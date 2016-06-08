@@ -3,6 +3,8 @@
 
 add_namespace = german
 
+#### Introduction Event (flavour) ####
+
 #### German Constitution
 country_event = {
 	id = german.1
@@ -26,6 +28,8 @@ country_event = {
 	}
 
 }
+
+#### General Staff Event Chain (2-8) ####
 
 #### Hans von Seeckt Dies 
 #### TODO: Remove the minister...
@@ -115,6 +119,7 @@ country_event = {
 
 }
 #### Kaisers decision
+#### TODO: PICTURE 
 country_event = {
 	id = german.6
 	title = german.6.t
@@ -148,6 +153,7 @@ country_event = {
 	option = {
 		name = german.7.a
 		#load_oob =
+		country_event = { id = german.8 days = 7 }
 	}
 	
 	option = {
@@ -155,4 +161,59 @@ country_event = {
 
 	}
 }
+#### Generals resign
+#### TODO: List of Generals that resign
+country_event = {
+	id = german.8
+	title = german.8.t
+	desc = german.8.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.8.a
+		#remove_unit_leader = 
 
+	}
+
+}
+
+
+#### General Events ####
+
+### Agricultural Crisis in Mitteleuropa
+country_event = {
+	id = german.200
+	title = german.200.t
+	desc = german.200.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		date > 1936.4.1
+
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	
+	
+	option = {
+		name = german.200.a
+		if = {
+			limit = {
+				UKR = { has_government = reactionary}
+			}
+			add_opinion_modifier = {target = UKR modifier = agriculture_help_granted}
+		}
+		
+	}
+	option = {
+		name = german.200.a
+		add_opinion_modifier = { target = UKR modifier = agriculture_help_denied}
+	}
+
+}

@@ -247,13 +247,13 @@ country_event = {
 			limit = {
 				UKR = { has_government = reactionary}
 			}
-			add_opinion_modifier = {target = UKR modifier = agriculture_help_granted}
+			add_opinion_modifier = {target = UKR modifier = agriculture_help_denied}
 		}
 		
 	}
 	option = {
 		name = german.200.b
-		add_opinion_modifier = { target = UKR modifier = agriculture_help_denied}
+		add_opinion_modifier = { target = UKR modifier = agriculture_help_granted }
 	}
 
 }
@@ -566,17 +566,19 @@ country_event = {
 	option = {
 		name = german.230.b
 		add_opinion_modifier = {target = ITA modifier = catholic_bounds}
+		GER = { give_guarantee = ITA }
 		ITA = { country_event = { id = german.231 days = 6 } }
 	}
 	option = {
 		name = german.230.b
 		add_opinion_modifier = {target = ITA modifier = catholic_bounds}
+		GER = { give_guarantee = ITA }
 		ITA = { country_event = { id = german.231 days = 6 } }
 
 	}
 
 }
-
+### German proposial to italy
 country_event = {
 	id = german.231
 	title = german.231.t
@@ -586,7 +588,7 @@ country_event = {
 	
 	option = {
 		name = german.231.a
-		GER = { give_guarantee = ITA }
+		GER = { add_to_faction = ITA }
 		
 		
 	}
@@ -596,6 +598,174 @@ country_event = {
 	}
 
 }
+### French people in Germany
+### TODO: Garrison OOB
+country_event = {
+	id = german.232
+	title = german.232.t
+	desc = german.232.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		date > 1937.5.1
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	
+	
+	option = {
+		name = german.232.a
+		add_national_unity = 0.01
+		FRA = { country_event = { id = german.233 days = 6 } }
+		NFA = { country_event = { id = german.233 days = 6 } }
+		
+	}
+	option = {
+		name = german.232.b
+		add_national_unity = -0.01
+	}
+
+}
+
+### Event to france
+country_event = {
+	id = german.233
+	title = german.233.t
+	desc = german.233.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.233.a
+		add_national_unity = 0.01
+		
+	}
+
+
+}
+
+### Increase Security
+country_event = {
+	id = german.234
+	title = german.234.t
+	desc = german.234.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.234.a
+		add_national_unity = 0.01
+		
+	}
+	option = {
+		name = german.234.b
+		add_national_unity = 0.05
+		FRA = { country_event = { id = german.235 days = 6 } } 
+		
+	}
+	option = {
+		name = german.234.c
+		add_national_unity = -0.01
+		set_country_flag = security_backdown
+		
+	}
+
+}
+
+### France responce
+country_event = {
+	id = german.235
+	title = german.235.t
+	desc = german.235.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.235.a
+		add_national_unity = -0.01
+		
+	}
+	option = {
+		name = german.235.b
+		add_national_unity = -0.1
+			declare_war_on = {
+				target = GER
+				type = take_state_focus
+				generator = { 42 28 8 741 } 
+			}
+		
+		
+	}
+	option = {
+		name = german.235.c
+		add_national_unity = 0.05
+		GER = { country_event = { id = german.236 days = 1 } } 
+		
+	}
+			
+
+}
+### German Responce
+country_event = {
+	id = german.236
+	title = german.236.t
+	desc = german.236.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.236.a
+		
+		
+	}
+	option = {
+		name = german.236.b
+		add_national_unity = -0.05
+			declare_war_on = {
+				target = GER
+				type = take_state_focus
+				generator = { 42 28 8 741 } 
+			}
+		
+	}
+
+}
+
+### Von Hammerstein-Equord Affair
+### TODO: active Minister!
+country_event = {
+	id = german.237
+	title = german.237.t
+	desc = german.237.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.237.a
+		add_national_unity = -0.03
+		
+	}
+	option = {
+		name = german.237.b
+		add_national_unity = -0.02		
+		
+	}
+	option = {
+		name = german.237.c
+		add_national_unity = -0.01
+			
+	}
+
+}
+
+
+
 
 ### Minister Deaths
 ### Otto Wells
@@ -619,6 +789,306 @@ country_event = {
 	option = {
 		name = german.250.a
 	}
+
+}
+
+
+
+### German foreign
+### Invasion of Denmark
+country_event = {
+	id = german.400
+	title = german.400.t
+	desc = german.400.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		DEN = { OR = {has_war_with = ENG has_war_with = FRA}}
+		NOT = { GER = { OR = {has_war_with = ENG has_war_with = FRA }}}
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.400.a
+		GER = { add_to_faction = DEN}
+		add_national_unity = 0.05
+	}
+	option = {
+		name = german.400.b
+		add_national_unity = -0.02
+	}
+
+}
+### Invasion of north Italy
+country_event = {
+	id = german.401
+	title = german.401.t
+	desc = german.401.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		ITA = { OR = {has_war_with = ENG has_war_with = FRA}}
+		NOT = { GER = { OR = {has_war_with = ENG has_war_with = FRA }}}
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.401.a
+		GER = { add_to_faction = ITA}
+		add_national_unity = 0.05
+	}
+	option = {
+		name = german.401.b
+		add_national_unity = -0.02
+	}
+
+}
+### Anexion of Netherlands
+### TODO:  Dutch fleeing into colonies
+country_event = {
+	id = german.402
+	title = german.402.t
+	desc = german.402.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		controls_state = 35
+		controls_state = 7
+		controls_state = 36
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.402.a
+		
+		GER = { transfer_state = 35 }
+		GER = { transfer_state = 7 }
+		GER = { transfer_state = 36 }
+	}
+}
+
+
+### netherlands to wallonia
+
+country_event = {
+	id = german.403
+	title = german.403.t
+	desc = german.403.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		owns_state = 35
+		owns_state = 7
+		owns_state = 36
+		country_exists = BEL
+		#GER = {is_puppet = BEL }
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.403.a
+		
+		BEL = { transfer_state = 35 }
+		BEL = { transfer_state = 7 }
+		BEL = { transfer_state = 36 }
+		BEL = { add_state_core = 35}
+		BEL = { add_state_core = 7}
+		BEL = { add_state_core = 36}
+	}
+	option = {
+		name = german.403.b
+		
+	}
+
+}
+
+### The fate of spanish Marocco
+country_event = {
+	id = german.404
+	title = german.404.t
+	desc = german.404.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		SPR = { has_civil_war = yes }
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.404.a
+		GER = { transfer_state = 290 }
+		GER = { transfer_state = 699 }
+		GER = { transfer_state = 178 }
+		
+		FRA = { country_event = { id = german.405 days = 3 } } 
+
+	}
+	option = {
+		name = german.404.b
+		
+	}
+
+}
+
+### French intervention?
+country_event = {
+	id = german.405
+	title = german.405.t
+	desc = german.405.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.405.a
+
+	}
+	option = {
+		name = german.405.b
+		declare_war_on = {
+				target = GER
+				type = take_state_focus
+				generator = { 290 699 178 461 462 } 
+			}
+	}
+
+}
+
+### Logging in Madagascar
+country_event = {
+	id = german.406
+	title = german.406.t
+	desc = german.406.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		date > 1939.1.1
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.406.a
+		country_event = { id = german.407 days = 30}
+
+	}
+	option = {
+		name = german.406.b
+		
+	}
+
+}
+### Industry esteblished expand?
+### TODO: Resources and factory
+country_event = {
+	id = german.407
+	title = german.407.t
+	desc = german.407.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.407.a
+		random_list = {
+			70 = {country_event = { id = german.408 days = 30}}
+			30 = {country_event = { id = german.409 days = 30}}
+		}
+	}
+	option = {
+		name = german.407.b
+		
+	}
+
+}
+
+### Sucess of expansion
+### EVEN more factories
+country_event = {
+	id = german.408
+	title = german.408.t
+	desc = german.408.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.408.a
+
+	}
+
+}
+### Fail of expansion
+### Remove factories keep resources
+country_event = {
+	id = german.409
+	title = german.409.t
+	desc = german.409.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = german.409.a
+
+	}
+
+}
+### Trouble in Sri Lanca
+country_event = {
+	id = german.410
+	title = german.410.t
+	desc = german.410.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		date > 1937.1.1
+
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = german.410.a
+		add_national_unity = -0.02
+
+	}
+
 
 }
 

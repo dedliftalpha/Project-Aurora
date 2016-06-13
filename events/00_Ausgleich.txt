@@ -3,3 +3,570 @@
 
 add_namespace = ausgleich
 
+### Trigger 
+news_event = {
+	id = ausgleich.1
+	title = ausgleich.1.t
+	desc = ausgleich.1.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		country_exists = AUS
+		date > 1937.2.1
+	}
+	
+	immediate = {
+		AUS = { country_event = {id = ausgleich.2 }}
+		
+	}
+	
+	option = {
+		name = ausgleich.1.a
+	}
+	
+}
+### Ausgleich Event for Austria
+### Decides what course to take
+Country_event = {
+	id = ausgleich.2
+	title = ausgleich.2.t
+	desc = ausgleich.2.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.2.a #Stay Dualism
+		every_country = {
+			limit = {
+				has_idea = austria_dualism
+			}
+			add_opinion_modifier = {target = this modifier = dualism_disagree}
+		}
+		add_opinion_modifier = {target = GER modifier = dualism_agree}
+		HUN = {country_event = { id = ausgleich.3 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.2.b #Federalism
+		every_country = {
+			limit = {
+				has_idea = austria_dualism
+			}
+			add_opinion_modifier = {target = this modifier = federalism_agree}
+		}
+		add_opinion_modifier = {target = GER modifier = federlism_disagree}
+		HUN = {country_event = { id = ausgleich.4 days = 1 }}
+	}
+	
+	option = {
+		name = ausgleich.2.c #Centralize
+		every_country = {
+			limit = {
+				has_idea = austria_dualism
+			}
+			add_opinion_modifier = {target = this modifier = centralize_disagree}
+		}
+		HUN = {country_event = { id = ausgleich.5 days = 1 }}
+	}
+}
+
+### Stay dualism
+country_event = {
+	id = ausgleich.3
+	title = ausgleich.3.t
+	desc = ausgleich.3.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.3.a # Accept
+		AUS = {country_event = { id = ausgleich.6 days = 1 }}
+	}
+	
+	option = {
+		name = ausgleich.3.b # Decline
+	}
+	
+}
+### Become Federation
+country_event = {
+	id = ausgleich.4
+	title = ausgleich.4.t
+	desc = ausgleich.4.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.4.a # Accept
+		AUS = {country_event = { id = ausgleich.10 days = 1 }}
+	}
+	
+	option = {
+		name = ausgleich.4.b # Decline
+	}
+	
+}
+### Centralize the State
+country_event = {
+	id = ausgleich.5
+	title = ausgleich.5.t
+	desc = ausgleich.5.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.5.a # Accept
+	}
+	
+	option = {
+		name = ausgleich.5.b # Decline
+	}
+	
+}
+
+### Dualism chain
+### Dualism Agreed
+country_event = {
+	id = ausgleich.6
+	title = ausgleich.6.t
+	desc = ausgleich.6.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.6.a 
+	}
+	
+}
+
+### The Galicia purchase
+country_event = {
+	id = ausgleich.7
+	title = ausgleich.7.t
+	desc = ausgleich.7.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.7.a # Accept
+		POL = { country_event = { id = ausgleich.8 days = 3}}
+	}
+	
+	option = {
+		name = ausgleich.7.b # Decline
+	}
+	
+}
+### Polish responce
+country_event = {
+	id = ausgleich.8
+	title = ausgleich.8.t
+	desc = ausgleich.8.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.8.a # Accept
+		annex_country ={ target = GAL transfer_troops = yes }
+		add_state_core = 88
+		add_state_core = 91
+		add_state_core = 89
+		add_state_core = 80
+		AUS = { country_event = { id = ausgleich.9 days = 3}}
+	}
+	
+	option = {
+		name = ausgleich.8.b # Decline
+	}
+	
+}
+### Poland accepts
+country_event = {
+	id = ausgleich.9
+	title = ausgleich.9.t
+	desc = ausgleich.9.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.9.a 
+		puppet = POL
+	}
+	
+}
+### Federalism
+### Federalism Agreed
+country_event = {
+	id = ausgleich.10
+	title = ausgleich.10.t
+	desc = ausgleich.10.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.10.a
+		BOM = { country_event = {id = ausgleich.11 days = 1}}
+		CRO = { country_event = {id = ausgleich.12 days = 1}}
+		GAL = { country_event = {id = ausgleich.13 days = 1}}
+		BOS = { country_event = {id = ausgleich.14 days = 1}}
+		HUN = { release = CRO}
+		AUS = { puppet = CRO}
+	}
+	
+}
+### Bohemia Federalism
+country_event = {
+	id = ausgleich.11
+	title = ausgleich.11.t
+	desc = ausgleich.11.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.11.a 
+	}
+	
+}
+### Croatia Federalism
+country_event = {
+	id = ausgleich.12
+	title = ausgleich.12.t
+	desc = ausgleich.12.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.12.a 
+	}
+	
+}
+### Galicia Federalism
+country_event = {
+	id = ausgleich.13
+	title = ausgleich.13.t
+	desc = ausgleich.13.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.13.a 
+	}
+	
+}
+### Bosnia Federalism
+country_event = {
+	id = ausgleich.14
+	title = ausgleich.14.t
+	desc = ausgleich.14.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.14.a 
+	}
+	
+}
+
+### Centralisation
+### Centralisation Agreed
+country_event = {
+	id = ausgleich.15
+	title = ausgleich.15.t
+	desc = ausgleich.15.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.15.a
+		AUS = { annex_country = { target = HUN transfer_troops = yes }}
+		AUS = { add_state_core = 155 }
+		AUS = { add_state_core = 664 }
+		AUS = { add_state_core = 70 }
+		AUS = { add_state_core = 71 }
+		AUS = { add_state_core = 73 }
+		AUS = { add_state_core = 43 }
+		AUS = { add_state_core = 154 }
+		AUS = { add_state_core = 45 }
+		AUS = { add_state_core = 82 }
+		AUS = { add_state_core = 83 }
+		AUS = { add_state_core = 76 }
+		AUS = { add_state_core = 84 }
+		
+		BOM = { country_event = {id = ausgleich.16 days = 1}}
+		CRO = { country_event = {id = ausgleich.17 days = 1}}
+		BOS = { country_event = {id = ausgleich.18 days = 1}}
+		GAL = { country_event = {id = ausgleich.19 days = 1}}
+		
+		AUS = { puppet = CRO}
+	}
+	
+}
+### Bohemia
+country_event = {
+	id = ausgleich.16
+	title = ausgleich.16.t
+	desc = ausgleich.16.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.16.a # Accept
+		AUS = { annex_country = { target = BOM transfer_troops = yes }}
+		AUS = { add_state_core = 9 }
+		AUS = { add_state_core = 72 }
+		AUS = { add_state_core = 74 }
+		AUS = { add_state_core = 75 }
+		AUS = { add_state_core = 69 }
+		
+	}
+	option = {
+		name = ausgleich.16.b # Decline
+		AUS = { country_event = { id = ausgleich.22 days = 3}}
+	}
+	
+}
+### Croatia
+country_event = {
+	id = ausgleich.17
+	title = ausgleich.17.t
+	desc = ausgleich.17.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.17.a # Accept
+		AUS = { annex_country = { target = CRO transfer_troops = yes }}
+		AUS = { add_state_core = 109 }
+		AUS = { add_state_core = 103 }
+		AUS = { add_state_core = 163 }
+		
+	}
+	option = {
+		name = ausgleich.17.b # Decline
+		AUS = { country_event = { id = ausgleich.25 days = 3}}
+	}
+	
+}
+### Bosnia
+country_event = {
+	id = ausgleich.18
+	title = ausgleich.18.t
+	desc = ausgleich.18.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.18.a # Accept
+		AUS = { annex_country = { target = BOS transfer_troops = yes }}
+		AUS = { add_state_core = 104 }
+
+		
+	}
+	option = {
+		name = ausgleich.18.b # Decline
+		AUS = { country_event = { id = ausgleich.23 days = 3}}
+	}
+	
+}
+### Galicia
+country_event = {
+	id = ausgleich.19
+	title = ausgleich.19.t
+	desc = ausgleich.19.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.19.a # Accept
+		AUS = { annex_country = { target = GAL transfer_troops = yes }}
+		AUS = { add_state_core = 88 }
+		AUS = { add_state_core = 91 }
+		AUS = { add_state_core = 89 }
+		AUS = { add_state_core = 80 }
+
+		
+	}
+	option = {
+		name = ausgleich.19.b # Decline
+		AUS = { country_event = { id = ausgleich.24 days = 3}}
+	}
+	option = {
+		name = ausgleich.19.c # Join Poland
+		POL = { country_event = { id = ausgleich.20 days = 3}}
+	}
+}
+### request to Poland
+country_event = {
+	id = ausgleich.20
+	title = ausgleich.20.t
+	desc = ausgleich.20.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.20.a # Accept
+		annex_country ={ target = GAL transfer_troops = yes }
+		add_state_core = 88
+		add_state_core = 91
+		add_state_core = 89
+		add_state_core = 80
+		AUS = { country_event = { id = ausgleich.21 days = 3}}
+		
+	}
+	option = {
+		name = ausgleich.20.b # Decline
+		AUS = { country_event = { id = ausgleich.24 days = 3}}
+	}
+	
+}
+### Galicia breaks away
+country_event = {
+	id = ausgleich.21
+	title = ausgleich.21.t
+	desc = ausgleich.21.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.21.a # To war
+		add_national_unity = 0.05
+			declare_war_on = {
+				target = POL
+				type = take_state_focus
+				generator = { 88 91 89 80 } 
+			}
+		add_state_core = 88
+		add_state_core = 91
+		add_state_core = 89
+		add_state_core = 80
+	}
+	option = {
+		name = ausgleich.21.b # No need
+		add_national_unity = -0.1
+	}
+	
+}
+### Indipendance declarations
+### Bohemia
+country_event = {
+	id = ausgleich.22
+	title = ausgleich.22.t
+	desc = ausgleich.22.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.22.a # To war
+		declare_war_on = {
+				target = BOM
+				type = annex_everything
+			}
+		AUS = { add_state_core = 9 }
+		AUS = { add_state_core = 72 }
+		AUS = { add_state_core = 74 }
+		AUS = { add_state_core = 75 }
+		AUS = { add_state_core = 69 }
+		
+	}
+	option = {
+		name = ausgleich.22.b # No need
+		add_national_unity = -0.05
+		
+	}
+	
+}
+### Bosnia
+country_event = {
+	id = ausgleich.23
+	title = ausgleich.23.t
+	desc = ausgleich.23.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.23.a # To war
+		declare_war_on = {
+				target = BOS
+				type = annex_everything
+			}
+		AUS = { add_state_core = 104 }
+		
+	}
+	option = {
+		name = ausgleich.23.b # No need
+		add_national_unity = -0.05
+		
+	}
+	
+}
+### Galicia
+country_event = {
+	id = ausgleich.24
+	title = ausgleich.24.t
+	desc = ausgleich.24.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.24.a # To war
+		declare_war_on = {
+				target = GAL
+				type = annex_everything
+			}
+		AUS = { add_state_core = 88 }
+		AUS = { add_state_core = 91 }
+		AUS = { add_state_core = 89 }
+		AUS = { add_state_core = 80 }
+		
+	}
+	option = {
+		name = ausgleich.24.b # No need
+		add_national_unity = -0.05
+	}
+	
+}
+### Croatia
+country_event = {
+	id = ausgleich.25
+	title = ausgleich.25.t
+	desc = ausgleich.25.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.25.a # To war
+		declare_war_on = {
+				target = CRO
+				type = annex_everything
+			}
+		AUS = { add_state_core = 109 }
+		AUS = { add_state_core = 103 }
+		AUS = { add_state_core = 163 }
+		
+	}
+	option = {
+		name = ausgleich.25.b # No need
+		add_national_unity = -0.05		
+	}
+	
+}
+
+### Hungary rejects first proposial
+country_event = {
+	id = ausgleich.26
+	title = ausgleich.26.t
+	desc = ausgleich.26.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.26.a 
+		
+	}
+	option = {
+		name = ausgleich.26.b 
+			
+	}
+	
+}

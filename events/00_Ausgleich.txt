@@ -87,6 +87,7 @@ country_event = {
 	
 	option = {
 		name = ausgleich.3.b # Decline
+		AUS = {country_event = { id = ausgleich.26 days = 3 }}
 	}
 	
 }
@@ -105,6 +106,7 @@ country_event = {
 	
 	option = {
 		name = ausgleich.4.b # Decline
+		AUS = {country_event = { id = ausgleich.26 days = 3 }}
 	}
 	
 }
@@ -119,6 +121,7 @@ country_event = {
 	option = {
 		name = ausgleich.5.a # Accept
 		AUS = {country_event = { id = ausgleich.15 days = 3 }}
+		set_global_flag = centralize_success
 	}
 	option = {
 		name = ausgleich.5.b # Decline
@@ -584,7 +587,8 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.26.a 
+		name = ausgleich.26.a
+		HUN = {country_event = { id = ausgleich.27 days = 1 }}		
 		
 	}
 	option = {
@@ -605,6 +609,8 @@ country_event = {
 		AUS = { add_state_core = 83 }
 		AUS = { add_state_core = 84 }
 		AUS = { add_state_core = 76 }
+		
+		set_global_flag = ausgleich_war
 			
 	}
 	
@@ -727,6 +733,8 @@ country_event = {
 		HUN = { add_state_core = 160 }
 		HUN = { add_state_core = 39 }
 		
+		set_global_flag = ausgleich_war
+		
 		GER = {country_event = {id = ausgleich.33 days = 1}}
 
 		
@@ -764,6 +772,8 @@ country_event = {
 		AUS = { add_state_core = 83 }
 		AUS = { add_state_core = 84 }
 		AUS = { add_state_core = 76 }
+		
+		set_global_flag = ausgleich_war
 		
 		GER = {country_event = {id = ausgleich.35 days = 1}}
 	}
@@ -857,6 +867,8 @@ country_event = {
 		GAL = { country_event = {id = ausgleich.19 days = 1}}
 		
 		AUS = { puppet = CRO}
+		
+		set_global_flag = centralize_success
 
 	}
 
@@ -977,6 +989,7 @@ country_event = {
 		AUS = { add_state_core = 84 }
 		AUS = { add_state_core = 76 }
 	
+		set_global_flag = ausgleich_war
 		
 		HUN = { country_event = { id = ausgleich.54 days = 1}}
 	}
@@ -1830,6 +1843,10 @@ country_event = {
 		owns_state = 71
 		owns_state = 73
 		
+		country_exists = HUN
+		country_exists = AUS
+		
+		NOT = {has_global_flag = centralize_success}
 		has_global_flag = ausgleich_37
 
 	}
@@ -1983,6 +2000,101 @@ country_event = {
 	option = {
 		name = ausgleich.82.a
 		#load_oob
+
+	}
+
+
+}
+
+### War is over
+### Austria wins
+country_event = {
+	id = ausgleich.83
+	title = ausgleich.83.t
+	desc = ausgleich.83.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+
+		tag  = AUS
+		NOT = {country_exists = HUN}
+		country_exists = AUS
+		
+		NOT = {has_global_flag = centralize_success}
+		has_global_flag = ausgleich_war
+
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ausgleich.83.a
+		
+		BOM = { country_event = {id = ausgleich.16 days = 1}}
+		CRO = { country_event = {id = ausgleich.17 days = 1}}
+		BOS = { country_event = {id = ausgleich.18 days = 1}}
+		GAL = { country_event = {id = ausgleich.19 days = 1}}
+		
+		AUS = { puppet = CRO}
+		set_global_flag = centralize_success
+	}	
+
+}
+
+### Hungary Wins
+country_event = {
+	id = ausgleich.84
+	title = ausgleich.84.t
+	desc = ausgleich.84.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+
+		tag = HUN
+		NOT = {country_exists = AUS}
+		country_exists = HUN
+		
+		NOT = {has_global_flag = centralize_success}
+		has_global_flag = ausgleich_war
+
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ausgleich.84.a
+		
+		country_event = {id = ausgleich.85 days = 1}
+		
+	}	
+
+}
+
+### Future of Hungary
+country_event = {
+	id = ausgleich.85
+	title = ausgleich.85.t
+	desc = ausgleich.85.d
+	
+	is_triggered_only = yes
+	
+	option = { # end all this
+		name = ausgleich.85.a
+		AUS = {end_puppet = BOS}
+		AUS = {end_puppet = CRO}
+		AUS = {end_puppet = GAL}
+		AUS = {end_puppet = BOM}
+		
+		HUN = {end_puppet = BOS}
+		puppet = CRO
+		HUN = {end_puppet = GAL}
+		HUN = {end_puppet = BOM}
 
 	}
 

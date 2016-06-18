@@ -93,10 +93,10 @@ focus_tree = {
 		complete_tooltip = {
 			every_state = {
 				limit = { has_state_flag = FRA_industrial_expansion_2IC }
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -112,29 +112,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					NOT = { OR = {
-						region = 557
-						region = 514
-						}
-					}				
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = FRA_industrial_expansion_2IC
-			}
-
 			random_owned_state = {
 				limit = {
 					free_building_slots = {
@@ -169,28 +146,6 @@ focus_tree = {
 						region = 514
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = FRA_industrial_expansion_1IC
-			}
-
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					NOT = { OR = {
-						region = 557
-						region = 514
-						}
-					}				
 				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -233,10 +188,10 @@ focus_tree = {
 		complete_tooltip = {
 			every_state = {
 				limit = { has_state_flag = FRA_military_factories_2MF }
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -252,28 +207,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-					NOT = { OR = {
-						region = 557
-						region = 514
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = FRA_military_factories_2MF
-			}
-
 			random_owned_state = {
 				limit = {
 					free_building_slots = {
@@ -469,6 +402,7 @@ focus_tree = {
 		icon = GFX_focus_research
 		prerequisite = { 
 			focus = NFA_effort_national
+			NOT = { country_exists = FRA } 
 		}
 		available = {
 			num_of_factories > 75
@@ -496,7 +430,7 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		completion_reward = {
+		completion_reward = { #should give bonuses to fighting on its own territory
 		}
 	}
 
@@ -508,11 +442,12 @@ focus_tree = {
 		x = 4
 		y = 1
 		cost = 10
-		completion_reward = {
+		completion_reward = { #cheaper fortifications
 		}
 	}
+	
 	focus = {
-		id = NFA_mediteranean_forts
+		id = NFA_mediteranean_forts 
 		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = NFA_fortification_focus }
 		x = 4
@@ -523,16 +458,11 @@ focus_tree = {
 			735 = { is_controlled_by = FRA }
 		}
 
-		completion_reward = {
-			ROOT = { country_event = { id = france.3 } }
-			ITA = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = FRA_alpine_forts
-				}
+		completion_reward = { #Builds coastal fort in Algeria and Tunisia
+			
 			}
 		}
-	}
+	
 	focus = {
 		id = NFA_protect_the_air
 		icon = GFX_goal_generic_fortify_city
@@ -545,18 +475,8 @@ focus_tree = {
 			18 = { is_controlled_by = FRA }
 			29 = { is_controlled_by = FRA }
 		}
-		completion_reward = {
-			ROOT = { country_event = { id = france.2 } }
-			BEL = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = FRA_extend_the_maginot_line_focus_neg
-				}
-				add_opinion_modifier = {
-					target = GER
-					modifier = FRA_extend_the_maginot_line_focus_pos
-				}
-			}
+		completion_reward = { #adds DCA in Algeria and Tunisia
+		
 		}
 	}
 	focus = {
@@ -567,7 +487,7 @@ focus_tree = {
 		x = 6
 		y = 1
 		cost = 10
-		completion_reward = {
+		completion_reward = { #unlocks events giving new ships 
 			army_experience = 5
 		}
 	}
@@ -579,15 +499,16 @@ focus_tree = {
 		y = 2
 		cost = 10
 		completion_reward = {
-			army_experience = 5
-			add_tech_bonus = {
-				name = FRA_artillery_focus
-				bonus = 0.5
-				uses = 1
-				category = artillery
+		272 = {
+			add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+					}
+				}
 			}
 		}
-	}
 	focus = {
 		id = NFA_battleship_focus
 		icon = GFX_goal_generic_navy_battleship
@@ -595,14 +516,7 @@ focus_tree = {
 		x = 6
 		y = 3
 		cost = 10
-		completion_reward = {
-			army_experience = 5
-			add_tech_bonus = {
-				name = FRA_heavy_armor_focus
-				bonus = 0.5
-				uses = 1
-				category = cat_heavy_armor
-			}
+		completion_reward = { #Gives Navy experience and blueprints for Battleships
 		}
 	}
 	focus = {
@@ -618,7 +532,7 @@ focus_tree = {
 		ai_will_do = {
 			factor = 0.2
 		}
-		completion_reward = {
+		completion_reward = { #Bonus to planning maybe ? 
 		}
 	}
 	focus = {
@@ -629,7 +543,7 @@ focus_tree = {
 		x = 8
 		y = 1
 		cost = 10
-		completion_reward = {
+		completion_reward = { #see what National Idea Nat.France will get
 			army_experience = 5
 		}
 	}
@@ -642,7 +556,7 @@ focus_tree = {
 		cost = 10
 		completion_reward = {
 			army_experience = 5
-			add_tech_bonus = {
+			add_tech_bonus = { #blueprints for infantry equipment
 				name = FRA_mechanized_focus
 				bonus = 0.5
 				uses = 1
@@ -659,7 +573,7 @@ focus_tree = {
 		x = 10
 		y = 1 
 		cost = 10 
-		completion_reward = { 
+		completion_reward = { #gives legionary units
 		army_experience = 5 
 		}
 	}
@@ -671,7 +585,7 @@ focus_tree = {
 		x = 10
 		y = 2
 		cost = 10 
-		completion_reward = { 
+		completion_reward = { #blueprints for motorization ? Maybe some motorized brigades
 		army_experience = 5 
 		}
 	}
@@ -684,7 +598,7 @@ focus_tree = {
 		x = 8
 		y = 3
 		cost = 10
-		completion_reward = {
+		completion_reward = { #blueprints for special forces
 			army_experience = 5
 			add_tech_bonus = {
 				name = FRA_light_medium_armor

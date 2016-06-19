@@ -1,0 +1,224 @@
+﻿###########################
+# Ukraine Events
+###########################
+
+add_namespace = ukraine
+
+
+# Russia demand southern ukraine (Ukraine)
+country_event = {
+	id = ukraine.1
+	title = ukraine.1.t
+	desc = ukraine.1.d
+	picture = GFX_report_event_generic_read_write
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = ukraine.1.a
+		ai_chance = { factor = 90 }
+		GER = {
+			country_event = { days = 1 id = russia.1003 }
+		}
+	}
+	option = { # Refuse
+		name = ukraine.1.b		
+		ai_chance = { 
+			factor = 10
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			} 
+		}
+		effect_tooltip = {
+			SOV = {
+				create_wargoal = {
+				type = take_state_focus
+				target = UKR
+				generator = { 240 }
+				generator = { 221 }
+				generator = { 228 }
+				generator = { 227 }
+				generator = { 200 }
+				generator = { 226 }
+				generator = { 196 }
+				generator = { 137 }			
+				}
+				country_event = { days = 1 id = russia.1004 }
+			}
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = russia.1004 }
+			}
+		}		
+	}
+}
+
+# Ukraine asked about Anschluss
+country_event = {
+	id = ukraine.2
+	title = ukraine.2.t
+	desc = ukraine.2.d
+	picture = GFX_report_event_hitler_parade
+	
+	is_triggered_only = yes
+	
+	option = { # Accept
+		name = Ukraine.2.a
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = -25
+				SOV = { has_army_size = { size < 40 } }
+			}
+			modifier = {
+				add = 100
+				SOV = { has_army_size = { size > 39 } }
+			}
+		}
+		SOV = {
+			country_event = { hours = 2 id = ukraine.4 }
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+	}
+	option = { # Refuse
+		name = ukraine.2.b
+		ai_chance = {
+			base = 10 
+
+			modifier = {
+				factor = 0
+				SOV = { has_army_size = { size > 39 } }
+				is_historical_focus_on = yes
+			}
+			modifier = {
+				add = 20
+				SOV = { has_army_size = { size < 30 } }
+			}
+		}
+		SOV = {
+			country_event = { hours = 2 id = ukraine.3 }
+			if = { limit = { is_in_faction_with = UKR }
+				remove_from_faction = UKR
+			}
+		}
+	}
+}
+
+# ukraine  refuses Anschluss
+country_event = {
+	id = ukraine.3
+	title = ukraine.3.t
+	desc = ukraine.3.d
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ukraine.3.a
+		add_state_claim = 192
+		add_state_claim = 197
+		add_state_claim = 203
+		add_state_claim = 259
+		add_state_claim = 225
+		add_state_claim = 193
+		add_state_claim = 202
+		add_state_claim = 198
+		add_state_claim = 201
+		add_state_claim = 199
+		add_state_claim = 93
+		create_wargoal = {
+			type = take_state_focus
+			target = UKR
+			generator = { 192 197 203 259 225 193 202 198 201 199 93 }
+		}
+	}
+}
+
+# Ukraine  Anschluss Completed
+country_event = {
+	id = ukraine.4
+	title = ukraine.4.t
+	desc = ukraine.4.d
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = Ukraine.4.a
+		192 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		197 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		203 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		259 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		225 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		193 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		202 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		198 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		201 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		199 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+		93 = {
+			if = {
+				limit = { is_owned_by = UKR }
+				add_core_of = SOV
+			}
+		}
+
+
+		annex_country = { target = UKR transfer_troops = yes }
+		add_political_power = 75
+		add_named_threat = { threat = 4 name = ukraine.4.t }
+		set_country_flag = UKR_annexed
+		news_event = { hours = 6 id = news.36 }
+	}
+}

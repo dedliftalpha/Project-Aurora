@@ -1,0 +1,495 @@
+focus_tree = {
+	id = soviet_focus
+
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = SOV
+		}
+	}
+	
+	default = no
+	
+	focus = {
+		id = SOV_MRGA
+		icon = GFX_goal_generic_military_sphere
+		x = 2
+		y = 0
+		cost = 10
+		available = { is_puppet = no }
+		
+		ai_will_do = {
+			factor = 10
+		}	
+		completion_reward = {
+			custom_effect_tooltip = SOV_RUSSIA_GREAT
+			add_political_power = 150
+			army_experience = 5
+			add_named_threat = { threat = 2 name = SOV_MRGA_threat }
+			if = {
+				limit = { SOV = { is_puppet = no } }
+				GER = {
+					country_event = { id = russia.1001 }
+					custom_effect_tooltip = may_provoke_hostility
+				}
+			}
+		}		
+	}
+	
+	focus = {
+		id = SOV_WEST_EXPANSION
+		icon = GFX_goal_generic_military_sphere
+		x = 2
+		y = 1
+		cost = 10
+		available = { is_puppet = no }
+		prerequisite = { focus = SOV_MRGA }
+		ai_will_do = {
+			factor = 10
+		}	
+		completion_reward = {
+			custom_effect_tooltip = SOV_RUSSIA_GREAT
+			add_political_power = 50
+			army_experience = 5
+			add_named_threat = { threat = 1 name = SOV_RUSSIA_GREAT_threat }
+			if = {
+				limit = { SOV = { is_puppet = no } }
+				GER = {
+					country_event = { id = russia.1002 }
+					custom_effect_tooltip = may_provoke_hostility
+				}
+			}
+		}		
+	}
+	
+
+	focus = {
+		id = SOV_demand_southern_ukraine
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = SOV_WEST_EXPANSION }
+		available = { is_puppet = no }
+		x = 1
+		y = 2
+		cost = 10
+		bypass = {
+			240 = { is_owned_by = SOV }
+			221 = { is_owned_by = SOV }
+			228 = { is_owned_by = SOV }
+			227 = { is_owned_by = SOV }
+			200 = { is_owned_by = SOV }
+			226 = { is_owned_by = SOV }
+			196 = { is_owned_by = SOV }
+			137 = { is_owned_by = SOV }
+
+		}
+		ai_will_do = {
+			factor = 10	
+			modifier = {
+				factor = 0
+				date < 1939.1.1
+			}
+		}	
+		completion_reward = {
+			SOV = { add_state_core = 240 }
+			SOV = { add_state_core = 221 }
+			SOV = { add_state_core = 228 }
+			SOV = { add_state_core = 227 }
+			SOV = { add_state_core = 200 }
+			SOV = { add_state_core = 226 }
+			SOV = { add_state_core = 196 }
+			SOV = { add_state_core = 137 }
+			add_named_threat = { threat = 3 name = SOV_demand_southern_ukraine_threat }
+			if = {
+				limit = {
+					UKR= { owns_state = 240 }
+					UKR= { owns_state = 221 }
+					UKR= { owns_state = 228 }
+					UKR= { owns_state = 227 }
+					UKR= { owns_state = 200 }
+					UKR= { owns_state = 226 }
+					UKR= { owns_state = 196 }
+					UKR= { owns_state = 137 }
+				}
+				UKR = {
+					country_event = { id = ukraine.1 days = 1 }
+				}
+			}
+		}
+	}
+		focus = {
+		id = SOV_WHR_Anschluss
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = SOV_WEST_EXPANSION }
+		available = {
+			is_puppet = no
+			has_army_manpower = { size > 549999 }
+		}
+
+		cancel_if_invalid = no
+		x = 3
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				date < 1938.1.1
+			}
+		}	
+		completion_reward = {
+			army_experience = 10
+			if = {
+				limit = {
+					country_exists = WHR
+					WHR = {
+						OR = {
+							owns_state = 194
+							owns_state = 204
+							owns_state = 206
+							owns_state = 207
+							owns_state = 96
+							owns_state = 95
+							owns_state = 94
+							
+						}
+					}
+				}
+				WHR = {
+					country_event = WhiteRuthenia.1
+				}
+				# REVISIT Add  claims, possibly
+			}
+			if = {
+				limit = {
+					194 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 194
+			}
+			if = {
+				limit = {
+					204 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 204
+			}
+			if = {
+				limit = {
+					206 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 206
+			}
+			if = {
+				limit = {
+					207 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 207
+			}
+			if = {
+				limit = {
+					96 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 96
+			}
+			if = {
+				limit = {
+					95 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 95
+			}
+			if = {
+				limit = {
+					94 = {
+						owner = {
+							NOT = {
+								tag = WHR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 94
+			}
+		}
+	}
+	
+	
+	focus = {
+		id = SOV_UKR_Anschluss
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = SOV_demand_southern_ukraine}
+		prerequisite = { focus = SOV_WHR_Anschluss }
+		
+		available = {
+			is_puppet = no
+			has_army_manpower = { size > 549999 }
+		}
+
+		cancel_if_invalid = no
+		x = 3
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				date < 1938.1.1
+			}
+		}	
+		completion_reward = {
+			army_experience = 10
+			if = {
+				limit = {
+					country_exists = UKR
+					UKR = {
+						OR = {
+							owns_state = 192
+							owns_state = 197
+							owns_state = 203
+							owns_state = 259
+							owns_state = 225
+							owns_state = 193
+							owns_state = 202
+							owns_state = 198
+							owns_state = 201
+							owns_state = 199
+							owns_state = 93
+							
+						}
+					}
+				}
+				UKR = {
+					country_event = Ukraine.2
+				}
+				# REVISIT Add  claims, possibly
+			}
+			if = {
+				limit = {
+					192 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 192
+			}
+			if = {
+				limit = {
+					197 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 197
+			}
+			if = {
+				limit = {
+					203 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 203
+			}
+
+			if = {
+				limit = {
+					259 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 259
+			}
+			if = {
+				limit = {
+					225 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 225
+			}
+			if = {
+				limit = {
+					193 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 193
+			}
+			if = {
+				limit = {
+					202 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 202
+			}
+			if = {
+				limit = {
+					198 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 198
+			}
+			if = {
+				limit = {
+					201 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 201
+			}
+			if = {
+				limit = {
+					199 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 199
+			}
+			if = {
+				limit = {
+					93 = {
+						owner = {
+							NOT = {
+								tag = UKR
+							}
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_state_core = 93
+			}
+		}
+	}
+
+	
+	
+	
+	
+}

@@ -158,6 +158,15 @@ country_event = {
 	
 	option = { # Syndicalist take control
 		name = austria.7.a
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		add_popularity = {
+			ideology = syndicalist
+			popularity = 0.53
+		}
+		GER = {country_event = {id = austria.8 days = 3}}
 		
 	}
 	option = { # Army restores order
@@ -166,5 +175,262 @@ country_event = {
 	}
 
 }
+### German answer to syndicalist
+country_event = {
+	id = austria.8
+	title = austria.8.t
+	desc = austria.8.d
+	
+	is_triggered_only = yes
+	
+	option = { # demands
+		name = austria.8.a
+		AUS = {country_event = {id = austria.9 days = 3}}
+		
+	}
+	option = { # To war
+		name = austria.8.b
+		declare_war_on = {
+				target = AUS
+				type = annex_everything
+			}
+		FRA = {country_event = {id = austria.10 days = 3}}
+	}
+	option = { # nothing
+		name = austria.8.c
+		AUS = {country_event = {id = austria.11 days = 3}}
+		
+	}
+
+}
+### demand puppet
+country_event = {
+	id = austria.9
+	title = austria.9.t
+	desc = austria.9.d
+	
+	is_triggered_only = yes
+	
+	option = { # seek help
+		name = austria.9.a
+		FRA = {country_event = {id = austria.10 days = 3}}
+		
+	}
+	option = { # we cant do anything
+		name = austria.9.b
+		
+		GER = {country_event = {id = austria.12 days = 3}}
+	}
 
 
+}
+### Helprequest from austria
+country_event = {
+	id = austria.10
+	title = austria.10.t
+	desc = austria.10.d
+	
+	is_triggered_only = yes
+	
+	option = { # ultimatuum to germany
+		name = austria.10.a
+		GER = {country_event = {id = austria.13 days = 3}}
+		
+	}
+	option = { # we cant do anything
+		name = austria.10.b
+		
+		GER = {country_event = {id = austria.12 days = 3}}
+	}
+
+
+}
+### The syndicalist established
+country_event = {
+	id = austria.11
+	title = austria.11.t
+	desc = austria.11.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.11.a
+		add_national_unity = 0.1
+		
+	}
+}
+### The syndicalist defeted
+country_event = {
+	id = austria.12
+	title = austria.12.t
+	desc = austria.12.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.12.a
+		GER = {puppet = AUS}
+		AUS = {country_event = {id = austria.14 days = 3}}
+		GER = {country_event = {id = austria.16 days = 3}}
+	}
+}
+### ultimatuum to germany
+country_event = {
+	id = austria.13
+	title = austria.13.t
+	desc = austria.13.d
+	
+	is_triggered_only = yes
+	
+	option = { # Back down
+		name = austria.13.a
+		AUS = {country_event = {id = austria.11 days = 3}}
+		
+	}
+	option = { # Ignore and attack
+		name = austria.13.b
+		declare_war_on = {
+				target = AUS
+				type = puppet_wargoal_focus
+			}
+		FRA = {country_event = {id = austria.15 days = 3}}
+		
+	}
+}
+### We had to submit
+country_event = {
+	id = austria.14
+	title = austria.14.t
+	desc = austria.14.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.14.a
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		add_popularity = {
+			ideology = authoritarian_democratist
+			popularity = 0.73
+		}
+		
+	}
+}
+### France option to help
+country_event = {
+	id = austria.15
+	title = austria.15.t
+	desc = austria.15.d
+	
+	is_triggered_only = yes
+	
+	option = { # Back down
+		name = austria.15.a
+		AUS = {country_event = {id = austria.12 days = 3}}
+		
+	}
+	option = { # attack
+		name = austria.15.b
+		add_to_war = {
+		targeted_alliance = AUS
+		enemy = GER
+		}
+		
+	}
+}
+### the future of Austria
+country_event = {
+	id = austria.16
+	title = austria.16.t
+	desc = austria.16.d
+	
+	is_triggered_only = yes
+	
+	option = { # Anschluss
+		name = austria.16.a
+		AUS = {country_event = {id = austria.17 days = 3}}
+		
+	}
+	option = { # Puppet
+		name = austria.16.b
+		AUS = {country_event = {id = austria.18 days = 3}}
+		
+	}
+	option = { # Free them
+		name = austria.16.c
+		AUS = {country_event = {id = austria.19 days = 3}}
+		       
+		
+	}
+}
+### Anschluss
+country_event = {
+	id = austria.17
+	title = austria.17.t
+	desc = austria.17.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.17.a
+		GER = { annex_country = { target = AUS transfer_troops = yes }}
+		every_state ={
+			limit = {
+				is_core_of = AUS
+			}
+			
+			add_core_of = GER
+		}
+		
+	}
+
+}
+### Puppet
+country_event = {
+	id = austria.18
+	title = austria.18.t
+	desc = austria.18.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.18.a
+		
+	}
+
+}
+### Freedom
+country_event = {
+	id = austria.19
+	title = austria.19.t
+	desc = austria.19.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.19.a
+		country_event = {id = austria.20 days = 3}
+		
+	}
+
+}
+### Republic or Monarchy
+country_event = {
+	id = austria.20
+	title = austria.20.t
+	desc = austria.20.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = austria.20.a
+		
+	}
+	option = { 
+		name = austria.20.b
+		
+	}
+
+}

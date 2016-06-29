@@ -4,7 +4,7 @@
 
 add_namespace = ustates
 
-country_event = {
+country_event = { # A Day in September
 	id = ustates.1
 	title = ustates.1.t
 	desc = ustates.1.d
@@ -15,6 +15,7 @@ country_event = {
 	trigger = {
 		tag = USA
 		date > 1936.9.29
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -37,6 +38,10 @@ country_event = {
 
 		ai_chance = {
 			factor = 30
+			modifier = { # Not if Avoid Civil War
+				factor = 0
+				has_country_flag = EVNT_150
+			}
 		}
 
 		country_event = { id = ustates.2 days = 1 }
@@ -44,7 +49,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # MacArthur clamps down on problem groups
 	id = ustates.2
 	title = ustates.2.t
 	desc = ustates.2.d
@@ -71,7 +76,7 @@ country_event = {
 		}
 
 		add_national_unity = 0.01
-		country_event = { id = ustates.14 days = 3 }
+		country_event = { id = ustates.157 days = 3 }
 	}			
 }
 
@@ -88,7 +93,7 @@ country_event = {
 		date > 1936.7.3
 		AND = {
 			OR = { 
-				has_government = social_democratist
+				has_government = social_liberalist
 				has_government = social_liberalist
 				has_government = market_liberalist
 				has_government = social_conservatist
@@ -441,12 +446,14 @@ country_event = {
 	}
 }
 
-### MacArthur's Regime
+################################################################
+### MacArthur's regime
+################################################################
 
 country_event = { # Constitutional Ban on CSA and America First
-	id = ustates.70
-	title = ustates.70.t
-	desc = ustates.70.d
+	id = ustates.157
+	title = ustates.157.t
+	desc = ustates.157.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes
@@ -464,7 +471,7 @@ country_event = { # Constitutional Ban on CSA and America First
 	}
 
 	option = {
-		name = ustates.70.b
+		name = ustates.157.b
 
 		ai_chance = {
 			factor = 10
@@ -475,7 +482,7 @@ country_event = { # Constitutional Ban on CSA and America First
 	}	
 
 	option = {
-		name = ustates.70.c
+		name = ustates.157.c
 
 		ai_chance = {
 			factor = 5
@@ -808,7 +815,6 @@ country_event = { # Martial Law Causes Terrible Problems
 
 	option = {
 		name = ustates.26.a
-
 		set_country_flag = ACW_CAL
 		set_country_flag = ACW_CSA
 		set_country_flag = ACW_AUS
@@ -831,6 +837,7 @@ country_event = { # The 1936 Election
 		tag = USA
 		has_country_flag = STANDARD_ELEC
 		date > 1936.11.2
+		not = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -864,7 +871,7 @@ country_event = { # The 1936 Election
 		add_popularity = { ideology = market_liberalist popularity = 0.17 }
 		add_popularity = { ideology = syndicalist popularity = 0.04 }
 		add_popularity = { ideology = national_populist popularity = 0.07 }
-		set_politics = { ruling_party = social_democratist elections_allowed = no }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
 		set_country_flag = ELECTIONS_1936
 	}	
 
@@ -916,6 +923,7 @@ country_event = { # CSA Contest Election Results!
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = syndicalist
+			has_country_flag = EVNT_150
 		}	
 	}
 
@@ -943,6 +951,7 @@ country_event = { # The America First contest the election
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = national_populist
+			has_country_flag = EVNT_150
 		}	
 	}
 
@@ -970,6 +979,7 @@ country_event = { # Hoover denounces Reed
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = syndicalist
+			has_country_flag = EVNT_150
 		}	
 	}
 
@@ -997,6 +1007,7 @@ country_event = { # Hoover denounces Long
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = national_populist
+			has_country_flag = EVNT_150
 		}	
 	}
 
@@ -1022,6 +1033,7 @@ country_event = { # Hoover supports Curtis or Garner
 	trigger = {
 		tag = USA
 		has_country_flag = ELECTIONS_1936
+		NOT = { has_country_flag = EVNT_150 }
 		AND = {
 			OR = {
 				NOT = {
@@ -1058,6 +1070,7 @@ country_event = { # Reed launches the New Years Day Strike
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = syndicalist
+			has_country_flag = EVNT_150
 		}
 		date > 1937.1.1	
 	}
@@ -1087,6 +1100,7 @@ country_event = { # Long launches the Southern Rally
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = national_populist
+			has_country_flag = EVNT_150
 		}
 		date > 1937.1.9	
 	}
@@ -1116,9 +1130,8 @@ country_event = { # Long Establishes the Minute Men
 		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = authoritarian_democratist
-		}
-		NOT = {
 			has_government = national_populist
+			has_country_flag = EVNT_150
 		}
 		date > 1936.11.11	
 	}
@@ -1150,7 +1163,8 @@ country_event = { # Longs New America
 	trigger = {
 		tag = USA
 		has_government = national_populist
-		date > 1937.1.20	
+		date > 1937.1.20
+		NOT = { has_country_flag = EVNT_150 }	
 	}
 
 	mean_time_to_happen = {
@@ -1176,6 +1190,7 @@ country_event = { # Establishing the minute men
 		tag = USA
 		has_government = national_populist
 		date > 1937.2.11
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1190,7 +1205,7 @@ country_event = { # Establishing the minute men
 	}		
 }
 
-country_event = { # Reed and the General Strike
+country_event = { # longs '37 reforms
 	id = ustates.38
 	title = ustates.38.t
 	desc = ustates.38.d
@@ -1202,6 +1217,7 @@ country_event = { # Reed and the General Strike
 		tag = USA
 		has_government = national_populist
 		date > 1937.2.23
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1264,6 +1280,7 @@ country_event = { # Long's Agricultural Reforms
 				has_country_flag = LONG_LIM_REF
 			}
 		}
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1311,6 +1328,7 @@ country_event = { # Tariff on imports
 				has_country_flag = LONG_MOD_REF
 			}
 		}
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1353,6 +1371,7 @@ country_event = { # Tariffs Cause Dissent through out the country
 		has_government = national_populist
 		date > 1937.5.2
 		has_country_flag = LONG_TARIFF
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1384,6 +1403,7 @@ country_event = { # Price riots
 				has_country_flag = LONG_TARIFF
 			}
 		}
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1418,6 +1438,7 @@ country_event = { # Coast to Coast Reforms
 			}
 		}
 		date > 1937.4.14
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1474,6 +1495,7 @@ country_event = { # The Coast to Coast Reforms agitate the Californians
 		NOT = { 
 			has_country_flag = LONG_NO_CONSTITUTION 
 			country_exists = CAL
+			has_country_flag = EVNT_150
 		}
 	}
 
@@ -1503,6 +1525,7 @@ country_event = { # Long responds to the Californians protests
 		NOT = {
 			has_country_flag = LONG_NO_CONSTITUTION
 			country_exists = CAL
+			has_country_flag = EVNT_150
 		}	
 		date > 1937.4.23
 	}
@@ -1560,6 +1583,7 @@ country_event = { # California's governor protests the Coast 2 Coast reform
 		has_government = national_populist
 		date > 1937.4.20
 		has_country_flag = LONG_CTC_SOME
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1588,6 +1612,7 @@ country_event = { # Long responds to the Californians protests
 		NOT = {
 			has_country_flag = LONG_NO_CONSTITUTION
 			country_exists = CAL
+			has_country_flag = EVNT_150
 		}	
 		date > 1937.4.23
 	}
@@ -1637,7 +1662,8 @@ country_event = { # Long's Aircraft Tax
 				has_country_flag = LONG_MOD_REF
 				has_country_flag = LONG_LIM_REF
 			}
-		}	
+		}
+		NOT = { has_country_flag = EVNT_150 }	
 		date > 1937.5.17
 	}
 
@@ -1679,7 +1705,8 @@ country_event = { # Reed launches General strike
 	trigger = {
 		tag = USA
 		has_government = national_populist
-		has_country_flag = PRICE_RIOTS	
+		has_country_flag = PRICE_RIOTS
+		NOT = { has_country_flag = EVNT_150 }	
 	}
 
 	mean_time_to_happen = {
@@ -1721,6 +1748,7 @@ country_event = { # Long and the trade union
 		tag = USA
 		has_government = national_populist
 		has_country_flag = PRICE_RIOTS	
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -1772,7 +1800,10 @@ country_event = { # Congress passes the bill
 		tag = USA
 		has_government = national_populist
 		has_country_flag = LONG_CON_CSA
-		NOT = { country_exists = CSA }	
+		NOT = { 
+			country_exists = CSA
+			has_country_flag = EVNT_150 
+		}	
 	}
 
 	mean_time_to_happen = {
@@ -1798,7 +1829,10 @@ country_event = { # Reed ignores the bill and rallies the CSA behind him
 		tag = USA
 		has_government = national_populist
 		has_country_flag = LONG_CON_CSA
-		NOT = { country_exists = CSA }		
+		NOT = {
+		 	country_exists = CSA 
+		 	has_country_flag = EVNT_150
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -1842,7 +1876,8 @@ country_event = { # Police clash with protestors and anarchist kill 2 AUS men
 		NOT = { 
 			country_exists = CSA
 			has_country_flag = LONG_CON_CSA
-			has_country_flag = LONG_NO_CONSTITUTION 
+			has_country_flag = LONG_NO_CONSTITUTION
+			has_country_flag = EVNT_150 
 		}		
 	}
 
@@ -1889,6 +1924,7 @@ country_event = { # Minute Men and the CSA clash across the North East
 		has_country_flag = LONG_CON_CSA
 		NOT = { 
 			country_exists = CSA 
+			has_country_flag = EVNT_150
 		}		
 	}
 
@@ -1921,6 +1957,7 @@ country_event = { # The Minute Men clash with Anarchists
 			country_exists = CSA 
 			has_country_flag = LONG_CON_CSA
 			has_country_flag = LONG_NO_CONSTITUTION
+			has_country_flag = EVNT_150
 		}		
 	}
 
@@ -1953,7 +1990,8 @@ country_event = { # Coast to Coast Reforms with no constitution
 		has_country_flag = LONG_AGG_REF
 		has_country_flag = LONG_NO_CONSTITUTION
 		NOT = { 
-			country_exists = CAL 
+			country_exists = CAL
+			has_country_flag = EVNT_150 
 		}		
 	}
 
@@ -1983,7 +2021,8 @@ country_event = { # The Coast to Coast Reforms agitate the Californians
 		has_country_flag = LONG_CTC_FULL
 		has_country_flag = LONG_NO_CONSTITUTION
 		NOT = { 
-			country_exists = CAL 
+			country_exists = CAL
+			has_country_flag = EVNT_150 
 		}
 		date > 1937.4.20		
 	}
@@ -2013,7 +2052,8 @@ country_event = { # Long responds to the Governor Californias protests / no cons
 		has_country_flag = LONG_CTC_FULL
 		has_country_flag = CAL_GOVERNOR_ARR
 		NOT = { 
-			country_exists = CAL 
+			country_exists = CAL
+			has_country_flag = EVNT_150 
 		}
 		date > 1937.4.22		
 	}
@@ -2045,7 +2085,8 @@ country_event = { # MacArthur Seizes Power
 		country_exists = CAL
 		has_war_with = CSA
 		has_war_with = CAL
-		date > 1937.4.22		
+		date > 1937.4.22
+		NOT = { has_country_flag = EVNT_150 }		
 	}
 
 	mean_time_to_happen = {
@@ -2077,6 +2118,7 @@ country_event = { # Inauguration of President Reed
 		has_government = syndicalist
 		has_country_flag = REED_PRESIDENT
 		date > 1937.1.20
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2147,7 +2189,8 @@ country_event = { # First step is to nationalize the industry
 	trigger = {
 		tag = USA
 		has_government = syndicalist
-		has_country_flag = EVNT_60	
+		has_country_flag = EVNT_60
+		NOT = { has_country_flag = EVNT_150 }	
 	}
 
 	mean_time_to_happen = {
@@ -2175,6 +2218,7 @@ country_event = { # Nationalising the resource industry
 		tag = USA
 		has_country_flag = EVNT_61
 		date > 1937.2.3
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2220,6 +2264,7 @@ country_event = { # California refuses to hand over oil industry
 		has_country_flag = REED_NAT_OIL
 		has_government = syndicalist
 		date > 1937.2.10
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2263,6 +2308,7 @@ country_event = { # The blockade is a failure
 		has_country_flag = EVNT_63
 		has_government = syndicalist
 		date > 1937.2.24
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2307,6 +2353,7 @@ country_event = { # Naval Blockade of California
 		has_country_flag = REED_CAL_NAVY
 		has_government = syndicalist
 		date > 1937.3.1
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2347,6 +2394,7 @@ country_event = { # America First goons attack CSA men
 	trigger = {
 		tag = USA
 		has_government = syndicalist
+		NOT = { has_country_flag = EVNT_150 }
 		date > 1937.1.23
 	}
 
@@ -2379,7 +2427,10 @@ country_event = { # Southern Trade Unions
 		has_country_flag = EVNT_66
 		has_government = syndicalist
 		date > 1937.2.13
-		NOT = { country_exists = TEX }
+		NOT = { 
+			country_exists = TEX
+			has_country_flag = EVNT_150 
+		}
 	}
 
 	mean_time_to_happen = {
@@ -2423,6 +2474,7 @@ country_event = { # Trade Union Financial support
 		tag = USA
 		has_country_flag = REED_TU_FIN
 		has_government = syndicalist
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2463,6 +2515,7 @@ country_event = { # Minute Men Clash with Mexicans
 		tag = USA
 		has_country_flag = REED_MEX_REV
 		has_government = syndicalist
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2515,6 +2568,7 @@ country_event = { # Army refuses to support Reed
 		tag = USA
 		has_country_flag = REED_ARMY_MM
 		has_government = syndicalist
+		NOT = { has_country_flag = EVNT_150 }
 	}
 
 	mean_time_to_happen = {
@@ -2543,3 +2597,2964 @@ country_event = { # Army refuses to support Reed
 		set_country_flag = REED_MEX_MM
 	}
 }
+
+country_event = { # Long denounces Reed as a tyrant
+	id = ustates.72
+	title = ustates.72.t
+	desc = ustates.72.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		has_country_flag = REED_ARMY_MM
+		date > 1937.3.1
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.72.a
+
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # MacArthur moves to take control
+	id = ustates.73
+	title = ustates.73.t
+	desc = ustates.73.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		has_country_flag = REED_DEPOSED
+		date > 1936.1.1
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.73.a
+
+		set_country_flag = ACW_junta
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Militia goes into to get rid of the Minute Men
+	id = ustates.74
+	title = ustates.74.t
+	desc = ustates.74.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		has_country_flag = REED_MIL_MM
+		date > 1936.3.1
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.74.a
+
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # Army refuses to support Reed
+	id = ustates.75
+	title = ustates.75.t
+	desc = ustates.75.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = REED_MIL
+		has_government = syndicalist
+		date > 1937.2.20
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.75.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = REED_ARMY_MAC
+	}	
+
+	option = { 
+		name = ustates.75.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = REED_REM_MIL
+	}
+}
+
+country_event = { # Army refuses to support Reed
+	id = ustates.76
+	title = ustates.76.t
+	desc = ustates.76.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = REED_ARMY_MAC
+		has_government = syndicalist
+		date > 1937.2.28
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.76.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = REED_DEPOSED
+	}	
+
+	option = { 
+		name = ustates.76.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = REED_REM_MIL
+	}
+}
+
+country_event = { # Reed removes his Militia
+	id = ustates.77
+	title = ustates.77.t
+	desc = ustates.77.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		has_country_flag = REED_REM_MIL
+		date > 1936.3.2
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.77.a
+
+		add_national_unity = -0.05
+	}	
+}
+
+country_event = { # Reed removes Mexicans
+	id = ustates.78
+	title = ustates.78.t
+	desc = ustates.78.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		has_country_flag = REED_MEX_MM
+		date > 1936.3.2
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.78.a
+
+		add_national_unity = -0.05
+	}	
+}
+
+country_event = { # Hughes shoots down propoganda blimp
+	id = ustates.79
+	title = ustates.79.t
+	desc = ustates.79.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = REED_NAT_NO_OIL
+		has_government = syndicalist
+		date > 1937.3.15
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.79.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = ACW_CAL
+	}	
+
+	option = { 
+		name = ustates.79.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_national_unity = -0.05
+	}
+}
+
+country_event = { # Long supports a coup against Reed
+	id = ustates.80
+	title = ustates.780.t
+	desc = ustates.80.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		date > 1937.3.15
+		NOT = {
+			has_country_flag = ACW_AUS
+			country_exists = TEX
+			has_country_flag = EVNT_150
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.80.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = ACW_AUS
+		set_country_flag = REED_DEPOSED
+	}	
+
+	option = { 
+		name = ustates.80.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = ACW_AUS
+	}
+
+	option = { 
+		name = ustates.80.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = REED_DEPOSED
+	}
+}
+
+#################################
+### Garners Presidency
+#################################
+
+country_event = { # Garners Inaugural Address
+	id = ustates.81
+	title = ustates.81.t
+	desc = ustates.81.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		date > 1937.1.20
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.81.a
+
+		add_national_unity = 0.01
+	}	
+}
+
+country_event = { # Garner responds
+	id = ustates.82
+	title = ustates.82.t
+	desc = ustates.82.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		date > 1937.1.24
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.82.a
+
+		ai_chance = {
+			factor = 44
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = GAR_FED_INV
+	}	
+
+	option = { 
+		name = ustates.82.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = GAR_LOC_LAW
+	}
+
+	option = { 
+		name = ustates.82.b
+
+		ai_chance = {
+			factor = 16
+		}
+
+		add_national_unity = -0.02
+		set_country_flag = GAR_NEG_REED
+	}
+}
+
+country_event = { # Federal Authority on the strike
+	id = ustates.83
+	title = ustates.83.t
+	desc = ustates.83.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_FED_INV
+		date > 1937.2.1
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.83.a
+
+		set_country_flag = GAR_LONG_WORK
+	}	
+}
+
+country_event = { # Workers Arrive
+	id = ustates.84
+	title = ustates.84.t
+	desc = ustates.84.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_LONG_WORK
+		date > 1937.2.14
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.84.a
+
+		ai_chance = {
+			factor = 22
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = FED_TROOP_AUS
+		clr_country_flag = GAR_LONG_WORK
+		add_ideas = garner_protect_workers_med
+	}	
+
+	option = { 
+		name = ustates.84.b
+
+		ai_chance = {
+			factor = 23
+		}
+
+		add_national_unity = -0.05
+		add_ideas = garner_protect_workers_low
+		set_country_flag = EVNT_84
+	}
+
+	option = { 
+		name = ustates.84.b
+
+		ai_chance = {
+			factor = 45
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = FED_TROOP_CSA
+		set_country_flag = GAR_LONG_WORK
+		add_ideas = garner_protect_workers_low
+	}
+}
+
+country_event = { # Federal Troops clash with America First thugs
+	id = ustates.85
+	title = ustates.85.t
+	desc = ustates.85.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = FED_TROOP_AUS
+		date > 1937.2.21
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.85.a
+
+		add_national_unity = -0.05
+	}	
+}
+
+country_event = { # America First workers strike as well
+	id = ustates.86
+	title = ustates.86.t
+	desc = ustates.86.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = FED_TROOP_AUS
+		date > 1937.2.28
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.86.a
+
+		ai_chance = {
+			factor = 66
+		}
+
+		add_national_unity = -0.02
+		set_country_flag = EVNT_86
+	}	
+
+	option = { 
+		name = ustates.86.b
+
+		ai_chance = {
+			factor = 34
+		}
+
+		add_national_unity = -0.05
+		clr_country_flag = FED_TROOP_AUS
+	}
+}
+
+country_event = { # Battle for Chicago
+	id = ustates.87
+	title = ustates.87.t
+	desc = ustates.87.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_86
+		NOT = {
+			has_country_flag = FED_TROOP_AUS
+			country_exists = CSA
+			country_exists = TEX
+			has_country_flag = EVNT_150
+		}
+		date > 1937.3.3
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.87.a
+
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_AUS
+		set_country_flag = EVNT_87
+	}	
+}
+
+country_event = { # The America First and CSA brawl in Chicago
+	id = ustates.88
+	title = ustates.88.t
+	desc = ustates.88.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_87
+		NOT = {
+			has_country_flag = FED_TROOP_AUS
+			has_country_flag = EVNT_150
+		}
+		date > 1937.3.3
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.88.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = EVNT_88
+	}	
+}
+
+country_event = { # The CSA breaks away
+	id = ustates.89
+	title = ustates.89.t
+	desc = ustates.89.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_88
+		country_exists = TEX
+		NOT = {
+			has_country_flag = FED_TROOP_AUS
+			has_country_flag = EVNT_150
+		}
+		date > 1937.3.7
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.89.a
+
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Federal Troops clash with CSA
+	id = ustates.90
+	title = ustates.90.t
+	desc = ustates.90.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = FED_TROOP_CSA
+		date > 1937.2.21
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.90.a
+
+		set_country_flag = ACW_CSA
+		add_national_unity = -0.02
+	}	
+}
+
+country_event = { # An anarchist takes a shot at the President
+	id = ustates.91
+	title = ustates.91.t
+	desc = ustates.91.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = FED_TROOP_AUS
+		date > 1937.2.25
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.91.a
+
+		ai_chance = {
+			factor = 34
+		}
+
+		add_national_unity = -0.02
+		set_country_flag = GAR_MM_CHI
+		set_country_flag = EVNT_91
+	}	
+
+	option = { 
+		name = ustates.91.b
+
+		ai_chance = {
+			factor = 66
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_91
+	}
+}
+
+country_event = { # Federal Troops and MM clash with CSA
+	id = ustates.92
+	title = ustates.92.t
+	desc = ustates.92.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_MM_CHI
+		has_country_flag = EVNT_91
+		date > 1937.2.21
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.92.a
+
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Federal Troops with CSA
+	id = ustates.93
+	title = ustates.93.t
+	desc = ustates.93.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_91
+		NOT = { 
+			has_country_flag = GAR_MM_CHI
+			has_country_flag = EVNT_150
+		}
+		date > 1937.3.3
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.93.a
+
+		set_country_flag = ACW_CSA
+		set_country_flag = EVNT_93
+	}	
+}
+
+country_event = { # Long offers the President Assistance in dealing with Reed
+	id = ustates.94
+	title = ustates.94.t
+	desc = ustates.94.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_93
+		has_war_with = CSA
+		date > 1937.2.25
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.94.a
+
+		ai_chance = {
+			factor = 34
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = GAR_MM_CHI
+	}	
+
+	option = { 
+		name = ustates.94.b
+
+		ai_chance = {
+			factor = 66
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = ACW_AUS
+	}
+}
+
+country_event = { # Federal Troops clash with CSA and AUS
+	id = ustates.95
+	title = ustates.95.t
+	desc = ustates.95.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_84
+		NOT = { 
+			has_country_flag = FED_TROOP_CSA 
+			has_country_flag = FED_TROOP_AUS
+			has_country_flag = EVNT_86
+			has_country_flag = EVNT_150
+		}
+		date > 1937.2.21
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.95.a
+
+		add_national_unity = -0.02
+		set_country_flag = EVNT_95
+	}	
+}
+
+country_event = { # Federal Troops clash with CSA and AUS
+	id = ustates.96
+	title = ustates.96.t
+	desc = ustates.96.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_95
+		date > 1937.2.25
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.96.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Local law enforcement is ineffective
+	id = ustates.97
+	title = ustates.97.t
+	desc = ustates.97.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_LOC_LAW
+		date > 1937.2.1
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.97.a
+
+		add_national_unity = -0.02
+		add_ideas = garner_enforcement_ineffective
+		set_country_flag = EVNT_97
+	}	
+}
+
+country_event = { # Governor of Missouri asks Long for help
+	id = ustates.98
+	title = ustates.98.t
+	desc = ustates.98.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_97
+		date > 1937.2.6
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.98.a
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_98
+	}	
+}
+
+country_event = { # Minute Men Arrive in St. Louis
+	id = ustates.99
+	title = ustates.99.t
+	desc = ustates.99.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_98
+		date > 1937.2.11
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.99.a
+
+		ai_chance = {
+			factor = 21
+		}
+
+		add_national_unity = -0.08
+		set_country_flag = GAR_MM_NO
+	}	
+
+	option = { 
+		name = ustates.99.b
+
+		ai_chance = {
+			factor = 79
+		}
+
+		add_national_unity = -0.03
+		add_ideas = long_supp_end_strike
+		set_country_flag = EVNT_99
+	}
+}
+
+country_event = { # Long refuses to remove the minute men
+	id = ustates.100
+	title = ustates.100.t
+	desc = ustates.100.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_MM_NO
+		date > 1937.2.14
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.100.a
+
+		ai_chance = {
+			factor = 89
+		}
+
+		add_national_unity = -0.02
+	}	
+
+	option = { 
+		name = ustates.100.b
+
+		ai_chance = {
+			factor = 11
+		}
+
+		add_national_unity = -0.05
+		clr_country_flag = GAR_MM_NO
+		set_country_flag = EVNT_100
+	}
+}
+
+country_event = { # President backs down from Long
+	id = ustates.101
+	title = ustates.101.t
+	desc = ustates.101.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_98
+		NOT = { 
+			has_country_flag = GAR_MM_NO
+			has_country_flag = EVNT_150 
+		}
+		date > 1937.2.18
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.101.a
+
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # President sends in the army to remove the minute men
+	id = ustates.102
+	title = ustates.102.t
+	desc = ustates.102.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_98
+		has_country_flag = GAR_MM_NO
+		date > 1937.2.20
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.102.a
+
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # Garner supports Long against the CSA
+	id = ustates.103
+	title = ustates.103.t
+	desc = ustates.103.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_98
+		NOT = {
+			has_country_flag = GAR_MM_NO
+			has_country_flag = EVNT_100
+			has_country_flag = EVNT_150
+		}	
+		date > 1937.2.17
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.103.a
+
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # Garner Sits down with Reed
+	id = ustates.104
+	title = ustates.104.t
+	desc = ustates.104.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_NEG_REED
+		date > 1937.1.29
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.104.a
+
+		ai_chance = {
+			factor = 21
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = GAR_REED_REF
+		add_ideas = garner_red_reforms
+	}	
+
+	option = { 
+		name = ustates.104.b
+
+		ai_chance = {
+			factor = 79
+		}
+
+		add_national_unity = -0.02
+		set_country_flag = GAR_CONT
+	}
+}
+
+country_event = { # America First Votes down the reforms
+	id = ustates.105
+	title = ustates.105.t
+	desc = ustates.105.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_REED_REF
+		date > 1937.2.10
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.105.a
+
+		ai_chance = {
+			factor = 66
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = EVNT_105
+	}	
+
+	option = { 
+		name = ustates.105.b
+
+		ai_chance = {
+			factor = 34
+		}
+
+		add_national_unity = -0.03
+		set_country_flag = GAR_BACK
+		clr_country_flag = GAR_REED_REF
+		add_ideas = garner_red_reforms_back_down
+	}
+}
+
+country_event = { # Garner Expells Long
+	id = ustates.106
+	title = ustates.106.t
+	desc = ustates.106.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_105
+		has_country_flag = GAR_REED_REF
+		date > 1937.2.14
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.106.a
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_106
+	}	
+}
+
+country_event = { # America First attack Reed
+	id = ustates.107
+	title = ustates.107.t
+	desc = ustates.107.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_REED_REF
+		has_country_flag = EVNT_106
+		date > 1937.2.20
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.107.a
+
+		ai_chance = {
+			factor = 33
+		}
+
+		add_national_unity = -0.05
+		clr_country_flag = GAR_REED_REF
+		set_country_flag = EVNT_107
+	}	
+
+	option = { 
+		name = ustates.107.b
+
+		ai_chance = {
+			factor = 67
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = EVNT_107
+	}
+}
+
+country_event = { # Martial Law causes great dissent
+	id = ustates.108
+	title = ustates.108.t
+	desc = ustates.108.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_107
+		has_country_flag = GAR_REED_REF
+		date > 1937.2.25
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.108.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_CAL
+	}	
+}
+
+country_event = { # We will weather the storm
+	id = ustates.109
+	title = ustates.109.t
+	desc = ustates.109.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		OR = {
+			has_country_flag = GAR_REED_REF
+			has_country_flag = GAR_BACK
+		}
+		OR = {
+			has_country_flag = EVNT_107
+			has_country_flag = EVNT_112
+		}
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.3.1
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.109.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Garner backs down from reforms.
+	id = ustates.110
+	title = ustates.110.t
+	desc = ustates.110.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_BACK
+		NOT = { 
+			has_country_flag = GAR_REED_REF 
+			has_country_flag = EVNT_150
+		}
+		date > 1937.2.14
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.110.a
+
+		ai_chance = {
+			factor = 49
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_110
+	}	
+
+	option = { 
+		name = ustates.110.b
+
+		ai_chance = {
+			factor = 51
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = GAR_BACK2
+		clr_country_flag = GAR_BACK
+	}
+}
+
+country_event = { # Long is expelled.
+	id = ustates.111
+	title = ustates.111.t
+	desc = ustates.111.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_BACK
+		has_country_flag = EVNT_110
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.21
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.111.a
+
+		set_country_flag = EVNT_111
+	}	
+}
+
+country_event = { # America First attack Reed
+	id = ustates.112
+	title = ustates.112.t
+	desc = ustates.112.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_BACK
+		has_country_flag = EVNT_111
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.20
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.112.a
+
+		ai_chance = {
+			factor = 33
+		}
+
+		add_national_unity = -0.05
+		clr_country_flag = GAR_BACK
+		set_country_flag = EVNT_112
+	}	
+
+	option = { 
+		name = ustates.112.b
+
+		ai_chance = {
+			factor = 67
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = EVNT_112
+	}
+}
+
+country_event = { # Long protests the continuing negotiations
+	id = ustates.113
+	title = ustates.113.t
+	desc = ustates.113.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_CONT
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.3
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.113.a
+
+		add_national_unity = -0.01
+		set_country_flag = EVNT_113
+	}	
+}
+
+country_event = { # The White House Riot
+	id = ustates.114
+	title = ustates.114.t
+	desc = ustates.114.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_113
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.11
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.114.a
+
+		add_national_unity = -0.05
+		set_country_flag = AUS_WASH_OUT
+	}	
+}
+
+country_event = { # Man takes a shot at Long
+	id = ustates.115
+	title = ustates.115.t
+	desc = ustates.115.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = AUS_WASH_OUT
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.14
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.115.a
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_115
+	}	
+}
+
+country_event = { # Mobs turn on the CSA
+	id = ustates.116
+	title = ustates.116.t
+	desc = ustates.116.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_115
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.19
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.116.a
+
+		ai_chance = {
+			factor = 85
+		}
+
+		country_event = ustates.117
+	}	
+
+	option = { 
+		name = ustates.116.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_116
+	}
+}
+
+country_event = { # Martial Law causes great dissent
+	id = ustates.117
+	title = ustates.117.t
+	desc = ustates.117.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.117.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_CAL
+		set_country_flag = EVNT_117
+	}	
+}
+
+country_event = { # Reed refuses
+	id = ustates.118
+	title = ustates.118.t
+	desc = ustates.118.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = GAR_BACK2
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.18
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.118.a
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_118
+	}	
+}
+
+country_event = { # Martial Law in the North
+	id = ustates.119
+	title = ustates.119.t
+	desc = ustates.119.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_118
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.25
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.119.a
+
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # The Government Collapses and MacArthur Takes Command of the Government
+	id = ustates.70
+	title = ustates.70.t
+	desc = ustates.70.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = market_liberalist
+		has_country_flag = EVNT_116
+		NOT = { has_country_flag = EVNT_117 }
+		date > 1937.2.28
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.119.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_CAL
+		set_country_flag = ACW_JUNTA
+	}	
+}
+
+####################################################################
+#### Curtis' Presidency
+####################################################################
+
+country_event = { # Curtis' Inaugural Address
+	id = ustates.120
+	title = ustates.120.t
+	desc = ustates.120.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.1.20
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.120.a
+
+		set_country_flag = EVNT_120
+		add_national_unity = 0.02
+	}	
+}
+
+country_event = { # Curtis deals with Reed's strike
+	id = ustates.121
+	title = ustates.121.t
+	desc = ustates.121.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_120
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.1.28
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.121.a
+
+		ai_chance = {
+			factor = 92
+		}
+
+		set_country_flag = CURT_REED_NEG
+		add_national_unity = 0.01
+	}	
+
+	option = { 
+		name = ustates.121.b
+
+		ai_chance = {
+			factor = 8
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_121
+	}
+}
+
+country_event = { # Curtis and Reed sit down in Chicago
+	id = ustates.122
+	title = ustates.122.t
+	desc = ustates.122.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = CURT_REED_NEG
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.122.a
+
+		set_country_flag = EVNT_122
+		add_national_unity = 0.01
+	}	
+}
+
+country_event = { # Long Demands to be involved in the negotiations
+	id = ustates.123
+	title = ustates.123.t
+	desc = ustates.123.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_122
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.3
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.123.a
+
+		ai_chance = {
+			factor = 34
+		}
+
+		set_country_flag = CURT_REED_LONG
+		add_national_unity = -0.05
+	}	
+
+	option = { 
+		name = ustates.123.b
+
+		ai_chance = {
+			factor = 66
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_123
+	}
+}
+
+country_event = { # Reed puts forward his demands
+	id = ustates.124
+	title = ustates.124.t
+	desc = ustates.124.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_122
+		NOT = { 
+			has_country_flag = CURT_REED_LONG
+			has_country_flag = EVNT_150 
+		}
+		date > 1937.2.6
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = { 
+		name = ustates.124.a
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_country_flag = CURT_REED_YES
+		add_national_unity = -0.05
+		add_ideas = curt_reed_yes
+		add_opinion_modifier = { target = FRA modifier = curt_red_yes_FRA_ENG }
+		add_opinion_modifier = { target = ENG modifier = curt_red_yes_FRA_ENG }
+		add_opinion_modifier = { target = MEX modifier = curt_red_yes_MEX }
+		add_opinion_modifier = { target = CAN modifier = curt_red_yes_CAN }
+		add_popularity = { ideology = syndicalist popularity = 0.1 }		
+	}	
+
+	option = { 
+		name = ustates.124.b
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = EVNT_123
+		add_ideas = curt_reed_some
+		add_opinion_modifier = { target = FRA modifier = curt_red_some_FRA_ENG }
+		add_opinion_modifier = { target = ENG modifier = curt_red_some_FRA_ENG }
+		add_opinion_modifier = { target = MEX modifier = curt_red_some_MEX }
+		add_opinion_modifier = { target = CAN modifier = curt_red_some_CAN }
+		add_popularity = { ideology = syndicalist popularity = 0.05 }		
+	}
+}
+
+country_event = { # Long denounces Curtis as a traitor to the American people
+	id = ustates.125
+	title = ustates.125.t
+	desc = ustates.125.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = CURT_REED_YES
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.10
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.125.a
+
+		set_country_flag = ACW_AUS
+		set_country_flag = EVNT_125
+	}	
+}
+
+country_event = { # California joins Long and seperates
+	id = ustates.126
+	title = ustates.126.t
+	desc = ustates.126.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_125
+		has_country_flag = CURT_REED_YES
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.10
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.126.a
+
+		set_country_flag = ACW_CAL
+	}	
+}
+
+country_event = { # Long protests the reforms
+	id = ustates.127
+	title = ustates.127.t
+	desc = ustates.127.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_123
+		NOT = {
+			has_country_flag = CURT_REED_YES
+			has_country_flag = CURT_REED_NO
+			has_country_flag = EVNT_150
+		}	
+		date > 1937.2.10
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.127.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		set_country_flag = CURT_LONG_CAB
+		add_national_unity = -0.02		
+	}	
+
+	option = { 
+		name = ustates.127.b
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_national_unity = -0.05
+		country_event = ustates.147
+		set_country_flag = EVNT_127
+	}	
+}
+
+country_event = { # By adding Long to the Cabinet Reed is calling
+	id = ustates.128
+	title = ustates.128.t
+	desc = ustates.128.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = CURT_LONG_CAB
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.17
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.128.a
+
+		ai_chance = {
+			factor = 55
+		}
+
+		set_country_flag = ACW_AUS
+		add_national_unity = -0.01	
+	}	
+
+	option = { 
+		name = ustates.128.b
+
+		ai_chance = {
+			factor = 45
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # Long does not accept the assurances
+	id = ustates.129
+	title = ustates.129.t
+	desc = ustates.129.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_127
+		NOT = {
+		 	has_country_flag = CURT_LONG_CAB
+		 	has_country_flag = EVNT_148 
+		 	has_country_flag = EVNT_149
+		 	has_country_flag = EVNT_150 
+		}
+		date > 1937.2.17
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.129.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		set_country_flag = ACW_AUS
+		add_national_unity = -0.01
+		add_popularity = { ideology = syndicalist popularity = 0.05 }	
+	}	
+
+	option = { 
+		name = ustates.129.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = ACW_CSA
+		add_popularity = { ideology = syndicalist popularity = -0.15 }
+	}	
+}
+
+country_event = { # The general strike spreads
+	id = ustates.130
+	title = ustates.130.t
+	desc = ustates.130.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_121
+		NOT = { 
+			has_country_flag = CURT_REED_NEG 
+			has_country_flag = EVNT_150
+		}
+		date > 1937.2.5
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.130.a
+
+		set_country_flag = EVNT_130
+		add_national_unity = -0.05
+		add_ideas = curt_reed_general_strike
+	}	
+}
+
+country_event = { # The Great St. Louis Riot
+	id = ustates.131
+	title = ustates.131.t
+	desc = ustates.131.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_130
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.15
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.131.a
+
+		ai_chance = {
+			factor = 62
+		}
+
+		set_country_flag = CURT_NAT_GUARD
+		add_national_unity = 0.01
+		add_popularity = { ideology = syndicalist popularity = 0.05 }	
+	}	
+
+	option = { 
+		name = ustates.131.b
+
+		ai_chance = {
+			factor = 38
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_131
+		add_popularity = { ideology = syndicalist popularity = -0.05 }
+	}	
+}
+
+country_event = { # The Great St. Louis Riot
+	id = ustates.132
+	title = ustates.132.t
+	desc = ustates.132.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = CURT_NAT_GUARD
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.21
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.132.a
+
+		ai_chance = {
+			factor = 85
+		}
+
+		add_national_unity = 0.01	
+	}	
+
+	option = { 
+		name = ustates.132.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_national_unity = -0.05
+		set_country_flag = EVNT_131
+		clr_country_flag = CURT_NAT_GUARD
+	}	
+}
+
+country_event = { # The Great St. Louis Riot 2
+	id = ustates.133
+	title = ustates.133.t
+	desc = ustates.133.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_131
+		NOT = { 
+			has_country_flag = CURT_NAT_GUARD
+			has_country_flag = EVNT_150 
+		}
+		date > 1937.2.21
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.133.a
+
+		ai_chance = {
+			factor = 85
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = EVNT_133	
+	}	
+
+	option = { 
+		name = ustates.133.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_national_unity = -0.05
+		clr_country_flag = CURT_NAT_GUARD
+	}	
+}
+
+country_event = { # The St Louis riots no troops
+	id = ustates.134
+	title = ustates.134.t
+	desc = ustates.134.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_131
+		NOT = { 
+			has_country_flag = CURT_NAT_GUARD
+			has_country_flag = EVNT_150 
+		}
+		date > 1937.3.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.134.a
+
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # The St Louis riots no troops
+	id = ustates.135
+	title = ustates.135.t
+	desc = ustates.135.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_133
+		has_country_flag = CURT_NAT_GUARD
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.3.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.135.a
+
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # Long and Reed argue
+	id = ustates.136
+	title = ustates.136.t
+	desc = ustates.136.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = CURT_REED_LONG
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.10
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.136.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = CURT_REM_LONG	
+	}	
+
+	option = { 
+		name = ustates.136.b
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_national_unity = -0.5
+		set_country_flag = EVNT_136
+	}	
+}
+
+country_event = { # Long is physically removed from the meeting
+	id = ustates.137
+	title = ustates.137.t
+	desc = ustates.137.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_133
+		has_country_flag = CURT_REM_LONG
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.14
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.137.a
+
+		add_national_unity = -0.05
+	}	
+}
+
+country_event = { # America First and CSA clash in Chicago
+	id = ustates.138
+	title = ustates.138.t
+	desc = ustates.138.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_133
+		has_country_flag = CURT_REM_LONG
+		NOT = { has_country_flag = EVNT_150 }
+		date > 1937.2.21
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.138.a
+
+		set_country_flag = ACW_CSA
+		set_country_flag = ACW_AUS
+	}	
+}
+
+country_event = { # Reed walks out on the meeting
+	id = ustates.139
+	title = ustates.139.t
+	desc = ustates.139.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		has_country_flag = EVNT_136
+		NOT = { 
+			has_country_flag = CURT_REM_REED
+			has_country_flag = EVNT_150
+		}
+		date > 1937.2.10
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.139.a
+
+		set_country_flag = ACW_CSA
+	}	
+}
+
+#################################################################
+### Dissent rise and fall events
+#################################################################
+
+country_event = { # Valentine's Day Explosion
+	id = ustates.140
+	title = ustates.140.t
+	desc = ustates.140.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		NOT = { 
+			has_country_flag = END_ACW 
+			has_national_unity < 80
+			has_war = yes
+		}
+		date > 1937.2.14
+		
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.140.a
+
+		add_national_unity = -0.1
+	}	
+}
+
+country_event = { # International Support for CSA
+	id = ustates.141
+	title = ustates.141.t
+	desc = ustates.141.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CSA
+		NOT = { 
+			has_country_flag = END_ACW 
+		}
+		has_war = yes	
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.141.a
+
+		add_national_unity = 0.05
+	}	
+}
+
+country_event = { # International Support for CSA
+	id = ustates.142
+	title = ustates.142.t
+	desc = ustates.142.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = TEX
+		NOT = { 
+			has_country_flag = END_ACW 
+		}
+		has_war = yes
+		has_national_unity < 75	
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.142.a
+
+		add_national_unity = 0.05
+	}	
+}
+
+country_event = { # The Hughes Airshow
+	id = ustates.143
+	title = ustates.143.t
+	desc = ustates.143.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAL
+		NOT = { 
+			has_country_flag = END_ACW 
+		}
+		has_war = yes
+		has_national_unity < 75	
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.143.a
+
+		add_national_unity = 0.05
+	}	
+}
+
+country_event = { # July 4th '37
+	id = ustates.144
+	title = ustates.144.t
+	desc = ustates.144.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_war = yes
+		date > 1937.7.3
+		NOT = { date < 1937.7.5}
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.144.a
+
+		add_national_unity = 0.05
+	}	
+}
+
+###################################################################
+### Overtthrow Events
+###################################################################
+
+country_event = { # MacArthur overthrows Reed while Reed is at war/ Washington Falls
+	id = ustates.145
+	title = ustates.145.t
+	desc = ustates.145.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		OR = {
+			country_exists = TEX
+			country_exists = CAL
+		}
+		USA = { controls_state = 361 }
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.145.a
+
+		set_country_flag = ACW_junta
+		set_country_flag = ACW_CSA
+	}	
+}
+
+country_event = { # MacArthur overthrows Reed while Reed is at war/ Washington Falls
+	id = ustates.146
+	title = ustates.146.t
+	desc = ustates.146.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = national_populist
+		OR = {
+			country_exists = CSA
+			country_exists = CAL
+		}
+		USA = { controls_state = 361 }
+		NOT = { has_country_flag = EVNT_150 }
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.146.a
+
+		set_country_flag = ACW_junta
+		set_country_flag = ACW_AUS
+	}	
+}
+
+###################################################################
+### Avoid Civil War Events
+###################################################################
+
+country_event = { # MacArthur proposes assassination of Long.
+	id = ustates.147
+	title = ustates.147.t
+	desc = ustates.147.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.147.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = -0.01
+	}	
+
+	option = { 
+		name = ustates.147.b
+
+		ai_chance = {
+			factor = 75
+		}
+
+		country_event = ustates.148
+	}	
+}
+
+country_event = { # Assassination attempt on Huey Long!
+	id = ustates.148
+	title = ustates.148.t
+	desc = ustates.148.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.148.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		set_country_flag = ACW_AUS
+		set_country_flag = EVNT_148
+	}	
+
+	option = { 
+		name = ustates.148.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		country_event = ustates.149
+	}	
+}
+
+country_event = { # Huey Long is dead!
+	id = ustates.149
+	title = ustates.149.t
+	desc = ustates.149.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.149.a
+
+		add_national_unity = -0.15
+		set_country_flag = EVNT_149
+		# kill_country_leader = Long
+	}	
+}
+
+country_event = { # Peace at last!
+	id = ustates.150
+	title = ustates.150.t
+	desc = ustates.150.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = EVNT_150
+		USA = { 
+			controls_state = 371
+			controls_state = 370
+			controls_state = 366
+			controls_state = 368
+			controls_state = 363
+			controls_state = 364
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.150.a
+
+		add_national_unity = 0.4
+		set_country_flag = END_ACW
+		set_country_flag = EVNT_150
+		add_ideas = avoid_acw
+	}	
+}
+
+country_event = { # Jack Reed's Death
+	id = ustates.151
+	title = ustates.151.t
+	desc = ustates.151.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		NOT = { 
+			has_country_flag = EVNT_ # Reed and the CSA escape to France
+			has_country_flag = ACW_CSA
+		}
+		date > 1943.3.24
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.151.a
+
+		# kill_country_leader = Reed
+		add_national_unity = -0.02
+	}	
+}
+
+country_event = { # The Independence of the Phillippines
+	id = ustates.152
+	title = ustates.152.t
+	desc = ustates.152.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PHI
+		has_war = no
+		is_puppet_of = USA
+		date > 1943.3.24
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.152.a
+
+		USA = { country_event = ustates.158 }
+	}	
+}
+
+country_event = { # The Combined Syndicates abandon Presidential politics.
+	id = ustates.153
+	title = ustates.153.t
+	desc = ustates.153.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = EVNT_ # 800171
+		date > 1941.2.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.153.a
+
+		set_country_flag = EVNT_153
+	}	
+}
+
+country_event = { # Lindbergh and his family leave for Canada.
+	id = ustates.154
+	title = ustates.154.t
+	desc = ustates.154.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		CAN = { NOT = { has_war_with = ENG } }
+		# has_country_flag = # 800171
+		date > 1937.4.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.154.a
+
+		release_puppet = PHI
+	}	
+}
+
+country_event = { # Economic Recovery
+	id = ustates.155
+	title = ustates.155.t
+	desc = ustates.155.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = END_ACW
+		# has_country_flag = # 800171
+		date > 1937.10.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.155.a
+
+		add_national_unity = 0.05
+		set_country_flag = EVNT_155
+		add_ideas = economic_recovery
+	}	
+}
+
+country_event = { # Further Economic Recovery
+	id = ustates.156
+	title = ustates.156.t
+	desc = ustates.156.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = END_ACW
+		# has_country_flag = # 800171
+		has_country_flag = EVNT_155
+		date > 1937.10.1
+	}
+
+	mean_time_to_happen = {
+		days = 30    
+	}
+
+	option = { 
+		name = ustates.156.a
+
+		add_national_unity = 0.05
+		add_ideas = futher_economic_recovery
+	}	
+}
+
+country_event = { # The Independence of the Phillippines
+	id = ustates.158
+	title = ustates.158.t
+	desc = ustates.158.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.158.a
+
+		end_puppet = PHI
+	}	
+}
+

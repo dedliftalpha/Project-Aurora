@@ -94,27 +94,27 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 				type = civil_war 
 			}
 
-			if = {
-				limit = {
-					TEX = { exists = yes}
-				}
+			#if = {
+				#limit = {
+					#TEX = { exists = yes}
+				#}
 
-				declare_war_on = {
-				target = TEX
-				type = civil_war
-				}
-			}
+				#declare_war_on = {
+				#target = TEX
+				#type = civil_war
+				#}
+			#}
 
-			if = {
-				limit = {
-					CAL = { exists = yes}
-				}
+			#if = {
+				#limit = {
+					#CAL = { exists = yes}
+				#}
 
-				declare_war_on = {
-				target = CAL
-				type = civil_war
-				}
-			}
+				#declare_war_on = {
+				#target = CAL
+				#type = civil_war
+				#}
+			#}
 
 			country_event = { id = amcivwar.2 days = 1 }
 		}
@@ -189,33 +189,6 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 			add_state_core = 359
 			add_state_core = 358
 			add_state_core = 357
-
-			declare_war_on = {
-				target = USA
-				type = civil_war 
-			}
-
-			if = {
-				limit = {
-					TEX = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = TEX
-				type = civil_war
-				}
-			}
-
-			if = {
-				limit = {
-					CAL = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CAL
-				type = civil_war
-				}
-			}
 
 			change_tag_from = USA
 		}
@@ -306,34 +279,9 @@ country_event = { # Long launches major protests in the South
 			add_state_core = 358
 			add_state_core = 357
 
-			declare_war_on = {
-				target = USA
-				type = civil_war
-			}
-
-			if = {
-				limit = {
-					CSA = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CSA
-				type = civil_war
-				}
-			}
-
-			if = {
-				limit = {
-					CAL = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CAL
-				type = civil_war
-				}
-			}
-
 			USA = { country_event = { id = amcivwar.3 days = 10 }}
+
+			TEX = { country_event = { id = amcivwar.9 days = 2 }}
 		}
 
 		add_national_unity = -0.1
@@ -401,36 +349,11 @@ country_event = { # Long launches major protests in the South
 			add_state_core = 358
 			add_state_core = 357
 
-			declare_war_on = {
-				target = USA
-				type = civil_war
-			}
-
-			if = {
-				limit = {
-					CSA = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CSA
-				type = civil_war
-				}
-			}
-
-			if = {
-				limit = {
-					CAL = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CAL
-				type = civil_war
-				}
-			}
-
 			change_tag_from = USA
 
 			USA = { country_event = { id = amcivwar.3 days = 10 }}
+
+			TEX = { country_event = { id = amcivwar.9 days = 2 }}
 		}
 
 		add_national_unity = -0.1
@@ -492,33 +415,6 @@ country_event = { # California leaves the Union
 			add_state_core = 385
 			add_state_core = 378
 
-			declare_war_on = {
-				target = USA
-				type = civil_war
-			}
-
-			if = {
-				limit = {
-					CSA = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CSA
-				type = civil_war
-				}
-			}
-
-			if = {
-				limit = {
-					TEX = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = TEX
-				type = civil_war
-				}
-			}
-
 			add_national_unity = -0.1
 			add_manpower = -350000
 		}
@@ -536,33 +432,6 @@ country_event = { # California leaves the Union
 			add_state_core = 386
 			add_state_core = 385
 			add_state_core = 378
-
-			declare_war_on = {
-				target = USA
-				type = civil_war
-			}
-
-			if = {
-				limit = {
-					CSA = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = CSA
-				type = civil_war
-				}
-			}
-
-			if = {
-				limit = {
-					TEX = { exists = yes}
-				}
-
-				declare_war_on = {
-				target = TEX
-				type = civil_war
-				}
-			}
 
 			change_tag_from = USA
 		}
@@ -637,6 +506,75 @@ country_event = { # States Jump to the CAL/Idah6
 	}
 }
 
+country_event = { # USA Junta under MacArthur
+	id = amcivwar.7
+	title = amcivwar.7.t
+	desc = amcivwar.7.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_country_flag = ACW_JUNTA
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = amcivwar.7.a
+
+		add_popularity = { ideology = authoritarian_democratist popularity = 0.4 }
+		set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+		set_capital = 382
+	}
+}
+
+country_event = { # Rise of the AUS Military
+	id = amcivwar.9
+	title = amcivwar.9.t
+	desc = amcivwar.9.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = TEX
+		has_country_flag = LONG_PRES	
+		has_country_flag = ACW_AUS
+	}	
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = amcivwar.9.a
+
+		clr_country_flag = LONG_PRES
+		TEX = { country_event = { id = amcivwar.9 days = 2 }}
+		TEX = { transfer_state = 361 }
+	}
+}
+
+country_event = { # Rise of the AUS Military
+	id = amcivwar.9
+	title = amcivwar.9.t
+	desc = amcivwar.9.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	os_triggered_only = yes
+	
+	option = {
+		name = amcivwar.9.a
+
+		load_oob = ACW_AUS_WASH
+	}
+}
+
 country_event = { # Canadian Defense Scheme
 	id = amcivwar.10
 	title = amcivwar.10.t
@@ -667,7 +605,7 @@ country_event = { # Canadian Defense Scheme
 		}
 
 		add_opinion_modifier = { target = USA modifier = occupied_new_england }
-		country_event = { id = amcivwar.11 days = 1 }
+		USA = { country_event = { id = amcivwar.11 days = 1 }}
 		add_state_claim = 357	
 
 
@@ -680,12 +618,7 @@ country_event = { # Canadian Defense Scheme
 			factor = 1
 		}
 
-		declare_war_on = {
-
-			target = CSA 
-			type = annex_everything	
-		}
-
+		declare_war_on = { target = CSA type = annex_everything	}
 		add_national_unity = -0.05	
 	}
 
@@ -762,7 +695,7 @@ country_event = { # Canada seizes Alaska
 
 		add_opinion_modifier = { target = USA modifier = occupied_alaska_CAN }
 		add_state_claim = 463
-		country_event = { id = amcivwar.13 days = 1 }	
+		USA = { country_event = { id = amcivwar.13 days = 1 }}	
 	}
 
 	option = { 
@@ -909,4 +842,627 @@ country_event = {
 
 		CAN = { transfer_state = 685 }	
 	}
+}
+
+###################### WAR EVENTS
+
+country_event = { # California has a chance to declare war.
+	id = amcivwar.18
+	title = amcivwar.18.t
+	desc = amcivwar.18.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAL
+		country_exists = USA
+		NOT = {
+			is_puppet_of = USA
+			has_war_with = USA
+			has_war_together_with = USA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.18.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		declare_war_on = { target = USA type = civil_war_focus }
+	}
+
+	option = { 
+		name = amcivwar.18.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = amcivwar.18	
+	}		
+}
+
+country_event = { # California chooses to declare war on USA a second time
+	id = amcivwar.19
+	title = amcivwar.19.t
+	desc = amcivwar.19.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAL
+		country_exists = USA
+		NOT = {
+			is_puppet_of = USA
+			has_war_with = USA
+			has_war_together_with = USA
+			has_country_flag = CURT_CON_CAL
+			has_country_flag = amcivwar.
+		}
+		OR = {
+			USA = { 
+				has_war_with = CSA
+				has_war_with = TEX
+			}	
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.19.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		declare_war_on = { target = USA type = civil_war_focus }
+	}
+
+	option = { 
+		name = amcivwar.19.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # AUS vs USA
+	id = amcivwar.20
+	title = amcivwar.20.t
+	desc = amcivwar.20.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = TEX
+		country_exists = USA
+		NOT = {
+			has_war_with = USA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.20.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = USA type = civil_war_focus }
+	}
+
+	option = { 
+		name = amcivwar.20.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # Reed will fight for his future
+	id = amcivwar.21
+	title = amcivwar.21.t
+	desc = amcivwar.21.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CSA
+		country_exists = USA
+		NOT = {
+			has_war_with = USA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.21.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = USA type = civil_war_focus }
+		add_national_unity = 0.05
+	}
+
+	option = { 
+		name = amcivwar.21.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # President Curtis vs AUS
+	id = amcivwar.22
+	title = amcivwar.22.t
+	desc = amcivwar.22.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = TEX
+		has_government = social_liberalist
+		NOT = {
+			has_war_with = TEX
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.22.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = TEX type = civil_war_focus }
+		add_national_unity = 0.05
+	}
+
+	option = { 
+		name = amcivwar.22.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # CSA vs AUS
+	id = amcivwar.23
+	title = amcivwar.23.t
+	desc = amcivwar.23.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CSA
+		country_exists = TEX
+		NOT = {
+			has_war_with = TEX
+			has_country_flag = amcivwar.24
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.23.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = TEX type = civil_war_focus }
+		set_country_flag = amcivwar.23
+	}
+
+	option = { 
+		name = amcivwar.23.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = amcivwar.23
+	}		
+}
+
+country_event = { # AUS vs CSA
+	id = amcivwar.24
+	title = amcivwaar.24.t
+	desc = amcivwar.24.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = TEX
+		country_exists = CSA
+		NOT = {
+			has_war_with = CSA
+			has_country_flag = amcivwar.23
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.24.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = TEX type = civil_war_focus }
+		set_country_flag = amcivwar.24
+	}
+
+	option = { 
+		name = amcivwar.24.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+		set_country_flag = amcivwar.24
+	}		
+}
+
+country_event = { # President Curtis vs CAL
+	id = amcivwar.25
+	title = amcivwar.25.t
+	desc = amcivwar.25.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = CAL
+		has_government = social_liberalist
+		NOT = {
+			has_war_with = CAL
+			USA = { is_puppet = yes }
+			CAL = { is_puppet = yes }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.25.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = CAL type = civil_war_focus }
+	}
+
+	option = { 
+		name = amcivwar.25.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # President Curtis vs CAL
+	id = amcivwar.26
+	title = amcivwar.26.t
+	desc = amcivwar.26.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = CAL
+		has_government = market_liberalist
+		NOT = {
+			has_war_with = CAL
+			USA = { is_puppet = yes }
+			CAL = { is_puppet = yes }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.26.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = CAL type = civil_war_focus }
+		add_national_unity = 0.1
+	}
+
+	option = { 
+		name = amcivwar.26.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # MacArhtur vs CSA
+	id = amcivwar.27
+	title = amcivwar.27.t
+	desc = amcivwar.27.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = CAL
+		has_government = authoritarian_democratist
+		NOT = {
+			has_war_with = CAL
+			USA = { is_puppet = yes }
+			CAL = { is_puppet = yes }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.27.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = CAL type = civil_war_focus }
+		add_national_unity = 0.1
+	}
+
+	option = { 
+		name = amcivwar.27.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # MacArhtur vs AUS
+	id = amcivwar.28
+	title = amcivwar.28.t
+	desc = amcivwar.28.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = TEX
+		has_government = authoritarian_democratist
+		NOT = {
+			has_war_with = TEX
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.28.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		declare_war_on = { target = TEX type = civil_war_focus }
+		add_national_unity = 0.1
+	}
+
+	option = { 
+		name = amcivwar.28.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+country_event = { # AUS hits the road
+	id = amcivwar.29
+	title = amcivwar.29.t
+	desc = amcivwar.29.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			country_exists = CSA
+			country_exists = CAL
+		}		
+		NOT = {
+			has_government = national_populist
+			has_country_flag = ACW_AUS
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.29.a
+
+		set_country_flag = ACW_AUS 
+	}		
+}
+
+country_event = { # Combined Syndicates of America Leave
+	id = amcivwar.30
+	title = amcivwar.30.t
+	desc = amcivwar.30.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			country_exists = TEX
+			country_exists = CAL
+		}		
+		NOT = {
+			has_government = syndicalist
+			has_country_flag = ACW_CSA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.30.a
+
+		set_country_flag = ACW_CSA
+	}		
+}
+
+country_event = { # AUS hits the road
+	id = amcivwar.31
+	title = amcivwar.31.t
+	desc = amcivwar.31.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			country_exists = TEX
+			country_exists = CSA
+		}		
+		NOT = {
+			has_country_flag = ACW_CAL
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.31.a
+
+		set_country_flag = ACW_CAL
+	}		
+}
+
+country_event = { # If Reed is president elect
+	id = amcivwar.32
+	title = amcivwar.32.t
+	desc = amcivwar.32.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		country_exists = CSA
+		has_country_flag = REED_PRES	
+		has_country_flag = ACW_CSA
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.32.a
+
+		clr_country_flag = REED_PRES
+		CSA = { country_event = { id = amcivwar.33 days = 2 }}
+		CSA = { transfer_state = 361 }
+	}		
+}
+
+country_event = { # If Reed is president elect
+	id = amcivwar.33
+	title = amcivwar.33.t
+	desc = amcivwar.33.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.33.a
+
+		load_oob = ACW_CSA_WASH
+	}		
 }

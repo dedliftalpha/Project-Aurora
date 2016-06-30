@@ -533,9 +533,9 @@ country_event = { # USA Junta under MacArthur
 }
 
 country_event = { # Rise of the AUS Military
-	id = amcivwar.9
-	title = amcivwar.9.t
-	desc = amcivwar.9.d
+	id = amcivwar.8
+	title = amcivwar.8.t
+	desc = amcivwar.8.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	fire_only_once = yes
@@ -552,7 +552,7 @@ country_event = { # Rise of the AUS Military
 	}
 	
 	option = {
-		name = amcivwar.9.a
+		name = amcivwar.8.a
 
 		clr_country_flag = LONG_PRES
 		TEX = { country_event = { id = amcivwar.9 days = 2 }}
@@ -566,7 +566,7 @@ country_event = { # Rise of the AUS Military
 	desc = amcivwar.9.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	os_triggered_only = yes
+	is_triggered_only = yes
 	
 	option = {
 		name = amcivwar.9.a
@@ -606,6 +606,8 @@ country_event = { # Canadian Defense Scheme
 
 		add_opinion_modifier = { target = USA modifier = occupied_new_england }
 		USA = { country_event = { id = amcivwar.11 days = 1 }}
+		CSA = { country_event = { id = amcivwar.34 days = 1 }}
+		TEX = { country_event = { id = amcivwar.35 days = 1 }}
 		add_state_claim = 357	
 
 
@@ -695,7 +697,10 @@ country_event = { # Canada seizes Alaska
 
 		add_opinion_modifier = { target = USA modifier = occupied_alaska_CAN }
 		add_state_claim = 463
-		USA = { country_event = { id = amcivwar.13 days = 1 }}	
+		USA = { country_event = { id = amcivwar.13 days = 1 }}
+		CSA = { country_event = { id = amcivwar.36 days = 1 }}
+		TEX = { country_event = { id = amcivwar.37 days = 1 }}
+		CAL = { country_event = { id = amcivwar.38 days = 1 }}
 	}
 
 	option = { 
@@ -704,11 +709,16 @@ country_event = { # Canada seizes Alaska
 		ai_chance = {
 			factor = 25
 		}
-		add_national_unity = -0.01	
+		add_national_unity = -0.01
+		if = {
+			limit = { NOT = { CAL = { has_war_with = USA }}}
+
+			CAL = { country_event = { id = amcivwar.39 days = 1 }}
+		}	 	
 	}		
 }
 
-country_event = {
+country_event = { # Canada seizes Alaska
 	id = amcivwar.13
 	title = amcivwar.13.t
 	desc = amcivwar.13.d
@@ -725,7 +735,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # Japan seizes Guam
 	id = amcivwar.14
 	title = amcivwar.14.t
 	desc = amcivwar.14.d
@@ -735,7 +745,8 @@ country_event = {
 	
 	trigger = {
 		tag = JAP
-		# Add the correct Trigger
+		country_exists = CAL
+		USA = { controls_state = 638 }
 	}
 
 	mean_time_to_happen = {
@@ -766,7 +777,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # Japan seizes Guam
 	id = amcivwar.15
 	title = amcivwar.15.t
 	desc = amcivwar.15.d
@@ -777,15 +788,11 @@ country_event = {
 	option = { 
 		name = amcivwar.15.a
 
-		ai_chance = {
-			factor = 100
-		}
-
 		JAP = { transfer_state = 638 }	
 	}
 }
 
-country_event = {
+country_event = { # Canada seizes Panama Canal
 	id = amcivwar.16
 	title = amcivwar.16.t
 	desc = amcivwar.16.d
@@ -795,7 +802,12 @@ country_event = {
 	
 	trigger = {
 		tag = CAN
-		# Add the correct Trigger
+		country_exists = CSA
+		USA = { controls_state = 685 }
+		NOT = {
+			has_war_with = USA
+			has_war_together_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -825,7 +837,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # Canada seizes Panama Canal
 	id = amcivwar.17
 	title = amcivwar.17.t
 	desc = amcivwar.17.d
@@ -1006,7 +1018,7 @@ country_event = { # Reed will fight for his future
 		name = amcivwar.21.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = USA type = civil_war_focus }
@@ -1017,7 +1029,7 @@ country_event = { # Reed will fight for his future
 		name = amcivwar.21.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1092,7 +1104,7 @@ country_event = { # CSA vs AUS
 		name = amcivwar.23.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = TEX type = civil_war_focus }
@@ -1103,7 +1115,7 @@ country_event = { # CSA vs AUS
 		name = amcivwar.23.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1113,7 +1125,7 @@ country_event = { # CSA vs AUS
 
 country_event = { # AUS vs CSA
 	id = amcivwar.24
-	title = amcivwaar.24.t
+	title = amcivwar.24.t
 	desc = amcivwar.24.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
@@ -1136,7 +1148,7 @@ country_event = { # AUS vs CSA
 		name = amcivwar.24.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = TEX type = civil_war_focus }
@@ -1147,7 +1159,7 @@ country_event = { # AUS vs CSA
 		name = amcivwar.24.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1182,7 +1194,7 @@ country_event = { # President Curtis vs CAL
 		name = amcivwar.25.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = CAL type = civil_war_focus }
@@ -1192,7 +1204,7 @@ country_event = { # President Curtis vs CAL
 		name = amcivwar.25.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1226,7 +1238,7 @@ country_event = { # President Curtis vs CAL
 		name = amcivwar.26.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = CAL type = civil_war_focus }
@@ -1237,7 +1249,7 @@ country_event = { # President Curtis vs CAL
 		name = amcivwar.26.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1271,7 +1283,7 @@ country_event = { # MacArhtur vs CSA
 		name = amcivwar.27.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = CAL type = civil_war_focus }
@@ -1282,7 +1294,7 @@ country_event = { # MacArhtur vs CSA
 		name = amcivwar.27.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1314,7 +1326,7 @@ country_event = { # MacArhtur vs AUS
 		name = amcivwar.28.a
 
 		ai_chance = {
-			factor = 100
+			factor = 99
 		}
 
 		declare_war_on = { target = TEX type = civil_war_focus }
@@ -1325,7 +1337,7 @@ country_event = { # MacArhtur vs AUS
 		name = amcivwar.28.b
 
 		ai_chance = {
-			factor = 0
+			factor = 1
 		}
 
 		add_national_unity = -0.01
@@ -1465,4 +1477,230 @@ country_event = { # If Reed is president elect
 
 		load_oob = ACW_CSA_WASH
 	}		
+}
+
+country_event = { # CSA responds to Canada seizing NE
+	id = amcivwar.34
+	title = amcivwar.34.t
+	desc = amcivwar.34.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.34.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		declare_war_on = { target = CAN type = puppet_wargoal_focus }
+	}
+
+	option = { 
+		name = amcivwar.34.b
+
+		ai_chance = {
+			factor = 99
+		}
+
+		add_national_unity = -0.01
+	}			
+}
+
+country_event = { # AUS responds to Canada seizing NE
+	id = amcivwar.35
+	title = amcivwar.35.t
+	desc = amcivwar.35.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.35.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		declare_war_on = { target = CAN type = puppet_wargoal_focus }
+	}
+
+	option = { 
+		name = amcivwar.35.b
+
+		ai_chance = {
+			factor = 99
+		}
+
+		add_national_unity = -0.01
+	}				
+}
+
+country_event = { # CSA responds to Canada seizing Alaska
+	id = amcivwar.36
+	title = amcivwar.36.t
+	desc = amcivwar.36.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.36.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_opinion_modifier = { target = CSA modifier = occupied_alaska_USA }
+	}			
+}
+
+country_event = { # AUS responds to Canada seizing Alaska
+	id = amcivwar.37
+	title = amcivwar.37.t
+	desc = amcivwar.37.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.37.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_opinion_modifier = { target = TEX modifier = occupied_alaska_USA }
+	}			
+}
+
+country_event = { # CAL responds to Canada seizing Alaska
+	id = amcivwar.38
+	title = amcivwar.38.t
+	desc = amcivwar.38.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.38.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_opinion_modifier = { target = CAL modifier = occupied_alaska_USA }
+	}			
+}
+
+country_event = { # California seizes Alaska
+	id = amcivwar.39
+	title = amcivwar.39.t
+	desc = amcivwar.39.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.39.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		USA = { country_event = { id = amcivwar.40 days = 1 }}
+		add_state_core = 463
+	}
+
+	option = { 
+		name = amcivwar.39.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		add_national_unity = -0.01
+
+	}				
+}
+
+country_event = { # PSA seizes Alaska
+	id = amcivwar.40
+	title = amcivwar.40.t
+	desc = amcivwar.40.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.40.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.05
+		CAL = { transfer_state = 463 }
+	}			
+}
+
+############################################################
+
+country_event = { # Curtis dies in office
+	id = amcivwar.41
+	title = amcivwar.41.t
+	desc = amcivwar.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = social_liberalist
+		NOT = { USA = { controls_state = 685 }}
+		OR = {
+			has_war_with = CSA
+			has_war_with = TEX
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { 
+		name = amcivwar.41.a
+
+		ai_chance = {
+			factor = 100
+		}
+
+		set_country_flag = ACW_junta
+		#kill_country_leader = Charles Curtis
+		add_national_unity = 0.05
+	}
+
+	option = { 
+		name = amcivwar.41.b
+
+		ai_chance = {
+			factor = 0
+		}
+
+		#kill_country_leader = Charles Curtis
+		add_national_unity = 0.01
+		# Add MacArthur as a HoG
+	}
+
+	option = { 
+		name = amcivwar.41.c
+
+		ai_chance = {
+			factor = 0
+		}
+
+		#kill_country_leader = Charles Curtis
+		add_national_unity = -0.03
+	}					
 }

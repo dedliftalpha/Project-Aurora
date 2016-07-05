@@ -263,7 +263,7 @@ country_event = { # States Jump to the CAL/Nevada
 	}
 }
 
-country_event = { # States Jump to the CAL/Idah6
+country_event = { # States Jump to the CAL/Idaho
 	id = amcivwar.6
 	title = amcivwar.6.t
 	desc = amcivwar.6.d
@@ -398,9 +398,7 @@ country_event = { # Canadian Defense Scheme
 		USA = { country_event = { id = amcivwar.11 days = 1 }}
 		CSA = { country_event = { id = amcivwar.34 days = 1 }}
 		TEX = { country_event = { id = amcivwar.35 days = 1 }}
-		add_state_claim = 357	
-
-
+		add_state_claim = 357
 	}
 
 	option = { 
@@ -4031,4 +4029,794 @@ country_event = { # New England National Guard
 
 		load_oob = USANE
 	}					
+}
+
+############################################
+## New England
+############################################
+
+country_event = { # Canada Releases New England
+	id = amcivwar.123
+	title = amcivwar.123.t
+	desc = amcivwar.123.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		NOT = {
+			has_war_with = USA
+			has_war_with = TEX
+			has_war_with = CSA
+			country_exists = NEE
+			is_puppet = yes
+		}	
+		357 = { is_owned_by = CAN }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.123.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_national_unity = 0.01
+
+		NEE = {
+			transfer_state = 357
+
+			add_state_core = 357
+
+			country_event = { id = amcivwar.125 days = 2 }
+		}
+	}
+
+	option = { 
+		name = amcivwar.123.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = 0.01
+
+		NEE = {
+			transfer_state = 357
+
+			add_state_core = 357
+
+			country_event = { id = amcivwar.125 days = 2 }
+			change_tag_from = CAN
+		}
+	}
+
+	option = { 
+		name = amcivwar.123.c
+
+		ai_chance = {
+			factor = 9
+		}
+
+		add_state_claim = 357
+
+		set_country_flag = CANOCCNE
+	}		
+}
+
+country_event = { # Integration of New England
+	id = amcivwar.124
+	title = amcivwar.124.t
+	desc = amcivwar.124.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAN
+		has_country_flag = CANOCCNE
+		NOT = { controls_state = 357 }	
+	}
+
+	mean_time_to_happen = {
+		days = 1780
+	}
+	
+	option = {
+		name = amcivwar.124.a
+
+		add_state_core = 357
+	}					
+}
+
+country_event = { # Independent New England
+	id = amcivwar.125
+	title = amcivwar.125.t
+	desc = amcivwar.125.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+	
+	option = {
+		name = amcivwar.124.a
+
+		CAN = { add_to_faction = NEE }
+		add_opinion_modifier = { target = CAN modifier = NECAN }
+		add_opinion_modifier = { target = AST modifier = NEENT }
+		add_opinion_modifier = { target = DEH modifier = NEENT }
+		add_opinion_modifier = { target = CAF modifier = NEENT } 
+		add_opinion_modifier = { target = NFA modifier = NEENT }
+		country_event = { id = amcivwar.126 days = 30 }
+
+		add_manpower = 100000
+		load_oob = NEE
+	}					
+}
+
+country_event = { # Canada Releases New England
+	id = amcivwar.126
+	title = amcivwar.126.t
+	desc = amcivwar.126.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.126.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_national_unity = 0.01
+
+		CAN = { remove_from_faction = NEE }
+		add_to_war = { targeted_alliance = USA enemy = CSA }
+		add_to_war = { targeted_alliance = USA enemy = AUS }
+		add_to_war = { targeted_alliance = USA enemy = CAL }
+	}
+
+	option = { 
+		name = amcivwar.126.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.01
+	}	
+}
+
+country_event = { # New England and the USA
+	id = amcivwar.127
+	title = amcivwar.127.t
+	desc = amcivwar.127.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = END_ACW
+		country_exists = USA
+		NOT = { 
+			is_puppet = yes
+			USA = { is_puppet = yes }
+			country_exists = TEX
+			country_exists = CSA
+			has_war_with = USA 
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.127.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		if = {
+			limit = {
+				is_in_faction_with = CAN
+			}
+
+			CAN = { remove_from_faction = NEE }
+		}
+
+		# USA = { country_event = { id ustates.x days = 1 }} #USA Domestic Policy file (annex)
+	}
+
+	option = { 
+		name = amcivwar.127.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.01
+	}	
+}
+
+###################################################
+## Rise of New England Nationalism
+###################################################
+
+country_event = { # Reaction to Long's Minutemen
+	id = amcivwar.128
+	title = amcivwar.128.t
+	desc = amcivwar.128.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = minute_men
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.128.a
+
+		ai_chance = {
+			factor = 80
+		}
+
+		add_opinion_modifier =  { target = TEX modifier = CMM }
+	}	
+
+	option = { 
+		name = amcivwar.128.b
+
+		ai_chance = {
+			factor = 20
+		}
+
+		add_opinion_modifier =  { target = TEX modifier = NCMM }
+	}	
+}
+
+country_event = { # The Effects of Independence
+	id = amcivwar.129
+	title = amcivwar.129.t
+	desc = amcivwar.129.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = minute_men
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.129.a
+
+		ai_chance = {
+			factor = 99
+		}
+
+		add_national_unity = 0.05
+		add_ideas = new_english_nationalism
+		set_country_flag = ne_nationalism
+	}	
+
+	option = { 
+		name = amcivwar.129.b
+
+		ai_chance = {
+			factor = 1
+		}
+	}	
+}
+
+country_event = { # Passing of the Torch - A City Upon a Hill
+	id = amcivwar.130
+	title = amcivwar.130.t
+	desc = amcivwar.130.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = ne_nationalism
+		has_country_flag = ACW_AUS
+		has_country_flag = ACW_CSA
+		has_country_flag = USA_MIN_JUNTA
+		has_country_flag = USA_MAX_JUNTA
+		has_country_flag = USA_TOTALITARIAN
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.130.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = ne_beacon
+		set_political_party = { ideology = social_liberalist popularity = 0.1 }
+	}	
+
+	option = { 
+		name = amcivwar.130.b
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_national_unity = -0.05
+		set_political_party = { ideology = social_conservatist popularity = 0.05 }
+	}	
+}
+
+###################################################################################################
+## New England Nationalism has been firmly established, now its time to do something with it.
+###################################################################################################
+
+country_event = { # Establishing the Underground Railroad
+	id = amcivwar.131
+	title = amcivwar.131.t
+	desc = amcivwar.131.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = ne_nationalism
+		has_country_flag = ne_beacon
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.131.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_national_unity = 0.01
+		set_country_flag = underground_railroad
+		add_manpower = -1000
+	}	
+
+	option = { 
+		name = amcivwar.131.b
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_national_unity = -0.05
+		set_political_party = { ideology = social_conservatist popularity = 0.05 }
+	}	
+}
+
+country_event = { # Refugees from CSA
+	id = amcivwar.132
+	title = amcivwar.132.t
+	desc = amcivwar.132.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = underground_railroad
+		country_exists = CSA
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.132.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_ideas = csa_refugees
+		357 = = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		357 = = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		357 = { add_extra_state_shared_building_slots = 2 }
+	}	
+}
+
+country_event = { # Refugees from MacArthur's USA
+	id = amcivwar.133
+	title = amcivwar.133.t
+	desc = amcivwar.133.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = underground_railroad
+		country_exists = CSA
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.133.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_ideas = usa_refugees
+		357 = = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		357 = = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		357 = { add_extra_state_shared_building_slots = 2 }
+	}	
+}
+
+country_event = { # Refugees from Long's AUS
+	id = amcivwar.134
+	title = amcivwar.134.t
+	desc = amcivwar.134.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = underground_railroad
+		country_exists = CSA
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.134.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_ideas = aus_refugees
+		add_national_unity = -0.02
+		357 = = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		357 = = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		357 = { add_extra_state_shared_building_slots = 2 }
+	}	
+}
+
+#########################################
+## Resource Developement
+#########################################
+
+country_event = { # Mining in Maine
+	id = amcivwar.135
+	title = amcivwar.135.t
+	desc = amcivwar.135.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_country_flag = ne_nationalism
+		date > 1937.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.135.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		country_event = { id = amcivwar.136 days = 5 }
+		add_manpower = -2000
+	}	
+
+	option = { 
+		name = amcivwar.135.b
+
+		ai_chance = {
+			factor = 25
+		}
+	}	
+}
+
+country_event = { # Mining in Maine
+	id = amcivwar.136
+	title = amcivwar.136.t
+	desc = amcivwar.136.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.136.a
+
+		357 = = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
+		add_resource = { type = metal amount = 15 state = 357 }
+		
+	}	
+}
+
+country_event = { # The Great New England Hurricane!
+	id = amcivwar.137
+	title = amcivwar.137.t
+	desc = amcivwar.137.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NEE
+			tag = CAN
+			tag = CSA
+			tag = USA
+			tag = TEX
+		}	
+		owns_state = 357
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.137.a
+
+		ai_chance = {
+			factor = 80
+		}
+
+		add_national_unity = 0.02
+		add_timed_idea = { idea = great_england_hurricane days = 60 }
+	}	
+
+	option = { 
+		name = amcivwar.137.b
+
+		ai_chance = {
+			factor = 20
+		}
+
+		add_national_unity = -0.05
+	}	
+}
+
+###########################################
+## The New England Elections 
+
+country_event = { # 1939
+	id = amcivwar.138
+	title = amcivwar.138.t
+	desc = amcivwar.138.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			OR = { 
+				has_government = social_liberalist
+				has_government = social_liberalist
+				has_government = market_liberalist
+				has_government = social_conservatist
+			}
+		}
+		date > 1939.4.19	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.138.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.4 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.12 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+	}	
+
+	option = { 
+		name = amcivwar.138.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.41 }
+		set_political_party = { ideology = social_liberalist popularity = 0.21 }
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+	}
+
+	option = { 
+		name = amcivwar.138.c
+
+		ai_chance = {
+			factor = 20
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.4 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+	}		
+}
+
+country_event = { # 1944
+	id = amcivwar.139
+	title = amcivwar.139.t
+	desc = amcivwar.139.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			OR = { 
+				has_government = social_liberalist
+				has_government = social_liberalist
+				has_government = market_liberalist
+				has_government = social_conservatist
+			}
+		}
+		date > 1944.4.19	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.139.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.4 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.12 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+	}	
+
+	option = { 
+		name = amcivwar.139.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.41 }
+		set_political_party = { ideology = social_liberalist popularity = 0.21 }
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+	}
+
+	option = { 
+		name = amcivwar.139.c
+
+		ai_chance = {
+			factor = 15
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.4 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+	}		
+}
+
+country_event = { # 1949
+	id = amcivwar.140
+	title = amcivwar.140.t
+	desc = amcivwar.140.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			OR = { 
+				has_government = social_liberalist
+				has_government = social_liberalist
+				has_government = market_liberalist
+				has_government = social_conservatist
+			}
+		}
+		date > 1949.4.19	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.140.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.4 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.12 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+	}	
+
+	option = { 
+		name = amcivwar.140.b
+
+		ai_chance = {
+			factor = 45
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.41 }
+		set_political_party = { ideology = social_liberalist popularity = 0.21 }
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+	}
+
+	option = { 
+		name = amcivwar.140.c
+
+		ai_chance = {
+			factor = 20
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.12 }
+		set_political_party = { ideology = market_liberalist popularity = 0.2 }
+		set_political_party = { ideology = social_liberalist popularity = 0.4 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+	}		
 }

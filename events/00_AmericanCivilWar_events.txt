@@ -4576,7 +4576,7 @@ country_event = { # Mining in Maine
 		name = amcivwar.136.a
 
 		357 = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
-		add_resource = { type = metal amount = 15 state = 357 }
+		add_resource = { type = steel amount = 15 state = 357 }
 		
 	}	
 }
@@ -4890,6 +4890,10 @@ country_event = { # The Territory of Hawaii Revolts
 	option = { 
 		name = amcivwar.142.a
 
+		ai_chance = {
+			factor = 99
+		}
+
 		add_national_unity = 0.03
 
 		HAW = {
@@ -4898,8 +4902,30 @@ country_event = { # The Territory of Hawaii Revolts
 			add_state_core = 629
 
 			country_event = { id = amcivwar.143 days = 2 }
+			country_event = { id = amcivwar.144 days = 4 }
 		}	
-	}	
+	}
+
+	option = { 
+		name = amcivwar.142.a
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = 0.03
+
+		HAW = {
+			transfer_state = 629
+
+			add_state_core = 629
+
+			country_event = { id = amcivwar.143 days = 2 }
+			country_event = { id = amcivwar.144 days = 4 }
+
+			change_tag_from = USA
+		}	
+	}		
 }
 
 country_event = { # The Hawaiian Government
@@ -4908,16 +4934,7 @@ country_event = { # The Hawaiian Government
 	desc = amcivwar.143.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = USA
-		country_exists = CAL
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 	
 	option = { 
 		name = amcivwar.143.a
@@ -4937,11 +4954,60 @@ country_event = { # Wake and Midway Occupied by Hawaii
 	desc = amcivwar.144.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.144.a
+
+		USA = { country_event = { id = amcivwar.145 days = 4 }}
+
+		add_state_claim = 632
+		add_state_claim = 631
+		add_state_claim = 642
+		add_state_claim = 630
+		add_state_claim = 726
+	}	
+}
+
+country_event = { # Hawaii Occupies Midway, Wake and Other Pacific Islands
+	id = amcivwar.145
+	title = amcivwar.155.t
+	desc = amcivwar.145.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.144.a
+
+		HAW = {
+			transfer_state = 632
+			transfer_state = 631
+			transfer_state = 642
+			transfer_state = 630
+			transfer_state = 726
+		}	
+	}	
+}
+
+country_event = { # Hawaii Joins the PSA
+	id = amcivwar.146
+	title = amcivwar.146.t
+	desc = amcivwar.146.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
 	fire_only_once = yes
 
 	trigger = {
-		tag = USA
+		tag = HAW
+		has_country_flag = END_ACW
 		country_exists = CAL
+		NOT = {
+			is_puppet = yes
+			CAL = { is_puppet = yes }
+			country_exists = USA
+			has_war_with = CAL
+		}	
 	}
 
 	mean_time_to_happen = {
@@ -4949,13 +5015,677 @@ country_event = { # Wake and Midway Occupied by Hawaii
 	}
 	
 	option = { 
-		name = amcivwar.144.a
+		name = amcivwar.146.a
 
-		set_political_party = { ideology = market_liberalist popularity = 0.50 }
-		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		ai_chance = {
+			factor = 25
+		}
 
-		add_manpower = 25000
+		add_national_unity = -0.01
 
-		load_oob = HAW
+		add_opinion_modifier =  { target = CAL modifier = INDHAW_CAL }
+		add_opinion_modifier =  { target = AST modifier = INDHAW }
+		add_opinion_modifier =  { target = JAP modifier = INDHAW }
+		add_opinion_modifier =  { target = CAN modifier = INDHAW }
+	}
+
+	option = { 
+		name = amcivwar.146.b
+
+		ai_chance = {
+			factor = 35
+		}
+
+		add_national_unity = 0.03
+
+		add_opinion_modifier =  { target = CAL modifier = ALHAW_CAL }
+		add_opinion_modifier =  { target = AST modifier = ALHAW }
+		add_opinion_modifier =  { target = JAP modifier = ALHAW }
+		add_opinion_modifier =  { target = CAN modifier = ALHAW }
+
+		CAL = { country_event = { id = amcivwar.147 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.146.c
+
+		ai_chance = {
+			factor = 40
+		}
+
+		CAL = { country_event = { id = amcivwar.148 days = 1 }}
+	}		
+}
+
+country_event = { # Hawaii proposes an alliance with the PSA
+	id = amcivwar.147
+	title = amcivwar.147.t
+	desc = amcivwar.147.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.147.a
+
+		ai_chance = {
+			factor = 99
+		}
+
+		create_faction = "Pacific Alliance"
+		add_to_faction = HAW
+	}
+
+	option = { 
+		name = amcivwar.147.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.1
+	}		
+}
+
+country_event = { # PSA inherits Hawaii
+	id = amcivwar.148
+	title = amcivwar.148.t
+	desc = amcivwar.148.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.148.a
+
+		ai_chance = {
+			factor = 99
+		}
+
+		annex_country = { target = HAW }
+
+		add_state_core = 632
+		add_state_core = 631
+		add_state_core = 642
+		add_state_core = 630
+		add_state_core = 726
+		add_state_core = 629
+
+		set_country_flag = PSA_anexed_hawaii
+	}
+
+	option = { 
+		name = amcivwar.148.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.1
+	}		
+}
+
+country_event = { # Post War Hawaii
+	id = amcivwar.149
+	title = amcivwar.149.t
+	desc = amcivwar.149.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HAW
+		OR = {
+			country_exists = CSA
+			country_exists = USA
+			country_exists = TEX
+		}
+		country_exists = CAN
+		CAN = { is_in_faction = yes }
+		has_country_flag = END_ACW
+		NOT = {
+			is_puppet = yes
+			CAL = { is_puppet = yes }
+			country_exists = CAL
+			has_war_with = CAL
+			has_war_with = USA
+			has_war_with = CSA
+			has_war_with = TEX
+			is_in_faction_with = CAN
+			is_in_faction_with = JAP
+			is_in_faction_with = CAL
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.149.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = -0.01
+
+		add_opinion_modifier =  { target = CAL modifier = HAWENT }
+		add_opinion_modifier =  { target = AST modifier = HAWENT }
+		
+		CAN = { country_event = { id = amcivwar.150 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.149.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = -0.01
+
+		set_country_flag = HAW_IND
+	}		
+}
+
+country_event = { # Hawaii petitions the entente
+	id = amcivwar.150
+	title = amcivwar.150.t
+	desc = amcivwar.150.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.150.a
+
+		ai_chance = {
+			factor = 85
+		}
+
+		add_to_faction = HAW
+
+		add_national_unity = 0.01
+		HAW = { country_event = { id = amcivwar.151 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.150.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_national_unity = -0.1
+
+		HAW = { country_event = { id = amcivwar.151 days = 1 }}
+	}		
+}
+
+country_event = { # Hawaii joins the Entente
+	id = amcivwar.151
+	title = amcivwar.151.t
+	desc = amcivwar.151.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.151.a
+
+		add_opinion_modifier =  { target = CAL modifier = HAWENTYES }
+		add_opinion_modifier =  { target = AST modifier = HAWENTYES }
+		add_opinion_modifier =  { target = DEH modifier = HAWENTYES }
+		add_opinion_modifier =  { target = CAF modifier = HAWENTYES }
+		add_opinion_modifier =  { target = NFA modifier = HAWENTYES }
+	}		
+}
+
+country_event = { # Entente Denies Hawaii
+	id = amcivwar.152
+	title = amcivwar.152.t
+	desc = amcivwar.152.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.152.a
+
+		add_national_unity = -0.05
+		add_opinion_modifier =  { target = CAL modifier = HAWENTNO }
+	}		
+}
+
+country_event = { # Hawaii on its own/ Industrial Development
+	id = amcivwar.153
+	title = amcivwar.153.t
+	desc = amcivwar.153.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HAW
+		NOT = {
+			is_puppet = yes
+			is_in_faction = yes
+		}
+		date > 1940.2.11	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.153.a
+
+		629 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		629 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		629 = { add_extra_state_shared_building_slots = 2 }
+	}		
+}
+
+country_event = { # Hawaii Resources expand
+	id = amcivwar.154
+	title = amcivwar.154.t
+	desc = amcivwar.154.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HAW
+		NOT = {
+			is_puppet = yes
+			is_in_faction = yes
+		}
+		date > 1940.9.19	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.154.a
+
+		add_resource = { type = steel amount = 5 state = 629 }
+		add_resource = { type = aluminium amount = 5 state = 629 }
+		add_resource = { type = tungsten amount = 3 state = 629 }
+	}		
+}
+
+country_event = { # Pineapple Workers Union
+	id = amcivwar.155
+	title = amcivwar.155.t
+	desc = amcivwar.155.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HAW
+		has_country_flag = HAW_IND
+		date > 1941.3.12	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.155.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = -0.05
+	}
+
+	option = { 
+		name = amcivwar.155.b
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_national_unity = 0.1
+
+		if = {
+			limit = { country_exists = CSA }
+
+			CSA = { country_event = { id = amcivwar.156 days = 1 }}
+		}	
+	}		
+}
+
+country_event = { # CSA Island Agitators
+	id = amcivwar.156
+	title = amcivwar.156.t
+	desc = amcivwar.156.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.156.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		HAW = { country_event = { id = amcivwar.157 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.156.b
+
+		ai_chance = {
+			factor = 25
+		}
+	}		
+}
+
+country_event = { # CSA Island Agitators
+	id = amcivwar.157
+	title = amcivwar.157.t
+	desc = amcivwar.157.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.157.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_national_unity = -0.05
+		set_political_party = { ideology = syndicalist popularity = 0.1 }
+	}
+
+	option = { 
+		name = amcivwar.157.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = -0.01
+		add_opinion_modifier =  { target = CSA modifier = ARRCSAAGG }
+		CSA = { country_event = { id = amcivwar.158 days = 1 }}
+	}		
+}
+
+country_event = { # Trade Union of Hawaii
+	id = amcivwar.158
+	title = amcivwar.158.t
+	desc = amcivwar.158.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.158.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_opinion_modifier =  { target = HAW modifier = CSADEMREF }
+		HAW = { country_event = { id = amcivwar.159 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.158.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = 0.01
+	}		
+}
+
+country_event = { # Trade Union of Hawaii
+	id = amcivwar.159
+	title = amcivwar.159.t
+	desc = amcivwar.159.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.159.a
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_political_party = { ideology = syndicalist popularity = 0.5 }
+		add_national_unity = -0.05
+		CSA = { country_event = { id = amcivwar.160 days = 1 }}
+	}
+
+	option = { 
+		name = amcivwar.159.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_national_unity = 0.01
+		set_political_party = { ideology = syndicalist popularity = 0.15 }
+	}
+
+	option = { 
+		name = amcivwar.159.c
+
+		ai_chance = {
+			factor = 65
+		}
+
+		add_national_unity = 0.01
+		CSA = { country_event = { id = amcivwar.161 days = 1 }}
+	}		
+}
+
+country_event = { # Hawaii becomes a CSA puppet
+	id = amcivwar.160
+	title = amcivwar.160.t
+	desc = amcivwar.160.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.160.a
+
+		puppet = HAW
+		add_national_unity = 0.01
+	}		
+}
+
+country_event = { # Hawaii Denies the CSA
+	id = amcivwar.161
+	title = amcivwar.161.t
+	desc = amcivwar.161.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.161.a
+
+		ai_chance = {
+			factor = 65
+		}
+
+		declare_war_on = { target = POL type = civil_war }
+		add_national_unity = 0.01
+	}
+
+	option = { 
+		name = amcivwar.161.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		add_national_unity = -0.01
+	}		
+}
+
+############
+#Nationalism
+############
+
+country_event = { # Hawaii Denies the CSA
+	id = amcivwar.162
+	title = amcivwar.162.t
+	desc = amcivwar.162.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HAW
+		NOT = {
+			is_puppet = yes
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		date > 1937.10.10	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.162.a
+
+		ai_chance = {
+			factor = 65
+		}
+
+		set_political_party = { ideology = social_conservatist popularity = 0.50 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		add_national_unity = 0.03
+	}
+
+	option = { 
+		name = amcivwar.162.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		add_national_unity = -0.05
+	}		
+}
+
+country_event = { # Hawaii Denies the CSA
+	id = amcivwar.163
+	title = amcivwar.163.t
+	desc = amcivwar.163.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAL
+		has_country_flag = PSA_anexed_hawaii
+		owns_state = 629
+		NOT = {
+			OR = {
+				owns_state = 386
+				owns_state = 385
+				owns_state = 378
+			}
+			country_exists = HAW
+		}
+		date > 1937.10.10	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.163.a
+
+		ai_chance = {
+			factor = 98
+		}
+
+		add_national_unity = -0.02
+
+		HAW = {
+			transfer_state = 629
+			transfer_state = 632
+			transfer_state = 631
+			transfer_state = 642
+			transfer_state = 630
+			transfer_state = 726
+
+			add_state_core = 629
+			add_state_core = 632
+			add_state_core = 631
+			add_state_core = 642
+			add_state_core = 630
+			add_state_core = 726
+		}	
+	}
+
+	option = { 
+		name = amcivwar.163.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.02
+
+		HAW = {
+			transfer_state = 629
+			transfer_state = 632
+			transfer_state = 631
+			transfer_state = 642
+			transfer_state = 630
+			transfer_state = 726
+
+			add_state_core = 629
+			add_state_core = 632
+			add_state_core = 631
+			add_state_core = 642
+			add_state_core = 630
+			add_state_core = 726
+
+			change_tag_from = CAL
+		}	
+	}
+
+	option = { 
+		name = amcivwar.163.c
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_national_unity = -0.1
+
+		add_timed_idea = { idea = hawaii_revolts days = 180 }
+		load_oob = CAL_GARR_HAW
 	}	
 }
+
+#############################################
+###### The fate of Puerto Rico              #
+#############################################

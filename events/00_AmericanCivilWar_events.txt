@@ -5689,3 +5689,772 @@ country_event = { # Hawaii Denies the CSA
 #############################################
 ###### The fate of Puerto Rico              #
 #############################################
+
+country_event = { # Hawaii Denies the CSA
+	id = amcivwar.164
+	title = amcivwar.164.t
+	desc = amcivwar.164.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		OR = {
+			country_exists = CSA
+			country_exists = TEX
+		}
+		OR = {
+			has_war_with = CSA
+			has_war_with = TEX
+		}
+		NOT = {
+			has_war_with = CAN
+
+			owns_state = 366
+			owns_state = 364
+			owns_state = 362
+			owns_state = 361
+			owns_state = 358
+			owns_state = 359
+			owns_state = 357
+			owns_state = 371
+			owns_state = 685
+		}
+		owns_state = 686
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.164.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = -0.03
+
+		CAN = {
+			transfer_state = 686
+
+			country_event = { id = amcivwar.165 days = 1 }
+		}	
+	}
+
+	option = { 
+		name = amcivwar.164.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_national_unity = 0.03
+
+		686 = {
+			add_building_construction = { type = coastal_bunker province = 1440 level = 2 instant_build = yes }
+			add_building_construction = { type = arms_factory level = 1 instant_build = yes }		
+		}
+		load_oob = USA_PR_GAR
+	}	
+}
+
+country_event = { # Puerto Rico given to the Entente
+	id = amcivwar.165
+	title = amcivwar.165.t
+	desc = amcivwar.165.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.165.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		CAF = { 
+			country_event = { id = amcivwar.166 days = 1 }
+			transfer_state = 686
+		}
+
+		add_opinion_modifier =  { target = CAF modifier = CAFRP }
+	}
+
+	option = { 
+		name = amcivwar.165.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		686 = {
+			add_building_construction = { type = naval_base province = 1440 level = 4 instant_build = yes }
+			add_building_construction = { type = arms_factory level = 1 instant_build = yes }	
+		}
+	}		
+}
+
+country_event = { # Puerto Rico given to the Federation
+	id = amcivwar.166
+	title = amcivwar.166.t
+	desc = amcivwar.166.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.166.a
+
+		add_state_core = 686
+		add_national_unity = 0.02
+
+		add_opinion_modifier = { target = CAN modifier = CAFRP }
+	}	
+}
+
+##################################################
+###### Post-Civil War; USA want Puerto Rico back #
+##################################################
+
+country_event = { # Requesting Puerto Rico back
+	id = amcivwar.167
+	title = amcivwar.167.t
+	desc = amcivwar.167.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_country_flag = END_ACW
+		country_exists = CAN
+		CAN = { owns_state = 686 }
+		NOT = {
+			is_puppet_of = CAN
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.167.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		CAN = {
+			country_event = { id = amcivwar.168 days = 1 }
+		}	
+	}
+
+	option = { 
+		name = amcivwar.167.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = -0.05
+		remove_state_core = 686
+		add_opinion_modifier = { target = CAN modifier = USAPRNO } 
+	}	
+}
+
+country_event = { # United States want Puerto Rico back
+	id = amcivwar.168
+	title = amcivwar.168.t
+	desc = amcivwar.168.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.168.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		USA = { 
+			country_event = { id = amcivwar.169 days = 1 }
+			transfer_state = 686
+		}	
+		add_opinion_modifier = { target = USA modifier = CANGIVPR }
+	}
+
+	option = { 
+		name = amcivwar.168.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		USA = { country_event = { id = amcivwar.170 days = 1 }}
+
+		add_opinion_modifier = { target = USA modifier = CANNOPR }
+	}	
+}
+
+country_event = { # Puerto Rico is ours again!
+	id = amcivwar.169
+	title = amcivwar.169.t
+	desc = amcivwar.169.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.169.a
+
+		add_national_unity = 0.05
+		add_opinion_modifier = { target = CAN modifier = CANGIVPR }
+	}	
+}
+
+country_event = { # Canada retains Puerto Rico
+	id = amcivwar.170
+	title = amcivwar.170.t
+	desc = amcivwar.170.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.170.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = 0.01
+		add_opinion_modifier = { target = CAN modifier = USAVSCAN }
+	}
+
+	option = { 
+		name = amcivwar.170.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_opinion_modifier = { target = CAN modifier = USAVSCAN }
+		remove_state_core = 686
+		add_national_unity = -0.05
+	}	
+}
+
+### Federation Variant
+
+country_event = { # Requesting Puerto Rico back
+	id = amcivwar.171
+	title = amcivwar.171.t
+	desc = amcivwar.171.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_country_flag = END_ACW
+		country_exists = CAF
+		CAF = { owns_state = 686 }
+		NOT = {
+			is_puppet_of = CAN
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.171.a
+
+		ai_chance = {
+			factor = 80
+		}
+
+		CAF = {
+			country_event = { id = amcivwar.172 days = 1 }
+		}	
+	}
+
+	option = { 
+		name = amcivwar.171.b
+
+		ai_chance = {
+			factor = 20
+		}
+
+		add_national_unity = -0.05
+		remove_state_core = 686
+		add_opinion_modifier = { target = CAF modifier = USAPRNO } 
+	}	
+}
+
+country_event = { # United States want Puerto Rico back
+	id = amcivwar.172
+	title = amcivwar.172.t
+	desc = amcivwar.172.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.172.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		USA = { 
+			country_event = { id = amcivwar.173 days = 1 }
+			transfer_state = 686
+		}	
+		add_opinion_modifier = { target = USA modifier = CANGIVPR }
+	}
+
+	option = { 
+		name = amcivwar.172.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		USA = { country_event = { id = amcivwar.174 days = 1 }}
+
+		add_opinion_modifier = { target = USA modifier = CANNOPR }
+	}	
+}
+
+country_event = { # Puerto Rico is ours again!
+	id = amcivwar.173
+	title = amcivwar.173.t
+	desc = amcivwar.173.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.173.a
+
+		add_national_unity = 0.05
+		add_opinion_modifier = { target = CAF modifier = CANGIVPR }
+	}	
+}
+
+country_event = { # The Carribean Federation retains Puerto Rico
+	id = amcivwar.174
+	title = amcivwar.174.t
+	desc = amcivwar.174.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.174.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = 0.01
+		add_opinion_modifier = { target = CAF modifier = USAVSCAN }
+	}
+
+	option = { 
+		name = amcivwar.174.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_opinion_modifier = { target = CAF modifier = USAVSCAN }
+		remove_state_core = 686
+		add_national_unity = -0.05
+	}	
+}
+
+###################################################
+###### Post-Civil War; AUS wants Puerto Rico back #
+###################################################
+
+country_event = { # Requesting Puerto Rico back
+	id = amcivwar.175
+	title = amcivwar.175.t
+	desc = amcivwar.175.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = TEX
+		has_country_flag = END_ACW
+		country_exists = CAN
+		CAN = { owns_state = 686 }
+		NOT = {
+			is_puppet_of = CAN
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.175.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		CAN = {
+			country_event = { id = amcivwar.168 days = 1 }
+		}	
+	}
+
+	option = { 
+		name = amcivwar.175.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = -0.05
+		remove_state_core = 686
+		add_opinion_modifier = { target = CAN modifier = USAPRNO } 
+	}	
+}
+
+country_event = { # American Union State want Puerto Rico back
+	id = amcivwar.176
+	title = amcivwar.176.t
+	desc = amcivwar.176.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.176.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		TEX = { 
+			country_event = { id = amcivwar.169 days = 1 }
+			transfer_state = 686
+		}	
+		add_opinion_modifier = { target = TEX modifier = CANGIVPR }
+	}
+
+	option = { 
+		name = amcivwar.176.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		TEX = { country_event = { id = amcivwar.170 days = 1 }}
+
+		add_opinion_modifier = { target = TEX modifier = CANNOPR }
+	}	
+}
+
+country_event = { # Puerto Rico is ours again!
+	id = amcivwar.177
+	title = amcivwar.177.t
+	desc = amcivwar.177.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.177.a
+
+		add_national_unity = 0.05
+		add_opinion_modifier = { target = CAN modifier = CANGIVPR }
+	}	
+}
+
+country_event = { # Canada retains Puerto Rico
+	id = amcivwar.178
+	title = amcivwar.178.t
+	desc = amcivwar.178.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.178.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = 0.01
+		add_opinion_modifier = { target = CAN modifier = USAVSCAN }
+	}
+
+	option = { 
+		name = amcivwar.178.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_opinion_modifier = { target = CAN modifier = USAVSCAN }
+		remove_state_core = 686
+		add_national_unity = -0.05
+	}	
+}
+
+### Federation Variant
+
+country_event = { # Requesting Puerto Rico back
+	id = amcivwar.179
+	title = amcivwar.179.t
+	desc = amcivwar.179.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = TEX
+		has_country_flag = END_ACW
+		country_exists = CAF
+		CAF = { owns_state = 686 }
+		NOT = {
+			is_puppet_of = CAN
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.179.a
+
+		ai_chance = {
+			factor = 80
+		}
+
+		CAF = {
+			country_event = { id = amcivwar.172 days = 1 }
+		}	
+	}
+
+	option = { 
+		name = amcivwar.179.b
+
+		ai_chance = {
+			factor = 20
+		}
+
+		add_national_unity = -0.05
+		remove_state_core = 686
+		add_opinion_modifier = { target = CAF modifier = USAPRNO } 
+	}	
+}
+
+country_event = { # American Union State wants Puerto Rico back
+	id = amcivwar.180
+	title = amcivwar.180.t
+	desc = amcivwar.180.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.180.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		TEX = { 
+			country_event = { id = amcivwar.173 days = 1 }
+			transfer_state = 686
+		}	
+		add_opinion_modifier = { target = TEX modifier = CANGIVPR }
+	}
+
+	option = { 
+		name = amcivwar.180.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		TEX = { country_event = { id = amcivwar.174 days = 1 }}
+
+		add_opinion_modifier = { target = TEX modifier = CANNOPR }
+	}	
+}
+
+country_event = { # Puerto Rico is ours again!
+	id = amcivwar.181
+	title = amcivwar.181.t
+	desc = amcivwar.181.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.181.a
+
+		add_national_unity = 0.05
+		add_opinion_modifier = { target = CAF modifier = CANGIVPR }
+	}	
+}
+
+country_event = { # The Carribean Federation retains Puerto Rico
+	id = amcivwar.182
+	title = amcivwar.182.t
+	desc = amcivwar.182.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.182.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_national_unity = 0.01
+		add_opinion_modifier = { target = CAF modifier = USAVSCAN }
+	}
+
+	option = { 
+		name = amcivwar.182.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_opinion_modifier = { target = CAF modifier = USAVSCAN }
+		remove_state_core = 686
+		add_national_unity = -0.05
+	}	
+}
+
+#############################################
+###### Ultimate capture of Puerto Rico      #
+#############################################
+
+country_event = { # Unability to hold Puerto Rico
+	id = amcivwar.183
+	title = amcivwar.183.t
+	desc = amcivwar.183.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		OR = {
+			country_exists = CSA
+			country_exists = TEX
+		}
+		OR = {
+			has_war_with = CSA
+			has_war_with = TEX
+		}
+		NOT = {
+			owns_state = 366
+			owns_state = 364
+			owns_state = 362
+			owns_state = 361
+			owns_state = 358
+			owns_state = 359
+			owns_state = 357
+			owns_state = 371
+			owns_state = 685
+
+			owns_state = 375
+			owns_state = 374
+			owns_state = 372
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = amcivwar.183.a
+
+		add_national_unity = -0.02
+
+		CAN = {
+			transfer_state = 686
+
+			country_event = { id = amcivwar.184 days = 1 }
+		}	
+	}
+}
+
+country_event = { # Puerto Rico given to the Entente
+	id = amcivwar.184
+	title = amcivwar.184.t
+	desc = amcivwar.184.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.184.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		CAF = { 
+			country_event = { id = amcivwar.185 days = 1 }
+			transfer_state = 686
+		}
+
+		add_opinion_modifier =  { target = CAF modifier = CAFRP }
+	}
+
+	option = { 
+		name = amcivwar.184.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		686 = {
+			add_building_construction = { type = naval_base province = 1440 level = 4 instant_build = yes }
+			add_building_construction = { type = arms_factory level = 1 instant_build = yes }	
+		}
+	}		
+}
+
+country_event = { # Puerto Rico given to the Federation
+	id = amcivwar.185
+	title = amcivwar.185.t
+	desc = amcivwar.185.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.185.a
+
+		add_state_core = 686
+		add_national_unity = 0.02
+
+		add_opinion_modifier = { target = CAN modifier = CAFRP }
+	}	
+}

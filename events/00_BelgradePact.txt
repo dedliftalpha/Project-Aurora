@@ -1,0 +1,464 @@
+﻿### MODDER: DK ###
+### Belgrade Pact Events ###
+
+add_namespace = pact
+
+### The Belgrade pact
+country_event = {
+	id = pact.1
+	title = pact.1.t
+	desc = pact.1.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SER
+		date > 1937.5.1
+
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = { # Open
+		name = pact.1.a
+		add_national_unity = 0.01
+		ROM = { country_event = { id = pact.2 days = 1 } } 
+		GRE = { country_event = { id = pact.2 days = 1 } }
+		if = {
+			limit = {
+				MTN = {
+					exists = yes
+					has_war = no
+				}
+			}
+			MTN = { country_event = { id = pact.2 days = 1 }}
+		}
+		create_faction = belgrade_pact
+	}
+	option = { # Close
+		name = pact.1.a
+		add_national_unity = -0.1
+	}
+
+}
+
+### Invitation event
+country_event = {
+	id = pact.2
+	title = pact.2.t
+	desc = pact.2.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # Attend
+		name = pact.2.a
+		ai_chance = {
+			factor = 90
+		}
+		add_national_unity = 0.01
+		set_country_flag = join_belgrade_pact
+		SER = {
+			add_to_faction = ROOT
+		}
+	}
+	option = { # Stay
+		name = pact.2.a
+		add_national_unity = -0.1
+	}
+
+}
+
+### The pact is complete
+country_event = {
+	id = pact.3
+	title = pact.3.t
+	desc = pact.3.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SER
+		OR = {
+			ROM = {has_country_flag = join_belgrade_pact}
+			GRE = {has_country_flag = join_belgrade_pact}
+			MTN = {has_country_flag = join_belgrade_pact}
+		}
+
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { # Great
+		name = pact.3.a
+		add_national_unity = 0.05
+		set_country_flag = belgrade_pact_founded
+		BUL = { country_event = { id = pact.4 days = 1 }}
+	}
+
+
+}
+
+### Bulgaria informed
+country_event = {
+	id = pact.4
+	title = pact.4.t
+	desc = pact.4.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # Seek German Aid
+		name = pact.4.a
+		ai_chance = {
+			factor = 90
+		}
+		add_national_unity = -0.01
+		GER = { country_event = { id = pact.5 days = 1 }}
+		
+	}
+	option = { # Fight on our own
+		name = pact.4.a
+		add_national_unity = 0.05
+		SER = { country_event = { id = pact.9 days = 1 }}
+	}
+
+}
+
+### Bulgaria seeks Help
+country_event = {
+	id = pact.5
+	title = pact.5.t
+	desc = pact.5.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # grant aid
+		name = pact.5.a
+		ai_chance = {
+			factor = 70
+		}
+		add_national_unity = -0.01
+		BUL = { country_event = { id = pact.6 days = 1 }}
+	}
+	option = { # we cant afford
+		name = pact.5.a
+		add_national_unity = 0.01
+		BUL = { country_event = { id = pact.7 days = 1 }}
+		
+	}
+
+}
+### Aid granted
+country_event = {
+	id = pact.6
+	title = pact.6.t
+	desc = pact.6.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # perfect
+		name = pact.6.a
+		set_country_flag = german_help_with_pact
+		SER = { country_event = { id = pact.8 days = 1 }} ### Serbian demands
+		ROM = { country_event = { id = pact.11 days = 1 }} ### Romanian demands
+		GRE = { country_event = { id = pact.14 days = 1 }} ### Greek demands
+		BUL = { country_event = { id = pact.17 days = 30 }} ### Pact Ultimatuum
+	}
+
+}
+### Aid denied
+country_event = {
+	id = pact.7
+	title = pact.7.t
+	desc = pact.7.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # perfect
+		name = pact.7.a
+		set_country_flag = german_help_with_pact_denied
+		SER = { country_event = { id = pact.8 days = 1 }}
+	}
+
+}
+### Serbian demands
+country_event = {
+	id = pact.8
+	title = pact.8.t
+	desc = pact.8.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.8.a
+		ai_chance = {	
+			modifier = {
+				factor = 50
+					BUL = { has_country_flag = german_help_with_pact}
+					
+				}
+			factor = 90	
+		}
+		BUL = { country_event = { id = pact.9 days = 1 }}
+	}
+	option = { 
+		name = pact.8.a
+		
+		BUL = { country_event = { id = pact.10 days = 1 }}
+	}
+
+}
+### Serbian demands lands
+country_event = {
+	id = pact.9
+	title = pact.9.t
+	desc = pact.9.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.9.a
+		SER = {
+			add_state_core = 106
+			set_country_flag = serb_pact_demands
+		}
+		
+	}
+}
+### Serbien no demands
+country_event = {
+	id = pact.10
+	title = pact.10.t
+	desc = pact.10.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.10.a
+	}
+}
+### Romanian demands
+country_event = {
+	id = pact.11
+	title = pact.11.t
+	desc = pact.11.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.11.a
+		ai_chance = {	
+			modifier = {
+				factor = 50
+					BUL = { has_country_flag = german_help_with_pact}
+					
+				}
+			factor = 90	
+		}
+		BUL = { country_event = { id = pact.12 days = 1 }}
+	}
+	option = { 
+		name = pact.8.a
+		
+		BUL = { country_event = { id = pact.13 days = 1 }}
+	}
+
+}
+### Romanian demands lands
+country_event = {
+	id = pact.12
+	title = pact.12.t
+	desc = pact.12.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.12.a
+		ROM = {
+			add_state_core = 77
+			set_country_flag = romanian_pact_demands
+		}
+	}
+}
+### Romanian no demands
+country_event = {
+	id = pact.13
+	title = pact.13.t
+	desc = pact.13.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.13.a
+	}
+}
+### Greek demands
+country_event = {
+	id = pact.14
+	title = pact.14.t
+	desc = pact.14.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.14.a
+		ai_chance = {	
+			modifier = {
+				factor = 50
+					BUL = { has_country_flag = german_help_with_pact}
+					
+				}
+			factor = 90	
+		}
+		BUL = { country_event = { id = pact.15 days = 1 }}
+	}
+	option = { 
+		name = pact.8.a
+		
+		BUL = { country_event = { id = pact.16 days = 1 }}
+	}
+
+}
+### Greek demands lands
+country_event = {
+	id = pact.15
+	title = pact.15.t
+	desc = pact.15.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.15.a
+		GRE = {
+			add_state_core = 731
+			add_state_core = 184
+			set_country_flag = greek_pact_demands
+		}
+	}
+}
+### Greek no demands
+country_event = {
+	id = pact.16
+	title = pact.16.t
+	desc = pact.16.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = pact.16.a
+	}
+}
+### Pact Ultimatuum
+country_event = {
+	id = pact.17
+	title = pact.17.t
+	desc = pact.17.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # submit
+		name = pact.17.a
+		if = {
+			limit = {
+				SER = { has_country_flag = serb_pact_demands}
+			}
+			SER = {transfer_state = 106}
+		}
+		if = {
+			limit = {
+				ROM = { has_country_flag = romanian_pact_demands}
+			}
+			ROM = {transfer_state = 77}
+		}
+		if = {
+			limit = {
+				GRE = { has_country_flag = greek_pact_demands}
+			}
+			GRE = {transfer_state = 731}
+			GRE = {transfer_state = 184}
+		}
+	}
+	option = { # fight
+		name = pact.17.b
+		SER = {
+			country_event = { id = pact.18 days = 1 }
+		}
+		}
+	
+}
+### Serbian decision
+country_event = {
+	id = pact.18
+	title = pact.18.t
+	desc = pact.18.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # Fight
+		name = pact.18.a
+		ai_chance = {	
+			modifier = {
+				factor = 50
+					BUL = { has_country_flag = german_help_with_pact}
+					
+				}
+			factor = 90	
+		}
+		declare_war_on = { target = BUL type = annex_everything }
+		BUL = { country_event = { id = pact.20 days = 1 } }
+		
+	}
+	option = { # back down
+		name = pact.18.b
+			BUL = { country_event = { id = pact.19 days = 1 } }
+		}
+	
+}
+
+### Pact backs down
+country_event = {
+	id = pact.19
+	title = pact.19.t
+	desc = pact.19.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # Excellent
+		name = pact.19.a		
+	}		
+}
+### The 4. Balkan war
+country_event = {
+	id = pact.20
+	title = pact.20.t
+	desc = pact.20.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes 
+	
+	option = { # Excellent
+		name = pact.20.a		
+	}		
+}

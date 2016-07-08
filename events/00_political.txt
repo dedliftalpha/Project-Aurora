@@ -1,28 +1,510 @@
 ﻿### MODDER: DK ###
 ### Political Events ###
 
-add_namespace = political
+add_namespace = kr.political
 
+### Decrease
 country_event = {
-	id = political.1
-	title = political.1.t
-	desc = political.1.d
-	
-	fire_only_once = yes
+	id = kr.political.1
+	title = kr.political.1.t
+	desc = kr.political.1.d
+
 	
 	trigger = {
 		has_political_power < -100
-
+		NOT = {has_idea =  desaster }
+		
+		
+		
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 90
+		
+		modifier = {
+			factor = 0.5
+			has_political_power < -200
+			has_political_power > -300
+		}
+		modifier = {
+			factor = 0.75
+			has_political_power < -300
+		}
 	}
 	
 	option = {
-		name = political.1.a
-
+		name = kr.political.1.a
+		if = {
+			limit = {
+				has_idea =  very_low_stability 
+			}
+			remove_ideas = very_low_stability
+			add_ideas = desaster
+		}
+		if = {
+			limit = {
+				has_idea =  low_stability 
+			}
+			remove_ideas = low_stability
+			add_ideas = very_low_stability
+		}
+		if = {
+			limit = {
+				has_idea =  normal_stability 
+			}
+			remove_ideas = normal_stability
+			add_ideas = low_stability
+		}
+		if = {
+			limit = {
+				has_idea =  good_stability 
+			}
+			remove_ideas = good_stability
+			add_ideas = normal_stability
+		}
+		if = {
+			limit = {
+				has_idea =  very_good_stability 
+			}
+			remove_ideas = very_good_stability
+			add_ideas = good_stability
+		}
+	}
+}
+### Increase
+country_event = {
+	id = kr.political.2
+	title = kr.political.2.t
+	desc = kr.political.2.d
+	
+	trigger = {
+		has_political_power > 250
 		
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = kr.political.2.a
+		
+		if = {
+			limit = {
+				has_idea =  good_stability 
+			}
+			remove_ideas = good_stability
+			add_ideas = very_good_stability
+		}
+		if = {
+			limit = {
+				has_idea =  normal_stability 
+			}
+			remove_ideas = normal_stability
+			add_ideas = good_stability
+		}
+		if = {
+			limit = {
+				has_idea =  low_stability 
+			}
+			remove_ideas = low_stability
+			add_ideas = normal_stability
+		}
+		if = {
+			limit = {
+				has_idea =  very_low_stability 
+			}
+			remove_ideas = very_low_stability
+			add_ideas = low_stability
+		}
+		if = {
+			limit = {
+				has_idea =  desaster 
+			}
+			remove_ideas = desaster
+			add_ideas = very_low_stability
+		}
+	}
+	option = {
+		name = kr.political.2.b
+		
+	}
+}
+
+### very_high_popularity
+country_event = {
+	id = kr.political.3
+	title = kr.political.3.t
+	desc = kr.political.3.d
+	
+	trigger = {
+		NOT = { has_idea = very_high_popularity }
+		OR = {
+			AND = {
+				has_government = totalist
+				totalist > 0.80
+			}
+			AND = {
+				has_government = radical_socialist
+				radical_socialist > 0.80
+			}
+			AND = {
+				has_government = syndicalist
+				syndicalist > 0.80
+			}
+			AND = {
+				has_government = social_democratist
+				social_democratist > 0.80
+			}
+			AND = {
+				has_government = social_liberalist
+				social_liberalist > 0.80
+			}
+			AND = {
+				has_government = market_liberalist
+				market_liberalist > 0.80
+			}
+			AND = {
+				has_government = social_conservatist
+				social_conservatist > 0.80
+			}
+			AND = {
+				has_government = authoritarian_democratist
+				authoritarian_democratist > 0.80
+			}
+			AND = {
+				has_government = paternal_autocratist
+				paternal_autocratist > 0.80
+			}
+			AND = {
+				has_government = national_populist
+				national_populist > 0.80
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = kr.political.3.a
+		hidden_effect = {
+		remove_ideas = very_low_popularity
+		remove_ideas = low_popularity
+		remove_ideas = normal_popularity
+		remove_ideas = high_popularity
+		remove_ideas = very_high_popularity
+		}
+		add_ideas = very_high_popularity
+	}
+
+}
+### high_popularity
+country_event = {
+	id = kr.political.4
+	title = kr.political.4.t
+	desc = kr.political.4.d
+	
+	trigger = {
+		NOT = { has_idea = high_popularity }
+		OR = {
+			AND = {
+				has_government = totalist
+				totalist < 0.80
+				totalist > 0.60
+			}
+			AND = {
+				has_government = radical_socialist
+				radical_socialist < 0.80
+				radical_socialist > 0.60
+			}
+			AND = {
+				has_government = syndicalist
+				syndicalist < 0.80
+				syndicalist > 0.60
+			}
+			AND = {
+				has_government = social_democratist
+				social_democratist < 0.80
+				social_democratist > 0.60
+			}
+			AND = {
+				has_government = social_liberalist
+				social_liberalist < 0.80
+				social_liberalist > 0.60
+			}
+			AND = {
+				has_government = market_liberalist
+				market_liberalist < 0.80
+				market_liberalist > 0.60
+			}
+			AND = {
+				has_government = social_conservatist
+				social_conservatist < 0.80
+				social_conservatist > 0.60
+			}
+			AND = {
+				has_government = authoritarian_democratist
+				authoritarian_democratist < 0.80
+				authoritarian_democratist > 0.60
+			}
+			AND = {
+				has_government = paternal_autocratist
+				paternal_autocratist < 0.80
+				paternal_autocratist > 0.60
+			}
+			AND = {
+				has_government = national_populist
+				national_populist < 0.80
+				national_populist > 0.60
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = kr.political.4.a
+		hidden_effect = {
+		remove_ideas = very_low_popularity
+		remove_ideas = low_popularity
+		remove_ideas = normal_popularity
+		remove_ideas = high_popularity
+		remove_ideas = very_high_popularity
+		}
+		add_ideas = high_popularity
+	}
+
+}
+### normal_popularity
+country_event = {
+	id = kr.political.5
+	title = kr.political.5.t
+	desc = kr.political.5.d
+	
+	trigger = {
+		NOT = { has_idea = normal_popularity }
+		OR = {
+			AND = {
+				has_government = totalist
+				totalist < 0.60
+				totalist > 0.40
+			}
+			AND = {
+				has_government = radical_socialist
+				radical_socialist < 0.60
+				radical_socialist > 0.40
+			}
+			AND = {
+				has_government = syndicalist
+				syndicalist < 0.60
+				syndicalist > 0.40
+			}
+			AND = {
+				has_government = social_democratist
+				social_democratist < 0.60
+				social_democratist > 0.40
+			}
+			AND = {
+				has_government = social_liberalist
+				social_liberalist < 0.60
+				social_liberalist > 0.40
+			}
+			AND = {
+				has_government = market_liberalist
+				market_liberalist < 0.60
+				market_liberalist > 0.40
+			}
+			AND = {
+				has_government = social_conservatist
+				social_conservatist < 0.60
+				social_conservatist > 0.40
+			}
+			AND = {
+				has_government = authoritarian_democratist
+				authoritarian_democratist < 0.60
+				authoritarian_democratist > 0.40
+			}
+			AND = {
+				has_government = paternal_autocratist
+				paternal_autocratist < 0.60
+				paternal_autocratist > 0.40
+			}
+			AND = {
+				has_government = national_populist
+				national_populist < 0.60
+				national_populist > 0.40
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = kr.political.5.a
+		hidden_effect = {
+		remove_ideas = very_low_popularity
+		remove_ideas = low_popularity
+		remove_ideas = normal_popularity
+		remove_ideas = high_popularity
+		remove_ideas = very_high_popularity
+		}
+		add_ideas = normal_popularity
+	}
+
+}
+### low_popularity
+country_event = {
+	id = kr.political.6
+	title = kr.political.6.t
+	desc = kr.political.6.d
+	
+	trigger = {
+		NOT = { has_idea = low_popularity }
+		OR = {
+			AND = {
+				has_government = totalist
+				totalist < 0.40
+				totalist > 0.20
+			}
+			AND = {
+				has_government = radical_socialist
+				radical_socialist < 0.40
+				radical_socialist > 0.20
+			}
+			AND = {
+				has_government = syndicalist
+				syndicalist < 0.40
+				syndicalist > 0.20
+			}
+			AND = {
+				has_government = social_democratist
+				social_democratist < 0.40
+				social_democratist > 0.20
+			}
+			AND = {
+				has_government = social_liberalist
+				social_liberalist < 0.40
+				social_liberalist > 0.20
+			}
+			AND = {
+				has_government = market_liberalist
+				market_liberalist < 0.40
+				market_liberalist > 0.20
+			}
+			AND = {
+				has_government = social_conservatist
+				social_conservatist < 0.40
+				social_conservatist > 0.20
+			}
+			AND = {
+				has_government = authoritarian_democratist
+				authoritarian_democratist < 0.40
+				authoritarian_democratist > 0.20
+			}
+			AND = {
+				has_government = paternal_autocratist
+				paternal_autocratist < 0.40
+				paternal_autocratist > 0.20
+			}
+			AND = {
+				has_government = national_populist
+				national_populist < 0.40
+				national_populist > 0.20
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = kr.political.6.a
+		hidden_effect = {
+		remove_ideas = very_low_popularity
+		remove_ideas = low_popularity
+		remove_ideas = normal_popularity
+		remove_ideas = high_popularity
+		remove_ideas = very_high_popularity
+		}
+		add_ideas = low_popularity
+	}
+
+}
+### very_low_popularity
+country_event = {
+	id = kr.political.7
+	title = kr.political.7.t
+	desc = kr.political.7.d
+	
+	trigger = {
+		NOT = { has_idea = very_low_popularity }
+		OR = {
+			AND = {
+				has_government = totalist
+				totalist < 0.20
+			}
+			AND = {
+				has_government = radical_socialist
+				radical_socialist < 0.20
+				
+			}
+			AND = {
+				has_government = syndicalist
+				syndicalist < 0.20
+
+			}
+			AND = {
+				has_government = social_democratist
+				social_democratist < 0.20
+			}
+			AND = {
+				has_government = social_liberalist
+				social_liberalist < 0.20
+			}
+			AND = {
+				has_government = market_liberalist
+				market_liberalist < 0.20
+			}
+			AND = {
+				has_government = social_conservatist
+				social_conservatist < 0.20
+			}
+			AND = {
+				has_government = authoritarian_democratist
+				authoritarian_democratist < 0.20
+			}
+			AND = {
+				has_government = paternal_autocratist
+				paternal_autocratist < 0.20
+			}
+			AND = {
+				has_government = national_populist
+				national_populist < 0.20
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = kr.political.7.a
+		hidden_effect = {
+		remove_ideas = very_low_popularity
+		remove_ideas = low_popularity
+		remove_ideas = normal_popularity
+		remove_ideas = high_popularity
+		remove_ideas = very_high_popularity
+		}
+		add_ideas = very_low_popularity
 	}
 
 }

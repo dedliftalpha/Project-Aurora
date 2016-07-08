@@ -1,24 +1,42 @@
 ﻿#### Modder: Selim ####
 #### Japanese Events ####
 
-add_namespace = japan
+add_namespace = kr.japan
 
-# Imperial Rule Assistance Society
-# Civil Disobedience in Niigata
-# Spread of the Niigata riots
+# Bookmark/Description Event = kr.japan.0
 
-# The Death of Prime Minister Inukai
-# Kodoha or Toseiha
-
-# Decleration of forming own path
+# Imperial Rule Assistance Society = kr.japan.1
+# Civil Disobedience in Niigata = kr.japan.2
+# Spread of the Niigata riots = kr.japan.3
 
 ##########################################################
 
+# Bookmark/Description Event
+country_event = {
+	id = kr.japan.0
+	title = kr.japan.0.t
+	desc = kr.japan.0.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = JAP
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option =  {
+		name = kr.japan.0.a #"Start"
+	}
+}
+
 # Imperial Rule Assistance Society
 country_event = {
-	id = japan.1
-	title = japan.1.t
-	desc = japan.1.d
+	id = kr.japan.1
+	title = kr.japan.1.t
+	desc = kr.japan.1.d
 	#DH Picture "Japan_Victory2"
 	
 	fire_only_once = yes
@@ -40,7 +58,7 @@ country_event = {
 	}
 	
 	option = {
-		name = japan.1.a
+		name = kr.japan.1.a #"Glory to the Rising Sun! Banzai! Banzai!"
 		add_ideas = japan_parties_banned
 		retire_country_leader = yes
 		set_politics = {
@@ -68,19 +86,19 @@ country_event = {
 	}
 }
 
+### Niigata Riots ###
 # Civil Disobedience in Niigta
-
 country_event = {
-	id = japan.2
-	title = japan.2.t
-	desc = japan.2.d
-	#DH Picture = "Japan_Occupation"
+	id = kr.japan.2
+	title = kr.japan.2.t
+	desc = kr.japan.2.d
+	#DH Picture = "Rodonominto"
 
 	fire_only_once = yes
 	
 	trigger = {
 		tag = JAP
-		date > 1936.05.15
+		date > 1936.04.03
 	}
 	
 	mean_time_to_happen = {
@@ -88,45 +106,99 @@ country_event = {
 	}
 	
 	option = {
-		name = japan.2.a
-		add_political_power = -40
-		add_popularity = {
-			ideology = social_conservatist
-			popularity = -0.05
+		name = kr.japan.2.a #"Negotiate with the dissenters"
+		country_event = {
+			id = kr.japan.3
+			days = 10
 		}
-		add_national_unity = -0.05
+		add_political_power = -20
 	}
 	option = {
-		name = japan.2.b
-		add_political_power = -80
-	}
-	option = {
-		name = japan.2.c
-		add_popularity = {
-			ideology = social_conservatist
-			popularity = -0.10
-		}
+		name = kr.japan.2.b #"Crush this riot"
+		add_manpower = -10000
 		add_national_unity = -0.10
+		send_equipment = {
+			target = JAP
+			type = infantry_equipment
+			amount = -1000
+		}
 	}
 }
 
-# Spread of the Niigata riots
-
+# Spread of the Niigata Riot
 country_event = {
-	id = japan.3
-	title = japan.3.t
-	desc = japan.3.d
-	#DH Picture = "Japan_Occupation"
+	id = kr.japan.3
+	title = kr.japan.3.t
+	desc = kr.japan.3.d
+	#DH Picture = "Rodonominto"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = kr.japan.3.a #"Continue negotiations"
+		add_political_power = -40
+		country_event = {
+			id = kr.japan.4
+			days = 10
+		}
+	}
+	option = {
+		name = kr.japan.3.b #"This is getting out of hand, send in the army"
+		add_manpower = -20000
+		add_national_unity = -0.10
+		send_equipment = {
+			target = JAP
+			type = infantry_equipment
+			amount = -2000
+		}
+	}
+}
+
+# The Decision
+country_event = {
+	id = kr.japan.4
+	title = kr.japan.4.t
+	desc = kr.japan.4.d
+	#DH Picture = "niigatariots"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = kr.japan.4.a #"Offer a reform package to appease people"
+		add_political_power = -60
+	}
+	option = {
+		name = kr.japan.4.b #"Dialogue is useless, declare martial law"
+		add_manpower = -40000
+		add_national_unity = -0.15
+		send_equipment = {
+			target = JAP
+			type = infantry_equipment
+			amount = -4000
+		}
+	}
+}
+
+# 1936 - Introductory Event
+country_event = {
+	id = kr.japan.5
+	title = kr.japan.5.t
+	desc = kr.japan.5.d
+	#DH Picture = "Farmers"
 	
 	fire_only_once = yes
 	
 	trigger = {
 		tag = JAP
-		date > 1936.07.20
+	}
+	
+	mean_time_to_happen = {
+		days = 5
 	}
 	
 	option = {
-		name = japan.3.a
-		
+		name = kr.japan.5.a #"OK"
+		add_political_power = -50
+		add_national_unity = -0.10
 	}
 }

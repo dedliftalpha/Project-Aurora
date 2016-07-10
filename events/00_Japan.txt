@@ -11,24 +11,56 @@ add_namespace = kr.japan
 
 ##########################################################
 
+### General Events ###
+# kr.japan.0 Trigger
+country_event = {
+	id = kr.japan.11
+	title = kr.japan.11.t
+	desc = kr.japan.11.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		country_exists = JAP
+		date > 1936.01.01
+	}
+	
+	immediate = {
+		JAP = {country_event = {id = kr.japan.0}}
+	}
+
+	option = {
+		name = kr.japan.11.a
+	}
+}
+
 # Bookmark/Description Event
 country_event = {
 	id = kr.japan.0
 	title = kr.japan.0.t
 	desc = kr.japan.0.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = JAP
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 	
 	option =  {
 		name = kr.japan.0.a #"Start"
+		hidden_effect = {country_event = {id = kr.japan.5 days = 3}}
+	}
+}
+
+# Recovering from the Lost Decade
+country_event = {
+	id = kr.japan.5
+	title = kr.japan.5.t
+	desc = kr.japan.5.d
+	#DH Picture = "Farmers"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = kr.japan.5.a #"OK"
+		add_political_power = -50
+		add_national_unity = -0.10
 	}
 }
 
@@ -54,13 +86,13 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1 
+		days = 15
 	}
 	
 	option = {
 		name = kr.japan.1.a #"Glory to the Rising Sun! Banzai! Banzai!"
 		add_ideas = japan_parties_banned
-		retire_country_leader = yes
+		hidden_effect = {retire_country_leader = yes}
 		set_politics = {
 			ruling_party = paternal_autocratist
 			elections_allowed = no
@@ -74,20 +106,22 @@ country_event = {
 			long_name = JAP_paternal_autocratist_party_long2
 			name = JAP_paternal_autocratist_party2
 		}
-		create_country_leader = {
-			name = "Hirohito"
-			desc = "POLITICS_HIROHITO_DESC"
-			picture = "Portrait_Japan_Hirohito.dds"
-			expire = "1965.1.1"
-			ideology = paternal_autocratist_subtype
-			traits = {}
+		hidden_effect = {
+			create_country_leader = {
+				name = "Hirohito"
+				desc = "POLITICS_HIROHITO_DESC"
+				picture = "Portrait_Japan_Hirohito.dds"
+				expire = "1965.1.1"
+				ideology = paternal_autocratist_subtype
+				traits = {}
+			}
 		}
 	}
 }
 
 ### Niigata Riots ###
 # Civil Disobedience in Niigta
-country_event = {
+news_event = {
 	id = kr.japan.2
 	title = kr.japan.2.t
 	desc = kr.japan.2.d
@@ -101,22 +135,21 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 30
 	}
 	
 	option = {
 		name = kr.japan.2.a #"Negotiate with the dissenters"
-		country_event = {
-			id = kr.japan.3
-			days = 10
-		}
+		country_event = {id = kr.japan.3 days = 15}
 		add_political_power = -20
+		add_ideas = niigata_riots
 	}
 	option = {
 		name = kr.japan.2.b #"Crush this riot"
 		add_manpower = -10000
 		add_national_unity = -0.10
 		army_experience = 10
+		add_timed_idea = {idea = niigata_riots days = 15}
 	}
 }
 
@@ -131,17 +164,15 @@ country_event = {
 	
 	option = {
 		name = kr.japan.3.a #"Continue negotiations"
-		add_political_power = -40
-		country_event = {
-			id = kr.japan.4
-			days = 10
-		}
+		add_political_power = -50
+		hidden_effect = {country_event = {id = kr.japan.4 days = 15}}
 	}
 	option = {
 		name = kr.japan.3.b #"This is getting out of hand, send in the army"
 		add_manpower = -20000
 		add_national_unity = -0.10
 		army_experience = 20
+		remove_ideas = niigata_riots
 	}
 }
 
@@ -156,63 +187,62 @@ country_event = {
 	
 	option = {
 		name = kr.japan.4.a #"Offer a reform package to appease people"
-		add_political_power = -60
+		add_political_power = -80
+		remove_ideas = niigata_riots
 	}
 	option = {
 		name = kr.japan.4.b #"Dialogue is useless, declare martial law"
 		add_manpower = -40000
 		add_national_unity = -0.15
 		army_experience = 40
-	}
-}
-
-# 1936 - Introductory Event
-country_event = {
-	id = kr.japan.5
-	title = kr.japan.5.t
-	desc = kr.japan.5.d
-	#DH Picture = "Farmers"
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = JAP
-		date > 1936.01.05
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
-	
-	option = {
-		name = kr.japan.5.a #"OK"
-		add_political_power = -50
-		add_national_unity = -0.10
+		add_political_power = -25
+		remove_ideas = niigata_riots
 	}
 }
 
 ### 1936 - General Elections 36, February ###
-# Dissolution of the Diet
+# kr.japan.6 Trigger
 country_event = {
-	id = kr.japan.6
-	title = kr.japan.6.t
-	desc = kr.japan.6.d
-	#DH Picture = "Inukai"
+	id = kr.japan.10
+	title = kr.japan.10.t
+	desc = kr.japan.10.d
 	
 	fire_only_once = yes
 	
 	trigger = {
-		tag = JAP
-		date > 1936.01.12
+		country_exists = JAP
+		date > 1936.01.20
 	}
 	
-	mean_time_to_happen = {
-		days = 1
+	immediate = {
+		JAP = {country_event = {id = kr.japan.6}}
 	}
+
+	option = {
+		name = kr.japan.10.a
+	}
+}
+# Dissolution of the Diet
+news_event = {
+	id = kr.japan.6
+	title = kr.japan.6.t
+	desc = kr.japan.6.d
+	#DH Picture = "Inukai"
+
+	is_triggered_only = yes
+	
+#	fire_only_once = yes
+#	
+#	trigger = {
+#		tag = JAP
+#		date > 1936.01.20
+#	}
 	
 	option = {
 		name = kr.japan.6.a #"OK"
 		add_national_unity = 0.05
+		add_political_power = 50
+		hidden_effect = {country_event = {id = kr.japan.7 days = 30}}
 	}
 }
 
@@ -223,19 +253,12 @@ country_event = {
 	desc = kr.japan.7.d
 	#DH Picture = "Japanese Voting"
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = JAP
-		date > 1936.02.11
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = kr.japan.7.a #"The Seiyukai have defended their absolute majority!"
+		add_national_unity = 0.05
+		add_political_power = -50
 	}
 	option = {
 		name = kr.japan.7.b #"The Seiyukai have lost their absolute majority!"
@@ -243,20 +266,61 @@ country_event = {
 			ideology = social_conservatist
 			popularity = 0.3
 		}
-		retire_country_leader = yes
+		hidden_effect = {retire_country_leader = yes}
 		set_politics = {
 			ruling_party = social_conservatist
 			elections_allowed = no
 		}
-		create_country_leader = {
-			name = "Hirohito"
-			desc = "POLITICS_HIROHITO_DESC"
-			picture = "Portrait_Japan_Hirohito.dds"
-			expire = "1965.1.1"
-			ideology = social_conservatist_subtype
-			traits = {}
+		hidden_effect = {
+			create_country_leader = {
+				name = "Hirohito"
+				desc = "POLITICS_HIROHITO_DESC"
+				picture = "Portrait_Japan_Hirohito.dds"
+				expire = "1965.1.1"
+				ideology = social_conservatist_subtype
+				traits = {}
+			}
+			remove_ideas_with_trait = head_of_government
 		}
-		remove_ideas_with_trait = head_of_government
 		add_ideas = hamaguchi_osachi_hog
+		add_national_unity = -0.05
+	}
+}
+
+### 1936 - The Assassination of Sen Katayama and Aftermath
+# The Assassination of Katayama Sen
+news_event = {
+	id = kr.japan.8
+	title = kr.japan.8.t
+	desc = kr.japan.8.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = JAP 
+		date > 1936.02.20
+	}
+	
+	mean_time_to_happen = 15
+	
+	option = {
+		name = kr.japan.8.a # OK
+		add_political_power = -50
+		hidden_effect = {country_event = {id = kr.japan.9 days = 30}}
+	}
+}
+
+# Friction Within the Japanese Left
+country_event = {
+	id = kr.japan.9
+	title = kr.japan.9.t
+	desc = kr.japan.9.d
+	
+	is_triggered_only = yes
+	
+	option = { # OK
+		name = kr.japan.9.a
+		add_political_power = -25
+		national_unity = -0.05
 	}
 }

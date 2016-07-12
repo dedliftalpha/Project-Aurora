@@ -10,17 +10,7 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 	desc = amcivwar.1.d
 	picture = GFX_report_event_soviet_finnish_pact
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = USA
-		has_global_flag = ACW_CSA
-		date > 1936.11.4
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = amcivwar.1.a
@@ -1162,7 +1152,8 @@ country_event = { # AUS hits the road
 	option = { 
 		name = amcivwar.29.a
 
-		set_global_flag = ACW_AUS 
+		set_global_flag = ACW_AUS
+		country_event = { id = amcivwar.2 days = 4 }  
 	}		
 }
 
@@ -1194,6 +1185,7 @@ country_event = { # Combined Syndicates of America Leave
 		name = amcivwar.30.a
 
 		set_global_flag = ACW_CSA
+		country_event = { id = amcivwar.1 days = 2 } 
 	}		
 }
 
@@ -1224,6 +1216,7 @@ country_event = { # AUS hits the road
 		name = amcivwar.31.a
 
 		set_global_flag = ACW_CAL
+		country_event = { id = amcivwar.4 days = 6 } 
 	}		
 }
 
@@ -1528,6 +1521,7 @@ country_event = { # California Leaves the Union due to war and the loss of Washi
 		name = amcivwar.42.a
 
 		set_global_flag = ACW_CAL
+		country_event = { id = amcivwar.4 days = 6 } 
 	}				
 }
 
@@ -4245,7 +4239,6 @@ country_event = { # Independent New England
 		add_opinion_modifier = { target = DEH modifier = NEENT }
 		add_opinion_modifier = { target = CAF modifier = NEENT } 
 		add_opinion_modifier = { target = NFA modifier = NEENT }
-		country_event = { id = amcivwar.126 days = 30 }
 
 		add_manpower = 100000
 		load_oob = NEE
@@ -4258,29 +4251,48 @@ country_event = { # Canada Releases New England
 	desc = amcivwar.126.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		USA = { surrender_progress < 0.75 }
+		OR = {
+			NOT = {
+				country_exists = CSA
+			}
+			NOT = {
+				country_exists = TEX
+			}
+		}
+		NOT = { has_war = yes }
+		country_exists = USA
+		USA = { has_war = yes }
+	}
+
+	mean_time_to_happen = { 
+		days = 1
+	}
 	
 	option = { 
 		name = amcivwar.126.a
 
 		ai_chance = {
-			factor = 90
+			factor = 50
 		}
 
 		add_political_power = 10
 		
 		set_global_flag = NEE_Allies_USA
 		CAN = { remove_from_faction = NEE }
-		add_to_war = { targeted_alliance = USA enemy = CSA }
-		add_to_war = { targeted_alliance = USA enemy = AUS }
-		add_to_war = { targeted_alliance = USA enemy = CAL }
+		USA = { create_faction = "American Alliance" }
+		USA = { add_to_faction = NEE }
 	}
 
 	option = { 
 		name = amcivwar.126.b
 
 		ai_chance = {
-			factor = 1
+			factor = 50
 		}
 
 		add_political_power = -10

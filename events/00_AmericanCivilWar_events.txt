@@ -439,6 +439,7 @@ country_event = { # USA/ Canada seizes NE
 		}
 
 		CAN = { transfer_state = 357 }
+		set_global_flag = ACE_CAN_SIEZE_NE
 
 		add_political_power = -10	
 	}		
@@ -630,7 +631,8 @@ country_event = { # Canada seizes Panama Canal
 			factor = 100
 		}
 
-		CAN = { transfer_state = 685 }	
+		CAN = { transfer_state = 685 }
+		set_global_flag = CAN_SEIZES_PANAMA	
 	}
 }
 
@@ -1045,12 +1047,12 @@ country_event = { # MacArhtur vs CSA
 	
 	trigger = {
 		tag = USA
-		country_exists = CAL
+		country_exists = CSA
 		has_government = authoritarian_democratist
 		NOT = {
-			has_war_with = CAL
+			has_war_with = CSA
 			USA = { is_puppet = yes }
-			CAL = { is_puppet = yes }
+			CSA = { is_puppet = yes }
 		}
 	}
 
@@ -1065,7 +1067,7 @@ country_event = { # MacArhtur vs CSA
 			factor = 99
 		}
 
-		declare_war_on = { target = CAL type = civil_war_focus }
+		declare_war_on = { target = CSA type = civil_war_focus }
 		add_national_unity = 0.1
 		add_political_power = 50
 	}
@@ -1681,7 +1683,7 @@ country_event = { # MacArthur Responds to PSA's rejoining of the Union
 	option = { 
 		name = amcivwar.46.a
 
-		annex_country = { target = CAL transfer_troops = no }
+		annex_country = { target = CAL transfer_troops = yes }
 		add_national_unity = 0.25
 		add_political_power = 100
 	}					
@@ -3295,7 +3297,7 @@ country_event = { # War Bonds
 
 	trigger = {
 		tag = USA
-		has_global_flag = ACW_CSA
+		has_global_flag = ACW_CAL
 		country_exists = CAL
 	}
 
@@ -3305,6 +3307,7 @@ country_event = { # War Bonds
 	
 	option = { 
 		name = amcivwar.92.a	
+		set_global_flag = CAL_NAVY
 	}					
 }
 
@@ -3329,7 +3332,8 @@ country_event = { # War Bonds
 	}
 	
 	option = { 
-		name = amcivwar.93.a	
+		name = amcivwar.93.a
+		set_global_flag = CSA_NAVY	
 	}					
 }
 
@@ -3345,7 +3349,7 @@ country_event = { # War Bonds
 
 	trigger = {
 		tag = USA
-		has_global_flag = ACW_CSA
+		has_global_flag = ACW_AUS
 		country_exists = TEX
 	}
 
@@ -3354,7 +3358,8 @@ country_event = { # War Bonds
 	}
 	
 	option = { 
-		name = amcivwar.94.a	
+		name = amcivwar.94.a
+		set_global_flag = AUS_NAVY	
 	}					
 }
 
@@ -3370,7 +3375,7 @@ country_event = { # PSA fleets
 
 	trigger = {
 		tag = CAL
-		has_country_flag = CAL_NAVY
+		has_global_flag = CAL_NAVY
 	}
 
 	mean_time_to_happen = {
@@ -3396,7 +3401,7 @@ country_event = { # CSA fleets
 
 	trigger = {
 		tag = CSA
-		has_country_flag = CSA_NAVY
+		has_global_flag = CSA_NAVY
 	}
 
 	mean_time_to_happen = {
@@ -3422,7 +3427,7 @@ country_event = { # AUS fleets
 
 	trigger = {
 		tag = TEX
-		has_country_flag = AUS_NAVY
+		has_global_flag = AUS_NAVY
 	}
 
 	mean_time_to_happen = {
@@ -4076,9 +4081,8 @@ country_event = { # Montana National Guard
 		tag = USA
 		OR = {
 			has_war_with = CSA
+			has_war_with = CAL
 		}	
-		country_exists = CSA
-		USA = { controls_state = 357 }
 	}
 
 	mean_time_to_happen = {
@@ -4103,9 +4107,11 @@ country_event = { # New England National Guard
 	trigger = {
 		tag = USA
 		OR = {
-			has_war_with = TEX
-			has_war_with = CAL
+			has_war_with = CSA
 		}	
+		country_exists = CSA
+		USA = { controls_state = 357 }
+		NOT = { has_global_flag = ACE_CAN_SIEZE_NE }
 	}
 
 	mean_time_to_happen = {
@@ -5079,7 +5085,7 @@ country_event = { # Wake and Midway Occupied by Hawaii
 
 country_event = { # Hawaii Occupies Midway, Wake and Other Pacific Islands
 	id = amcivwar.145
-	title = amcivwar.155.t
+	title = amcivwar.145.t
 	desc = amcivwar.145.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
@@ -5210,7 +5216,7 @@ country_event = { # PSA inherits Hawaii
 			factor = 99
 		}
 
-		annex_country = { target = HAW }
+		annex_country = { target = HAW transfer_troops = yes }
 
 		add_state_core = 632
 		add_state_core = 631
@@ -7249,6 +7255,7 @@ country_event = { # Our place in the sun
 	trigger = {
 		tag = USA
 		has_global_flag = END_ACW
+		has_global_flag = CAN_SEIZES_PANAMA
 		CAN = {
 			owns_state = 685
 		}
@@ -7544,7 +7551,7 @@ country_event = { # End of the Civil War CSA wins
 	}
 }
 
-country_event = { # End of the Civil War CSA wins
+country_event = { # End of the civil war PSA wins by beating the USA
 	id = amcivwar.214
 	title = amcivwar.214.t
 	desc = amcivwar.214.d
@@ -7553,12 +7560,13 @@ country_event = { # End of the Civil War CSA wins
 	fire_only_once = yes
 
 	trigger = {
-		tag = AUS
+		tag = CAL
 		has_global_flag = ACW_CSA
 		NOT = {
 			country_exists = USA
 			country_exists = TEX
-			has_war_with = CAL
+			country_exists = CSA
+			has_war_with = NEE
 			has_war_with = HAW
 		}
 	}
@@ -7608,7 +7616,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # End of the Civil War New England wins?
 	id = amcivwar.216
 	title = amcivwar.216.t
 	desc = amcivwar.216.d
@@ -7640,7 +7648,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # USA wins AUS integration / California
 	id = amcivwar.217
 	title = amcivwar.217.t
 	desc = amcivwar.217.d
@@ -7665,7 +7673,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	option = { 
 		name = amcivwar.217.a
 
-		AUS = {
+		TEX = {
 			remove_state_core = 365
 			remove_state_core = 367
 			remove_state_core = 371
@@ -7725,7 +7733,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # USA wins CSA integration /no california
 	id = amcivwar.218
 	title = amcivwar.218.t
 	desc = amcivwar.218.d
@@ -7810,7 +7818,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # CAL reintegrated into USA
 	id = amcivwar.219
 	title = amcivwar.219.t
 	desc = amcivwar.219.d
@@ -7835,7 +7843,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	option = { 
 		name = amcivwar.219.a
 
-		CSA = {
+		USA = {
 			remove_state_core = 386
 			remove_state_core = 385
 			remove_state_core = 378
@@ -7851,7 +7859,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 ######################################## Reintegration Events
 ######## End of the Civil War AUS reintegrated
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # AUS wins USA gives it up
 	id = amcivwar.220
 	title = amcivwar.220.t
 	desc = amcivwar.220.d
@@ -7875,7 +7883,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	option = { 
 		name = amcivwar.220.a
 
-		TEX = {
+		CAL = {
 			remove_state_claim = 650
 			remove_state_claim = 638
 			remove_state_claim = 632
@@ -7947,19 +7955,17 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 			add_state_core = 358
 			add_state_core = 357
 
-			country_event = { id = amcivwar.26 days = 1}
-			country_event = { id = amcivwar.27 days = 1}
-			country_event = { id = amcivwar.28 days = 1}
-			country_event = { id = amcivwar.29 days = 1}
-			country_event = { id = amcivwar.30 days = 1}
-			country_event = { id = amcivwar.31 days = 1}
+			country_event = { id = amcivwar.233 days = 1 }
+			country_event = { id = amcivwar.234 days = 1 }
+			country_event = { id = amcivwar.235 days = 1 }
+			country_event = { id = amcivwar.236 days = 1 }
 		}
 
 		add_political_power = -50
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # AUS wins USA integration / no California
 	id = amcivwar.221
 	title = amcivwar.221.t
 	desc = amcivwar.221.d
@@ -7997,7 +8003,7 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # AUS wins CSA integration
 	id = amcivwar.222
 	title = amcivwar.222.t
 	desc = amcivwar.222.d
@@ -8039,7 +8045,10 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+########################################################## CSA assumption of power
+######## End of the Civil War AUS reintegrated
+
+country_event = { # AUS wins USA gives it up
 	id = amcivwar.223
 	title = amcivwar.223.t
 	desc = amcivwar.223.d
@@ -8135,11 +8144,12 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 			add_state_core = 358
 			add_state_core = 357
 
-			country_event = { id = amcivwar.32 days = 1}
-			country_event = { id = amcivwar.33 days = 1}
-			country_event = { id = amcivwar.34 days = 1}
-			country_event = { id = amcivwar.35 days = 1}
-			country_event = { id = amcivwar.36 days = 1}
+			country_event = { id = amcivwar.226 days = 1 }
+			country_event = { id = amcivwar.227 days = 1 }
+			country_event = { id = amcivwar.228 days = 1 }
+			country_event = { id = amcivwar.229 days = 1 }
+			country_event = { id = amcivwar.230 days = 1 }
+			country_event = { id = amcivwar.231 days = 1 }
 		}
 
 		add_political_power = -50	
@@ -8545,6 +8555,22 @@ country_event = { # The Fate of the Union
 		puppet = USA
 
 		USA = {
+			remove_state_core = 378
+			remove_state_core = 385
+			remove_state_core = 386
+			remove_state_core = 387
+			remove_state_core = 379
+			remove_state_core = 463
+			remove_state_core = 650
+			remove_state_core = 638
+			remove_state_core = 632
+			remove_state_core = 342
+			remove_state_core = 726
+			remove_state_core = 727
+			remove_state_core = 630
+			remove_state_core = 631
+			remove_state_core = 629
+
 			transfer_state = 388
 			transfer_state = 381
 			transfer_state = 380 
@@ -8583,25 +8609,9 @@ country_event = { # The Fate of the Union
 			transfer_state = 369
 
 			if = {
-				limit = { CAN = { owns_state = 357 }}
+				limit = { CAL = { owns_state = 357 }}
 				USA = { transfer_state = 357 }
-			}
-
-			remove_state_core = 378
-			remove_state_core = 385
-			remove_state_core = 386
-			remove_state_core = 387
-			remove_state_core = 379
-			remove_state_core = 463
-			remove_state_core = 650
-			remove_state_core = 638
-			remove_state_core = 632
-			remove_state_core = 342
-			remove_state_core = 726
-			remove_state_core = 727
-			remove_state_core = 630
-			remove_state_core = 631
-			remove_state_core = 629
+			}	
 		}
 	}		
 
@@ -8677,6 +8687,9 @@ country_event = { # A good ally
 	
 	option = { 
 		name = amcivwar.239.a
+
+		create_faction = "American Alliance"
+		CAL = { add_to_faction = USA }
 	}		
 }
 

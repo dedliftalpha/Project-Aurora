@@ -28,11 +28,11 @@ focus = {
 		}
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
 			custom_effect_tooltip = unlock_focuses
-		}		
+		}
 	}
 
 focus = {
@@ -43,17 +43,28 @@ focus = {
 		cost = 10
 		available = { OR = { has_country_flag = RUS_DMI has_country_flag = RUS_DEN
 		OR = { AND = { has_country_flag = RUS_SEN has_country_flag = RUS_IRA }
-        AND = { has_country_flag = RUS_SEN has_country_flag = RUS_MILYU } } }  
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } }
+        AND = { has_country_flag = RUS_SEN has_country_flag = RUS_MILYU } } }
+        custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_CON_MON
-          
+		custom_effect_tooltip = con_mon_tooltip
+		remove_ideas = rus_political_unstability
+		hidden_effect = { set_country_flag = SOV_CON_MON country_event = { id = russia.11 days = 1 } }
+		if = { limit = { has_country_flag = RUS_DMI }
+		add_political_power = 50 }
+		if = { limit = { has_country_flag = RUS_DEN }
+		add_political_power = 0 }
+        if = { limit = { AND = { has_country_flag = RUS_SEN has_country_flag = RUS_IRA } }
+		add_political_power = -150 }
+		if = { limit = { AND = { has_country_flag = RUS_SEN has_country_flag = RUS_MILYU } }
+		add_political_power = -50 }
+		country_event = { id = russia.11 days = 1 }
 		}		
 	}
 	
@@ -64,16 +75,23 @@ focus = {
 		y = 1
 		cost = 10
 		available = { OR = { has_country_flag = RUS_DMI has_country_flag = RUS_DEN has_country_flag = RUS_WRA }  
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_CON_MON has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_TSAR_KYR
-          
+		custom_effect_tooltip = tsar_kyr_tooltip
+		remove_ideas = rus_political_unstability
+		hidden_effect = { set_country_flag = SOV_TSAR_KYR if = { limit = { has_country_flag = RUS_DMI }
+		add_political_power = 0 country_event = { id = russia.12 days = 1 } }
+		if = { limit = { has_country_flag = RUS_DEN }
+		add_political_power = 50 country_event = { id = russia.12 days = 1 } }
+		if = { limit = { has_country_flag = RUS_WRA }
+		add_political_power = 100 country_event = { id = russia.13 days = 1 } } }
 		}		
 	}
 	
@@ -84,16 +102,20 @@ focus = {
 		y = 1
 		cost = 10
 		available = { OR = { has_country_flag = RUS_DMI has_country_flag = RUS_WRA }  
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_CON_MON has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_TSAR_DMI
-          
+		custom_effect_tooltip = tsar_dmi_tooltip
+		remove_ideas = rus_political_unstability
+		hidden_effect = { set_country_flag = SOV_TSAR_DMI if = { limit = { has_country_flag = RUS_DMI } country_event = { id = russia.14 days = 1 } }
+		if = { limit = { has_country_flag = RUS_WRA } country_event = { id = russia.15 days = 1 } } }
+		add_political_power = -50
 		}		
 	}
 	
@@ -104,16 +126,20 @@ focus = {
 		y = 1
 		cost = 10
 		available = { has_country_flag = RUS_DMI 
-		NOT = { OR = { has_country_flag = SOV_CON_MON has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		mutually_exclusive = { }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_ARI_REP
+		custom_effect_tooltip = ari_rep_tooltip
+		remove_ideas = rus_political_unstability
+		hidden_effect = { set_country_flag = SOV_ARI_REP country_event = { id = russia.16 days = 1 } }
+		add_political_power = 50
           
 		}		
 	}
@@ -125,16 +151,20 @@ focus = {
 		y = 1
 		cost = 10
 		available = { has_country_flag = RUS_SEN 
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_CON_MON has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		mutually_exclusive = { }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_DEM_REP
+		custom_effect_tooltip = dem_rep_tooltip
+		remove_ideas = rus_political_unstability
+		hidden_effect = { set_country_flag = SOV_DEM_REP country_event = { id = russia.17 days = 1 } }
+		add_political_power = 50
           
 		}		
 	}
@@ -146,17 +176,20 @@ focus = {
 		y = 1
 		cost = 10
 		available = { has_country_flag = RUS_WRA 
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_CON_MON has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		mutually_exclusive = { }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_WRA_ambitions
-          
+		custom_effect_tooltip = wra_ambitions_tooltip
+		remove_ideas = rus_political_unstability
+        add_political_power = -50
+		country_event = { id = russia.18 days = 1 }         
 		}		
 	}
 	
@@ -167,16 +200,17 @@ focus = {
 		y = 0
 		cost = 10
 		available = { OR = { has_country_flag = RUS_IRA has_country_flag = RUS_BUKH } 
-		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_CON_MON has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_WRA_ambitions } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = SOV_ARI_REP has_country_flag = SOV_DEM_REP has_country_flag = SOV_TSAR_DMI has_country_flag = SOV_TSAR_KYR has_country_flag = SOV_SOVIET has_country_flag = SOV_WRA_ambitions } } }
 		}
 		prerequisite = { focus = SOV_KRSKY }
 		mutually_exclusive = { }
 		
 		ai_will_do = {
-			factor = 10
+			factor = 1000
 		}	
 		completion_reward = {
-		set_country_flag = SOV_SOVIET
+		set_country_flag = SOV_SOVIET #Not done, will do after I do the civil war
           
 		}		
 	}
@@ -391,7 +425,7 @@ focus = {
 		x = 5
 		y = 2
 		cost = 10
-		available = { }
+		available = { NOT = { has_country_flag = RUS_WRA } }
 		prerequisite = { focus = SOV_CON_MON focus = SOV_TSAR_KYR }
 		
 		ai_will_do = {
@@ -663,7 +697,7 @@ focus = {
 		x = 13
 		y = 2
 		cost = 10
-		available = { }
+		available = { NOT = { has_country_flag = RUS_WRA } }
 		prerequisite = { focus = SOV_TSAR_DMI focus = SOV_ARI_REP }
 		
 		ai_will_do = {
@@ -935,8 +969,8 @@ focus = {
 		x = 23
 		y = 2
 		cost = 10
-		available = { }
-		prerequisite = { focus = SOV_WRA_ambitions }
+		available = { has_country_flag = RUS_WRA }
+		prerequisite = { focus = SOV_WRA_ambitions focus = SOV_TSAR_KYR  focus = SOV_TSAR_DMI }
 		
 		ai_will_do = {
 			factor = 10
@@ -1132,6 +1166,10 @@ focus = {
             
 		}		
 	}
+	
+#############
+###### Military #######
+#############
 	
 focus = {
 		id = SOV_OKHRANA

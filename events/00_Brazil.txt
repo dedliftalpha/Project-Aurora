@@ -1,0 +1,1310 @@
+﻿###########################
+# BRA Events
+###########################
+
+add_namespace = bra
+add_namespace = bra.elections
+
+### Brazil Introduction
+# bra.1 Trigger
+country_event = {
+	id = bra.0
+	title = bra.0.t
+	desc = bra.0.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		country_exists = BRA
+		date > 1936.01.01
+	}
+	
+	immediate = {
+		BRA = { country_event = {id = bra.1} }
+	}
+
+	option = {
+		name = bra.00.a
+	}
+}
+country_event = {
+	id = bra.1
+	title = bra.1.t
+	desc = bra.1.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.1.a
+	}
+}
+
+##########
+### Pre-Election events
+#########
+
+#Padre Cicero Passes Away
+country_event = {
+	id = bra.2
+	title = bra.2.t
+	desc = bra.2.d
+	picture = GFX_bra_cico
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.1.7
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = bra.2.a
+		BRA = {
+			add_national_unity = -0.05
+		}
+	}
+}
+
+#PCB dissolves itself
+country_event = {
+	id = bra.3
+	title = bra.3.t
+	desc = bra.3.d
+	picture = GFX_BRA_PCB
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.1.10
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = bra.3.a
+	}
+}
+#Major industrial strike in São Paulo
+country_event = {
+	id = bra.4
+	title = bra.3.t
+	desc = bra.3.d
+	picture = GFX_bra_revolution
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.1.29
+	}
+	
+	option = {
+		name = bra.4.a
+		ai_chance = { factor = 25 }
+		BRA = {
+			add_popularity = { ideology = syndicalist popularity = 0.1 }
+		}
+	}
+	option = {
+		name = bra.4.b
+		ai_chance = { factor = 50 }
+		BRA = {
+			add_political_power = -35 #1 dissent * 35PP
+			hidden_effect = { country_event = { id = bra.5 days = 5 } }
+			#production_speed_buildings_factor = -0.05  #How to reduce industrial output without removing factories or adding more ideas?
+		}
+	}
+	option = {
+		name = bra.4.c
+		ai_chance = { factor = 25 }
+		BRA = {
+			add_political_power = -35 #1 dissent * 35PP
+			#production_speed_buildings_factor = -0.05 #How to reduce industrial output without removing factories or adding more ideas?
+			add_popularity = { ideology = national_populist popularity = 0.1 }
+		}
+	}
+}
+#CBT strike in São Paulo continues
+country_event = {
+	id = bra.5
+	title = bra.5.t
+	desc = bra.5.d
+	picture = GFX_bra_revolution
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.4.a
+		ai_chance = { factor = 50 }
+		BRA = { 
+			add_popularity = { ideology = syndicalist popularity = 0.1 }
+			#production_speed_buildings_factor = 0.05 #How to reduce industrial output without removing factories or adding more ideas?
+			add_political_power = 35 #-1 dissent * 35PP
+		}
+	}
+	option = {
+		name = bra.4.b
+		ai_chance = { factor = 50 }
+		BRA = {
+			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
+			add_popularity = { ideology = national_populist popularity = 0.05 }
+			#production_speed_buildings_factor = -0.05 #How to reduce industrial output without removing factories or adding more ideas?
+			add_political_power = -280 #8 dissent * 35PP
+		}
+	}
+}
+
+##########
+### 1936 Elections
+#########
+
+# bra.elections.1 Trigger
+country_event = {
+	id = bra.elections.0
+	title = bra.elections.0.t
+	desc = bra.elections.0.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		country_exists = BRA
+		date > 1936.08.01
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	immediate = {
+		BRA = { country_event = {id = bra.elections.1} }
+	}
+
+	option = {
+		name = bra.elections.0.a
+	}
+}
+#Brazilian Presidential Election, 1936
+country_event = {
+	id = bra.elections.1
+	title = bra.elections.1.t
+	desc = bra.elections.1.desc
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	option = { #Aliança Nacional Libertadora - Edgard Leuenroth
+		name = bra.elections.1.a
+		ai_chance = { factor = 60 }
+		BRA = {
+			hidden_effect = { kill_country_leader = yes }
+			create_country_leader = {
+				name = "Edgard Leuenroth"
+				desc = "POLITICS_EDGARD_LEUENROTH_DESC"
+				picture = "Portrait_Edgard_Leuenroth.tga"
+				expire = "1965.1.1"
+				ideology = radical_socialist_subtype
+				traits = {
+				}
+			}
+			country_event = { id = bra.elections.2 days = 0 }
+			hidden_effect = { set_country_flag = ANL }
+			set_politics = {
+				ruling_party = radical_socialist
+				elections_allowed = no
+				parties = {
+					totalist = {
+						popularity = 2
+					}
+					radical_socialist = {
+						popularity = 33
+					}
+					syndicalist = {
+						popularity = 13
+					}
+					social_democratist = {
+						popularity = 8
+					}
+					social_liberalist = {
+						popularity = 8
+					}
+					market_liberalist = {
+						popularity = 16
+					}
+					social_conservatist = {
+						popularity = 8
+					}
+					authoritarian_democratist = {
+						popularity = 3
+					}
+					paternal_autocratist = {
+						popularity = 6
+					}
+					national_populist = {
+						popularity = 3
+					}
+				}
+			}
+		}
+	}
+	option = { #Liberal-Democratas - Júlio Prestes
+		name = bra.elections.1.b
+		ai_chance = { factor = 5 }
+		BRA = {
+			hidden_effect = { kill_country_leader = yes }
+			create_country_leader = {
+				name = "Júlio Prestes"
+				desc = "POLITICS_JULIO_PRESTES_DESC"
+				picture = "Portrait_Brazil_Julio_Prestes.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {
+				}
+			}
+			country_event = { id = bra.elections.4 days = 0 }
+			hidden_effect = { set_country_flag = DEM }
+			set_politics = {
+				ruling_party = market_liberalist
+				parties = {
+					totalist = {
+						popularity = 2
+					}
+					radical_socialist = {
+						popularity = 7
+					}
+					syndicalist = {
+						popularity = 6
+					}
+					social_democratist = {
+						popularity = 8
+					}
+					social_liberalist = {
+						popularity = 5
+					}
+					market_liberalist = {
+						popularity = 39
+					}
+					social_conservatist = {
+						popularity = 4
+					}
+					authoritarian_democratist = {
+						popularity = 3
+					}
+					paternal_autocratist = {
+						popularity = 15
+					}
+					national_populist = {
+						popularity = 4
+					}
+				}
+			}
+		}
+	}
+	option = { #Republicanos - Getúlio Vargas
+		name = bra.elections.1.c
+		ai_chance = { factor = 15 }
+		BRA = {
+			hidden_effect = { kill_country_leader = yes }
+			create_country_leader = {
+				name = "Getúlio Vargas"
+				desc = "POLITICS_GETULIO_VARGAS_DESC"
+				picture = "Portrait_Brazil_Getulio_Vargas.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocratist_subtype
+				traits = {
+				}
+			}
+			country_event = { id = bra.elections.6 days = 0 }
+			hidden_effect = { set_country_flag = REP }
+			set_politics = {
+				ruling_party = paternal_autocratist
+				parties = {
+					totalist = {
+						popularity = 2
+					}
+					radical_socialist = {
+						popularity = 7
+					}
+					syndicalist = {
+						popularity = 6
+					}
+					social_democratist = {
+						popularity = 8
+					}
+					social_liberalist = {
+						popularity = 5
+					}
+					market_liberalist = {
+						popularity = 8
+					}
+					social_conservatist = {
+						popularity = 4
+					}
+					authoritarian_democratist = {
+						popularity = 9
+					}
+					paternal_autocratist = {
+						popularity = 36
+					}
+					national_populist = {
+						popularity = 15
+					}
+				}
+			}
+		}
+	}
+	option = { #Ação Integralista Brasileira - Plínio Salgado
+		name = bra.elections.1.d
+		ai_chance = { factor = 20 }
+		BRA = {
+			hidden_effect = { kill_country_leader = yes }
+			create_country_leader = {
+				name = "Plínio Salgado"
+				desc = "POLITICS_PLINIO_SALGADO_DESC"
+				picture = "Portrait_Brazil_Plinio_Salgado.tga"
+				expire = "1965.1.1"
+				ideology = national_populist_subtype
+				traits = {
+				}
+			}
+			country_event = { id = bra.elections.8 days = 0 }
+			hidden_effect = { set_country_flag = INT }
+			set_politics = {
+				ruling_party = national_populist
+				elections_allowed = no
+				parties = {
+					totalist = {
+						popularity = 3
+					}
+					radical_socialist = {
+						popularity = 6
+					}
+					syndicalist = {
+						popularity = 7
+					}
+					social_democratist = {
+						popularity = 7
+					}
+					social_liberalist = {
+						popularity = 6
+					}
+					market_liberalist = {
+						popularity = 7
+					}
+					social_conservatist = {
+						popularity = 5
+					}
+					authoritarian_democratist = {
+						popularity = 8
+					}
+					paternal_autocratist = {
+						popularity = 14
+					}
+					national_populist = {
+						popularity = 37
+					}
+				}
+			}
+		}
+	}
+}
+
+### 1936 Elections - ANL inauguration
+country_event = {
+	id = bra.elections.2
+	title = bra.elections.2.t
+	desc = bra.elections.2.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+	}
+	
+	option = {
+		name = bra.elections.2.a
+		ai_chance = { factor = 10 }
+		BRA = {
+			add_popularity = { ideology = social_liberalist popularity = 0.05 }
+			add_popularity = { ideology = radical_socialist popularity = 0.05 }
+			hidden_effect = { set_country_flag = ANL_DEM }
+			add_ideas = Borges_de_Medeiros_hog
+			add_ideas = Heitor_Ferreira_Lima_for
+			add_ideas = Jose_Americo_de_Almeida_eco
+			add_ideas = Luiz_Derivi_int
+		}
+	}
+	option = {
+		name = bra.elections.2.b
+		ai_chance = { factor = 40 }
+		BRA = {
+			add_popularity = { ideology = radical_socialist popularity = 0.05 }
+			add_popularity = { ideology = authoritarian_democratist popularity = 0.05 }
+			hidden_effect = { set_country_flag = ANL_TEN }
+			add_ideas = Luis_Carlos_Prestes_hog
+			add_ideas = Isidoto_Dias_Lopes_for
+			add_ideas = Hermogenio_da_Silva_Fernandes_eco
+			add_ideas = Jose_Oiticica_int
+		}
+	}
+	option = {
+		name = bra.elections.2.c
+		ai_chance = { factor = 50 }
+		BRA = {
+			hidden_effect = { set_country_flag = ANL_SOH }
+			add_popularity = { ideology = social_liberalist popularity = 0.1 }
+			country_event = { id = bra.elections.3 days = 0 }
+		}
+	}
+}
+#The new Chief Minister - ANL
+country_event = {
+	id = bra.elections.3
+	title = bra.elections.3.t
+	desc = bra.elections.3.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.elections.3.a
+		ai_chance = { factor = 25 }
+		add_ideas = Livio_Xavier_hog
+		add_ideas = Artus_Campagnolli_for
+		add_ideas = Elias_Iltchenco_eco
+		add_ideas = Jose_Oiticica_int
+	}
+	option = {
+		name = bra.elections.3.b
+		ai_chance = { factor = 50 }
+		add_ideas = Astrojildo_Pereira_hog
+		add_ideas = Artus_Campagnolli_for
+		add_ideas = Elias_Iltchenco_eco
+		add_ideas = Jose_Oiticica_int
+	}
+	option = {
+		name = bra.elections.3.c
+		ai_chance = { factor = 25 }
+		add_ideas = Joao_da_Costa_Pimenta_hog
+		add_ideas = Artus_Campagnolli_for
+		add_ideas = Elias_Iltchenco_eco
+		add_ideas = Jose_Oiticica_int
+	}
+}
+
+### 1936 Elections - DEM inauguration
+country_event = {
+	id = bra.elections.4
+	title = bra.elections.4.t
+	desc = bra.elections.4.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+	}
+	
+	option = {
+		name = bra.elections.4.a
+		ai_chance = { factor = 20 }
+		BRA = {
+			add_popularity = { ideology = market_liberalist popularity = 0.05 }
+			add_popularity = { ideology = authoritarian_democratist popularity = 0.05 }
+			hidden_effect = { set_country_flag = DEM_TEN }
+			add_ideas = Isidoro_Dias_Lopes_hog
+			add_ideas = Acyr_do_Nascimento_Paes_for
+			add_ideas = Herculano_de_carvalho_e_Silva_eco
+			add_ideas = Plinio_Barreto_int
+		}
+	}
+	option = {
+		name = bra.elections.4.b
+		ai_chance = { factor = 40 }
+		BRA = {
+			add_popularity = { ideology = market_liberalist popularity = 0.05 }
+			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
+			hidden_effect = { set_country_flag = DEM_REP }
+			add_ideas = Getulio_Vargas_hog
+			add_ideas = Raul_Fernandes_for
+			add_ideas = Ciccilo_Matarazzo_eco
+			add_ideas = Sebastiao_Nogueira_de_Lima_int
+		}
+	}
+	option = {
+		name = bra.elections.4.c
+		ai_chance = { factor = 40 }
+		BRA = {
+			hidden_effect = { set_country_flag = DEM_SOH }
+			add_popularity = { ideology = market_liberalist popularity = 0.1 }
+			country_event = { id = bra.elections.5 days = 0 }
+		}
+	}
+}
+#The new Chief Minister - DEM
+country_event = {
+	id = bra.elections.5
+	title = bra.elections.5.t
+	desc = bra.elections.5.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.elections.5.a
+		ai_chance = { factor = 60 }
+		add_ideas = Washington_Luis_Pereira_hog
+		add_ideas = Acyr_do_Nascimento_Paes_for
+		add_ideas = Herculano_de_carvalho_e_Silva_eco
+		add_ideas = Sebastiao_Nogueira_de_Lima_int
+	}
+	option = {
+		name = bra.elections.5.b
+		ai_chance = { factor = 10 }
+		add_ideas = Olimpio_de_Melo_hog
+		add_ideas = Acyr_do_Nascimento_Paes_for
+		add_ideas = Herculano_de_carvalho_e_Silva_eco
+		add_ideas = Sebastiao_Nogueira_de_Lima_int
+	}
+	option = {
+		name = bra.elections.5.c
+		ai_chance = { factor = 30 }
+		add_ideas = Borges_de_Medeiros_hog
+		add_ideas = Acyr_do_Nascimento_Paes_for
+		add_ideas = Herculano_de_carvalho_e_Silva_eco
+		add_ideas = Sebastiao_Nogueira_de_Lima_int
+	}
+}
+
+### 1936 Elections - REP inauguration
+country_event = {
+	id = bra.elections.6
+	title = bra.elections.6.t
+	desc = bra.elections.6.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+	}
+	
+	option = {
+		name = bra.elections.6.a
+		ai_chance = { factor = 35 }
+		BRA = {
+			hidden_effect = { set_country_flag = REP_TEN }
+			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
+			add_popularity = { ideology = authoritarian_democratist popularity = 0.05 }
+			add_ideas = Eurico_Gaspar_Dutra_hog
+			add_ideas = Raul_Fernandes_for
+			add_ideas = Euclides_Figueiredo_eco
+			add_ideas = Tasso_da_Silveira_int
+		}
+	}
+	option = {
+		name = bra.elections.6.b
+		ai_chance = { factor = 35 }
+		BRA = {
+			hidden_effect = { set_country_flag = REP_INT }
+			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
+			add_popularity = { ideology = national_populist popularity = 0.05 }
+			add_ideas = Plinio_Salgado_hog
+			add_ideas = Raul_Fernandes_for
+			add_ideas = Gustavo_Barroso_eco
+			add_ideas = Tasso_da_Silveira_int
+		}
+	}
+	option = {
+		name = bra.elections.6.c
+		ai_chance = { factor = 30 }
+		BRA = {
+			hidden_effect = { set_country_flag = REP_SOH }
+			add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
+			country_event = { id = bra.elections.7 days = 0 }
+		}
+	}
+}
+#The new Chief Minister - REP
+country_event = {
+	id = bra.elections.7
+	title = bra.elections.7.t
+	desc = bra.elections.7.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.elections.7.a
+		ai_chance = { factor = 20 }
+		add_ideas = Altino_Arantes_hog
+		add_ideas = Raul_Fernandes_for
+		add_ideas = Gastao_Vidigal_eco
+		add_ideas = Tasso_da_Silveira_int
+	}
+	option = {
+		name = bra.elections.7.b
+		ai_chance = { factor = 30 }
+		add_ideas = Eurico_Gaspar_Dutra_hog
+		add_ideas = Raul_Fernandes_for
+		add_ideas = Gastao_Vidigal_eco
+		add_ideas = Tasso_da_Silveira_int
+	}
+	option = {
+		name = bra.elections.7.c
+		ai_chance = { factor = 50 }
+		add_ideas = Joao_Pessoa_hog
+		add_ideas = Raul_Fernandes_for
+		add_ideas = Gastao_Vidigal_eco
+		add_ideas = Tasso_da_Silveira_int
+	}
+}
+
+### 1936 Elections - INT inauguration
+country_event = {
+	id = bra.elections.8
+	title = bra.elections.8.t
+	desc = bra.elections.8.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		} 
+	}
+	
+	option = {
+		name = bra.elections.8.a
+		ai_chance = { factor = 20 }
+		BRA = {
+			hidden_effect = { set_country_flag = INT_TEN }
+			add_popularity = { ideology = national_populist popularity = 0.05 }
+			add_popularity = { ideology = authoritarian_democratist popularity = 0.05 }
+			add_ideas = Miguel_Costa_hog
+			add_ideas = Luis_da_Camara_Cascudo_for
+			add_ideas = Marcondes_Salgado_eco
+			add_ideas = Filinto_Muller_int
+		}
+	}
+	option = {
+		name = bra.elections.8.b
+		ai_chance = { factor = 20 }
+		BRA = {
+			hidden_effect = { set_country_flag = INT_REP }
+			add_popularity = { ideology = national_populist popularity = 0.05 }
+			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
+			add_ideas = Getulio_Vargas_hog
+			add_ideas = Luis_da_Camara_Cascudo_for
+			add_ideas = Gastao_Vidigal_eco
+			add_ideas = Tasso_da_Silveira_int
+		}
+	}
+	option = {
+		name = bra.elections.8.c
+		ai_chance = { factor = 60 }
+		BRA = {
+			hidden_effect = { set_country_flag = INT_SOH }
+			add_popularity = { ideology = national_populist popularity = 0.1 }
+			country_event = { id = bra.elections.9 days = 0 }
+		}
+	}
+}
+#The new Chief Minister - INT
+country_event = {
+	id = bra.elections.9
+	title = bra.elections.9.t
+	desc = bra.elections.9.d
+	picture = GFX_bra_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = bra.elections.9.a
+		ai_chance = { factor = 80 }
+		add_ideas = Gustavo_Barroso_hog
+		add_ideas = Luis_da_Camara_Cascudo_for
+		add_ideas = Raimundo_Padilha_eco
+		add_ideas = Francisco_Campos_int
+	}
+	option = {
+		name = bra.elections.9.b
+		ai_chance = { factor = 20 }
+		add_ideas = Euclides_Figueiredo_hog
+		add_ideas = Luis_da_Camara_Cascudo_for
+		add_ideas = Raimundo_Padilha_eco
+		add_ideas = Francisco_Campos_int
+	}
+}
+###################
+#BSE crash reaction
+###################
+country_event = {
+	id = bra.6
+	title = bra.6.t
+	desc = bra.6.d
+	picture = american_supplies
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.3.20
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = "Guarantee the convertibility of the Real and the Papiermark"
+		ai_chance = { factor = 90 }
+		add_political_power = -450 #15 dissent * 350P
+		add_ideas = BRA_berlin_crisis
+		set_country_flag = convertibility_maintained
+	}
+	option = {
+		name = "Suspend convertibility of the Brazilian Real"
+		ai_chance = { factor = 10 }
+		add_political_power = -300 #10 dissent * 30PP
+		remove_building = { type = industrial_complex level = 1 state = 500 }
+		remove_building = { type = industrial_complex level = 2 state = 501 }
+		add_ideas = BRA_berlin_crisis
+		set_country_flag = convertibility_suspended
+	}
+}
+### Effects of the Berlin crisis
+news_event = {
+	id = bra.7
+	title = bra.7.t
+	desc = bra.7.d
+	picture = "bank"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.4.9
+		date < 1936.6.9
+		has_country_flag = convertibility_maintained
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Thank God we're leaving this mess already..."
+		BRA = {
+			add_political_power = -150 #5 dissent * 30PP
+			hidden_effect = {
+				clr_country_flag = convertibility_maintained
+				random_list = {
+					30 = { country_event = { months = 3 id = bra.9 } } 
+					50 = { country_event = { months = 6 id = bra.9 } } 
+					20 = { country_event = { months = 9 id = bra.9 } } 
+				}
+			}
+		}
+	}
+}
+### Bank panic!
+news_event = {
+	id = bra.8
+	title = bra.8.t
+	desc = bra.8.d
+	picture = "bank"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.4.9
+		date < 1936.6.9
+		has_country_flag = convertibility_suspended
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Why does this always happens to us?"
+		BRA = {
+			add_political_power = -300 #5 dissent * 30PP
+			remove_ideas = BRA_berlin_crisis
+			add_ideas = BRA_berlin_crisis_worse
+			hidden_effect = {
+				clr_country_flag = convertibility_suspended
+				random_list = {
+					20 = { country_event = { months = 3 id = bra.9 } } 
+					50 = { country_event = { months = 6 id = bra.9 } } 
+					30 = { country_event = { months = 9 id = bra.9 } } 
+				}
+			}
+		}
+	}
+}
+news_event = {
+	id = bra.9
+	title = bra.9.t
+	desc = bra.9.d
+	picture = "bank"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Thank God it's finally over."
+		BRA = {
+			remove_ideas = BRA_berlin_crisis
+			remove_ideas = BRA_berlin_crisis_worse
+		}
+	}
+}
+
+##########
+### ANL Events (from inauguration day to the start of the Civil War)
+##########
+
+########## Land Reform Chain
+country_event = {
+	id = bra.10
+	title = bra.10.t
+	desc = bra.10.d
+	picture = agriculture1
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.8.10
+		date < 1936.12.1
+		has_country_flag = ANL
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Land reform it is! Start the programme!"
+		ai_chance = { factor = 90 }
+		add_political_power = 300 #-5 dissent * 30PP
+		set_country_flag = BRA_LANDREFORM
+	}
+	option = {
+		name = "We musn't irritate the coronéis, hold the land reforms for a time"
+		ai_chance = { factor = 10 }
+		add_political_power = -300 #5 dissent * 30PP
+		country_event = { days = 0 id = bra.22 }
+	}
+}
+#Liberal-Democratas protest against the land reform
+country_event = {
+	id = bra.11
+	title = bra.11.t
+	desc = bra.11.d
+	picture = Coffee
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.8.12
+		date < 1936.12.12
+		has_country_flag = ANL_DEM
+		has_country_flag = BRA_LANDREFORM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Let him protest - the programme will go on"
+		ai_chance = { factor = 90 }
+		add_political_power = 30 #-1 dissent * 30PP
+		add_popularity = { ideology = social_liberalist popularity = -0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+	}
+	option = {
+		name = "We must respect our coalition partners - hold the land reforms for now"
+		ai_chance = { factor = 10 }
+		add_political_power = -300 #5 dissent * 30PP
+		add_popularity = { ideology = social_liberalist popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = -0.03 }
+	}
+}
+#The Second Coluna Prestes
+country_event = {
+	id = bra.12
+	title = bra.12.t
+	desc = bra.12.d
+	picture = bra_coluna
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.9.15
+		date < 1937.1.15
+		has_country_flag = ANL
+		has_country_flag = BRA_LANDREFORM
+		NOT = { has_idea = Luis_Carlos_Prestes_hog }
+		NOT = { has_country_flag = STOP_COLUNA }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Best of luck to them!"
+		ai_chance = { factor = 95 }
+		add_political_power = 30 #-1 dissent * 30PP
+		set_country_flag = COLUNAPRESTES
+	}
+	option = {
+		name = "We don't need that, we can trust our own surveys!"
+		ai_chance = { factor = 5 }
+	}
+}
+
+#The Second Coluna Prestes
+country_event = { ## Same event, but with Luis Carlos Prestes as HoG
+	id = bra.13
+	title = bra.13.t
+	desc = bra.13.d
+	picture = bra_coluna
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.9.15
+		date < 1937.1.15
+		has_country_flag = BRA_LANDREFORM
+		has_idea = Luis_Carlos_Prestes_hog
+		NOT = { has_country_flag = STOP_COLUNA }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Best of luck to them!"
+		ai_chance = { factor = 80 }
+		add_political_power = 30 #-1 dissent * 30PP
+		set_country_flag = COLUNAPRESTES
+		remove_ideas_with_trait = head_of_government
+		add_ideas = Isidoro_Dias_Lopes_hog
+	}
+	option = {
+		name = "Actually, Prestes is needed here in Rio."
+		ai_chance = { factor = 20 }
+	}
+}
+### The Second Coluna Prestes and the Cangaço
+country_event = {
+	id = bra.14
+	title = bra.14.t
+	desc = bra.14.d
+	picture = bra_cangaco03
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.10.1
+		date < 1937.2.1
+		has_country_flag = COLUNAPRESTES
+		NOT = { has_country_flag = STOP_COLUNA }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "The Cangaceiros shall be introduced to socialist doctrine."
+		ai_chance = { factor = 80 }
+		set_country_flag = CANGACO
+		create_corps_commander = {
+			name = "Lampião"
+			picture = "BRA_Lampiao.dds"
+			traits = { trickster hill_fighter }
+			skill = 2
+		}
+	}
+	option = {
+		name = "Social banditry is still banditry - we don't need help of their kind."
+		ai_chance = { factor = 20 }
+	}
+}
+### The Second Coluna Prestes Returns To Rio
+news_event = {
+	id = bra.15
+	title = bra.15.t
+	desc = bra.15.d
+	picture = bra_coluna2
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.11.28
+		date < 1937.3.28
+		has_country_flag = COLUNAPRESTES
+		NOT = { has_country_flag = ANL_TEN }
+		NOT = { has_country_flag = STOP_COLUNA }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Welcome them back with open arms."
+		add_political_power = 30 #-1 dissent * 30P
+	}
+}
+### The Second Coluna Prestes Returns To Rio - ANL_TEN
+news_event = {
+	id = bra.16
+	title = bra.16.t
+	desc = bra.16.d
+	picture = bra_coluna2
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.11.28
+		date < 1937.3.28
+		has_country_flag = COLUNAPRESTES
+		has_country_flag = ANL_TEN
+		NOT = { has_country_flag = STOP_COLUNA }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Welcome them with open arms - Prestes is back to his post."
+		add_political_power = 30 #-1 dissent * 30P
+		remove_ideas_with_trait = head_of_government
+		add_ideas = Luis_Carlos_Prestes_hog
+	}
+}
+
+### Starting the land reform programme
+country_event = {
+	id = bra.17
+	title = bra.17.t
+	desc = bra.17.d
+	picture = agrireform
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1936.12.1
+		date < 1937.3.1
+		has_country_flag = ANL
+		has_country_flag = BRA_LANDREFORM
+	}
+	
+	immediate = {
+		hidden_effect = { 
+			BRA = { 
+				random_list = {
+					33 = { country_event = { days = 7 id = bra.18 } } 
+					34 = { country_event = { days = 10 id = bra.18 } } 
+					33 = { country_event = { days = 14 id = bra.18 } } 
+				}
+				random_list = {
+					33 = { country_event = { days = 6 id = bra.19 } } 
+					34 = { country_event = { days = 9 id = bra.19 } } 
+					33 = { country_event = { days = 13 id = bra.19 } } 
+				}
+			} 
+		}
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Plan A - Reorganize all arable land into peasant-headed cooperatives."
+		ai_chance = { factor = 30 }
+		add_political_power = 180 #-6 dissent * 30P
+		add_popularity = { ideology = syndicalist popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+		add_popularity = { ideology = totalist popularity = 0.03 }
+	}
+	option = {
+		name = "Plan B - Confiscate all land and setup state-owned farms."
+		ai_chance = { factor = 30 }
+		add_political_power = 150 #-5 dissent * 30P
+		add_popularity = { ideology = syndicalist popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+		add_popularity = { ideology = totalist popularity = 0.06 }
+		add_ideas = BRA_state_farms
+	}
+	option = {
+		name = "Plan C - Peasant-headed cooperatives and limited private initiative."
+		ai_chance = { factor = 40 }
+		add_political_power = 150 #-5 dissent * 30P
+		add_popularity = { ideology = syndicalist popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+		add_popularity = { ideology = social_democratist popularity = 0.06 }
+		add_ideas = BRA_cooperatives
+	}
+}
+### The coronéis protest
+news_event = {
+	id = bra.18
+	title = bra.18.t
+	desc = bra.18.d
+	picture = Coffee
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = "Let them complain!"
+		ai_chance = { factor = 30 }
+		add_political_power = -60 #2 dissent * 30P
+	}
+}
+### Southern landowners protest
+news_event = {
+	id = bra.19
+	title = bra.19.t
+	desc = bra.19.d
+	picture = agriculture2
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = "Just ignore them!"
+		ai_chance = { factor = 30 }
+		add_political_power = -60 #2 dissent * 30P
+	}
+}
+### The Unsellable Coffee
+country_event = {
+	id = bra.20
+	title = bra.20.t
+	desc = bra.20.d
+	picture = Coffee
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BRA
+		date > 1937.2.1
+		date < 1937.5.1
+		has_country_flag = BRA_LANDREFORM
+		has_country_flag = ANL
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 30 }
+		name = "Didn't they always believe in 'free market'? Ignore them!"
+		add_political_power = -60 #2 dissent * 30P
+	}
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Buy the surplus coffee and BURN it. That will raise its price!" #No money in game, what to replace it with?
+		add_political_power = 30 #-1 dissent * 30P
+		BRA = { country_event = { days = 13 id = bra.21 } }
+	}
+}
+### Burn, coffee, burn!
+news_event = {
+	id = bra.21
+	title = bra.21.t
+	desc = bra.21.d
+	picture = bra_coffeeburn
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Now let's toast with a cup of strong black coffee!"
+		add_political_power = 60 #-2 dissent * 30P
+	}
+}
+
+### Coup by Luís Carlos Prestes
+country_event = {
+	id = bra.22
+	title = bra.22.t
+	desc = bra.22.d
+	picture = AST_Surrender
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_country_flag = STOP_COLUNA #So Coluna Prestes events don't fire
+		}
+	}
+	
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Turn a blind eye and let the coup go on."
+		add_political_power = -300 #5 dissent * 30P
+		country_event = { days = 0 id = bra.23 }
+	}
+	option = {
+		ai_chance = { factor = 30 }
+		name = "The Russians have Siberia, we have the Amazon - Relocate Prestes to Manaus."
+		add_political_power = -150 #5 dissent * 30P
+		remove_ideas_with_trait = head_of_government
+		add_ideas = Isidoro_Dias_Lopes_hog
+	}
+}
+news_event = {
+	id = bra.23
+	title = bra.23.t
+	desc = bra.23.d
+	picture = bolshevik_troops
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Socialism is safe, it seems"
+		hidden_effect = { retire_country_leader = yes }
+		create_country_leader = {
+			name = "Luís Carlos Prestes"
+			desc = "POLITICS_LUIS_CARLOS_PRESTES_DESC"
+			picture = "Portrait_Brazil_Luis_Carlos_Prestes.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = {}
+		}
+		add_political_power = -150 #5 dissent * 30P
+		set_country_flag = BRA_LANDREFORM
+		set_country_flag = ANL_TEN
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+		add_ideas = Isidoro_Dias_Lopes_hog
+		add_ideas = Ernani_do_Amaral_Peixoto_for
+		add_ideas = Herculano_de_carvalho_e_Silva_eco
+		add_ideas = Jose_Oiticica_int
+	}
+}
+### Limoeiro Crisis

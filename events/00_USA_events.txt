@@ -4925,3 +4925,6167 @@ country_event = {
 
 }
 
+country_event = { # Reed and the CSA escape to France
+	id = ustates.171
+	title = ustates.171.t
+	desc = ustates.171.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_global_flag = ACW_CSA
+		country_exists = FRA
+		NOT = { has_government = authoritarian_democratist }		
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name= ustates.171.a
+
+		add_opinion_modifier = { target = FRA modifier = REED_ESCAPES_FRA } # -25
+	}
+}
+
+country_event = { # Father Charles Coughlin's CBS Radio Broadcasts
+	id = ustates.172
+	title = ustates.172.t
+	desc = ustates.172.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes #Triggered by 906500; db/events/kaiserreich/Papacy/Papacy
+
+	option = { 
+		name = ustates.172.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_opinion_modifier = { target = ITA modifier = COUGHLIN_RADIO_STOP } # 20
+		add_political_power = -50
+	}	
+
+	option = { 
+		name = ustates.172.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_opinion_modifier = { target = ITA modifier = COUGHLIN_RADIO_CONTINUES } # -15
+		add_political_power = -30
+	}
+}
+
+country_event = { # The 100th anniversary of The Battle of The Alamo
+	id = ustates.173
+	title = ustates.173.t
+	desc = ustates.173.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1936.3.6
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.173.a
+
+		add_political_power = 10
+	}	
+}
+
+country_event = { # New England rejoins the Union
+	id = ustates.174
+	title = ustates.174.t
+	desc = ustates.174.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+
+	option = { 
+		name = ustates.174.a
+
+		annex_country = { target = NEE transfer_troops = yes }
+		add_political_power = 50
+	}	
+}
+
+#############################################
+#Democracy after Civil War - MacArthur
+#############################################
+
+country_event = { # Form of government
+	id = ustates.175
+	title = ustates.175.t
+	desc = ustates.175.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = ACW_CSA
+		has_global_flag = ACW_AUS
+		has_government = paternal_autocratist
+		NOT = {
+			country_exists = TEX
+			country_exists = CSA
+		}
+		date > 1937.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+
+	option = { 
+		name = ustates.175.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_popularity = { ideology = social_conservatist popularity = 0.25 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		add_political_power = -50
+	}	
+
+	option = { 
+		name = ustates.175.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = -100
+		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
+		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+		country_event = { id = ustates.175 days = 1 }
+	}
+}
+
+country_event = { # Forging new USA - internal policy
+	id = ustates.176
+	title = ustates.176.t
+	desc = ustates.176.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.176.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 50
+		set_country_flag = USA_MIN_JUNTA
+		add_popularity = { ideology = social_democratist popularity = 0.25 }
+		set_politics = { ruling_party = social_democratist elections_allowed = no }
+	}	
+
+	option = { 
+		name = ustates.176.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = 100
+		set_country_flag = USA_MAX_JUNTA
+		add_popularity = { ideology = social_conservatist popularity = 0.25 }
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
+
+		set_country_flag = USA_MACARTHUR
+	}
+
+	option = { 
+		name = ustates.176.c
+
+		ai_chance = {
+			factor = 20
+		}
+
+		add_political_power = 100
+		set_country_flag = USA_MAX_JUNTA
+		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
+		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+		set_country_flag = USA_MACARTHUR
+	}
+}
+
+country_event = { # Forging new USA - internal policy
+	id = ustates.177
+	title = ustates.177.t
+	desc = ustates.177.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MIN_JUNTA
+		date > 1940.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.177.a
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+		add_popularity = { ideology = social_liberalist popularity = 0.25 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Henry_A_Wallace_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}	
+
+	option = { 
+		name = ustates.177.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+		add_popularity = { ideology = social_conservatist popularity = -0.25 }
+		add_popularity = { ideology = market_liberalist popularity = 0.25}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		retire_country_leader = yes
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Thomas_E_Dewey_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}
+
+	option = { 
+		name = ustates.177.c
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -50
+		retire_country_leader = yes
+
+		clr_country_flag = USA_MACARTHUR
+		set_country_flag = Eisenhower_HoS
+
+		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
+
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+	}
+}
+
+country_event = { # Forging new USA - internal policy
+	id = ustates.178
+	title = ustates.178.t
+	desc = ustates.178.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MIN_JUNTA
+		date > 1944.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.178.a
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+
+		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
+		add_popularity = { ideology = social_liberalist popularity = 0.5 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Harry_S_Truman_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}	
+
+	option = { 
+		name = ustates.178.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+		add_popularity = { ideology = social_conservatist popularity = -0.5 }
+		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			John_Bricker_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}
+
+	option = { 
+		name = ustates.178.c
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -50
+	}
+}
+
+country_event = { # Forging new USA - internal policy
+	id = ustates.179
+	title = ustates.179.t
+	desc = ustates.179.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MIN_JUNTA
+		date > 1948.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.179.a
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+
+		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
+		add_popularity = { ideology = social_liberalist popularity = 0.5 }
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Henry A. Wallace"
+			desc = "HENRY_WALLACE_DESC"
+			picture = "Portrait_USA_Henry_Wallace.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Averell_H_Harriman_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}	
+
+	option = { 
+		name = ustates.179.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 50
+		set_country_flag = OPPOSITION_WINS
+		add_popularity = { ideology = social_conservatist popularity = -0.5 }
+		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			John_Bricker_hog
+		}
+
+		country_event = { id = ustates.180 days = 0 }
+	}
+
+	option = { 
+		name = ustates.179.c
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -50
+	}
+}
+
+########################################################################
+# Opposition wins elections
+########################################################################
+
+country_event = {
+	id = ustates.180
+	title = ustates.180.t
+	desc = ustates.180.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.180.a
+
+		ai_chance = {
+			factor = 15
+		}
+
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+		clr_country_flag = OPPOSITION_WINS
+
+		add_political_power = 150
+		set_national_unity = 90
+	}	
+
+	option = { 
+		name = ustates.180.b
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = -100
+
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = OPPOSITION_WINS
+		set_country_flag = USA_TOTALITARIAN
+		set_country_flag = USA_MACARTHUR
+
+		set_country_flag = OPPOSITION_WINS
+		add_popularity = { ideology = market_liberalist popularity = -0.5 }
+		add_popularity = { ideology = social_liberalist popularity = -0.5 }
+		add_popularity = { ideology = paternal_autocratist popularity = 0.5}
+		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Dwight_D_Eisenhower_hog
+		}
+	}
+}
+
+###########################################################################
+#Opposition becomes more radical
+###########################################################################
+
+country_event = {
+	id = ustates.181
+	title = ustates.181.t
+	desc = ustates.181.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_TOTALITARIAN
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.181.a
+
+		add_political_power = -100
+	}	
+}
+
+###########################################################################
+# MacArthur is killed!
+###########################################################################
+
+country_event = {
+	id = ustates.182
+	title = ustates.182.t
+	desc = ustates.182.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MACARTHUR
+		has_country_flag = evnt_906512 # Buscar, fer i posar flag bona.
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.182.a
+
+		ai_chance = {
+			factor = 30
+		}
+
+		kill_country_leader = yes
+
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+
+		set_country_flag = Eisenhower_HoS
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Dwight_D_Eisenhower_hog
+		}
+
+		add_political_power = -100
+
+		set_country_flag = ustates_182 
+	}	
+
+	option = { 
+		name = ustates.182.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = -150
+
+		kill_country_leader = yes
+
+		country_event = { id = ustates.183 days = 4 }
+		set_country_flag = ustates_182 
+	}
+
+	option = { 
+		name = ustates.182.c
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		clr_country_flag = USA_TOTALITARIAN
+
+		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
+		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+		add_ideas = {
+			John_Bricker_hog
+			Arthur_Vandenberg_for
+			Frederick_Vinson_eco
+			J_Edgar_Hoover_int
+		}
+
+		set_country_flag = ustates_182 
+	}
+}
+
+country_event = { # Dissolution of the United States!
+	id = ustates.183
+	title = ustates.183.t
+	desc = ustates.183.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.183.a
+
+		kill_country_leader = yes
+
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+
+		set_country_flag = Eisenhower_HoS
+
+		remove_ideas_with_trait = head_of_government
+
+		add_ideas = {
+			Dwight_D_Eisenhower_hog
+		}
+
+		add_political_power = -150
+		add_manpower = -500000
+
+		release_puppet = CAN
+		# release_puppet = QUE Quebec
+		release_puppet = CUB
+		# release_puppet = GUY Guyana
+		release_puppet = MEX
+		release_puppet = PRI
+		release_puppet = PAN
+		release_puppet = VEN
+		release_puppet = COL
+		release_puppet = BRA
+		release_puppet = ARG
+		release_puppet = GUA
+		# release_puppet = SAL Salvador
+		release_puppet = BOL
+		release_puppet = PRU
+		release_puppet = ECU
+		release_puppet = HON
+		release_puppet = NIC
+		release_puppet = CHL
+		# release_puppet = U01 Uruguay
+		release_puppet = PAR
+		# release_puppet = U27 Peru-Bolibian Confederation
+
+		set_capital = 382
+
+		if = {
+			limit = { controls_state = 357 NOT = { country_exists = NEE }}
+
+			release = NEE
+			set_global_flag = NEE_LIB
+
+			NEE = {
+				transfer_state = 357
+				transfer_state = 796
+				add_state_core = 357
+				add_state_core = 796
+			}
+
+			remove_state_core = 357
+			remove_state_core = 796
+		}
+
+		if = {
+			limit = { controls_state = 686 NOT = { country_exists = PRI }}
+
+			release = PRI
+
+			PRI = {
+				transfer_state = 686
+				add_state_core = 686
+			}
+
+			remove_state_core = 686
+		}
+
+		if = {
+			limit = { controls_state = 629 NOT = { country_exists = HAW }}
+
+			release = PRI
+
+			HAW = {
+				transfer_state = 629
+				transfer_state = 630
+				add_state_core = 629
+				add_state_core = 630
+			}
+
+			remove_state_core = 629
+			remove_state_core = 630
+		}
+
+		if = {
+			limit = { controls_state = 632 country_exists = JAP }
+
+			JAP = {
+				transfer_state = 632
+				add_state_core = 632
+			}
+
+			remove_state_core = 632
+		}
+
+		if = {
+			limit = { controls_state = 638 country_exists = GER }
+
+			JAP = {
+				transfer_state = 638
+				add_state_core = 638
+			}
+
+			remove_state_core = 638
+		}
+
+		release = CAL
+		set_global_flag = CAL_LIB
+
+		CAL = {
+			transfer_state = 650
+			transfer_state = 463
+			transfer_state = 386
+			transfer_state = 378
+			transfer_state = 387
+			transfer_state = 379
+			transfer_state = 385
+
+			add_state_core = 650
+			add_state_core = 463
+			add_state_core = 386
+			add_state_core = 378
+			add_state_core = 387
+			add_state_core = 379
+			add_state_core = 385
+		}
+
+		remove_state_core = 650
+		remove_state_core = 463
+		remove_state_core = 386
+		remove_state_core = 378
+		remove_state_core = 387
+		remove_state_core = 379
+		remove_state_core = 385
+
+		release = FSA
+		set_global_flag = FSA_LIB
+
+		FSA = {
+			transfer_state = 375
+			transfer_state = 374
+			transfer_state = 372
+			transfer_state = 371
+			transfer_state = 370
+			transfer_state = 368
+			transfer_state = 367
+			transfer_state = 366
+			transfer_state = 365
+			transfer_state = 364
+			transfer_state = 363
+			transfer_state = 362
+
+			add_state_core = 375
+			add_state_core = 374
+			add_state_core = 372
+			add_state_core = 371
+			add_state_core = 370
+			add_state_core = 368
+			add_state_core = 367
+			add_state_core = 366
+			add_state_core = 365
+			add_state_core = 364
+			add_state_core = 363
+			add_state_core = 362
+		}
+
+		remove_state_core = 375
+		remove_state_core = 374
+		remove_state_core = 372
+		remove_state_core = 371
+		remove_state_core = 370
+		remove_state_core = 368
+		remove_state_core = 367
+		remove_state_core = 366
+		remove_state_core = 365
+		remove_state_core = 364
+		remove_state_core = 363
+		remove_state_core = 362
+
+		release = CGL
+		set_global_flag = CGL_LIB
+
+		CGL = {
+			transfer_state = 394
+			transfer_state = 393
+			transfer_state = 395
+			transfer_state = 396
+			transfer_state = 369
+			transfer_state = 261
+			transfer_state = 360
+			transfer_state = 359
+			transfer_state = 358
+
+			add_state_core = 394
+			add_state_core = 393
+			add_state_core = 395
+			add_state_core = 396
+			add_state_core = 369
+			add_state_core = 261
+			add_state_core = 360
+			add_state_core = 359
+			add_state_core = 358
+		}
+
+		remove_state_core = 394
+		remove_state_core = 393
+		remove_state_core = 395
+		remove_state_core = 396
+		remove_state_core = 369
+		remove_state_core = 261
+		remove_state_core = 360
+		remove_state_core = 359
+		remove_state_core = 358
+
+		# FSA = { country_event = { id = 11800147 days = 1 }}
+		# NEE = { country_event = { id = 11800150 days = 1 }}
+		# CAL = { country_event = { id = 11800151 days = 1 }}
+		# CGL = { country_event = { id = 11800166 days = 1 }}
+	}	
+}
+
+##################################################################
+#Freedom of speech
+##################################################################
+
+country_event = {
+	id = ustates.184
+	title = ustates.184.t
+	desc = ustates.184.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.184.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_popularity = { ideology = national_populist popularity = 0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+	}	
+
+	option = { 
+		name = ustates.184.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = 30
+	}
+}
+
+################################################################
+#Protestors
+################################################################
+
+country_event = {
+	id = ustates.185
+	title = ustates.185.t
+	desc = ustates.185.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		NOT = {
+			country_exists = CSA
+			country_exists = TEX
+		}
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.185.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = -50
+
+		add_popularity = { ideology = national_populist popularity = 0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+	}	
+
+	option = { 
+		name = ustates.185.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = -40
+		CAN = { country_event = { id = ustates.186 days = 1 }}
+		add_popularity = { ideology = national_populist popularity = 0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+		add_opinion_modifier = { target = CAN modifier = USA_EXILE_OPOSITION_CAN }
+	}
+
+	option = { 
+		name = ustates.185.c
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 30
+	}
+}
+
+country_event = {
+	id = ustates.186
+	title = ustates.186.t
+	desc = ustates.186.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.186.a
+
+		add_manpower = 40000
+		add_political_power = -20
+		add_opinion_modifier = { target = USA modifier = USA_EXILE_OPOSITION_CAN }
+	}	
+}
+
+#################################################
+#Education reforms
+#################################################
+
+country_event = {
+	id = ustates.187
+	title = ustates.187.t
+	desc = ustates.187.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.187.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = -50
+		add_ideas = macarthur_education_reforms_mil
+		add_ideas = limited_conscription
+	}	
+
+	option = { 
+		name = ustates.187.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = -20
+		add_ideas = macarthur_education_reforms_pat
+	}
+
+	option = { 
+		name = ustates.187.c
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_political_power = -10
+	}
+}
+
+##########################################################
+#Confiscation of money
+##########################################################
+
+country_event = {
+	id = ustates.188
+	title = ustates.188.t
+	desc = ustates.188.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.188.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_ideas = limited_exports
+	}	
+
+	option = { 
+		name = ustates.188.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_ideas = free_trade
+	}
+}
+
+country_event = {
+	id = ustates.189
+	title = ustates.189.t
+	desc = ustates.189.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.189.a
+
+		ai_chance = {
+			factor = 60
+		}
+		
+		add_popularity = { ideology = syndicalist popularity = -0.05 }
+		add_political_power = -30
+	}	
+
+	option = { 
+		name = ustates.189.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 30
+	}
+}
+
+country_event = {
+	id = ustates.190
+	title = ustates.190.t
+	desc = ustates.190.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		OR = {
+			has_country_flag = USA_MAX_JUNTA
+			has_country_flag = USA_MIN_JUNTA
+			has_country_flag = USA_TOTALITARIAN
+		}
+		date > 1938.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.190.a
+
+		ai_chance = {
+			factor = 60
+		}
+		
+		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
+		add_political_power = -50
+	}	
+
+	option = { 
+		name = ustates.190.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = -10
+	}
+}
+
+country_event = {
+	id = ustates.191
+	title = ustates.191.t
+	desc = ustates.191.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MAX_JUNTA
+		date > 1940.1.1	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.191.a
+
+		ai_chance = {
+			factor = 30
+		}
+		
+		clr_country_flag = USA_MIN_JUNTA
+		set_country_flag = USA_TOTALITARIAN
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+	}	
+
+	option = { 
+		name = ustates.191.b
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }country_event = { id = ustates.192 days = 1460 }
+	}
+
+	option = { 
+		name = ustates.191.c
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_political_power = 100
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Henry_A_Wallace_hog
+        	Cordell_Hull_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }  
+	}
+}
+
+country_event = {
+	id = ustates.192
+	title = ustates.192.t
+	desc = ustates.192.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.192.a
+		
+		country_event = { id = ustates.193 days = 0 }
+	}	
+}
+
+country_event = {
+	id = ustates.193
+	title = ustates.193.t
+	desc = ustates.193.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.193.a
+
+		ai_chance = {
+			factor = 5
+		}
+		
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+		set_country_flag = USA_TOTALITARIAN
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+	}	
+
+	option = { 
+		name = ustates.193.b
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_political_power = -10
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+        country_event = { id = ustates.194 days = 1460 }
+	}
+
+	option = { 
+		name = ustates.193.c
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_political_power = 100
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Harry_S_Truman_hog
+        	Thomas_Connally_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.194
+	title = ustates.194.t
+	desc = ustates.194.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.194.a
+
+		ai_chance = {
+			factor = 5
+		}
+		
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+		set_country_flag = USA_TOTALITARIAN
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+	}	
+
+	option = { 
+		name = ustates.194.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		add_political_power = -10
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+        country_event = { id = ustates.194 days = 1460 }
+	}
+
+	option = { 
+		name = ustates.194.c
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 100
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+        add_popularity = {
+            ideology = syndicalist
+            popularity = 0.05
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = 0.05
+        }
+
+        set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Strom Thurmond"
+			desc = "STROM_THURMOND_DESC"
+			picture = "Portrait_USA_Strom_Thurmond.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Henry_Cabot_Lodge_int
+        }
+	}
+}
+
+#########################################################################
+#Death of Mac Arthur
+#########################################################################
+
+country_event = {
+	id = ustates.195
+	title = ustates.195.t
+	desc = ustates.195.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MIN_JUNTA
+		has_country_flag = Eisenhower_HoS
+		NOT = { has_country_flag = ustates_182 }
+		date > 1952.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.195.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 100
+
+		clr_country_flag = USA_MIN_JUNTA
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Strom Thurmond"
+			desc = "STROM_THURMOND_DESC"
+			picture = "Portrait_USA_Strom_Thurmond.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Henry_Cabot_Lodge_int
+        }
+	}	
+
+	option = { 
+		name = ustates.195.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
+		set_country_flag = USA_TOTALITARIAN
+		add_political_power = -100
+	}
+
+	option = { 
+		name = ustates.195.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_political_power = -150
+		country_event = { id = ustates.183 days = 4 }
+	}
+}
+
+#########################################################################
+#Death of Mac Arthur
+#########################################################################
+
+country_event = {
+	id = ustates.196
+	title = ustates.196.t
+	desc = ustates.196.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_government = paternal_autocratist
+		has_country_flag = USA_MIN_JUNTA
+		has_country_flag = USA_TOTALITARIAN
+		has_country_flag = Eisenhower_HoS
+		NOT = { has_country_flag = ustates_182 }
+		date > 1952.1.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.196.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 100
+
+		clr_country_flag = USA_MAX_JUNTA
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Strom Thurmond"
+			desc = "STROM_THURMOND_DESC"
+			picture = "Portrait_USA_Strom_Thurmond.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Henry_Cabot_Lodge_int
+        }
+	}	
+
+	option = { 
+		name = ustates.196.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		clr_country_flag = USA_MAX_JUNTA
+		set_country_flag = USA_TOTALITARIAN
+
+		add_political_power = -100
+	}
+
+	option = { 
+		name = ustates.196.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_political_power = -150
+		country_event = { id = ustates.183 days = 4 }
+	}
+}
+
+country_event = {
+	id = ustates.197
+	title = ustates.197.t
+	desc = ustates.197.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = FSA
+		has_global_flag = FSA_LIB
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			is_puppet = no
+			has_war = no
+			is_in_faction_with = USA
+			is_in_faction_with = GER
+			is_in_faction_with = JAP
+			is_in_faction_with = CAN
+			is_in_faction_with = FRA
+			is_in_faction_with = ENG
+			# is_in_faction_with = U07 United Kingdom
+			is_in_faction_with = SOV
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.197.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		#if = {
+			#limit = { NOT = { CAN = { is_in_faction_with = U07 }}}
+			CAN = { country_event = { id = ustates.198 days = 1 }}
+		#}
+
+		#if = {
+			#limit = { CAN = { is_in_faction_with = U07 }}
+			#U07 = { country_event = { id = ustates.199 days = 1 }}
+		#}
+
+		add_political_power = -20
+		clr_global_flag = FSA_LIB
+		add_opinion_modifier = { target = CAN modifier = FSA_JOINS_ENTENTE }
+	}	
+
+	option = { 
+		name = ustates.197.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		GER = { country_event = { id = ustates.200 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = FSA_LIB
+		add_opinion_modifier = { target = GER modifier = FSA_JOINS_MITT }
+	}
+
+	option = { 
+		name = ustates.197.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		SOV = { country_event = { id = ustates.201 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = FSA_LIB
+		add_opinion_modifier = { target = SOV modifier = FSA_JOINS_RUSS }
+	}
+
+	option = { 
+		name = ustates.197.e
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 10
+	}
+}
+
+country_event = {
+	id = ustates.198
+	title = ustates.198.t
+	desc = ustates.198.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.198.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = FSA
+		add_opinion_modifier = { target = FSA modifier = FSA_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = FSA_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.198.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = FSA_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = FSA_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.199
+	title = ustates.199.t
+	desc = ustates.199.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.199.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = FSA
+		add_opinion_modifier = { target = FSA modifier = FSA_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = FSA_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.199.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = FSA_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = FSA_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.200
+	title = ustates.200.t
+	desc = ustates.200.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.200.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = FSA
+		add_opinion_modifier = { target = FSA modifier = FSA_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = FSA_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.200.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = FSA_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = FSA_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.201
+	title = ustates.201.t
+	desc = ustates.201.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.201.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = FSA
+		add_opinion_modifier = { target = FSA modifier = FSA_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = FSA_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.201.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = FSA_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = FSA_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.202
+	title = ustates.202.t
+	desc = ustates.202.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = NEE
+		has_global_flag = NEE_LIB
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			is_puppet = no
+			has_war = no
+			is_in_faction_with = USA
+			is_in_faction_with = GER
+			is_in_faction_with = JAP
+			is_in_faction_with = CAN
+			is_in_faction_with = FRA
+			is_in_faction_with = ENG
+			# is_in_faction_with = U07 United Kingdom
+			is_in_faction_with = SOV
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.202.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		#if = {
+			#limit = { NOT = { CAN = { is_in_faction_with = U07 }}}
+			CAN = { country_event = { id = ustates.203 days = 1 }}
+		#}
+
+		#if = {
+			#limit = { CAN = { is_in_faction_with = U07 }}
+			#U07 = { country_event = { id = ustates.204 days = 1 }}
+		#}
+
+		add_political_power = -20
+		clr_global_flag = NEE_LIB
+		add_opinion_modifier = { target = CAN modifier = NEE_JOINS_ENTENTE }
+	}	
+
+	option = { 
+		name = ustates.202.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		GER = { country_event = { id = ustates.205 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = NEE_LIB
+		add_opinion_modifier = { target = GER modifier = NEE_JOINS_MITT }
+	}
+
+	option = { 
+		name = ustates.202.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		SOV = { country_event = { id = ustates.206 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = NEE_LIB
+		add_opinion_modifier = { target = SOV modifier = NEE_JOINS_RUSS }
+	}
+
+	option = { 
+		name = ustates.202.e
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 10
+	}
+}
+
+country_event = {
+	id = ustates.203
+	title = ustates.203.t
+	desc = ustates.203.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.203.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = NEE
+		add_opinion_modifier = { target = FSA modifier = NEE_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = NEE_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.203.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = NEE_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = NEE_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.204
+	title = ustates.204.t
+	desc = ustates.204.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.204.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = NEE
+		add_opinion_modifier = { target = FSA modifier = NEE_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = NEE_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.204.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = NEE_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = NEE_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.205
+	title = ustates.205.t
+	desc = ustates.205.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.205.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = NEE
+		add_opinion_modifier = { target = FSA modifier = NEE_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = NEE_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.205.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = NEE_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = NEE_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.206
+	title = ustates.206.t
+	desc = ustates.206.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.206.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = NEE
+		add_opinion_modifier = { target = FSA modifier = NEE_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = NEE_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.206.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = NEE_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = NEE_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.207
+	title = ustates.207.t
+	desc = ustates.207.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAL
+		has_global_flag = CAL_LIB
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			is_puppet = no
+			has_war = no
+			is_in_faction_with = USA
+			is_in_faction_with = GER
+			is_in_faction_with = JAP
+			is_in_faction_with = CAN
+			is_in_faction_with = FRA
+			is_in_faction_with = ENG
+			# is_in_faction_with = U07 United Kingdom
+			is_in_faction_with = SOV
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.207.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		#if = {
+			#limit = { NOT = { CAN = { is_in_faction_with = U07 }}}
+			CAN = { country_event = { id = ustates.208 days = 1 }}
+		#}
+
+		#if = {
+			#limit = { CAN = { is_in_faction_with = U07 }}
+			#U07 = { country_event = { id = ustates.209 days = 1 }}
+		#}
+
+		add_political_power = -20
+		clr_global_flag = CAL_LIB
+		add_opinion_modifier = { target = CAN modifier = CAL_JOINS_ENTENTE }
+	}	
+
+	option = { 
+		name = ustates.207.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		GER = { country_event = { id = ustates.210 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = CAL_LIB
+		add_opinion_modifier = { target = GER modifier = CAL_JOINS_MITT }
+	}
+
+	option = { 
+		name = ustates.207.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		JAP = { country_event = { id = ustates.211 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = CAL_LIB
+		add_opinion_modifier = { target = JAP modifier = CAL_JOINS_JAP }
+	}
+
+	option = { 
+		name = ustates.207.e
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 10
+	}
+}
+
+country_event = {
+	id = ustates.208
+	title = ustates.208.t
+	desc = ustates.208.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.208.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CAL
+		add_opinion_modifier = { target = FSA modifier = CAL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CAL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.208.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CAL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CAL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.209
+	title = ustates.209.t
+	desc = ustates.209.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.209.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CAL
+		add_opinion_modifier = { target = FSA modifier = CAL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CAL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.209.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CAL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CAL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.210
+	title = ustates.210.t
+	desc = ustates.210.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.210.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CAL
+		add_opinion_modifier = { target = FSA modifier = CAL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CAL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.210.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CAL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CAL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.211
+	title = ustates.211.t
+	desc = ustates.211.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.211.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CAL
+		add_opinion_modifier = { target = FSA modifier = CAL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CAL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.211.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CAL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CAL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.212
+	title = ustates.212.t
+	desc = ustates.212.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CGL
+		has_global_flag = CGL_LIB
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			is_puppet = no
+			has_war = no
+			is_in_faction_with = USA
+			is_in_faction_with = GER
+			is_in_faction_with = JAP
+			is_in_faction_with = CAN
+			is_in_faction_with = FRA
+			is_in_faction_with = ENG
+			# is_in_faction_with = U07 United Kingdom
+			is_in_faction_with = SOV
+		}	
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.212.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		#if = {
+			#limit = { NOT = { CAN = { is_in_faction_with = U07 }}}
+			CAN = { country_event = { id = ustates.213 days = 1 }}
+		#}
+
+		#if = {
+			#limit = { CAN = { is_in_faction_with = U07 }}
+			#U07 = { country_event = { id = ustates.214 days = 1 }}
+		#}
+
+		add_political_power = -20
+		clr_global_flag = CGL_LIB
+		add_opinion_modifier = { target = CAN modifier = CGL_JOINS_ENTENTE }
+	}	
+
+	option = { 
+		name = ustates.212.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		GER = { country_event = { id = ustates.215 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = CGL_LIB
+		add_opinion_modifier = { target = GER modifier = CGL_JOINS_MITT }
+	}
+
+	option = { 
+		name = ustates.212.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		SOV = { country_event = { id = ustates.216 days = 1 }}
+		add_political_power = -20
+		clr_global_flag = CGL_LIB
+		add_opinion_modifier = { target = SOV modifier = CGL_JOINS_RUSS }
+	}
+
+	option = { 
+		name = ustates.212.e
+
+		ai_chance = {
+			factor = 15
+		}
+
+		add_political_power = 10
+	}
+}
+
+country_event = {
+	id = ustates.213
+	title = ustates.213.t
+	desc = ustates.213.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.213.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CGL
+		add_opinion_modifier = { target = FSA modifier = CGL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CGL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.213.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CGL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CGL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.214
+	title = ustates.214.t
+	desc = ustates.214.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.214.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CGL
+		add_opinion_modifier = { target = FSA modifier = CGL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CGL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.214.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CGL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CGL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.215
+	title = ustates.215.t
+	desc = ustates.215.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.215.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CGL
+		add_opinion_modifier = { target = FSA modifier = CGL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CGL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.215.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CGL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CGL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+country_event = {
+	id = ustates.216
+	title = ustates.216.t
+	desc = ustates.216.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.216.a
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_to_faction = CGL
+		add_opinion_modifier = { target = FSA modifier = CGL_JOIN_FACTION } # 50
+		add_opinion_modifier = { target = USA modifier = CGL_JOIN_FACTION_USA } # -10
+	}	
+
+	option = { 
+		name = ustates.216.b
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_opinion_modifier = { target = FSA modifier = CGL_NO_JOIN_FACTION } # -25
+		add_opinion_modifier = { target = USA modifier = CGL_NO_JOIN_FACTION_USA } # 10
+	}
+}
+
+##################
+# 1940 elections 
+##################
+
+country_event = {
+	id = ustates.217
+	title = ustates.217.t
+	desc = ustates.217.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		date > 1940.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.217.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Thomas_E_Dewey_hog
+        	Arthur_Vandenberg_for
+        	Alf_M_Landon_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.217.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Henry_A_Wallace_hog
+        	Cordell_Hull_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.218
+	title = ustates.218.t
+	desc = ustates.218.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = social_liberalist
+		date > 1940.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.218.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Thomas_E_Dewey_hog
+        	Arthur_Vandenberg_for
+        	Alf_M_Landon_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.218.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Henry_A_Wallace_hog
+        	Cordell_Hull_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.219
+	title = ustates.219.t
+	desc = ustates.219.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = social_liberalist
+		date > 1940.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.219.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+		set_country_flag = MACARTHUR_HOS
+
+        add_ideas = {
+        	Frank_Knox_hog
+        	Arthur_Vandenberg_for
+        	Alf_M_Landon_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.219.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Henry_A_Wallace_hog
+        	Cordell_Hull_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+#######################
+#  1944
+#######################
+
+country_event = {
+	id = ustates.220
+	title = ustates.220.t
+	desc = ustates.220.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		date > 1944.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.220.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Thomas E.Dewey"
+			desc = "DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        add_ideas = {
+        	John_Bricker_hog
+        	Arthur_Vandenberg_for
+        	Alf_M_Landon_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.220.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Cordell Hull"
+			desc = "HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = HULL_HOS
+
+        add_ideas = {
+        	Harry_S_Truman_hog
+        	Thomas_Connally_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.221
+	title = ustates.221.t
+	desc = ustates.221.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = social_liberalist
+		date > 1944.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.221.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Henry A. Wallace"
+			desc = "HENRY_WALLACE_DESC"
+			picture = "Portrait_USA_Henry_Wallace.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = WALLACE_HOS
+
+        add_ideas = {
+        	Alben_W_Barkley_hog
+        	Thomas_Connally_for
+        	Alf_M_Landon_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.221.b
+
+		ai_chance = {
+			factor = 50
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Robert Taft"
+			desc = "TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = TAFT_HOS
+
+        add_ideas = {
+        	Strom_Thurmond_hog
+        	Arthur_Vandenberg_for
+        	Frederick_Vinson_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.222
+	title = ustates.222.t
+	desc = ustates.222.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		has_country_flag = MACARTHUR_HOS
+		date > 1944.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.222.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+		remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+		set_country_flag = MACARTHUR_HOS
+
+        add_ideas = {
+        	John_Bricker_hog
+        	Arthur_Vandenberg_for
+        	Frederick_Vinson_eco
+        	J_Edgar_Hoover_int
+        }
+	}	
+
+	option = { 
+		name = ustates.222.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+        add_ideas = {
+        	Averell_H_Harriman_hog
+        	Thomas_Connally_for
+        	Harry_I_Hopkins_eco
+        	J_Edgar_Hoover_int
+        }
+	}
+}
+
+#######################
+#  1948
+#######################
+
+country_event = {
+	id = ustates.223
+	title = ustates.223.t
+	desc = ustates.223.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		date > 1948.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.223.a
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Thomas E.Dewey"
+			desc = "DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Allan_Dulles_int
+        }
+	}	
+
+	option = { 
+		name = ustates.223.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 20
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Henry A. Wallace"
+			desc = "HENRY_WALLACE_DESC"
+			picture = "Portrait_USA_Henry_Wallace.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = WALLACE_HOS
+
+        add_ideas = {
+        	Averell_H_Harriman_hog
+        	Edward_Stettinius_for
+        	Harry_S_Truman_eco
+        	William_J_Donovan_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.224
+	title = ustates.224.t
+	desc = ustates.224.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		has_country_flag = MACARTHUR_HOS
+		date > 1948.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.224.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "John Bricker"
+			desc = "BRICKER_DESC"
+			picture = "Portrait_USA_John_Bricker.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Strom_Thurmond_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Allan_Dulles_int
+        }
+	}	
+
+	option = { 
+		name = ustates.224.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Henry A. Wallace"
+			desc = "HENRY_WALLACE_DESC"
+			picture = "Portrait_USA_Henry_Wallace.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = WALLACE_HOS
+
+        add_ideas = {
+        	Adlai_Stevenson_hog
+        	Edward_Stettinius_for
+        	Harry_S_Truman_eco
+        	William_J_Donovan_int  
+        }
+	}
+}
+
+country_event = {
+	id = ustates.225
+	title = ustates.225.t
+	desc = ustates.225.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		has_country_flag = TAFT_HOS
+		date > 1948.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.225.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.4
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = TAFT_HOS
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Allan_Dulles_int
+        }
+	}	
+
+	option = { 
+		name = ustates.225.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Alben W.Barkley"
+			desc = "BARCKLEY_DESC"
+			picture = "Portrait_USA_Alben_Barkley.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+        add_ideas = {
+        	Adlai_Stevenson_hog
+        	Edward_Stettinius_for
+        	Harry_S_Truman_eco
+        	William_J_Donovan_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.226
+	title = ustates.226.t
+	desc = ustates.226.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		has_country_flag = HULL_HOS
+		date > 1948.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.226.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "W. Averell Harriman"
+			desc = "HARRIMAN_DESC"
+			picture = "Portrait_USA_Averell_Harriman.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = HARRIMAN_HOS
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Adlai_Stevenson_hog
+        	Edward_Stettinius_for
+        	Harry_S_Truman_eco
+        	William_J_Donovan_int
+        }
+	}	
+
+	option = { 
+		name = ustates.226.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        retire_country_leader = yes
+
+        create_country_leader = {
+			name = "Robert Taft"
+			desc = "TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = TAFT_HOS
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Strom_Thurmond_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Allan_Dulles_int
+        }
+	}
+}
+
+country_event = {
+	id = ustates.227
+	title = ustates.227.t
+	desc = ustates.227.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = END_ACW
+		has_government = market_liberalist
+		has_country_flag = HULL_HOS
+		date > 1948.11.5
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.227.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.4
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.6
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		retire_country_leader = yes
+
+		create_country_leader = {
+			name = "Henry A. Wallace"
+			desc = "HENRY_WALLACE_DESC"
+			picture = "Portrait_USA_Henry_Wallace.dds"
+			expire = "1965.1.1"
+			ideology = social_liberalist_subtype
+			traits = {}
+		}
+
+		set_country_flag = HARRIMAN_HOS
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	Harry_S_Truman_hog
+        	Edward_Stettinius_for
+        	Harry_S_Truman_eco
+        	William_J_Donovan_int
+        }
+	}	
+
+	option = { 
+		name = ustates.227.b
+
+		ai_chance = {
+			factor = 60
+		}
+
+		add_political_power = 50
+
+		add_popularity = {
+            ideology = totalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = radical_socialist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = syndicalist
+            popularity = -1
+        }
+		add_popularity = {
+            ideology = social_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = -1
+        }
+        add_popularity = {
+            ideology = national_populist
+            popularity = -1
+        }
+
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.6
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.2
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        retire_country_leader = yes
+
+		set_country_flag = THURMOND_HOS
+
+        create_country_leader = {
+			name = "Strom Thurmond"
+			desc = "STROM_THURMOND_DESC"
+			picture = "Portrait_USA_Strom_Thurmond.dds"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
+
+        remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        remove_ideas_with_trait = intel_minister
+
+        add_ideas = {
+        	John_Bricker_hog
+        	John_Foster_Dulles_for
+        	John_D_Rockefeller_eco
+        	Henry_Cabot_Lodge_int
+        }
+	}
+}
+
+##################################
+### Minister Deaths
+##################################
+
+country_event = {
+	id = ustates.228
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1936.8.27
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = george_h_dern_died
+	}	
+}
+
+country_event = {
+	id = ustates.229
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1936.2.16
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = roy_d_chapin_died
+	}	
+}
+
+country_event = {
+	id = ustates.230
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1938.9.21
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = oscar_westover_died
+	}	
+}
+
+country_event = {
+	id = ustates.231
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1939.7.7
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = claude_a_swanson_died
+	}	
+}
+
+country_event = {
+	id = ustates.232
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1943.4.11
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = daniel_c_roper_died
+	}	
+}
+
+country_event = {
+	id = ustates.233
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1944.1.29
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = harry_hopkins_died
+	}	
+}
+
+country_event = {
+	id = ustates.234
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1944.7.2
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = norman_h_davis_died
+	}	
+}
+
+country_event = {
+	id = ustates.235
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1944.10.4
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = al_smith_died
+	}	
+}
+
+country_event = {
+	id = ustates.236
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1945.3.13
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = malin_craig_died
+	}	
+}
+
+country_event = {
+	id = ustates.237
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1945.7.25
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = victor_selden_clark_died
+	}	
+}
+
+country_event = {
+	id = ustates.238
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1947.4.7
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = henry_ford_died
+	}	
+}
+
+country_event = {
+	id = ustates.239
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1947.11.12
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = john_bassett_moore_died
+	}	
+}
+
+country_event = {
+	id = ustates.240
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1949.5.22
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = james_forrestal_died
+	}	
+}
+
+country_event = {
+	id = ustates.241
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1949.6.26
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = ray_l_wilbur_died
+	}	
+}
+
+country_event = {
+	id = ustates.242
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1949.7.19
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = frank_murphy_died
+	}	
+}
+
+country_event = {
+	id = ustates.243
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1949.10.29
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = edward_stettinius_died
+	}	
+}
+
+country_event = {
+	id = ustates.244
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1950.5.29
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = william_lemke_died
+	}	
+}
+
+country_event = {
+	id = ustates.245
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1950.10.20
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = henry_l_stimson_died
+	}	
+}
+
+country_event = {
+	id = ustates.246
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1951.4.18
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = arthur_vandenberg_died
+	}	
+}
+
+country_event = {
+	id = ustates.247
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1952.1.22
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = robert_p_patterson_died
+	}	
+}
+
+country_event = {
+	id = ustates.248
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1952.2.3
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = harold_ickes_died
+	}	
+}
+
+country_event = {
+	id = ustates.249
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1952.6.13
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = robert_minor_died
+	}	
+}
+
+country_event = {
+	id = ustates.250
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1952.8.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = andrew_higgins_died
+	}	
+}
+
+country_event = {
+	id = ustates.251
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1953.5.4
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = robert_f_wagner_died
+	}	
+}
+
+country_event = {
+	id = ustates.252
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1959.8.16
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = william_halsey_died
+	}	
+}
+
+country_event = {
+	id = ustates.253
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1959.8.16
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = george_c_marshall_died
+	}	
+}
+
+country_event = {
+	id = ustates.254
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1953.9.8
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = fred_m_vinson_died
+	}	
+}
+
+country_event = {
+	id = ustates.255
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1954.4.2
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = hoyt_vandenberg_died
+	}	
+}
+
+country_event = {
+	id = ustates.256
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1954.6.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = charles_f_adams_died
+	}	
+}
+
+country_event = {
+	id = ustates.257
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1954.6.13
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = hugh_s_gibson_died
+	}	
+}
+
+country_event = {
+	id = ustates.258
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1954.8.9
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = robert_h_jackson_died
+	}	
+}
+
+country_event = {
+	id = ustates.259
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1955.2.13
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = brehon_b_somervell_died
+	}	
+}
+
+country_event = {
+	id = ustates.260
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1958.6.11
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = william_aalto_died
+	}	
+}
+
+country_event = {
+	id = ustates.261
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1958.6.21
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = robert_l_ghormley_died
+	}	
+}
+
+country_event = {
+	id = ustates.262
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1959.2.3
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = vincent_astor_died
+	}	
+}
+
+country_event = {
+	id = ustates.263
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1959.2.8
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = william_j_donovan_died
+	}	
+}
+
+country_event = {
+	id = ustates.264
+	title = ustates.228.t
+	desc = ustates.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1959.6.20
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = ustates.228.a
+
+		set_country_flag = william_d_leahy_died
+	}	
+}

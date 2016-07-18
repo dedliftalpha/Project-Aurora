@@ -1501,7 +1501,7 @@ country_event = {
 country_event = {
 	id = bra.34
 	title = bra.34.t
-	desc = bra.34.desc
+	desc = bra.34.d
 	picture = economic
 	
 	is_triggered_only = yes
@@ -1538,8 +1538,8 @@ country_event = {
 ### Unemployment still rising
 country_event = {
 	id = bra.35
-	title = bra.35
-	desc = bra.35
+	title = bra.35.t
+	desc = bra.35.d
 	picture = bra_desemprego
 	
 	is_triggered_only = yes
@@ -1563,3 +1563,629 @@ country_event = {
 		set_country_flag = ANL_NATIONALIZE
 	}
 }
+
+### The Industrialists Resist
+country_event = {
+	id = bra.36
+	title = bra.36.t
+	desc = bra.36.d
+	picture = bra_matarazzo1
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.8.1
+		date < 1937.11.1
+		has_country_flag = ANL_NATIONALIZE
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = "Set up a conference with them."
+		set_country_flag = MATARAZZO_CONFERENCE
+	}
+	option = {
+		ai_chance = { factor = 50 }
+		name = "They cannot stop our reforms."
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		set_country_flag = MATARAZZO_NOCONFERENCE
+	}
+}
+
+### A conference with the industrialists
+country_event = {
+	id = bra.37
+	title = bra.37.t
+	desc = bra.37.d
+	picture = bra_matarazzo3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.9.1
+		date < 1937.12.1
+		has_country_flag = MATARAZZO_CONFERENCE
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 10 }
+		name = "Slow down the pace of our reforms"
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = totalist popularity = -0.01 }
+		add_political_power = -100 #5 dissent * 20 PP
+	}
+	option = {
+		ai_chance = { factor = 90 }
+		name = "No compromise!"
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_political_power = 100 #-5 dissent * 20 PP
+		set_country_flag = MATARAZZO_NOCONFERENCE
+	}
+}
+
+### Foreign factories dismantled
+country_event = {
+	id = bra.38
+	title = bra.38.t
+	desc = bra.38.d
+	picture = bra_santos2
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.10.1
+		date < 1938.1.1
+		has_country_flag = MATARAZZO_CONFERENCE
+		country_exists = ITA
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 10 }
+		name = "Let them leave, we can't risk a diplomatic incident."
+		add_political_power = -20 #1 dissent * 20 PP
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = totalist popularity = -0.01 }
+	}
+	option = {
+		ai_chance = { factor = 90 }
+		name = "This equipment belongs to the Brazilian workers!"
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_political_power = 20 #-5 dissent * 20 PP
+		reverse_add_opinion_modifier = { target = ITA modifier = BRA_seized_factories }
+	}
+}
+
+### Relations with the Church
+country_event = {
+	id = bra.39
+	title = bra.39.t
+	desc = bra.39.d
+	picture = christianity
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1938.6.1
+		date < 1938.9.1
+		has_country_flag = ANL
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 30 }
+		name = "We'd gain nothing by antagonizing the Church."
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = totalist popularity = -0.01 }
+		add_political_power = -25 #1 dissent * 20 PP
+	}
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Proceed with taxing Church property."
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_political_power = 20 #-1 dissent * 20 PP
+		reverse_add_opinion_modifier = { target = ITA modifier = BRA_taxing_church_property }
+	}
+}
+
+##########
+### LibDem Events (from inauguration day to the start of the Civil War) (bra.40 - bra.52)
+#########
+
+### The Unsellable Coffee
+country_event = {
+	id = bra.40
+	title = bra.40.t
+	desc = bra.40.d
+	picture = Coffee
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1936.08.10
+		date < 1936.11.10
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 1 }
+		name = "If we help them, we will compromise our budget for other areas"
+		add_political_power = -100 #5 dissent * 20 PP
+	}
+	option = {
+		ai_chance = { factor = 99 }
+		name = "Buy the surplus coffee and BURN it. That will raise its price!"
+		add_political_power = 20 #-1 dissent * 20 PP
+		BRA = { country_event = { days = 13 id = bra.21 } }
+	}
+}
+
+### New economical policies?
+country_event = {
+	id = bra.41
+	title = bra.41.t
+	desc = bra.41.d
+	picture = economic
+	
+	fire_only_once = yes
+
+	trigger = {
+		date > 1937.02.1
+		date < 1937.15.1
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Free market has always been our way, stick to it."
+		add_popularity = { ideology = market_liberalist popularity = 0.03 }
+		add_popularity = { ideology = social_liberalist popularity = 0.03 }
+		add_popularity = { ideology = social_conservatist popularity = 0.03 }
+		hidden_effect = { BRA = { country_event = { days = 0 id = bra.42 } } }
+	}
+	option = {
+		ai_chance = { factor = 30 }
+		name = "Some public interference in the economy may be needed."
+		add_popularity = { ideology = market_liberalist popularity = -0.01 }
+		add_popularity = { ideology = social_liberalist popularity = -0.01 }
+		add_popularity = { ideology = social_conservatist popularity = -0.01 }
+		hidden_effect = { BRA = { country_event = { days = 0 id = bra.43 } } }
+	}
+}
+
+### Privatize the public assets?
+country_event = {
+	id = bra.42
+	title = bra.42.t
+	desc = bra.42.d
+	picture = factory
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Laissez faire, laissez passer - Put everything on sale."
+		502 = { add_building_construction = { type = industrial_complex level = -1 instant_build = yes } }
+		503 = { add_building_construction = { type = industrial_complex level = -1 instant_build = yes } }
+		add_ideas = BRA_laissez_faire_economy
+		add_popularity = { ideology = market_liberalist popularity = 0.03 }
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_conservatist popularity = 0.02 }
+		add_popularity = { ideology = social_democratist popularity = -0.03 }
+		
+	}
+	option = {
+		ai_chance = { factor = 30 }
+		name = "Privatization would be a betrayal of the Brazilian people."
+		add_popularity = { ideology = market_liberalist popularity = -0.03 }
+		add_popularity = { ideology = social_liberalist popularity = -0.01 }
+		add_popularity = { ideology = social_conservatist popularity = -0.02 }
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+	}
+	option = {
+		ai_chance = { factor = 30 }
+		name = "The state needs at least SOME control - Establish mixed-capital ventures."
+		add_ideas = BRA_mixed_capital_ventures
+		add_popularity = { ideology = market_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_conservatist popularity = 0.01 }
+		add_popularity = { ideology = social_democratist popularity = 0.01 }
+	}
+}
+
+### Intervene on private companies?
+country_event = {
+	id = bra.43
+	title = bra.43.t
+	desc = bra.43.d
+	picture = factory
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 5 }
+		name = "If they can't do anything right, we should buy everything."
+		502 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		503 = { add_building_construction = { type = industrial_complex level =-1 instant_build = yes } }
+		add_ideas = BRA_nationalized_economy
+		add_popularity = { ideology = market_liberalist popularity = -0.03 }
+		add_popularity = { ideology = social_liberalist popularity = -0.03 }
+		add_popularity = { ideology = social_conservatist popularity = -0.03 }
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+		
+	}
+	option = {
+		ai_chance = { factor = 60 }
+		name = "The state needs just SOME control - Promote some mixed-capital ventures."
+		add_ideas = BRA_mixed_capital_ventures
+		add_popularity = { ideology = market_liberalist popularity = -0.02 }
+		add_popularity = { ideology = social_liberalist popularity = -0.01 }
+		add_popularity = { ideology = social_conservatist popularity = -0.01 }
+		add_popularity = { ideology = social_democratist popularity = 0.01 }
+		add_political_power = -20 #1 Dissent * 20 PP
+	}
+	option = {
+		ai_chance = { factor = 35 }
+		name = "NATIONALIZATION IS SOCIALISM. Got it? Stay out of it!"
+		add_popularity = { ideology = market_liberalist popularity = 0.02 }
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_conservatist popularity = 0.01 }
+		add_popularity = { ideology = social_democratist popularity = -0.01 }
+	}
+}
+
+### Dealing With the Trade Unions
+country_event = {
+	id = bra.44
+	title = bra.44.t
+	desc = bra.44.d
+	picture = bra_revolution
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.8.1
+		date < 1937.11.1
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = "Infiltrate our security agents on the unions."
+		add_political_power = -100 #5 Dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = totalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		set_country_flag = BRA_WHITETERROR
+	}
+	option = {
+		ai_chance = { factor = 10 }
+		name = "Crackdown - We can't allow them to operate."
+		add_political_power = -200 #10 Dissent * 20 PP
+		add_popularity = { ideology = social_democratist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = totalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = paternal_autocratist popularity = 0.02 }
+		add_popularity = { ideology = national_populist popularity = 0.02 }
+		add_popularity = { ideology = authoritarian_democratist popularity = 0.02 }
+		set_country_flag = BRA_WHITETERROR
+	}
+	option = {
+		ai_chance = { factor = 40 }
+		name = "Let them operate freely."
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+		add_political_power = 100 #-5 Dissent * 20 PP
+	}
+}
+
+### Outlaw the socialist parties?
+country_event = {
+	id = bra.45
+	title = bra.45.t
+	desc = bra.45.d
+	picture = bra_socialista
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.9.1
+		date < 1937.12.1
+		has_country_flag = DEM
+		has_country_flag = BRA_WHITETERROR
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 20 }
+		name = "Of course - Get rid of this syndicalist scum."
+		add_political_power = -200 #10 Dissent * 20 PP
+		set_country_flag = radical_socialist_banned
+		set_country_flag = syndicalist_banned
+		set_country_flag = totalist_banned
+	}
+	option = {
+		ai_chance = { factor = 80 }
+		name = "No way, this is a democracy!"
+		add_political_power = 100 #-5 Dissent * 20 PP
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+		clr_country_flag = BRA_WHITETERROR
+	}
+}
+
+### Socialist protests in São Paulo
+country_event = {
+	id = bra.46
+	title = bra.46.t
+	desc = bra.46.d
+	picture = algeria2
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.9.1
+		date < 1937.12.1
+		has_country_flag = DEM
+		NOT = { has_country_flag = BRA_WHITETERROR }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 20 }
+		name = "They are a threat to democracy - Don't allow it."
+		add_political_power = -100 #10 Dissent * 20 PP
+		set_country_flag = radical_socialist_banned
+		set_country_flag = syndicalist_banned
+		set_country_flag = totalist_banned
+	}
+	option = {
+		ai_chance = { factor = 80 }
+		name = "Let it procceed - This is a democracy after all."
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+	}
+}
+
+### Landless peasants occupy a farm in Paraná
+country_event = {
+	id = bra.47
+	title = bra.47.t
+	desc = bra.47.d
+	picture = banana
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.10.1
+		date < 1938.1.1
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 45 }
+		name = "The police will deal with them."
+		add_political_power = -40 #2 Dissent * 20 PP
+		add_popularity = { ideology = social_democratist popularity = -0.02 }
+		add_popularity = { ideology = social_liberalist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = totalist popularity = -0.01 }
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+	}
+	option = {
+		ai_chance = { factor = 50 }
+		name = "Let the army do the job."
+		add_political_power = -80 #4 Dissent * 20 PP
+		add_popularity = { ideology = social_democratist popularity = -0.03 }
+		add_popularity = { ideology = social_liberalist popularity = -0.02 }
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = totalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		set_country_flag = BRA_WHITETERROR
+	}
+	option = {
+		ai_chance = { factor = 5 }
+		name = "If they need this land, just give it to them."
+		add_political_power = -120 #6 Dissent * 20 PP
+		add_popularity = { ideology = social_democratist popularity = 0.03 }
+		add_popularity = { ideology = syndicalist popularity = 0.02 }
+		add_popularity = { ideology = totalist popularity = 0.02 }
+		add_popularity = { ideology = radical_socialist popularity = 0.02 }
+	}
+}
+### Unemployment on the rise
+country_event = {
+	id = bra.48
+	title = bra.48.t
+	desc = bra.48.d
+	picture = bra_desemprego
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.11.1
+		date < 1938.2.1
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Oh, well..."
+		add_political_power = -100 #5 dissent * 20 PP
+	}
+}
+### Integralists and Syndicalists clash in Rio
+country_event = {
+	id = bra.49
+	title = bra.49.t
+	desc = bra.49.d
+	picture = bra_integra_01
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.12.1
+		date < 1938.3.1
+		has_country_flag = DEM
+		NOT = { has_country_flag = BRA_WHITETERROR }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = "Crackdown on both groups."
+		add_political_power = -160 #8 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = national_populist popularity = -0.02 }
+	}
+	option = {
+		ai_chance = { factor = 25 }
+		name = "Investigate the Integralist leaders only."
+		add_political_power = -120 #6 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = 0.02 }
+		add_popularity = { ideology = radical_socialist popularity = 0.02 }
+		add_popularity = { ideology = national_populist popularity = -0.03 }
+	}
+	option = {
+		ai_chance = { factor = 25 }
+		name = "The police will raid Socialist meetings only."
+		add_political_power = -120 #6 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = national_populist popularity = 0.05 }
+	}
+}
+### May Day Protests
+# bra.50 Trigger
+country_event = {
+	id = bra.500
+	title = bra.500.t
+	desc = bra.500.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		country_exists = BRA
+		date > 1938.05.01
+		NOT = { has_country_flag = BRA_WHITETERROR }
+	}
+	
+	immediate = {
+		BRA = { country_event = {id = bra.48} }
+	}
+
+	option = {
+		name = bra.480.a
+	}
+}
+country_event = {
+	id = bra.50
+	title = bra.50.t
+	desc = bra.50.d
+	picture = bra_revolution
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 20 }
+		name = "Just ignore them"
+		add_political_power = -100 #5 dissent * 20 PP
+		hidden_effect = { 
+			random_list = {
+				33 = { country_event = { days = 31 id = bra.49 } } 
+				34 = { country_event = { days = 36 id = bra.49 } } 
+				33 = { country_event = { days = 41 id = bra.49 } } 
+			}
+		}
+	}
+	option = {
+		ai_chance = { factor = 80 }
+		name = "Send the cops - Crackdown on the trade unions"
+		add_political_power = -200 #10 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = social_democratist popularity = -0.02 }
+		add_popularity = { ideology = social_liberalist popularity = -0.02 }
+		add_popularity = { ideology = social_conservatist popularity = -0.01 }
+		add_popularity = { ideology = market_liberalist popularity = -0.01 }
+	}
+}
+### Astrogildo Pereira arrested
+country_event = {
+	id = bra.51
+	title = bra.51.t
+	desc = bra.51.d
+	picture = bra_astrogildo
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 70 }
+		name = "Lock him in jail - That'll teach those syndies"
+		add_political_power = -80 #4 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = social_democratist popularity = -0.01 }
+	}
+	option = {
+		ai_chance = { factor = 15 }
+		name = "That's not enough - Exile him"
+		add_political_power = -120 #6 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = social_democratist popularity = -0.02 }
+		add_popularity = { ideology = social_liberalist popularity = -0.02 }
+		add_popularity = { ideology = social_conservatist popularity = -0.01 }
+		add_popularity = { ideology = market_liberalist popularity = -0.01 }
+	}
+	option = {
+		ai_chance = { factor = 15 }
+		name = "Maybe that's just too much - Release him"
+		add_political_power = -80 #-2 dissent * 20 PP
+		add_popularity = { ideology = social_democratist popularity = 0.01 }
+		add_popularity = { ideology = social_liberalist popularity = 0.01 }
+		add_popularity = { ideology = social_conservatist popularity = 0.02 }
+		add_popularity = { ideology = market_liberalist popularity = 0.01 }
+	}
+}
+

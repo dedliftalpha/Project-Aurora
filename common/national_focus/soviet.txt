@@ -217,7 +217,7 @@ focus = {
 	
 focus = {
 		id = SOV_DEM_ADM1
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_national_unity
 		x = 23
 		y = 2
 		cost = 10
@@ -235,7 +235,7 @@ focus = {
 	
 focus = {
 		id = SOV_DEM_ADM2
-		icon = GFX_goal_generic_position_armies
+		icon = GFX_goal_generic_oil_refinery
 		x = 23
 		y = 3
 		cost = 10
@@ -451,7 +451,6 @@ focus = {
 				}
 				set_state_flag = SOV_DEM_ADM3_2Inf
 			}
-		add_ideas = rus_local_supply_points_focus
 		if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
 		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
 		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
@@ -532,8 +531,8 @@ focus = {
 						building = industrial_complex
 						size > 1
 						include_locked = yes
-						NOT = { has_state_flag = SOV_DEM_IND2_2IC }
 					}
+					NOT = { has_state_flag = SOV_DEM_IND2_2IC }
 				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -550,8 +549,8 @@ focus = {
 						building = arms_factory
 						size > 0
 						include_locked = yes
-						NOT = { has_state_flag = SOV_DEM_IND2_2IC }
 					}
+					NOT = { has_state_flag = SOV_DEM_IND2_2IC }
 				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -580,10 +579,14 @@ focus = {
 		completion_reward = {
 		add_research_slot = 1
 		add_tech_bonus = {
-				name = industry_bonus
+				name = excavation_bonus
 				bonus = 0.5
 				uses = 1
-				category = industry
+				technology = excavation5
+				technology = excavation4
+				technology = excavation3
+				technology = excavation2
+				technology = excavation1
 		  }
 		if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
 		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
@@ -604,7 +607,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-		add_political_power = 120
+		add_political_power = 100
             
 		}		
 	}
@@ -719,7 +722,7 @@ focus = {
 		x = 3
 		y = 2
 		cost = 10
-		available = { }
+		available = { NOT = { has_country_flag = RUS_WRA } }
 		prerequisite = { focus = SOV_CON_MON focus = SOV_TSAR_KYR }
 		
 		ai_will_do = {
@@ -902,7 +905,7 @@ focus = {
 	
 focus = {
 		id = SOV_DMI_ADM1
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_improve_relations
 		x = 19
 		y = 2
 		cost = 10
@@ -913,13 +916,14 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
+		add_political_power = 50
             
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_ADM2
-		icon = GFX_goal_generic_position_armies
+		icon = GFX_goal_generic_construction
 		x = 19
 		y = 3
 		cost = 10
@@ -930,13 +934,63 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_national_unity = 0.05
+		add_ideas = rus_zemstvo_funding_focus
+		random_owned_state = {
+				limit = { 
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 200000
+					NOT = { has_state_flag = SOV_DMI_ADM2_3Inf }
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM2_3Inf
+			}
+		random_owned_state = {
+				limit = { 
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 200000
+					NOT = { has_state_flag = SOV_DMI_ADM2_3Inf }
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM2_3Inf
+			}
+		random_owned_state = {
+				limit = { 
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 200000
+					NOT = { has_state_flag = SOV_DMI_ADM2_3Inf }
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM2_3Inf
+			}
+		
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_ADM3
-		icon = GFX_goal_generic_construct_infrastructure
+		icon = GFX_goal_generic_construct_civ_factory
 		x = 19
 		y = 4
 		cost = 10
@@ -947,7 +1001,45 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+           random_owned_state = {
+				limit = {
+					state_population > 500000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_ADM3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM3_2IC
+			}
+		   random_owned_state = {
+				limit = {
+					state_population > 500000
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_ADM3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM3_2IC
+			} 
+			if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
 		}		
 	}
 
@@ -957,20 +1049,56 @@ focus = {
 		x = 17
 		y = 2
 		cost = 10
-		available = { }
+		available = { NOT = { has_country_flag = RUS_WRA } }
 		prerequisite = { focus = SOV_TSAR_DMI focus = SOV_ARI_REP }
 		
 		ai_will_do = {
 			factor = 10
 		}	
 		completion_reward = {
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_IND1_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_IND1_2IC
+			}
+		   random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_IND1_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_IND1_2IC
+			} 
             
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_IND2
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_focus_research
 		x = 17
 		y = 3
 		cost = 10
@@ -981,13 +1109,20 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
+		add_research_slot = 1
+		add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+		  }
             
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_IND3
-		icon = GFX_focus_research
+		icon = GFX_goal_generic_construct_mil_factory
 		x = 17
 		y = 4
 		cost = 10
@@ -998,13 +1133,53 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_IND3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_IND3_2IC
+			}
+		   random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_IND3_2IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_IND3_2IC
+			}
+		add_ideas = rus_magic_turn_focus
+		if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
             
 		}		
 	}
 
 focus = {
 		id = SOV_DMI_POL1
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_neutrality_focus
 		x = 15
 		y = 2
 		cost = 10
@@ -1015,13 +1190,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_political_power = 100    
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_POL2
-		icon = GFX_goal_generic_scientific_exchange
+		icon = GFX_goal_generic_propaganda
 		x = 15
 		y = 3
 		cost = 10
@@ -1032,13 +1207,14 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_national_unity = 0.05  
+		 add_ideas = rus_moveable_feast_focus
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_POL3
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_goal_generic_demand_territory
 		x = 15
 		y = 4
 		cost = 10
@@ -1049,13 +1225,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_political_power = 100   
 		}		
 	}
 	
 focus = {
 		id = SOV_DMI_POL4
-		icon = GFX_goal_support_democracy
+		icon = GFX_goal_generic_scientific_exchange
 		x = 15
 		y = 5
 		cost = 10
@@ -1066,13 +1242,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_ideas = rus_great_library_focus  
 		}		
 	}
 	
 focus = {
 		id = SOV_ARI_POL1
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_cavalry
 		x = 21
 		y = 2
 		cost = 10
@@ -1083,13 +1259,15 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
-		}		
+         army_experience = 30
+		 navy_experience = 30
+		 air_experience = 30
+		}	
 	}
 	
 focus = {
 		id = SOV_ARI_POL2
-		icon = GFX_goal_generic_scientific_exchange
+		icon = GFX_goal_generic_consumer_goods
 		x = 21
 		y = 3
 		cost = 10
@@ -1100,13 +1278,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_national_unity = 0.1   
 		}		
 	}
 	
 focus = {
 		id = SOV_ARI_POL3
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_goal_support_democracy
 		x = 21
 		y = 4
 		cost = 10
@@ -1117,13 +1295,50 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_ADM3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM3_2IC
+			}
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = SOV_DMI_ADM3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOV_DMI_ADM3_2IC
+			}
+       add_political_power = 100
+       add_ideas = rus_bastion_democracy_focus	   
 		}		
 	}
 	
 focus = {
 		id = SOV_ARI_POL4
-		icon = GFX_goal_support_democracy
+		icon = GFX_goal_generic_demand_territory
 		x = 21
 		y = 5
 		cost = 10
@@ -1134,7 +1349,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_political_power = 100   
 		}		
 	}
 	
@@ -1195,8 +1410,8 @@ focus = {
 		x = 11
 		y = 2
 		cost = 10
-		available = { }
-		prerequisite = { focus = SOV_WRA_ambitions }
+		available = { has_country_flag = RUS_WRA }
+		prerequisite = { focus = SOV_WRA_ambitions focus = SOV_TSAR_KYR  focus = SOV_TSAR_DMI }
 		
 		ai_will_do = {
 			factor = 10
@@ -2069,7 +2284,7 @@ focus = {
 	
 focus = {
 		id = SOV_reform_berens
-		icon = goal_air_naval_bomber
+		icon = GFX_goal_generic_air_naval_bomber
 		x = 47
 		y = 0
 		cost = 10

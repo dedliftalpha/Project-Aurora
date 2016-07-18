@@ -54,7 +54,8 @@ country_event = {
 	
 	trigger = {
 		tag = BRA
-		date > 1936.1.7
+		date > 1936.1.3
+		date < 1936.4.3
 	}
 	
 	mean_time_to_happen = {
@@ -64,7 +65,7 @@ country_event = {
 	option = {
 		name = bra.2.a
 		BRA = {
-			add_national_unity = -0.05
+			add_political_power = -30 #1 dissent * 30P
 		}
 	}
 }
@@ -94,8 +95,8 @@ country_event = {
 #Major industrial strike in São Paulo
 country_event = {
 	id = bra.4
-	title = bra.3.t
-	desc = bra.3.d
+	title = bra.4.t
+	desc = bra.4.d
 	picture = GFX_bra_revolution
 	
 	fire_only_once = yes
@@ -116,17 +117,17 @@ country_event = {
 		name = bra.4.b
 		ai_chance = { factor = 50 }
 		BRA = {
-			add_political_power = -35 #1 dissent * 35PP
+			add_political_power = -30 #1 dissent * 35PP
+			add_ideas = BRA_Major_Industrial_Strike
 			hidden_effect = { country_event = { id = bra.5 days = 5 } }
-			#production_speed_buildings_factor = -0.05  #How to reduce industrial output without removing factories or adding more ideas?
 		}
 	}
 	option = {
 		name = bra.4.c
 		ai_chance = { factor = 25 }
 		BRA = {
-			add_political_power = -35 #1 dissent * 35PP
-			#production_speed_buildings_factor = -0.05 #How to reduce industrial output without removing factories or adding more ideas?
+			add_political_power = -150 #5 dissent * 35PP
+			add_timed_idea = { idea = BRA_Major_Industrial_Strike  days = 30 }
 			add_popularity = { ideology = national_populist popularity = 0.1 }
 		}
 	}
@@ -145,8 +146,8 @@ country_event = {
 		ai_chance = { factor = 50 }
 		BRA = { 
 			add_popularity = { ideology = syndicalist popularity = 0.1 }
-			#production_speed_buildings_factor = 0.05 #How to reduce industrial output without removing factories or adding more ideas?
-			add_political_power = 35 #-1 dissent * 35PP
+			add_political_power = 30 #-1 dissent * 35PP
+			remove_ideas = BRA_Major_Industrial_Strike
 		}
 	}
 	option = {
@@ -155,8 +156,9 @@ country_event = {
 		BRA = {
 			add_popularity = { ideology = paternal_autocratist popularity = 0.05 }
 			add_popularity = { ideology = national_populist popularity = 0.05 }
-			#production_speed_buildings_factor = -0.05 #How to reduce industrial output without removing factories or adding more ideas?
 			add_political_power = -280 #8 dissent * 35PP
+			remove_ideas = BRA_Major_Industrial_Strike
+			add_timed_idea = { idea = BRA_Major_Industrial_Strike  days = 60 }
 		}
 	}
 }
@@ -221,7 +223,7 @@ country_event = {
 						popularity = 2
 					}
 					radical_socialist = {
-						popularity = 33
+						popularity = 43
 					}
 					syndicalist = {
 						popularity = 13
@@ -230,19 +232,19 @@ country_event = {
 						popularity = 8
 					}
 					social_liberalist = {
-						popularity = 8
+						popularity = 4
 					}
 					market_liberalist = {
 						popularity = 16
 					}
 					social_conservatist = {
-						popularity = 8
+						popularity = 4
 					}
 					authoritarian_democratist = {
 						popularity = 3
 					}
 					paternal_autocratist = {
-						popularity = 6
+						popularity = 4
 					}
 					national_populist = {
 						popularity = 3
@@ -333,13 +335,13 @@ country_event = {
 						popularity = 6
 					}
 					social_democratist = {
-						popularity = 8
+						popularity = 6
 					}
 					social_liberalist = {
 						popularity = 5
 					}
 					market_liberalist = {
-						popularity = 8
+						popularity = 4
 					}
 					social_conservatist = {
 						popularity = 4
@@ -348,7 +350,7 @@ country_event = {
 						popularity = 9
 					}
 					paternal_autocratist = {
-						popularity = 36
+						popularity = 42
 					}
 					national_populist = {
 						popularity = 15
@@ -760,126 +762,6 @@ country_event = {
 		add_ideas = BRA_Francisco_Campos_int
 	}
 }
-###################
-#BSE crash reaction
-###################
-country_event = {
-	id = bra.6
-	title = bra.6.t
-	desc = bra.6.d
-	picture = american_supplies
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BRA
-		date > 1936.3.20
-	}
-	
-	mean_time_to_happen = { days = 2 }
-	
-	option = {
-		name = "Guarantee the convertibility of the Real and the Papiermark"
-		ai_chance = { factor = 90 }
-		add_political_power = -450 #15 dissent * 350P
-		add_ideas = BRA_berlin_crisis
-		set_country_flag = convertibility_maintained
-	}
-	option = {
-		name = "Suspend convertibility of the Brazilian Real"
-		ai_chance = { factor = 10 }
-		add_political_power = -300 #10 dissent * 30PP
-		remove_building = { type = industrial_complex level = 1 state = 500 }
-		remove_building = { type = industrial_complex level = 2 state = 501 }
-		add_ideas = BRA_berlin_crisis
-		set_country_flag = convertibility_suspended
-	}
-}
-### Effects of the Berlin crisis
-news_event = {
-	id = bra.7
-	title = bra.7.t
-	desc = bra.7.d
-	picture = "bank"
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BRA
-		date > 1936.4.9
-		date < 1936.6.9
-		has_country_flag = convertibility_maintained
-	}
-	
-	mean_time_to_happen = { days = 1 }
-	
-	option = {
-		name = "Thank God we're leaving this mess already..."
-		BRA = {
-			add_political_power = -150 #5 dissent * 30PP
-			hidden_effect = {
-				clr_country_flag = convertibility_maintained
-				random_list = {
-					30 = { country_event = { months = 3 id = bra.9 } } 
-					50 = { country_event = { months = 6 id = bra.9 } } 
-					20 = { country_event = { months = 9 id = bra.9 } } 
-				}
-			}
-		}
-	}
-}
-### Bank panic!
-news_event = {
-	id = bra.8
-	title = bra.8.t
-	desc = bra.8.d
-	picture = "bank"
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BRA
-		date > 1936.4.9
-		date < 1936.6.9
-		has_country_flag = convertibility_suspended
-	}
-	
-	mean_time_to_happen = { days = 1 }
-	
-	option = {
-		name = "Why does this always happens to us?"
-		BRA = {
-			add_political_power = -300 #5 dissent * 30PP
-			remove_ideas = BRA_berlin_crisis
-			add_ideas = BRA_berlin_crisis_worse
-			hidden_effect = {
-				clr_country_flag = convertibility_suspended
-				random_list = {
-					20 = { country_event = { months = 3 id = bra.9 } } 
-					50 = { country_event = { months = 6 id = bra.9 } } 
-					30 = { country_event = { months = 9 id = bra.9 } } 
-				}
-			}
-		}
-	}
-}
-news_event = {
-	id = bra.9
-	title = bra.9.t
-	desc = bra.9.d
-	picture = "bank"
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = "Thank God it's finally over."
-		BRA = {
-			remove_ideas = BRA_berlin_crisis
-			remove_ideas = BRA_berlin_crisis_worse
-		}
-	}
-}
-
 ##########
 ### ANL Events (from inauguration day to the start of the Civil War)
 ##########
@@ -1283,13 +1165,13 @@ news_event = {
 	
 	option = {
 		name = "Socialism is safe, it seems"
-		hidden_effect = { retire_country_leader = yes }
+		hidden_effect = { kill_country_leader = yes }
 		create_country_leader = {
 			name = "Luís Carlos Prestes"
 			desc = "POLITICS_LUIS_CARLOS_PRESTES_DESC"
 			picture = "Portrait_Brazil_Luis_Carlos_Prestes.tga"
 			expire = "1965.1.1"
-			ideology = syndicalist_subtype
+			ideology = radical_socialist_subtype
 			traits = {}
 		}
 		add_political_power = -150 #5 dissent * 30P
@@ -1308,3 +1190,376 @@ news_event = {
 	}
 }
 ### Limoeiro Crisis
+country_event = {
+	id = bra.24
+	title = bra.24.t
+	desc = bra.24.d
+	picture = bra_chico
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = ANL
+		has_country_flag = BRA_LANDREFORM
+		has_country_flag = CANGACO
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Form a army detachment and send it to Limoeiro, quick!"
+		ai_chance = { factor = 70 }
+		set_country_flag = LIMOEIRO_ARMY
+	}
+	option = {
+		name = "Let Lampião do the job for us"
+		ai_chance = { factor = 30 }
+		set_country_flag = LIMOEIRO_CANGACO
+		load_oob = BRA_limoeiro
+	}
+	option = {
+		name = "Time for a conference with the northeastern governors"
+		ai_chance = { factor = 0 }
+		set_country_flag = LIMOEIRO_CONFERENCE
+	}
+}
+
+### Limoeiro Crisis
+country_event = { #The same event, but if the Coluna Prestes didnt result in support for the Cangaceiros
+	id = bra.25
+	title = bra.25.t
+	desc = bra.25.d
+	picture = bra_chico
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = ANL
+		has_country_flag = BRA_LANDREFORM
+		NOT = { has_country_flag = CANGACO }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Form a army detachment and send it to Limoeiro, quick!"
+		ai_chance = { factor = 100 }
+		set_country_flag = LIMOEIRO_ARMY
+	}
+	option = {
+		name = "Time for a conference with the northeastern governors"
+		ai_chance = { factor = 0 }
+		set_country_flag = LIMOEIRO_CONFERENCE
+	}
+}
+
+###Pernambuco Crisis - The Army has rescued the hostages!
+country_event = {
+	id = bra.26
+	title = bra.26.t
+	desc = bra.26.d
+	picture = bra_coluna
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = LIMOEIRO_ARMY
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Replace them with Federal Interventors"
+		ai_chance = { factor = 80 }
+		add_political_power = 300 #-10 dissent * 30 PP
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = "Time for a conference with the northeastern governors"
+		ai_chance = { factor = 20 }
+		set_country_flag = LIMOEIRO_CONFERENCE
+	}
+}
+###Pernambuco Crisis - Disaster!
+country_event = {
+	id = bra.27
+	title = bra.27.t
+	desc = bra.27.d
+	picture = bra-soldiers2
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = BRA_LIMOEIRO_ARMY
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "How shamefull! Ok, negotiate with the governors"
+		ai_chance = { factor = 30 }
+		set_country_flag = LIMOEIRO_CONFERENCE
+		add_political_power = -300 #10 dissent * 30 PP
+	}
+	option = {
+		name = "This was all THEIR fault! Replace them with Federal Interventors!"
+		ai_chance = { factor = 70 }
+		add_political_power = -450 #10 dissent * 30 PP
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+}
+###Pernambuco Crisis - Lampião and his men attack the ranch!
+country_event = {
+	id = bra.28
+	title = bra.28.t
+	desc = bra.28.d
+	picture = bra_coluna
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = LIMOEIRO_CANGACO
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Replace them with Federal Interventors"
+		ai_chance = { factor = 99 }
+		add_political_power = 150 #-5 dissent * 30 PP
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = "Time for a conference with the northeastern governors"
+		ai_chance = { factor = 1 }
+		set_country_flag = LIMOEIRO_CONFERENCE
+	}
+}
+
+###Conference with the northeastern governors
+country_event = {
+	id = bra.29
+	title = bra.29.t
+	desc = bra.29.d
+	picture = bra_coluna
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.5.5
+		date < 1937.8.5
+		has_country_flag = LIMOEIRO_CONFERENCE
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "How can they propose such a thing! Call for federal intervention on these states!"
+		ai_chance = { factor = 70 }
+		add_political_power = -60 #0 dissent * 30 PP
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = "We cannot risk more conflict with them - Fold to their demands."
+		ai_chance = { factor = 10 }
+		add_political_power = -450 #0 dissent * 30 PP
+		country_event = { days = 0 id = bra.22 }
+	}
+	option = {
+		name = "If we sit here long enough, we may reach an agreement."
+		ai_chance = { factor = 20 }
+		add_political_power = -60 #0 dissent * 30 PP
+		country_event = { days = 0 id = bra.27 }
+	}
+}
+
+###Recife Conference results in concessions
+news_event = {
+	id = bra.30
+	title = bra.30.t
+	desc = bra.30.d
+	picture = bra_recife
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Far from the ideal solution, but they'll go for socialism eventually."
+		add_political_power = -60 #0 dissent * 30 PP
+		add_popularity = { ideology = radical_socialist popularity = -0.05 }
+	}
+}
+
+### Economy and Industrial measures
+country_event = {
+	id = bra.31
+	title = bra.31.t
+	desc = bra.31.d
+	picture = factory
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1937.2.1
+		date < 1937.5.1
+		has_country_flag = ANL
+	}
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Free market means capitalism, but we could use some of it."
+		ai_chance = { factor = 25 }
+		add_popularity = { ideology = radical_socialist popularity = -0.02 }
+		add_popularity = { ideology = syndicalist popularity = -0.02 }
+		add_popularity = { ideology = totalist popularity = -0.02 }
+		add_political_power = -60 #2 dissent * 30 PP
+		hidden_effect = { country_event = { days = 15 id = bra.32 } }
+	}
+	option = {
+		name = "Socialist interference in the economy is needed more than ever!"
+		ai_chance = { factor = 75 }
+		add_political_power = 60 #-2 dissent * 30 PP
+		add_popularity = { ideology = radical_socialist popularity = 0.02 }
+		add_popularity = { ideology = syndicalist popularity = 0.02 }
+		add_popularity = { ideology = totalist popularity = 0.02 }
+		hidden_effect = { country_event = { days = 15 id = bra.33 } }
+	}
+}
+### A shot of capitalism
+country_event = {
+	id = bra.32
+	title = bra.32.t
+	desc = bra.32.d
+	picture = Industry
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Socialism with Brazilian characteristics - Establish mixed-capital ventures"
+		ai_chance = { factor = 40 }
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = totalist popularity = -0.01 }
+		add_political_power = -60 #2 dissent * 30 PP
+		add_ideas = BRA_brazilian_socialism
+		hidden_effect = { country_event = { days = 34 id = bra.33 } }
+	}
+	option = {
+		name = "Anything resembling privatization would be a betrayal of the Brazilian people!"
+		ai_chance = { factor = 60 }
+		add_political_power = 60 #-2 dissent * 30 PP
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		hidden_effect = { country_event = { days = 34 id = bra.33 } }
+	}
+}
+### Intervene on private companies?
+country_event = {
+	id = bra.33
+	title = bra.33.t
+	desc = bra.33.d
+	picture = Industry
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Nationalize! All belongs to the state!"
+		ai_chance = { factor = 80 }
+		add_popularity = { ideology = radical_socialist popularity = 0.02 }
+		add_popularity = { ideology = syndicalist popularity = 0.02 }
+		add_popularity = { ideology = totalist popularity = 0.03 }
+		add_political_power = 150 #-5 dissent * 30 PP
+		set_country_flag = ANL_NATIONALIZE
+		500 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		501 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		502 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		503 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		hidden_effect = { country_event = { days = 34 id = bra.33 } }
+	}
+	option = {
+		name = "Promote some mixed-capital ventures"
+		ai_chance = { factor = 20 }
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_political_power = 60 #-2 dissent * 30 PP
+		add_ideas = BRA_mixed_capital_ventures
+		hidden_effect = { country_event = { days = 34 id = bra.33 } }
+	}
+}
+### New Minister of Industry
+country_event = {
+	id = bra.34
+	title = bra.34.t
+	desc = bra.34.desc
+	picture = economic
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = { country_event = { days = 15 id = bra.35 } }
+	}
+	
+	option = {
+		name = "Manuel Cendón - Stockpile military supplies."
+		ai_chance = { factor = 20 }
+		remove_ideas_with_trait = economy_minister
+		add_ideas = BRA_Manuel_Cendon_eco
+	}
+	option = {
+		name = "Elias Iltchenco - Invest on our industry."
+		ai_chance = { factor = 40 }
+		remove_ideas_with_trait = economy_minister
+		add_ideas = BRA_Elias_Iltchenco_eco
+	}
+	option = {
+		name = "Hermogênio da Silva Fernandes - Military research."
+		ai_chance = { factor = 20 }
+		remove_ideas_with_trait = economy_minister
+		add_ideas = BRA_Hermogenio_da_Silva_Fernandes_eco
+	}
+	option = {
+		name = "Leave everything as it is."
+		ai_chance = { factor = 20 }
+		add_political_power = -60 #2 dissent * 30 PP
+	}
+}
+
+### Unemployment still rising
+country_event = {
+	id = bra.35
+	title = bra.35
+	desc = bra.35
+	picture = bra_desemprego
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 40 }
+		name = "No changes will be made."
+		add_political_power = -120 #6 dissent * 20 PP
+	}
+	option = {
+		ai_chance = { factor = 40 }
+		name = "Promote more cooperatives and workers' self-management."
+		add_political_power = -40 #2 dissent * 20 PP
+		add_popularity = { ideology = syndicalist popularity = 0.02 }
+	}
+	option = {
+		ai_chance = { factor = 20 }
+		name = "Nationalize and intervene even further."
+		add_political_power = -60 #6 dissent * 20 PP
+		add_popularity = { ideology = totalist popularity = 0.02 }
+		set_country_flag = ANL_NATIONALIZE
+	}
+}

@@ -286,8 +286,7 @@ country_event = {
 	
 	option = {
 		name = ausgleich.15.a
-		#AUS = { annex_country = { target = HUN transfer_troops = yes }}
-		
+
 		AUS  = { transfer_state = 155 }
 		AUS  = { transfer_state = 664 }
 		AUS  = { transfer_state = 70 }
@@ -300,6 +299,9 @@ country_event = {
 		AUS  = { transfer_state = 83 }
 		AUS  = { transfer_state = 76 }
 		AUS  = { transfer_state = 84 }
+		AUS  = { transfer_state = 784 }
+		AUS  = { transfer_state = 790 }
+		AUS  = { transfer_state = 789 }
 		
 		155 = { add_core_of = AUS }
 		664 = { add_core_of = AUS }
@@ -313,6 +315,11 @@ country_event = {
 		83 = { add_core_of = AUS }
 		76 = { add_core_of = AUS }
 		84 = { add_core_of = AUS }
+		784 = { add_core_of = AUS }
+		790 = { add_core_of = AUS }
+		789 = { add_core_of = AUS }
+		
+		AUS = { annex_country = { target = HUN transfer_troops = yes }}
 		
 		BOM = { country_event = {id = ausgleich.16 days = 1}}
 		CRO = { country_event = {id = ausgleich.17 days = 1}}
@@ -320,6 +327,8 @@ country_event = {
 		GAL = { country_event = {id = ausgleich.19 days = 1}}
 		
 		AUS = { puppet = CRO}
+		
+		set_global_flag = centralize_success
 	}
 	
 }
@@ -333,18 +342,27 @@ country_event = {
 	
 	option = {
 		name = ausgleich.16.a # Accept
-		AUS = { annex_country = { target = BOM transfer_troops = yes }}
+		
+		AUS  = { transfer_state = 9 }
+		AUS  = { transfer_state = 72 }
+		AUS  = { transfer_state = 74 }
+		AUS  = { transfer_state = 75 }
+		AUS  = { transfer_state = 69 }
+		AUS  = { transfer_state = 786 }
+		
 		AUS = { add_state_core = 9 }
 		AUS = { add_state_core = 72 }
 		AUS = { add_state_core = 74 }
 		AUS = { add_state_core = 75 }
 		AUS = { add_state_core = 69 }
-		
+		AUS = { add_state_core = 786 }
+
+		AUS = { annex_country = { target = BOM transfer_troops = yes }}		
 	}
 	option = {
 		name = ausgleich.16.b # Decline
 		AUS = { country_event = { id = ausgleich.22 days = 3}}
-		AUS = {end_puppet = BOS}
+		AUS = {end_puppet = BOM}
 		
 	}
 	
@@ -359,10 +377,20 @@ country_event = {
 	
 	option = {
 		name = ausgleich.17.a # Accept
-		AUS = { annex_country = { target = CRO transfer_troops = yes }}
+		
+		AUS  = { transfer_state = 109 }
+		AUS  = { transfer_state = 103 }
+		AUS  = { transfer_state = 163 }
+		AUS  = { transfer_state = 794 }
+		AUS  = { transfer_state = 793 }
+		
 		AUS = { add_state_core = 109 }
 		AUS = { add_state_core = 103 }
 		AUS = { add_state_core = 163 }
+		AUS = { add_state_core = 794 }
+		AUS = { add_state_core = 793 }
+		
+		AUS = { annex_country = { target = CRO transfer_troops = yes }}
 		
 	}
 	option = {
@@ -383,10 +411,12 @@ country_event = {
 	
 	option = {
 		name = ausgleich.18.a # Accept
-		AUS = { annex_country = { target = BOS transfer_troops = yes }}
+		
+		AUS  = { transfer_state = 104 }
+		
 		AUS = { add_state_core = 104 }
 
-		
+		AUS = { annex_country = { target = BOS transfer_troops = yes }}
 	}
 	option = {
 		name = ausgleich.18.b # Decline
@@ -406,13 +436,18 @@ country_event = {
 	
 	option = {
 		name = ausgleich.19.a # Accept
-		AUS = { annex_country = { target = GAL transfer_troops = yes }}
+		
+		AUS  = { transfer_state = 88 }
+		AUS  = { transfer_state = 91 }
+		AUS  = { transfer_state = 89 }
+		AUS  = { transfer_state = 80 }
+		
 		AUS = { add_state_core = 88 }
 		AUS = { add_state_core = 91 }
 		AUS = { add_state_core = 89 }
 		AUS = { add_state_core = 80 }
 
-		
+		AUS = { annex_country = { target = GAL transfer_troops = yes }}		
 	}
 	option = {
 		name = ausgleich.19.b # Decline
@@ -463,15 +498,17 @@ country_event = {
 	option = {
 		name = ausgleich.21.a # To war
 		add_national_unity = 0.05
-			declare_war_on = {
-				target = POL
-				type = take_state_focus
-				generator = { 88 91 89 80 } 
-			}
 		add_state_core = 88
 		add_state_core = 91
 		add_state_core = 89
 		add_state_core = 80
+		
+		declare_war_on = {
+			target = POL
+			type = take_core_state
+			generator = { 88 91 89 80 } 
+		}
+
 		
 	}
 	option = {
@@ -491,18 +528,17 @@ country_event = {
 	
 	option = {
 		name = ausgleich.22.a # To war
-		declare_war_on = {
-				target = BOM
-				type = civil_war
-			}
 		AUS = { add_state_core = 9 }
 		AUS = { add_state_core = 72 }
 		AUS = { add_state_core = 74 }
 		AUS = { add_state_core = 75 }
 		AUS = { add_state_core = 69 }
-		
-		
-		
+		AUS = { add_state_core = 786 }
+		declare_war_on = {
+			target = BOM
+			type = take_core_state
+			generator = { 9 72 74 75 69 786 }
+		}	
 	}
 	option = {
 		name = ausgleich.22.b # No need
@@ -521,14 +557,12 @@ country_event = {
 	
 	option = {
 		name = ausgleich.23.a # To war
-		declare_war_on = {
-				target = BOS
-				type = annex_everything
-			}
 		AUS = { add_state_core = 104 }
-		
-		
-		
+		declare_war_on = {
+			target = BOS
+			type = take_core_state
+			generator = { 104 }
+		}	
 	}
 	option = {
 		name = ausgleich.23.b # No need
@@ -547,16 +581,17 @@ country_event = {
 	
 	option = {
 		name = ausgleich.24.a # To war
-		declare_war_on = {
-				target = GAL
-				type = annex_everything
-			}
+
 		AUS = { add_state_core = 88 }
 		AUS = { add_state_core = 91 }
 		AUS = { add_state_core = 89 }
 		AUS = { add_state_core = 80 }
 		
-		
+		declare_war_on = {
+			target = GAL
+			type = take_core_state
+			generator = { 88 91 89 80 }
+		}		
 		
 	}
 	option = {
@@ -575,15 +610,18 @@ country_event = {
 	
 	option = {
 		name = ausgleich.25.a # To war
-		declare_war_on = {
-				target = CRO
-				type = annex_everything
-			}
+
 		AUS = { add_state_core = 109 }
 		AUS = { add_state_core = 103 }
 		AUS = { add_state_core = 163 }
+		AUS = { add_state_core = 793 }
+		AUS = { add_state_core = 794 }
 		
-		
+		declare_war_on = {
+			target = CRO
+			type = take_core_state
+			generator = { 109 103 163 793 794}
+		}		
 		
 	}
 	option = {
@@ -609,23 +647,30 @@ country_event = {
 	}
 	option = {
 		name = ausgleich.26.b
-		declare_war_on = {
-				target = HUN
-				type = annex_everything
-		}
-		AUS = { add_state_core = 155 }
-		AUS = { add_state_core = 664 }
-		AUS = { add_state_core = 70 }
-		AUS = { add_state_core = 71 }
-		AUS = { add_state_core = 73 }
-		AUS = { add_state_core = 43 }
-		AUS = { add_state_core = 154 }
-		AUS = { add_state_core = 45 }
-		AUS = { add_state_core = 82 }
-		AUS = { add_state_core = 83 }
-		AUS = { add_state_core = 84 }
-		AUS = { add_state_core = 76 }
 		
+		AUS = {end_puppet = HUN}
+
+		155 = { add_core_of = AUS }
+		664 = { add_core_of = AUS }
+		70 = { add_core_of = AUS }
+		71 = { add_core_of = AUS }
+		73 = { add_core_of = AUS }
+		43 = { add_core_of = AUS }
+		154 = { add_core_of = AUS }
+		45 = { add_core_of = AUS }
+		82 = { add_core_of = AUS }
+		83 = { add_core_of = AUS }
+		76 = { add_core_of = AUS }
+		84 = { add_core_of = AUS }
+		784 = { add_core_of = AUS }
+		790 = { add_core_of = AUS }
+		789 = { add_core_of = AUS }
+		
+		declare_war_on = {
+			target = HUN
+			type = annex_everything
+		}
+
 		set_global_flag = ausgleich_war
 			
 	}
@@ -666,17 +711,26 @@ country_event = {
 		name = ausgleich.28.a #Give it to Croatia
 		add_national_unity = 0.05
 		CRO = {country_event = {id = ausgleich.29 days = 3}}
-		
+		ai_chance = {
+			factor = 70
+		}
 	}
 	option = {
 		name = ausgleich.28.b #Keep as puppet
 		add_national_unity = 0.02
+	    ai_chance = {
+			factor = 30
+		}
 	}
 	option = {
 		name = ausgleich.28.c #Anex it
 		HUN = { annex_country = { target = BOS transfer_troops = yes }}
 		HUN = { add_state_core = 104 }
 		add_national_unity = -0.05
+		
+		ai_chance = {
+			factor = 0
+		}
 			
 	}
 	
@@ -709,17 +763,27 @@ country_event = {
 	option = {
 		name = ausgleich.30.a # Pro Asutria
 		HUN = {country_event = {id = ausgleich.31 days = 1}}
-		
+		ai_chance = {
+			factor = 20
+		}
 	}
 	option = {
 		name = ausgleich.30.b # Pro Hungary
 		AUS = {country_event = {id = ausgleich.32 days = 1}}
+		
+		ai_chance = {
+			factor = 10
+		}
 		
 	}
 	option = {
 		name = ausgleich.30.c # Neutral
 		HUN = {country_event = {id = ausgleich.33 days = 1}}
 		AUS = {country_event = {id = ausgleich.33 days = 1}}
+		
+		ai_chance = {
+			factor = 80
+		}
 	}
 }
 ### Pro Asutria
@@ -737,19 +801,28 @@ country_event = {
 	}
 	option = {
 		name = ausgleich.31.b # Decline
-		declare_war_on = {
-				target = AUS
-				type = annex_everything
-		}
-		HUN = { add_state_core = 4 }
-		HUN = { add_state_core = 152 }
-		HUN = { add_state_core = 102 }
-		HUN = { add_state_core = 736 }
-		HUN = { add_state_core = 153 }
-		HUN = { add_state_core = 160 }
-		HUN = { add_state_core = 39 }
+		AUS = {end_puppet = HUN}
+
+		155 = { add_core_of = AUS }
+		664 = { add_core_of = AUS }
+		70 = { add_core_of = AUS }
+		71 = { add_core_of = AUS }
+		73 = { add_core_of = AUS }
+		43 = { add_core_of = AUS }
+		154 = { add_core_of = AUS }
+		45 = { add_core_of = AUS }
+		82 = { add_core_of = AUS }
+		83 = { add_core_of = AUS }
+		76 = { add_core_of = AUS }
+		84 = { add_core_of = AUS }
+		784 = { add_core_of = AUS }
+		790 = { add_core_of = AUS }
+		789 = { add_core_of = AUS }
 		
-		set_global_flag = ausgleich_war
+		declare_war_on = {
+			target = HUN
+			type = annex_everything
+		}
 		
 		GER = {country_event = {id = ausgleich.33 days = 1}}
 
@@ -772,10 +845,7 @@ country_event = {
 	}
 	option = {
 		name = ausgleich.32.b # Decline
-		declare_war_on = {
-				target = HUN
-				type = annex_everything
-		}
+		
 		AUS = { add_state_core = 155 }
 		AUS = { add_state_core = 664 }
 		AUS = { add_state_core = 70 }
@@ -788,6 +858,13 @@ country_event = {
 		AUS = { add_state_core = 83 }
 		AUS = { add_state_core = 84 }
 		AUS = { add_state_core = 76 }
+		AUS = { add_state_core = 775 }
+		AUS = { add_state_core = 736 }
+		
+		declare_war_on = {
+			target = HUN
+			type = annex_everything
+		}
 		
 		set_global_flag = ausgleich_war
 		
@@ -820,8 +897,8 @@ country_event = {
 	option = {
 		name = ausgleich.34.a # Accept
 		add_to_war = {
-		targeted_alliance = AUS
-		enemy = HUN
+			targeted_alliance = AUS
+			enemy = HUN
 		}
 		
 		
@@ -842,8 +919,8 @@ country_event = {
 	option = {
 		name = ausgleich.35.a # Accept
 		add_to_war = {
-		targeted_alliance = HUN
-		enemy = AUS
+			targeted_alliance = HUN
+			enemy = AUS
 		}
 		
 		
@@ -863,19 +940,39 @@ country_event = {
 	
 	option = {
 		name = ausgleich.36.a
+		AUS  = { transfer_state = 155 }
+		AUS  = { transfer_state = 664 }
+		AUS  = { transfer_state = 70 }
+		AUS  = { transfer_state = 71 }
+		AUS  = { transfer_state = 73 }
+		AUS  = { transfer_state = 43 }
+		AUS  = { transfer_state = 154 }
+		AUS  = { transfer_state = 45 }
+		AUS  = { transfer_state = 82 }
+		AUS  = { transfer_state = 83 }
+		AUS  = { transfer_state = 76 }
+		AUS  = { transfer_state = 84 }
+		AUS  = { transfer_state = 784 }
+		AUS  = { transfer_state = 790 }
+		AUS  = { transfer_state = 789 }
+		
+		155 = { add_core_of = AUS }
+		664 = { add_core_of = AUS }
+		70 = { add_core_of = AUS }
+		71 = { add_core_of = AUS }
+		73 = { add_core_of = AUS }
+		43 = { add_core_of = AUS }
+		154 = { add_core_of = AUS }
+		45 = { add_core_of = AUS }
+		82 = { add_core_of = AUS }
+		83 = { add_core_of = AUS }
+		76 = { add_core_of = AUS }
+		84 = { add_core_of = AUS }
+		784 = { add_core_of = AUS }
+		790 = { add_core_of = AUS }
+		789 = { add_core_of = AUS }
+		
 		AUS = { annex_country = { target = HUN transfer_troops = yes }}
-		AUS = { add_state_core = 155 }
-		AUS = { add_state_core = 664 }
-		AUS = { add_state_core = 70 }
-		AUS = { add_state_core = 71 }
-		AUS = { add_state_core = 73 }
-		AUS = { add_state_core = 43 }
-		AUS = { add_state_core = 154 }
-		AUS = { add_state_core = 45 }
-		AUS = { add_state_core = 82 }
-		AUS = { add_state_core = 83 }
-		AUS = { add_state_core = 76 }
-		AUS = { add_state_core = 84 }
 		
 		BOM = { country_event = {id = ausgleich.16 days = 1}}
 		CRO = { country_event = {id = ausgleich.17 days = 1}}
@@ -989,24 +1086,28 @@ country_event = {
 	option = {
 		AUS = {end_puppet = HUN}
 		name = ausgleich.41.a
+		AUS = {end_puppet = HUN}
+
+		155 = { add_core_of = AUS }
+		664 = { add_core_of = AUS }
+		70 = { add_core_of = AUS }
+		71 = { add_core_of = AUS }
+		73 = { add_core_of = AUS }
+		43 = { add_core_of = AUS }
+		154 = { add_core_of = AUS }
+		45 = { add_core_of = AUS }
+		82 = { add_core_of = AUS }
+		83 = { add_core_of = AUS }
+		76 = { add_core_of = AUS }
+		84 = { add_core_of = AUS }
+		784 = { add_core_of = AUS }
+		790 = { add_core_of = AUS }
+		789 = { add_core_of = AUS }
+		
 		declare_war_on = {
-				target = HUN
-				type = annex_everything
+			target = HUN
+			type = annex_everything
 		}
-		AUS = { add_state_core = 155 }
-		AUS = { add_state_core = 664 }
-		AUS = { add_state_core = 70 }
-		AUS = { add_state_core = 71 }
-		AUS = { add_state_core = 73 }
-		AUS = { add_state_core = 43 }
-		AUS = { add_state_core = 154 }
-		AUS = { add_state_core = 45 }
-		AUS = { add_state_core = 82 }
-		AUS = { add_state_core = 83 }
-		AUS = { add_state_core = 84 }
-		AUS = { add_state_core = 76 }
-	
-		set_global_flag = ausgleich_war
 		
 		HUN = { country_event = { id = ausgleich.54 days = 1}}
 	}
@@ -1030,6 +1131,10 @@ country_event = {
 		HUN = { add_state_core = 153 }
 		HUN = { add_state_core = 160 }
 		HUN = { add_state_core = 39 }
+		HUN = { add_state_core = 736 }
+		HUN = { add_state_core = 795 }
+		HUN = { add_state_core = 759 }
+		HUN = { add_state_core = 783 }
 		
 		BOM = { country_event = {id = ausgleich.42 days = 1}}
 		CRO = { country_event = {id = ausgleich.43 days = 1}}
@@ -1054,8 +1159,8 @@ country_event = {
 		set_country_flag = side_austria
 		
 		add_to_war = {
-		targeted_alliance = AUS
-		enemy = HUN
+			targeted_alliance = AUS
+			enemy = HUN
 		}
 		
 		AUS = { country_event = {id = ausgleich.46 days = 1}}
@@ -1067,8 +1172,8 @@ country_event = {
 		set_country_flag = side_hungary
 		
 		add_to_war = {
-		targeted_alliance = HUN
-		enemy = AUS
+			targeted_alliance = HUN
+			enemy = AUS
 		}
 		
 		AUS = { country_event = {id = ausgleich.47 days = 1}}
@@ -1093,8 +1198,8 @@ country_event = {
 		set_country_flag = side_austria
 		
 		add_to_war = {
-		targeted_alliance = AUS
-		enemy = HUN
+			targeted_alliance = AUS
+			enemy = HUN
 		}
 		
 		AUS = { country_event = {id = ausgleich.48 days = 1}}
@@ -1106,8 +1211,8 @@ country_event = {
 		set_country_flag = side_hungary
 		
 		add_to_war = {
-		targeted_alliance = HUN
-		enemy = AUS
+			targeted_alliance = HUN
+			enemy = AUS
 		}
 		
 		AUS = { country_event = {id = ausgleich.49 days = 1}}
@@ -1132,8 +1237,8 @@ country_event = {
 		set_country_flag = side_austria
 		
 		add_to_war = {
-		targeted_alliance = AUS
-		enemy = HUN
+			targeted_alliance = AUS
+			enemy = HUN
 		}
 		
 		AUS = { country_event = {id = ausgleich.50 days = 1}}
@@ -1145,8 +1250,8 @@ country_event = {
 		set_country_flag = side_hungary
 		
 		add_to_war = {
-		targeted_alliance = HUN
-		enemy = AUS
+			targeted_alliance = HUN
+			enemy = AUS
 		}
 		
 		AUS = { country_event = {id = ausgleich.51 days = 1}}
@@ -1174,8 +1279,8 @@ country_event = {
 		set_country_flag = side_austria
 		
 		add_to_war = {
-		targeted_alliance = AUS
-		enemy = HUN
+			targeted_alliance = AUS
+			enemy = HUN
 		}
 		
 		AUS = { country_event = {id = ausgleich.52 days = 1}}
@@ -1187,8 +1292,8 @@ country_event = {
 		set_country_flag = side_hungary
 		
 		add_to_war = {
-		targeted_alliance = HUN
-		enemy = AUS
+			targeted_alliance = HUN
+			enemy = AUS
 		}
 		
 		AUS = { country_event = {id = ausgleich.53 days = 1}}

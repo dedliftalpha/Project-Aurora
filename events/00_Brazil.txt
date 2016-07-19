@@ -3053,6 +3053,7 @@ country_event = {
 ##################
 
 ##### Set 1 - Civil War Setup
+
 ##### ANL Government
 country_event = {
 	id = bra.300
@@ -3060,18 +3061,359 @@ country_event = {
 	desc = bra.300.d
 	picture = bra-getulio-vargas2
 	
+	fire_only_once = yes
+	
 	trigger = {
 		date > 1938.8.1
 		date < 1939.11.1
 		has_country_flag = ANL
 	}
 	
+	mean_time_to_happen = { days = 1 }
+	
 	option = {
 		ai_chance = { factor = 99 }
 		name = "The presidential guard will disperse these reactionaries"
+		set_global_flag = CW_GOVANL
+		set_global_flag = CW_REBVAR
+		country_event = { days = 0 id = bra.308 } #Triggers "Vargas launches an uprising"
 	}
 	option = {
 		ai_chance = { factor = 1 }
 		name = "Stand down, we cannot endorse a bloodbath"
+		country_event = { days = 0 id = bra.301 } #Triggers "The Coup Succedes"
+	}
+}
+
+country_event = {
+	id = bra.301
+	title = bra.301.t
+	desc = bra.301.d
+	picture = bra_vargas_3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Long live the new President!"
+		add_political_power = -400 #20 dissent * 20 PP
+		set_global_flag = CW_GOVANL
+		set_global_flag = CW_REBVAR
+		country_event = { days = 0 id = bra.308 } #Triggers "Vargas launches an uprising"
+		clr_country_flag = ANL
+		clr_country_flag = REP
+		clr_country_flag = DEM
+		clr_country_flag = INT
+		set_country_flag = POSTCW_REP
+		add_popularity = { ideology = paternal_autocratist popularity = 0.5 }
+		hidden_effect = {
+			kill_country_leader = yes
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+		create_country_leader = {
+			name = "Getúlio Vargas"
+			desc = "POLITICS_GETULIO_VARGAS_DESC"
+			picture = "Portrait_Brazil_Getulio_Vargas.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+		add_ideas = BRA_Carlos_de_Lima_Cavalcanti_hog
+		add_ideas = BRA_Raul_Fernandes_for
+		add_ideas = BRA_Gastao_Vidigal_eco
+		add_ideas = BRA_Tasso_da_Silveira_int
+		BRA = { dismantle_faction = yes }
+		remove_from_faction = BRA
+	}
+}
+
+##### REP Government
+country_event = {
+	id = bra.302
+	title = bra.302.t
+	desc = bra.302.d
+	picture = bra_revolution
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1938.8.1
+		date < 1939.11.1
+		has_country_flag = REP
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 90 }
+		name = "The presidential guard will disperse these reactionaries"
+		set_global_flag = CW_GOVREP
+		set_global_flag = CW_REBANL
+		country_event = { days = 0 id = bra.318 } #Triggers "Prestes launches an uprising"
+	}
+	option = {
+		ai_chance = { factor = 10 }
+		name = "Stand down, we cannot endorse a bloodbath"
+		country_event = { days = 0 id = bra.303 } #Triggers "The Coup Succedes"
+	}
+}
+
+country_event = {
+	id = bra.303
+	title = bra.303.t
+	desc = bra.303.d
+	picture = Milice
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Long live the new President!"
+		add_political_power = -400 #20 dissent * 20 PP
+		clr_country_flag = ANL
+		clr_country_flag = REP
+		clr_country_flag = DEM
+		clr_country_flag = INT
+		set_country_flag = POSTCW_ANL
+		add_popularity = { ideology = syndicalist popularity = 0.2 }
+		add_popularity = { ideology = radical_socialist popularity = 0.5 }
+		hidden_effect = {
+			kill_country_leader = yes
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+		create_country_leader = {
+			name = "Luís Carlos Prestes"
+			desc = "POLITICS_LUIS_CARLOS_PRESTES_DESC"
+			picture = "Portrait_Brazil_Luis_Carlos_Prestes.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+		add_ideas = BRA_Isidoro_Dias_Lopes_hog
+		add_ideas = BRA_Ernani_do_Amaral_Peixoto_for
+		add_ideas = BRA_Herculano_de_Carvalho_e_Silva_eco
+		add_ideas = BRA_Jose_Oiticica_int
+		BRA = { dismantle_faction = yes }
+		remove_from_faction = BRA
+	}
+}
+
+##### DEM Government
+country_event = {
+	id = bra.304
+	title = bra.304.t
+	desc = bra.304.d
+	picture = bra_integra_02
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1938.8.1
+		date < 1939.11.1
+		has_country_flag = DEM
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 60 }
+		name = "The presidential guard will disperse these reactionaries"
+		set_global_flag = CW_GOVDEM
+		set_global_flag = CW_REBINT
+		country_event = { days = 0 id = bra.314 } #Triggers "Plínio Salgado launches an uprising"
+	}
+	option = {
+		ai_chance = { factor = 40 }
+		name = "Stand down, we cannot endorse a bloodbath"
+		country_event = { days = 0 id = bra.305 } #Triggers "The Coup Succedes"
+	}
+}
+
+country_event = {
+	id = bra.305
+	title = bra.305.t
+	desc = bra.305.d
+	picture = bra_integra_03
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Long live the new President!"
+		add_political_power = -400 #20 dissent * 20 PP
+		clr_country_flag = ANL
+		clr_country_flag = REP
+		clr_country_flag = DEM
+		clr_country_flag = INT
+		set_country_flag = POSTCW_INT
+		add_popularity = { ideology = national_populist popularity = 0.5 }
+		hidden_effect = {
+			kill_country_leader = yes
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+		create_country_leader = {
+			name = "Plínio Salgado"
+			desc = "POLITICS_PLINIO_SALGADO_DESC"
+			picture = "Portrait_Brazil_Plinio_Salgado.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {}
+		}
+		add_ideas = BRA_Miguel_Costa_hog
+		add_ideas = BRA_Luis_da_Camara_Cascudo_for
+		add_ideas = BRA_Marcondes_Salgado_eco
+		add_ideas = BRA_Filinto_Muller_int
+		BRA = { dismantle_faction = yes }
+		remove_from_faction = BRA
+	}
+}
+
+##### INT Government
+country_event = {
+	id = bra.306
+	title = bra.306.t
+	desc = bra.306.d
+	picture = bra_revolution
+	
+	fire_only_once = yes
+	
+	trigger = {
+		date > 1938.8.1
+		date < 1939.11.1
+		has_country_flag = INT
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		ai_chance = { factor = 99 }
+		name = "The presidential guard will disperse the syndie scum"
+		set_global_flag = CW_GOVINT
+		set_global_flag = CW_REBANL
+		country_event = { days = 0 id = bra.318 } #Triggers "Prestes launches an uprising"
+	}
+	option = {
+		ai_chance = { factor = 1 }
+		name = "Stand down, we cannot endorse a bloodbath"
+		country_event = { days = 0 id = bra.307 } #Triggers "The Coup Succedes"
+	}
+}
+
+country_event = {
+	id = bra.307
+	title = bra.307.t
+	desc = bra.307.d
+	picture = Milice
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Long live the new President!"
+		add_political_power = -400 #20 dissent * 20 PP
+		clr_country_flag = ANL
+		clr_country_flag = REP
+		clr_country_flag = DEM
+		clr_country_flag = INT
+		set_country_flag = POSTCW_ANL
+		add_popularity = { ideology = syndicalist popularity = 0.2 }
+		add_popularity = { ideology = radical_socialist popularity = 0.5 }
+		hidden_effect = {
+			kill_country_leader = yes
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = intel_minister 
+		}
+		create_country_leader = {
+			name = "Luís Carlos Prestes"
+			desc = "POLITICS_LUIS_CARLOS_PRESTES_DESC"
+			picture = "Portrait_Brazil_Luis_Carlos_Prestes.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+		add_ideas = BRA_Isidoro_Dias_Lopes_hog
+		add_ideas = BRA_Ernani_do_Amaral_Peixoto_for
+		add_ideas = BRA_Herculano_de_Carvalho_e_Silva_eco
+		add_ideas = BRA_Jose_Oiticica_int
+		BRA = { dismantle_faction = yes }
+		remove_from_faction = BRA
+	}
+}
+
+##### Set 2 - Rebels
+##### CW_REBVAR
+
+### Vargas launches an uprising
+news_event = {
+	id = bra.308
+	title = bra.308.t
+	desc = bra.308.d
+	picture = bra_uprising
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Can't we have just one moment of calm? That's all I'm asking!"
+		add_political_power = -800 #40 dissent * 20 PP # Dissent goes up. A lot.
+		BRA = { start_civil_war = { ideology = paternal_autocratist size = 0.2 } }
+	}
+}
+### Massacre of the peasants
+#trigger for bra.309
+country_event = {
+	id = bra.3090
+	title = bra.3090.t
+	desc = bra.3090.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_global_flag = CW_GOVANL		
+		has_global_flag = CW_REBVAR
+		original_tag = BRA
+		ontrols_state = 499
+		NOT = { tag = BRA }
+		OR = {
+			has_government = paternal_autocratist
+			has_government = national_populist
+		}
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	immediate = {
+		hidden_effect = { BRA = { country_event = {id = bra.309} } }
+	}
+
+	option = {
+		name = bra.3090.a
+	}
+}
+
+news_event = {
+	id = bra.309
+	title = bra.309.t
+	desc = bra.309.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "They will be avanged!"
+		add_political_power = -100 #5 dissent * 20 PP
+		499 = { 
+			add_manpower = -113576 
+			add_building_construction = {
+				type = infrastructure
+				level = -1
+				instant_build = yes
+			}
+		}
 	}
 }

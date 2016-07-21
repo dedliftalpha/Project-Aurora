@@ -20,8 +20,9 @@ country_event = { #History
 	
 	trigger = {
 		tag = RUS
-
 	}
+	
+	mean_time_to_happen = { days = 1 }
 	
 	option = {
 		name = russia.1.a
@@ -59,7 +60,7 @@ country_event = { #reparations
 	
 	option = {
 		name = russia.3.a
-		add_political_power = -300
+		add_political_power = -400
 		add_timed_idea = {
 			idea = rus_austerity_measures
 			days = 365 }
@@ -1145,17 +1146,55 @@ country_event = {
 
 #Revolution itself
 
+country_event = { #Initialization Hidden event
+	id = russia.1916
+	title = russia.1916.t
+	desc = russia.1916.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = { country_exists = RUS RUS = { has_political_power < -1100 } date > 1936.02.01 date < 1937.02.29
+	NOT = { country_exists = SOV } 
+	219 = { is_owned_by = RUS } 195 = { is_owned_by = RUS } 219 = { is_controlled_by = RUS } 195 = { is_controlled_by = RUS } }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = russia.1916.a
+		trigger = { RUS = { OR = { has_country_flag = RUS_WRA has_country_flag = RUS_DMI } } }
+		random_list = { 35 = { RUS = { country_event = { id = russia.1917 } } } 
+		                65 = { } } }
+		
+	option = {
+		name = russia.1916.b
+		trigger = { RUS = { has_country_flag = RUS_DEN } }
+		random_list = { 40 = { RUS = { country_event = { id = russia.1918 } } } 
+		           60 = {} } }
+		
+	option = {
+		name = russia.1916.c
+		trigger = { RUS = { OR = { has_country_flag = RUS_IRA has_country_flag = RUS_MILYU } } }
+		random_list = { 50 = { RUS = { country_event = { id = russia.1919 } } } 
+		           50 = { } } }
+		
+	option = {
+		name = russia.1916.e
+		trigger = { RUS = { has_country_flag = RUS_BUKH } }
+		random_list = { 50 = { RUS = { country_event = { id = russia.1920 } } } 
+		           50 = { } } }
+		
+}
+
 country_event = { #Revolution for wra and dmitri
 	id = russia.1917
 	title = russia.1917.t
 	desc = russia.1917.d
 	picture = GFX_petain_NFA
 	
-	fire_only_once = yes
-	
-	trigger = { tag = RUS 	has_political_power < 1100 date > 1936.02.01 date < 1937.02.29
-	NOT = { country_exists = SOV } OR = { has_country_flag = RUS_WRA has_country_flag = RUS_DMI } 
-	219 = { is_owned_by = RUS } 195 = { is_owned_by = RUS } 219 = { is_controlled_by = RUS } 195 = { is_controlled_by = RUS } }
+	is_triggered_only = yes
 	
 	option = {
 		name = russia.1917.a #wait
@@ -1320,11 +1359,7 @@ country_event = { #Revolution for denikin
 	desc = russia.1918.d
 	picture = GFX_petain_NFA
 	
-	fire_only_once = yes
-	
-	trigger = { tag = RUS 	has_political_power < 1100 date > 1936.02.01 date < 1937.02.29
-	NOT = { country_exists = SOV } has_country_flag = RUS_DEN 
-	219 = { is_owned_by = RUS } 195 = { is_owned_by = RUS } 219 = { is_controlled_by = RUS } 195 = { is_controlled_by = RUS } }
+	is_triggered_only = yes
 	
 	option = {
 		name = russia.1918.a
@@ -1489,11 +1524,7 @@ country_event = { #Revolution for Senate not Bukharin
 	desc = russia.1919.d
 	picture = GFX_petain_NFA
 	
-	fire_only_once = yes
-	
-	trigger = { tag = RUS 	has_political_power < 1100 date > 1936.02.01 date < 1937.02.29
-	NOT = { country_exists = SOV } OR = { has_country_flag = RUS_IRA has_country_flag = RUS_MILYU } 
-	219 = { is_owned_by = RUS } 195 = { is_owned_by = RUS } 219 = { is_controlled_by = RUS } 195 = { is_controlled_by = RUS } }
+	is_triggered_only = yes
 	
 	option = {
 		name = russia.1919.a
@@ -1658,11 +1689,7 @@ country_event = { #Revolution for Bukharin
 	desc = russia.1920.d
 	picture = GFX_petain_NFA
 	
-	fire_only_once = yes
-	
-	trigger = { tag = RUS 	has_political_power < 1100 date > 1936.02.01 date < 1937.02.29
-	NOT = { country_exists = SOV } has_country_flag = RUS_BUKH
-	219 = { is_owned_by = RUS } 195 = { is_owned_by = RUS } 219 = { is_controlled_by = RUS } 195 = { is_controlled_by = RUS } }
+	is_triggered_only = yes
 	
 	option = {
 		name = russia.1920.a
@@ -1698,7 +1725,7 @@ country_event = { #Revolution for Bukharin
 		name = russia.1920.b
 		ai_chance = { factor = 20 }
 		add_political_power = 700
-		RUS = { change_tag_from = SOV }
+		SOV = { change_tag_from = RUS }
 		SOV = { annex_country = { target = RUS transfer_troops = yes } }
 		every_state = { limit = { is_core_of = RUS } SOV = { add_state_core = PREV } }
 		every_state = { limit = { is_claimed_by = RUS } SOV = { add_state_claim = PREV } }
@@ -2320,7 +2347,7 @@ country_event = { #Russia surrenders
 	
 	option = {
 		name = russia.1939.a
-		RUS = { change_tag_from = SOV }
+		SOV = { change_tag_from = RUS }
 		annex_country = { target = RUS transfer_troops = yes }
 		every_state = { limit = { is_core_of = RUS } SOV = { add_state_core = PREV } }
 		every_state = { limit = { is_claimed_by = RUS NOT = { is_core_of = RUS } } SOV = { add_state_claim = PREV } }

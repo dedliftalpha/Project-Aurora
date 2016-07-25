@@ -37,8 +37,8 @@ focus = {
 
 focus = {
 		id = RUS_CON_MON
-		icon = GFX_goal_generic_demand_territory
-		x = 3
+		icon = GFX_goal_generic_neutrality_focus
+		x = 2
 		y = 1
 		cost = 10
 		available = { custom_trigger_tooltip = { tooltip = russia_must_wait_unlock OR = { has_country_flag = unlock_dmitri has_country_flag = unlock_denikin has_country_flag = unlock_milyukov has_country_flag = unlock_iraklij } }
@@ -68,7 +68,7 @@ focus = {
 focus = {
 		id = RUS_TSAR_KYR
 		icon = GFX_goal_generic_demand_territory
-		x = 7
+		x = 6
 		y = 1
 		cost = 10
 		available = { custom_trigger_tooltip = { tooltip = russia_must_wait_unlock OR = { has_country_flag = unlock_dmitri has_country_flag = unlock_denikin has_country_flag = unlock_wrangel } } 
@@ -96,7 +96,7 @@ focus = {
 focus = {
 		id = RUS_TSAR_DMI
 		icon = GFX_goal_generic_demand_territory
-		x = 17
+		x = 16
 		y = 1
 		cost = 10
 		available = { custom_trigger_tooltip = { tooltip = russia_must_wait_unlock OR = { has_country_flag = unlock_dmitri has_country_flag = unlock_wrangel } }
@@ -119,8 +119,8 @@ focus = {
 	
 focus = {
 		id = RUS_ARI_REP
-		icon = GFX_goal_generic_demand_territory
-		x = 21
+		icon = GFX_goal_generic_cavalry
+		x = 20
 		y = 1
 		cost = 10
 		available = { custom_trigger_tooltip = { tooltip = russia_must_wait_unlock has_country_flag = unlock_dmitri }
@@ -144,7 +144,7 @@ focus = {
 	
 focus = {
 		id = RUS_DEM_REP
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_support_democracy
 		x = 25
 		y = 1
 		cost = 10
@@ -169,7 +169,7 @@ focus = {
 	
 focus = {
 		id = RUS_WRA_ambitions
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_support_fascism
 		x = 11
 		y = 1
 		cost = 10
@@ -240,6 +240,7 @@ focus = {
 		}	
 		completion_reward = {
 		add_ideas = rus_village_communes_focus
+		add_national_unity = 0.05
             
 		}		
 	}
@@ -678,7 +679,7 @@ focus = {
 	
 focus = {
 		id = RUS_CON_ADM1
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_demand_territory
 		x = 5
 		y = 2
 		cost = 10
@@ -689,13 +690,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_political_power = 50
 		}		
 	}
 	
 focus = {
 		id = RUS_CON_ADM2
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_scientific_exchange
 		x = 5
 		y = 3
 		cost = 10
@@ -706,13 +707,31 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_CON_ADM2_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = RUS_CON_ADM2_2IC
+			}
+         add_ideas = rus_educate_the_masses_focus   
 		}		
 	}
 	
 focus = {
 		id = RUS_CON_ADM3
-		icon = GFX_goal_generic_construct_infrastructure
+		icon = GFX_focus_research
 		x = 5
 		y = 4
 		cost = 10
@@ -723,13 +742,16 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+		add_research_slot = 1
+        if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
 		}		
 	}
 	
 focus = {
 		id = RUS_CON_IND1
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_position_armies
 		x = 3
 		y = 2
 		cost = 10
@@ -740,7 +762,44 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         random_owned_state = {
+				limit = {
+					state_population > 200000
+					state_population < 2000000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_CON_IND1_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = RUS_CON_IND1_2IC
+			}
+         random_owned_state = {
+				limit = {
+					state_population > 200000
+					state_population < 2000000
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_CON_IND1_2IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = RUS_CON_IND1_2IC
+			}			
 		}		
 	}
 	
@@ -757,13 +816,19 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+		  }
+         add_ideas = rus_mechanization_focus		  
 		}		
 	}
 	
 focus = {
 		id = RUS_CON_IND3
-		icon = GFX_focus_research
+		icon = GFX_goal_generic_construct_mil_factory
 		x = 3
 		y = 4
 		cost = 10
@@ -774,13 +839,51 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_CON_IND3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = RUS_CON_IND3_2IC
+			}
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_CON_IND3_2IC }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = RUS_CON_IND3_2IC
+			}
+         if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }   
 		}		
 	}
 	
 focus = {
 		id = RUS_CON_POL1
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_national_unity
 		x = 1
 		y = 2
 		cost = 10
@@ -791,7 +894,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         	 
 		}		
 	}
 	
@@ -808,7 +911,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+           
 		}		
 	}
 	
@@ -848,7 +951,7 @@ focus = {
 	
 focus = {
 		id = RUS_TSAR_POL1
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_propaganda
 		x = 7
 		y = 2
 		cost = 10
@@ -859,13 +962,14 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_political_power = 100
+         add_ideas = rus_radio_propaganda_focus		   
 		}		
 	}
 	
 focus = {
 		id = RUS_TSAR_POL2
-		icon = GFX_goal_generic_scientific_exchange
+		icon = GFX_goal_generic_more_territorial_claims
 		x = 7
 		y = 3
 		cost = 10
@@ -876,13 +980,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+        add_ideas = rus_neoslavism_focus     
 		}		
 	}
 	
 focus = {
 		id = RUS_TSAR_POL3
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_goal_generic_consumer_goods
 		x = 7
 		y = 4
 		cost = 10
@@ -893,13 +997,13 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_national_unity = 0.15 
 		}		
 	}
 	
 focus = {
 		id = RUS_TSAR_POL4
-		icon = GFX_goal_support_democracy
+		icon = GFX_goal_anschluss
 		x = 7
 		y = 5
 		cost = 10
@@ -910,7 +1014,8 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-            
+         add_political_power = 100
+		 add_ideas = rus_imperial_glory_focus
 		}		
 	}
 	
@@ -1201,7 +1306,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-        add_political_power = 120    
+        add_political_power = 100    
 		}		
 	}
 	
@@ -1236,7 +1341,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-         add_political_power = 120  
+         add_political_power = 100  
 		}		
 	}
 	
@@ -1342,7 +1447,7 @@ focus = {
 				}
 				set_state_flag = RUS_DMI_ADM3_2IC
 			}
-       add_political_power = 120  
+       add_political_power = 100 
 		}		
 	}
 	
@@ -1359,7 +1464,7 @@ focus = {
 			factor = 10
 		}	
 		completion_reward = {
-        add_political_power = 120   
+        add_political_power = 100 
 		}		
 	}
 	
@@ -1501,7 +1606,7 @@ focus = {
 	
 focus = {
 		id = RUS_WRA_ADM3
-		icon = GFX_goal_tripartite_pact
+		icon = GFX_goal_generic_allies_build_infantry
 		x = 9
 		y = 4
 		cost = 10
@@ -1513,7 +1618,10 @@ focus = {
 		}	
 		completion_reward = {
          add_national_unity = 0.15
-		 add_ideas = rus_corporate_syndicalism_focus
+		 add_ideas = rus_esprit_de_corps_focus
+		 if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
 		}		
 	}
 
@@ -1536,15 +1644,15 @@ focus = {
 					state_population > 300000
 					free_building_slots = {
 						building = arms_factory
-						size > 2
+						size > 1
 						include_locked = yes
 					}
 					NOT = { has_state_flag = RUS_WRA_IND1_2IC }
 				}
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 				set_state_flag = RUS_WRA_IND1_2IC
@@ -1669,6 +1777,9 @@ focus = {
 					level = 2
 					instant_build = yes
 					} }
+			if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
 		}		
 	}
 
@@ -1738,6 +1849,71 @@ focus = {
 		}	
 		completion_reward = {
          add_national_unity = 0.15
+		}		
+	}
+	
+focus = {
+		id = RUS_nuclear_effort
+		icon = GFX_focus_wonderweapons
+		x = 12
+		y = 7
+		cost = 10
+		available = { custom_trigger_tooltip = { tooltip = rus_special_unlock_tooltip OR = { AND = { has_completed_focus = RUS_CON_ADM3 has_completed_focus = RUS_CON_IND3 } AND = { has_completed_focus = RUS_WRA_ADM3 has_completed_focus = RUS_WRA_IND3 } AND = { has_completed_focus = RUS_DMI_ADM3 has_completed_focus = RUS_DMI_IND3 } AND = { has_completed_focus = RUS_DEM_ADM3 has_completed_focus = RUS_DEM_IND3 } } } }
+		prerequisite = { focus = RUS_CON_ADM3 focus = RUS_CON_IND3 focus = RUS_WRA_ADM3 focus = RUS_WRA_IND3 focus = RUS_DMI_ADM3 focus = RUS_DMI_IND3 focus = RUS_DEM_ADM3 focus = RUS_DEM_IND3 }
+		
+		ai_will_do = {
+			factor = 10
+		}	
+		completion_reward = {
+		add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear
+			}
+            
+		}		
+	}
+	
+focus = {
+		id = RUS_rocket_effort
+		icon = GFX_focus_rocketry
+		x = 16
+		y = 7
+		cost = 10
+		available = { custom_trigger_tooltip = { tooltip = rus_special_unlock_tooltip OR = { AND = { has_completed_focus = RUS_CON_ADM3 has_completed_focus = RUS_CON_IND3 } AND = { has_completed_focus = RUS_WRA_ADM3 has_completed_focus = RUS_WRA_IND3 } AND = { has_completed_focus = RUS_DMI_ADM3 has_completed_focus = RUS_DMI_IND3 } AND = { has_completed_focus = RUS_DEM_ADM3 has_completed_focus = RUS_DEM_IND3 } } } }
+		prerequisite = { focus = RUS_CON_ADM3 focus = RUS_CON_IND3 focus = RUS_WRA_ADM3 focus = RUS_WRA_IND3 focus = RUS_DMI_ADM3 focus = RUS_DMI_IND3 focus = RUS_DEM_ADM3 focus = RUS_DEM_IND3 }
+		
+		ai_will_do = {
+			factor = 10
+		}	
+		completion_reward = {
+		add_tech_bonus = {
+				name = rocket_bonus
+				bonus = 0.5
+				uses = 2
+				category = rocketry
+			}
+            
+		}		
+	}
+	
+focus = {
+		id = RUS_tech_slot
+		icon = GFX_focus_research
+		x = 14
+		y = 7
+		cost = 10
+		available = { custom_trigger_tooltip = { tooltip = rus_special_unlock_tooltip OR = { AND = { has_completed_focus = RUS_CON_ADM3 has_completed_focus = RUS_CON_IND3 } AND = { has_completed_focus = RUS_WRA_ADM3 has_completed_focus = RUS_WRA_IND3 } AND = { has_completed_focus = RUS_DMI_ADM3 has_completed_focus = RUS_DMI_IND3 } AND = { has_completed_focus = RUS_DEM_ADM3 has_completed_focus = RUS_DEM_IND3 } } }
+		num_of_factories > 80 } #Will surely be changed to unlock with conquests
+		prerequisite = { focus = RUS_CON_ADM3 focus = RUS_CON_IND3 focus = RUS_WRA_ADM3 focus = RUS_WRA_IND3 focus = RUS_DMI_ADM3 focus = RUS_DMI_IND3 focus = RUS_DEM_ADM3 focus = RUS_DEM_IND3 }
+		
+		ai_will_do = {
+			factor = 10
+		}	
+		completion_reward = {
+		add_research_slot = 1
+            
 		}		
 	}
 	
@@ -2829,7 +3005,7 @@ focus = {
 	focus = {
 		id = RUS_MRGA
 		icon = GFX_goal_generic_military_sphere
-		x = 102
+		x = 55
 		y = 0
 		cost = 10
 		available = { is_puppet = no }
@@ -2855,7 +3031,7 @@ focus = {
 	focus = {
 		id = RUS_WEST_EXPANSION
 		icon = GFX_goal_generic_military_sphere
-		x = 102
+		x = 55
 		y = 1
 		cost = 10
 		available = { is_puppet = no }
@@ -2884,7 +3060,7 @@ focus = {
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = RUS_WEST_EXPANSION }
 		available = { is_puppet = no }
-		x = 101
+		x = 56
 		y = 2
 		cost = 10
 		bypass = {
@@ -2942,7 +3118,7 @@ focus = {
 		}
 
 		cancel_if_invalid = no
-		x = 103
+		x = 56
 		y = 2
 		cost = 10
 		ai_will_do = {
@@ -3096,7 +3272,7 @@ focus = {
 		}
 
 		cancel_if_invalid = no
-		x = 103
+		x = 57
 		y = 3
 		cost = 10
 		ai_will_do = {

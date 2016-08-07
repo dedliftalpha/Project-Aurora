@@ -12,6 +12,9 @@ focus_tree = {
 	
 	default = no
 	
+	### Todo
+	# Party Popularity Events
+	
 	###################
 	### Trade Union Congress
 	###################
@@ -27,11 +30,6 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 50
-		#	add_ideas = eng_tuc_idea	
-			
-			### Todo
-			# Idea: eng_tuc_idea
-			# Moar ideas for every choice
 			
 		}
 	}
@@ -98,7 +96,7 @@ focus_tree = {
 				name = construction_tech_bonus
 				bonus = 0.5
 				uses = 1
-				category = construction_tech					
+				category = construction_tech	
 			}
 		}
 	}
@@ -202,10 +200,6 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = ENG_tuc_internal_mosley_idea
 			add_political_power = -50
-				
-			### Todo
-			# Higher Stability
-			
 		}
 	}
 	
@@ -221,10 +215,6 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = ENG_tuc_internal_glaise_idea
 			add_political_power = -50
-
-			### Todo
-			# Higher Party Popularity
-				
 		}
 	}
 	
@@ -239,7 +229,6 @@ focus_tree = {
 		
 		completion_reward = {
 			add_ideas = ENG_tuc_internal_fem_idea
-		
 		}
 	}	
 	
@@ -268,7 +257,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_ideas = ENG_tuc_military_mosley_idea
-			add_political_power = -100		
+			add_political_power = -100	
 		}
 	}
 	
@@ -283,7 +272,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_ideas = ENG_tuc_military_glaise_idea
-			add_political_power = -50	
+			add_political_power = -50
 		}
 	}
 	
@@ -297,8 +286,7 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			add_ideas = ENG_tuc_military_fem_idea
-		
+			add_ideas = ENG_tuc_military_fem_idea	
 		}
 	}	
 	
@@ -308,7 +296,7 @@ focus_tree = {
 		id = ENG_tuc_foreign
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = ENG_tuc }
-		x = 20
+		x = 19
 		y = 1
 		cost = 5
 		
@@ -337,7 +325,7 @@ focus_tree = {
 		icon = GFX_goal_generic_intelligence_exchange
 		prerequisite = { focus = ENG_tuc_foreign }
 		available = { NOT = { OR = { has_idea = ENG_tuc_foreign_mosley_idea has_idea = ENG_tuc_foreign_horner_idea has_idea = ENG_tuc_foreign_fem_idea } } }
-		x = 18
+		x = 16
 		y = 2
 		cost = 5
 		
@@ -352,8 +340,8 @@ focus_tree = {
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = ENG_tuc_foreign }
 		available = { NOT = { OR = { has_idea = ENG_tuc_foreign_mosley_idea has_idea = ENG_tuc_foreign_glaise_idea has_idea = ENG_tuc_foreign_fem_idea } } }
-		x = 21
-		y = 3
+		x = 20
+		y = 2
 		cost = 5
 		
 		completion_reward = {
@@ -367,8 +355,8 @@ focus_tree = {
 		icon = GFX_goal_generic_alliance
 		prerequisite = { focus = ENG_tuc_foreign }
 		available = { NOT = { OR = { has_idea = ENG_tuc_foreign_mosley_idea has_idea = ENG_tuc_foreign_glaise_idea has_idea = ENG_tuc_foreign_horner_idea } } }
-		x = 19
-		y = 3
+		x = 18
+		y = 2
 		cost = 5
 		
 		completion_reward = {
@@ -727,7 +715,7 @@ focus_tree = {
 		id = ENG_purge_militia_remains
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = ENG_dissolve_militias }
-		prerequisite = { focus = ENG_officer_corps }
+		prerequisite = { focus = ENG_officer_corps_academy }
 		available = { }
 		x = 11
 		y = 5
@@ -779,9 +767,22 @@ focus_tree = {
 	}
 	
 	focus = {
+		id = ENG_three_armies
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = ENG_tuc_military_glaise }
+		available = { }
+		x = 15
+		y = 3
+		cost = 10
+		
+		completion_reward = {	
+		}
+	}
+	
+	focus = {
 		id = ENG_expand_army
 		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_officer_corps focus = ENG_no_idea }
+		prerequisite = { focus = ENG_officer_corps_academy focus = ENG_officer_corps_experience }
 		available = { }
 		x = 13
 		y = 5
@@ -792,10 +793,10 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_officer_corps
+		id = ENG_officer_corps_academy
 		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = ENG_tuc_military_mosley focus = ENG_tuc_military_fem }
-		mutually_exclusive = { focus = ENG_no_idea }
+		mutually_exclusive = { focus = ENG_officer_corps_experience }
 		available = { }
 		x = 12
 		y = 4
@@ -836,23 +837,10 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_expand_army2
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_build_airforce focus = ENG_build_tank }
-		available = { has_war = yes }
-		x = 13
-		y = 7
-		cost = 10
-		
-		completion_reward = {
-		}
-	}
-	
-	focus = {
-		id = ENG_no_idea
-		icon = GFX_goal_unknown
+		id = ENG_officer_corps_experience
+		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = ENG_tuc_military_fem focus = ENG_tuc_military_glaise }
-		mutually_exclusive = { focus = ENG_officer_corps }
+		mutually_exclusive = { focus = ENG_officer_corps_academy }
 		available = { }
 		x = 14
 		y = 4
@@ -865,7 +853,7 @@ focus_tree = {
 	focus = {
 		id = ENG_women_soldiers
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = ENG_no_idea }
+		prerequisite = { focus = ENG_officer_corps_experience }
 		available = { }
 		x = 15
 		y = 5
@@ -876,7 +864,115 @@ focus_tree = {
 		}
 	}
 	
+	# Foreign
+	
+	focus = {
+		id = ENG_copenhagen_conference
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = ENG_tuc_foreign_glaise }
+		available = { }
+		x = 17
+		y = 3
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_the_hague_conference
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = ENG_tuc_foreign_glaise focus = ENG_tuc_foreign_fem focus = ENG_tuc_foreign_horner }
+		available = { }
+		x = 19
+		y = 3
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_continue_talks
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = ENG_copenhagen_conference }
+		available = { }
+		x = 17
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_settle_conflict
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = ENG_the_hague_conference }
+		available = { }
+		x = 19
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_end_embargoes
+		icon = GFX_goal_generic_trade
+		prerequisite = { focus = ENG_copenhagen_conference focus = ENG_the_hague_conference }
+		available = { }
+		x = 18
+		y = 5
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_transatlantic_trade
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = ENG_end_embargoes }
+		available = { }
+		x = 17
+		y = 6
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_north_sea_trade
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = ENG_end_embargoes }
+		available = { }
+		x = 19
+		y = 6
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_convoy_system
+		icon = GFX_goal_generic_consumer_goods
+		prerequisite = { focus = ENG_transatlantic_trade focus = ENG_north_sea_trade }
+		available = { has_war = yes }
+		x = 18
+		y = 7
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
 	### War!
+	
+	# Economy
 	
 	focus = {
 		id = ENG_military_industry
@@ -903,6 +999,21 @@ focus_tree = {
 					instant_build = yes	
 				}
 			}
+		}
+	}
+	
+	# Military
+	
+	focus = {
+		id = ENG_expand_army2
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = ENG_build_airforce focus = ENG_build_tank }
+		available = { has_war = yes }
+		x = 13
+		y = 7
+		cost = 10
+		
+		completion_reward = {
 		}
 	}
 	
@@ -934,6 +1045,7 @@ focus_tree = {
 		prerequisite = { focus = ENG_tuc }
 		available = { 	OR = { has_idea = ENG_tuc_foreign_glaise_idea has_idea = ENG_tuc_foreign_horner_idea has_idea = ENG_tuc_foreign_fem_idea has_idea = ENG_tuc_foreign_mosley_idea }	
 						OR = { has_idea = ENG_tuc_military_mosley_idea has_idea = ENG_tuc_military_glaise_idea has_idea = ENG_tuc_military_fem_idea  }
+						OR = { has_idea = ENG_tuc_internal_mosley_idea has_idea = ENG_tuc_internal_glaise_idea has_idea = ENG_tuc_internal_fem_idea  }
 						OR = { has_idea = ENG_tuc_economy_mosley_idea has_idea = ENG_tuc_economy_glaise_idea has_idea = ENG_tuc_economy_fem_idea  }		
 		}
 		x = 7

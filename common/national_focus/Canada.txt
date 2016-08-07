@@ -815,5 +815,292 @@ focus_tree = {
 			}
 		}
 	}
+
+
+	
+	############
+	##Bill C-7##
+	############
+
+	#Bill C7 Drafting#
+	focus = {
+		id = CAN_C7_intro
+		icon = GFX_goal_generic_national_unity
+		x = 17
+		y = 0
+		cost = 1
+		available = {
+			date > 1936.2.1
+		}
+		completion_reward = {
+			add_ideas = CAN_bill_c_7_debate
+			}
+	}
+		
+	focus = {
+		id = CAN_C7_Industry_Howe
+		icon = GFX_goal_generic_construction2
+		prerequisite = {focus = CAN_C7_intro}
+		mutually_exclusive = {focus = CAN_C7_Industry_Tory}
+	    mutually_exclusive = {focus = CAN_C7_Industry_Compromise}
+		x = 15
+		y = 1
+		cost = 1
+		completion_reward = {
+			331 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 2
+							instant_build = yes
+					}
+				}
+			}
+			332 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 2
+							instant_build = yes
+					}
+				}
+			}
+			464 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 2
+							instant_build = yes
+					}
+				}
+			}
+			465 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 2
+							instant_build = yes
+					}
+				}
+			}
+			add_ideas = CAN_howes_conversion
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Industry_Compromise
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = {focus = CAN_C7_intro}
+		mutually_exclusive = {focus = CAN_C7_Industry_Howe}
+		mutually_exclusive = {focus = CAN_C7_Industry_Tory}
+		x = 17
+		y = 1
+		cost = 5
+		completion_reward = {
+			add_ideas = CAN_industrial_compromise
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Industry_Tory ##Remove Howe as Minister
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = {focus = CAN_C7_intro}
+		mutually_exclusive = {focus = CAN_C7_Industry_Howe}
+		mutually_exclusive = {focus = CAN_C7_Industry_Compromise}
+		x = 19
+		y = 1
+		cost = 1
+		completion_reward = {
+			473 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 5
+							instant_build = yes
+					}
+				}
+			}
+			466 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+							
+	focus = {
+		id = CAN_C7_Conscription_Debate
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = {focus = CAN_C7_Industry_Compromise focus = CAN_C7_Industry_Howe focus = CAN_C7_Industry_Tory}
+		x = 17
+		y = 2
+		cost = 1
+		completion_reward = {
+			add_ideas = CAN_conscription_debate
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Heavy_Conscription ##Trigger Protest Event ##Trigger Liberal Party Event
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = {focus = CAN_C7_Conscription_Debate}
+		mutually_exclusive = {focus = CAN_C7_Conscription_Compromise}
+		mutually_exclusive = {focus = CAN_C7_No_Conscription}
+		x = 15
+		y = 3
+		cost = 1
+		completion_reward = {
+			add_ideas = extensive_conscription
+			add_national_unity  = -0.05
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Conscription_Compromise
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = {focus = CAN_C7_Conscription_Debate}
+		mutually_exclusive = {focus = CAN_C7_Heavy_Conscription}
+		mutually_exclusive = {focus = CAN_C7_No_Conscription}
+		x = 17
+		y = 3
+		cost = 5
+		completion_reward = {
+			add_ideas = limited_conscription
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_No_Conscription
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = {focus = CAN_C7_Conscription_Debate}
+		mutually_exclusive = {focus = CAN_C7_Heavy_Conscription}
+		mutually_exclusive = {focus = CAN_C7_Conscription_Compromise}
+		x = 19
+		y = 3 
+		cost = 1
+		completion_reward = {
+			add_national_unity = 0.05
+			add_tech_bonus = {		
+				name = army_reform_bonus
+				bonus = 0.5
+				uses = 3
+				category = land_doctrine
+				category = air_doctrine
+				category = naval_doctrine
+				}
+			}	
+		}
+	focus = {
+		id = CAN_C7_Domestic_Debate
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = {focus = CAN_C7_Conscription_Compromise focus = CAN_C7_Heavy_Conscription focus = CAN_C7_No_Conscription}
+		x = 17
+		y = 4
+		cost = 1
+		completion_reward = {
+			add_ideas = CAN_divided_nation
+			}
+		}
+	
+	focus = {
+		id = CAN_C7_No_Police
+		icon = GFX_goal_generic_support_democracy
+		prerequisite = {focus = CAN_C7_Domestic_Debate}
+		mutually_exclusive = {focus = CAN_C7_Police_Compromise}
+		mutually_exclusive = {focus = CAN_C7_Heavy_Police}
+		x = 15
+		y = 5
+		cost 1
+		completion_reward = {
+			add_timed_idea = {
+				idea = CAN_country_united
+				days = 1095
+			}
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Police_Compromise
+		icon = GFX_goal_generic_intelligence_exchange
+		prerequisite = {focus = CAN_C7_Domestic_Debate}
+		mutually_exclusive = {focus = CAN_C7_No_Police}
+		mutually_exclusive = {focus = CAN_C7_Heavy_Police}
+		x = 17
+		y = 5
+		cost = 5
+		completion_reward = {
+			add_ideas = CAN_Progressive_Intelligence
+		}
+	}
+	
+	focus = {
+		id = CAN_C7_Heavy_Police
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = {focus = CAN_C7_Domestic_Debate}
+		mutually_exclusive = {focus = CAN_C7_Police_Compromise}
+		mutually_exclusive = {focus = CAN_C7_No_Police}
+		x = 19
+		y = 5
+		cost = 1
+		completion_reward = {
+			add_ideas = CAN_Mounties
+			add_national_unity = -0.05
+		}
+	}
+	
+	focus = {
+		id = CAN_Bill_C7_Big_Support
+		icon = GFX_goal_generic_national_unity
+		prerequisite = {focus = CAN_C7_Police_Compromise focus = CAN_C7_Heavy_Police focus = CAN_C7_No_Police}
+		mutually_exclusive = {focus = CAN_Bill_C7_Little_Support}
+		x = 18
+		y = 6 
+		cost = 10
+		completion_reward = {
+			remove_ideas = CAN_divided_nation
+			remove_ideas = CAN_conscription_debate
+			remove_ideas = CAN_bill_c_7_debate
+			add_national_unity = 0.05
+		}
+	}
+	
+	focus = {
+		id = CAN_Bill_C7_Little_Support
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = {focus = CAN_C7_Police_Compromise focus = CAN_C7_Heavy_Police focus = CAN_C7_No_Police}
+		mutually_exclusive = {focus = CAN_Bill_C7_Big_Support}
+		x = 16
+		y = 6 
+		cost = 1 
+		completion_reward = {
+			remove_ideas = CAN_divided_nation
+			remove_ideas = CAN_conscription_debate
+			remove_ideas = CAN_bill_c_7_debate
+			add_national_unity = -0.10
+		}
+	}
 }
+	
 	

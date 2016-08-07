@@ -48,10 +48,12 @@ country_event = { # Death of King George V
 
 		retire_country_leader = yes
 
+		set_global_flag = KING_GEORGE_V_DEATH
+
 		create_country_leader = {
 			name = "Prince Edward VIII"
 			desc = "EDWARD_DESC"
-			picture = "Portrait_CAN_King_Edward_viii.dds"
+			picture = "Portrait_CAN_King_Edward_viii.tga"
 			expire = "1965.1.1"
 			ideology = market_liberalist_subtype
 			traits = {}
@@ -321,7 +323,7 @@ country_event = { # The Coronation of 'The Prince of the People'
 		create_country_leader = {
 			name = "King Edward VIII"
 			desc = "EDWARD_DESC"
-			picture = "Portrait_CAN_King_Edward_viii.dds"
+			picture = "Portrait_CAN_King_Edward_viii.tga"
 			expire = "1965.1.1"
 			ideology = market_liberalist_subtype
 			traits = {}
@@ -433,3 +435,3180 @@ country_event = { # The King's Radio Address
 }
 
 ### Bill C-7 via Focus Tree ###
+### After the C-7 chain ###
+
+country_event = { # Rideau Hall
+	id = canada.13
+	title = canada.13.t
+	desc = canada.13.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.5.20
+		has_country_flag = Bill-C7_Fail
+		OR = {
+			has_country_flag = CAN_EVIII_PM
+			has_country_flag = CAN_LATER
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.13.a
+
+		ai_chance = {
+			factor = 30
+		}
+
+		set_country_flag = CAN_CONSERVATIVE
+	}
+
+	option = {
+		name = canada.13.b
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_country_flag = CAN_PRIVY
+	}
+}
+
+country_event = { # Progressives remain with the Liberal Party
+	id = canada.14
+	title = canada.14.t
+	desc = canada.14.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.5.20
+		has_country_flag = Bill-C7_Fail
+		NOT = {
+			has_country_flag = Progressives
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.14.a
+
+		hidden_effect = { country_event = { id = canada.16 days = 31 }}
+	}
+}
+
+country_event = { # Progressives have left the Liberal Party
+	id = canada.15
+	title = canada.15.t
+	desc = canada.15.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.5.20
+		has_country_flag = Bill-C7_Fail
+		has_country_flag = Progressives
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.15.a
+
+		hidden_effect = { country_event = { id = canada.16 days = 31 }}
+	}
+}
+
+country_event = { # 1936 Election Events
+	id = canada.16
+	title = canada.16.t
+	desc = canada.16.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.16.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Mackenzie_King_hog_mli
+        	CAN_Mackenzie_King_for_mli
+        	CAN_CD_Howe_eco_mli
+        	CAN_Kenneth_Stuart_int_mli
+        }
+
+        hidden_effect = { country_event = { id = canada.18 days = 1 }}
+	}
+
+	option = {
+		name = canada.16.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_RB_Bennett_hog_sco
+        	CAN_RB_Bennett_for_sco
+        	CAN_CD_Howe_eco_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+
+        hidden_effect = { country_event = { id = canada.17 days = 1 }}
+	}
+
+	option = {
+		name = canada.16.c
+
+		ai_chance = {
+			factor = 35
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_RB_Bennett_hog_sco
+        	CAN_Sir_William_Aberhart_for_pau
+        	CAN_CH_Douglas_eco_ade
+        	CAN_Maurice_Pope_int_sco
+        }
+
+        hidden_effect = { country_event = { id = canada.19 days = 1 }}
+	}
+}
+
+country_event = { # The King congratulates the new Prime Minister
+	id = canada.17
+	title = canada.17.t
+	desc = canada.17.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.17.a
+
+		add_political_power = 200
+		set_country_flag = market_liberalist_1936
+	}
+}
+
+country_event = { # The King congratulates the new Prime Minister
+	id = canada.18
+	title = canada.18.t
+	desc = canada.18.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.18.a
+
+		add_political_power = 60
+	}
+}
+
+country_event = { # The King congratulates the new Prime Minister
+	id = canada.19
+	title = canada.19.t
+	desc = canada.19.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.19.a
+
+		add_political_power = 200
+		set_country_flag = social_liberalist_1936 
+	}
+}
+
+########################################
+#### Canadian military
+########################################
+
+country_event = { # The Field Marshall
+	id = canada.20
+	title = canada.20.t
+	desc = canada.20.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.20.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		hidden_effect = { country_event = { id = canada.22 days = 1 }}
+		hidden_effect = { country_event = { id = canada.23 days = 5 }}
+		add_ideas = CAN_Sir_Edmund_Ironside_mhc_sco
+		set_country_flag = CAN_COS_IRON
+	}
+
+	option = {
+		name = canada.20.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		hidden_effect = { country_event = { id = canada.22 days = 1 }}
+		hidden_effect = { country_event = { id = canada.23 days = 5 }}
+		add_ideas = CAN_Kenneth_Stuart_mhc_mli
+		add_political_power = 20
+	}
+
+	option = {
+		name = canada.20.c
+
+		ai_chance = {
+			factor = 25
+		}
+
+		hidden_effect = { country_event = { id = canada.21 days = 1 }}
+		hidden_effect = { country_event = { id = canada.23 days = 5 }}
+		add_ideas = CAN_Claude_Auchinleck_mhc_sco
+		add_political_power = -40
+		set_country_flag = CAN_COS_AUCH
+	}
+
+	option = {
+		name = canada.20.e
+
+		ai_chance = {
+			factor = 25
+		}
+
+		hidden_effect = { country_event = { id = canada.21 days = 1 }}
+		hidden_effect = { country_event = { id = canada.23 days = 5 }}
+		add_ideas = CAN_Georges_Vanier_mhc_ade
+		add_political_power = 20
+	}	
+}
+
+country_event = { # J.F.C Fuller and His Combined Arms Doctrines
+	id = canada.21
+	title = canada.21.t
+	desc = canada.21.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.21.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = -100
+		add_ideas = CAN_JFC_Fuller_carm_ade
+	}
+
+	option = {
+		name = canada.21.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = 40
+	}	
+}
+
+country_event = { # J.F.C Fuller and His Combined Arms Doctrines
+	id = canada.22
+	title = canada.22.t
+	desc = canada.22.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.22.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = -100
+		add_ideas = CAN_JFC_Fuller_carm_ade
+	}
+
+	option = {
+		name = canada.22.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = 40
+	}	
+}
+
+#################################
+### The Future of the War Effort 
+#################################
+
+country_event = { # The British Royal Command Staff
+	id = canada.23
+	title = canada.23.t
+	desc = canada.23.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.23.a
+
+		ai_chance = {
+			factor = 90
+		}
+
+		add_political_power = -40
+		add_ideas = CAN_JFC_Fuller_carm_ade
+		add_tech_bonus = {
+			name = land_doc_bonus
+			bonus = 0.5
+			uses = 2
+			category = cat_grand_battle_plan
+		}
+		hidden_effect = { country_event = { id = canada.20 days = 5 }}
+	}
+
+	option = {
+		name = canada.23.b
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_political_power = 20
+		hidden_effect = { country_event = { id = canada.20 days = 5 }}
+	}	
+}
+
+country_event = { # Investing in Canadian Industry
+	id = canada.24
+	title = canada.24.t
+	desc = canada.24.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.7.15
+		has_idea = CAN_Mackenzie_King_hog_mli
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.24.a
+
+		ai_chance = {
+			factor = 80
+		}
+
+		add_tech_bonus = {
+			name = industry_bonus
+			bonus = 0.5
+			uses = 1
+			category = industry
+		}
+
+		add_timed_idea = { idea = king_new_companies days = 60 }
+
+		add_political_power = 20
+	}
+
+	option = {
+		name = canada.24.b
+
+		ai_chance = {
+			factor = 20
+		}
+	}
+}
+
+###########################################################
+##### Bishop demands more priority for the airforce       #
+###########################################################
+
+country_event = { # The Field Marshall
+	id = canada.25
+	title = canada.25.t
+	desc = canada.25.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.7.15
+		has_idea = CAN_Mackenzie_King_hog_mli
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.25.a
+
+		ai_chance = {
+			factor = 75
+		}
+
+		add_tech_bonus = {
+			name = fighter_bonus
+			bonus = 0.5
+			uses = 1
+			category = fighter_techs
+		}
+
+		add_tech_bonus = {
+			name = medium_air_bonus
+			bonus = 0.5
+			uses = 1
+			category = medium_air
+		}
+
+		add_manpower = -15000
+
+		add_timed_idea = { idea = bishop_chief_air days = 120 }
+		add_ideas = CAN_William_Avery_Bishop_cair_ade
+
+		464 = {
+			add_building_construction = {
+				type = air_base
+				level = 1
+				instant_build = yes
+			}
+		}			
+
+		add_political_power = -20
+	}
+
+	option = {
+		name = canada.25.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = 20
+		add_manpower = 1000
+	}
+}
+
+################################
+#### The Death of Billy Bishop #
+################################
+
+country_event = { # The Death of Billy Bishop
+	id = canada.26
+	title = canada.26.t
+	desc = canada.26.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.7.15
+		has_idea = CAN_Mackenzie_King_hog_mli
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.26.a
+
+		remove_ideas = CAN_William_Avery_Bishop_cair_ade
+		set_country_flag = BISHOP_DIED
+		add_political_power = -40
+		hidden_effect = { country_event = { id = canada.26 days = 31 }}
+	}
+}
+
+###################################
+#### The appointment of Curtis ####
+###################################
+
+country_event = { # The appointment of Curtis
+	id = canada.27
+	title = canada.27.t
+	desc = canada.27.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.27.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_tech_bonus = {
+			name = air_doctrine_bonus
+			bonus = 0.5
+			uses = 1
+			category = air_doctrine
+		}
+
+		add_political_power = -100
+		add_manpower = -35000
+
+		hidden_effect = { country_event = { id = canada.28 days = 31 }}
+	}
+
+	option = {
+		name = canada.27.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = 20
+	}
+
+	option = {
+		name = canada.27.c
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_political_power = -40
+		add_manpower = 50000
+
+		hidden_effect = { country_event = { id = canada.29 days = 31 }}
+	}
+}
+
+country_event = { # The King Complains
+	id = canada.28
+	title = canada.28.t
+	desc = canada.28.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.28.a
+
+		add_political_power = 20
+	}
+}
+
+country_event = { # Curtis resigns
+	id = canada.29
+	title = canada.29.t
+	desc = canada.29.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.29.a
+
+		add_tech_bonus = {
+			name = air_doctrine_bonus
+			bonus = -0.5
+			uses = 1
+			category = air_doctrine
+		}
+	}
+}
+
+##############################
+### RCNNP activation event ###
+##############################
+
+country_event = { # The Death of Billy Bishop
+	id = canada.30
+	title = canada.30.t
+	desc = canada.30.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_tech = atomic_research
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.30.a
+
+		add_tech_bonus = {
+			name = naval_bonus
+			bonus = 0.5
+			uses = 2
+			category = naval_equipment
+		}
+	}
+}
+
+country_event = { # The New Vision
+	id = canada.31
+	title = canada.31.t
+	desc = canada.31.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1936.7.15
+		has_global_flag = KING_GEORGE_V_DEATH
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.31.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -20
+		set_country_flag = domsecurity
+	}
+
+	option = {
+		name = canada.31.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_political_power = -40
+		set_country_flag = domengland
+	}
+
+	option = {
+		name = canada.31.c
+
+		ai_chance = {
+			factor = 5
+		}
+
+		add_political_power = -20
+	}
+}
+
+country_event = { # Standing vs Drafted service
+	id = canada.32
+	title = canada.32.t
+	desc = canada.32.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1937.2.17
+		IRE = { is_in_faction_with = CAN }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.32.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_ideas = { can_conscript_army }
+	}
+
+	option = {
+		name = canada.32.b
+
+		ai_chance = {
+			factor = 25
+		}
+
+		add_ideas = { can_professional_army }
+	}
+}
+
+############################
+#Conscription Riots
+############################
+
+country_event = { # Conscription Riots
+	id = canada.33
+	title = canada.33.t
+	desc = canada.33.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = Duplessis_Protests
+		has_war = yes
+		controls_state = 466
+		NOT = { has_country_flag = CAN_CONSCRIPTION_RIOTS }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	immediate = {
+		add_ideas = quebec_riots
+	}
+
+	option = {
+		name = canada.33.a
+
+		set_country_flag = CAN_CONSCRIPTION_RIOTS
+		set_country_flag = CAN_CONSCRIPTION_RIOTS_FIRST
+		add_political_power = -40
+		add_manpower = -5000
+	}	
+}
+
+country_event = { # The Conscription Riots End
+	id = canada.34
+	title = canada.34.t
+	desc = canada.34.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = CAN_CONSCRIPTION_RIOTS
+		has_war = yes
+		always = no
+		# Random = yes ??
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.34.a
+
+		clr_country_flag = CAN_CONSCRIPTION_RIOTS
+		add_political_power = 20
+
+		remove_ideas = quebec_riots
+	}	
+}
+
+country_event = { # Conscription Riots
+	id = canada.35
+	title = canada.35.t
+	desc = canada.35.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = CAN_CONSCRIPTION_RIOTS
+		has_war = yes
+		NOT = { controls_state = 466 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.35.a
+
+		clr_country_flag = CAN_CONSCRIPTION_RIOTS
+		add_political_power = 40
+
+		remove_ideas = quebec_riots
+	}	
+}
+
+country_event = { # Conscription Riots
+	id = canada.36
+	title = canada.36.t
+	desc = canada.36.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = CAN_CONSCRIPTION_RIOTS
+		has_war = no
+		controls_state = 466
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.36.a
+
+		clr_country_flag = CAN_CONSCRIPTION_RIOTS
+		add_political_power = 40
+
+		remove_ideas = quebec_riots
+	}	
+}
+
+############################
+#The Georgian Line
+############################
+
+country_event = { # The Georgian Line
+	id = canada.37
+	title = canada.37.t
+	desc = canada.37.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		country_exists = CSA
+		NOT = { is_in_faction_with = CSA }
+		NOT = { is_puppet_of = CSA }
+		NOT = { has_war_with = CSA }
+		has_global_flag = END_ACW
+		owns_state = 467
+		owns_state = 682
+		owns_state = 276
+		controls_state = 467
+		controls_state = 682
+		controls_state = 276
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.37.a
+
+		add_ideas = CAN_FORTS
+
+		set_country_flag = CAN_FORTS
+	}
+}
+
+country_event = { # The Georgian Line
+	id = canada.38
+	title = canada.38.t
+	desc = canada.38.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = CAN_FORTS
+		NOT = { has_war_with = CSA }
+		NOT = { has_country_flag = CAN_FORTS_CONSTRUCTED }
+	}
+
+	mean_time_to_happen = {
+		days = 180
+	}
+
+	option = {
+		name = canada.38.a
+
+		remove_ideas = CAN_FORTS
+		clr_country_flag = CAN_FORTS
+		set_country_flag = CAN_FORTS_CONSTRUCTED
+		add_political_power = 20
+
+		467 = { add_building_construction = { type = bunker province = 1873 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 4790 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 1848 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 12145 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 4875 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 7899 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 1769 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 4270 	level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 6625 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 3605 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 749 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 9667 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 9711 level = 2 instant_build = yes }}
+	}
+}
+
+country_event = { # The Georgian Line
+	id = canada.39
+	title = canada.39.t
+	desc = canada.39.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = CAN_FORTS
+		has_war_with = CSA
+		NOT = { has_country_flag = CAN_FORTS_CONSTRUCTED }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.39.a
+
+		remove_ideas = CAN_FORTS
+		clr_country_flag = CAN_FORTS
+		set_country_flag = CAN_FORTS_CONSTRUCTED
+		add_political_power = 20
+
+		467 = { add_building_construction = { type = bunker province = 1873 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 4790 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 1848 level = 2 instant_build = yes }}
+		467 = { add_building_construction = { type = bunker province = 12145 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 4875 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 7899 level = 2 instant_build = yes }}
+		682 = { add_building_construction = { type = bunker province = 1769 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 4270 	level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 6625 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 3605 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 749 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 9667 level = 2 instant_build = yes }}
+		276 = { add_building_construction = { type = bunker province = 9711 level = 2 instant_build = yes }}
+	}
+}
+
+############################
+#Emergency Reserves
+############################
+
+country_event = { # Emergency Reserves
+	id = canada.40
+	title = canada.40.t
+	desc = canada.40.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_war = yes
+		OR = {
+			NOT = {
+				controls_state = 464
+				controls_state = 465
+				controls_state = 468
+				controls_state = 466
+				controls_state = 332
+				controls_state = 331
+				controls_state = 276
+				controls_state = 682
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.40.a
+
+		add_manpower = 10000
+		load_oob = CAN_RESERVES
+	}
+}
+
+############################
+#The Queen Mary Way
+############################
+
+country_event = { # The Queen Mary Way
+	id = canada.41
+	title = canada.41.t
+	desc = canada.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		controls_state = 276
+		date > 1938.7.1
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.41.a
+
+		276 = { add_building_construction = { type = infrastructure level = 2 instant_build = yes }}
+	}
+}
+
+############################
+#Old Guard Retires
+############################
+
+country_event = { # Old Guard Retires
+	id = canada.42
+	title = canada.42.t
+	desc = canada.42.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_war = no
+		date > 1938.7.8
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.32.a
+
+		ai_chance = {
+			factor = 5
+		}
+
+		army_experience = -50
+		add_political_power = 40
+	}
+
+	option = {
+		name = canada.32.b
+
+		ai_chance = {
+			factor = 95
+		}
+
+		add_political_power = -20
+		army_experience = 20
+	}
+}
+
+############################################
+# Post 1936 Conservative/SocCred Elections #
+############################################
+
+country_event = { # 1941 Dominion General Election
+	id = canada.43
+	title = canada.43.t
+	desc = canada.43.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_government = social_democratist
+		has_government = social_liberalist
+		has_government = market_liberalist
+		has_government = social_conservatist
+		has_government = authoritarian_democratist
+		has_government = paternal_autocratist
+		is_puppet = no
+		date > 1941.5.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.43.a
+
+		ai_chance = {
+			factor = 25
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Mackenzie_King_hog_mli
+        	CAN_Mackenzie_King_for_mli
+        	CAN_James_Ralston_eco_mli
+        	CAN_Kenneth_Stuart_int_mli
+        }
+	}
+
+	option = {
+		name = canada.43.b
+
+		ai_chance = {
+			factor = 75
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_RB_Bennett_hog_sco
+        	CAN_William_Charles_Good_eco_sde
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+	}
+
+	option = {
+		name = canada.43.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Thomas_A_Crerar_hog_sli
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Alphonse_Fournier_eco_sli
+        	CAN_Mitchell_Hepburn_int_sli
+        }
+	}
+}
+
+country_event = { # The Death of William Aberhart
+	id = canada.44
+	title = canada.44.t
+	desc = canada.44.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		date > 1943.5.23
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.44.a
+
+		set_country_flag = ABERHART_DIED
+	}
+}
+
+country_event = { # 1946 Dominion General Election
+	id = canada.45
+	title = canada.45.t
+	desc = canada.45.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_government = social_democratist
+		has_government = social_liberalist
+		has_government = market_liberalist
+		has_government = social_conservatist
+		has_government = authoritarian_democratist
+		has_government = paternal_autocratist
+		is_puppet = no
+		date > 1946.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.45.a
+
+		ai_chance = {
+			factor = 20
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Sir_Murdoch_Alexander_MacPherson_hog_sco
+        	CAN_Mackenzie_King_for_mli
+        	CAN_Douglas_S_Abbott_eco_mli
+        	CAN_Ralph_Gibson_int_mli
+        }
+	}
+
+	option = {
+		name = canada.45.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Louis_St_Laurent_hog_mli
+        	CAN_William_Charles_Good_eco_sde
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+	}
+
+	option = {
+		name = canada.45.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Thomas_A_Crerar_hog_sli
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Alphonse_Fournier_eco_sli
+        	CAN_Mitchell_Hepburn_int_sli
+        }
+	}
+}
+
+country_event = { # 1951 Dominion General Election
+	id = canada.46
+	title = canada.46.t
+	desc = canada.46.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_government = social_democratist
+		has_government = social_liberalist
+		has_government = market_liberalist
+		has_government = social_conservatist
+		has_government = authoritarian_democratist
+		has_government = paternal_autocratist
+		is_puppet = no
+		date > 1951.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.46.a
+
+		ai_chance = {
+			factor = 20
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Sir_Murdoch_Alexander_MacPherson_hog_sco
+        	CAN_Louis_St_Laurent_for_mli
+        	CAN_CD_Howe_eco_mli
+        	CAN_Ralph_Gibson_int_mli
+        }
+	}
+
+	option = {
+		name = canada.46.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Louis_St_Laurent_hog_mli
+        	CAN_William_Charles_Good_eco_sde
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+	}
+
+	option = {
+		name = canada.46.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Thomas_A_Crerar_hog_sli
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Alphonse_Fournier_eco_sli
+        	CAN_Mitchell_Hepburn_int_sli
+        }
+	}
+}
+
+country_event = { # 1956 Dominion General Election
+	id = canada.47
+	title = canada.47.t
+	desc = canada.47.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_government = social_democratist
+		has_government = social_liberalist
+		has_government = market_liberalist
+		has_government = social_conservatist
+		has_government = authoritarian_democratist
+		has_government = paternal_autocratist
+		is_puppet = no
+		date > 1956.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.47.a
+
+		ai_chance = {
+			factor = 20
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Sir_Murdoch_Alexander_MacPherson_hog_sco
+        	CAN_Louis_St_Laurent_for_mli
+        	CAN_CD_Howe_eco_mli
+        	CAN_Ralph_Gibson_int_mli
+        }
+	}
+
+	option = {
+		name = canada.47.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Louis_St_Laurent_hog_mli
+        	CAN_William_Charles_Good_eco_sde
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+	}
+
+	option = {
+		name = canada.47.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Thomas_A_Crerar_hog_sli
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Alphonse_Fournier_eco_sli
+        	CAN_Mitchell_Hepburn_int_sli
+        }
+	}
+}
+
+country_event = { # 1961 Dominion General Election
+	id = canada.48
+	title = canada.48.t
+	desc = canada.48.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_government = social_democratist
+		has_government = social_liberalist
+		has_government = market_liberalist
+		has_government = social_conservatist
+		has_government = authoritarian_democratist
+		has_government = paternal_autocratist
+		is_puppet = no
+		date > 1961.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.48.a
+
+		ai_chance = {
+			factor = 20
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.5
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.25
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Sir_Murdoch_Alexander_MacPherson_hog_sco
+        	CAN_Louis_St_Laurent_for_mli
+        	CAN_CD_Howe_eco_mli
+        	CAN_Ralph_Gibson_int_mli
+        }
+	}
+
+	option = {
+		name = canada.48.b
+
+		ai_chance = {
+			factor = 80
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.40
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.20
+        }
+
+		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Louis_St_Laurent_hog_mli
+        	CAN_William_Charles_Good_eco_sde
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Maurice_Pope_int_sco
+        }
+	}
+
+	option = {
+		name = canada.48.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		hidden_effect = {
+
+			add_popularity = {
+           	 ideology = totalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = radical_socialist
+            	popularity = -1
+       	 	}
+			add_popularity = {
+            	ideology = syndicalist
+            	popularity = -1
+        	}
+			add_popularity = {
+            	ideology = social_democratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = market_liberalist
+            	popularity = -1
+        	}
+        	add_popularity = {
+           	 	ideology = social_conservatist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = authoritarian_democratist
+           		popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = paternal_autocratist
+            	popularity = -1
+        	}
+        	add_popularity = {
+            	ideology = national_populist
+            	popularity = -1
+        	}
+        }
+
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.25
+        }
+        add_popularity = {
+            ideology = social_liberalist
+            popularity = 0.5
+        }
+
+		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = intel_minister
+		}
+
+		add_ideas = {
+        	CAN_Thomas_A_Crerar_hog_sli
+        	CAN_Newton_Wesley_Rowell_for_mli
+        	CAN_Alphonse_Fournier_eco_sli
+        	CAN_Mitchell_Hepburn_int_sli
+        }
+	}
+}
+
+#################
+# Social Credit #
+#################
+
+country_event = { # Implementing Social Credit
+	id = canada.200
+	title = canada.200.t
+	desc = canada.200.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = Bill_c_7_passes
+		date > 1936.3.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.200.a
+
+		ai_chance = {
+			factor = 35
+		}
+
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		add_political_power = 100
+		set_country_flag = CAN_SOCCRED
+		hidden_effect = { country_event = { id = canada.49 days = 1 }}
+	}
+
+	option = {
+		name = canada.200.b
+
+		ai_chance = {
+			factor = 35
+		}
+
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		add_political_power = 20
+		set_country_flag = CAN_SOCCRED
+		hidden_effect = { country_event = { id = canada.49 days = 1 }}
+	}
+
+	option = {
+		name = canada.200.c
+
+		ai_chance = {
+			factor = 30
+		}
+
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = infrastructure level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
+		add_political_power = -120
+		set_country_flag = CAN_SOCCRED
+		hidden_effect = { country_event = { id = canada.49 days = 1 }}
+	}
+}
+
+country_event = { # Dupleissis Protests SocCred
+	id = canada.49
+	title = canada.49.t
+	desc = canada.49.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+
+	option = {
+		name = canada.49.a
+
+		add_political_power = -60
+		set_country_flag = duplessis_protests_socred
+	}
+}
+
+#################################
+# Dealing with the Progressives #
+#################################
+
+country_event = { # Implementing Social Credit
+	id = canada.50
+	title = canada.50.t
+	desc = canada.50.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		AND = {
+			OR = {
+				has_country_flag = market_liberalist_1936
+				has_country_flag = social_liberalist_1936
+			}
+		}	
+		date > 1937.1.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.50.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = canada.50.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = canada.50.c
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 60
+
+		add_opinion_modifier = { target = ENG modifier = CAN_BROADCAST_ENG } # -50
+		add_opinion_modifier = { target = FRA modifier = CAN_BROADCAST_FRA } # -50
+		add_opinion_modifier = { target = SRI modifier = CAN_BROADCAST_SRI } # -50
+		add_opinion_modifier = { target = SOV modifier = CAN_BROADCAST_SOV } # -50
+		add_opinion_modifier = { target = CSA modifier = CAN_BROADCAST_CSA } # -100
+	}
+}
+
+##########################
+# Dealing with Duplessis #
+##########################
+
+country_event = { # 'Imperial' version
+	id = canada.51
+	title = canada.51.t
+	desc = canada.51.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = Bill_C_7_passes	
+		date > 1937.1.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.51.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -240
+		add_popularity = {
+            ideology = syndicalist
+            popularity = 0.10
+        }
+	}
+
+	option = {
+		name = canada.51.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = 80
+		add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.10
+        }
+	}
+}
+
+country_event = { # 'Imperial' version
+	id = canada.52
+	title = canada.52.t
+	desc = canada.52.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		has_country_flag = duplessis_protests_socred
+		date > 1937.1.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.52.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_political_power = -80
+		add_popularity = {
+            ideology = syndicalist
+            popularity = 0.10
+        }
+	}
+
+	option = {
+		name = canada.52.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = 40
+		add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.10
+        }
+	}
+}
+
+########################
+### FOREIGN POLICIES ###
+########################
+
+###########################
+### Treaty with Ireland ###
+###########################
+
+country_event = { # Treaty with Ireland
+	id = canada.53
+	title = canada.53.t
+	desc = canada.53.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		country_exists = IRE
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			has_war_with = USA
+			has_war_with = CSA
+			has_war_with = TEX
+			has_war_with = CAL
+			has_war_with = IRE
+			CAN = { is_puppet = yes }
+			IRE = { is_puppet = yes }
+			IRE = { is_in_faction_with = FRA }
+		}
+		OR = {
+			has_global_flag = IRE_ENT
+			is_in_faction_with = IRE 
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.53.a
+
+		ai_chance = {
+			factor = 70
+		}
+
+		add_opinion_modifier = { target = IRE modifier = CAN_MIL_AID_IRE } # 15
+		hidden_effect = { country_event = { id = canada.54 days = 1 }}
+	}
+
+	option = {
+		name = canada.53.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_opinion_modifier = { target = IRE modifier = CAN_ECO_AID_IRE } # 15
+		hidden_effect = { country_event = { id = canada.55 days = 1 }}
+	}
+
+	option = {
+		name = canada.53.c
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_opinion_modifier = { target = IRE modifier = CAN_FULL_AID_IRE } # 30
+		hidden_effect = { country_event = { id = canada.56 days = 1 }}
+	}
+
+	option = {
+		name = canada.53.e
+
+		ai_chance = {
+			factor = 10
+		}
+
+		add_opinion_modifier = { target = IRE modifier = CAN_NO_AID_IRE } # -15
+	}
+}
+
+country_event = { # Terms of the Treaty 
+	id = canada.54
+	title = canada.54.t
+	desc = canada.54.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.54.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		set_country_flag = CAN_IRE_MILALI
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.54.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		set_country_flag = CAN_IRE_MILACS
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.54.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_country_flag = CAN_IRE_MILNON
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+}
+
+country_event = { # Terms of the Treaty 
+	id = canada.55
+	title = canada.55.t
+	desc = canada.55.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.55.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		set_country_flag = CAN_IRE_ECOALI
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.55.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		set_country_flag = CAN_IRE_ECOACS
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.55.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_country_flag = CAN_IRE_ECONON
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+}
+
+country_event = { # Terms of the Treaty 
+	id = canada.56
+	title = canada.56.t
+	desc = canada.56.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.56.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		set_country_flag = CAN_IRE_FULALI
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.56.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		set_country_flag = CAN_IRE_FULACS
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+
+	option = {
+		name = canada.56.c
+
+		ai_chance = {
+			factor = 10
+		}
+
+		set_country_flag = CAN_IRE_FULNON
+		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+	}
+}
+
+country_event = { # Military Alliance
+	id = canada.57
+	title = canada.57.t
+	desc = canada.57.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = canada.57.a
+
+		ai_chance = {
+			factor = 50
+		}
+
+		CAN = { add_to_faction = IRE }
+		add_opinion_modifier = { target = CAN modifier = IRE_ALI_CAN } # 150
+		hidden_effect = { CAN = { country_event = { id = canada.84 days = 1 }}}
+	}
+
+	option = {
+		name = canada.57.b
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_opinion_modifier = { target = CAN modifier = IRE_NO_CAN } # -5
+		hidden_effect = { CAN = { country_event = { id = canada.88 days = 1 }}}
+	}
+}

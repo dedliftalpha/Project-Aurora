@@ -997,7 +997,6 @@ country_event = { #Tsar Kyril without Wrangel
 		}
 		
 		add_popularity = { ideology = paternal_autocratist popularity = 0.15 }
-		kill_country_leader = yes
 		create_country_leader = {
 			name = "E.I.V Kyril I"
 			desc = "POLITICS_KYRIL_ROMANOV_ABS_DESC"
@@ -2432,6 +2431,9 @@ country_event = { #War RUS
 		add_political_power = 200
 		add_ideas = rus_cw
 		set_country_flag = RUS_CIVIL_WAR
+		set_country_flag = RUS_KAR_PANIC
+		set_country_flag = RUS_VOL_PANIC
+		set_country_flag = RUS_SIB_PANIC
 	}
 
 
@@ -2452,6 +2454,9 @@ country_event = { #War RUS2
 		add_political_power = 200
 		add_ideas = rus_cw
 		set_country_flag = RUS_CIVIL_WAR
+		set_country_flag = RUS_KAR_PANIC
+		set_country_flag = RUS_VOL_PANIC
+		set_country_flag = RUS_SIB_PANIC
 	}
 
 
@@ -2581,6 +2586,7 @@ country_event = { #Russia surrenders
 		remove_ideas = sov_cw_armed_camp
 		remove_ideas = sov_cw_militias
 		remove_ideas = sov_cw_officers
+		clr_global_flag = RUS_FIN_COALITION
 	}
 
 
@@ -2868,6 +2874,9 @@ country_event = { #End of the soviets
 	option = {
 		name = russia.1951.a
 		clr_country_flag = RUS_CIVIL_WAR
+		clr_country_flag = RUS_KAR_PANIC
+		clr_country_flag = RUS_SIB_PANIC
+		clr_country_flag = RUS_VOL_PANIC
 		remove_ideas = rus_cw
 		every_state = { limit = { is_core_of = SOV } remove_core_of = SOV }
 		every_state = { limit = { is_claimed_by = SOV NOT = { is_core_of = SOV } } remove_claim_by = SOV }
@@ -2948,4 +2957,943 @@ country_event = { #Red terror
 	}
 	
 
+}
+
+### Panics events
+
+#Karelia Panic
+
+country_event = { #Panic in Karelia
+	id = russia.1955
+	title = russia.1955.t
+	desc = russia.1955.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN RUS = { has_country_flag = RUS_KAR_PANIC } OR = { has_government = paternal_autocratist has_government = national_populist } has_war = no is_puppet = no NOT = { is_in_faction_with = RUS } }
+	
+	mean_time_to_happen = { days = 30 }
+	
+	option = {
+		name = russia.1955.a #Claim Karelia
+		ai_chance = { factor = 50 }
+		add_named_threat = { threat = 1 name = russia.1955.t }
+		RUS = { country_event = { id = russia.1956 days = 1 } }
+		if = { limit = { SOV = { OR = { controls_state = 215 controls_state = 216 } } } SOV = { country_event = { id = russia.1957 days = 1 } } }
+		add_opinion_modifier = { target = SWE modifier = FIN_claimed_karelia2 }
+		add_opinion_modifier = { target = NOR modifier = FIN_claimed_karelia2 }
+		add_opinion_modifier = { target = RUS modifier = FIN_claimed_karelia3 }
+		add_opinion_modifier = { target = GER modifier = FIN_claimed_karelia1 }
+		add_opinion_modifier = { target = DEN modifier = FIN_claimed_karelia1 }
+	}
+	
+	option = {
+		name = russia.1955.b #Claim Karelia and Murmansk
+		ai_chance = { factor = 30 }
+		add_named_threat = { threat = 2 name = russia.1955.t }
+		RUS = { country_event = { id = russia.1958 days = 1 } }
+		if = { limit = { SOV = { OR = { controls_state = 215 controls_state = 216 controls_state = 213 } } } SOV = { country_event = { id = russia.1959 days = 1 } } }
+		add_opinion_modifier = { target = SWE modifier = FIN_claimed_karelia2 }
+		add_opinion_modifier = { target = NOR modifier = FIN_claimed_karelia2 }
+		add_opinion_modifier = { target = RUS modifier = FIN_claimed_karelia4 }
+		add_opinion_modifier = { target = GER modifier = FIN_claimed_karelia2 }
+		add_opinion_modifier = { target = DEN modifier = FIN_claimed_karelia1 }
+	}
+	
+	option = {
+		name = russia.1955.c #Ally Russia
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		add_opinion_modifier = { target = RUS modifier = FIN_ally_russia }
+		RUS = { country_event = { id = russia.1964 } }
+		if = { limit = { is_in_faction = yes } remove_from_faction = FIN }
+	}
+	
+	option = {
+		name = russia.1955.e #Nothing
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Karelia claimed RUS
+	id = russia.1956
+	title = russia.1956.t
+	desc = russia.1956.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1956.a
+		ai_chance = { factor = 70 }
+		add_political_power = -60
+		FIN = { transfer_state = 215
+		        add_state_core = 215
+                transfer_state = 216
+		        add_state_core = 216 }
+	}
+	
+	option = { #no
+		name = russia.1956.b
+		ai_chance = { factor = 30 }
+		FIN = { add_named_threat = { threat = 3 name = russia.1955.t } }
+		declare_war_on = { target = FIN type = annex_everything }
+		
+	}
+	
+}
+
+country_event = { #Karelia claimed SOV
+	id = russia.1957
+	title = russia.1957.t
+	desc = russia.1957.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1957.a
+		ai_chance = { factor = 99 }
+		add_political_power = -20
+		FIN = { transfer_state = 215
+		        add_state_core = 215
+                transfer_state = 216
+		        add_state_core = 216 }
+	}
+	
+	option = { #no
+		name = russia.1957.b
+		ai_chance = { factor = 1 }
+		FIN = { add_named_threat = { threat = 3 name = russia.1955.t } }
+		declare_war_on = { target = FIN type = annex_everything }
+		
+	}
+	
+}
+
+country_event = { #Karelia and Murmansk claimed RUS
+	id = russia.1958
+	title = russia.1958.t
+	desc = russia.1958.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1958.a
+		ai_chance = { factor = 50 }
+		add_political_power = -100
+		FIN = { transfer_state = 215
+		        add_state_core = 215
+                transfer_state = 216
+		        add_state_core = 216
+                transfer_state = 213
+		        add_state_core = 213 }
+	}
+	
+	option = { #no
+		name = russia.1958.b
+		ai_chance = { factor = 50 }
+		FIN = { add_named_threat = { threat = 3 name = russia.1955.t } }
+		declare_war_on = { target = FIN type = annex_everything }
+		add_political_power = -60
+		
+	}
+	
+}
+
+country_event = { #Karelia and Murmansk claimed SOV
+	id = russia.1959
+	title = russia.1959.t
+	desc = russia.1959.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1959.a
+		ai_chance = { factor = 98 }
+		add_political_power = -100
+		FIN = { transfer_state = 215
+		        add_state_core = 215
+                transfer_state = 216
+		        add_state_core = 216
+                transfer_state = 213
+		        add_state_core = 213 }
+	}
+	
+	option = { #no
+		name = russia.1959.b
+		ai_chance = { factor = 2 }
+		FIN = { add_named_threat = { threat = 3 name = russia.1955.t } }
+		declare_war_on = { target = FIN type = annex_everything }
+		add_political_power = -60
+		
+	}
+	
+}
+
+country_event = { #Treaty of Arkhangelsk
+	id = russia.1960
+	title = russia.1960.t
+	desc = russia.1960.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_war_with = FIN
+    FIN = { controls_state = 215 controls_state = 213 is_puppet = no NOT = { is_in_faction_with = GER } } NOT = { controls_state = 216 } is_puppet = no }
+	
+	mean_time_to_happen = { days = 5 }
+	
+	option = { #yes
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1960.a
+		ai_chance = { factor = 75 }
+		add_political_power = -40
+		FIN = { country_event = { id = russia.1961 } }
+	}
+	
+	option = { #no
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1960.b
+		ai_chance = { factor = 25 }
+		add_political_power = -100
+		
+	}
+	
+	option = { #yes
+	    trigger = { has_war_with = SOV }
+		name = russia.1960.a
+		ai_chance = { factor = 99 }
+		add_political_power = -40
+		FIN = { country_event = { id = russia.1961 } }
+	}
+	
+	option = { #no
+	    trigger = { has_war_with = SOV }
+		name = russia.1960.b
+		ai_chance = { factor = 1 }
+		add_political_power = -100
+		
+	}
+	
+}
+
+country_event = { #Treaty of Arkhangelsk FIN
+	id = russia.1961
+	title = russia.1961.t
+	desc = russia.1961.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1961.a
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		white_peace = RUS
+		FIN = { transfer_state = 215
+		        add_state_core = 215
+                transfer_state = 216
+		        add_state_core = 216
+                transfer_state = 213
+		        add_state_core = 213 }
+		RUS = { country_event = { id = russia.1962 } }
+	}
+	
+	option = { #no
+		name = russia.1961.b
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		FIN = { 
+		        add_state_core = 215
+                
+		        add_state_core = 216
+                
+		        add_state_core = 213 }
+		RUS = { country_event = { id = russia.1963 } }
+		
+	}
+	
+}
+
+country_event = { #Treaty of Arkhangelsk accepted
+	id = russia.1962
+	title = russia.1962.t
+	desc = russia.1962.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1962.a
+		add_political_power = -40
+		RUS = { remove_state_core = 215
+		        
+                remove_state_core = 216
+		        
+                remove_state_core = 213 }
+	}
+	
+}
+
+country_event = { #Treaty of Arkhangelsk refused fucking finns who the fuck do they think they are little bitches I’ll let them know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I’m the top sniper in the entire russian armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the telegraph ? Think again, fucker. As we speak I am contacting my secret network of spies across russia and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the Russia Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little “clever” refusal was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo.
+	id = russia.1963
+	title = russia.1963.t
+	desc = russia.1963.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1963.a
+		add_political_power = -20
+	}
+	
+}
+
+country_event = { #Alliance with finns
+	id = russia.1964
+	title = russia.1964.t
+	desc = russia.1964.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1964.a
+		ai_chance = { factor = 99 }
+		set_global_flag = RUS_FIN_COALITION
+		clr_country_flag = RUS_KAR_PANIC
+		add_opinion_modifier = { target = FIN modifier = RUS_fin_coalition }
+		if = { limit = { is_in_faction = no } create_faction = "finno_russian_coalition" add_to_faction = FIN }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = FIN }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = FIN } }
+	}
+	
+	option = { #no
+		name = russia.1964.b
+		ai_chance = { factor = 1 }
+	}
+	
+}
+
+country_event = { #End of russo-finn alliance ?
+	id = russia.1965
+	title = russia.1965.t
+	desc = russia.1965.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN has_global_flag = RUS_FIN_COALITION NOT = { country_exists = SOV } is_in_faction_with = RUS }
+	
+	option = {
+		name = russia.1965.a #Leave alliance
+		ai_chance = { factor = 95 }
+		trigger = { country_exists = GER }
+	    every_country = { limit = { is_faction_leader = yes is_in_faction_with = FIN } 	remove_from_faction = FIN }
+		clr_global_flag = RUS_FIN_COALITION
+		RUS = { if = { limit = { NOT = { any_country = { is_in_faction_with = RUS } } } dismantle_faction = yes } }
+	}
+	
+	option = {
+		name = russia.1965.b #Keep alliance
+		ai_chance = { factor = 5 }
+		trigger = { country_exists = GER }
+		add_opinion_modifier = { target = RUS modifier = RUS_fin_coalition }
+	}
+	
+	option = {
+		name = russia.1965.a #Leave alliance
+		ai_chance = { factor = 5 }
+		trigger = { NOT = { country_exists = GER } }
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = FIN } 	remove_from_faction = FIN }
+		clr_global_flag = RUS_FIN_COALITION
+		RUS = { if = { limit = { NOT = { any_country = { is_in_faction_with = RUS } } } dismantle_faction = yes } }
+	}
+	
+	option = {
+		name = russia.1965.b #Keep alliance
+		ai_chance = { factor = 95 }
+		trigger = { NOT = { country_exists = GER } }
+		add_opinion_modifier = { target = RUS modifier = RUS_fin_coalition }
+	}
+
+}
+
+country_event = { #Defeated Russia
+	id = russia.1966
+	title = russia.1966.t
+	desc = russia.1966.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN has_global_flag = RUS_FIN_COALITION NOT = { country_exists = RUS } country_exists = SOV has_war_with = SOV }
+	
+	option = {
+		name = russia.1966.a #peace with sov
+		ai_chance = { factor = 95 }
+		SOV = { country_event = { id = russia.1967 } }
+	}
+	
+	option = {
+		name = russia.1966.b #war
+		ai_chance = { factor = 5 }
+		
+	}
+
+}
+
+country_event = { #Peace FIN SOV
+	id = russia.1967
+	title = russia.1967.t
+	desc = russia.1967.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1967.a
+		ai_chance = { factor = 75 }
+		white_peace = FIN
+	}
+	
+	option = {
+		name = russia.1967.b
+		ai_chance = { factor = 25 }
+	}
+	
+}
+
+country_event = { #Murmansk is vulnerable
+	id = russia.1968
+	title = russia.1968.t
+	desc = russia.1968.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN NOT = { has_war_with = RUS has_war_with = SOV RUS = { is_in_faction_with = GER } RUS = { is_in_faction_with = CAN } RUS = { is_in_faction_with = FIN } 
+	RUS = { controls_state = 195 controls_state = 219 controls_state = 214 controls_state = 217 controls_state = 251 } } 
+    RUS = { has_war = yes controls_state = 213 } controls_state = 215 controls_state = 722 }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = russia.1968.a #seize
+		ai_chance = { factor = 100 }
+		add_opinion_modifier = { target = RUS modifier = FIN_claimed_murmansk }
+		RUS = { country_event = { id = russia.1969 } }
+	}
+	
+	option = {
+		name = russia.1968.b #no
+		ai_chance = { factor = 0 }
+		add_political_power = -20
+	}
+
+}
+
+country_event = { #finland claims murmansk
+	id = russia.1969
+	title = russia.1969.t
+	desc = russia.1969.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1969.a #yes
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		FIN = { transfer_state = 213 add_state_core = 213 }
+	}
+	
+	option = {
+		name = russia.1969.b #no
+		ai_chance = { factor = 30 }
+		add_political_power = 20
+		declare_war_on = { target = FIN type = annex_everything }
+	}
+	
+}
+
+country_event = { #Panic atlong the Volga Cossack initialization
+	id = russia.1970
+	title = russia.1970.t
+	desc = russia.1970.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = { tag = DKB RUS = { has_country_flag = RUS_VOL_PANIC has_war_with = SOV controls_state = 217 }  has_war = no is_puppet = no NOT = { is_in_faction_with = RUS has_country_flag = CHE_UPR } } #CHE_UPR = MRNC Revolt
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = russia.1970.a
+		random_list = { 60 = { country_event = { id = russia.1972 } }
+		                40 = { } }
+	}
+
+}
+
+country_event = { #Panic along the Volga Alash Orda initialization
+	id = russia.1971
+	title = russia.1971.t
+	desc = russia.1971.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = { tag = ALO RUS = { has_country_flag = RUS_VOL_PANIC has_war_with = SOV controls_state = 582 controls_state = 571 }  has_war = no is_puppet = no NOT = { is_in_faction_with = RUS } }
+	
+	mean_time_to_happen = { days = 25 }
+	
+	option = {
+		name = russia.1971.a
+		random_list = { 40 = { country_event = { id = russia.1974 } }
+		                60 = { } }
+	}
+
+}
+
+country_event = { #Cossack claim
+	id = russia.1972
+	title = russia.1972.t
+	desc = russia.1972.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1972.a #yes
+		ai_chance = { factor = 90 }
+		add_named_threat = { threat = 3 name = russia.1972.t }
+		add_opinion_modifier = { target = RUS modifier = DKB_claim_volga }
+		add_opinion_modifier = { target = GER modifier = DKB_claim_volga2 }
+		add_political_power = -240
+		RUS = { country_event = { id = russia.1973 } }
+		add_state_core = 217
+		add_state_core = 265
+		add_state_core = 260
+		
+	}
+	
+	option = {
+		name = russia.1972.b #no
+		ai_chance = { factor = 10 }
+		add_political_power = -40
+		add_opinion_modifier = { target = RUS modifier = DKB_not_claim_volga }
+	}
+	
+}
+
+country_event = { #Cossack makes their move
+	id = russia.1973
+	title = russia.1973.t
+	desc = russia.1973.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1973.a #yes
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		DKB = { transfer_state = 217 transfer_state = 265 transfer_state = 260 }
+		remove_state_core = 217
+		remove_state_core = 265
+		remove_state_core = 260
+	}
+	
+	option = {
+		name = russia.1973.b #no
+		ai_chance = { factor = 30 }
+		declare_war_on = { target = DKB type = annex_everything } 
+	}
+	
+}
+
+country_event = { #Alash Orda claim
+	id = russia.1974
+	title = russia.1974.t
+	desc = russia.1974.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1974.a #yes
+		ai_chance = { factor = 50 }
+		add_named_threat = { threat = 2 name = russia.1974.t }
+		add_opinion_modifier = { target = RUS modifier = ALO_claim_volga }
+		add_political_power = -200
+		RUS = { country_event = { id = russia.1976 } }
+		add_state_core = 652
+		add_state_core = 251
+		add_state_core = 401
+		
+	}
+	
+	option = {
+		name = russia.1974.b #no
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = { target = RUS modifier = ALO_not_claim_volga }
+	}
+	
+	option = {
+		name = russia.1974.c #help russia
+		ai_chance = { factor = 90 }
+		trigger = { has_country_flag = ALO_RUS }
+		RUS = { country_event = { id = russia.1975 } }
+		add_manpower = -1000
+		send_equipment = { target = RUS type = infantry_equipment amount = 500 }
+		add_opinion_modifier = { target = RUS modifier = ALO_support_russia }
+	}
+	
+}
+
+country_event = { #Aid from alash orda
+	id = russia.1975
+	title = russia.1975.t
+	desc = russia.1975.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1975.a
+		load_oob = RUS_ALO_VOLUNTEERS
+		custom_effect_tooltip = received_equipment_500
+	}
+	
+}
+
+country_event = { #Alash Orda makes his move
+	id = russia.1976
+	title = russia.1976.t
+	desc = russia.1976.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1976.a #yes
+		ai_chance = { factor = 60 }
+		add_political_power = -100
+		ALO = { transfer_state = 652 transfer_state = 251 transfer_state = 401 }
+		remove_state_core = 652
+		remove_state_core = 251
+		remove_state_core = 401
+	}
+	
+	option = {
+		name = russia.1976.b #no
+		ai_chance = { factor = 40 }
+		declare_war_on = { target = ALO type = annex_everything } 
+	}
+	
+}
+
+country_event = { #Treaty of Astrakhan
+	id = russia.1977
+	title = russia.1977.t
+	desc = russia.1977.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_war_with = ALO
+    ALO = { controls_state = 651 controls_state = 572 controls_state = 652 controls_state = 582 controls_state = 236 controls_state = 251 controls_state = 588
+	is_puppet = no } is_puppet = no }
+	
+	mean_time_to_happen = { days = 25 }
+	
+	option = { #yes
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1977.a
+		ai_chance = { factor = 35 }
+		add_political_power = -40
+		ALO = { country_event = { id = russia.1978 } }
+	}
+	
+	option = { #no
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1977.b
+		ai_chance = { factor = 65 }
+		add_political_power = -80
+		
+	}
+	
+	option = { #yes
+	    trigger = { has_war_with = SOV }
+		name = russia.1977.a
+		ai_chance = { factor = 85 }
+		add_political_power = -60
+		ALO = { country_event = { id = russia.1978 } }
+	}
+	
+	option = { #no
+	    trigger = { has_war_with = SOV }
+		name = russia.1977.b
+		ai_chance = { factor = 15 }
+		add_political_power = -120
+		
+	}
+	
+}
+
+country_event = { #Treaty of Astrakhan ALO
+	id = russia.1978
+	title = russia.1978.t
+	desc = russia.1978.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1978.a
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		white_peace = RUS
+		ALO = { transfer_state = 401
+		        add_state_core = 401
+                transfer_state = 251
+		        add_state_core = 251
+                transfer_state = 652
+		        add_state_core = 652
+                transfer_state = 572
+		        add_state_core = 572
+                transfer_state = 582
+		        add_state_core = 582
+                transfer_state = 571
+		        add_state_core = 571
+                transfer_state = 403
+		        add_state_core = 403
+                transfer_state = 588
+		        add_state_core = 588
+                transfer_state = 583
+		        add_state_core = 583
+                transfer_state = 590
+		        add_state_core = 590	}
+		RUS = { country_event = { id = russia.1979 } }
+	}
+	
+	option = { #no
+		name = russia.1978.b
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		ALO = { 
+		        add_state_core = 401
+                
+		        add_state_core = 251
+                
+		        add_state_core = 652
+                
+		        add_state_core = 572
+                
+		        add_state_core = 582
+                
+		        add_state_core = 571
+                
+		        add_state_core = 403
+                
+		        add_state_core = 588
+                
+		        add_state_core = 583
+                
+		        add_state_core = 590	}
+		RUS = { country_event = { id = russia.1980 } }
+		
+	}
+	
+}
+
+country_event = { #Treaty of Astrakhan accepted
+	id = russia.1979
+	title = russia.1979.t
+	desc = russia.1979.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1979.a
+		add_political_power = -40
+		RUS = { 
+		        remove_state_core = 401
+                
+		        remove_state_core = 251
+                
+		        remove_state_core = 652
+                
+		        remove_state_core = 572
+                
+		        remove_state_core = 582
+                
+		        remove_state_core = 571
+                
+		        remove_state_core = 403
+                
+		        remove_state_core = 588
+                
+		        remove_state_core = 583
+                
+		        remove_state_core = 590	}
+	}
+	
+}
+
+country_event = { #Treaty of Astrakhan refused 
+	id = russia.1980
+	title = russia.1980.t
+	desc = russia.1980.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1980.a
+		add_political_power = -20
+	}
+	
+}
+
+country_event = { #Treaty of Tsaritsyn
+	id = russia.1981
+	title = russia.1981.t
+	desc = russia.1981.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_war_with = DKB
+    DKB = { controls_state = 217 controls_state = 260 controls_state = 265
+	is_puppet = no NOT = { is_in_faction_with = GER } } is_puppet = no NOT = { controls_state = 239 } }
+	
+	mean_time_to_happen = { days = 25 }
+	
+	option = { #yes
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1981.a
+		ai_chance = { factor = 30 }
+		add_political_power = -100
+		DKB = { country_event = { id = russia.1982 } }
+	}
+	
+	option = { #no
+	    trigger = { NOT = { has_war_with = SOV } }
+		name = russia.1981.b
+		ai_chance = { factor = 70 }
+		add_political_power = -20
+		
+	}
+	
+	option = { #yes
+	    trigger = { has_war_with = SOV }
+		name = russia.1981.a
+		ai_chance = { factor = 90 }
+		add_political_power = -100
+		DKB = { country_event = { id = russia.1982 } }
+	}
+	
+	option = { #no
+	    trigger = { has_war_with = SOV }
+		name = russia.1981.b
+		ai_chance = { factor = 10 }
+		add_political_power = -200
+		
+	}
+	
+}
+
+country_event = { #Treaty of Tsaritsyn DKB
+	id = russia.1982
+	title = russia.1982.t
+	desc = russia.1982.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #yes
+		name = russia.1982.a
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		white_peace = RUS
+		DKB = { transfer_state = 260
+		        add_state_core = 260
+                transfer_state = 265
+		        add_state_core = 265
+                transfer_state = 217
+		        add_state_core = 217
+                transfer_state = 239
+		        add_state_claim = 239	}
+		RUS = { country_event = { id = russia.1983 } }
+	}
+	
+	option = { #no
+		name = russia.1982.b
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		DKB = { 
+		        add_state_core = 260
+                
+		        add_state_core = 265
+                
+		        add_state_core = 217
+                
+		        add_state_claim = 239	}
+		RUS = { country_event = { id = russia.1984 } }
+		
+	}
+	
+}
+
+country_event = { #Treaty of Tsaritsyn accepted
+	id = russia.1983
+	title = russia.1983.t
+	desc = russia.1983.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1983.a
+		add_political_power = -40
+		RUS = { 
+		        remove_state_core = 260
+                
+		        remove_state_core = 265
+                
+		        remove_state_core = 217
+                
+		        remove_state_core = 239	}
+	}
+	
+}
+
+country_event = { #Treaty of Tsaritsyn refused 
+	id = russia.1984
+	title = russia.1984.t
+	desc = russia.1984.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = russia.1984.a
+		add_political_power = -20
+	}
+	
 }

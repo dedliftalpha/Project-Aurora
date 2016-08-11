@@ -204,3 +204,167 @@ country_event = { #Major peasant unrest
 		
 	
 }
+
+country_event = { #Workers' demonstration
+
+	id = rusd.7	
+	title = rusd.7.t
+	desc = rusd.7.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_idea_with_trait = low_stability
+	}
+	mean_time_to_happen = { days = 60 }
+	option = { 
+		name = rusd.7.a
+		add_political_power = -30
+		}
+	}
+
+	
+country_event = { #Workers' strike
+	id = rusd.8
+	title = rusd.8.t
+	desc = rusd.8.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		OR = {
+		has_idea_with_trait = very_low_stability
+		has_idea_with_trait = low_stability
+		}
+	}
+		
+	mean_time_to_happen = { days = 150 }
+	option = { 
+	name = rusd.8.a
+		add_timed_idea = {
+		idea = rus_fulfilled_strike
+		days = 120
+		}
+		}
+	option = { 
+	name = rusd.8.b
+	set_country_flag = rus_minor_strike_flag
+	add_ideas =  rus_minor_strike
+		}
+	option = { 
+	name = rusd.8.c
+	add_political_power = -120
+		}
+		
+	
+}
+
+country_event = { #Negotiating with the strikers
+	id = rusd.9
+	title = rusd.9.t
+	desc = rusd.9.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_minor_strike_flag
+	}
+		
+	mean_time_to_happen = { days = 30 }
+	option = { 
+	name = rusd.9.a
+		add_political_power = -30
+		set_country_flag = stalled_strikers
+		}
+	option = { 
+	name = rusd.9.b
+	add_political_power = -10
+	add_timed_idea = {
+		idea = rus_fulfilled_strike
+		days = 60
+			}
+		clr_country_flag = rus_minor_strike
+		set_country_flag = rus_end_strike
+	}
+	option = { 
+	name = rusd.9.c
+	add_political_power = 20
+		add_timed_idea = {
+		idea = rus_fulfilled_strike
+		days = 120
+			}
+		clr_country_flag = rus_minor_strike_flag
+		set_country_flag = rus_end_strike
+		}	
+}
+
+country_event = { #Harsh measures
+	id = rusd.10	
+	title = rusd.10.t
+	desc = rusd.10.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_minor_strike_flag
+		has_country_flag = stalled_strikers
+	}
+		
+	mean_time_to_happen = { days = 45 }
+	option = { 
+	name = rusd.10.a
+	ai_chance = { factor = 2 }
+		add_political_power = -120
+		clr_country_flag = rus_minor_strike_flag
+		clr_country_flag =  stalled_strikers	
+		set_country_flag = rus_end_strike
+		}
+	option = { 
+	name = rusd.10.b
+	ai_chance = { factor = 8 }
+	set_country_flag = rus_strike_patience
+	}
+	
+}
+
+country_event = { #Workers give up
+	id = rusd.11	
+	title = rusd.11.t
+	desc = rusd.11.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_minor_strike_flag
+		has_country_flag = stalled_strikers
+		has_country_flag = rus_strike_patience
+	}
+		
+	mean_time_to_happen = { days = 50 }
+	option = { 
+	name = rusd.11.a
+		add_political_power = -120
+		clr_country_flag = rus_minor_strike_flag
+		clr_country_flag =  stalled_strikers
+		clr_country_flag = rus_strike_patience	
+		set_country_flag = rus_end_strike
+		}
+
+	
+}
+
+country_event = { #Factories return to work
+	id = rusd.12	
+	title = rusd.12.t
+	desc = rusd.12.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_end_strike
+	}
+		
+	mean_time_to_happen = { days = 50 }
+	option = { 
+	name = rusd.12.a
+		remove_ideas = rus_minor_strike
+		}
+
+	
+}
+
+

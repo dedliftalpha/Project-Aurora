@@ -31,11 +31,16 @@ country_event = { #Political Murder
 	name = rusd.1.a
 	add_political_power = -30
 	random_list = {
-	20 = { remove_unit_leader = 404  }
-	20 = { remove_unit_leader = 405 }
-	20 = { remove_unit_leader = 403 }
-	20 = { remove_unit_leader = 402 }
-	20 = { remove_unit_leader = 401 }
+	10 = { remove_unit_leader = 412 }
+	10 = { remove_unit_leader = 411 }
+	10 = { remove_unit_leader = 410 }
+	10 = { remove_unit_leader = 409 }
+	10 = { remove_unit_leader = 408 }
+	10 = { remove_unit_leader = 407 }
+	10 = { remove_unit_leader = 406 }
+	10 = { remove_unit_leader = 405 }
+	10 = { remove_unit_leader = 404 }
+	10 = { remove_unit_leader = 403 }
 		}
 	}
 }
@@ -55,7 +60,7 @@ country_event = { #Political Murder_2
 		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
-	mean_time_to_happen = { days = 60 }
+	mean_time_to_happen = { days = 50 }
 	option = { 
 	name = rusd.1.a
 	add_political_power = -60
@@ -79,7 +84,7 @@ country_event = { #Bombing
 		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
-	mean_time_to_happen = { days = 60 }
+	mean_time_to_happen = { days = 50 }
 	option = { 
 	name = rusd.1.a
 	add_political_power = -90
@@ -125,7 +130,7 @@ country_event = { #Agitation in the countryside
 		}
 	}
 		
-	mean_time_to_happen = { days = 60 }
+	mean_time_to_happen = { days = 20 }
 	option = { 
 	name = rusd.5.a
 	add_political_power = -90
@@ -161,7 +166,7 @@ country_event = { #Major peasant unrest
 		}
 	}
 		
-	mean_time_to_happen = { days = 105 }
+	mean_time_to_happen = { days = 50 }
 	option = { 
 	name = rusd.6.a
 	add_political_power = -150
@@ -225,7 +230,7 @@ country_event = { #Workers' strike
 		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
-	mean_time_to_happen = { days = 150 }
+	mean_time_to_happen = { days = 90 }
 	option = { 
 	name = rusd.8.a
 		add_timed_idea = {
@@ -269,7 +274,7 @@ country_event = { #Negotiating with the strikers
 		idea = rus_fulfilled_strike
 		days = 60
 			}
-		clr_country_flag = rus_minor_strike
+		clr_country_flag = rus_minor_strike_flag
 		set_country_flag = rus_end_strike
 	}
 	option = { 
@@ -295,7 +300,7 @@ country_event = { #Harsh measures
 		has_country_flag = stalled_strikers
 	}
 		
-	mean_time_to_happen = { days = 30 }
+	mean_time_to_happen = { days = 15 }
 	option = { 
 	name = rusd.10.a
 	ai_chance = { factor = 2 }
@@ -365,6 +370,7 @@ country_event = { #General strike
 		tag = RUS 
 		has_idea_with_trait = desaster
 		NOT = { has_country_flag = RUS_POPULAR_FRONT }
+		NOT = { has_country_flag = rus_minor_strike_flag }
 	}
 		
 	mean_time_to_happen = { days = 150 }
@@ -623,4 +629,74 @@ country_event = { #Clashes in Tallin
 	add_political_power = -60
 	
 	}
+}
+
+country_event = { #Negotiating with the strikers general 
+	id = rusd.26
+	title = rusd.9.t
+	desc = rusd.9.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_general_strike_flag
+	}
+		
+	mean_time_to_happen = { days = 55 }
+	option = { 
+	name = rusd.9.a
+		add_political_power = -40
+		set_country_flag = stalled_strikers_general
+		remove_ideas = rus_general_strike
+		remove_ideas = rus_general_strike_big
+		add_timed_idea = {
+		idea = rus_general_strike
+		days = 80
+		}
+	}
+	option = { 
+	name = rusd.9.b
+	add_political_power = -10
+	add_timed_idea = {
+		idea = rus_fulfilled_strike_general
+		days = 60
+			}
+		clr_country_flag = rus_general_strike_flag
+		set_country_flag = rus_end_strike_general
+	}
+	option = { 
+	name = rusd.9.c
+	add_political_power = 20
+		add_timed_idea = {
+		idea = rus_fulfilled_strike_general
+		days = 120
+			}
+		clr_country_flag = rus_minor_strike_flag
+		set_country_flag = rus_end_strike_general
+		}	
+}
+
+country_event = { #Factories return to work general
+	id = rusd.27
+	title = rusd.12.t
+	desc = rusd.12.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		OR = {
+		has_country_flag = rus_end_strike_general
+		AND = { 
+			has_country_flag = stalled_strikers_general
+			NOT = { has_idea = rus_general_strike }
+				}
+		}
+	}
+		
+	mean_time_to_happen = { days = 3 }
+	option = { 
+	name = rusd.12.a
+		remove_ideas = rus_general_strike
+		clr_country_flag = general_strike_clashes
+		}
+
+	
 }

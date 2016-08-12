@@ -1,4 +1,4 @@
-####### Modder : Levi ######
+﻿####### Modder : Levi ######
 
 ###########################
 # Russian Domestic events 
@@ -20,17 +20,13 @@ country_event = { #Political Murder
 	trigger = { 
 		tag = RUS 
 		OR = {
-		 has_government = national_populist
-		has_government = paternal_autocratist
-		has_government = authoritarian_democratist
-		}
-		OR = {
 		has_idea_with_trait = desaster
 		has_idea_with_trait = very_low_stability
 		}
+	NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
-	mean_time_to_happen = { days = 60 }
+	mean_time_to_happen = { days = 50 }
 	option = { 
 	name = rusd.1.a
 	add_political_power = -30
@@ -46,7 +42,6 @@ country_event = { #Political Murder
 
 
 country_event = { #Political Murder_2
-
 	id = rusd.2
 	title = rusd.2.t
 	desc = rusd.2.d
@@ -54,14 +49,10 @@ country_event = { #Political Murder_2
 	trigger = { 
 		tag = RUS 
 		OR = {
-		 has_government = national_populist
-		has_government = paternal_autocratist
-		has_government = authoritarian_democratist
-		}
-		OR = {
 		has_idea_with_trait = desaster
 		has_idea_with_trait = very_low_stability
 		}
+		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
 	mean_time_to_happen = { days = 60 }
@@ -82,17 +73,13 @@ country_event = { #Bombing
 	trigger = { 
 		tag = RUS 
 		OR = {
-		 has_government = national_populist
-		has_government = paternal_autocratist
-		has_government = authoritarian_democratist
-		}
-		OR = {
 		has_idea_with_trait = desaster
 		has_idea_with_trait = very_low_stability
 		}
+		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
-	mean_time_to_happen = { days = 90 }
+	mean_time_to_happen = { days = 60 }
 	option = { 
 	name = rusd.1.a
 	add_political_power = -90
@@ -214,8 +201,9 @@ country_event = { #Workers' demonstration
 	trigger = { 
 		tag = RUS 
 		has_idea_with_trait = low_stability
+		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
-	mean_time_to_happen = { days = 60 }
+	mean_time_to_happen = { days = 45 }
 	option = { 
 		name = rusd.7.a
 		add_political_power = -30
@@ -234,6 +222,7 @@ country_event = { #Workers' strike
 		has_idea_with_trait = very_low_stability
 		has_idea_with_trait = low_stability
 		}
+		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
 		
 	mean_time_to_happen = { days = 150 }
@@ -306,7 +295,7 @@ country_event = { #Harsh measures
 		has_country_flag = stalled_strikers
 	}
 		
-	mean_time_to_happen = { days = 45 }
+	mean_time_to_happen = { days = 30 }
 	option = { 
 	name = rusd.10.a
 	ai_chance = { factor = 2 }
@@ -335,7 +324,7 @@ country_event = { #Workers give up
 		has_country_flag = rus_strike_patience
 	}
 		
-	mean_time_to_happen = { days = 50 }
+	mean_time_to_happen = { days = 30 }
 	option = { 
 	name = rusd.11.a
 		add_political_power = -120
@@ -358,7 +347,7 @@ country_event = { #Factories return to work
 		has_country_flag = rus_end_strike
 	}
 		
-	mean_time_to_happen = { days = 50 }
+	mean_time_to_happen = { days = 3 }
 	option = { 
 	name = rusd.12.a
 		remove_ideas = rus_minor_strike
@@ -367,4 +356,271 @@ country_event = { #Factories return to work
 	
 }
 
+country_event = { #General strike
+	id = rusd.13
+	title = rusd.13.t
+	desc = rusd.13.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_idea_with_trait = desaster
+		NOT = { has_country_flag = RUS_POPULAR_FRONT }
+	}
+		
+	mean_time_to_happen = { days = 150 }
+	option = { 
+	name = rusd.13.a
+	add_ideas =  rus_general_strike
+	add_political_power = -70
+	set_country_flag = rus_general_strike_flag
+	
+	}
+	
+		
+	
+}
 
+country_event = { #General strike expands
+	id = rusd.14
+	title = rusd.14.t
+	desc = rusd.14.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_general_strike_flag
+		NOT = { has_country_flag = gen_strike_nego }
+
+	}
+		
+	mean_time_to_happen = { days = 35 }
+	option = { 
+	name = rusd.14.a
+	add_ideas =  rus_general_strike_big
+	remove_ideas = rus_general_strike
+	add_political_power = -50
+	
+	}
+	
+		
+	
+}
+
+country_event = { #Clashes with the workers
+	id = rusd.15
+	title = rusd.15.t
+	desc = rusd.15.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = rus_general_strike_flag
+		NOT = { has_country_flag = gen_strike_nego }
+		}
+	mean_time_to_happen = { days = 40 }
+		option = { 
+	name = rusd.15.a
+		set_country_flag = general_strike_clashes
+	}
+		
+}
+
+country_event = { #Clashes in Tsaritsyn
+
+	id = rusd.16
+	title = rusd.16.t
+	desc = rusd.16.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		217 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 30 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+
+country_event = { #Clashes in Moscow
+
+	id = rusd.17
+	title = rusd.17.t
+	desc = rusd.17.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		219 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 25 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+
+country_event = { #Clashes in St. Petersburg
+
+	id = rusd.18
+	title = rusd.18.t
+	desc = rusd.18.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		195 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 15 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Kiev
+
+	id = rusd.19
+	title = rusd.19.t
+	desc = rusd.19.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		202 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 20 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Kharkov
+
+	id = rusd.20
+	title = rusd.20.t
+	desc = rusd.20.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		221 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 25 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Minsk
+
+	id = rusd.21
+	title = rusd.21.t
+	desc = rusd.21.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		206 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 12 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Vladivostok
+
+	id = rusd.22
+	title = rusd.22.t
+	desc = rusd.22.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		408 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 30 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Wilno
+
+	id = rusd.23
+	title = rusd.23.t
+	desc = rusd.23.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		11 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 30 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Riga
+
+	id = rusd.24
+	title = rusd.24.t
+	desc = rusd.24.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		12 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 30 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}
+
+country_event = { #Clashes in Tallin
+
+	id = rusd.25
+	title = rusd.25.t
+	desc = rusd.25.d
+	fire_only_once = yes
+	trigger = { 
+		tag = RUS 
+		has_country_flag = general_strike_clashes
+		13 = { is_controlled_by = RUS }
+		}
+		
+	mean_time_to_happen = { days = 32 }
+	option = { 
+	name = rusd.16.a
+	add_political_power = -60
+	
+	}
+}

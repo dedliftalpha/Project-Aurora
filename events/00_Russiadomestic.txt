@@ -50,7 +50,6 @@ country_event = { #Political Murder_2
 	id = rusd.2
 	title = rusd.2.t
 	desc = rusd.2.d
-	fire_only_once = yes
 	trigger = { 
 		tag = RUS 
 		OR = {
@@ -74,7 +73,6 @@ country_event = { #Bombing
 	id = rusd.3
 	title = rusd.3.t
 	desc = rusd.3.d
-	fire_only_once = yes
 	trigger = { 
 		tag = RUS 
 		OR = {
@@ -98,7 +96,6 @@ country_event = { #Peasent unrest
 	id = rusd.4
 	title = rusd.4.t
 	desc = rusd.4.d
-	fire_only_once = yes
 	trigger = { 
 		tag = RUS 
 		OR = {
@@ -108,7 +105,7 @@ country_event = { #Peasent unrest
 		}
 	}
 		
-	mean_time_to_happen = { days = 30 }
+	mean_time_to_happen = { days = 100 }
 	option = { 
 	name = rusd.4.a
 	add_political_power = -30
@@ -171,13 +168,13 @@ country_event = { #Major peasant unrest
 	name = rusd.6.a
 	add_political_power = -150
 	clr_country_flag = unrest_agitate
-	clr_country_flag = unrest_agitate
+	clr_country_flag = unrest_eliminate
 		}
 	option = { 
 	name = rusd.6.b
 	add_political_power = -60
 	clr_country_flag = unrest_agitate
-	clr_country_flag = unrest_agitate
+	clr_country_flag = unrest_eliminate
 	add_timed_idea = {
 		idea = rus_negot_peasants
 		days = 150
@@ -187,7 +184,7 @@ country_event = { #Major peasant unrest
 	name = rusd.6.c
 	add_political_power = 30
 	clr_country_flag = unrest_agitate
-	clr_country_flag = unrest_agitate
+	clr_country_flag = unrest_eliminate
 	add_timed_idea = {
 		idea = rus_negot_peasants
 		days = 365
@@ -202,13 +199,12 @@ country_event = { #Workers' demonstration
 	id = rusd.7	
 	title = rusd.7.t
 	desc = rusd.7.d
-	fire_only_once = yes
 	trigger = { 
 		tag = RUS 
 		has_idea_with_trait = low_stability
 		NOT = { has_country_flag = RUS_POPULAR_FRONT }
 	}
-	mean_time_to_happen = { days = 45 }
+	mean_time_to_happen = { days = 65 }
 	option = { 
 		name = rusd.7.a
 		add_political_power = -30
@@ -779,3 +775,557 @@ country_event = { #Zemstvo gather funds for the war effort
 				}	
 		}
 }
+
+
+country_event = { #Youth organisation provides volunteers
+		id = rusd.32
+		title = rusd.32.t
+		desc = rusd.32.d
+		trigger = { 
+		tag = RUS 
+		has_completed_focus = RUS_WRA_ADM1 
+			}
+		mean_time_to_happen = { days = 200 }
+		option = {
+		name = rusd.28.a
+		add_manpower = 10000
+		}
+}
+
+country_event = { #Patriotic ceremony
+		id = rusd.33
+		title = rusd.33.t
+		desc = rusd.33.d
+		trigger = { 
+		tag = RUS 
+		has_completed_focus = RUS_WRA_ADM1 
+			}
+		mean_time_to_happen = { days = 50 }
+		option = {
+		name = rusd.28.a
+		add_political_power = 10
+		}
+}
+country_event = { #Investing in the future
+		id = rusd.34
+		title = rusd.34.t
+		desc = rusd.34.d
+		trigger = { 
+		has_war = no
+		NOT = { has_country_flag = future_invest }
+		OR = {
+		AND = {
+		tag = RUS 	
+		OR = {
+		has_completed_focus = RUS_DEM_ADM1 
+		has_completed_focus = RUS_WRA_ADM1 
+					}	
+					}
+		tag = SOV
+			}
+		}
+		mean_time_to_happen = { days = 200 }
+		option = {
+		name = rusd.34.a
+		set_country_flag = future_invest
+		random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = infrastructure
+						size < 5
+					}
+			}
+	}
+		add_building_construction = { type = infrastructure level = 4 instant_build = yes }
+		}
+		random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = infrastructure
+						size < 5
+					}
+			}
+	}
+		add_building_construction = { type = infrastructure level = 4 instant_build = yes }
+		}
+		random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = infrastructure
+						size < 5
+					}
+			}
+	}
+		add_building_construction = { type = infrastructure level = 4 instant_build = yes }
+		}
+	}
+	option = {
+	name = rusd.34.b
+	set_country_flag = future_invest
+	add_political_power = 50
+		}
+	option = {
+	name = rusd.34.c
+	set_country_flag = future_invest
+	random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = arms_factory
+						size < 2
+					}
+			}
+	}
+		add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+		}
+	random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = arms_factory
+						size < 2
+					}
+			}
+	}
+		add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+		}
+		random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = arms_factory
+						size < 2
+					}
+			}
+	}
+		add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+		}
+		}
+	option = {
+	name = rusd.34.e	
+	set_country_flag = future_invest
+	random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = arms_factory
+						size < 2
+					}
+			}
+	}
+		add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+		}
+	random_owned_state = { 	
+			limit = { NOT = { free_building_slots = {
+						building = infrastructure
+						size < 5
+					}
+			}
+	}
+		add_building_construction = { type = infrastructure level = 4 instant_build = yes }
+		}
+		add_political_power = 10
+		}
+}
+
+country_event = { #Village collective reports production surplus
+		id = rusd.35
+		title = rusd.35.t
+		desc = rusd.35.d
+		trigger = { 
+		OR = {
+		AND = {
+		tag = RUS 
+		has_completed_focus = RUS_DEM_ADM1 
+					}
+		tag = SOV
+			}
+			}
+		mean_time_to_happen = { days = 175 }
+		option = {
+		name = rusd.28.a
+		add_timed_idea = {
+		idea = village_surplus
+		days = 30	
+			}
+		}
+}
+
+country_event = { #A new collective is formed
+		id = rusd.36
+		title = rusd.36.t
+		desc = rusd.36.d
+		trigger = { 
+		OR = {
+		AND = {
+		tag = RUS 
+		has_completed_focus = RUS_DEM_ADM1 
+					}
+		tag = SOV
+			}
+			}
+		mean_time_to_happen = { days = 130 }
+		option = {
+		name = rusd.28.a
+		add_political_power = 15
+		}
+}
+
+country_event = { #Projected limits exceeded
+		id = rusd.37
+		title = rusd.37.t
+		desc = rusd.37.d
+		trigger = { 
+		OR = {
+		AND = {
+		tag = RUS 
+		has_completed_focus = RUS_DEM_ADM1 
+					}
+		tag = SOV
+			}
+			}
+		mean_time_to_happen = { days = 160 }
+		option = {
+		name = rusd.28.a
+		add_timed_idea = {
+		idea = project_exeeded
+		days = 35	
+			}
+		}
+}
+
+
+###########################
+# Religion
+###########################
+
+country_event = { #Status of the Orthodox Church
+		id = rusd.38
+		title = rusd.38.t
+		desc = rusd.38.d
+		trigger = { 
+		tag = RUS
+		OR = { 
+		has_country_flag = RUS_BUKH
+		has_country_flag = RUS_MILYU
+		has_country_flag = RUS_IRA
+			}
+		}
+		mean_time_to_happen = { days = 55 }
+		option = {
+		name = rusd.38.a
+		ai_chance = { factor = 30 }
+		add_political_power = 50
+		set_country_flag = orth_state
+		}
+		option = {
+		name = rusd.38.b
+		ai_chance = { factor = 60 }
+		add_political_power = -20
+		set_country_flag = secular
+		}
+		option = {
+		ai_chance = { factor = 10 }
+		name = rusd.38.c
+		add_political_power = -150
+		set_country_flag = orth_gvmt
+		}
+}
+
+country_event = { #The clergy criticises the government 
+		id = rusd.39
+		title = rusd.39.t
+		desc = rusd.39.d
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular
+			}
+		mean_time_to_happen = { days = 150 }
+		option = {
+		name = rusd.39.a
+		add_political_power = -20
+		}
+}
+country_event = { #The patriarch criticises the government DEM
+		id = rusd.40
+		title = rusd.40.t
+		desc = rusd.40.d
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular
+		OR = {
+		has_idea_with_trait = desaster
+		has_idea_with_trait = very_low_stability
+		has_idea_with_trait = low_stability
+		}
+			OR = { 
+		has_country_flag = RUS_MILYU
+		has_country_flag = RUS_IRA
+			}	
+			}
+		mean_time_to_happen = { days = 100 }
+		option = {
+		name = rusd.40.a
+		ai_chance = { factor = 70 }
+		add_political_power = -30
+		}
+		option = {
+		name = rusd.40.b
+		ai_chance = { factor = 30 }
+		add_national_unity = -0.01
+		}
+}
+
+country_event = { #The patriarch criticises the government secular ARI
+		id = rusd.41
+		title = rusd.40.t
+		desc = rusd.40.d
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular
+		OR = { 
+		has_country_flag = RUS_DEN
+		has_country_flag = RUS_TRUB
+			}	
+			OR = {
+		has_idea_with_trait = desaster
+		has_idea_with_trait = very_low_stability
+		has_idea_with_trait = low_stability
+		}
+			}
+		mean_time_to_happen = { days = 150 }
+		option = {
+		name = rusd.40.a
+		ai_chance = { factor = 60 }
+		add_political_power = -30
+		}
+		option = {
+		name = rusd.40.b
+		ai_chance = { factor = 35 }
+		add_national_unity = -0.01
+		}
+		option = {
+		name = rusd.41.c
+		ai_chance = { factor = 5 }
+		add_political_power = -10
+		clr_country_flag = secular
+		set_country_flag = orth_state
+				}
+}
+
+country_event = { #The patriarch criticises the government secular WRA
+		id = rusd.42
+		title = rusd.40.t
+		desc = rusd.40.d
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular
+		OR = { 
+		has_country_flag = RUS_WRA
+		has_country_flag = RUS_PUR
+			}
+		OR = {
+		has_idea_with_trait = desaster
+		has_idea_with_trait = very_low_stability
+		has_idea_with_trait = low_stability
+		}
+			}
+		mean_time_to_happen = { days = 150 }
+		option = {
+		name = rusd.40.a
+		ai_chance = { factor = 60 }
+		add_political_power = -30
+		}
+		option = {
+		name = rusd.41.c
+		ai_chance = { factor = 40 }
+		add_political_power = -10
+		clr_country_flag = secular
+		set_country_flag = orth_state
+				}
+}
+
+country_event = { #The patriarch criticises the government secular WRA
+		id = rusd.43
+		title = rusd.40.t
+		desc = rusd.40.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_idea_with_trait = desaster
+		has_idea_with_trait = very_low_stability
+		has_idea_with_trait = low_stability
+		}
+		has_country_flag = secular
+		has_country_flag = RUS_BUKH
+			}
+		mean_time_to_happen = { days = 150 }
+		option = {
+		name = rusd.40.a
+		ai_chance = { factor = 75 }
+		add_political_power = -30
+		}
+		option = {
+		name = rusd.43.b
+		ai_chance = { factor = 25 }
+		add_political_power = -300
+		clr_country_flag = secular
+		set_country_flag = atheism
+				}
+}
+
+country_event = { #Motherland mass secular
+		id = rusd.44
+		title = rusd.44.t
+		desc = rusd.44.d
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular
+		NOT = { has_country_flag = RUS_BUKH }
+			}
+		mean_time_to_happen = { days = 140 }
+		option = {
+		name = rusd.44.a
+		
+		add_political_power = 20
+		}
+	}
+
+country_event = { #Motherland mass state religion
+		id = rusd.45
+		title = rusd.44.t
+		desc = rusd.45.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = orth_state
+		has_country_flag = orth_gvmt
+		}
+		NOT = { has_country_flag = RUS_BUKH }
+			}
+		mean_time_to_happen = { days = 140 }
+		option = {
+		name = rusd.45.a
+		
+		add_political_power = 30
+		}
+	}
+
+country_event = { #Motherland mass in capital
+		id = rusd.46
+		title = rusd.44.t
+		desc = rusd.46.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = orth_state
+		has_country_flag = orth_gvmt
+		}
+		NOT = { has_country_flag = RUS_BUKH }
+			OR = {
+			RUS = { controls_state = 195 }
+			RUS = { controls_state = 219 }		
+			}
+			}
+		mean_time_to_happen = { days = 200 }
+		option = {
+		name = rusd.45.a
+		
+		add_political_power = 50
+		}
+	}
+
+country_event = { #Prayers for the tsar
+		id = rusd.47
+		title = rusd.47.t
+		desc = rusd.47.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = orth_state
+		has_country_flag = orth_gvmt
+		}
+		has_country_flag = rus_tsar
+		NOT = { has_country_flag = RUS_BUKH }
+			}
+		mean_time_to_happen = { days = 100 }
+		option = {
+		name = rusd.47.a
+		
+		add_political_power = 40
+		}
+	}
+
+country_event = { #Liberals criticize the clergy DEM
+		id = rusd.48
+		title = rusd.48.t
+		desc = rusd.48.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = orth_state
+		has_country_flag = orth_gvmt
+		}
+		OR = { 
+		has_country_flag = RUS_TRUB
+		has_country_flag = RUS_MILYU
+		has_country_flag = RUS_IRA
+			}
+		}
+		mean_time_to_happen = { days = 150 }
+		option = {
+		name = rusd.48.a
+		ai_chance = { factor = 40 }
+		add_political_power = -20
+		}
+		option = {
+		name = rusd.40.b
+		ai_chance = { factor = 60 }
+		add_national_unity = -0.01
+		add_political_power = 20
+		}
+	}
+
+country_event = { #Liberals criticize the clergy WRA
+		id = rusd.49
+		title = rusd.48.t
+		desc = rusd.48.d
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = orth_state
+		has_country_flag = orth_gvmt
+		}
+		OR = { 
+		has_country_flag = RUS_DEN
+		has_country_flag = RUS_WRA
+		has_country_flag = RUS_KIR
+		has_country_flag = RUS_FEL
+		has_country_flag = RUS_PAV
+		has_country_flag = RUS_DMI
+			}
+		}
+		mean_time_to_happen = { days = 120 }
+		option = {
+		name = rusd.48.a
+		ai_chance = { factor = 80 }
+		add_political_power = -20
+		}
+		option = {
+		name = rusd.40.b
+		ai_chance = { factor = 20 }
+		add_national_unity = -0.01
+		add_political_power = 20
+		}
+	}
+
+country_event = { #President addresses the Duma
+		id = rusd.50
+		title = rusd.50.t
+		desc = rusd.50.d
+		is_triggered_only = yes
+		option = {
+		name = rusd.50.a
+		add_political_power = 40
+		}
+	}
+
+country_event = { #Marshal Denikin Addresses the Nation
+		id = rusd.51
+		title = rusd.51.t
+		desc = rusd.51.d
+		is_triggered_only = yes
+		option = {
+		name = rusd.51.a
+		add_political_power = 40
+		}
+	}

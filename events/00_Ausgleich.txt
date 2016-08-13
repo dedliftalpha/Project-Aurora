@@ -44,8 +44,13 @@ Country_event = {
 			}
 			add_opinion_modifier = {target = this modifier = dualism_disagree}
 		}
+		GER = { add_opinion_modifier = {target = AUS modifier = dualism_agree} }
 		add_opinion_modifier = {target = GER modifier = dualism_agree}
 		HUN = {country_event = { id = ausgleich.3 days = 1 }}
+		
+		ai_chance = {
+			base = 30
+		}
 	}
 
 	option = {
@@ -56,8 +61,12 @@ Country_event = {
 			}
 			add_opinion_modifier = {target = this modifier = federalism_agree}
 		}
-		add_opinion_modifier = {target = GER modifier = federlism_disagree}
+		GER = { add_opinion_modifier = {target = AUS modifier = federlism_disagree}}
 		HUN = {country_event = { id = ausgleich.4 days = 1 }}
+		
+		ai_chance = {
+			base = 20
+		}
 	}
 	
 	option = {
@@ -69,6 +78,10 @@ Country_event = {
 			add_opinion_modifier = {target = this modifier = centralize_disagree}
 		}
 		HUN = {country_event = { id = ausgleich.5 days = 1 }}
+		
+		ai_chance = {
+			base = 50
+		}
 	}
 }
 
@@ -83,11 +96,19 @@ country_event = {
 	option = {
 		name = ausgleich.3.a # Accept
 		AUS = {country_event = { id = ausgleich.6 days = 1 }}
+		
+		ai_chance = {
+			base = 50
+		}
 	}
 	
 	option = {
 		name = ausgleich.3.b # Decline
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
+		
+		ai_chance = {
+			base = 50
+		}
+		
 	}
 	
 }
@@ -102,11 +123,17 @@ country_event = {
 	option = {
 		name = ausgleich.4.a # Accept
 		AUS = {country_event = { id = ausgleich.10 days = 1 }}
+		ai_chance = {
+			base = 50
+		}
 	}
 	
 	option = {
 		name = ausgleich.4.b # Decline
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
+		ai_chance = {
+			base = 50
+		}
+		
 	}
 	
 }
@@ -121,16 +148,23 @@ country_event = {
 	option = {
 		name = ausgleich.5.a # Accept
 		AUS = {country_event = { id = ausgleich.15 days = 3 }}
-		set_global_flag = centralize_success
+		set_global_flag = aus_centralize_success
+		
+		ai_chance = {
+			base = 30
+		}
 	}
 	option = {
 		name = ausgleich.5.b # Decline
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
+		
+		ai_chance = {
+			base = 70
+		}
 	}
 	
 }
 
-### Dualism chain
+
 ### Dualism Agreed
 country_event = {
 	id = ausgleich.6
@@ -145,7 +179,7 @@ country_event = {
 	
 }
 
-### The Galicia purchase
+### Federalism Agreed
 country_event = {
 	id = ausgleich.7
 	title = ausgleich.7.t
@@ -154,16 +188,40 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.7.a # Accept
-		POL = { country_event = { id = ausgleich.8 days = 3}}
-	}
-	
-	option = {
-		name = ausgleich.7.b # Decline
+		name = ausgleich.7.a
+		BOM = { country_event = {id = ausgleich.8 days = 1}}
+		CRO = { country_event = {id = ausgleich.8 days = 1}}
+		GAL = { country_event = {id = ausgleich.8 days = 1}}
+		BOS = { country_event = {id = ausgleich.8 days = 1}}
+		HUN = { country_event = {id = ausgleich.8 days = 1}}
+		HUN = { release = CRO}
+		AUS = { puppet = CRO}
+		
+		DNF = {
+			annex_country = { target = AUS transfer_troops = yes } 
+			change_tag_from = AUS
+			country_event = {id = special.1 days = 5}
+			
+		}
+		
+		every_state = {
+				limit = {
+					OR = {
+						is_core_of = BOM
+						is_core_of = CRO
+						is_core_of = GAL
+						is_core_of = BOS
+						is_core_of = HUN
+					}
+				}
+				DNF = {
+					add_state_core = PREV
+				}
+			}
 	}
 	
 }
-### Polish responce
+### Federalism: Annex other states
 country_event = {
 	id = ausgleich.8
 	title = ausgleich.8.t
@@ -172,108 +230,14 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.8.a # Accept
-		annex_country ={ target = GAL transfer_troops = yes }
-		AUS = { 
-		add_state_core = 88
-		add_state_core = 91
-		add_state_core = 89
-		add_state_core = 80
-		
-		country_event = { id = ausgleich.9 days = 3}}
-	}
-	
-	option = {
-		name = ausgleich.8.b # Decline
+		name = ausgleich.8.a
+		DNF = {
+			annex_country = { target = ROOT transfer_troops = yes } 
+		 }
 	}
 	
 }
-### Poland accepts
-country_event = {
-	id = ausgleich.9
-	title = ausgleich.9.t
-	desc = ausgleich.9.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.9.a 
-		puppet = POL
-	}
-	
-}
-### Federalism
-### Federalism Agreed
-country_event = {
-	id = ausgleich.10
-	title = ausgleich.10.t
-	desc = ausgleich.10.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.10.a
-		BOM = { country_event = {id = ausgleich.11 days = 1}}
-		CRO = { country_event = {id = ausgleich.12 days = 1}}
-		GAL = { country_event = {id = ausgleich.13 days = 1}}
-		BOS = { country_event = {id = ausgleich.14 days = 1}}
-		HUN = { release = CRO}
-		AUS = { puppet = CRO}
-	}
-	
-}
-### Bohemia Federalism
-country_event = {
-	id = ausgleich.11
-	title = ausgleich.11.t
-	desc = ausgleich.11.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.11.a 
-	}
-	
-}
-### Croatia Federalism
-country_event = {
-	id = ausgleich.12
-	title = ausgleich.12.t
-	desc = ausgleich.12.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.12.a 
-	}
-	
-}
-### Galicia Federalism
-country_event = {
-	id = ausgleich.13
-	title = ausgleich.13.t
-	desc = ausgleich.13.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.13.a 
-	}
-	
-}
-### Bosnia Federalism
-country_event = {
-	id = ausgleich.14
-	title = ausgleich.14.t
-	desc = ausgleich.14.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.14.a 
-	}
-	
-}
+
 
 ### Centralisation
 ### Centralisation Agreed

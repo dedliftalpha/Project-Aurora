@@ -13,6 +13,7 @@ country_event = { #triggers background info
 	fire_only_once = yes
 	
 	trigger = {
+		tag = DEH
 		country_exists = DEH
 		date > 1936.01.01
 	}
@@ -22,7 +23,7 @@ country_event = { #triggers background info
 	}
 	
 	immediate = {
-		DEH = {country_event = {id = delhi.3 days = 19}}
+		DEH = {country_event = {id = delhi.3 days = 18}}
 	}
 
 	option = {
@@ -93,13 +94,27 @@ country_event = {
 }
 		
 ##############
-#Afghan Invasion - Victory
+#Afghan Invasion
 ##############
 
-country_event = { #peace treaty, avoids conferance until AI is fixed
+country_event = { 
 	id = delhi.4
 	title = delhi.4.t
 	desc = delhi.4.d 
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes 
+	
+	option = {
+	name = delhi.4.a 
+	}
+}
+
+country_event = { #peace treaty, avoids conferance until AI is fixed
+	id = delhi.5
+	title = delhi.5.t
+	desc = delhi.5.d 
 	
 	fire_only_once = yes 
 	
@@ -107,7 +122,7 @@ country_event = { #peace treaty, avoids conferance until AI is fixed
 		tag = DEH
 		has_defensive_war = yes
 		AFG = {
-		surrender_progress > 0.50
+		surrender_progress > 0.30
 		}
 	}
 	
@@ -116,70 +131,74 @@ country_event = { #peace treaty, avoids conferance until AI is fixed
 	}
 	
 	option = { # take cores
-		name = delhi.4.a 
+		name = delhi.5.a 
 		ai_chance = {
-		factor = 55
+		factor = 50
 			}
 		AFG = {
 		remove_state_core = 442
 		remove_state_core = 445
+		set_state_controller = 267
+		set_state_controller = 415
 		}
 		DEH = {
 		set_state_owner = 442
 		set_state_owner = 445
+		set_state_controller = 442 
+		set_state_controller = 445
 		white_peace = AFG 
 		}
 	}
 	option = { #puppet
-		name = delhi.4.b 
+		name = delhi.5.b 
 		ai_chance = {
-		factor = 35
+		factor = 49
 			}
 		add_political_power = -100
-			AFG = {
+		AFG = {
 		remove_state_core = 442
 		remove_state_core = 445
+		set_state_controller = 267
+		set_state_controller = 415
 		}
 		DEH = {
 		set_state_owner = 442
 		set_state_owner = 445
+		set_state_controller = 442 
+		set_state_controller = 445
 		puppet = AFG 
-		country_event = {id = delhi.5}
+		country_event = {id = delhi.6}
 		
 		white_peace = AFG 
 	}
 }
 	option = { #conquest 
-	name = delhi.4.c 
+	name = delhi.5.c 
 	ai_chance = {
-	factor = 10 
+	factor = 1
 		}
 		add_political_power = -150
+		add_national_unity = -0.05
 	}
 }
 
 #How to puppet Afghanistan 
 
 country_event = {
-	id = delhi.5 
-	title = delhi.5.t 
-	desc = delhi.5.d 
+	id = delhi.6 
+	title = delhi.6.t 
+	desc = delhi.6.d 
 	
 	is_triggered_only = yes 
 	
-	option = {
-			name = delhi.5.a
-			ai_chance = {
-				factor = 50 
-			}
-	}
-
 	option = { 
-		name = delhi.5.a 
+		name = delhi.6.a 
 			ai_chance = {
 				factor = 50 
 			}
-	AFG= {	create_country_leader = {
+	AFG= {	
+	retire_country_leader = yes
+	create_country_leader = {
 			name = "Amanullah Khan"
 			desc = "AMANULLAH_KHAN_DESC"
 			picture = "Portrait_Afghan_Amanullah_Khan.tga"
@@ -191,33 +210,36 @@ country_event = {
 	}
 		
 	option = {
-		name = delhi.5.b 
+		name = delhi.6.b 
 		ai_chance = {
 			factor = 50
 		}
-	retire_country_leader = yes 
+		AFG = { 
+		retire_country_leader = yes 
 	
-	create_country_leader = {
+			create_country_leader = {
 			name = "Mohammed Nadir Shah"
 			desc = "NADIR_SHAH_DESC"
 			picture = "Portrait_Afghan_Mohammed_Zahir.tga"
 			expire = "1965.1.1"
 			ideology = authoritarian_democratist_subtype
 			traits = {}
-		}
-	
+			}
 		}
 	}
+}
+
 
 
 #Edward VIII or Singh 
 
 country_event = {
-	id = delhi.6
-	title = delhi.6.t 
-	desc = delhi.6.d 
+	id = delhi.7
+	title = delhi.7.t 
+	desc = delhi.7.d 
 	
 	trigger = {
+		tag = DEH
 		DEH = {
 		has_war = no
 		date > 1936.5.1 
@@ -228,9 +250,9 @@ country_event = {
 	}
 	
 	option = { #Edward 8 as figurehead
-		name = delhi.6.a 
+		name = delhi.7.a 
 			ai_chance ={
-				factor = 40
+				factor = 60
 			}
 		retire_country_leader = yes 
 
@@ -247,9 +269,9 @@ country_event = {
 	}
 	
 		option = { #Ganga Singh as viceroy
-		name = delhi.6.a 
+		name = delhi.7.b
 			ai_chance ={
-				factor = 45
+				factor = 40
 			}
 		retire_country_leader = yes 
 

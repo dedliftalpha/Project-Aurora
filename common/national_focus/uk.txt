@@ -55,7 +55,7 @@ focus_tree = {
 	
 	focus = {
 		id = ENG_tuc_internal
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = ENG_tuc }
 		x = 7
 		y = 1
@@ -70,8 +70,8 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_tuc_internal_mosley
-		icon = GFX_goal_support_fascism
+		id = ENG_political_commissars
+		icon = GFX_goal_generic_propaganda
 		prerequisite = { focus = ENG_tuc_internal }
 		available = { has_idea = ENG_tuc_internal_mosley_idea }
 		x = 8
@@ -84,8 +84,8 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_tuc_internal_glaise
-		icon = GFX_goal_support_democracy
+		id = ENG_country_reorganization
+		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = ENG_tuc_internal }
 		available = { has_idea = ENG_tuc_internal_glaise_idea }
 		x = 6
@@ -96,19 +96,6 @@ focus_tree = {
 			add_political_power = -50
 		}
 	}
-	
-	focus = {
-		id = ENG_tuc_internal_fem
-		icon = GFX_goal_support_communism
-		prerequisite = { focus = ENG_tuc_internal }
-		available = { has_idea = ENG_tuc_internal_fem_idea }
-		x = 7
-		y = 3
-		cost = 5
-		
-		completion_reward = {
-		}
-	}	
 	
 	# Military
 	
@@ -127,47 +114,6 @@ focus_tree = {
 			}
 		}
 	}
-	
-	focus = {
-		id = ENG_tuc_military_mosley
-		icon = GFX_goal_support_fascism
-		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_mosley_idea }
-		x = 12
-		y = 2
-		cost = 5
-		
-		completion_reward = {
-			add_political_power = -100	
-		}
-	}
-	
-	focus = {
-		id = ENG_tuc_military_glaise
-		icon = GFX_goal_support_democracy
-		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_glaise_idea }
-		x = 14
-		y = 2
-		cost = 5
-		
-		completion_reward = {
-			add_political_power = -50
-		}
-	}
-	
-	focus = {
-		id = ENG_tuc_military_fem
-		icon = GFX_goal_support_communism
-		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_fem_idea }
-		x = 13
-		y = 3
-		cost = 5
-		
-		completion_reward = {
-		}
-	}	
 	
 	# Foreign
 	
@@ -463,10 +409,11 @@ focus_tree = {
 	focus = {
 		id = ENG_devolution
 		icon = GFX_goal_support_democracy
-		prerequisite = { focus = ENG_local_talent }
 		prerequisite = { focus = ENG_dissolve_tuc }
+		mutually_exclusive = { focus = ENG_evolution }
+		mutually_exclusive = { focus = ENG_revolution }
 		available = { }
-		x = 4
+		x = 5
 		y = 6
 		cost = 10
 		
@@ -484,7 +431,7 @@ focus_tree = {
 	focus = {
 		id = ENG_three_under_one
 		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = ENG_tuc_internal_glaise }
+		prerequisite = { focus = ENG_country_reorganization }
 		available = { }
 		x = 5
 		y = 3
@@ -500,6 +447,7 @@ focus_tree = {
 		id = ENG_dissolve_tuc
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = ENG_three_under_one }
+		prerequisite = { focus = ENG_local_industry }
 		available = { }
 		x = 4
 		y = 4
@@ -513,10 +461,71 @@ focus_tree = {
 	focus = {
 		id = ENG_strengthen_chairman
 		icon = GFX_goal_generic_dangerous_deal
-		prerequisite = { focus = ENG_tuc_internal_mosley }
+		prerequisite = { focus = ENG_political_commissars }
 		available = { }
 		x = 9
 		y = 3
+		cost = 10
+		
+		completion_reward = {
+			add_political_power = -200
+		}
+	}
+	
+	# Congregationalist & Federationist reforms
+	
+	focus = {
+		id = ENG_defend_the_revolution
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = ENG_tuc_internal }
+		available = { has_idea = ENG_tuc_internal_fem_idea }
+		x = 7
+		y = 3
+		cost = 5
+		
+		completion_reward = {
+			add_political_power = -50
+		}
+	}	
+	
+	focus = {
+		id = ENG_city_upon_a_hill
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = ENG_defend_the_revolution }
+		available = { }
+		x = 6
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+			add_political_power = -100
+		}
+	}
+	
+	focus = {
+		id = ENG_turn_the_other_cheek
+		icon = GFX_goal_generic_dangerous_deal
+		prerequisite = { focus = ENG_defend_the_revolution }
+		available = { }
+		x = 8
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+			add_political_power = -100
+		}
+	}
+	
+	focus = {
+		id = ENG_evolution
+		icon = GFX_goal_support_communism
+		prerequisite = { focus = ENG_turn_the_other_cheek }
+		prerequisite = { focus = ENG_city_upon_a_hill }
+		mutually_exclusive = { focus = ENG_devolution }
+		mutually_exclusive = { focus = ENG_revolution }
+		available = { }
+		x = 7
+		y = 6
 		cost = 10
 		
 		completion_reward = {
@@ -529,7 +538,7 @@ focus_tree = {
 	focus = {
 		id = ENG_dissolve_militias
 		icon = GFX_goal_generic_forceful_treaty
-		prerequisite = { focus = ENG_tuc_internal_mosley focus = ENG_tuc_military_mosley}
+		prerequisite = { focus = ENG_political_commissars focus = ENG_experience_exchange_instruction}
 		available = { }
 		x = 10
 		y = 4
@@ -559,12 +568,15 @@ focus_tree = {
 		id = ENG_revolution
 		icon = GFX_goal_support_fascism
 		prerequisite = { focus = ENG_dissolve_militias }
+		mutually_exclusive = { focus = ENG_evolution }
+		mutually_exclusive = { focus = ENG_devolution }
 		available = { }
-		x = 10
+		x = 9
 		y = 6
 		cost = 10
 		
 		completion_reward = {
+			add_political_power = -200
 			
 			### Todo
 			# Dependending on events, ideas, etc. should maybe cause a civil war
@@ -575,9 +587,53 @@ focus_tree = {
 	# Military
 	
 	focus = {
+		id = ENG_experience_exchange_instruction
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = ENG_tuc_military }
+		available = { has_idea = ENG_tuc_military_mosley_idea }
+		x = 12
+		y = 2
+		cost = 5
+		
+		completion_reward = {
+			add_political_power = -100	
+		}
+	}
+	
+	focus = {
+		id = ENG_good_riddance
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = ENG_tuc_military }
+		available = { has_idea = ENG_tuc_military_glaise_idea }
+		x = 14
+		y = 2
+		cost = 5
+		
+		completion_reward = {
+			add_political_power = -50
+		}
+	}
+	
+	focus = {
+		id = ENG_officer_recall_vote
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = ENG_tuc_military }
+		available = { has_idea = ENG_tuc_military_fem_idea }
+		x = 13
+		y = 3
+		cost = 5
+		
+		completion_reward = {
+		}
+	}	
+	
+	### Todo
+	# Event chain for rebellious officers?
+	
+	focus = {
 		id = ENG_central_command
 		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = ENG_tuc_military_mosley }
+		prerequisite = { focus = ENG_experience_exchange_instruction }
 		available = { }
 		x = 11
 		y = 3
@@ -598,7 +654,7 @@ focus_tree = {
 	focus = {
 		id = ENG_three_armies
 		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = ENG_tuc_military_glaise }
+		prerequisite = { focus = ENG_good_riddance }
 		available = { }
 		x = 15
 		y = 3
@@ -624,7 +680,7 @@ focus_tree = {
 	focus = {
 		id = ENG_officer_corps_academy
 		icon = GFX_goal_generic_position_armies
-		prerequisite = { focus = ENG_tuc_military_mosley focus = ENG_tuc_military_fem }
+		prerequisite = { focus = ENG_experience_exchange_instruction focus = ENG_officer_recall_vote }
 		mutually_exclusive = { focus = ENG_officer_corps_experience }
 		available = { }
 		x = 12
@@ -668,7 +724,7 @@ focus_tree = {
 	focus = {
 		id = ENG_officer_corps_experience
 		icon = GFX_goal_generic_position_armies
-		prerequisite = { focus = ENG_tuc_military_fem focus = ENG_tuc_military_glaise }
+		prerequisite = { focus = ENG_officer_recall_vote focus = ENG_good_riddance }
 		mutually_exclusive = { focus = ENG_officer_corps_academy }
 		available = { }
 		x = 14
@@ -697,7 +753,7 @@ focus_tree = {
 	
 	focus = {
 		id = ENG_copenhagen_conference
-		icon = GFX_goal_generic_improve_relations
+		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = ENG_tuc_foreign }
 		available = { has_idea = ENG_tuc_foreign_glaise_idea }
 		x = 16
@@ -710,7 +766,7 @@ focus_tree = {
 	
 	focus = {
 		id = ENG_the_hague_conference
-		icon = GFX_goal_generic_improve_relations
+		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = ENG_tuc_foreign }
 		available = { 
 			OR = {
@@ -828,7 +884,7 @@ focus_tree = {
 	#focus = {
 	#	id = ENG_military_factories
 	#	icon = GFX_goal_generic_construct_mil_factory
-	#	prerequisite = { focus = ENG_tuc_internal_mosley focus = ENG_tuc_military_mosley }
+	#	prerequisite = { focus = ENG_political_commissars focus = ENG_experience_exchange_instruction }
 	#	available = { }
 	#	x = 7
 	#	y = 5

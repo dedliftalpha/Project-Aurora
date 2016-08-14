@@ -988,10 +988,11 @@ country_event = { #Projected limits exceeded
 # Religion
 ###########################
 
-country_event = { #Status of the Orthodox Church
+country_event = { #Status of the Orthodox Church DEM
 		id = rusd.38
 		title = rusd.38.t
 		desc = rusd.38.d
+		fire_only_once = yes
 		trigger = { 
 		tag = RUS
 		OR = { 
@@ -1013,7 +1014,7 @@ country_event = { #Status of the Orthodox Church
 		add_political_power = -20
 		set_country_flag = secular
 		}
-		option = {
+		option = { #needs ministers
 		ai_chance = { factor = 10 }
 		name = rusd.38.c
 		add_political_power = -150
@@ -1093,7 +1094,7 @@ country_event = { #The patriarch criticises the government secular ARI
 		ai_chance = { factor = 35 }
 		add_national_unity = -0.01
 		}
-		option = {
+		option = { #needs ministers
 		name = rusd.41.c
 		ai_chance = { factor = 5 }
 		add_political_power = -10
@@ -1125,7 +1126,7 @@ country_event = { #The patriarch criticises the government secular WRA
 		ai_chance = { factor = 60 }
 		add_political_power = -30
 		}
-		option = {
+		option = { #needs ministers
 		name = rusd.41.c
 		ai_chance = { factor = 40 }
 		add_political_power = -10
@@ -1134,7 +1135,7 @@ country_event = { #The patriarch criticises the government secular WRA
 				}
 }
 
-country_event = { #The patriarch criticises the government secular WRA
+country_event = { #The patriarch criticises the government secular BUKH
 		id = rusd.43
 		title = rusd.40.t
 		desc = rusd.40.d
@@ -1329,3 +1330,331 @@ country_event = { #Marshal Denikin Addresses the Nation
 		add_political_power = 40
 		}
 	}
+
+
+country_event = { #The Patriarch's Demands secular
+		id = rusd.52
+		title = rusd.52.t
+		desc = rusd.52.d
+		fire_only_once = yes
+		trigger = { 
+		tag = RUS
+		has_country_flag = secular 
+		NOT = { has_country_flag = rus_tsar }
+		has_country_flag = RUS_KIR
+			}
+		mean_time_to_happen = { days = 200 }
+		option = { #needs ministers
+		name = rusd.52.a
+		ai_chance = { factor = 60 }
+		add_political_power = -50
+		clr_country_flag = secular	
+		set_country_flag = orth_gvmt
+		}
+		option = {
+		name = rusd.52.b
+		ai_chance = { factor = 20 }
+		add_political_power = -200
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pavel_milyukov_hog
+				}
+			option = { #needs ministers
+		trigger = { OR = { has_country_flag = RUS_DMI has_country_flag = RUS_DEN } }
+		name = rusd.52.c
+		ai_chance = { factor = 20 }
+		add_political_power = -400
+		RUS = { country_event = { id = russia.12 days = 1 }}
+		clr_country_flag = secular
+		clr_country_flag = orth_state		
+		set_country_flag = orth_gvmt
+				}
+			option = { #needs ministers
+		trigger = { has_country_flag = RUS_WRA }
+		name = rusd.52.e
+		ai_chance = { factor = 20 }
+		add_political_power = -400
+		RUS = { country_event = { id = russia.13 days = 1 }}
+		clr_country_flag = secular
+		clr_country_flag = orth_state		
+		set_country_flag = orth_gvmt
+				}
+}
+
+country_event = { #Status of the Orthodox Church DEN
+		id = rusd.53
+		title = rusd.38.t
+		desc = rusd.38.d
+		fire_only_once = yes
+		trigger = { 
+		tag = RUS
+		has_country_flag = RUS_DEN
+		}
+		mean_time_to_happen = { days = 55 }
+		option = {
+		name = rusd.38.a
+		ai_chance = { factor = 60 }
+		add_political_power = 50
+		set_country_flag = orth_state
+		}
+		option = {
+		name = rusd.38.b
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		set_country_flag = secular
+		}
+		option = { #needs ministers
+		ai_chance = { factor = 20 }
+		name = rusd.38.c
+		add_political_power = -20
+		set_country_flag = orth_gvmt
+		}
+}
+
+country_event = { #Status of the Orthodox Church WRA/DMI
+		id = rusd.54
+		title = rusd.38.t
+		desc = rusd.38.d
+		fire_only_once = yes
+		trigger = { 
+		tag = RUS
+		OR = {
+		has_country_flag = RUS_WRA
+		has_country_flag = RUS_DMI
+		}
+		}
+		mean_time_to_happen = { days = 55 }
+		option = {
+		name = rusd.38.a
+		ai_chance = { factor = 70 }
+		add_political_power = 50
+		set_country_flag = orth_state
+		}
+		option = {
+		name = rusd.38.b
+		ai_chance = { factor = 20 }
+		set_country_flag = secular
+		}
+		option = { #needs ministers
+		ai_chance = { factor = 10 }
+		name = rusd.38.c
+		add_political_power = -150
+		set_country_flag = orth_gvmt
+		}
+}
+
+country_event = { #The Patriarch's Demands statereligion
+		id = rusd.55
+		title = rusd.52.t
+		desc = rusd.52.d
+		fire_only_once = yes
+		trigger = { 
+		tag = RUS
+		has_country_flag = orth_state
+		has_country_flag = RUS_KIR
+		NOT = { has_country_flag = rus_tsar }
+			}
+		mean_time_to_happen = { days = 200 }
+		option = { #needs ministers
+		name = rusd.52.a
+		ai_chance = { factor = 40 }
+		add_political_power = -50
+		clr_country_flag = orth_state		
+		set_country_flag = orth_gvmt
+		}
+		option = {
+		name = rusd.55.b
+		ai_chance = { factor = 20 }
+		add_political_power = -200
+				}
+			option = { #needs ministers
+		trigger = { OR = { has_country_flag = RUS_DMI has_country_flag = RUS_DEN } }
+		name = rusd.52.c
+		ai_chance = { factor = 20 }
+		add_political_power = -300
+		RUS = { country_event = { id = russia.12 days = 1 }}
+		clr_country_flag = secular
+		clr_country_flag = orth_state		
+		set_country_flag = orth_gvmt
+				}
+			option = { #needs ministers
+		trigger = { has_country_flag = RUS_WRA }
+		name = rusd.52.e
+		ai_chance = { factor = 20 }
+		add_political_power = -400
+		RUS = { country_event = { id = russia.13 days = 1 }}
+		clr_country_flag = secular
+		clr_country_flag = orth_state		
+		set_country_flag = orth_gvmt
+				}
+}
+
+country_event = { #Kyril the tsar is dead absolute
+		id = rusd.56
+		title = rusd.56.t
+		desc = rusd.56.d
+		fire_only_once = yes
+		trigger = {
+		NOT = { has_country_flag = RUS_CON_MON }
+		has_country_flag = RUS_TSAR_KYR
+		date > 1938.10.10
+		date < 1938.11.11
+		}
+		mean_time_to_happen = { days = 1 }
+		option = { 
+		name = rusd.56.a
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		clr_country_flag = RUS_TSAR_KYR
+		set_country_flag = RUS_TSAR_VLA
+			}
+		}
+
+country_event = { #Kyril the tsar is dead constitutional
+		id = rusd.57
+		title = rusd.56.t
+		desc = rusd.56.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_CON_MON
+		has_country_flag = RUS_TSAR_KYR
+		date > 1938.10.10
+		date < 1938.11.11
+		}
+		mean_time_to_happen = { days = 1 }
+		option = { 
+		name = rusd.57.a
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = market_liberalist
+			elections_allowed = no
+		}
+		clr_country_flag = RUS_TSAR_KYR
+		set_country_flag = RUS_TSAR_VLA
+			}
+		}
+
+
+country_event = { #Kyril the pretender is dead 1
+		id = rusd.58
+		title = rusd.58.t
+		desc = rusd.58.d
+		fire_only_once = yes
+		trigger = {
+		NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = rus_tsar has_country_flag = RUS_TRUB has_country_flag = RUS_DEN }
+		date > 1938.10.10
+		date < 1938.11.11
+		}
+		mean_time_to_happen = { days = 1 }
+		option = { 
+		name = rusd.58.a
+			}
+		}
+country_event = { #Kyril the pretender is dead DEN
+		id = rusd.59
+		title = rusd.59.t
+		desc = rusd.59.d
+		fire_only_once = yes
+		trigger = {
+		NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = rus_tsar  }
+		has_country_flag = RUS_DEN
+		date > 1938.10.10
+		date < 1938.11.11
+		}
+		mean_time_to_happen = { days = 1 }
+		option = { 
+		name = rusd.59.a
+		trigger = { NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = rus_tsar has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_WRA_ambitions  } }
+		ai_chance = { factor = 60 }
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		add_political_power = 50
+			}
+		option = {
+		name = rusd.59.b
+		ai_chance = { factor = 40 }
+		add_political_power = -50
+			}
+		}
+country_event = { #Kyril the pretender is dead conservative
+		id = rusd.60
+		title = rusd.59.t
+		desc = rusd.59.d
+		fire_only_once = yes
+		trigger = {
+		OR = {
+		has_country_flag = RUS_KIR
+		has_country_flag = RUS_TRUB
+			}
+		date > 1938.10.10
+		date < 1938.11.11
+		}
+		mean_time_to_happen = { days = 1 }
+		option = { 
+		name = rusd.60.a
+		trigger = { NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = rus_tsar has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_WRA_ambitions  } } 
+		ai_chance = { factor = 40 }
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = patriarch_kiril_hog
+		clr_country_flag = RUS_TRUB
+		set_country_flag = RUS_KIR
+		add_political_power = 50
+			}
+		option = {
+		name = rusd.60.b
+		ai_chance = { factor = 40 }
+		add_political_power = -50
+			}
+		}

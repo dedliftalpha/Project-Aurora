@@ -419,9 +419,13 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
-			
-			### Todo
-			# Release Scotland & Wales
+			set_politics = {
+				ruling_party = syndicalist
+			}
+			release_puppet = WAL
+			add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
+			release_puppet = SCT
+			add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
 			
 			}
 	}
@@ -439,7 +443,10 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
-			add_ideas = ENG_three_under_one_idea
+			release = WAL
+			add_opinion_modifier = { target = WAL modifier = ENG_three_under_one_op }
+			release = SCT
+			add_opinion_modifier = { target = SCT modifier = ENG_three_under_one_op }
 		}
 	}
 	
@@ -485,6 +492,9 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -50
+			set_politics = {
+				ruling_party = totalist
+			}
 		}
 	}	
 	
@@ -561,6 +571,10 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
+			
+			### Todo
+			# division_template?
+			
 		}
 	}
 	
@@ -596,7 +610,13 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			add_political_power = -100	
+			add_political_power = -100
+			army_experience = 100
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 	
@@ -610,7 +630,7 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			add_political_power = -50
+			add_political_power = 100
 		}
 	}
 	
@@ -624,6 +644,7 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
+			army_experience = 50
 		}
 	}	
 	
@@ -655,12 +676,28 @@ focus_tree = {
 		id = ENG_three_armies
 		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = ENG_good_riddance }
-		available = { }
+		available = {
+			is_in_faction_with = WAL
+			is_in_faction_with = SCT
+		}
 		x = 15
 		y = 3
 		cost = 10
 		
-		completion_reward = {	
+		completion_reward = {
+			WAL = {
+				set_equipment_fraction = 0.1
+			}
+			add_opinion_modifier = { target = WAL modifier = ENG_three_armies_op }
+			SCT = {
+				set_equipment_fraction = 0.25
+			}
+			add_opinion_modifier = { target = SCT modifier = ENG_three_armies_op }
+			
+			### Todo
+			# Officers
+			# OOB
+
 		}
 	}
 	
@@ -960,7 +997,27 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			every_country = { 
+				limit = { 
+					AND = {
+						all_owned_state = {
+							is_on_continent = europe
+						}
+						is_in_faction_with = ENG
+					}
+				}
+				add_opinion_modifier = { 
+					target = ENG modifier = aided_industry 
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
 	
@@ -973,12 +1030,32 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			every_country = { 
+				limit = { 
+					AND = {
+						all_owned_state = {
+							is_on_continent = middle_east
+						}
+						is_in_faction_with = ENG
+					}
+				}
+				add_opinion_modifier = { 
+					target = ENG modifier = aided_industry 
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
 	
 	focus = {
-		id = ENG_develop_asia
+		id = ENG_develop_far_east
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
 		x = 28
@@ -986,7 +1063,27 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			every_country = { 
+				limit = { 
+					AND = {
+						all_owned_state = {
+							is_on_continent = asia
+						}
+						is_in_faction_with = ENG
+					}
+				}
+				add_opinion_modifier = { 
+					target = ENG modifier = aided_industry 
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
 	
@@ -999,9 +1096,30 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			every_country = { 
+				limit = { 
+					AND = {
+						all_owned_state = {
+							is_on_continent = central_america
+						}
+						is_in_faction_with = ENG
+					}
+				}
+				add_opinion_modifier = { 
+					target = ENG modifier = aided_industry 
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
+
 	
 	focus = {
 		id = ENG_develop_south_america
@@ -1012,9 +1130,30 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			every_country = { 
+				limit = { 
+					AND = {
+						all_owned_state = {
+							is_on_continent = south_america
+						}
+						is_in_faction_with = ENG
+					}
+				}
+				add_opinion_modifier = { 
+					target = ENG modifier = aided_industry 
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
+
 	
 	### Military Help
 	

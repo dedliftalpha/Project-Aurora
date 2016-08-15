@@ -1523,6 +1523,7 @@ country_event = { #Kyril the tsar is dead absolute
 		}
 		clr_country_flag = RUS_TSAR_KYR
 		set_country_flag = RUS_TSAR_VLA
+		set_country_flag = KYR_DEAD
 			}
 		}
 
@@ -1556,6 +1557,7 @@ country_event = { #Kyril the tsar is dead constitutional
 		}
 		clr_country_flag = RUS_TSAR_KYR
 		set_country_flag = RUS_TSAR_VLA
+		set_country_flag = KYR_DEAD
 			}
 		}
 
@@ -1607,6 +1609,7 @@ country_event = { #Kyril the pretender is dead DEN
 		}
 		set_country_flag = rus_tsar
 		set_country_flag = RUS_TSAR_VLA
+		set_country_flag = KYR_DEAD
 		remove_ideas_with_trait = head_of_government
 		add_ideas = anton_denikin_hog
 		add_political_power = 50
@@ -1615,6 +1618,7 @@ country_event = { #Kyril the pretender is dead DEN
 		name = rusd.59.b
 		ai_chance = { factor = 40 }
 		add_political_power = -50
+		set_country_flag = KYR_DEAD
 			}
 		}
 country_event = { #Kyril the pretender is dead conservative
@@ -1651,16 +1655,14 @@ country_event = { #Kyril the pretender is dead conservative
 		}
 		set_country_flag = rus_tsar
 		set_country_flag = RUS_TSAR_VLA
-		remove_ideas_with_trait = head_of_government
-		add_ideas = patriarch_kiril_hog
-		clr_country_flag = RUS_TRUB
-		set_country_flag = RUS_KIR
 		add_political_power = 50
+		set_country_flag = KYR_DEAD
 			}
 		option = {
 		name = rusd.60.b
 		ai_chance = { factor = 40 }
 		add_political_power = -50
+		set_country_flag = KYR_DEAD
 			}
 		}
 
@@ -1720,8 +1722,8 @@ country_event = { #Kyril the pretender is dead conservative
 		clr_country_flag = RUS_DEN
 		clr_country_flag = RUS_IRA
 		remove_ideas_with_trait = head_of_government
-		add_ideas = nikolai_trubetskoy_hog
-		set_country_flag = RUS_TRUB
+		add_ideas = felix_yusupov_hog
+		set_country_flag = RUS_FEL
 		add_political_power = 80
 		add_popularity = {
            		 ideology = social_conservatist
@@ -1927,7 +1929,7 @@ country_event = { #The IX Duma Elections RUS_ARI_REP
 		ai_chance = { factor = 10 }
 		clr_country_flag = RUS_DMI
 		remove_ideas_with_trait = head_of_government
-		add_ideas = pavel_milyukov_hog
+		add_ideas = iraklij_tsereteliy_hog
 		set_country_flag = RUS_IRA
 		add_political_power = -50
 		add_popularity = {
@@ -1942,8 +1944,8 @@ option = { #conservatives ministers
 		ai_chance = { factor = 60 }
 		clr_country_flag = RUS_DMI
 		remove_ideas_with_trait = head_of_government
-		add_ideas = nikolai_trubetskoy_hog
-		set_country_flag = RUS_TRUB
+		add_ideas = felix_yusupov_hog
+		set_country_flag = RUS_FEL
 		add_political_power = 80
 		add_popularity = {
            		 ideology = social_conservatist
@@ -1954,12 +1956,12 @@ option = { #conservatives ministers
 		name = rusd.62.e
 		ai_chance = { factor = 10 }
 		country_event = { id = russia.10 days = 10 }
-		clr_country_flag = RUS_BUKH
+		clr_country_flag = RUS_DMI
 		remove_ideas_with_trait = head_of_government
 		add_ideas = pyotr_wrangel_hog
 		set_country_flag = RUS_WRA
 		add_political_power = -300
-		clr_country_flag = RUS_DEM_REP
+		clr_country_flag = RUS_ARI_REP
 		add_popularity = { ideology = national_populist popularity = 0.15 }
 		set_politics = {
 			ruling_party = national_populist
@@ -2038,6 +2040,809 @@ option = {
 		option = { 
 		name = rusd.65.e
 		ai_chance = { factor = 5 }
+		add_political_power = -80
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		add_popularity = {
+           		 ideology = syndicalist
+          		  popularity = 0.1
+        }
+		}
+}
+
+country_event = { # SR-Meneshvik coalition breaks up
+	id = rusd.66
+	title = rusd.66.t
+	desc = rusd.66.d
+	fire_only_once = yes
+	trigger = { 
+	tag = RUS
+	date > 1937.7.1
+		 } 
+	mean_time_to_happen = { days = 5 } 
+	option = { 
+	trigger = { NOT = { has_country_flag = RUS_IRA } } 
+	name = rusd.66.a
+	add_political_power = -30
+			}
+	option = { #needs SL ministers and flag
+	trigger = { has_country_flag = RUS_IRA }
+	name = rusd.66.b 
+	add_ideas = lev_kamenev_hog
+	clr_country_flag = RUS_IRA
+	set_country_flag = RUS_LEV
+	add_political_power = -50
+				}
+
+	}
+
+country_event = { # Splintering within the conservatives
+	id = rusd.67
+	title = rusd.67.t
+	desc = rusd.67.d
+	fire_only_once = yes
+	trigger = { 
+	tag = RUS
+	has_country_flag = KYR_DEAD
+
+		 } 
+	mean_time_to_happen = { days = 5 } 
+	option = { 
+	trigger = { NOT = { has_country_flag = RUS_FEL } } 
+	name = rusd.67.a
+	add_political_power = -30
+			}
+	option = { #needs SC ministers.
+	trigger = { has_country_flag = RUS_FEL has_country_flag = RUS_DEM_REP }
+	name = rusd.66.b 
+	clr_country_flag = RUS_FEL
+	remove_ideas_with_trait = head_of_government
+	add_ideas = nikolai_trubetskoy_hog
+	set_country_flag = RUS_TRUB
+	add_political_power = -50
+				}
+
+	}
+country_event = { #The X Duma Elections CON_MON
+		id = rusd.68
+		title = rusd.68.t
+		desc = rusd.68.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_CON_MON
+		date > 1942.4.1
+		date < 1942.5.1
+			}
+		mean_time_to_happen = { days = 2 }
+		option = { #liberal ministers
+		name = rusd.68.a
+		ai_chance = { factor = 35 }
+		clr_country_flag = RUS_MILYU
+		clr_country_flag = RUS_IRA
+		clr_country_flag = RUS_FEL
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pavel_milyukov_hog
+		set_country_flag = RUS_MILYU
+		add_political_power = 40
+		 add_popularity = {
+          			  ideology = market_liberalist
+          			  popularity = 0.2
+       			 }
+		}
+		option = { #SR ministers
+		name = rusd.68.b
+		ai_chance = { factor = 20 }
+		clr_country_flag = RUS_MILYU
+		clr_country_flag = RUS_IRA
+		clr_country_flag = RUS_FEL
+		remove_ideas_with_trait = head_of_government
+		add_ideas = lev_kamenev_hog
+		set_country_flag = RUS_LEV
+		add_political_power = -50
+		add_popularity = {
+        	  	  ideology = social_liberalist
+            		popularity = 0.2
+       			 }
+		
+		}
+
+	option = { 
+		name = rusd.68.c
+		ai_chance = { factor = 35 }
+		clr_country_flag = RUS_MILYU
+		clr_country_flag = RUS_FEL
+		clr_country_flag = RUS_IRA
+		 country_event = { id = rusd.69 days = 1 } 
+}
+		option = { #Autocratic ministers
+		name = rusd.61.e
+		ai_chance = { factor = 10 }
+		hidden_effect = { country_event = { id = russia.19 days = 1 } }
+		clr_country_flag = RUS_MILYU
+		clr_country_flag = RUS_DMI
+		clr_country_flag = RUS_DEN
+		clr_country_flag = RUS_IRA
+		add_political_power = -250
+		clr_country_flag = RUS_CON_MON
+		add_popularity = { ideology = paternal_autocratist popularity = 0.15 }
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		}
+}
+
+	country_event = { 	#conservative victory
+		id = rusd.69	
+		title = rusd.69.t
+		desc = rusd.69.d
+		is_triggered_only = yes 
+			
+		option = {  #SC ministers
+		name = rusd.69.a
+		ai_chance = { factor = 60 }
+		set_country_flag = RUS_TRUB
+		remove_ideas_with_trait = head_of_government
+		add_ideas = nikolai_trubetskoy_hog	
+		add_political_power = 20
+		add_popularity = {
+        	  	  ideology = social_conservatist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #PA ministers
+		name = rusd.69.b
+		ai_chance = { factor = 40 }
+		set_country_flag = RUS_DEN
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		add_political_power = -25	
+		add_popularity = {
+        	  	  ideology = paternal_autocratist
+            		popularity = 0.2
+       			 }
+				}
+			
+			}
+
+country_event = { #The X Duma Elections Milyu
+		id = rusd.70	
+		title = rusd.68.t
+		desc = rusd.68.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_DEM_REP
+		has_country_flag = RUS_MILYU
+		date > 1942.4.1
+		date < 1942.5.1
+			}
+		mean_time_to_happen = { days = 2 }
+		option = { #liberal ministers
+		name = rusd.68.a
+		ai_chance = { factor = 45 }
+		 add_popularity = {
+          			  ideology = market_liberalist
+          			  popularity = 0.2
+       			 }
+		}
+		option = { 
+		name = rusd.70.b
+		ai_chance = { factor = 25 }
+		clr_country_flag = RUS_MILYU
+		country_event = { id = rusd.71 days = 1 } 
+		
+		}
+
+	option = { 
+		name = rusd.68.c
+		ai_chance = { factor = 25 }
+		clr_country_flag = RUS_MILYU
+		 country_event = { id = rusd.72 days = 1 } 
+}
+		option = { #Autocratic ministers
+		name = rusd.62.e
+		ai_chance = { factor = 5 }
+		country_event = { id = russia.10 days = 10 }
+		clr_country_flag = RUS_MILYU
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pyotr_wrangel_hog
+		set_country_flag = RUS_WRA
+		add_political_power = -300
+		clr_country_flag = RUS_DEM_REP
+		add_popularity = { ideology = national_populist popularity = 0.15 }
+		set_politics = {
+			ruling_party = national_populist
+			elections_allowed = no
+		}
+		}
+}
+country_event = { 	#socialist victory
+		id = rusd.71	
+		title = rusd.71.t
+		desc = rusd.71.d
+		is_triggered_only = yes 
+			
+		option = {  #SL ministers
+		name = rusd.71.a
+		ai_chance = { factor = 30 }
+		set_country_flag = RUS_LEV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = lev_kamenev_hog	
+		add_political_power = -20
+		add_popularity = {
+        	  	  ideology = social_liberalist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #SD ministers
+		name = rusd.71.b
+		ai_chance = { factor = 30 }
+		set_country_flag = RUS_IRA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = iraklij_tsereteliy_hog
+		add_political_power = -50	
+		add_popularity = {
+        	  	  ideology = social_democratist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #SYN ministers
+		name = rusd.71.c
+		ai_chance = { factor = 40 }
+		set_country_flag = RUS_BUKH
+		remove_ideas_with_trait = head_of_government
+		add_ideas = nikolai_bukharin_hog
+		add_political_power = -80	
+		add_popularity = {
+        	  	  ideology = syndicalist
+            		popularity = 0.2
+       			 }
+				}
+			
+			}
+
+	country_event = { 	#conservative victory
+		id = rusd.72	
+		title = rusd.69.t
+		desc = rusd.69.d
+		is_triggered_only = yes 
+			
+		option = {  #SC ministers
+		name = rusd.69.a
+		ai_chance = { factor = 80 }
+		set_country_flag = RUS_TRUB
+		remove_ideas_with_trait = head_of_government
+		add_ideas = nikolai_trubetskoy_hog	
+		add_political_power = 25
+		add_popularity = {
+        	  	  ideology = social_conservatist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #PA ministers
+		name = rusd.69.b
+		ai_chance = { factor = 20 }
+		set_country_flag = RUS_DEN
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		add_political_power = -25	
+		add_popularity = {
+        	  	  ideology = paternal_autocratist
+            		popularity = 0.2
+       			 }
+				}
+			
+			}
+
+country_event = { #The X Duma Elections Kamenev
+		id = rusd.73	
+		title = rusd.68.t
+		desc = rusd.68.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_DEM_REP
+		has_country_flag = RUS_LEV
+		date > 1942.4.1
+		date < 1942.5.1
+			}
+		mean_time_to_happen = { days = 2 }
+		option = { 
+		name = rusd.70.b
+		ai_chance = { factor = 50 }
+		country_event = { id = rusd.74 days = 1 } 
+		clr_country_flag = RUS_LEV
+		 
+		}
+		option = { 
+		name = rusd.68.a
+		ai_chance = { factor = 25 }
+		clr_country_flag = RUS_LEV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pavel_milyukov_hog
+		set_country_flag = RUS_MILYU
+		add_popularity = {
+          			  ideology = market_liberalist
+          			  popularity = 0.2
+       			 }
+		
+		}
+
+	option = { 
+		name = rusd.68.c
+		ai_chance = { factor = 10 }
+		clr_country_flag = RUS_LEV
+		 country_event = { id = rusd.75 days = 1 } 
+}
+		option = { #Autocratic ministers
+		name = rusd.62.e
+		ai_chance = { factor = 5 }
+		country_event = { id = russia.10 days = 10 }
+		clr_country_flag = RUS_LEV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pyotr_wrangel_hog
+		set_country_flag = RUS_WRA
+		add_political_power = -300
+		clr_country_flag = RUS_DEM_REP
+		add_popularity = { ideology = national_populist popularity = 0.15 }
+		set_politics = {
+			ruling_party = national_populist
+			elections_allowed = no
+		}
+		}
+}
+
+country_event = { 	#socialist victory
+		id = rusd.74	
+		title = rusd.71.t
+		desc = rusd.71.d
+		is_triggered_only = yes 
+			
+		option = {  #SL ministers
+		name = rusd.71.a
+		ai_chance = { factor = 35 }
+		set_country_flag = RUS_LEV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = lev_kamenev_hog	
+		add_political_power = -20
+		add_popularity = {
+        	  	  ideology = social_liberalist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #SD ministers
+		name = rusd.71.b
+		ai_chance = { factor = 35 }
+		set_country_flag = RUS_IRA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = iraklij_tsereteliy_hog
+		add_political_power = -50	
+		add_popularity = {
+        	  	  ideology = social_democratist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #SYN ministers
+		name = rusd.71.c
+		ai_chance = { factor = 35 }
+		set_country_flag = RUS_BUKH
+		remove_ideas_with_trait = head_of_government
+		add_ideas = nikolai_bukharin_hog
+		add_political_power = -80	
+		add_popularity = {
+        	  	  ideology = syndicalist
+            		popularity = 0.2
+       			 }
+				}
+			
+			}
+
+country_event = { 	#conservative victory
+		id = rusd.75	
+		title = rusd.69.t
+		desc = rusd.69.d
+		is_triggered_only = yes 
+			
+		option = {  #SC ministers
+		name = rusd.69.a
+		ai_chance = { factor = 50 }
+		set_country_flag = RUS_TRUB
+		remove_ideas_with_trait = head_of_government
+		add_ideas = nikolai_trubetskoy_hog	
+		add_political_power = 25
+		add_popularity = {
+        	  	  ideology = social_conservatist
+            		popularity = 0.2
+       			 }
+				}
+		option = { #PA ministers
+		name = rusd.69.b
+		ai_chance = { factor = 50 }
+		set_country_flag = RUS_DEN
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		add_political_power = -25	
+		add_popularity = {
+        	  	  ideology = paternal_autocratist
+            		popularity = 0.2
+       			 }
+				}
+			
+			}
+country_event = { #The X Duma Elections Bukharin
+		id = rusd.76	
+		title = rusd.68.t
+		desc = rusd.76.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_DEM_REP
+		has_country_flag = RUS_BUKH
+		date > 1942.4.1
+		date < 1942.5.1
+			}
+		mean_time_to_happen = { days = 2 }
+		option = { 
+		name = rusd.76.a
+		ai_chance = { factor = 60 }
+		country_event = { id = rusd.77 days = 1 } 
+
+		 
+		}
+		option = { 
+		name = rusd.76.b
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		add_popularity = {
+          			  ideology = syndicalist
+          			  popularity = 0.05
+       			 }
+		add_popularity = {
+          			  ideology = social_liberalist
+          			  popularity = 0.05
+       			 }
+		add_popularity = {
+          			  ideology = social_democratist
+          			  popularity = 0.05
+       			 }
+		
+		}
+
+	
+		option = { #monarchy
+		name = rusd.76.c
+		clr_country_flag = RUS_BUKH
+		clr_country_flag = RUS_DEM_REP
+		country_event = { id = rusd.78 days = 1 } 
+		}
+		option = { #Autocratic ministers
+		name = rusd.76.e
+		ai_chance = { factor = 5 }
+		country_event = { id = russia.10 days = 10 }
+		clr_country_flag = RUS_BUKH
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pyotr_wrangel_hog
+		set_country_flag = RUS_WRA
+		add_political_power = -300
+		clr_country_flag = RUS_DEM_REP
+		add_popularity = { ideology = national_populist popularity = 0.15 }
+		set_politics = {
+			ruling_party = national_populist
+			elections_allowed = no
+		}
+		RUS = { country_event = { id = russia.1917 } } 
+		}
+}
+country_event = { #Syndicalist coup
+	id = rusd.77
+	title = rusd.77.t	
+	desc = rusd.77.d
+	is_triggered_only = yes
+
+	option = {
+		name = rusd.77.a
+		 hidden_effect = { SOV = { annex_country = { target = RUS transfer_troops = yes } }
+        	every_state = { limit = { is_core_of = RUS } SOV = { add_state_core = PREV } }
+        	every_state = { limit = { is_claimed_by = RUS } SOV = { add_state_claim = PREV } }
+       	 every_state = { limit = { is_core_of = RUS } remove_core_of = RUS }
+       	 every_state = { limit = { is_claimed_by = RUS NOT = { is_core_of = RUS } } remove_claim_by = RUS }
+        	SOV = { change_tag_from = RUS }
+        	SOV = { country_event = { id = russia.1950 } } 
+			}
+    		    		}	
+		}
+	country_event = { #Anti-Bolshevik coup
+		id = rusd.78
+		title = rusd.78.t
+		desc = rusd.78.d
+		is_triggered_only = yes		
+		option = { 
+		name = rusd.78.a
+		ai_chance = { factor = 50 }
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = market_liberalist
+			elections_allowed = no
+		}
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		set_country_flag = RUS_CON_MON
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pavel_milyukov_hog
+		set_country_flag = RUS_MILYU
+		RUS = { country_event = { id = russia.1919 } } 
+				}
+
+		option = { 
+		name = rusd.78.b
+		ai_chance = { factor = 50 }
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		set_country_flag = RUS_DEN
+		RUS = { country_event = { id = russia.1918 } } 
+				}
+		}
+
+country_event = { #The X Duma Elections Trub
+		id = rusd.79	
+		title = rusd.68.t
+		desc = rusd.68.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_DEM_REP
+		has_country_flag = RUS_TRUB
+		date > 1942.4.1
+		date < 1942.5.1
+			}
+		mean_time_to_happen = { days = 2 }
+		option = { 
+		name = rusd.79.a
+		ai_chance = { factor = 40 }
+			add_popularity = { #SC ministers
+          			  ideology = social_conservatist
+          			  popularity = 0.2
+       			 }
+			add_political_power = 50
+		
+		}
+		option = { #AD ministers
+		name = rusd.79.b 
+		ai_chance = { factor = 30 }
+		clr_country_flag = RUS_TRUB
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		set_country_flag = RUS_DEN
+		add_popularity = {
+          			  ideology = authoritarian_democratist
+          			  popularity = 0.2
+       			 }
+		add_political_power = -50
+		
+		}
+
+	option = { #liberal ministers
+		name = rusd.79.c
+		ai_chance = { factor = 25 }
+		clr_country_flag = RUS_TRUB
+		remove_ideas_with_trait = head_of_government
+		add_ideas = pavel_milyukov_hog
+		set_country_flag = RUS_MILYU
+		add_popularity = {
+          			  ideology = market_liberalist
+          			  popularity = 0.2
+       			 }
+		
+		}
+		option = { #Autocratic ministers
+		name = rusd.62.e
+		ai_chance = { factor = 5 }
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Kyril_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		add_political_power = -200
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = anton_denikin_hog
+		set_country_flag = RUS_DEN
+		clr_country_flag = RUS_TRUB
+		clr_country_flag = RUS_DEM_REP
+		}
+}
+country_event = { #The Presidental Elections of 1942
+		id = rusd.80
+		title = rusd.80.t
+		desc = rusd.80.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_ARI_REP
+		date > 1942.6.1
+		date < 1942.7.1
+			}
+		mean_time_to_happen = { days = 4 }
+		option = { #liberal ministers
+		name = rusd.65.a
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		set_politics = {
+			ruling_party = social_liberalist
+			elections_allowed = no	
+			}
+		add_popularity = { ideology = social_liberalist popularity = 0.1 }
+		}
+		option = { 
+		name = rusd.65.b
+		ai_chance = { factor = 35 }
+		add_political_power = -30
+		create_country_leader = {
+			name = "Vasily Maklakov"
+			desc = "POLITICS_DMITRI_ROMANOV_DESC"
+			picture = "Portrait_Soviet_Dmitri_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = market_liberalist
+			elections_allowed = no	
+			}
+		add_popularity = {
+        	  	  ideology = market_liberalist
+            		popularity = 0.1
+       			 }
+		
+		}
+
+option = { 
+		name = rusd.80.c
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		create_country_leader = {	
+			name = "Alexei Archangelsky"
+			desc = "POLITICS_DMITRI_ROMANOV_DESC"
+			picture = "Portrait_Soviet_Dmitri_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no	
+			}
+		add_popularity = {
+           		 ideology = paternal_autocratist
+          		  popularity = 0.1
+        }
+}
+		option = { 
+		name = rusd.65.e
+		ai_chance = { factor = 10 }
+		add_political_power = -80
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		add_popularity = {
+           		 ideology = syndicalist
+          		  popularity = 0.1
+			}
+		}
+	}
+country_event = { #The Presidental Elections of 1943
+		id = rusd.81
+		title = rusd.81.t
+		desc = rusd.81.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_DEM_REP
+		date > 1943.6.1
+		date < 1943.7.1
+			}
+		mean_time_to_happen = { days = 4 }
+		option = { #liberal ministers
+		name = rusd.65.a
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		set_politics = {
+			ruling_party = social_liberalist
+			elections_allowed = no	
+			}
+		add_popularity = { ideology = social_liberalist popularity = 0.1 }
+		}
+		option = { 
+		name = rusd.65.b
+		ai_chance = { factor = 35 }
+		add_political_power = -30
+		create_country_leader = {
+			name = "Vasily Maklakov"
+			desc = "POLITICS_DMITRI_ROMANOV_DESC"
+			picture = "Portrait_Soviet_Dmitri_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = market_liberalist
+			elections_allowed = no	
+			}
+		add_popularity = {
+        	  	  ideology = market_liberalist
+            		popularity = 0.1
+       			 }
+		
+		}
+
+option = { 
+		name = rusd.80.c
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		create_country_leader = {	
+			name = "Alexei Archangelsky"
+			desc = "POLITICS_DMITRI_ROMANOV_DESC"
+			picture = "Portrait_Soviet_Dmitri_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no	
+			}
+		add_popularity = {
+           		 ideology = paternal_autocratist
+          		  popularity = 0.1
+        }
+}
+		option = { 
+		name = rusd.65.e
+		ai_chance = { factor = 10 }
 		add_political_power = -80
 		set_politics = {
 			ruling_party = syndicalist

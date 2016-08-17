@@ -1,0 +1,310 @@
+focus_tree = {
+	id = soviet_focus
+
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = SOV
+		}
+	}
+	
+	default = no
+	
+#############
+###### Internal Politics #######
+#############
+
+
+focus = {
+		id = SOV_FRUNZE
+		icon = GFX_goal_support_communism
+		x = 0
+		y = 0
+		cost = 5
+		available = { has_war = no RUS = { exists = no } }
+		mutually_exclusive = { focus = SOV_SOVNARKOM focus = SOV_TUKH }
+		ai_will_do = {
+			factor = 40
+		}	
+		completion_reward = {
+			set_country_flag = unlock_soviet
+			country_event = { id = sovd.1 }
+		}
+	}
+	
+	focus = {
+		id = SOV_SOVNARKOM
+		icon = GFX_goal_support_communism
+		x = 2
+		y = 0
+		cost = 5
+		available = { has_war = no RUS = { exists = no } }
+		mutually_exclusive = { focus = SOV_FRUNZE focus = SOV_TUKH }
+		ai_will_do = {
+			factor = 30
+		}	
+		completion_reward = {
+			set_country_flag = unlock_soviet
+			country_event = { id = sovd.2 }
+			add_opinion_modifier = { target = FRA modifier = SOV_UNI } 
+			add_opinion_modifier = { target = ENG modifier = SOV_UNI } 
+			add_opinion_modifier = { target = BHC modifier = SOV_UNI } 
+			add_opinion_modifier = { target = CNT modifier = SOV_UNI } 
+			add_opinion_modifier = { target = SRI modifier = SOV_UNI } 
+			add_opinion_modifier = { target = GEO modifier = SOV_UNI } 
+			add_opinion_modifier = { target = MEX modifier = SOV_UNI } 
+		}
+	}
+	focus = {
+		id = SOV_TUKH
+		icon = GFX_goal_support_communism
+		x = 4
+		y = 0
+		cost = 5
+		available = { has_war = no RUS = { exists = no } }
+		mutually_exclusive = { focus = SOV_FRUNZE focus = SOV_SOVNARKOM }
+		ai_will_do = {
+			factor = 30
+		}	
+		completion_reward = {
+			set_country_flag = unlock_soviet
+			country_event = { id = sovd.3 }
+			add_opinion_modifier = { target = FRA modifier = SOV_INT } 
+			add_opinion_modifier = { target = ENG modifier = SOV_INT } 
+			add_opinion_modifier = { target = BHC modifier = SOV_INT } 
+			add_opinion_modifier = { target = CNT modifier = SOV_INT } 
+			add_opinion_modifier = { target = SRI modifier = SOV_INT } 
+			add_opinion_modifier = { target = GEO modifier = SOV_INT } 
+			add_opinion_modifier = { target = MEX modifier = SOV_INT } 
+		}
+	}
+	
+	
+	####Economic focuses####
+	
+	focus = {
+		id = SOV_ECO_START
+		icon = GFX_goal_generic_production
+		x = 9
+		y = 0
+		cost = 10
+		available = { has_country_flag = unlock_soviet }
+	
+		completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.7
+				uses = 2
+				category = industry
+			}
+		}
+	}
+		focus = {
+		id = SOV_COL_START
+		icon = GFX_goal_generic_soviet_construction
+		x = 8
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_ECO_START }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				} }
+		}
+			
+	}
+	focus = {
+		id = SOV_COL_FIRST
+		icon = GFX_goal_generic_production2
+		x = 8
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_COL_START }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 } 
+			random_owned_state = { add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} }
+				random_owned_state = { add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} }
+				
+		}
+			
+	}
+	focus = {
+		id = SOV_COL_LAST
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 8
+		y = 3
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_COL_FIRST }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+			random_owned_state = { add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} }
+				random_owned_state = { add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} }
+		}
+			
+	}
+	focus = {
+		id = SOV_COL_RAW
+		icon = GFX_goal_generic_trade
+		x = 7
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_COL_LAST }
+		completion_reward = {
+			random_owned_state = { add_resource = {
+				type = rubber
+				amount = 6 } } 
+			random_owned_state = { add_resource = {
+				type = steel
+				amount = 12 } } 
+			random_owned_state = { add_resource = {
+				type = oil
+				amount = 5 } }
+				add_ideas = SOV_COL_END
+			
+		}
+			
+	}
+	focus = {
+		id = SOV_COL_MIL
+		icon = GFX_goal_generic_small_arms
+		x = 9
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_COL_LAST }
+		completion_reward = {
+				add_ideas = SOV_COL_MILITIA
+		}
+			
+	}
+	focus = {
+		id = SOV_IND_START
+		icon = GFX_goal_support_communism
+		x = 10
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_ECO_START }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+				random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+				add_political_power = 50
+				country_event = { id = sovd.4 }
+		}
+	}
+	focus = {
+	id = SOV_IND_FIRST
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 10
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_IND_START }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				} } 
+				random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				} } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				} } 
+		}
+	}
+	focus = {
+	id = SOV_IND_LAST
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 10
+		y = 3
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_IND_FIRST }
+		completion_reward = {
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				} } 
+				random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				} } 
+			random_owned_state = { add_extra_state_shared_building_slots = 2 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				} } 
+		}
+	}
+	focus = {
+	id = SOV_IND_ARM
+		icon = GFX_goal_generic_soviet_construction
+		x = 9
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_IND_LAST }
+		completion_reward = {
+			add_ideas = SOV_IND_ARMY
+		}
+	}
+	}

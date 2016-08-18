@@ -26,14 +26,69 @@ focus = {
 		available = { has_war = no RUS = { exists = no } }
 		mutually_exclusive = { focus = SOV_SOVNARKOM focus = SOV_TUKH }
 		ai_will_do = {
-			factor = 40
+			factor = 30
 		}	
 		completion_reward = {
+			set_country_flag = SOV_FRU
 			set_country_flag = unlock_soviet
 			country_event = { id = sovd.1 }
 		}
 	}
-	
+	focus = {
+		id = FRUNZE_COUNCILS
+		icon = GFX_goal_generic_demand_territory
+		x = 0
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_FRUNZE }
+		completion_reward = {
+		add_political_power = 300
+		}
+	}
+	focus = {
+		id = FRUNZE_LANGUAGE
+		icon = GFX_focus_research
+		x = 0
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = FRUNZE_COUNCILS }
+		completion_reward = {
+		      add_ideas = SOV_RES_FRUNZE
+			  add_research_slot = 1
+		}
+	}
+	focus = {
+		id = FRUNZE_ARMY
+		icon = GFX_goal_generic_special_forces
+		x = 0
+		y = 3
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = FRUNZE_LANGUAGE }
+		completion_reward = {
+		   army_experience = 150
+		   add_tech_bonus = {
+				name = land_bonus
+				bonus = 0.5	
+				uses = 2
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = FRUNZE_CULTURE
+		icon = GFX_goal_anschluss
+		x = 0
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = FRUNZE_ARMY }
+		completion_reward = {
+		  add_ideas = SOV_CULTURE_FRUNZE
+		}
+	}
 	focus = {
 		id = SOV_SOVNARKOM
 		icon = GFX_goal_support_communism
@@ -47,6 +102,7 @@ focus = {
 		}	
 		completion_reward = {
 			set_country_flag = unlock_soviet
+			set_country_flag = SOV_UNION
 			country_event = { id = sovd.2 }
 			add_opinion_modifier = { target = FRA modifier = SOV_UNI } 
 			add_opinion_modifier = { target = ENG modifier = SOV_UNI } 
@@ -57,6 +113,63 @@ focus = {
 			add_opinion_modifier = { target = MEX modifier = SOV_UNI } 
 		}
 	}
+	focus = {
+		id = SOV_FILM
+		icon = GFX_goal_generic_radar
+		x = 2
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_SOVNARKOM }
+		completion_reward = {
+		  add_ideas = SOYUZMULTFILM
+		  add_political_power = 50
+		}
+	}
+	focus = {
+		id = SOV_ARMY
+		icon = GFX_goal_generic_army_doctrines
+		x = 2
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_FILM } 
+		completion_reward = {
+		  add_ideas = SOV_ARMY_RED
+		  add_tech_bonus = {
+				name = land_bonus
+				bonus = 0.2	
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = SOV_RES
+		icon = GFX_focus_research
+		x = 2
+		y = 3 
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_ARMY } 
+		completion_reward = {
+		  add_ideas = SOV_RES_SOV
+		 add_research_slot = 1
+			}
+		}
+		focus = {
+		id = SOV_REPUBLICS 
+		icon = GFX_goal_support_communism
+		x = 2
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_RES } 
+		completion_reward = {
+		  add_ideas = SOV_REPUB
+			}
+		}
+	
 	focus = {
 		id = SOV_TUKH
 		icon = GFX_goal_support_communism
@@ -70,17 +183,109 @@ focus = {
 		}	
 		completion_reward = {
 			set_country_flag = unlock_soviet
+			set_country_flag = SOV_REP
 			country_event = { id = sovd.3 }
-			add_opinion_modifier = { target = FRA modifier = SOV_INT } 
-			add_opinion_modifier = { target = ENG modifier = SOV_INT } 
-			add_opinion_modifier = { target = BHC modifier = SOV_INT } 
-			add_opinion_modifier = { target = CNT modifier = SOV_INT } 
-			add_opinion_modifier = { target = SRI modifier = SOV_INT } 
-			add_opinion_modifier = { target = GEO modifier = SOV_INT } 
-			add_opinion_modifier = { target = MEX modifier = SOV_INT } 
 		}
 	}
-	
+	focus = {
+		id = TUKH_DIP
+		icon = GFX_goal_anschluss
+		x = 4
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_TUKH } 
+		completion_reward = {
+		every_country = { limit = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist } }
+				add_opinion_modifier = { target = SOV modifier = SOV_INT } }
+									}
+		}
+		focus = {
+		id = TUKH_REV
+		icon = GFX_goal_generic_war_with_comintern
+		x = 4
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = TUKH_DIP } 
+		completion_reward = {
+				add_ideas = TUKH_REVOLT
+									}
+		}
+		focus = {
+		id = TUKH_RES
+		icon = GFX_goal_generic_scientific_exchange
+		x = 4
+		y = 3
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = TUKH_DIP } 
+		completion_reward = {
+		add_research_slot = 1
+		add_ideas = TUKH_SCI
+									}
+		}
+		focus = {
+		id = TUKH_UNI
+		icon = GFX_goal_generic_propaganda
+		x = 4
+		y = 4
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = TUKH_RES } 
+		completion_reward = {
+		add_ideas = TUKH_PROP 
+									}
+		}
+		focus = {
+		id = SOV_EXT_RES
+		icon = GFX_focus_research
+		x = 2
+		y = 5
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = TUKH_UNI focus = SOV_REPUBLICS focus = FRUNZE_CULTURE } 
+		completion_reward = {
+		add_research_slot = 1
+									}
+		}
+		focus = {
+		id = SOV_ROCK
+		icon = GFX_focus_rocketry
+		x = 1
+		y = 6
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_EXT_RES } 
+		mutually_exclusive = { focus = SOV_NUC }
+		completion_reward = {
+		add_tech_bonus = {
+				name = rocket_bonus
+				bonus = 0.5
+				uses = 2
+				category = rocketry
+			}
+									}
+		}
+		
+		focus = {
+		id = SOV_NUC
+		icon = GFX_focus_wonderweapons
+		x = 3
+		y = 6
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_EXT_RES } 
+		mutually_exclusive = { focus = SOV_ROCK }
+		completion_reward = {
+		add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear
+			}
+									}
+		}
 	
 	####Economic focuses####
 	
@@ -245,7 +450,7 @@ focus = {
 	}
 	focus = {
 	id = SOV_IND_FIRST
-		icon = GFX_goal_generic_construct_infrastructure
+		icon = GFX_goal_generic_construction
 		x = 10
 		y = 2
 		cost = 10
@@ -298,7 +503,7 @@ focus = {
 	focus = {
 	id = SOV_IND_ARM
 		icon = GFX_goal_generic_soviet_construction
-		x = 9
+		x = 11
 		y = 4
 		cost = 10
 		available = { always = yes }
@@ -307,4 +512,112 @@ focus = {
 			add_ideas = SOV_IND_ARMY
 		}
 	}
+	
+	####navy####
+	focus = {
+		id = SOV_NAV_START
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 14
+		y = 0
+		cost = 10
+		available = { has_country_flag = unlock_soviet }
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				technology = basic_battleship
+				technology = heavy_battleship
+			}
+			add_tech_bonus = {
+				name = ships_bonus
+				bonus = 0.5
+				uses = 1
+				category = naval_equipment
+			}			
+		}
+	}
+	
+	focus = {
+		id = SOV_NAV_CRUS
+		icon = GFX_goal_generic_navy_cruiser
+		x = 13
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_NAV_START }
+		completion_reward = {
+		country_event = { id = sovd.27 }
+		}
+	}
+	focus = {
+		id = SOV_NAV_BAT
+		icon = GFX_goal_generic_navy_battleship
+		x = 13
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_NAV_CRUS }
+		completion_reward = {
+		country_event = { id = sovd.28 }
+		}
+	}
+	focus = {
+		id = SOV_NAV_BAS
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 15
+		y = 1
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_NAV_START }
+		completion_reward = {
+		random_owned_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				}
+				random_owned_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+		}
+	}
+	}
+	focus = {
+		id = SOV_NAV_DOC
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 15
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_NAV_BAS }
+		completion_reward = {
+		add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5
+				uses = 2
+				category = naval_doctrine
+			}			
+		}
 	}

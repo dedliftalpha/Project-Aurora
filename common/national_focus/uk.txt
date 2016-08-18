@@ -420,11 +420,12 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = -200
 			release_puppet = WAL
-			add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
 			release_puppet = SCT
-			add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
-			
+			hidden_effect = {
+				add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
+				add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
 			}
+		}
 	}
 	
 	# Internal
@@ -442,10 +443,12 @@ focus_tree = {
 			add_political_power = -200
 			release = WAL
 			puppet = WAL
-			add_opinion_modifier = { target = WAL modifier = ENG_three_under_one_op }
 			release = SCT
 			puppet = SCT
-			add_opinion_modifier = { target = SCT modifier = ENG_three_under_one_op }
+			hidden_effect = {
+				add_opinion_modifier = { target = WAL modifier = ENG_three_under_one_op }
+				add_opinion_modifier = { target = SCT modifier = ENG_three_under_one_op }
+			}
 		}
 	}
 	
@@ -699,12 +702,12 @@ focus_tree = {
 		id = ENG_expand_army
 		icon = GFX_goal_generic_allies_build_infantry
 		prerequisite = { focus = ENG_officer_corps_academy focus = ENG_officer_corps_experience }
-		available = { }
+		available = {  }
 		x = 13
 		y = 5
 		cost = 10
 		
-		completion_reward = {	
+		completion_reward = {
 		}
 	}
 	
@@ -727,8 +730,8 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_build_airforce
-		icon = GFX_goal_generic_build_airforce
+		id = ENG_red
+		icon = GFX_goal_generic_special_forces
 		prerequisite = { focus = ENG_expand_army }
 		available = { }
 		x = 12
@@ -740,8 +743,8 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_build_tank
-		icon = GFX_goal_generic_build_tank
+		id = ENG_bomber_harris
+		icon = GFX_goal_generic_occupy_start_war
 		prerequisite = { focus = ENG_expand_army }
 		available = { }
 		x = 14
@@ -852,6 +855,8 @@ focus_tree = {
 		}
 	}
 	
+	# Show of Force
+	
 	focus = {
 		id = ENG_show_of_force
 		icon = GFX_goal_generic_occupy_states_coastal
@@ -862,6 +867,45 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			add_political_power = 50
+			ENG = {
+				country_event = { id = uob.15 days = 14 }
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_show_of_force_diplo
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ENG_show_of_force }
+		mutually_exclusive = { focus = ENG_show_of_force_aggro }
+		available = { }
+		x = 18
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+			hidden_effect = {
+				ENG = {
+					country_event = { id = 45 days = 1 }
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_show_of_force_aggro
+		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = ENG_show_of_force }
+		mutually_exclusive = { focus = ENG_show_of_force_diplo }
+		available = { }
+		x = 20
+		y = 4
+		cost = 10
+		
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = IRE }
+			create_wargoal = { type = puppet_wargoal_focus target = IRE }
 		}
 	}
 	
@@ -902,7 +946,7 @@ focus_tree = {
 	focus = {
 		id = ENG_expand_army2
 		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_build_airforce focus = ENG_build_tank }
+		prerequisite = { focus = ENG_red focus = ENG_bomber_harris }
 		available = { has_war = yes }
 		x = 13
 		y = 7
@@ -1210,162 +1254,3 @@ focus_tree = {
 		
 		}
 	}
-	
-	
-	
-	###################
-	### Show of Force
-	###################
-
-	# Finish the RNS Rebecca
-	
-	focus = {
-		id = ENG_finish_rns_rebecca
-		icon = GFX_goal_generic_build_navy
-		x = 32
-		y = 0
-		cost = 10
-		
-		completion_reward = {
-		
-		### Todo
-		# Remove the Rebecca from the beginning OOB
-		# Make the focus actually build the Rebecca
-		
-			add_tech_bonus = {
-				name = cv_bonus
-				bonus = 0.50
-				uses = 1
-				category = cv_tech
-			}
-		}		
-	}
-	
-	### Where should we send the Navy?
-	
-	# Keep the Navy at home
-	
-	focus = {
-		id = ENG_force_territorial_waters
-		icon = GFX_goal_generic_navy_carrier
-		prerequisite = { focus = ENG_finish_rns_rebecca }
-		mutually_exclusive = { focus = ENG_force_ireland focus = ENG_force_iceland_azores }
-		available = { }
-			
-		x = 30
-		y = 1
-		cost = 10
-		
-		completion_reward = {
-			hidden_effect = { set_country_flag = force_territorial_waters }
-			navy_experience = 100		
-		}
-	}
-	
-	# Send the Navy towards Ireland
-		
-	focus = {
-		id = ENG_force_ireland
-		icon = GFX_goal_generic_navy_carrier
-		prerequisite = { focus = ENG_finish_rns_rebecca }
-		mutually_exclusive = { focus = ENG_force_territorial_waters focus = ENG_force_iceland_azores }
-		available = { }
-		
-		x = 32
-		y = 1
-		cost = 10
-		
-		completion_reward = {
-		hidden_effect = { set_country_flag = force_ireland }		
-		}
-	}
-	
-	# Split the Navy and send it to Iceland and the Azores
-	
-	focus = {
-		id = ENG_force_iceland_azores
-		icon = GFX_goal_generic_navy_carrier
-		prerequisite = { focus = ENG_finish_rns_rebecca }
-		mutually_exclusive = { focus = ENG_force_territorial_waters focus = ENG_force_ireland }
-		available = { }
-		
-		x = 34
-		y = 1
-		cost = 10
-		
-		completion_reward = {
-			hidden_effect = { set_country_flag = force_ireland_azores }
-			navy_experience = 50		
-		}
-	}
-	
-	# Invade Ireland
-	
-	focus = {
-		id = ENG_invade_ireland
-		icon = GFX_goal_generic_occupy_states_coastal
-		prerequisite = { focus = ENG_force_ireland }
-		cancel_if_invalid = yes
-		
-		x = 32
-		y = 2
-		cost = 10
-		
-		completion_reward = {
-		create_wargoal = {
-				type = puppet_wargoal_focus
-				target = IRE
-			}
-		# hidden_effect = { remove_country_flag = force_ireland }
-
-		### Todo
-		# How do remove country flag? :/
-		
-		}
-	}
-	
-	### Todo
-	# Canada: Guarantee - Pull back
-	# Germany: Guarantee - Pull back
-	
-	### What should we do with Ireland?
-	
-	# Puppet Ireland
-	
-	focus = {
-		id = ENG_puppet_ireland
-		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = ENG_invade_ireland }
-		mutually_exclusive = { focus = ENG_annex_ireland }
-		
-		x = 31
-		y = 3
-		cost = 10
-		
-		completion_reward = {
-
-		}
-	}
-	
-	# Annex Ireland
-	
-	focus = {
-		id = ENG_annex_ireland
-		icon = GFX_goal_generic_military_sphere
-		prerequisite = { focus = ENG_invade_ireland }
-		mutually_exclusive = { focus = ENG_puppet_ireland }
-		
-		x = 33
-		y = 3
-		cost = 10
-		
-		completion_reward = {
-	
-	### Todo
-	# Ireland: Annexion Event
-
-		}
-	}
-	
-	### Todo
-	# CSA: Demand release of Ireland

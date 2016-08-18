@@ -1,5 +1,9 @@
 ﻿add_namespace = uob
 
+##################
+### Trade Union Congress
+##################
+
 ### Policy choices
 
 # Economic policy
@@ -148,9 +152,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.6.a
@@ -205,9 +207,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.7.a
@@ -265,9 +265,7 @@ country_event = {
 		}
 	}
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.8.a
@@ -327,9 +325,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.9.a
@@ -453,9 +449,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.10.a
@@ -558,9 +552,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.11.a
@@ -663,9 +655,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 10
-	}
+	mean_time_to_happen = { days = 7 }
 	
 	option = {
 		name = uob.12.a
@@ -727,9 +717,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	mean_time_to_happen = {
-		days = 60
-	}
+	mean_time_to_happen = { days = 60 }
 	
 	option = {
 		name = uob.13.a
@@ -859,3 +847,857 @@ country_event = {
 		}
 	}
 }
+
+####################
+### Show of Force
+####################
+
+# Where to send the Fleet?
+
+country_event = {
+	id = uob.15
+	title = uob.15.t
+	desc = uob.15.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.15.a
+		navy_experience = 25
+	}
+	option = {
+		name = uob.15.b
+		navy_experience = 50
+		IRE = {
+			country_event = { id = uob.16 days = 14 }
+			add_opinion_modifier = {
+				target = ENG modifier = ENG_show_of_force_op
+			}
+		}
+	}
+	option = {
+		name = uob.15.c
+		navy_experience = 50
+		hidden_effect = {
+			GER = {
+				country_event = { id = uob.28 days = 14 }
+				add_opinion_modifier = {
+					target = ENG modifier = ENG_show_of_force_op
+				}
+			}
+			CAN = {
+				country_event = { id = uob.25 days = 14 }
+				add_opinion_modifier = {
+					target = ENG modifier = ENG_show_of_force_op
+				}
+			}
+		}
+	}
+}
+
+# Ireland can ask for protection
+
+country_event = {
+	id = uob.16
+	title = uob.16.t
+	desc = uob.16.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.16.a
+	}
+	option = {
+		name = uob.16.b
+		GER = {
+			country_event = { id = uob.21 days = 7 }
+		}
+	}
+	option = {
+		name = uob.16.c
+		CAN = {
+			country_event = { id = uob.17 days = 7 }
+		}
+	}
+}
+
+### Canada
+
+country_event = {
+	id = uob.17
+	title = uob.17.t
+	desc = uob.17.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.17.a
+		hidden_effect = {
+			ENG = {
+				news_event = { id = uob.18 days = 3 }
+				set_country_flag = ENG_CAN_protection
+				add_political_power = -50
+			}
+			IRE = {
+				news_event = { id = uob.18 days = 3 }
+			}
+		}
+	}
+	option = {
+		name = uob.17.b
+		hidden_effect = {
+			set_country_flag = ENG_show_of_force_support
+			ENG = {
+				news_event = { id = uob.19 days = 3 }
+				set_country_flag = ENG_CAN_support
+				create_wargoal = { type = annex_everything target = IRE }
+				add_political_power = -25
+			}
+			IRE = {
+				news_event = { id = uob.19 days = 3 }
+			}
+		}
+	}
+	option = {
+		name = uob.17.c
+		hidden_effect = {
+			ENG = {
+				news_event = { id = uob.20 days = 3 }
+				create_wargoal = { type = annex_everything target = IRE }
+				add_political_power = 50
+			}
+			IRE = {
+				news_event = { id = uob.20 days = 3 }
+			}
+		}
+	}
+}
+
+# Canada protects Ireland
+
+news_event = {
+	id = uob.18
+	title = uob.18.t
+	desc = uob.18.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.18.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.18.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+# Canada supports Ireland
+
+news_event = {
+	id = uob.19
+	title = uob.19.t
+	desc = uob.19.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.19.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.19.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+# Canada abandons Ireland
+
+news_event = {
+	id = uob.20
+	title = uob.20.t
+	desc = uob.20.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.20.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.20.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+### Germany
+
+country_event = {
+	id = uob.21
+	title = uob.21.t
+	desc = uob.21.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.21.a
+		hidden_effect = {
+			IRE = {
+				news_event = { id = uob.22 days = 3 }
+			}
+			ENG = {
+				news_event = { id = uob.22 days = 3 }
+				set_country_flag = ENG_GER_protection
+				add_political_power = -50
+			}
+		}
+	}
+	option = {
+		name = uob.21.b
+		hidden_effect = {
+			ENG = {
+				news_event = { id = uob.23 days = 3 }
+				set_country_flag = ENG_GER_support
+				create_wargoal = { type = annex_everything target = IRE }
+				add_political_power = -25
+			}
+			IRE = {
+				news_event = { id = uob.23 days = 3 }
+			}
+		}
+	}
+	option = {
+		name = uob.21.c
+		hidden_effect = {
+			ENG = {
+				news_event = { id = uob.24 days = 3 }
+				set_country_flag = ENG_show_of_force_aggro
+				create_wargoal = { type = annex_everything target = IRE }
+				add_political_power = 50
+			}
+			IRE = {
+				news_event = { id = uob.24 days = 3 }
+			}
+		}
+	}
+}
+
+# Germany protects Ireland
+
+news_event = {
+	id = uob.22
+	title = uob.22.t
+	desc = uob.22.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.22.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.22.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+# Germany supports Ireland
+
+news_event = {
+	id = uob.23
+	title = uob.23.t
+	desc = uob.23.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.23.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.23.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+# Germany abandons Ireland
+
+news_event = {
+	id = uob.24
+	title = uob.24.t
+	desc = uob.24.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.24.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	option = {
+		name = uob.24.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+### Iceland & Azores
+
+### Canada
+
+country_event = {
+	id = uob.25
+	title = uob.25.t
+	desc = uob.25.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.25.a
+		news_event = { id = uob.26 days = 3 }
+		ENG = {
+			add_opinion_modifier = { target = CAN modifier = ENG_show_of_force_op }
+		}
+	}
+	option = {
+		name = uob.26.b
+		news_event = { id = uob.27 days = 3 }
+	}
+}
+
+# Royal Navy on the Atlantic
+
+news_event = {
+	id = uob.26
+	title = uob.26.t
+	desc = uob.26.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.26.a
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.26.b
+		trigger = {
+			tag = FRA
+		}
+	}
+}
+
+# Canadians cower
+
+news_event = {
+	id = uob.27
+	title = uob.27.t
+	desc = uob.27.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.27.a
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.27.b
+		trigger = {
+			tag = FRA
+		}
+	}
+}
+
+### Germany
+
+country_event = {
+	id = uob.28
+	title = uob.28.t
+	desc = uob.28.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.28.a
+		news_event = { id = uob.26 days = 3 }
+		ENG = {
+			add_opinion_modifier = { target = GER modifier = ENG_show_of_force_op }
+		}
+	}
+	option = {
+		name = uob.28.b
+		news_event = { id = uob.27 days = 3 }
+	}
+}
+
+# Hochseeflotte on the Atlantic
+
+news_event = {
+	id = uob.29
+	title = uob.29.t
+	desc = uob.29.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.29.a
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.29.b
+		trigger = {
+			tag = FRA
+		}
+	}
+}
+
+# Germans cower
+
+news_event = {
+	id = uob.30
+	title = uob.30.t
+	desc = uob.30.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.30.a
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.30.b
+		trigger = {
+			tag = FRA
+		}
+	}
+}
+
+### The Invasion of Ireland - Canada / Protection
+
+# Canadian reaction
+
+country_event = {
+	id = uob.31
+	title = uob.31.t
+	desc = uob.31.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = CAN
+		ENG = {
+			has_country_flag = ENG_CAN_protection
+			has_offensive_war_with = IRE
+		}
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.31.a
+		ENG = {
+			country_event = { id = uob.32 days = 3 }
+		}
+		add_political_power = 50
+		hidden_effect = {
+			clr_country_flag = ENG_CAN_protection
+			news_event = { id = uob.34 days = 3 }
+		}
+	}
+	option = {
+		name = uob.31.b
+		add_political_power = -50
+		hidden_effect = {
+			clr_country_flag = ENG_CAN_protection
+			news_event = { id = uob.35 days = 3 }
+		}
+	}
+}
+
+# British reaction
+
+country_event = {
+	id = uob.32
+	title = uob.32.t
+	desc = uob.32.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.32.a
+		white_peace = IRE
+		hidden_effect = {
+			news_event = { id = uob.35 days = 1 }
+		}
+	}
+	option = {
+		name = uob.32.b
+		add_political_power = -50
+		hidden_effect = {
+			CAN = {
+				country_event = { id = uob.33 days = 3 }
+			}
+		}
+	}
+}
+
+# Canadian reaction
+
+country_event = {
+	id = uob.33
+	title = uob.33.t
+	desc = uob.33.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.33.a
+		add_to_faction = IRE
+	}
+	option = {
+		name = uob.33.b
+		add_political_power = -50
+		news_event = { id = uob.36 days = 3 }
+	}
+}
+
+# News - Canadian Ultimatum
+
+news_event = {
+	id = uob.34
+	title = uob.34.t
+	desc = uob.34.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.34.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Britain pulls back
+
+news_event = {
+	id = uob.35
+	title = uob.35.t
+	desc = uob.35.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.35.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.35.b
+		trigger = {
+			tag = CAN
+		}
+	}
+}
+
+# News - Canada backs up
+
+news_event = {
+	id = uob.36
+	title = uob.36.t
+	desc = uob.36.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.36.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+### The Invasion of Ireland - Germany / Protection
+
+# German reaction
+
+country_event = {
+	id = uob.37
+	title = uob.37.t
+	desc = uob.37.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = GER
+		ENG = {
+			has_country_flag = ENG_GER_protection
+			has_offensive_war_with = IRE
+		}
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.37.a
+		ENG = {
+			country_event = { id = uob.38 days = 3 }
+		}
+		add_political_power = 50
+		hidden_effect = {
+			clr_country_flag = ENG_GER_protection
+			news_event = { id = uob.40 days = 3 }
+		}
+	}
+	option = {
+		name = uob.37.b
+		add_political_power = -50
+		hidden_effect = {
+			clr_country_flag = ENG_GER_protection
+			news_event = { id = uob.42 days = 3 }
+		}
+	}
+}
+
+# British reaction
+
+country_event = {
+	id = uob.38
+	title = uob.38.t
+	desc = uob.38.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.38.a
+		white_peace = IRE
+		hidden_effect = {
+			news_event = { id = uob.41 days = 1 }
+		}
+	}
+	option = {
+		name = uob.38.b
+		add_political_power = -50
+		hidden_effect = {
+			GER = {
+				country_event = { id = uob.39 days = 3 }
+			}
+		}
+	}
+}
+
+# German reaction
+
+country_event = {
+	id = uob.39
+	title = uob.39.t
+	desc = uob.39.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.39.a
+		add_to_faction = IRE
+	}
+	option = {
+		name = uob.39.b
+		add_political_power = -50
+		news_event = { id = uob.42 days = 3 }
+	}
+}
+
+# News - German Ultimatum
+
+news_event = {
+	id = uob.40
+	title = uob.40.t
+	desc = uob.40.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.40.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Britain pulls back
+
+news_event = {
+	id = uob.41
+	title = uob.41.t
+	desc = uob.41.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.41.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.41.b
+		trigger = {
+			tag = GER
+		}
+	}
+}
+
+# News - Germany backs up
+
+news_event = {
+	id = uob.42
+	title = uob.42.t
+	desc = uob.42.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.42.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# The Invasion of Ireland - Canada / Support
+
+country_event = {
+	id = uob.43
+	title = uob.43.t
+	desc = uob.43.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = CAN
+		ENG = {
+			has_country_flag = ENG_CAN_protection
+			has_offensive_war_with = IRE
+		}
+	}
+	
+	mean_time_to_happen = { days = 14 }
+	
+	option = {
+		name = uob.43.a
+		ENG = {
+			country_event = { id = uob.32 days = 3 }
+		}
+		add_political_power = -100
+		hidden_effect = {
+			clr_country_flag = ENG_show_of_force_support
+			news_event = { id = uob.34 days = 3 }
+		}
+	}
+	option = {
+		name = uob.43.b
+		add_political_power = -50
+		hidden_effect = {
+			clr_country_flag = ENG_show_of_force_support
+			news_event = { id = uob.35 days = 3 }
+		}
+	}
+}
+
+# The Invasion of Ireland - Germany / Support
+
+country_event = {
+	id = uob.44
+	title = uob.44.t
+	desc = uob.44.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = GER
+		ENG = {
+			has_country_flag = ENG_show_of_force_support
+			has_offensive_war_with = IRE
+		}
+	}
+	
+	mean_time_to_happen = { days = 14 }
+	
+	option = {
+		name = uob.44.a
+		ENG = {
+			country_event = { id = uob.38 days = 3 }
+		}
+		add_political_power = -100
+		hidden_effect = {
+			clr_country_flag = ENG_show_of_force_support
+			news_event = { id = uob.40 days = 3 }
+		}
+	}
+	option = {
+		name = uob.44.b
+		add_political_power = -50
+		hidden_effect = {
+			clr_country_flag = ENG_show_of_force_support
+			news_event = { id = uob.42 days = 3 }
+		}
+	}
+}
+
+### Diplomatic campaign against Ireland

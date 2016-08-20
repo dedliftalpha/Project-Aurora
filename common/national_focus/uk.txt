@@ -45,8 +45,12 @@ focus_tree = {
 		
 		completion_reward = {
 			ENG = {
-				country_event = { id = uob.1 }
 				custom_effect_tooltip = ENG_congress_vote
+			}
+			hidden_effect = {
+				ENG = {
+					country_event = { id = uob.1 }
+				}
 			}
 		}
 	}
@@ -63,9 +67,13 @@ focus_tree = {
 		
 		completion_reward = {
 			ENG = {
-				country_event = { id = uob.2 }
 				custom_effect_tooltip = ENG_congress_vote
-			}	
+			}
+			hidden_effect = {
+				ENG = {
+					country_event = { id = uob.2 }
+				}
+			}
 		}
 	}
 	
@@ -109,8 +117,12 @@ focus_tree = {
 		
 		completion_reward = {
 			ENG = {
-				country_event = { id = uob.3 }
 				custom_effect_tooltip = ENG_congress_vote
+			}
+			hidden_effect = {
+				ENG = {
+					country_event = { id = uob.4 }
+				}
 			}
 		}
 	}
@@ -127,8 +139,12 @@ focus_tree = {
 		
 		completion_reward = {
 			ENG = {
-				country_event = { id = uob.4 }
 				custom_effect_tooltip = ENG_congress_vote
+			}
+			hidden_effect = {
+				ENG = {
+					country_event = { id = uob.5 }
+				}
 			}
 		}
 	}
@@ -494,9 +510,6 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -50
-			set_politics = {
-				ruling_party = totalist
-			}
 		}
 	}	
 	
@@ -572,10 +585,12 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-			add_political_power = -200
+			army_experience = 100
+			add_political_power = -100
 			
 			### Todo
 			# division_template?
+			# Kill officers
 			
 		}
 	}
@@ -606,18 +621,35 @@ focus_tree = {
 		id = ENG_experience_exchange_instruction
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_mosley_idea }
+		available = { has_idea = ENG_tuc_military_mosley_idea has_country_flag = ENG_defecting_officers }
 		x = 12
 		y = 2
 		cost = 5
 		
 		completion_reward = {
-			add_political_power = -100
+			custom_effect_tooltip = ENG_eei_tp
 			army_experience = 100
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
+			navy_experience = 50
+			add_political_power = -100
+			hidden_effect = {
+				create_corps_commander = { ### Noble War Hero
+					name = "Harold Alexander"
+					picture = "Portrait_Britain_Harold_Alexander.dds"
+					traits = {  }
+					skill = 5
+				}
+				create_corps_commander = {
+					name = "Thomas Jacomb Hutton"
+						picture = "Portrait_Britain_Thomas_Jacomb_Hutton.dds"
+					traits = {  }
+					skill = 2
+				}
+				create_navy_leader = {
+					name = "Algernon Willis"
+						picture = "Portrait_Britain_Algernon_Willis.dds"
+					traits = { spotter }
+					skill = 3
+				}
 			}
 		}
 	}
@@ -626,13 +658,17 @@ focus_tree = {
 		id = ENG_good_riddance
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_glaise_idea }
+		available = { has_idea = ENG_tuc_military_glaise_idea has_country_flag = ENG_defecting_officers }
 		x = 14
 		y = 2
 		cost = 5
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_good_riddance_tp
 			add_political_power = 100
+			hidden_effect = {
+				clr_country_flag = ENG_defecting_officers
+			}
 		}
 	}
 	
@@ -640,13 +676,29 @@ focus_tree = {
 		id = ENG_officer_recall_vote
 		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_fem_idea }
+		available = { has_idea = ENG_tuc_military_fem_idea has_country_flag = ENG_defecting_officers }
 		x = 13
 		y = 3
 		cost = 5
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_officer_recall_vote_tp
 			army_experience = 50
+			navy_experience = 50
+			hidden_effect = {
+				create_corps_commander = { ### Noble War Hero
+					name = "Harold Alexander"
+					picture = "Portrait_Britain_Harold_Alexander.dds"
+					traits = {  }
+					skill = 5
+				}
+				create_navy_leader = {
+					name = "Algernon Willis"
+						picture = "Portrait_Britain_Algernon_Willis.dds"
+					traits = { spotter }
+					skill = 3
+				}
+			}
 		}
 	}	
 	
@@ -687,19 +739,19 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-			add_opinion_modifier = { target = WAL modifier = ENG_three_armies_op }
-			add_opinion_modifier = { target = SCT modifier = ENG_three_armies_op }
-			set_equipment_fraction = 0.5
-			
-			### Todo
-			# Officers
-			# OOB
-
+			hidden_effect = {
+				set_equipment_fraction = 0.5
+				WAL = { load_oob = WAL_three_armies }
+				SCT = { load_oob = SCT_three_armies }
+				add_opinion_modifier = { target = WAL modifier = ENG_three_armies_op }
+				add_opinion_modifier = { target = SCT modifier = ENG_three_armies_op }
+			}
+			custom_effect_tooltip = ENG_three_armies_tp
 		}
 	}
 	
 	focus = {
-		id = ENG_expand_army
+		id = ENG_improve_army
 		icon = GFX_goal_generic_allies_build_infantry
 		prerequisite = { focus = ENG_officer_corps_academy focus = ENG_officer_corps_experience }
 		available = {  }
@@ -708,6 +760,11 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}	
 		}
 	}
 	
@@ -732,26 +789,40 @@ focus_tree = {
 	focus = {
 		id = ENG_red
 		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = ENG_expand_army }
+		prerequisite = { focus = ENG_improve_army }
 		available = { }
 		x = 12
 		y = 6
 		cost = 10
 		
-		completion_reward = {	
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = para_tech
+			}	
+			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}	
 		}
 	}
 	
 	focus = {
-		id = ENG_bomber_harris
+		id = ENG_raf
 		icon = GFX_goal_generic_occupy_start_war
-		prerequisite = { focus = ENG_expand_army }
+		prerequisite = { focus = ENG_improve_army }
 		available = { }
 		x = 14
 		y = 6
 		cost = 10
 		
 		completion_reward = {
+			ENG = {
+			country_event = { id = uob.5 days = 1 }
+			}
 		}
 	}
 	
@@ -944,15 +1015,20 @@ focus_tree = {
 	# Military
 	
 	focus = {
-		id = ENG_expand_army2
+		id = ENG_improve_army2
 		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_red focus = ENG_bomber_harris }
+		prerequisite = { focus = ENG_red focus = ENG_raf }
 		available = { has_war = yes }
 		x = 13
 		y = 7
 		cost = 10
 		
 		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = support_tech
+			}	
 		}
 	}
 	
@@ -998,9 +1074,10 @@ focus_tree = {
 	focus = {
 		id = ENG_third_international
 		icon = GFX_goal_support_communism
+		available = { FRA = { has_completed_focus = FRA_Host_the_Internationale } }
 		x = 26
 		y = 0
-		cost = 10
+		cost = 5
 		
 		completion_reward = {
 		
@@ -1035,6 +1112,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_phalanstere_tp
 			every_country = { 
 				limit = { 
 					AND = {
@@ -1068,6 +1146,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_phalanstere_tp
 			every_country = { 
 				limit = { 
 					AND = {
@@ -1101,6 +1180,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_phalanstere_tp
 			every_country = { 
 				limit = { 
 					AND = {
@@ -1134,6 +1214,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_phalanstere_tp
 			every_country = { 
 				limit = { 
 					AND = {
@@ -1168,6 +1249,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			custom_effect_tooltip = ENG_phalanstere_tp
 			every_country = { 
 				limit = { 
 					AND = {

@@ -84,6 +84,22 @@ country_event = {
 	}
 	
 	option = {
+		add_tech_bonus = {
+			bonus = 0.75
+			uses = 1
+			category = computing_tech
+		}
+		add_tech_bonus = {
+			bonus = 0.75
+			uses = 1
+			category = encryption_tech
+		}
+		add_tech_bonus = {
+			bonus = 0.75
+			uses = 1
+			category = decryption_tech
+		}
+		add_political_power = 100
 		name = uobflavour.3.a
 		hidden_effect = {
 			clr_country_flag = ENG_bletchley_park
@@ -99,10 +115,41 @@ country_event = {
 	desc = uobflavour.4.d
 	picture = GFX_report_event_communists_cheer
 	
-	is_triggered_only = yes
+	trigger = {
+		date > 1936.7.1
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
 	
 	option = {
 		name = uobflavour.4.a
+		add_political_power = 25
+		every_country = { 
+			limit = { 
+				OR = {
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = syndicalist
+				}
+			}
+			add_opinion_modifier = { 
+				target = ENG modifier = ENG_encyclopedia_modifier
+			}
+		}
+		hidden_effect = {
+			news_event = { id = uobflavour.19 days = 7 }
+		}
+	}
+	
+	option = {
+		name = uobflavour.4.b
+		add_political_power = 50
+	}
+	
+	option = {
+		name = uobflavour.4.c
 	}
 }
 
@@ -319,3 +366,80 @@ news_event = {
 		name = uobflavour.17.a
 	}
 }
+
+# The RAF
+
+country_event = {
+	id = uobflavour.18
+	title = uobflavour.18.t
+	desc = uobflavour.18.d
+	picture = GFX_report_event_communists_cheer
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uobflavour.18.a # Bomber Harris, do it again!
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 2
+			category = strategic_destruction_tree
+		}
+	}
+	
+	option = {
+		name = uobflavour.18.b # 
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 2
+			category = battlefield_support_tree
+		}
+	}
+	
+	option = {
+		name = uobflavour.18.c
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 2
+			category = operational_integrity_tree
+		}
+	}
+}
+
+# Encyclopedia
+
+news_event = {
+	id = uobflavour.19
+	title = uobflavour.19.t
+	desc = uobflavour.19.d
+	picture = GFX_report_event_communists_cheer
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uobflavour.19.a
+		trigger = {
+			OR = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+			NOT = {
+				tag = ENG
+			}
+		}
+	}
+	
+	option = {
+		name = uobflavour.19.b
+		trigger = {
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+	}
+}
+
+### Todo
+# T. E. Lawrence

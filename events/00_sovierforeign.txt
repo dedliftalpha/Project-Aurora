@@ -1,0 +1,821 @@
+﻿####### Modder : Levi ######
+
+###########################
+#Soviet foreign events 
+###########################
+
+add_namespace = sovf
+
+
+#############################
+###  Soviet Russia Foreign Events
+##############################
+
+country_event = { #Georgia 
+	id = sovf.1
+	title = sovf.1.t
+	desc = sovf.1.d 
+	fire_only_once = yes
+	trigger = {
+	tag = GEO
+	OR = {
+	has_government = totalist
+	has_government = radical_socialist
+	has_government = syndicalist
+				}
+	SOV = { exists = yes }
+	NOT = { SOV = { has_war_with = RUS } }
+				}
+				mean_time_to_happen = { days = 5 }
+			option = { #alliance
+			name = sovf.1.a 
+			ai_chance = { factor = 20 }
+			SOV = { country_event = { id = sovf.2 days = 5 } }
+						}
+				option = { #recognize
+				name = sovf.1.b
+				ai_chance = { factor = 60 }
+					add_opinion_modifier = { target = SOV modifier = SOV_REC } 
+					
+						}
+				option = { #gap
+				name = sovf.1.c
+				ai_chance = { factor = 20 }
+					add_opinion_modifier = { target = SOV modifier = SOV_IDE } 
+
+				}
+				
+		}
+		country_event = { #Georgia response
+	id = sovf.2
+	title = sovf.2.t
+	desc = sovf.2.d 
+	is_triggered_only = yes
+			option = { #alliance
+			ai_chance = { factor = 60 }
+			name = sovf.2.a 
+			create_faction = "proletarian_alliance"
+			add_to_faction = GEO
+						}
+				option = { #recognize
+				ai_chance = { factor = 40 }
+				name = sovf.2.b
+					add_opinion_modifier = { target = SOV modifier = SOV_IDE } 
+					
+						}
+				option = { #CRUSH
+				name = sovf.2.c
+				ai_chance = { factor = 0 }	
+					declare_war_on = { target = GEO type = annex_everything }
+
+				}
+				
+		}
+		
+		country_event = { #CSA
+	id = sovf.3
+	title = sovf.3.t
+	desc = sovf.3.d 
+	fire_only_once = yes
+	trigger = {
+	tag = CSA
+	OR = {
+	has_government = totalist
+	has_government = radical_socialist
+	has_government = syndicalist
+				}
+	SOV = { exists = yes }
+	NOT = { SOV = { has_war_with = RUS } }
+	TEX = { exists = no }
+	USA = { exists = no }
+				}
+				mean_time_to_happen = { days = 5 }
+			option = { #treaty
+			name = sovf.3.a 
+			ai_chance = { factor = 95 }
+			SOV = { country_event = { id = sovf.4 days = 5 } }
+						}
+				option = { #recognize
+				name = sovf.3.b
+				ai_chance = { factor = 5 }
+					
+					add_opinion_modifier = { target = SOV modifier = SOV_REC } 
+					
+						}
+				
+		}
+		country_event = { #america response
+	id = sovf.4 
+	title = sovf.4.t
+	desc = sovf.4.d 
+	is_triggered_only = yes
+			option = { #alliance
+			ai_chance = { factor = 95 }
+			name = sovf.4.a 
+			add_opinion_modifier = { target = SOV modifier = SOV_FRI } 
+			give_guarantee = CSA
+			CSA = { give_guarantee = SOV }
+			CSA = { country_event = { id = sovf.5 } }
+						}
+				option = { #ignore
+				ai_chance = { factor = 5 }
+				name = sovf.4.b
+				CSA = { country_event = { id = sovf.6 } }
+					
+					
+						}
+				
+				
+		}
+		country_event = {
+		id = sovf.5
+	title = sovf.5.t
+	desc = sovf.5.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.5.a 
+						}
+				
+		}
+		country_event = {
+		id = sovf.6
+	title = sovf.6.t
+	desc = sovf.6.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.6.a 
+						}
+				
+		}
+		
+		country_event = { #siberia
+		id = sovf.7
+	title = sovf.7.t
+	desc = sovf.7.d 
+	fire_only_once = yes
+	trigger = {
+	tag = SOV
+	SIB = { exists = yes }
+	SOV = { NOT = { has_war_with = RUS } } 
+				}
+		mean_time_to_happen = { days = 30 }
+			option = {
+			name = sovf.7.a 
+			ai_chance = { factor = 60 }
+			declare_war_on = { target = SIB type = annex_everything }
+			SIB = { country_event = { id = sovf.8 } }
+						}
+			option = {
+			name = sovf.7.b 
+			ai_chance = { factor = 40 }
+			add_political_power = -100
+			SIB = { country_event = { id = sovf.9 } }
+						
+				
+		}
+	}
+	
+	country_event = {
+		id = sovf.8
+	title = sovf.8.t
+	desc = sovf.8.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.8.a 
+						}
+				
+		}
+		
+	country_event = {
+		id = sovf.9 
+	title = sovf.9.t
+	desc = sovf.9.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.9.a 
+			add_opinion_modifier = { target = SOV modifier = SOV_REC }
+			add_political_power = 50
+						}
+				
+		}
+		
+	country_event = {
+		id = sovf.10
+	title = sovf.10.t
+	desc = sovf.10.d 
+	fire_only_once = yes
+	trigger = {
+	tag = SOV
+	SIB = { exists = yes }
+	SOV = { has_war_with = RUS } 
+	SIB = { has_war_with = RUS } 
+				}
+		mean_time_to_happen = { days = 30 }
+			option = {
+			name = sovf.7.a 
+			trigger = { SIB = { NOT = { is_in_faction_with = JAP } } }
+			ai_chance = { factor = 10 }
+			declare_war_on = { target = SIB type = annex_everything }
+			SIB = { country_event = { id = sovf.8 } }
+						}
+			option = {
+			name = sovf.10.b 
+			trigger = { SIB = { NOT = { OR = { is_in_faction_with = JAP has_war_with = MON has_war_with = JAP } } } }
+			ai_chance = { factor = 20 }
+			add_political_power = -30
+			SIB = { country_event = { id = sovf.11 days = 3 } }
+						
+				
+		}
+		option = {
+			name = sovf.10.c 
+			ai_chance = { factor = 70 }
+						
+				
+		}
+	}
+	
+	country_event = { #Siberia response
+	id = sovf.11
+	title = sovf.11.t
+	desc = sovf.11.d 
+	is_triggered_only = yes
+			option = { #alliance
+			ai_chance = { factor = 70 }
+			name = sovf.11.a 
+			create_faction = "russian_rebels"
+			add_to_faction = SOV
+			SOV = { country_event = { id = sovf.12 } }
+						}
+				option = { #ignore
+				ai_chance = { factor = 30 }
+				name = sovf.11.b
+					SOV = { country_event = { id = sovf.13 } }
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.12
+	title = sovf.12.t
+	desc = sovf.12.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.12.a 
+			add_opinion_modifier = { target = SIB modifier = SOV_REC }
+			add_political_power = 50
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.13
+	title = sovf.13.t
+	desc = sovf.13.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.13.a 
+			ai_chance = { factor = 90 }
+			add_political_power = -20
+						}
+		option = {
+			name = sovf.13.b
+			ai_chance = { factor = 10 }
+			declare_war_on = { target = SIB type = annex_everything }
+			SIB = { country_event = { id = sovf.8 } }
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.14
+	title = sovf.14.t
+	desc = sovf.14.d 
+	fire_only_once = yes
+	trigger = {  
+	tag = SIB
+	is_in_faction_with = SOV
+	RUS = { exists = no }
+				}
+		mean_time_to_happen = { days = 30 }
+			option = {
+			name = sovf.14.a 
+			ai_chance = { factor = 90 }
+			dismantle_faction = yes
+			SOV = { country_event = { id = sovf.15 } }
+						}
+		option = {
+			name = sovf.14.b
+			ai_chance = { factor = 10 }
+			add_political_power = -50
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.15
+	title = sovf.15.t
+	desc = sovf.15.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.15.a 
+			ai_chance = { factor = 50 }
+			add_political_power = -20
+			declare_war_on = { target = SIB type = annex_everything }
+			SIB = { country_event = { id = sovf.8 } }
+						}
+		option = {
+			name = sovf.15.b
+			ai_chance = { factor = 50 }
+			add_political_power = -50
+					}
+				
+		}
+		
+		country_event = {
+		id = sovf.16
+	title = sovf.16.t
+	desc = sovf.16.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.16.a 
+			ai_chance = { factor = 60 }
+			SOV = { annex_country = { target = DKB transfer_troops = no }
+			every_state = { limit = { is_core_of = DKB } SOV = { add_state_core = PREV } }
+			SOV = { country_event = { id = sovf.17 } }
+						}
+						}
+		option = {
+			name = sovf.16.b
+			ai_chance = { factor = 40 }
+			declare_war_on = { target = SOV type = annex_everything }
+			SOV = { country_event = { id = sovf.18 } }
+					}
+				
+		}
+		
+		country_event = {
+		id = sovf.17 
+	title = sovf.17.t
+	desc = sovf.17.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.17.a 
+			load_oob = RED_COS
+			add_political_power = 50
+						}
+				
+		}
+		
+	country_event = {
+		id = sovf.18
+	title = sovf.18.t
+	desc = sovf.18.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.18.a
+			declare_war_on = { target = DKB type = annex_everything }
+			add_political_power = -30
+						}
+				
+		}
+		
+	country_event = {
+		id = sovf.19
+	title = sovf.19.t
+	desc = sovf.19.d 
+	trigger = 
+	{ tag = SOV
+		SOV = { controls_state = 245 }	
+		SOV = { controls_state = 238 }	
+		SOV = { controls_state = 787 } 
+		DKB = { exists = no } 
+		NOT = { 245 = { is_core_of = SOV }
+				238 = { is_core_of = SOV }
+				787 = { is_core_of = SOV }	}
+					}
+		mean_time_to_happen = { days = 50 }
+			option = {
+			name = sovf.19.a
+			add_state_core = 245
+			add_state_core = 238 
+			add_state_core = 787 
+			add_state_core = 237 
+			add_state_core = 218 
+			add_state_core = 235
+			add_state_core = 234
+			add_state_core = 233
+			add_state_core = 232
+			add_political_power = -20
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.20
+		title = sovf.20.t 
+		desc = sovf.20.d
+		is_triggered_only = yes
+		option = { #GEO
+		name = sovf.20.a
+		trigger = { 
+		GEO = {	exists = yes }
+		NOT = { GEO = { is_puppet_of = SOV } }
+		NOT = { GEO = { is_in_faction_with = SOV  }  }
+						}
+		country_event = { id = sovf.21 }
+		}
+		option = { #ARM
+		name = sovf.20.b
+		trigger = { 
+		ARM = {	exists = yes }
+		OR = {
+		GEO = {	exists = no }
+		GEO = { is_puppet_of = SOV }
+		GEO = { is_in_faction_with = SOV  }		
+				}
+		NOT = { ARM = { is_puppet_of = SOV } }
+		NOT = { ARM = { is_in_faction_with = SOV  }  }
+		NOT = { has_country_flag = ARM_UP }
+						}
+		country_event = { id = sovf.26 }
+						}
+		option = { #AZB
+		name = sovf.20.c 
+		trigger = { 
+		AZB = {	exists = yes }
+		NOT = { AZB = { is_puppet_of = SOV } }
+		NOT = { AZB = { is_in_faction_with = SOV  }  }
+						}
+		country_event = { id = sovf.34 }
+						}
+		option = {
+		name = sovf.20.e
+		trigger = {
+		OR = {
+		AZB = {	exists = no }
+		AZB = { is_puppet_of = SOV }
+		AZB = { is_in_faction_with = SOV  }
+				}
+		OR = {	
+			ARM = {	exists = no }	
+			ARM = { is_puppet_of = SOV }
+			ARM = { is_in_faction_with = SOV 
+			has_country_flag = ARM_UP }			
+				}
+		OR = {
+		GEO = {	exists = no }
+		GEO = { is_puppet_of = SOV }
+		GEO = { is_in_faction_with = SOV  }		
+				}
+					}
+		add_political_power = 100
+					}
+		}
+		
+		
+		country_event = {
+		id = sovf.21
+	title = sovf.21.t
+	desc = sovf.21.d 
+	is_triggered_only = yes
+			option = { #war
+			name = sovf.21.a
+			ai_chance = { factor = 20 }
+			declare_war_on = { target = GEO type = annex_everything }
+						}
+			option = { #demand
+			name = sovf.21.b
+			ai_chance = { factor = 25 }
+			GEO = { country_event = { id = sovf.22 days = 5 } }
+			}
+			option = { #alliance
+			name = sovf.21.c
+			trigger = { is_in_faction = no
+		GEO = { OR { has_government = radical_socialist has_government = syndicalist has_government = totalist   } } } 
+			ai_chance = { factor = 25 }
+			GEO = { country_event = { id = sovf.23 days = 5 } }
+			}
+				
+		}				
+		
+		country_event = {
+		id = sovf.22
+	title = sovf.22.t
+	desc = sovf.22.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.22.a
+			ai_chance = { factor = 20 }
+			SOV = { annex_country = { target = GEO transfer_troops = yes }
+			every_state = { limit = { is_core_of = GEO } SOV = { add_state_core = PREV } }
+						} }
+			option = {
+			name = sovf.22.b
+			ai_chance = { factor = 70 }
+			SOV = { declare_war_on = { target = GEO type = annex_everything } }
+			add_political_power = -30
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.23 
+	title = sovf.23.t
+	desc = sovf.23.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.23.a
+			ai_chance = { factor = 80 }
+			SOV = { create_faction = "proletarian_alliance" }
+		    SOV = { add_to_faction = GEO }
+			SOV = { country_event = { id = sovf.20 days = 5 } }
+			add_political_power = 50
+						}
+			option = {
+			name = sovf.23.b
+			ai_chance = { factor = 20 }
+			SOV = { declare_war_on = { target = GEO type = annex_everything } }
+			add_political_power = -30
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.24
+	title = sovf.24.t
+	desc = sovf.24.d 
+	fire_only_once = yes
+	trigger = { tag = SOV
+		SOV = { controls_state = 231 }	}
+		mean_time_to_happen = { days = 1 }
+			option = {
+			name = sovf.24.a
+		country_event = { id = sovf.20 days = 30 }
+			add_political_power = 50
+						}
+				
+		}
+		country_event = {
+		id = sovf.25
+	title = sovf.25.t
+	desc = sovf.25.d 
+	trigger = 
+	{ tag = SOV
+		SOV = { controls_state = 231 }	
+		GEO = { exists = no } 
+		NOT = { 231 = { is_core_of = SOV }	}
+					}
+		mean_time_to_happen = { days = 60 }
+			option = {
+			name = sovf.25.a
+			add_state_core = 231
+			add_political_power = -30
+						}
+				
+		}
+		country_event = {
+		id = sovf.26
+	title = sovf.26.t
+	desc = sovf.26.d 
+	is_triggered_only = yes
+			option = { #war
+			name = sovf.26.a
+			trigger = { ARM = { NOT = { is_puppet_of = TUR } } }
+			ai_chance = { factor = 20 }
+			declare_war_on = { target = ARM type = annex_everything }
+						}
+			option = { #demand
+			name = sovf.26.b
+			trigger = { ARM = { NOT = { is_puppet_of = TUR } } }
+			ai_chance = { factor = 25 }
+			ARM = { country_event = { id = sovf.27 days = 5 } }
+			}
+			option = { #negotiate
+			name = sovf.26.c
+			trigger = { ARM = { is_puppet_of = TUR } }
+			ai_chance = { factor = 85 }
+			TUR = { country_event = { id = sovf.28 days = 5 } }
+			}
+			option = { #fuck ottomans
+			name = sovf.26.e
+			trigger = { ARM = { is_puppet_of = TUR } }
+			ai_chance = { factor = 15 }
+			declare_war_on = { target = TUR type = annex_everything }
+			}
+	}
+	
+	country_event = {
+		id = sovf.27
+	title = sovf.27.t
+	desc = sovf.27.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.27.a
+			ai_chance = { factor = 50 }
+			SOV = { annex_country = { target = ARM transfer_troops = yes }
+			every_state = { limit = { is_core_of = ARM	} SOV = { add_state_core = PREV } }
+						} }
+			option = {
+			name = sovf.27.b
+			ai_chance = { factor = 50 }
+			SOV = { declare_war_on = { target = ARM type = annex_everything } }
+			add_political_power = -30
+						}
+				
+		}
+		
+	country_event = {
+		id = sovf.28
+	title = sovf.28.t
+	desc = sovf.28.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.28.a
+			ai_chance = { factor = 50 }
+			add_political_power = -20
+			SOV = { country_event = { id = sovf.29 days = 7 } }
+			}
+			option = {
+			name = sovf.28.b
+			ai_chance = { factor = 50 }
+			SOV = { country_event = { id = sovf.30 days = 1 } }
+			add_political_power = -30
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.29
+	title = sovf.29.t
+	desc = sovf.29.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.29.a
+			ai_chance = { factor = 60 }
+			add_political_power = -80
+			diplomatic_relation = { country = TUR relation = non_aggression_pact }
+			SOV = { annex_country = { target = ARM transfer_troops = yes }
+			every_state = { limit = { is_core_of = ARM	} SOV = { add_state_core = PREV } }
+						}
+			}
+			
+			option = {
+			name = sovf.29.b
+			ai_chance = { factor = 40 }
+			diplomatic_relation = { country = TUR relation = non_aggression_pact }
+			ARM = { country_event = { id = sovf.31 days = 1 } }
+			country_event = { id = sovf.20 days = 30}
+			}
+				
+		}
+		
+		country_event = {
+		id = sovf.30
+	title = sovf.30.t
+	desc = sovf.30.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.30.a
+			ai_chance = { factor = 60 }
+			add_political_power = -70
+			country_event = { id = sovf.20 days = 30 }
+			set_country_flag = ARM_UP
+						} 
+			option = {
+			name = sovf.30.b
+			ai_chance = { factor = 40 }
+			SOV = { declare_war_on = { target = TUR type = annex_everything } }
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.31
+	title = sovf.31.t
+	desc = sovf.31.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.31.a
+			ai_chance = { factor = 100 }
+			set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		SOV = { puppet = ARM }
+			add_political_power = -150
+						}
+				option = {
+			name = sovf.27.b
+			ai_chance = { factor = 0 }
+			SOV = { declare_war_on = { target = ARM type = annex_everything } }
+			add_political_power = -30
+						}
+		}
+		country_event = {
+		id = sovf.32
+	title = sovf.32.t
+	desc = sovf.32.d 
+	fire_only_once = yes
+	trigger = { tag = SOV
+		SOV = { controls_state = 230 }	}
+		mean_time_to_happen = { days = 1 }
+			option = {
+			name = sovf.24.a
+		country_event = { id = sovf.20 days = 30 }
+			add_political_power = 50
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.33
+	title = sovf.33.t
+	desc = sovf.33.d 
+	trigger = 
+	{ tag = SOV
+		SOV = { controls_state = 230 }	
+		ARM = { exists = no } 
+		NOT = { 230 = { is_core_of = SOV }	}
+					}
+		mean_time_to_happen = { days = 60 }
+			option = {
+			name = sovf.25.a
+			add_state_core = 230
+			add_political_power = -30
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.34
+	title = sovf.34.t
+	desc = sovf.34.d 
+	is_triggered_only = yes
+			option = { #war
+			name = sovf.26.a
+			ai_chance = { factor = 20 }
+			declare_war_on = { target = AZB type = annex_everything }
+						}
+			option = { #demand
+			name = sovf.34.b
+			ai_chance = { factor = 25 }
+			AZB = { country_event = { id = sovf.35 days = 5 } }
+			}
+			
+		}
+		
+		country_event = {
+		id = sovf.35
+	title = sovf.27.t
+	desc = sovf.35.d 
+	is_triggered_only = yes
+			option = {
+			name = sovf.27.a
+			ai_chance = { factor = 100 }
+			SOV = { annex_country = { target = AZB transfer_troops = yes }
+			every_state = { limit = { is_core_of = AZB	} SOV = { add_state_core = PREV } }
+						} }
+			option = {
+			name = sovf.27.b
+			ai_chance = { factor = 0 }
+			SOV = { declare_war_on = { target = ARM type = annex_everything } }
+			add_political_power = -30
+						}
+				
+		}
+		
+		country_event = {
+	id = sovf.36
+	title = sovf.36.t
+	desc = sovf.36.d 
+	fire_only_once = yes
+	trigger = { tag = SOV
+		SOV = { controls_state = 229 }	}
+		mean_time_to_happen = { days = 1 }
+			option = {
+			name = sovf.24.a
+		country_event = { id = sovf.20 days = 30 }
+			add_political_power = 50
+						}
+				
+		}
+		
+		country_event = {
+		id = sovf.37
+	title = sovf.37.t
+	desc = sovf.37.d 
+	trigger = 
+	{ tag = SOV
+		SOV = { controls_state = 229 }	
+		AZB = { exists = no } 
+		NOT = { 230 = { is_core_of = SOV }	}
+					}
+		mean_time_to_happen = { days = 60 }
+			option = {
+			name = sovf.25.a
+			add_state_core = 229
+			add_political_power = -30
+						}
+				
+		}

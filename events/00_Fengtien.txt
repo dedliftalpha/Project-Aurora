@@ -1,0 +1,1689 @@
+﻿###############################
+# Fengtien Events
+###############################
+
+add_namespace = fengtien
+
+#####################################################################
+############### Fengtien Republic events by esmaerla ################
+#####################################################################
+
+country_event = { # Zhang Zuelin's decision
+	id = fengtien.1
+	title = fengtien.1.t
+	desc = fengtien.1.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		surrender_progress < 60
+		has_war_with = QIE
+		NOT = {
+			QIE = { is_puppet = yes }
+		}
+		date > 1936.11.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = fengtien.1.a
+
+		ai_chance = { factor = 30 }
+
+		trigger = {
+			OR = {
+				is_puppet_of = JAP
+				is_in_faction_with = JAP
+			}
+		}
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = fengtien.1.b
+
+		ai_chance = { factor = 10 }
+
+		trigger = {
+			NOT = {
+				is_puppet_of = JAP
+				is_in_faction_with = JAP
+			}
+		}
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = fengtien.1.c
+
+		ai_chance = { factor = 20 }
+
+		trigger = {
+			country_exists = JAP
+			NOT = {
+				is_puppet = yes
+				JAP = { is_puppet = yes }
+				has_global_flag = JAP_ISO
+				JAP = { has_war = yes }
+				OR = {
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = syndicalist
+				}
+				has_war_with = JAP
+				is_in_faction_with = JAP
+				is_in_faction_with = RUS
+				is_in_faction_with = SOV
+				is_in_faction_with = FRA
+				is_in_faction_with = USA
+			}
+		}
+
+		add_political_power = -60
+		hidden_effect = { JAP = { country_event = { id = fengtien.2 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.1.e
+
+		ai_chance = { factor = 20 }
+
+		trigger = {
+			OR = {
+				is_puppet_of = JAP
+				is_in_faction_with = JAP
+			}
+		}
+
+		white_peace = QIE
+		white_peace = GER
+		remove_from_faction = FNG
+		end_puppet = FNG
+		hidden_effect = { JAP = { country_event = { id = fengtien.3 days = 1 }}}
+		hidden_effect = { QIE = { country_event = { id = fengtien.4 days = 1 }}}
+		add_opinion_modifier = { target = JAP modifier = FNG_LEAVES_FIGHT_JAP } # -100
+		add_opinion_modifier = { target = QIE modifier = FNG_LEAVES_FIGHT } # 50
+		add_opinion_modifier = { target = GER modifier = FNG_LEAVES_FIGHT } # 50
+		set_global_flag = MAN_leave_japan
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+
+	option = {
+		name = fengtien.1.f
+
+		ai_chance = { factor = 30 }
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.5 days = 1 }}}
+		add_opinion_modifier = { target = JAP modifier = FNG_JOINS_QIE_JAP } # -150
+		add_opinion_modifier = { target = QIE modifier = FNG_JOINS_QIE } # 100
+		add_opinion_modifier = { target = GER modifier = FNG_JOINS_QIE } # 100
+		set_global_flag = MAN_leave_japan
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+
+	option = {
+		name = fengtien.1.g
+
+		ai_chance = { factor = 20 }
+
+		trigger = {
+			OR = {
+				is_puppet_of = JAP
+				is_in_faction_with = JAP
+			}
+		}
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.11 days = 1 }}}
+		add_opinion_modifier = { target = JAP modifier = FNG_HELP_QIE_JAP } # -50
+		add_opinion_modifier = { target = QIE modifier = FNG_HELP_QIE } # 50
+		add_opinion_modifier = { target = GER modifier = FNG_HELP_QIE } # 50
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+}
+
+country_event = { # Manchuria wants to form an alliance
+	id = fengtien.2
+	title = fengtien.2.t
+	desc = fengtien.2.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.2.a
+
+		ai_chance = { factor = 95 }
+
+		if = {
+			limit = { is_in_faction = no }
+
+			create_faction = "Asian Co-Prosperity Sphere"
+		}
+
+		add_to_faction = FNG
+		add_political_power = 60
+		add_opinion_modifier = { target = FNG modifier = JAP_ALL_FNG } # 100
+	}
+
+	option = {
+		name = fengtien.2.b
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = FNG modifier = JAP_NO_ALL_FNG } # -100
+	}
+}
+
+country_event = { # Zhang Zuelin's Betrayal
+	id = fengtien.3
+	title = fengtien.3.t
+	desc = fengtien.3.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.3.a
+
+		ai_chance = { factor = 70 }
+
+		declare_war_on = { target = FNG type = annex_everything	}
+		hidden_effect = { FNG = { country_event = { id = fengtien.17 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.3.b
+
+		ai_chance = { factor = 10 }
+
+		if = {
+			limit = {
+				has_war_with = GER
+				NOT = {
+					is_in_faction_with = FRA
+					is_in_faction_with = RUS
+					is_in_faction_with = SOV
+					is_in_faction_with = USA
+					is_in_faction_with = CAN
+				}
+			}
+
+			hidden_effect = { GER = { country_event = { id = fengtien.17 days = 1 }}}
+		}
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}	
+	}
+
+	option = {
+		name = fengtien.3.c
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -60
+	}
+}
+
+country_event = { # Zhang Zueling has refused to fight!
+	id = fengtien.4
+	title = fengtien.4.t
+	desc = fengtien.4.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.4.a
+
+		ai_chance = { factor = 60 }
+
+		hidden_effect = { FNG = { country_event = { id = fengtien.7 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.4.b
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -60	
+	}
+
+	option = {
+		name = fengtien.4.c
+
+		ai_chance = { factor = 20 }
+
+		declare_war_on = { target = FNG type = annex_everything	}
+	}
+}
+
+country_event = { # Manchuria Declares for the Qing!
+	id = fengtien.5
+	title = fengtien.5.t
+	desc = fengtien.5.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.5.a
+
+		set_country_flag = Manchuria_Joins_Qing
+		annex_country = { target = FNG transfer_troops = no }
+	}
+}
+
+country_event = { # Japan seeks to negotiate
+	id = fengtien.6
+	title = fengtien.6.t
+	desc = fengtien.6.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.6.a
+
+		ai_chance = { factor = 70 }
+
+		GER = { country_event = { id = fengtien.8 days = 6 }}
+	}
+
+	option = {
+		name = fengtien.6.b
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -60	
+	}
+}
+
+country_event = { # The Qing are pushing us
+	id = fengtien.7
+	title = fengtien.7.t
+	desc = fengtien.7.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.7.a
+
+		ai_chance = { factor = 40 }
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.9 days = 6 }}}
+	}
+
+	option = {
+		name = fengtien.7.b
+
+		ai_chance = { factor = 60 }
+
+		add_political_power = -60
+		set_global_flag = CSX_MAN_refusal
+	}
+}
+
+country_event = { # Our negotiators are meeting with the Japanese
+	id = fengtien.8
+	title = fengtien.8.t
+	desc = fengtien.8.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.8.a
+
+		ai_chance = { factor = 50 }
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.13 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.8.b
+
+		ai_chance = { factor = 50 }
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.14 days = 1 }}}
+	}
+}
+
+country_event = { # The Fengtien have submitted!
+	id = fengtien.9
+	title = fengtien.9.t
+	desc = fengtien.9.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.9.a
+
+		set_country_flag = Manchuria_Joins_Qing
+		annex_country = { target = FNG transfer_troops = no }
+	}
+}
+
+country_event = { # Zhang Zueling has refused our demands
+	id = fengtien.10
+	title = fengtien.10.t
+	desc = fengtien.10.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.10.a
+
+		ai_chance = { factor = 30 }
+
+		declare_war_on = { target = FNG type = annex_everything	}
+	}
+
+	option = {
+		name = fengtien.10.b
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = fengtien.10.c
+
+		ai_chance = { factor = 30 }
+
+		trigger = {
+			has_war_with = JAP
+		}
+
+		white_peace = JAP
+
+		if = {
+			limit = { is_in_faction_with = GER }
+
+			hidden_effect = { GER = { country_event = { id = fengtien.14 days = 1 }}}
+
+			remove_from_faction = QIE
+		}
+
+		hidden_effect = { JAP = { country_event = { id = fengtien.16 days = 1 }}}
+		hidden_effect = { FNG = { country_event = { id = fengtien.18 days = 1 }}}
+	}
+}
+
+country_event = { # OH NO! My troops are defecting!
+	id = fengtien.11
+	title = fengtien.11.t
+	desc = fengtien.11.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.11.a
+
+		add_ideas = defections_fng
+		QIE = {
+			load_oob = QIE_DEFECT_FROM_FNG
+		}
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.12 days = 0 }}}
+	}	
+}
+
+country_event = { # Zhang Zueling is playing games
+	id = fengtien.12
+	title = fengtien.12.t
+	desc = fengtien.12.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.12.a
+
+		set_country_flag = Manchuria_Joins_Qing
+	}
+}
+
+country_event = { # We have sat down at the table
+	id = fengtien.13
+	title = fengtien.13.t
+	desc = fengtien.13.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.13.a
+
+		ai_chance = { factor = 75 }
+
+		white_peace = GER
+		white_peace = QIE
+
+		add_ideas = JAP_WAR_REP
+		GER = { add_ideas = JAP_WAR_REP_GER }
+
+		diplomatic_relation = { country = QIE relation = non_aggression_pact }
+		diplomatic_relation = { country = GER relation = non_aggression_pact }
+		add_political_power = -100
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}	 
+	}
+
+	option = {
+		name = fengtien.13.a
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = -40
+	}
+}
+
+country_event = { # We have sat down at the table
+	id = fengtien.14
+	title = fengtien.14.t
+	desc = fengtien.14.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.14.a
+
+		ai_chance = { factor = 25 }
+
+		white_peace = GER
+		white_peace = QIE
+
+		add_ideas = JAP_WAR_REP_FULL
+		GER = { add_ideas = JAP_WAR_REP_GER_FULL }
+
+		diplomatic_relation = { country = QIE relation = non_aggression_pact }
+		diplomatic_relation = { country = GER relation = non_aggression_pact }
+		add_political_power = -500
+		add_national_unity = -20
+
+		end_puppet = PHI
+		end_puppet = TRM
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}	
+
+		GER = {
+			transfer_state = 526
+			transfer_state = 645
+			transfer_state = 648
+		} 
+	}
+
+	option = {
+		name = fengtien.14.a
+
+		ai_chance = { factor = 75 }
+
+		add_political_power = 100
+	}
+}
+
+country_event = { # The Qing have abandoned us!
+	id = fengtien.15
+	title = fengtien.15.t
+	desc = fengtien.15.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.15.a
+
+		ai_chance = { factor = 30 }
+
+		declare_war_on = { target = QIE type = annex_everything	}
+	}
+
+	option = {
+		name = fengtien.15.a
+
+		ai_chance = { factor = 70 }
+	}
+}
+
+country_event = { # The Qing have followed the Fengtein
+	id = fengtien.16
+	title = fengtien.16.t
+	desc = fengtien.16.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.16.a
+
+		ai_chance = { factor = 70 }
+
+		add_political_power = 20
+	}
+
+	option = {
+		name = fengtien.16.a
+
+		ai_chance = { factor = 30 }
+
+		declare_war_on = { target = QIE type = annex_everything	}
+	}
+}
+
+country_event = { # Japan has attacked us!
+	id = fengtien.17
+	title = fengtien.17.t
+	desc = fengtien.17.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.17.a
+
+		ai_chance = { factor = 70 }
+
+		trigger = {
+			country_exists = QIE
+			is_puppet = no
+		}
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.5 days = 2 }}}
+	}
+
+	option = {
+		name = fengtien.17.a
+
+		ai_chance = { factor = 30 }
+
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+		add_political_power = -100
+	}
+}
+
+country_event = { # The Qing have followed our lead
+	id = fengtien.18
+	title = fengtien.18.t
+	desc = fengtien.18.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.18.a
+
+		ai_chance = { factor = 70 }
+
+		trigger = {
+			country_exists = QIE
+			is_puppet = no
+		}
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.5 days = 2 }}}
+	}
+
+	option = {
+		name = fengtien.18.a
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -40
+	}
+}
+
+#################################
+### Kolchak breaks away -     ###
+### will Zueling follow suit? ###
+#################################
+
+country_event = { # Kolchak has broken away from Japanese rule!
+	id = fengtien.19
+	title = fengtien.19.t
+	desc = fengtien.19.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		country_exists = TRM
+		OR = {
+			TRM = { has_country_flag = PRI_breaksaway }
+			has_global_flag = PRI_breaksaway
+		}
+		TRM = { is_puppet = no }
+		is_puppet_of = JAP
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = fengtien.19.a
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -20
+		clr_global_flag = PRI_breaksaway
+		TRM = { clr_country_flag = PRI_breaksaway }
+	}
+
+	option = {
+		name = fengtien.19.b
+
+		ai_chance = { factor = 30 }
+
+		white_peace = TRM
+		end_puppet = FNG
+		hidden_effect = { TRM = { country_event = { id = fengtien.20 days = 1 }}}
+		hidden_effect = { JAP = { country_event = { id = fengtien.23 days = 1 }}}
+		clr_global_flag = PRI_breaksaway
+		TRM = { clr_country_flag = PRI_breaksaway }
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+
+	option = {
+		name = fengtien.19.c
+
+		ai_chance = { factor = 50 }
+
+		trigger = {
+			country_exists = QIE
+			QIE = { is_puppet = no }
+		}
+
+		white_peace = QIE
+		end_puppet = FNG
+		hidden_effect = { QIE = { country_event = { id = fengtien.21 days = 1 }}}
+		hidden_effect = { JAP = { country_event = { id = fengtien.23 days = 1 }}}
+		clr_global_flag = PRI_breaksaway
+		TRM = { clr_country_flag = PRI_breaksaway }
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+}
+
+country_event = { # Zhang Zueling wishes to join us!
+	id = fengtien.20
+	title = fengtien.20.t
+	desc = fengtien.20.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.20.a
+
+		ai_chance = { factor = 70 }
+
+		create_faction = "Anti-Japanese Pact"
+		add_to_faction = FNG
+		add_opinion_modifier = { target = FNG modifier = TRM_ALL_FNG } # 150
+		add_opinion_modifier = { target = JAP modifier = TRM_ALL_FNG_JAP } # -100
+	}
+
+	option = {
+		name = fengtien.20.b
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -40
+		hidden_effect = { FNG = { country_event = { id = fengtien.22 days = 1 }}}
+	}
+}
+
+country_event = { # Zhang Zueling wishes to join us!
+	id = fengtien.21
+	title = fengtien.21.t
+	desc = fengtien.21.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.21.a
+
+		ai_chance = { factor = 70 }
+
+		set_country_flag = Manchuria_Joins_Qing
+		annex_country = { target = FNG transfer_troops = no }
+		hidden_effect = { JAP = { country_event = { id = fengtien.26 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.21.b
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -40
+		hidden_effect = { FNG = { country_event = { id = fengtien.25 days = 1 }}}
+	}
+}
+
+country_event = { # Kolchak has refused our offer
+	id = fengtien.22
+	title = fengtien.22.t
+	desc = fengtien.22.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.22.a
+
+		ai_chance = { factor = 30 }
+
+		hidden_effect = { JAP = { country_event = { id = fengtien.27 days = 1 }}}
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+
+	option = {
+		name = fengtien.22.b
+
+		ai_chance = { factor = 70 }
+
+		trigger = {
+			country_exists = QIE
+			QIE = { is_puppet = no }
+		}
+
+		hidden_effect = { QIE = { country_event = { id = fengtien.21 days = 1 }}}
+
+		add_state_core = 612
+		add_state_core = 611
+		add_state_core = 610
+		add_state_core = 745
+	}
+}
+
+country_event = { # Remove our support
+	id = fengtien.23
+	title = fengtien.23.t
+	desc = fengtien.23.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.23.a
+
+		add_manpower = 20000
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}
+		
+		hidden_effect = { FNG = { country_event = { id = fengtien.24 days = 1 }}}	
+	}
+}
+
+country_event = { # Japan has removed support from our country
+	id = fengtien.24
+	title = fengtien.24.t
+	desc = fengtien.24.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.24.a
+
+		clr_country_flag = JAP_Help
+
+		FNG = {
+			add_state_core = 612
+			add_state_core = 611
+			add_state_core = 610
+			add_state_core = 745
+		}
+
+		add_manpower = -20000
+		
+		hidden_effect = { FNG = { country_event = { id = fengtien.24 days = 1 }}}	
+	}
+}
+
+country_event = { # The Qing have turned us down!
+	id = fengtien.25
+	title = fengtien.25.t
+	desc = fengtien.25.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.25.a
+
+		ai_chance = { factor = 70 }
+
+		FNG = {
+			add_state_core = 612
+			add_state_core = 611
+			add_state_core = 610
+			add_state_core = 745
+		}
+		
+		hidden_effect = { TRM = { country_event = { id = fengtien.20 days = 1 }}}	
+	}
+
+	option = {
+		name = fengtien.25.b
+
+		ai_chance = { factor = 30 }
+
+		FNG = {
+			add_state_core = 612
+			add_state_core = 611
+			add_state_core = 610
+			add_state_core = 745
+		}
+		
+		hidden_effect = { FNG = { country_event = { id = fengtien.27 days = 1 }}}	
+	}
+}
+
+country_event = { # Zhang Zueling has also betrayed us!
+	id = fengtien.26
+	title = fengtien.26.t
+	desc = fengtien.26.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.26.a
+
+		ai_chance = { factor = 50 }
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}
+		
+		add_political_power = -40	
+	}
+
+	option = {
+		name = fengtien.26.b
+
+		ai_chance = { factor = 30 }
+
+		trigger = {
+			NOT = { has_war_with = QIE }
+		}
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}
+		
+		hidden_effect = { QIE = { country_event = { id = fengtien.28 days = 1 }}}	
+	}
+
+	option = {
+		name = fengtien.26.c
+
+		ai_chance = { factor = 20 }
+
+		trigger = {
+			NOT = { has_war_with = QIE }
+		}
+
+		declare_war_on = { target = FNG type = annex_everything	}
+	}
+}
+
+country_event = { # Zhang Zueling has been left out to dry
+	id = fengtien.27
+	title = fengtien.27.t
+	desc = fengtien.27.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.27.a
+
+		ai_chance = { factor = 80 }
+
+		declare_war_on = { target = FNG type = annex_everything	}
+	}
+
+	option = {
+		name = fengtien.27.b
+
+		ai_chance = { factor = 30 }
+
+		trigger = {
+			NOT = { has_war_with = QIE }
+		}
+
+		FNG = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+			transfer_state = 745
+		}
+		
+		add_political_power = -40	
+	}
+}
+
+country_event = { # Zhang Zueling has been left out to dry
+	id = fengtien.28
+	title = fengtien.28.t
+	desc = fengtien.28.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.28.a
+
+		ai_chance = { factor = 30 }
+
+		remove_from_faction = QIE
+
+		if = {
+			limit = { JAP = { is_in_faction = no }}
+
+			JAP = { create_faction = "Sino-Japanese Co-Prosperity Sphere" }
+		}
+
+		JAP = { add_to_faction = QIE } 
+	}
+
+	option = {
+		name = fengtien.28.b
+
+		ai_chance = { factor = 70 }
+
+		add_opinion_modifier = { target = JAP modifier = QIE_NO_ALL_JAP } # -50
+		add_opinion_modifier = { target = JAP modifier = QIE_NO_ALL_JAP_CHI } # 15
+	}
+}
+
+######################################
+
+country_event = { # Our beloved prime minister is dead!	
+	id = fengtien.29
+	title = fengtien.29.t
+	desc = fengtien.29.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		# has_idea = # Yan Xishan HoG
+		date > 1960.7.22
+		NOT = { has_country_flag = fengtien_30 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = fengtien.29.a
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = -100
+		set_country_flag = yan_xishan_died
+		remove_ideas_with_trait = head_of_government
+		# add_ideas = Zhang Zongchang HoG
+		hidden_effect = { FNG = { country_event = { id = fengtien.34 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+
+	option = {
+		name = fengtien.29.b
+
+		ai_chance = { factor = 35 }
+
+		trigger = {
+			is_puppet_of = JAP
+		}
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_JAP } # 50
+		set_country_flag = yan_xishan_died
+		add_political_power = -200
+		hidden_effect = { JAP = { country_event = { id = fengtien.31 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+
+	option = {
+		name = fengtien.29.c
+
+		ai_chance = { factor = 30 }
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_PEP } # -50
+		set_country_flag = yan_xishan_died
+		add_political_power = 200
+		hidden_effect = { FNG = { country_event = { id = fengtien.32 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+}
+
+country_event = { # Our beloved prime minister is dead!	
+	id = fengtien.30
+	title = fengtien.30.t
+	desc = fengtien.30.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		# has_idea = # Yan Xishan HoG
+		date > 1938.1.1
+		NOT = { has_country_flag = fengtien_29 }
+	}
+
+	mean_time_to_happen = {
+		days = 180
+	}
+
+	option = {
+		name = fengtien.30.a
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = -100
+		set_country_flag = yan_xishan_died
+		remove_ideas_with_trait = head_of_government
+		# add_ideas = Zhang Zongchang HoG
+		hidden_effect = { FNG = { country_event = { id = fengtien.34 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+
+	option = {
+		name = fengtien.30.b
+
+		ai_chance = { factor = 35 }
+
+		trigger = {
+			is_puppet_of = JAP
+		}
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_JAP } # 50
+		set_country_flag = yan_xishan_died
+		add_political_power = -200
+		hidden_effect = { JAP = { country_event = { id = fengtien.31 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+
+	option = {
+		name = fengtien.30.c
+
+		ai_chance = { factor = 30 }
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_PEP } # -50
+		set_country_flag = yan_xishan_died
+		add_political_power = 200
+		hidden_effect = { FNG = { country_event = { id = fengtien.32 days = 1 }}}
+		set_country_flag = fengtien_29
+	}
+}
+
+country_event = { # Our dear puppet need our help.
+	id = fengtien.31
+	title = fengtien.31.t
+	desc = fengtien.31.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.31.a
+
+		ai_chance = { factor = 0 }
+
+		hidden_effect = { FNG = { country_event = { id = fengtien.37 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.31.b
+
+		ai_chance = { factor = 60 }
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_JAP_Zhang } # 20
+		hidden_effect = { JAP = { country_event = { id = fengtien.33 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.31.c
+
+		ai_chance = { factor = 20 }
+
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_JAP_DECIDE } # 30
+		hidden_effect = { FNG = { country_event = { id = fengtien.34 days = 1 }}}
+	}
+}
+
+country_event = { # A free election for the people!!
+	id = fengtien.32
+	title = fengtien.32.t
+	desc = fengtien.32.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.32.a
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = 100
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Zhang Xueliang HoG
+	}
+
+	option = {
+		name = fengtien.32.b
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = -20
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Zhang Zongchang HoG
+	}
+
+	option = {
+		name = fengtien.32.c
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -200
+		add_opinion_modifier = { target = PRC modifier = FNG_GOV_MET } # 50
+		add_opinion_modifier = { target = ITA modifier = FNG_GOV_MET } # 50
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_MET_JAP } # -20
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Feng Yuxiang HoG
+
+		if = {	
+			limit = { NOT = { has_war_with = PRC }}
+
+			hidden_effect = { PRC = { country_event = { id = fengtien.35 days = 1 }}}
+		}
+	}
+}
+
+country_event = { # Japan says Zhang Xueliang is the man for us!
+	id = fengtien.33
+	title = fengtien.33.t
+	desc = fengtien.33.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.33.a
+
+		add_political_power = 100
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Zhang Xueliang HoG
+	}
+}
+
+country_event = { # Japan tell us we can choose! Hurrah for our lords!
+	id = fengtien.34
+	title = fengtien.34.t
+	desc = fengtien.34.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.34.a
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = 100
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Zhang Xueliang HoG
+	}
+
+	option = {
+		name = fengtien.34.b
+
+		ai_chance = { factor = 35 }
+
+		add_political_power = -20
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Zhang Zongchang HoG
+	}
+
+	option = {
+		name = fengtien.34.c
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -200
+		add_opinion_modifier = { target = PRC modifier = FNG_GOV_MET } # 50
+		add_opinion_modifier = { target = ITA modifier = FNG_GOV_MET } # 50
+		add_opinion_modifier = { target = JAP modifier = FNG_GOV_MET_JAP } # -20
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		# add_ideas = Feng Yuxiang HoG
+
+		if = {	
+			limit = { NOT = { has_war_with = PRC }}
+
+			hidden_effect = { PRC = { country_event = { id = fengtien.35 days = 1 }}}
+		}
+	}
+}
+
+country_event = { # The Fengtien Republic has a christian leader.
+	id = fengtien.35
+	title = fengtien.35.t
+	desc = fengtien.35.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.35.a
+
+		ai_chance = { factor = 70 }
+
+		add_political_power = 100
+		add_opinion_modifier = { target = FNG modifier = FNG_GOV_MET } # 50
+		hidden_effect = { FNG = { country_event = { id = fengtien.36 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.35.b
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -20
+
+		add_opinion_modifier = { target = FNG modifier = PRC_TRUE_CHRIS } # -10
+	}
+}
+
+country_event = { # The The Pure Kingdom Upon the Heavens asks for an alliance
+	id = fengtien.36
+	title = fengtien.36.t
+	desc = fengtien.36.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.36.a
+
+		ai_chance = { factor = 65 }
+
+		add_political_power = 100
+		add_opinion_modifier = { target = PRC modifier = FNG_PRC_ALL } # 150
+		add_opinion_modifier = { target = JAP modifier = FNG_PRC_ALL_JAP } # -15
+		
+		if = {
+			limit = { PRC = { is_in_faction = no }}
+
+			PRC = { create_faction = "Pure Alliance" }
+		}
+
+		PRC = { add_to_faction = FNG }
+	}
+
+	option = {
+		name = fengtien.36.b
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -20
+
+		add_opinion_modifier = { target = PRC modifier = FNG_NO_ALL_PRC } # -10
+	}
+
+	option = {
+		name = fengtien.36.c
+
+		ai_chance = { factor = 70 }
+
+		add_political_power = 20
+
+		add_opinion_modifier = { target = PRC modifier = FNG_NO_ALL_PRC } # -10
+		hidden_effect = { PRC = { country_event = { id = fengtien.40 days = 1 }}}
+	}
+}
+
+country_event = { # Japan demands our incorporation into empire
+	id = fengtien.37
+	title = fengtien.37.t
+	desc = fengtien.37.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.37.a
+
+		ai_chance = { factor = 60 }
+
+		hidden_effect = { JAP = { country_event = { id = fengtien.38 days = 1 }}}
+		add_political_power = -200
+	}
+
+	option = {
+		name = fengtien.37.b
+
+		ai_chance = { factor = 40 }
+
+		end_puppet = FNG
+		add_opinion_modifier = { target = JAP modifier = FNG_LEAVES_JAP } # -250
+
+		if = {
+			limit = { FNG = { is_in_faction_with = JAP }}
+
+			JAP = { remove_from_faction = FNG }
+		}	
+
+		add_opinion_modifier = { target = JAP modifier = embargo }
+		add_political_power = 100
+		hidden_effect = { JAP = { country_event = { id = fengtien.39 days = 1 }}}
+	}
+}
+
+country_event = { # Fengtien Republic accepts the inevitable
+	id = fengtien.38
+	title = fengtien.38.t
+	desc = fengtien.38.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.38.a
+
+		annex_country = { target = FNG transfer_troops = no }
+		add_political_power = -300
+
+		JAP = {
+			add_state_core = 716
+			add_state_core = 328
+			add_state_core = 717
+			add_state_core = 714
+			add_state_core = 715
+		}
+	}
+}
+
+country_event = { # Fengtien Republic rejects our decision
+	id = fengtien.39
+	title = fengtien.39.t
+	desc = fengtien.39.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.39.a
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = fengtien.39.b
+
+		ai_chance = { factor = 70 }
+
+		declare_war_on = { target = FNG type = annex_everything	}
+	}
+}
+
+country_event = { # Fengtien Republic would like us to join them as one Christian nation. Could that work?
+	id = fengtien.40
+	title = fengtien.40.t
+	desc = fengtien.40.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.40.a
+
+		ai_chance = { factor = 30 }
+
+		hidden_effect = { FNG = { country_event = { id = fengtien.41 days = 1 }}}
+	}
+
+	option = {
+		name = fengtien.40.b
+
+		ai_chance = { factor = 70 }
+
+		add_opinion_modifier = { target = FNG modifier = PRC_ALL_FNG } # 50
+
+		if = {
+			limit = { PRC = { is_in_faction = no }}
+
+			PRC = { create_faction = "Pure Alliance" }
+		}
+
+		PRC = { add_to_faction = FNG }
+	}
+
+	option = {
+		name = fengtien.40.c
+
+		ai_chance = { factor = 70 }
+
+		add_political_power = -160
+		add_opinion_modifier = { target = FNG modifier = PRC_NO_ONE_NAT } # -150
+	}
+}
+
+country_event = { # Two republics as one!
+	id = fengtien.41
+	title = fengtien.41.t
+	desc = fengtien.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = fengtien.41.a
+
+		annex_country = { target = PRC transfer_troops = yes }
+		add_political_power = -200
+		add_opinion_modifier = { target = JAP modifier = FNG_PRC_UNION_JAP } # -150 
+		add_manpower = 50000
+
+		every_state = { 
+			limit = { is_core_of = QIE } 
+
+			add_core_of = FNG
+		}
+
+		every_state = { 
+			limit = { is_core_of = PRC } 
+
+			remove_core_of = PRC
+		}
+
+		if = {
+			limit = { NOT = { is_in_faction_with = AOG }}
+
+			# hidden_effect = { FNG = { country_event = { id = days = 1 }}} # event 890706 in Republican China .txt
+		}	
+	}
+}
+
+country_event = { # Two republics as one!
+	id = fengtien.42
+	title = fengtien.42.t
+	desc = fengtien.42.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		controls_state = 622
+		controls_state = 608
+		controls_state = 599
+		controls_state = 325
+		controls_state = 604
+		NOT = {
+			country_exists = PRC
+			country_exists = YUN
+			country_exists = QIE
+			country_exists = AOG
+			country_exists = XSM
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = fengtien.42.a
+
+		add_political_power = -100
+		add_ideas = FNG_CHI_CONQUERED
+		set_country_flag = CHI_unified
+		CHI = { annex_country = { target = FNG transfer_troops = yes } change_tag_from = FNG }
+		add_manpower = 200000
+
+		every_state = { 
+			limit = { is_core_of = QIE } 
+
+			add_core_of = CHI
+		}
+
+		every_state = { 
+			limit = { is_core_of = FNG } 
+
+			remove_core_of = FNG
+		}	
+	}
+}
+
+country_event = { # The capital
+	id = fengtien.43
+	title = fengtien.43.t
+	desc = fengtien.43.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = FNG
+			original_tag = FNG
+		}
+		has_war = no
+		controls_state = 328
+		controls_state = 608
+		controls_state = 613
+		owns_state = 328
+		owns_state = 608
+		owns_state = 613
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = fengtien.43.a
+
+		ai_chance = { factor = 25 }
+
+		set_capital = 328
+	}
+
+	option = {
+		name = fengtien.43.b
+
+		ai_chance = { factor = 25 }
+
+		set_capital = 608
+	}
+
+	option = {
+		name = fengtien.43.c
+
+		ai_chance = { factor = 25 }
+
+		set_capital = 613
+	}
+}

@@ -79,7 +79,7 @@ country_event = { #Germany's Reaction on Russian plans in Caucasus
 		ai_chance = { factor = 20 }
         add_opinion_modifier = { target = RUS modifier = GER_dont_care_caucasus }
 		#Should end guarantees but can't lol paradox fix your shit ^^
-		set_country_flag = RUS_end_protect_caucasus_chain
+		RUS = { set_country_flag = RUS_end_protect_caucasus_chain }
 	}
 
 }
@@ -230,7 +230,7 @@ country_event = { #Russia ignored demands
 		add_opinion_modifier = { target = AZB modifier = GER_declared_war_RUS }
 		add_opinion_modifier = { target = ARM modifier = GER_declared_war_RUS }
 		declare_war_on = { target = RUS type = puppet_wargoal_focus }
-		set_country_flag = RUS_end_protect_caucasus_chain
+		RUS = { set_country_flag = RUS_end_protect_caucasus_chain }
 	}
 	
 	option = {
@@ -245,7 +245,7 @@ country_event = { #Russia ignored demands
 		add_opinion_modifier = { target = AZB modifier = GER_backed_down_caucasus2 }
 		add_opinion_modifier = { target = ARM modifier = GER_backed_down_caucasus2 }
 		add_opinion_modifier = { target = RUS modifier = GER_backed_down_caucasus1 }
-		set_country_flag = RUS_end_protect_caucasus_chain
+		RUS = { set_country_flag = RUS_end_protect_caucasus_chain }
 	}
 
 }
@@ -277,7 +277,7 @@ country_event = { #Remove malus from ceased contacts
 	
 	fire_only_once = yes
 	
-	trigger = { tag = RUS has_global_flag = RUS_GER_ceased_contacts OR = { NOT = { GER = { controls_state = 64 } } GER = { is_puppet = yes } } }
+	trigger = { tag = RUS has_global_flag = RUS_GER_ceased_contacts OR = { NOT = { GER = { controls_state = 64 } } NOT = { GER = { is_faction_leader = no } } GER = { is_puppet = yes } } }
 	
 	mean_time_to_happen = { days = 30 } 
 	
@@ -286,5 +286,619 @@ country_event = { #Remove malus from ceased contacts
 		remove_ideas = rus_ceased_contacts_germany
 	}
 	
+
+}
+
+country_event = { #What to do with DKB
+	id = rusfor.1009
+	title = rusfor.1009.t
+	desc = rusfor.1009.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1009.a #Start consulting with germany
+		ai_chance = { factor = 35 }
+		trigger = { country_exists = GER GER = { is_puppet = no controls_state = 64 } NOT = { has_global_flag = RUS_GER_ceased_contacts GER = { OR = { has_government = totalist has_government = radical_socialist has_government = syndicalist } } } }
+		GER = { country_event = { id = rusfor.1010 } }
+	}
+	
+	option = {
+		name = rusfor.1009.b #Start sending agitators
+		ai_chance = { factor = 30 }
+		trigger = { has_country_flag = RUS_OKH }
+		DKB = { country_event = { id = rusfor.1015 days = 14 } }
+	}
+	
+	option = {
+		name = rusfor.1009.c #Start thinking about a plebiscite
+		ai_chance = { factor = 35 }
+		DKB = { country_event = { id = rusfor.1017 } }
+	}
+
+}
+
+country_event = { #Russia wants to seize Don-Kuban GER
+	id = rusfor.1010
+	title = rusfor.1010.t
+	desc = rusfor.1010.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1010.a #ok
+		ai_chance = { factor = 50 }
+		add_political_power = 60
+		DKB = { country_event = { id = rusfor.1011 } }
+	}
+	
+	option = {
+		name = rusfor.1010.b #no
+		ai_chance = { factor = 50 }
+		RUS = { country_event = { id = rusfor.1014 } }
+	}
+
+}
+
+country_event = { #Russia wants to seize us! DKB
+	id = rusfor.1011
+	title = rusfor.1011.t
+	desc = rusfor.1011.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1011.a #strike
+		ai_chance = { factor = 35 }
+		declare_war_on = { target = RUS type = annex_everything }
+		RUS = { country_event = { id = rusfor.1012 } }
+	}
+	
+	option = {
+		name = rusfor.1011.b #surrender
+		ai_chance = { factor = 35 }
+		RUS = { country_event = { id = rusfor.1013 } }
+	}
+
+}
+
+country_event = { #DKB declared war on us !
+	id = rusfor.1012
+	title = rusfor.1012.t
+	desc = rusfor.1012.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1012.a
+	}
+
+}
+
+country_event = { #DKB surrendered
+	id = rusfor.1013
+	title = rusfor.1013.t
+	desc = rusfor.1013.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1013.a
+		add_political_power = -200
+		add_state_core = 245
+		 add_state_core = 218
+		 add_state_core = 238
+		 add_state_core = 237
+		 add_state_core = 234
+         add_state_core = 235
+         add_state_core = 787	
+         add_state_core = 233	
+         add_state_core = 232
+		annex_country = { target = DKB }
+	}
+
+}
+
+country_event = { #Germans refuse to give up on Don-Kuban
+	id = rusfor.1014
+	title = rusfor.1014.t
+	desc = rusfor.1014.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1014.a #The Russians shall rise up!
+		ai_chance = { factor = 40 }
+		country_event = { id = rusfor.1015 }
+	}
+	
+	option = {
+		name = rusfor.1014.b #Influence local business leaders to organise a plebiscite!
+		ai_chance = { factor = 40 }
+		country_event = { id = rusfor.1017 }
+	}
+	
+	option = {
+		name = rusfor.1014.c #Forget about it
+		ai_chance = { factor = 20 }
+	}
+
+}
+
+country_event = { #The country is thrown into chaos! DKB
+	id = rusfor.1015
+	title = rusfor.1015.t
+	desc = rusfor.1015.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1015.a #The rebels seize the capital!
+		ai_chance = { factor = 50 }
+		RUS = { country_event = { id = rusfor.1016 } }
+		add_political_power = 200
+	}
+	
+	option = {
+		name = rusfor.1015.b #The rebels are crushed!
+		ai_chance = { factor = 50 }
+		add_political_power = -600
+		add_opinion_modifier = { target = RUS modifier = RUS_tried_coup_DKB }
+	}
+
+}
+
+country_event = { #Russian Coup succeeds in Don-Kuban Union
+	id = rusfor.1016
+	title = rusfor.1016.t
+	desc = rusfor.1016.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1016.a #The Don-Kuban Union comes back to the Motherland!
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		add_state_core = 245
+		 add_state_core = 218
+		 add_state_core = 238
+		 add_state_core = 237
+		 add_state_core = 234
+         add_state_core = 235
+         add_state_core = 787	
+         add_state_core = 233	
+         add_state_core = 232
+		annex_country = { target = DKB }
+	}
+	
+	option = {
+		name = rusfor.1016.b #puppet it
+		ai_chance = { factor = 0 }
+		add_political_power = -300
+		puppet = DKB
+	}
+
+}
+
+country_event = { #Business leaders want plebiscite DKB
+	id = rusfor.1017
+	title = rusfor.1017.t
+	desc = rusfor.1017.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1017.a #Allow
+		ai_chance = { factor = 50 }
+		country_event = { id = rusfor.1018 days = 3 }
+	}
+	
+	option = {
+		name = rusfor.1017.b #Don't allow
+		ai_chance = { factor = 50 }
+		RUS = { country_event = { id = rusfor.1019 } }
+	}
+
+}
+
+country_event = { #Plebiscite in the Don-Kuban Union
+	id = rusfor.1018
+	title = rusfor.1018.t
+	desc = rusfor.1018.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1018.a #DKB joins russia
+		ai_chance = { factor = 80 }
+		RUS = { country_event = { id = rusfor.1013 } }
+	}
+	
+	option = {
+		name = rusfor.1018.b #DKB remains independent
+		ai_chance = { factor = 20 }
+		RUS = { country_event = { id = rusfor.1019 } }
+	}
+
+}
+
+country_event = { #Problem with Don-Kuban RUS
+	id = rusfor.1019
+	title = rusfor.1019.t
+	desc = rusfor.1019.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1019.a #Perhaps we have to overthrow Cossack rule over Don-Kuban.
+		ai_chance = { factor = 40 }
+		DKB = { country_event = { id = rusfor.1015 } }
+	}
+	
+	option = {
+		name = rusfor.1019.b #It means war!
+		ai_chance = { factor = 40 }
+		declare_war_on = { target = DKB type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1019.c #we can't defeat them
+		ai_chance = { factor = 20 }
+		add_political_power = -140
+	}
+
+}
+
+country_event = { #The Baku Oil Fields
+	id = rusfor.1020
+	title = rusfor.1020.t
+	desc = rusfor.1020.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1020.a #Take over the Baku Oil Concern and control their Government!
+		ai_chance = { factor = 50 }
+		add_political_power = -100
+		send_equipment = { target = AZB type = infantry_equipment amount = 2000 }
+		AZB = { country_event = { id = rusfor.1021 } }
+	}
+	
+	option = {
+		name = rusfor.1020.b #Guarantee the security of Azerbaijan and invest in the oil fields.
+		ai_chance = { factor = 20 }
+		add_political_power = -50
+		 add_opinion_modifier = { target = AZB modifier = RUS_invest_AZB }
+		 add_opinion_modifier = { target = AZB modifier = RUS_invest_AZB_trade }
+		 give_guarantee = AZB
+		 remove_state_claim = 229
+	}
+	
+	option = {
+		name = rusfor.1020.c #Who built Baku's oil plants? Make plans for a hostile takeover!
+		ai_chance = { factor = 20 }
+		add_political_power = -50
+		add_named_threat = { threat = 3 name = rusfor.1020.t }
+		add_opinion_modifier = { target = AZB modifier = RUS_prepare_war_AZB }
+		create_wargoal = { type = annex_everything target = AZB }
+	}
+	
+	option = {
+		name = rusfor.1020.e #We shall take back our stolen plants by force, right now!
+		ai_chance = { factor = 20 }
+		trigger = { has_country_flag = RUS_EXP }
+		declare_war_on = { target = AZB type = annex_everything }
+		add_named_threat = { threat = 3 name = rusfor.1020.t }
+		add_opinion_modifier = { target = AZB modifier = RUS_declared_war_AZB }
+	}
+
+}
+
+country_event = { #Russian Investment AZB
+	id = rusfor.1021
+	title = rusfor.1021.t
+	desc = rusfor.1021.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1021.a #Invite the Russians to protect and develop Azerbaijan.
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1023 } }
+		custom_effect_tooltip = received_equipment_2000
+		add_opinion_modifier = { target = RUS modifier = RUS_control_AZB }
+		229 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				
+			}
+		load_oob = AZB_protected_RUS
+		
+	}
+	
+	option = {
+		name = rusfor.1021.b #Decline the offer, attempt to limit Russian influence!
+		ai_chance = { factor = 30 }
+		add_political_power = 100
+		add_opinion_modifier = { target = RUS modifier = RUS_control_AZB_declined }
+		RUS = { country_event = { id = rusfor.1022 } }
+	}
+
+}
+
+country_event = { #Azerbaijani resistance
+	id = rusfor.1022
+	title = rusfor.1022.t
+	desc = rusfor.1022.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1022.a #War will solve that
+		ai_chance = { factor = 99 }
+		add_political_power = 20
+		declare_war_on = { target = AZB type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1022.b #Back down
+		ai_chance = { factor = 1 }
+		add_political_power = -40
+		add_opinion_modifier = { target = AZB modifier = RUS_back_down_AZB }
+		remove_state_claim = 229
+	}
+
+}
+
+country_event = { #Azerbaijan agrees
+	id = rusfor.1023
+	title = rusfor.1023.t
+	desc = rusfor.1023.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1023.a #Establish control over the Azeri economy.
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = { target = AZB modifier = RUS_control_AZB_trade }
+		add_political_power = 100
+		puppet = AZB
+		remove_state_claim = 229
+	}
+	
+	option = {
+		name = rusfor.1023.b #Start to plan on how best to incorporate Azerbaijan into Russia!
+		ai_chance = { factor = 60 }
+		trigger = { has_country_flag = RUS_EXP }
+		puppet = AZB
+		add_opinion_modifier = { target = AZB modifier = RUS_control_AZB_trade }
+		add_political_power = -100
+		add_named_threat = { threat = 2 name = rusfor.1023.b }
+	}
+
+}
+
+country_event = { #Integration Azerbaijan
+	id = rusfor.1024
+	title = rusfor.1024.t
+	desc = rusfor.1024.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_country_flag = RUS_EXP AZB = { is_puppet_of = RUS } }
+	
+	mean_time_to_happen = { days = 175 } 
+	
+	option = {
+		name = rusfor.1024.a
+		ai_chance = { factor = 99 }
+		annex_country = { target = AZB }
+		add_state_core = 229
+		add_political_power = -100
+	}
+	
+	option = {
+		name = rusfor.1024.b
+		ai_chance = { factor = 1 }
+	}
+
+}
+
+country_event = { #The Georgian question
+	id = rusfor.1025
+	title = rusfor.1025.t
+	desc = rusfor.1025.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1025.a #War will solve this
+		ai_chance = { factor = 20 }
+		trigger = { has_country_flag = RUS_EXP }
+		declare_war_on = { target = GEO type = annex_everything }
+		add_named_threat = { threat = 3 name = rusfor.1025.t }
+		add_political_power = -80
+	}
+	
+	option = {
+		name = rusfor.1025.b #Threaten them with force
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+		add_named_threat = { threat = 2 name = rusfor.1025.t }
+		GEO = { country_event = { id = rusfor.1026 } }
+	}
+	
+	option = {
+		name = rusfor.1025.c #Covert operations will be good enough.
+		ai_chance = { factor = 20 }
+		trigger = { has_country_flag = RUS_OKH }
+		random_list = { 50 = { GEO = { country_event = { id = rusfor.1029 days = 14 } } }
+		                                  50 = { } }
+	}
+
+}
+
+country_event = { #Russian demands GEO
+	id = rusfor.1026
+	title = rusfor.1026.t
+	desc = rusfor.1026.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1026.a #accept
+		ai_chance = { factor = 20 }
+		add_political_power = -80
+		RUS = { country_event = { id = rusfor.1027 } }		
+	}
+	
+	option = {
+		name = rusfor.1026.b #Never
+		ai_chance = { factor = 80 }
+		add_political_power = 40
+		add_opinion_modifier = { target = RUS modifier = RUS_demands_GEO_declined }
+		RUS = { country_event = { id = rusfor.1028 } }
+	}
+
+}
+
+country_event = { #Georgia submits
+	id = rusfor.1027
+	title = rusfor.1027.t
+	desc = rusfor.1027.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1027.a #Hooray
+		add_political_power = -40
+		if = { limit = { has_country_flag = RUS_EXP } annex_country = { target = GEO } }
+		if = { limit = { has_country_flag = RUS_REAL } puppet = GEO }
+	}
+
+}
+
+country_event = { #Georgian resistance
+	id = rusfor.1028
+	title = rusfor.1028.t
+	desc = rusfor.1028.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1028.a #War will solve that
+		ai_chance = { factor = 99 }
+		add_political_power = 20
+		declare_war_on = { target = GEO type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1028.b #Back down
+		ai_chance = { factor = 1 }
+		add_political_power = -40
+		add_opinion_modifier = { target = AZB modifier = RUS_back_down_GEO }
+	}
+
+}
+
+country_event = { #Russian coup GEO
+	id = rusfor.1029
+	title = rusfor.1029.t
+	desc = rusfor.1029.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1029.a #The rebels take over the capital!
+		ai_chance = { factor = 60 }
+		set_politics = { 
+		ruling_party = authoritarian_democratist
+		elections_allowed = no }
+		RUS = { country_event = { id = rusfor.1030 } }
+	}
+	
+	option = {
+		name = rusfor.1029.b #rebels defeated
+		ai_chance = { factor = 40 }
+		add_political_power = -200
+		RUS = { country_event = { id = rusfor.1031 } }
+	}
+
+}
+
+country_event = { #Georgia falls
+	id = rusfor.1030
+	title = rusfor.1030.t
+	desc = rusfor.1030.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1030.a #Incorporate Georgia into Russia!
+		ai_chance = { factor = 60 }
+		trigger = { has_country_flag = RUS_EXP }
+		annex_country = { target = GEO }
+	}
+	
+	option = {
+		name = rusfor.1030.b #take control of the new governement
+		ai_chance = { factor = 40 }
+		puppet = GEO
+	}
+
+}
+
+country_event = { #Russian coup failed
+	id = rusfor.1031
+	title = rusfor.1031.t
+	desc = rusfor.1031.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1031.a #war
+		ai_chance = { factor = 70 }
+		add_political_power = -20
+		declare_war_on = { target = GEO type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1031.b #let them be
+		ai_chance = { factor = 30 }
+		add_political_power = -60
+	}
 
 }

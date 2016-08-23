@@ -827,6 +827,7 @@ country_event = {
 			ruling_party = radical_socialist
 		}
 		hidden_effect = {
+			set_country_flag = chairmann
 			clr_country_flag = philip_snowden_resigns
 		}
 	}
@@ -1058,7 +1059,6 @@ country_event = {
 	option = {
 		name = uob.17.b
 		hidden_effect = {
-			set_country_flag = ENG_show_of_force_support
 			ENG = {
 				news_event = { id = uob.19 days = 3 }
 				set_country_flag = ENG_CAN_support
@@ -2000,6 +2000,186 @@ country_event = {
 	}
 }
 
+### T.E. Lawrence
+
+# Hello there
+
+country_event = {
+	id = uob.150
+	title = uob.150.t
+	desc = uob.150.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.150.a
+		set_country_flag = lawrence
+	}
+	
+	option = {
+		name = uob.150.b
+	}
+}
+
+# Drop him
+
+country_event = {
+	id = uob.151
+	title = uob.151.t
+	desc = uob.151.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		has_war_with = GER
+		has_country_flag = lawrence
+	}
+	
+	mean_time_to_happen = { days = 50 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.151.a
+		GER = {
+			set_country_flag = lawrence_deployed
+		}
+		send_equipment = { target = FRA type = infantry_equipment amount = 500 }
+		clr_country_flag = lawrence
+	}
+	
+	option = {
+		name = uob.151.b
+		clr_country_flag = lawrence
+	}
+}
+
+country_event = {
+	id = uob.152
+	title = uob.152.t
+	desc = uob.152.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = GER
+		has_country_flag = lawrence_deployed
+	}
+	
+	mean_time_to_happen = { days = 30 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.152.a
+		42 = {
+			remove_building = { type = arms_factory level = 1 }
+		}
+		780 = {
+			remove_building = { type = arms_factory level = 1 }
+		}	
+		hidden_effect = {
+			country_event = { id = uob.153 days = 30 }
+		}
+	}
+}
+
+country_event = {
+	id = uob.153
+	title = uob.153.t
+	desc = uob.153.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.153.a
+		781 = {
+			remove_building = { type = arms_factory level = 1 }
+		}
+		51 = {
+			remove_building = { type = arms_factory level = 1 }
+		}	
+		hidden_effect = {
+			country_event = { id = uob.154 days = 30 }
+		}
+	}
+}
+
+country_event = {
+	id = uob.154
+	title = uob.154.t
+	desc = uob.154.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.154.a
+		55 = {
+			remove_building = { type = arms_factory level = 1 }
+		}
+		60 = {
+			remove_building = { type = arms_factory level = 1 }
+		}	
+		hidden_effect = {
+			random_list = {
+				50 = { news_event = { id = uob.155 days = 14 } }
+				50 = { news_event = { id = uob.156 days = 14 } }
+			}
+		}
+	}
+}
+
+news_event = {
+	id = uob.155
+	title = uob.155.t
+	desc = uob.155.d
+	picture = GFX_news_event_polish_resistance_warsaw
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.155.a
+		trigger = {
+			tag = ENG
+		}
+		set_country_flag = lawrence_back
+	}
+	
+	option = {
+		name = uob.155.b
+		trigger = {
+			tag = GER
+		}
+		clr_country_flag = lawrence_deployed
+	}
+}
+
+news_event = {
+	id = uob.156
+	title = uob.156.t
+	desc = uob.156.d
+	picture = GFX_news_event_generic_funeral
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.156.a
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.156.b
+		trigger = {
+			tag = GER
+		}
+		clr_country_flag = lawrence_deployed
+	}
+}
+
 ################
 ### Revolution
 ################
@@ -2089,9 +2269,22 @@ country_event = {
 						has_completed_focus = ENG_central_command
 					}
 				}
-				random_list = {
-					30 = { country_event = { id = uob.211 days = 2 } } # Yay...?
-					70 = { country_event = { id = uob.212 days = 2 } } # Nay
+				if = { 
+					limit = {
+						has_country_flag = lawrence_back
+					}
+					random_list = {
+						30 = { country_event = { id = uob.211 days = 2 } } # Yay...?
+						70 = { country_event = { id = uob.212 days = 2 } } # Nay
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = lawrence_back
+						}
+					}
+					country_event = { id = uob.211 days = 2 }
 				}
 			}
 		}
@@ -2318,15 +2511,7 @@ country_event = {
 	option = { # The day after a revolution
 		name = uob.213.a
 		hidden_effect = {
-			retire_country_leader = yes
-			create_country_leader = {
-				name = "Oswald Mosley"
-				desc = "ENG_mosley_desc"
-				picture = "Portrait_England_Oswald_Mosley.tga"
-				expire = "1965.1.1"
-				ideology = totalist_subtype
-				traits = { dictator }
-			}
+			add_country_leader_trait = dictator
 			set_politics = {
 				ruling_party = totalist
 			}

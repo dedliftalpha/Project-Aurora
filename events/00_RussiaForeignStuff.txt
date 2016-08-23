@@ -31,6 +31,125 @@ country_event = { #Unlock focus tree
 
 }
 
+country_event = { #Security of the Eastern border TUR
+	id = rusfor.2
+	title = rusfor.2.t
+	desc = rusfor.2.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = TUR is_puppet = no RUS = { is_puppet = no } country_exists = EGY country_exists = SAU NOT = { has_war_with = RUS is_in_faction_with = RUS is_in_faction_with = GER is_in_faction_with = EGY is_in_faction_with = SAU EGY = { is_puppet_of = TUR } SAU = { is_puppet_of = TUR } }
+	OR = { 231 = { is_controlled_by = RUS } any_country = { AND = { is_puppet_of = RUS controls_state = 231 } } } TUR = { controls_state = 291 controls_state = 554 } }
+	
+	option = {
+		name = rusfor.2.a #Send the Prince!
+		ai_chance = { factor = 70 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = TUR_initiated_NAP_RUS }
+		RUS = { country_event = { id = rusfor.3 } }
+	}
+	
+	option = {
+		name = rusfor.2.b #No deals with the russians !
+		ai_chance = { factor = 30 }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Nap with Ottomans !
+	id = rusfor.3
+	title = rusfor.3.t
+	desc = rusfor.3.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.3.a #ok sign it
+		ai_chance = { factor = 40 }
+		diplomatic_relation = { country = TUR relation = non_aggression_pact }
+		add_political_power = -20
+		add_opinion_modifier = { target = TUR modifier = TUR_initiated_NAP_RUS }
+		TUR = { country_event = { id = rusfor.4 } }
+	}
+	
+	option = {
+		name = rusfor.3.b #Include armenia in deal
+		ai_chance = { factor = 55 }
+		trigger = { ARM = { is_puppet_of = TUR } }
+		add_political_power = 20
+		TUR = { country_event = { id = rusfor.5 } }
+	}
+	
+	option = {
+		name = rusfor.3.c #No
+		ai_chance = { factor = 5 }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Non-aggression pact with Russians was signed
+	id = rusfor.4
+	title = rusfor.4.t
+	desc = rusfor.4.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.4.a #yeaaah
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		add_opinion_modifier = { target = RUS modifier = TUR_finished_NAP_RUS }
+	}
+
+}
+
+country_event = { #Russia wants armenia
+	id = rusfor.5
+	title = rusfor.5.t
+	desc = rusfor.5.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.5.a #abandon armenia
+		ai_chance = { factor = 70 }
+		end_puppet = ARM
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.6 } }
+	}
+	
+	option = {
+		name = rusfor.5.b #we won't give up on armenia !
+		ai_chance = { factor = 30 }
+		add_political_power = -40
+		add_opinion_modifier = { target = RUS modifier = TUR_refused_armenia_deal }
+	}
+
+}
+
+country_event = { #NAP is signed with armenia ! RUS
+	id = rusfor.6
+	title = rusfor.6.t
+	desc = rusfor.6.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.6.a #hurray !
+		diplomatic_relation = { country = TUR relation = non_aggression_pact }
+		add_political_power = 100
+		set_country_flag = RUS_armenia_liberated_NAP
+	}
+
+}
+
 #Foreign Politics Focuses Events
 ###########################
 
@@ -899,6 +1018,354 @@ country_event = { #Russian coup failed
 		name = rusfor.1031.b #let them be
 		ai_chance = { factor = 30 }
 		add_political_power = -60
+	}
+
+}
+
+country_event = { #Status of armenia
+	id = rusfor.1032
+	title = rusfor.1032.t
+	desc = rusfor.1032.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1032.a #Demand their incorporation!
+		ai_chance = { factor = 60 }
+		trigger = { has_country_flag = RUS_EXP }
+		ARM = { country_event = { id = rusfor.1033 } }
+		add_political_power = 40
+		add_opinion_modifier = { target = ARM modifier = RUS_incorporate_armenia }
+	}
+	
+	option = {
+		name = rusfor.1032.b #establish control over their government
+		ai_chance = { factor = 40 }
+		add_political_power = 20
+		ARM = { country_event = { id = rusfor.1036 } }
+		add_opinion_modifier = { target = ARM modifier = RUS_puppet_armenia }
+	}
+
+}
+
+country_event = { #Russians demand annex
+	id = rusfor.1033
+	title = rusfor.1033.t
+	desc = rusfor.1033.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1033.a #accept
+		ai_chance = { factor = 85 }
+		RUS = { country_event = { id = rusfor.1034 } }
+		add_political_power = -80
+	}
+	
+	option = {
+		name = rusfor.1033.b #Never !
+		ai_chance = { factor = 15 }
+		add_political_power = 40
+		RUS = { country_event = { id = rusfor.1035 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_puppet_armenia_declined }
+	}
+
+}
+
+country_event = { #Armenian submission
+	id = rusfor.1034
+	title = rusfor.1034.t
+	desc = rusfor.1034.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1034.a
+		annex_country = { target = ARM }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Armenian Resistance
+	id = rusfor.1035
+	title = rusfor.1035.t
+	desc = rusfor.1035.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1035.a #war
+		ai_chance = { factor = 99 }
+		declare_war_on = { target = ARM type = annex_everything }
+		add_political_power = 20
+	}
+	
+	option = {
+		name = rusfor.1035.b #back down
+		ai_chance = { factor = 1 }
+		add_political_power = -40
+		add_opinion_modifier = { target = ARM modifier = RUS_back_down_ARM }
+	}
+
+}
+
+country_event = { #Russians demand puppet
+	id = rusfor.1036
+	title = rusfor.1036.t
+	desc = rusfor.1036.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1036.a #accept
+		ai_chance = { factor = 100 }
+		RUS = { country_event = { id = rusfor.1037 } }
+		add_political_power = 20
+	}
+	
+	option = {
+		name = rusfor.1036.b #Never !
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		RUS = { country_event = { id = rusfor.1035 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_puppet_armenia_declined }
+	}
+
+}
+
+country_event = { #Armenian submission
+	id = rusfor.1037
+	title = rusfor.1037.t
+	desc = rusfor.1037.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1037.a
+		puppet = ARM
+		add_political_power = 40
+	}
+
+}
+
+country_event = { #Status of armenia
+	id = rusfor.1038
+	title = rusfor.1038.t
+	desc = rusfor.1038.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1038.a #Demand their incorporation!
+		ai_chance = { factor = 60 }
+		trigger = { has_country_flag = RUS_EXP }
+		ARM = { country_event = { id = rusfor.1039 } }
+		add_political_power = 40
+		add_opinion_modifier = { target = ARM modifier = RUS_incorporate_armenia }
+	}
+	
+	option = {
+		name = rusfor.1038.b #establish control over their government
+		ai_chance = { factor = 40 }
+		add_political_power = 20
+		ARM = { country_event = { id = rusfor.1045 } }
+		add_opinion_modifier = { target = ARM modifier = RUS_puppet_armenia }
+	}
+	
+	option = {
+		name = rusfor.1038.c #war will solve this
+		ai_chance = { factor = 20 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_political_power = -80
+		declare_war_on = { target = ARM type = annex_everything }
+		add_named_threat = { threat = 3 name = rusfor.1038.t }
+		
+	}
+	
+	option = {
+		name = rusfor.1038.e #covert operations
+		ai_chance = { factor = 20 }
+		trigger = { has_country_flag = RUS_OKH }
+		ARM = { country_event = { id = rusfor.1042 days = 10 } }
+		
+	}
+
+}
+
+country_event = { #Russians demand annex
+	id = rusfor.1039
+	title = rusfor.1039.t
+	desc = rusfor.1039.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1039.a #accept
+		ai_chance = { factor = 60 }
+		trigger = { NOT = { is_puppet_of = TUR } }
+		RUS = { country_event = { id = rusfor.1040 } }
+		add_political_power = 80
+	}
+	
+	option = {
+		name = rusfor.1039.b #Never !
+		ai_chance = { factor = 40 }
+		add_political_power = -40
+		RUS = { country_event = { id = rusfor.1041 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_puppet_armenia_declined }
+	}
+
+}
+
+country_event = { #Armenian submission
+	id = rusfor.1040
+	title = rusfor.1040.t
+	desc = rusfor.1040.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1040.a
+		annex_country = { target = ARM }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Armenian Resistance
+	id = rusfor.1041
+	title = rusfor.1041.t
+	desc = rusfor.1041.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1041.a #war
+		ai_chance = { factor = 99 }
+		declare_war_on = { target = ARM type = annex_everything }
+		add_political_power = 20
+	}
+	
+	option = {
+		name = rusfor.1041.b #back down
+		ai_chance = { factor = 1 }
+		add_political_power = -40
+		add_opinion_modifier = { target = ARM modifier = RUS_back_down_ARM }
+	}
+
+}
+
+country_event = { #Russian coup ARM
+	id = rusfor.1042
+	title = rusfor.1042.t
+	desc = rusfor.1042.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1042.a #rebels win
+		ai_chance = { factor = 40 }
+		RUS = { country_event = { id = rusfor.1043 } }
+	}
+	
+	option = {
+		name = rusfor.1042.b #rebels lose
+		ai_chance = { factor = 60 }
+		add_political_power = -200
+		RUS = { country_event = { id = rusfor.1044 } }
+	}
+
+}
+
+country_event = { #Armenia falls
+	id = rusfor.1043
+	title = rusfor.1043.t
+	desc = rusfor.1043.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1043.a
+		if = { limit = { has_country_flag = RUS_EXP } annex_country = { target = ARM } }
+		if = { limit = { has_country_flag = RUS_REAL } puppet = ARM }
+	}
+
+}
+
+country_event = { #Russian coup failed
+	id = rusfor.1044
+	title = rusfor.1044.t
+	desc = rusfor.1044.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1044.a #Crush them
+		ai_chance = { factor = 70 }
+		declare_war_on = { target = ARM type = annex_everything }
+		add_political_power = -40
+	}
+	
+	option = {
+		name = rusfor.1044.b #leave them be
+		ai_chance = { factor = 30 }
+		add_political_power = -60
+	}
+
+}
+
+country_event = { #Russians demand puppet
+	id = rusfor.1045
+	title = rusfor.1045.t
+	desc = rusfor.1045.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1045.a #accept
+		ai_chance = { factor = 100 }
+		trigger = { NOT = { is_puppet_of = TUR } }
+		RUS = { country_event = { id = rusfor.1046 } }
+		add_political_power = 20
+	}
+	
+	option = {
+		name = rusfor.1045.b #Never !
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		RUS = { country_event = { id = rusfor.1041 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_puppet_armenia_declined }
+	}
+
+}
+
+country_event = { #Armenian submission
+	id = rusfor.1046
+	title = rusfor.1046.t
+	desc = rusfor.1046.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1046.a
+		puppet = ARM
+		add_political_power = 40
 	}
 
 }

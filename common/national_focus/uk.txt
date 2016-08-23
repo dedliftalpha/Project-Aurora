@@ -76,35 +76,6 @@ focus_tree = {
 			}
 		}
 	}
-	
-	focus = {
-		id = ENG_political_commissars
-		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = ENG_tuc_internal }
-		available = { has_idea = ENG_tuc_internal_mosley_idea }
-		x = 8
-		y = 2
-		cost = 5
-		
-		completion_reward = {
-			add_political_power = -50
-		}
-	}
-	
-	focus = {
-		id = ENG_country_reorganization
-		icon = GFX_goal_generic_neutrality_focus
-		prerequisite = { focus = ENG_tuc_internal }
-		available = { has_idea = ENG_tuc_internal_glaise_idea }
-		x = 6
-		y = 2
-		cost = 5
-		
-		completion_reward = {
-			add_political_power = -50
-		}
-	}
-	
 	# Military
 	
 	focus = {
@@ -157,13 +128,30 @@ focus_tree = {
 		id = ENG_central_industry_research
 		icon = GFX_focus_research
 		prerequisite = { focus = ENG_tuc_economy }
-		available = { has_idea = ENG_tuc_economy_mosley_idea }
+		available = {
+			has_idea = ENG_tuc_economy_mosley_idea 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 0
 		y = 2
 		cost = 5
 		
 		completion_reward = {
 			add_research_slot = 1
+			add_tech_bonus = {		
+				name = concentrated_industry_bonus
+				bonus = 0.5
+				uses = 1
+				technology = concentrated_industry
+				technology = concentrated_industry2
+				technology = concentrated_industry3
+				technology = concentrated_industry4
+			}
 		}
 	}
 	
@@ -171,7 +159,15 @@ focus_tree = {
 		id = ENG_local_help
 		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = ENG_tuc_economy }
-		available = { has_idea = ENG_tuc_economy_glaise_idea }
+		available = { 
+			has_idea = ENG_tuc_economy_glaise_idea 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 2
 		y = 2
 		cost = 5
@@ -194,7 +190,14 @@ focus_tree = {
 		id = ENG_expand_industry_1
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_tuc_economy focus = ENG_central_industry_research focus = ENG_local_help }
-		available = { }
+		available = { 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 1
 		y = 3
 		cost = 5
@@ -272,6 +275,12 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
+			add_tech_bonus = {		
+				name = synthetic_industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = synth_resources
+			}
 		}
 	}
 	
@@ -438,6 +447,9 @@ focus_tree = {
 			release_puppet = WAL
 			release_puppet = SCT
 			hidden_effect = {
+			#	ENG = { 				### Set Autonomist government
+			#		country_event = { id = uob.XX days = 1 }
+			#	}
 				add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
 				add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
 			}
@@ -445,6 +457,51 @@ focus_tree = {
 	}
 	
 	# Internal
+	
+	focus = {
+		id = ENG_political_commissars
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ENG_tuc_internal }
+		available = { 
+			has_idea = ENG_tuc_internal_mosley_idea 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 8
+		y = 2
+		cost = 5
+		
+		completion_reward = {
+			add_political_power = -50
+		}
+	}
+	
+	focus = {
+		id = ENG_country_reorganization
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = ENG_tuc_internal }
+		available = {
+			has_idea = ENG_tuc_internal_glaise_idea 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 6
+		y = 2
+		cost = 5
+		
+		completion_reward = {
+			add_political_power = -50
+		}
+	}
+	
 	
 	focus = {
 		id = ENG_three_under_one
@@ -484,7 +541,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_strengthen_chairman
+		id = ENG_merge_chairman_and_secretary
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = ENG_political_commissars }
 		available = { }
@@ -493,17 +550,46 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-			add_political_power = -200
+			if = {
+				limit = {
+					has_country_flag = horner_chairman
+				}
+				country_event = { id = uob.102 days = 1 }
+			}
+			if = {
+				limit = {
+					has_country_flag = mosley_chairman
+				}
+				country_event = { id = uob.103 days = 1 }
+			}
+			if = {
+				limit = {
+					has_country_flag = kenney_chairman
+				}
+				country_event = { id = uob.104 days = 1 }
+			}
+			if = {
+				limit = {
+					has_country_flag = glais_chairman
+				}
+				country_event = { id = uob.105 days = 1 }
+			}
 		}
 	}
-	
-	# Federationist reforms
 	
 	focus = {
 		id = ENG_defend_the_revolution
 		icon = GFX_goal_generic_defence
 		prerequisite = { focus = ENG_tuc_internal }
-		available = { has_idea = ENG_tuc_internal_fem_idea }
+		available = { 
+			has_idea = ENG_tuc_internal_fem_idea 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 7
 		y = 3
 		cost = 5
@@ -512,6 +598,8 @@ focus_tree = {
 			add_political_power = -50
 		}
 	}	
+	
+	# Federationist reforms
 	
 	focus = {
 		id = ENG_city_upon_a_hill
@@ -544,8 +632,7 @@ focus_tree = {
 	focus = {
 		id = ENG_evolution
 		icon = GFX_goal_support_communism
-		prerequisite = { focus = ENG_turn_the_other_cheek }
-		prerequisite = { focus = ENG_city_upon_a_hill }
+		prerequisite = { focus = ENG_turn_the_other_cheek focus = ENG_city_upon_a_hill }
 		mutually_exclusive = { focus = ENG_devolution }
 		mutually_exclusive = { focus = ENG_revolution }
 		available = { }
@@ -608,11 +695,11 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
-			
-			### Todo
-			# Dependending on events, ideas, etc. should maybe cause a civil war
-			
+			custom_effect_tooltip = ENG_revolution_tp
+			hidden_effect = {
+				country_event = { id = uob.201 days = 1 }
 			}
+		}
 	}
 	
 	# Military
@@ -621,7 +708,16 @@ focus_tree = {
 		id = ENG_experience_exchange_instruction
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_mosley_idea has_country_flag = ENG_defecting_officers }
+		available = { 
+			has_idea = ENG_tuc_military_mosley_idea
+			has_country_flag = ENG_defecting_officers
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 12
 		y = 2
 		cost = 5
@@ -658,7 +754,16 @@ focus_tree = {
 		id = ENG_good_riddance
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_glaise_idea has_country_flag = ENG_defecting_officers }
+		available = { 
+			has_idea = ENG_tuc_military_glaise_idea 
+			has_country_flag = ENG_defecting_officers
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 14
 		y = 2
 		cost = 5
@@ -676,7 +781,16 @@ focus_tree = {
 		id = ENG_officer_recall_vote
 		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = ENG_tuc_military }
-		available = { has_idea = ENG_tuc_military_fem_idea has_country_flag = ENG_defecting_officers }
+		available = { 
+			has_idea = ENG_tuc_military_fem_idea 
+			has_country_flag = ENG_defecting_officers
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			} 
+		}
 		x = 13
 		y = 3
 		cost = 5
@@ -700,10 +814,7 @@ focus_tree = {
 				}
 			}
 		}
-	}	
-	
-	### Todo
-	# Event chain for rebellious officers?
+	}
 	
 	focus = {
 		id = ENG_central_command
@@ -821,7 +932,7 @@ focus_tree = {
 		
 		completion_reward = {
 			ENG = {
-			country_event = { id = uob.5 days = 1 }
+			country_event = { id = uobflavour.18 days = 1 }
 			}
 		}
 	}
@@ -860,7 +971,15 @@ focus_tree = {
 		id = ENG_copenhagen_conference
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = ENG_tuc_foreign }
-		available = { has_idea = ENG_tuc_foreign_glaise_idea }
+		available = { 
+			has_idea = ENG_tuc_foreign_glaise_idea
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 16
 		y = 2
 		cost = 10
@@ -877,6 +996,12 @@ focus_tree = {
 			OR = {
 				has_idea = ENG_tuc_foreign_glaise_idea
 				has_idea = ENG_tuc_foreign_fem_idea
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
 			}
 		}
 		x = 18
@@ -932,7 +1057,14 @@ focus_tree = {
 		id = ENG_show_of_force
 		icon = GFX_goal_generic_occupy_states_coastal
 		prerequisite = { focus = ENG_tuc_foreign }
-		available = { }
+		available = { 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
 		x = 19
 		y = 3
 		cost = 10
@@ -977,6 +1109,19 @@ focus_tree = {
 		completion_reward = {
 			create_wargoal = { type = annex_everything target = IRE }
 			create_wargoal = { type = puppet_wargoal_focus target = IRE }
+		}
+	}
+	
+	focus = {
+		id = ENG_show_of_force_fate
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = ENG_show_of_force_diplo focus = ENG_show_of_force_aggro }
+		available = { }
+		x = 19
+		y = 5
+		cost = 10
+		
+		completion_reward = {
 		}
 	}
 	
@@ -1075,12 +1220,27 @@ focus_tree = {
 		id = ENG_third_international
 		icon = GFX_goal_support_communism
 		available = { FRA = { has_completed_focus = FRA_Host_the_Internationale } }
-		x = 26
+		x = 23
 		y = 0
 		cost = 5
 		
 		completion_reward = {
 		
+		}
+	}
+	
+	focus = {
+		id = ENG_go_with_france
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = ENG_third_international }
+		x = 23
+		y = 1
+		cost = 5
+		
+		completion_reward = {
+			FRA = {
+				add_to_faction = ENG
+			}
 		}
 	}
 	
@@ -1092,7 +1252,7 @@ focus_tree = {
 		id = ENG_phalanstere_internationale
 		icon = GFX_goal_generic_production
 		prerequisite = { focus = ENG_third_international }
-		x = 28
+		x = 26
 		y = 1
 		cost = 10
 		
@@ -1107,7 +1267,7 @@ focus_tree = {
 		id = ENG_develop_europe
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
-		x = 26
+		x = 24
 		y = 2
 		cost = 10
 		
@@ -1141,7 +1301,7 @@ focus_tree = {
 		id = ENG_develop_middle_east
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
-		x = 27
+		x = 25
 		y = 3
 		cost = 10
 		
@@ -1175,7 +1335,7 @@ focus_tree = {
 		id = ENG_develop_far_east
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
-		x = 28
+		x = 26
 		y = 2
 		cost = 10
 		
@@ -1209,7 +1369,7 @@ focus_tree = {
 		id = ENG_develop_central_america
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
-		x = 29
+		x = 27
 		y = 3
 		cost = 10
 		
@@ -1244,7 +1404,7 @@ focus_tree = {
 		id = ENG_develop_south_america
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = ENG_phalanstere_internationale }
-		x = 30
+		x = 28
 		y = 2
 		cost = 10
 		
@@ -1284,10 +1444,18 @@ focus_tree = {
 		icon = GFX_goal_generic_territory_or_war
 		prerequisite = { focus = ENG_third_international }
 		prerequisite = { focus = ENG_tuc_foreign }
-		available = { OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
-								has_idea = ENG_tuc_foreign_fem_idea		}
+		available = { 
+			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
+					has_idea = ENG_tuc_foreign_fem_idea		
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
 		}
-		x = 24
+		x = 22
 		y = 2
 		cost = 10
 		
@@ -1302,7 +1470,7 @@ focus_tree = {
 		id = ENG_send_help_to_spain
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = ENG_military_interventions }
-		x = 25
+		x = 23
 		y = 3
 		cost = 10
 		
@@ -1315,7 +1483,7 @@ focus_tree = {
 		id = ENG_send_help_to_india
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = ENG_military_interventions }
-		x = 24
+		x = 22
 		y = 4
 		cost = 10
 		
@@ -1328,7 +1496,7 @@ focus_tree = {
 		id = ENG_send_help_to_america
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = ENG_military_interventions }
-		x = 23
+		x = 21
 		y = 3
 		cost = 10
 		

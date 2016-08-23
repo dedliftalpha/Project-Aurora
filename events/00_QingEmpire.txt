@@ -51,7 +51,7 @@ country_event = { # Pu Yi speaks!
 		ai_chance = { factor = 75 }
 
 		add_political_power = 60
-		hidden_effect = { country_event = { id = qing.7 months = 4 }}
+		hidden_effect = { country_event = { id = qing.7 days = 120 }}
 	}
 
 	option = {
@@ -220,16 +220,7 @@ country_event = { # The New Reformation
 	desc = qing.7.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = QIE
-		date > 1938.1.26
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = qing.7.a
@@ -452,7 +443,7 @@ country_event = { # The Agrarian Reform
 	}
 }
 
-country_event = { # The Agrarian Reform
+country_event = { # Politicians and Economic Reform
 	id = qing.11
 	title = qing.11.t
 	desc = qing.11.d
@@ -1119,7 +1110,7 @@ country_event = { # Intelectualls demand constitutional monarchy!
 	}
 
 	option = {
-		name = qing.18.a
+		name = qing.18.b
 
 		ai_chance = { factor = 10 }
 
@@ -1236,7 +1227,7 @@ country_event = { # Intellectuals give support to Kuomitang
 	}
 
 	option = {
-		name = qing.19.a
+		name = qing.19.b
 
 		ai_chance = { factor = 10 }
 
@@ -1355,7 +1346,7 @@ country_event = { # Intellectuals give support to Kuomitang
 	}
 
 	option = {
-		name = qing.20.a
+		name = qing.20.b
 
 		ai_chance = { factor = 70 }
 
@@ -1943,7 +1934,7 @@ country_event = { # The Expanding Qing Empire
 		ai_chance = { factor = 50 }
 
 		add_opinion_modifier = { target = QIE modifier = GER_DEM_SHAN } # -25
-		hidden_effect = { country_event = { id = qing.41 days = 1 }}
+		hidden_effect = { QIE = { country_event = { id = qing.41 days = 1 }}}
 	}
 
 	option = {
@@ -1959,7 +1950,7 @@ country_event = { # The Expanding Qing Empire
 
 		ai_chance = { factor = 20 }
 
-		hidden_effect = { country_event = { id = qing.42 days = 1 }}
+		hidden_effect = { QIE = { country_event = { id = qing.42 days = 1 }}}
 		add_opinion_modifier = { target = QIE modifier = GER_NO_PUYI } # -25
 		add_opinion_modifier = { target = JAP modifier = GER_NO_PUYI } # -25
 	}
@@ -3409,7 +3400,7 @@ country_event = { # We still haven't heard anything from Yunnan...
 	
 	trigger = {
 		tag = QIE
-		has_global_flag = CYN_ignore
+		has_global_flag = CYN_ignore 
 		NOT = { country_exists = AOG }
 		NOT = { country_exists = PRC }
 		NOT = { has_war_with = YUN }
@@ -3737,9 +3728,15 @@ country_event = { # Dealing with Xibei San Ma
 	trigger = {
 		tag = QIE
 		country_exists = XSM
+		owns_state = 622
+		owns_state = 599
+		owns_state = 325
 		NOT = {	
 			has_war = yes
 			country_exists = CHI
+			country_exists = AOG
+			country_exists = PRC
+			country_exists = YUN
 			XSM = { is_puppet = yes }
 			is_puppet = yes 
 		}
@@ -3820,7 +3817,7 @@ country_event = { # The Qing want to talk
 
 		ai_chance = { factor = 30 }
 
-		declare_war_on = { target = XSM type = annex_everything	}
+		declare_war_on = { target = QIE type = annex_everything	}
 	}
 
 	option = {
@@ -3828,7 +3825,7 @@ country_event = { # The Qing want to talk
 
 		ai_chance = { factor = 10 }
 
-		hidden_effect = { XSM = { country_event = { id = qing.90 days = 1 }}}
+		hidden_effect = { QIE = { country_event = { id = qing.90 days = 1 }}}
 	}
 }
 
@@ -4817,9 +4814,9 @@ country_event = { # Qing deal
 	}
 }
 
-### Dealing with Mongolia
+### Dealing Mongolia
 
-country_event = { # Fate of Tibet
+country_event = { # Fate of Mongolia
 	id = qing.119
 	title = qing.119.t
 	desc = qing.119.d
@@ -4829,7 +4826,7 @@ country_event = { # Fate of Tibet
 	
 	trigger = {
 		tag = QIE
-		country_exists = TIB
+		country_exists = MON
 		controls_state = 617
 		MON = { controls_state = 330 }
 		NOT = {
@@ -4968,7 +4965,7 @@ country_event = { # The fate of Sternberg
 		ai_chance = { factor = 40 }
 
 		add_opinion_modifier = { target = RUS modifier = QIE_RET_STERN } # 20
-		hidden_effect = { QIE = { country_event = { id = qing.124 days = 1 }}}
+		hidden_effect = { RUS = { country_event = { id = qing.124 days = 1 }}}
 		add_political_power = -20
 	}
 
@@ -5262,7 +5259,7 @@ country_event = { # Fengtian
 		controls_state = 325
 		has_war = no
 		is_puppet = no
-		is_in_faction_with = FNG
+		NOT = { is_in_faction_with = FNG }
 		NOT = {
 			country_exists = CHI
 			country_exists = AOG
@@ -5544,7 +5541,7 @@ country_event = { # The Final Decision
 	    white_peace = JAP
 	    white_peace = RUS
 	    white_peace = SOV
-	    remove_from_faction = FNG
+	    JAP = { remove_from_faction = FNG }
 	    end_puppet = FNG
 
 	    if = {
@@ -5560,11 +5557,11 @@ country_event = { # The Final Decision
 	    		}
 	    	}
 
-	    	# hidden_effect = { FNG = { country_event = { id =  days = 0 }}} 627061 in Fengtiang Republic events file
+	    	hidden_effect = { JAP = { country_event = { id = fengtien.3 days = 0 }}}
 	    	set_global_flag = MAN_leave_japan
 	    }
 
-	    # hidden_effect = { FNG = { country_event = { id = days = 0 }}} 627062 in Fengtiang Republic events file
+	    hidden_effect = { QIE = { country_event = { id = fengtien.4 days = 0 }}}
 
 	    add_opinion_modifier = { target = JAP modifier = FNG_JAP_FREE } # -100
 	    add_opinion_modifier = { target = QIE modifier = FNG_QIE_FREE } # 50
@@ -5587,7 +5584,7 @@ country_event = { # The Final Decision
 	    add_opinion_modifier = { target = QIE modifier = FNG_QIE_QIE } # 200
 	    add_opinion_modifier = { target = GER modifier = FNG_GER_QIE } # 100
 
-	    # hidden_effect = { FNG = { country_event = { id = days = 0 }}} 627066 in Fengtiang Republic events file
+	    hidden_effect = { QIE = { country_event = { id = fengtien.5 days = 0 }}}
 	}
 }
 
@@ -5940,6 +5937,7 @@ country_event = { # New directions
 		clr_global_flag = CSX_united
 		add_political_power = -300
 		add_state_claim = 408
+		add_state_claim = 409
 		add_opinion_modifier = { target = RUS modifier = QIE_DEM_VLA } # -100
 		add_opinion_modifier = { target = TRM modifier = QIE_DEM_VLA } # -100
 		add_opinion_modifier = { target = SIB modifier = QIE_DEM_VLA } # -100
@@ -5948,7 +5946,7 @@ country_event = { # New directions
 	}
 
 	option = {
-		name = qing.149.a
+		name = qing.149.b
 
 	    ai_chance = { factor = 20 }
 
@@ -5968,11 +5966,401 @@ country_event = { # New directions
 	}
 
 	option = {
-		name = qing.149.a
+		name = qing.149.c
 
 	    ai_chance = { factor = 60 }
 
 	    clr_global_flag = CSX_united
 	    add_political_power = 300
+	}	
+}
+
+###############################################################
+############### The Sino Coalition by esmaerla ################
+###############################################################
+
+country_event = { # The War of Resistance
+	id = qing.150
+	title = qing.150.t
+	desc = qing.150.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = QIE
+		is_puppet = no
+		OR = {
+			has_war_with = JAP
+			has_war_with = GER
+			has_war_with = SOV
+			has_war_with = RUS
+		}
+		OR = {
+			country_exists = PRC
+			country_exists = YUN
+			country_exists = XSM
+		}
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = RUS
+			is_in_faction_with = JAP
+			is_in_faction_with = USA
+			is_in_faction_with = TEX
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = qing.150.a
+
+		ai_chance = { factor = 80 }
+
+		set_global_flag = CofC
+		add_political_power = 20
+	}
+
+	option = {
+		name = qing.150.b
+
+	    ai_chance = { factor = 20 }
+
+	    add_political_power = -20
+	}	
+}
+
+country_event = { # The Sino Coalition
+	id = qing.151
+	title = qing.151.t
+	desc = qing.151.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PRC
+		has_global_flag = CofC
+		is_puppet = no
+		has_war = no
+		NOT = {
+			is_in_faction_with = QIE
+			is_in_faction_with = RUS
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = qing.151.a
+
+		ai_chance = { factor = 60 }
+
+		set_global_flag = CHC_CofC
+		add_opinion_modifier = { target = QIE modifier = QIE_JOIN_COA } # 50
+		add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+		hidden_effect = { QIE = { country_event = { id = qing.152 days = 0 }}}
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = PRC_COAL
+		}
+	}
+
+	option = {
+		name = qing.151.b
+
+	    ai_chance = { factor = 0 }
+
+	    add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+
+	    if = {
+	    	limit = { QIE = { has_war_with = JAP }}
+
+	    	declare_war_on = { target = JAP type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = RUS }}
+
+	    	declare_war_on = { target = RUS type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = SOV }}
+
+	    	declare_war_on = { target = SOV type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = GER }}
+
+	    	declare_war_on = { target = GER type = annex_everything	}
+	    }
+	}
+
+	option = {
+		name = qing.151.c
+
+	    ai_chance = { factor = 30 }
+
+	    add_opinion_modifier = { target = QIE modifier = QIE_NO_COA } # -25
+	}		
+}
+
+country_event = { # Shangqing Tianguo joins the Sino Coalition
+	id = qing.152
+	title = qing.152.t
+	desc = qing.152.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = qing.152.a
+
+		if = {
+			limit = { is_in_faction = no }
+
+			create_faction = "Sino Coalition"
+		}
+
+		add_to_faction = PRC
+		add_opinion_modifier = { target = PRC modifier = THEY_JOIN_COA } # 70
+		add_political_power = 100
+		add_manpower = 30000
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = QIE_COAL_PRC
+		}
+	}	
+}
+
+country_event = { # The Sino Coalition
+	id = qing.153
+	title = qing.153.t
+	desc = qing.153.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUN
+		has_global_flag = CofC
+		is_puppet = no
+		has_war = no
+		NOT = {
+			is_in_faction_with = QIE
+			is_in_faction_with = RUS
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = qing.153.a
+
+		ai_chance = { factor = 60 }
+
+		set_global_flag = YUN_CofC
+		add_opinion_modifier = { target = QIE modifier = QIE_JOIN_COA } # 50
+		add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+		hidden_effect = { QIE = { country_event = { id = qing.154 days = 0 }}}
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = YUN_COAL
+		}
+	}
+
+	option = {
+		name = qing.153.b
+
+	    ai_chance = { factor = 0 }
+
+	    add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+
+	    if = {
+	    	limit = { QIE = { has_war_with = JAP }}
+
+	    	declare_war_on = { target = JAP type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = RUS }}
+
+	    	declare_war_on = { target = RUS type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = SOV }}
+
+	    	declare_war_on = { target = SOV type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = GER }}
+
+	    	declare_war_on = { target = GER type = annex_everything	}
+	    }
+	}
+
+	option = {
+		name = qing.153.c
+
+	    ai_chance = { factor = 30 }
+
+	    add_opinion_modifier = { target = QIE modifier = QIE_NO_COA } # -25
+	}		
+}
+
+country_event = { # Yunnan joins the Sino Coalition
+	id = qing.154
+	title = qing.154.t
+	desc = qing.154.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = qing.154.a
+
+		if = {
+			limit = { is_in_faction = no }
+
+			create_faction = "Sino Coalition"
+		}
+
+		add_to_faction = YUN
+		add_opinion_modifier = { target = YUN modifier = THEY_JOIN_COA } # 70
+		add_political_power = 100
+		add_manpower = 30000
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = QIE_COAL_YUN
+		}
+	}	
+}
+
+country_event = { # The Sino Coalition
+	id = qing.155
+	title = qing.155.t
+	desc = qing.155.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = XSM
+		has_global_flag = CofC
+		is_puppet = no
+		has_war = no
+		NOT = {
+			is_in_faction_with = QIE
+			is_in_faction_with = RUS
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = qing.155.a
+
+		ai_chance = { factor = 60 }
+
+		set_global_flag = XSM_CofC
+		add_opinion_modifier = { target = QIE modifier = QIE_JOIN_COA } # 50
+		add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+		hidden_effect = { QIE = { country_event = { id = qing.156 days = 0 }}}
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = XSM_COAL
+		}
+	}
+
+	option = {
+		name = qing.155.b
+
+	    ai_chance = { factor = 0 }
+
+	    add_opinion_modifier = { target = GER modifier = CHI_VS_COAL } # 5
+
+	    if = {
+	    	limit = { QIE = { has_war_with = JAP }}
+
+	    	declare_war_on = { target = JAP type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = RUS }}
+
+	    	declare_war_on = { target = RUS type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = SOV }}
+
+	    	declare_war_on = { target = SOV type = annex_everything	}
+	    }
+
+	    if = {
+	    	limit = { QIE = { has_war_with = GER }}
+
+	    	declare_war_on = { target = GER type = annex_everything	}
+	    }
+	}
+
+	option = {
+		name = qing.155.c
+
+	    ai_chance = { factor = 30 }
+
+	    add_opinion_modifier = { target = QIE modifier = QIE_NO_COA } # -25
+	}		
+}
+
+country_event = { # Shangqing Tianguo joins the Sino Coalition
+	id = qing.156
+	title = qing.156.t
+	desc = qing.156.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = qing.156.a
+
+		if = {
+			limit = { is_in_faction = no }
+
+			create_faction = "Sino Coalition"
+		}
+
+		add_to_faction = XSM
+		add_opinion_modifier = { target = XSM modifier = THEY_JOIN_COA } # 70
+		add_political_power = 100
+		add_manpower = 30000
+
+		if = {
+			limit = { is_ai = yes }
+
+			load_oob = QIE_COAL_XSM
+		}
 	}	
 }

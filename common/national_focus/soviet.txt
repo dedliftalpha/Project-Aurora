@@ -219,7 +219,7 @@ focus = {
 		y = 3
 		cost = 10
 		available = { always = yes }
-		prerequisite = { focus = TUKH_DIP } 
+		prerequisite = { focus = TUKH_REV } 
 		completion_reward = {
 		add_research_slot = 1
 		add_ideas = TUKH_SCI
@@ -625,7 +625,7 @@ focus = {
 	focus = {
 		id = SOV_EXP_REV
 		icon = GFX_goal_generic_attack_allies
-		x = 20
+		x = 23
 		y = 0
 		cost = 10
 		available = { has_country_flag = unlock_soviet }
@@ -636,40 +636,86 @@ focus = {
 	focus = {
 		id = SOV_EXP_FAR
 		icon = GFX_goal_generic_political_pressure
-		x = 22
+		x = 28
 		y = 1
 		cost = 10
 		available = { always = yes }
 		prerequisite = { focus = SOV_EXP_REV }
 		completion_reward = {
+		#Transamur
 		add_state_claim = 409
 		add_state_claim = 408
+		#Manchuria
 		add_state_claim = 655
 		add_state_claim = 714
 		add_state_claim = 715
 		add_state_claim = 318 
 		add_state_claim = 717
 		add_state_claim = 716
+		#chahar
 		add_state_claim = 612
 		add_state_claim = 610
-		add_state_claim = 611		
+		add_state_claim = 611
+		#mongolia
 		add_state_claim = 563
 		add_state_claim = 564
 		add_state_claim = 329
 		add_state_claim = 618
 		add_state_claim = 330
-		set_country_flag = SOV_EA
 		}
 	}
 	focus = {
+	id = SOV_FAR_TRA
+		icon = GFX_goal_generic_military_deal
+		x = 29
+		y = 2
+		cost = 10
+		available = { always = yes }
+		prerequisite = { focus = SOV_EXP_FAR }
+		bypass = { OR = { TRM = { is_puppet_of = SOV } controls_state = 408 } }
+		completion_reward = {
+		random_list = {
+		55 = { country_event = { id = sovf.43 days = 7 } TRM = { country_event = { id = sovf.45 } } }
+		40 = { country_event = { id = sovf.44 } }
+										}
+						}
+				}
+		focus = {
+	id = SOV_FAR_MON	
+		icon = GFX_goal_generic_cavalry
+		x = 27
+		y = 2
+		cost = 6
+		available = { always = yes }
+		prerequisite = { focus = SOV_EXP_FAR }
+		bypass = { OR = { MON = { is_puppet_of = SOV } controls_state = 330 } }
+		completion_reward = {
+		country_event = { id = sovf.54 }
+						}
+				}
+		focus = {
+	id = SOV_FAR_JAP	
+		icon = GFX_goal_generic_territory_or_war
+		x = 29
+		y = 3
+		cost = 6
+		available = { NOT = { has_war_with = JAP }}
+		prerequisite = { focus = SOV_FAR_TRA }
+		bypass = { AND { OR = { FNG = { is_puppet_of = SOV } PRC = { is_puppet_of = SOV } controls_state = 716 } NOT = { has_war_with = JAP } } } 
+		completion_reward = {
+		create_wargoal = { type = annex_everything target = JAP }
+						}
+				}
+	focus = {
 		id = SOV_EXP_CEN
 		icon = GFX_goal_generic_political_pressure
-		x = 20
+		x = 23
 		y = 1
 		cost = 10
 		available = { always = yes }
 		prerequisite = { focus = SOV_EXP_REV }
 		completion_reward = {
+		#ALO
 		add_state_claim = 589 
 		add_state_claim = 586
 		add_state_claim = 404
@@ -678,6 +724,7 @@ focus = {
 		add_state_claim = 406
 		add_state_claim = 236
 		add_state_claim = 587 
+		#TRK
 		add_state_claim = 585
 		add_state_claim = 584
 		add_state_claim = 405
@@ -692,19 +739,17 @@ focus = {
 		add_state_claim = 234
 		add_state_claim = 233
 		add_state_claim = 232
-		#geo
+		#CAU
 		add_state_claim = 231
 		add_state_claim = 230
 		add_state_claim = 229
-		add_state_claim = 345
-		set_country_flag = SOV_CA
-		
+		add_state_claim = 345		
 		}
 	}
 	focus = {
 	id = SOV_CEN_COS
 		icon = GFX_goal_generic_alliance
-		x = 19
+		x = 21
 		y = 2
 		cost = 10
 		available = { always = yes }
@@ -715,17 +760,63 @@ focus = {
 		
 						}
 				}
+	focus = {
+    id = SOV_CEN_CAU
+        icon = GFX_goal_generic_build_tank
+        y = 3
+        x = 21
+        cost = 10
+        available = { always = yes }
+        prerequisite = { focus = SOV_CEN_COS }
+        bypass = { ARM = { exists = no } GEO = { exists = no } AZB = { exists = no } }
+        completion_reward = {
+         country_event = { id = sovf.20 } 
+
+                        }
+                }
 		focus = {
-	id = SOV_CEN_CAU
-		icon = GFX_goal_generic_occypy_states_ongoing_war
-		y = 3
-		x = 19
-		cost = 10
-		available = { always = yes }
-		prerequisite = { focus = SOV_CEN_COS }
-		bypass = { ARM = { exists = no } GEO = { exists = no } AZB = { exists = no } }
+	id = SOV_CEN_WAR
+		icon = GFX_goal_generic_major_war
+		y = 2
+		x = 25
+		cost = 3
+		available = { ALO = { has_war_with = TRK } }
+		prerequisite = { focus = SOV_EXP_CEN }
+		bypass = { ALO = { exists = no } TRK = { exists = no } }
 		completion_reward = {
-		 country_event = { id = sovf.20 } 
+		declare_war_on = { target = ALO type = annex_everything }
+		declare_war_on = { target = TRK type = annex_everything }
+		
+						}
+				}
+		focus = {
+	id = SOV_CEN_ALO
+		icon = GFX_goal_generic_demand_territory
+		y = 2
+		x = 23
+		cost = 10
+		available = { NOT = { ALO = { has_war_with = TRK } } } 
+		prerequisite = { focus = SOV_EXP_CEN }
+		bypass = { ALO = { exists = no } }
+		completion_reward = {
+		random_list = {
+                60 = { country_event = { id = sovf.38 days = 7 } ALO = { country_event = { id = sovf.45 } } } 
+                40 = { country_event = { id = sovf.39 } }
+            }
+		
+						}
+				}
+		focus = {
+	id = SOV_CEN_TRK
+		icon = GFX_goal_poland_goal
+		y = 3
+		x = 23
+		cost = 10
+		available = { NOT = { ALO = { has_war_with = TRK } } OR = { ALO = { exists = no } ALO = { is_puppet_of = SOV } } } 
+		prerequisite = { focus = SOV_CEN_ALO }
+		bypass = { TRK = { exists = no } }
+		completion_reward = {
+		create_wargoal = { type = annex_everything target = TRK }
 		
 						}
 				}
@@ -793,5 +884,61 @@ focus = {
 		
 		}
 	}
-	}
+	focus = {
+	id = SOV_EUR_INT
+		icon = GFX_goal_support_communism
+		x = 19
+		y = 2
+		cost = 10
+		available = { FRA = { NOT = { has_war_with = GER } } is_in_faction = no FRA = { exists = yes } }
+		prerequisite = { focus = SOV_EXP_EUR }
+		bypass = { is_in_faction_with = FRA }
+		mutually_exclusive = { focus = SOV_EUR_PRO }
+		completion_reward = {
+		FRA = { country_event = { id = sovf.64 } }
+		
+						}
+				}
+		focus = {
+	id = SOV_EUR_PRO
+		icon = GFX_goal_generic_alliance
+		x = 17
+		y = 2
+		cost = 10
+		available = { NOT = { has_war_with = GER } NOT = { is_in_faction_with = FRA } }
+		prerequisite = { focus = SOV_EXP_EUR }
+		bypass = { is_faction_leader = yes }
+		mutually_exclusive = { focus = SOV_EUR_INT }
+		completion_reward = {
+		create_faction = "fourth_international"
+		add_political_power = 200
+						}
+				}
 	
+	focus = {
+	id = SOV_EUR_WAR
+		icon = GFX_goal_generic_forceful_treaty
+		x = 18
+		y = 3
+		cost = 2
+		available = { FRA = { has_war_with = GER } }
+		prerequisite = { focus = SOV_EXP_EUR }
+		completion_reward = {
+		country_event = { id = sovf.66 }
+						}
+				}
+
+	focus = {
+	id = SOV_EUR_GER	
+		icon = GFX_goal_generic_territory_or_war
+		x = 18
+		y = 4
+		cost = 6
+		available = { GER = { exists = yes } }
+		prerequisite = { focus = SOV_EUR_PRO }
+		prerequisite = { focus = SOV_EUR_INT }
+		completion_reward = {
+		create_wargoal = { type = annex_everything target = GER }
+						}
+				}
+	}

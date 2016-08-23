@@ -4025,7 +4025,7 @@ focus = {
 focus = {
 		id = RUS_azerbaijan_status
 		icon = GFX_goal_generic_oil_refinery
-		x = 12
+		x = 14
 		y = 9
 		cost = 10
 		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain 
@@ -4060,7 +4060,7 @@ focus = {
 focus = {
 		id = RUS_georgia_status
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = 14
+		x = 12
 		y = 9
 		cost = 10
 		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain 
@@ -4088,18 +4088,22 @@ focus = {
 		completion_reward = {
          add_opinion_modifier = { target = GEO modifier = RUS_georgia_status }
           add_state_claim = 231
-        if = { limit = { country_exists = GEO GEO = { is_puppet = no } NOT = { has_war_with = GEO } } country_event = { id = rusfor.1024 } }   
+        if = { limit = { country_exists = GEO GEO = { is_puppet = no } NOT = { has_war_with = GEO } } country_event = { id = rusfor.1025 } }   
 		}		
 	}
 	
 focus = {
 		id = RUS_armenia_status
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = 13
+		x = 12
 		y = 10
 		cost = 10
-		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain }
-		prerequisite = { focus = RUS_azerbaijan_status focus = RUS_georgia_status }
+		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain 
+		OR = { owns_state = 231 any_country = { AND = { is_puppet_of = RUS owns_state = 231 } } } }
+		prerequisite = { focus = RUS_georgia_status }
+		bypass = {
+			OR = { owns_state = 230 any_country = { AND = { is_puppet_of = RUS owns_state = 230 } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4115,7 +4119,10 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+         add_opinion_modifier = { target = ARM modifier = RUS_armenia_status }
+          add_state_claim = 230
+        if = { limit = { country_exists = ARM has_country_flag = RUS_armenia_liberated_NAP ARM = { is_puppet = no } NOT = { has_war_with = ARM } } country_event = { id = rusfor.1032 } }
+		if = { limit = { country_exists = ARM NOT = { has_country_flag = RUS_armenia_liberated_NAP } NOT = { has_war_with = ARM } } country_event = { id = rusfor.1038 } }
 		}		
 	}
 	
@@ -4348,7 +4355,7 @@ focus = {
 focus = {
 		id = RUS_greater_armenia
 		icon = GFX_goal_generic_more_territorial_claims
-		x = 13
+		x = 12
 		y = 11
 		cost = 10
 		available = { has_completed_focus = RUS_middle_east_focus }

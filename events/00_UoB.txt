@@ -469,6 +469,22 @@ country_event = {
 					}
 				}
 			}
+			AND = {
+				has_idea = ENG_tuc_military_mosley_idea
+				has_idea = ENG_tuc_internal_mosley_idea
+				NOT = {
+					OR = {
+						AND = {
+							has_idea = ENG_tuc_economy_glaise_idea
+							has_idea = ENG_tuc_foreign_glaise_idea
+						}
+						AND = {
+							has_idea = ENG_tuc_economy_fem_idea
+							has_idea = ENG_tuc_foreign_fem_idea
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -576,6 +592,22 @@ country_event = {
 					}
 				}
 			}
+			AND = {
+				has_idea = ENG_tuc_military_glaise_idea
+				has_idea = ENG_tuc_internal_glaise_idea
+				NOT = {
+					OR = {
+						AND = {
+							has_idea = ENG_tuc_economy_mosley_idea
+							has_idea = ENG_tuc_foreign_mosley_idea
+						}
+						AND = {
+							has_idea = ENG_tuc_economy_fem_idea
+							has_idea = ENG_tuc_foreign_fem_idea
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -679,6 +711,22 @@ country_event = {
 						AND = {
 							has_idea = ENG_tuc_internal_mosley_idea
 							has_idea = ENG_tuc_military_mosley_idea
+						}
+					}
+				}
+			}
+			AND = {
+				has_idea = ENG_tuc_internal_fem_idea
+				has_idea = ENG_tuc_military_fem_idea
+				NOT = {
+					OR = {
+						AND = {
+							has_idea = ENG_tuc_foreign_glaise_idea
+							has_idea = ENG_tuc_economy_glaise_idea
+						}
+						AND = {
+							has_idea = ENG_tuc_foreign_mosley_idea
+							has_idea = ENG_tuc_economy_mosley_idea
 						}
 					}
 				}
@@ -1018,6 +1066,11 @@ country_event = {
 	
 	option = {
 		name = uob.16.a
+		hidden_effect = {
+			ENG = {
+				create_wargoal = { type = annex_everything target = IRE }
+			}
+		}
 	}
 	option = {
 		name = uob.16.b
@@ -1062,7 +1115,6 @@ country_event = {
 			ENG = {
 				news_event = { id = uob.19 days = 3 }
 				set_country_flag = ENG_CAN_support
-				create_wargoal = { type = annex_everything target = IRE }
 				add_political_power = -25
 			}
 			IRE = {
@@ -1075,7 +1127,7 @@ country_event = {
 		hidden_effect = {
 			ENG = {
 				news_event = { id = uob.20 days = 3 }
-				create_wargoal = { type = annex_everything target = IRE }
+				set_country_flag = ENG_alone
 				add_political_power = 50
 			}
 			IRE = {
@@ -1186,7 +1238,6 @@ country_event = {
 			ENG = {
 				news_event = { id = uob.23 days = 3 }
 				set_country_flag = ENG_GER_support
-				create_wargoal = { type = annex_everything target = IRE }
 				add_political_power = -25
 			}
 			IRE = {
@@ -1199,9 +1250,8 @@ country_event = {
 		hidden_effect = {
 			ENG = {
 				news_event = { id = uob.24 days = 3 }
-				set_country_flag = ENG_show_of_force_aggro
-				create_wargoal = { type = annex_everything target = IRE }
 				add_political_power = 50
+				set_country_flag = ENG_alone
 			}
 			IRE = {
 				news_event = { id = uob.24 days = 3 }
@@ -1511,6 +1561,9 @@ country_event = {
 	option = {
 		name = uob.33.a
 		add_to_faction = IRE
+		CAN = {
+			add_to_war = {	targeted_alliance = IRE enemy = ENG }
+		}
 	}
 	option = {
 		name = uob.33.b
@@ -1662,6 +1715,9 @@ country_event = {
 	option = {
 		name = uob.39.a
 		add_to_faction = IRE
+		GER = {
+			add_to_war = {	targeted_alliance = IRE enemy = ENG }
+		}
 	}
 	option = {
 		name = uob.39.b
@@ -1811,7 +1867,537 @@ country_event = {
 
 ### Diplomatic campaign against Ireland
 
+news_event = {
+	id = uob.45
+	title = uob.45.t
+	desc = uob.45.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.45.aa
+		trigger = {
+			tag = ENG
+		}
+	}
+	
+	option = {
+		name = uob.45.ab
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.45.ac
+		trigger = {
+			OR = {
+				AND = {
+					tag = CAN	
+					ENG = {
+						OR = {
+							has_country_flag = ENG_CAN_protection
+							has_country_flag = ENG_CAN_support
+						}
+					}
+				}
+				AND = {
+					tag = GER
+					ENG = {
+						OR = {
+							has_country_flag = ENG_GER_protection
+							has_country_flag = ENG_GER_support
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = uob.45.ad
+		trigger = {
+			OR = {
+				tag = CAN	
+				ENG = {
+					has_country_flag = ENG_alone
+				}
+				tag = GER
+				ENG = {
+					has_country_flag = ENG_alone
+				}
+			}
+		}
+	}
+}
 
+### Canadian reaction
+
+country_event = {
+	id = uob.46
+	title = uob.46.t
+	desc = uob.46.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = CAN
+		ENG = {
+			OR = {
+				has_country_flag = ENG_CAN_protection
+				has_country_flag = ENG_CAN_support
+			}
+			OR = {
+				has_country_flag = ENG_IRE_annex
+				has_country_flag = ENG_IRE_bases
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.46.a
+		ENG = {
+			country_event = { id = uob.47 days = 3 }
+		}
+		add_political_power = 50
+		hidden_effect = {
+			ENG = {
+				clr_country_flag = ENG_CAN_protection
+				clr_country_flag = ENG_CAN_support
+			}
+			news_event = { id = uob.49 days = 3 }
+		}
+	}
+	option = {
+		name = uob.46.b
+		add_political_power = -50
+		hidden_effect = {
+			ENG = {
+				clr_country_flag = ENG_CAN_protection
+				clr_country_flag = ENG_CAN_support
+			}
+			news_event = { id = uob.50 days = 3 }
+		}
+	}
+}
+
+# British reaction
+
+country_event = {
+	id = uob.47
+	title = uob.47.t
+	desc = uob.47.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.47.a
+		hidden_effect = {
+			news_event = { id = uob.50 days = 1 }
+		}
+	}
+	option = {
+		name = uob.47.b
+		add_political_power = -50
+		hidden_effect = {
+			CAN = {
+				country_event = { id = uob.48 days = 3 }
+			}
+		}
+	}
+}
+
+# Canadian reaction
+
+country_event = {
+	id = uob.48
+	title = uob.48.t
+	desc = uob.48.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.48.a
+		add_to_faction = IRE
+		add_political_power = -50
+		news_event = { id = uob.52 days = 3 }
+	}
+	option = {
+		name = uob.48.b
+		ENG = {
+			set_country_flag = ENG_alone
+		}
+	}
+}
+
+# News - Canadian Ultimatum
+
+news_event = {
+	id = uob.49
+	title = uob.49.t
+	desc = uob.49.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.49.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Britain pulls back
+
+news_event = {
+	id = uob.50
+	title = uob.50.t
+	desc = uob.50.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.50.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.50.b
+		trigger = {
+			tag = CAN
+		}
+	}
+}
+
+# News - Canada backs up
+
+news_event = {
+	id = uob.51
+	title = uob.51.t
+	desc = uob.51.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.51.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Canada supports Ireland
+
+news_event = {
+	id = uob.52
+	title = uob.52.t
+	desc = uob.52.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.52.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.52.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+### German reaction
+
+country_event = {
+	id = uob.53
+	title = uob.53.t
+	desc = uob.53.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = GER
+		ENG = {
+			OR = {
+				has_country_flag = ENG_GER_protection
+				has_country_flag = ENG_GER_support
+			}
+			OR = {
+				has_country_flag = ENG_IRE_annex
+				has_country_flag = ENG_IRE_bases
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.53.a
+		ENG = {
+			country_event = { id = uob.54 days = 3 }
+		}
+		add_political_power = 50
+		hidden_effect = {
+			ENG = {
+				clr_country_flag = ENG_GER_protection
+				clr_country_flag = ENG_GER_support
+			}
+			news_event = { id = uob.56 days = 3 }
+		}
+	}
+	option = {
+		name = uob.53.b
+		add_political_power = -50
+		hidden_effect = {
+			ENG = {
+				clr_country_flag = ENG_GER_protection
+				clr_country_flag = ENG_GER_support
+			}
+			news_event = { id = uob.57 days = 3 }
+		}
+	}
+}
+
+# British reaction
+
+country_event = {
+	id = uob.54
+	title = uob.54.t
+	desc = uob.54.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.54.a
+		hidden_effect = {
+			news_event = { id = uob.57 days = 1 }
+		}
+	}
+	option = {
+		name = uob.54.b
+		add_political_power = -50
+		hidden_effect = {
+			GER = {
+				country_event = { id = uob.55 days = 3 }
+			}
+		}
+	}
+}
+
+# German reaction
+
+country_event = {
+	id = uob.55
+	title = uob.55.t
+	desc = uob.55.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.55.a
+		add_to_faction = IRE
+		add_political_power = -50
+		news_event = { id = uob.59 days = 3 }
+	}
+	option = {
+		name = uob.55.b
+		news_event = { id = uob.58 days = 3 }
+		ENG = {
+			set_country_flag = ENG_alone
+		}
+	}
+}
+
+# News - German Ultimatum
+
+news_event = {
+	id = uob.56
+	title = uob.56.t
+	desc = uob.56.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.56.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Britain pulls back
+
+news_event = {
+	id = uob.57
+	title = uob.57.t
+	desc = uob.57.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.57.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.57.b
+		trigger = {
+			tag = GER
+		}
+	}
+}
+
+# News - Germany backs up
+
+news_event = {
+	id = uob.58
+	title = uob.58.t
+	desc = uob.58.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.58.a
+		trigger = {
+			tag = IRE
+		}
+	}
+}
+
+# News - Germany supports Ireland
+
+news_event = {
+	id = uob.59
+	title = uob.59.t
+	desc = uob.59.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.59.a
+		trigger = {
+			tag = IRE
+		}
+	}
+	
+	option = {
+		name = uob.59.b
+		trigger = {
+			tag = ENG
+		}
+	}
+}
+
+### What policy?
+
+country_event = {
+	id = uob.60
+	title = uob.60.t
+	desc = uob.60.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.60.a
+		set_country_flag = ENG_IRE_annex
+	}
+	
+	option = {
+		name = uob.60.b
+		set_country_flag = ENG_IRE_bases
+	}
+	
+	option = {
+		name = uob.60.c
+		set_country_flag = ENG_IRE_influence
+	}
+}
+
+### Ireland is alone, now we'll get what we want!
+
+country_event = {
+	id = uob.61
+	title = uob.61.t
+	desc = uob.61.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = ENG_IRE_annex
+		has_country_flag = ENG_alone
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.61.a
+		annex_country = { target = IRE }
+	}
+}
+
+country_event = {
+	id = uob.62
+	title = uob.62.t
+	desc = uob.62.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = ENG_IRE_bases
+		has_country_flag = ENG_alone
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.62.a
+		puppet = IRE
+	}
+}
+
+country_event = {
+	id = uob.63
+	title = uob.63.t
+	desc = uob.63.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = ENG_IRE_influnce
+		has_country_flag = ENG_alone
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = uob.63.a
+		IRE = {
+			add_ideas = ENG_political_pressure
+		}
+	}
+}
 
 ### New General Secretaries under Chairmen / Chairwoman
 
@@ -2180,6 +2766,65 @@ news_event = {
 	}
 }
 
+### Autonomist reforms
+
+# Devolution
+
+news_event = {
+	id = uob.190
+	title = uob.190.t
+	desc = uob.190.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.190.a
+		trigger = {
+			tag = ENG
+		}
+		hidden_effect = {
+			create_country_leader = {
+				name = "Niclas y Glais"
+				desc = "ENG_glais_desc"
+				picture = "Portrait_England_Niclas_y_Glais.tga"
+				expire = "1965.1.1"
+				ideology = syndicalist_subtype
+				traits = { }
+			}
+			set_politics = {
+				ruling_party = syndicalist
+			}
+		}
+	}
+	
+	option = {
+		name = uob.190.b
+		trigger = {
+			has_government = syndicalist
+		}
+	}
+	
+	option = {
+		name = uob.190.c
+		trigger = {
+			has_government = radical_socialist
+		}
+	}
+	
+	option = {
+		name = uob.190.d
+		trigger = {
+			NOT = {
+				OR = {
+					has_government = syndicalist
+					has_government = radical_socialist
+				}
+			}
+		}
+	}
+}
+
 ################
 ### Revolution
 ################
@@ -2511,7 +3156,14 @@ country_event = {
 	option = { # The day after a revolution
 		name = uob.213.a
 		hidden_effect = {
-			add_country_leader_trait = dictator
+			create_country_leader = {
+				name = "Oswald Mosley"
+				desc = "ENG_mosley_desc"
+				picture = "Portrait_England_Oswald_Mosley.tga"
+				expire = "1965.1.1"
+				ideology = totalist_subtype
+				traits = { }
+			}
 			set_politics = {
 				ruling_party = totalist
 			}

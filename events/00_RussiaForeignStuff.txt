@@ -1,7 +1,7 @@
 ﻿####### Modder : Nijato ######
 
 ###########################
-# Russia Events
+# Russia Foreign Politics Events
 ###########################
 
 add_namespace = rusfor
@@ -217,6 +217,11 @@ country_event = { #German Offer DKB
 		add_opinion_modifier = { target = GER modifier = DKB_joined_mitteleuropa1 }
 		every_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = DKB_joined_mitteleuropa2 } }
 		GER = { country_event = { id = rusfor.1002 } }
+		add_ai_strategy = {
+				type = alliance
+				id = "GER"
+				value = 200
+			}
 		if = { limit = { AZB = { is_puppet = no has_war = no NOT = { is_in_faction_with = TUR is_in_faction_with = GEO is_in_faction_with = FRA is_in_faction_with = PER } } } AZB = { country_event = { id = rusfor.1003 } } }
 		#Must do the same for MRNC
 	}
@@ -258,6 +263,11 @@ country_event = { #German Offer AZB
 		name = rusfor.1003.a #Accept their offer.
         ai_chance = { factor = 95 }
 		add_opinion_modifier = { target = GER modifier = AZB_joined_mitteleuropa1 }
+		add_ai_strategy = {
+				type = alliance
+				id = "GER"
+				value = 200
+			}
 		every_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = AZB_joined_mitteleuropa2 } }
 		GER = { country_event = { id = rusfor.1004 } }
 	}
@@ -328,12 +338,12 @@ country_event = { #Russia ignored demands
 		if = { limit = { is_in_faction_with = RUS } remove_from_faction = RUS }
 		add_political_power = -40
 		add_opinion_modifier = { target = RUS modifier = embargo }
-		if = { limit = { BEL = { is_in_faction_with = GER } } BEL = { add_opinion_modifier = { target = RUS modifier = embargo } } }
-		if = { limit = { WHR = { is_in_faction_with = GER } } WHR = { add_opinion_modifier = { target = RUS modifier = embargo } } }
-		if = { limit = { BAT = { is_in_faction_with = GER } } BAT = { add_opinion_modifier = { target = RUS modifier = embargo } } }
-		if = { limit = { UKR = { is_in_faction_with = GER } } UKR = { add_opinion_modifier = { target = RUS modifier = embargo } } }
-		if = { limit = { MAF = { is_puppet_of = GER } } MAF = { add_opinion_modifier = { target = RUS modifier = embargo } } }
-		if = { limit = { AOG = { is_puppet_of = GER } } AOG = { add_opinion_modifier = { target = RUS modifier = embargo } } }
+		if = { limit = { BEL = { is_in_faction_with = GER } } BEL = { country_event = { id = rusfor.10061 } } }
+		if = { limit = { WHR = { is_in_faction_with = GER } } WHR = { country_event = { id = rusfor.10061 } } }
+		if = { limit = { BAT = { is_in_faction_with = GER } } BAT = { country_event = { id = rusfor.10061 } } }
+		if = { limit = { UKR = { is_in_faction_with = GER } } UKR = { country_event = { id = rusfor.10061 } } }
+		if = { limit = { MAF = { is_puppet_of = GER } } MAF = { country_event = { id = rusfor.10061 } } }
+		if = { limit = { AOG = { is_puppet_of = GER } } AOG = { country_event = { id = rusfor.10061 } } }
 		#Should end guarantees but can't lol paradox fix your shit ^^
 		RUS = { country_event = { id = rusfor.1007 } }
 		set_global_flag = RUS_GER_ceased_contacts
@@ -365,6 +375,23 @@ country_event = { #Russia ignored demands
 		add_opinion_modifier = { target = ARM modifier = GER_backed_down_caucasus2 }
 		add_opinion_modifier = { target = RUS modifier = GER_backed_down_caucasus1 }
 		RUS = { set_country_flag = RUS_end_protect_caucasus_chain }
+	}
+
+}
+
+country_event = { #Add embargo event
+	id = rusfor.10061
+	title = rusfor.10061.t
+	desc = rusfor.10061.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.10061.a
+		add_opinion_modifier = { target = RUS modifier = embargo }
 	}
 
 }
@@ -1366,6 +1393,453 @@ country_event = { #Armenian submission
 		name = rusfor.1046.a
 		puppet = ARM
 		add_political_power = 40
+	}
+
+}
+
+country_event = { #RUS demand concessions caucasus
+	id = rusfor.1047
+	title = rusfor.1047.t
+	desc = rusfor.1047.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1047.a #demand concessions in the caucasus
+		ai_chance = { factor = 50 }
+		GER = { country_event = { id = rusfor.1048 } }
+	}
+	
+	option = {
+		name = rusfor.1047.b #Offer the German Empire an alliance, for a price...
+		ai_chance = { factor = 50 }
+		trigger = { GER = { is_faction_leader = yes controls_state = 64 is_puppet = no } NOT = { GER = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } is_in_faction_with = RUS is_in_faction_with = CAN is_in_faction_with = JAP is_in_faction_with = FRA is_in_faction_with = USA } } }
+		add_political_power = -20
+		GER = { country_event = { id = rusfor.1052 } }
+		add_opinion_modifier = { target = GER modifier = RUS_joined_GER_concau1 }
+		add_opinion_modifier = { target = FRA modifier = RUS_joined_GER_concau2 }
+		add_opinion_modifier = { target = SRI modifier = RUS_joined_GER_concau3 }
+		add_opinion_modifier = { target = ENG modifier = RUS_joined_GER_concau4 }
+	}
+
+}
+
+country_event = { #GER Russia demands concessions in the Caucasus
+	id = rusfor.1048
+	title = rusfor.1048.t
+	desc = rusfor.1048.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1048.a #Accept
+		ai_chance = { factor = 60 }
+		#Should add MRNC later
+		clr_country_flag = RUS_GER_blocks_caucasus
+		add_political_power = -40
+		add_opinion_modifier = { target = RUS modifier = GER_accepted_concessions_RUS1 }
+		add_opinion_modifier = { target = DKB modifier = GER_accepted_concessions_RUS2 }
+		add_opinion_modifier = { target = AZB modifier = GER_accepted_concessions_RUS2 }
+		#Should end guarantees but can't lol paradox fix your shit ^^
+		end_puppet = DKB
+		end_puppet = AZB
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		if = { limit = { DKB = { is_in_faction_with = GER } } DKB = { country_event = { id = rusfor.1050 days = 1 } } }
+		if = { limit = { AZB = { is_in_faction_with = GER } } AZB = { country_event = { id = rusfor.1051 days = 1 } } }
+		if = { limit = { DKB = { is_puppet = no } country_exists = DKB } RUS = { country_event = { id = rusfor.1053 days = 4 } } }
+		if = { limit = { AZB = { is_puppet = no } country_exists = AZB } RUS = { country_event = { id = rusfor.1054 days = 4 } } }
+	}
+	
+	option = {
+		name = rusfor.1048.b #Never!
+		ai_chance = { factor = 40 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1049 } }
+		add_opinion_modifier = { target = RUS modifier = GER_refused_concessions_RUS2 }
+		add_opinion_modifier = { target = DKB modifier = GER_refused_concessions_RUS1 }
+		add_opinion_modifier = { target = AZB modifier = GER_refused_concessions_RUS1 }
+	}
+
+}
+
+country_event = { #Germans refused our demands
+	id = rusfor.1049
+	title = rusfor.1049.t
+	desc = rusfor.1049.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1049.a #Declare war upon Mitteleuropa!
+		ai_chance = { factor = 45 }
+		trigger = { OR = { DKB = { is_in_faction_with = GER } AZB = { is_in_faction_with = GER } } }
+		#Should add MRNC later
+		clr_country_flag = RUS_GER_blocks_caucasus
+		add_opinion_modifier = { target = GER modifier = RUS_declared_war_GER_concau }
+		declare_war_on = { target = GER type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1049.b #Ignore german guarantees
+		ai_chance = { factor = 55 }
+		trigger = { NOT = { DKB = { is_in_faction_with = GER } AZB = { is_in_faction_with = GER } } }
+		clr_country_flag = RUS_GER_blocks_caucasus
+		add_opinion_modifier = { target = GER modifier = RUS_ignored_guarantees_GER_concau }
+		#Should end guarantees but can't lol paradox fix your shit ^^
+	}
+
+}
+
+country_event = { #Betrayal of the German Empire! DKB
+	id = rusfor.1050
+	title = rusfor.1050.t
+	desc = rusfor.1050.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1050.a
+		#Should end guarantees and other shits but can't lol paradox fix your shit ^^
+		add_opinion_modifier = { target = GER modifier = GER_betrayal_concau }
+		GER = { remove_from_faction = DKB }
+	}
+
+}
+
+country_event = { #Betrayal of the German Empire! AZB
+	id = rusfor.1051
+	title = rusfor.1051.t
+	desc = rusfor.1051.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1051.a
+		#Should end guarantees and other shits but can't lol paradox fix your shit ^^
+		add_opinion_modifier = { target = GER modifier = GER_betrayal_concau }
+		GER = { remove_from_faction = AZB }
+	}
+
+}
+
+country_event = { #Russia wants to join Mitteleuropa at a cost.
+	id = rusfor.1052
+	title = rusfor.1052.t
+	desc = rusfor.1052.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1052.a #Accept
+		ai_chance = { factor = 75 }
+		#Should add MRNC later
+		clr_country_flag = RUS_GER_blocks_caucasus
+		add_political_power = -60
+		add_opinion_modifier = { target = RUS modifier = GER_accepted_concessions_RUS1 }
+		add_opinion_modifier = { target = DKB modifier = GER_accepted_concessions_RUS2 }
+		add_opinion_modifier = { target = AZB modifier = GER_accepted_concessions_RUS2 }
+		#Should end guarantees but can't lol paradox fix your shit ^^
+		add_to_faction = RUS
+		end_puppet = DKB
+		end_puppet = AZB
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		if = { limit = { DKB = { is_in_faction_with = GER } } DKB = { country_event = { id = rusfor.1050 days = 1 } } }
+		if = { limit = { AZB = { is_in_faction_with = GER } } AZB = { country_event = { id = rusfor.1051 days = 1 } } }
+		if = { limit = { DKB = { is_puppet = no } country_exists = DKB } RUS = { country_event = { id = rusfor.1053 days = 4 } } }
+		if = { limit = { AZB = { is_puppet = no } country_exists = AZB } RUS = { country_event = { id = rusfor.1054 days = 4 } } }
+	}
+	
+	option = {
+		name = rusfor.1052.b #Never!
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1049 } }
+		add_opinion_modifier = { target = RUS modifier = GER_refused_concessions_RUS2 }
+		add_opinion_modifier = { target = DKB modifier = GER_refused_concessions_RUS1 }
+		add_opinion_modifier = { target = AZB modifier = GER_refused_concessions_RUS1 }
+	}
+
+}
+
+country_event = { #Status of Don-Kuban RUS
+	id = rusfor.1053
+	title = rusfor.1053.t
+	desc = rusfor.1053.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1053.a #Demand the full integration of the Don-Kuban Union!
+		ai_chance = { factor = 70 }
+		add_political_power = 60
+		DKB = { country_event = { id = rusfor.1055 } }
+	}
+	
+	option = {
+		name = rusfor.1053.b #demand reformation of gvt
+		ai_chance = { factor = 30 }
+		add_political_power = -20
+		DKB = { country_event = { id = rusfor.1056 } }
+	}
+
+}
+
+country_event = { #Status of Azerbaijan RUS
+	id = rusfor.1054
+	title = rusfor.1054.t
+	desc = rusfor.1054.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1054.a #Demand the full integration of Azerbaijan!
+		ai_chance = { factor = 70 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_political_power = 60
+		AZB = { country_event = { id = rusfor.1057 } }
+	}
+	
+	option = {
+		name = rusfor.1054.b #demand reformation of gvt
+		ai_chance = { factor = 30 }
+		add_political_power = -20
+		AZB = { country_event = { id = rusfor.1058 } }
+	}
+
+}
+
+country_event = { #Russia demands our reintegration DKB
+	id = rusfor.1055
+	title = rusfor.1055.t
+	desc = rusfor.1055.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1055.a #we have no choice
+		ai_chance = { factor = 95 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1059 } }
+	}
+	
+	option = {
+		name = rusfor.1055.b #resist
+		ai_chance = { factor = 5 }
+		RUS = { country_event = { id = rusfor.1060 days = 1 } }
+	}
+
+}
+
+country_event = { #Russia demands reformation of our government DKB
+	id = rusfor.1056
+	title = rusfor.1056.t
+	desc = rusfor.1056.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1056.a #we have no choice
+		ai_chance = { factor = 100 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1061 } }
+	}
+	
+	option = {
+		name = rusfor.1056.b #resist
+		ai_chance = { factor = 0 }
+		RUS = { country_event = { id = rusfor.1060 days = 1 } }
+	}
+
+}
+
+country_event = { #Russia demands our reintegration AZB
+	id = rusfor.1057
+	title = rusfor.1057.t
+	desc = rusfor.1057.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1057.a #we have no choice
+		ai_chance = { factor = 95 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1062 } }
+	}
+	
+	option = {
+		name = rusfor.1057.b #resist
+		ai_chance = { factor = 5 }
+		RUS = { country_event = { id = rusfor.1063 days = 1 } }
+	}
+
+}
+
+country_event = { #Russia demands reformation of our government AZB
+	id = rusfor.1058
+	title = rusfor.1058.t
+	desc = rusfor.1058.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1058.a #we have no choice
+		ai_chance = { factor = 100 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1064 } }
+	}
+	
+	option = {
+		name = rusfor.1058.b #resist
+		ai_chance = { factor = 0 }
+		RUS = { country_event = { id = rusfor.1063 days = 1 } }
+	}
+
+}
+
+country_event = { #The demise of the Don-Kuban Union annex
+	id = rusfor.1059
+	title = rusfor.1059.t
+	desc = rusfor.1059.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1059.a
+		annex_country = { target = DKB }
+		add_political_power = 100
+		add_state_claim = 245
+		 add_state_claim = 218
+		 add_state_claim = 238
+		 add_state_claim = 237
+		 add_state_claim = 234
+         add_state_claim = 235
+         add_state_claim = 787	
+         add_state_claim = 233	
+         add_state_claim = 232
+	}
+
+}
+
+country_event = { #The Don-Kuban Union resist our demands
+	id = rusfor.1060
+	title = rusfor.1060.t
+	desc = rusfor.1060.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1060.a #declare war
+		ai_chance = { factor = 100 }
+		add_state_claim = 245
+		 add_state_claim = 218
+		 add_state_claim = 238
+		 add_state_claim = 237
+		 add_state_claim = 234
+         add_state_claim = 235
+         add_state_claim = 787	
+         add_state_claim = 233	
+         add_state_claim = 232
+		 declare_war_on = { target = DKB type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1060.b #deal with them later
+		ai_chance = { factor = 0 }
+		add_state_claim = 245
+		 add_state_claim = 218
+		 add_state_claim = 238
+		 add_state_claim = 237
+		 add_state_claim = 234
+         add_state_claim = 235
+         add_state_claim = 787	
+         add_state_claim = 233	
+         add_state_claim = 232
+	}
+
+}
+
+country_event = { #The submission of the Don-Kuban Union puppet
+	id = rusfor.1061
+	title = rusfor.1061.t
+	desc = rusfor.1061.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1061.a
+		puppet = DKB
+		add_political_power = 100
+	}
+
+}
+
+country_event = { #The demise of Azerbaijan annex
+	id = rusfor.1062
+	title = rusfor.1062.t
+	desc = rusfor.1062.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1062.a
+		annex_country = { target = AZB }
+		add_political_power = 100
+		add_state_claim = 229
+	}
+
+}
+
+country_event = { #Azerbaijan resist our demands
+	id = rusfor.1063
+	title = rusfor.1063.t
+	desc = rusfor.1063.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1063.a #declare war
+		ai_chance = { factor = 100 }
+		add_state_claim = 229
+		 declare_war_on = { target = AZB type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1063.b #deal with them later
+		ai_chance = { factor = 0 }
+		add_state_claim = 229
+	}
+
+}
+
+country_event = { #The submission of Azerbaijan puppet
+	id = rusfor.1064
+	title = rusfor.1064.t
+	desc = rusfor.1064.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1064.a
+		puppet = AZB
+		add_political_power = 100
 	}
 
 }

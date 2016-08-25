@@ -1843,3 +1843,164 @@ country_event = { #The submission of Azerbaijan puppet
 	}
 
 }
+
+country_event = { #Protect Persia at a cost RUS
+	id = rusfor.1065
+	title = rusfor.1065.t
+	desc = rusfor.1065.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1065.a #ask for northern iran
+		ai_chance = { factor = 70 }
+		add_state_claim = 266
+		add_state_claim = 420
+		PER = { country_event = { id = rusfor.1066 } }
+	}
+	
+	option = {
+		name = rusfor.1065.b #ask for northern iran and a port on the indian ocean
+		ai_chance = { factor = 30 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_state_claim = 266
+		add_state_claim = 420
+		add_state_claim = 804
+		PER = { country_event = { id = rusfor.1069 } }
+	}
+
+}
+
+country_event = { #Russia demands northern iran
+	id = rusfor.1066
+	title = rusfor.1066.t
+	desc = rusfor.1066.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1066.a #accept
+		ai_chance = { factor = 30 }
+		add_political_power = -200
+		add_opinion_modifier = { target = RUS modifier = RUS_protect_persia_accept }
+		RUS = { country_event = { id = rusfor.1067 } }
+		RUS = { transfer_state = 420
+		        transfer_state = 266
+				}
+	}
+	
+	option = {
+		name = rusfor.1066.b #Never !
+		ai_chance = { factor = 70 }
+        add_political_power = 20
+		add_opinion_modifier = { target = RUS modifier = RUS_protect_persia_declined }
+		RUS = { country_event = { id = rusfor.1068 } }
+	}
+
+}
+
+country_event = { #Iran accepts !
+	id = rusfor.1067
+	title = rusfor.1067.t
+	desc = rusfor.1067.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1067.a #Hurray !
+		add_political_power = 60
+		give_guarantee = PER
+		if = { limit = { is_in_faction = no } create_faction = "russo_persian_alliance" add_to_faction = PER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = PER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = PER } }
+	}
+
+}
+
+country_event = { #Iran refuses
+	id = rusfor.1068
+	title = rusfor.1068.t
+	desc = rusfor.1068.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1068.a #war
+		ai_chance = { factor = 90 }
+		add_state_claim = 419
+		 add_state_claim = 420
+		 add_state_claim = 266
+		 add_state_claim = 421
+		 add_state_claim = 417
+		 add_state_claim = 413
+		 add_state_claim = 411
+		 add_state_claim = 418
+		 add_state_claim = 416
+		 add_state_claim = 414
+		 add_state_claim = 412
+		 add_state_claim = 410
+		 add_state_claim = 804
+		 declare_war_on = { target = PER type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1068.b #back down for now
+		ai_chance = { factor = 10 }
+        add_political_power = -20
+		add_opinion_modifier = { target = PER modifier = RUS_back_down_PER }
+	}
+
+}
+
+country_event = { #Russia demands northern iran and a port
+	id = rusfor.1069
+	title = rusfor.1069.t
+	desc = rusfor.1069.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1069.a #accept
+		ai_chance = { factor = 15 }
+		add_political_power = -250
+		add_opinion_modifier = { target = RUS modifier = RUS_protect_persia_accept }
+		RUS = { country_event = { id = rusfor.1070 } }
+		RUS = { transfer_state = 420
+		        transfer_state = 266
+				transfer_state = 804
+				}
+	}
+	
+	option = {
+		name = rusfor.1069.b #Never !
+		ai_chance = { factor = 85 }
+        add_political_power = 20
+		add_opinion_modifier = { target = RUS modifier = RUS_protect_persia_declined }
+		RUS = { country_event = { id = rusfor.1068 } }
+	}
+
+}
+
+country_event = { #Iran accepts ! with port
+	id = rusfor.1070
+	title = rusfor.1070.t
+	desc = rusfor.1070.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1070.a #Hurray !
+		add_political_power = 60
+		give_guarantee = PER
+		if = { limit = { is_in_faction = no } create_faction = "russo_persian_alliance" add_to_faction = PER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = PER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = PER } }
+	}
+
+}

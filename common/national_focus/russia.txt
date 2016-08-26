@@ -4062,7 +4062,7 @@ focus = {
 		x = 12
 		y = 9
 		cost = 2
-		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain 
+		available = { has_country_flag = RUS_end_protect_caucasus_chain 
 		AND = { OR = { owns_state = 218 any_country = { AND = { is_puppet_of = RUS owns_state = 218 } } }
 			OR = { owns_state = 234 any_country = { AND = { is_puppet_of = RUS owns_state = 234 } } }
             OR = { owns_state = 233 any_country = { AND = { is_puppet_of = RUS owns_state = 233 } } } } }
@@ -4097,7 +4097,7 @@ focus = {
 		x = 12
 		y = 10
 		cost = 2
-		available = { NOT = { has_country_flag = RUS_GER_blocks_caucasus } has_country_flag = RUS_end_protect_caucasus_chain 
+		available = { has_country_flag = RUS_end_protect_caucasus_chain 
 		OR = { owns_state = 231 any_country = { AND = { is_puppet_of = RUS owns_state = 231 } } } }
 		prerequisite = { focus = RUS_georgia_status }
 		bypass = {
@@ -4137,7 +4137,12 @@ focus = {
 		prerequisite = { focus = RUS_caucasus_focus }
 		cancel = {
 			NOT = { OR = { GER = { has_war_with = FRA } GER = { has_war_with = ENG } } }
-		} 
+		}
+		bypass = {
+			AND = { OR = { owns_state = 233 any_country = { AND = { is_puppet_of = RUS owns_state = 233 } } }
+			OR = { owns_state = 234 any_country = { AND = { is_puppet_of = RUS owns_state = 234 } } }
+            OR = { owns_state = 229 any_country = { AND = { is_puppet_of = RUS owns_state = 229 } } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4307,10 +4312,16 @@ focus = {
 		icon = GFX_goal_generic_dangerous_deal
 		x = 16
 		y = 9
-		cost = 10
-		available = { country_exists = PER PER = { controls_state = 420 controls_state = 266 controls_state = 804 is_puppet = no } }
+		cost = 4
+		available = { country_exists = PER PER = { controls_state = 420 controls_state = 266 controls_state = 804 is_puppet = no } NOT = { PER = { has_war_with = RUS is_in_faction_with = RUS has_government = radical_socialist has_government = totalist has_government = syndicalist } } }
 		prerequisite = { focus = RUS_middle_east_focus }
 		mutually_exclusive = { focus = RUS_crush_persia }
+		bypass = {
+			AND = { OR = { owns_state = 266 any_country = { AND = { is_puppet_of = RUS owns_state = 266 } } }
+			OR = { owns_state = 804 any_country = { AND = { is_puppet_of = RUS owns_state = 804 } } }
+            OR = { owns_state = 413 any_country = { AND = { is_puppet_of = RUS owns_state = 413 } } }
+            OR = { owns_state = 415 any_country = { AND = { is_puppet_of = RUS owns_state = 415 } } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4336,10 +4347,16 @@ focus = {
 		icon = GFX_goal_generic_attack_allies
 		x = 18
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_middle_east_focus }
 		mutually_exclusive = { focus = RUS_crush_persia }
+		bypass = {
+			AND = { OR = { owns_state = 266 any_country = { AND = { is_puppet_of = RUS owns_state = 266 } } }
+			OR = { owns_state = 804 any_country = { AND = { is_puppet_of = RUS owns_state = 804 } } }
+            OR = { owns_state = 413 any_country = { AND = { is_puppet_of = RUS owns_state = 413 } } }
+            OR = { owns_state = 415 any_country = { AND = { is_puppet_of = RUS owns_state = 415 } } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4379,8 +4396,10 @@ focus = {
 		icon = GFX_goal_generic_more_territorial_claims
 		x = 12
 		y = 11
-		cost = 10
-		available = { has_completed_focus = RUS_middle_east_focus }
+		cost = 2
+		available = { has_completed_focus = RUS_middle_east_focus 
+		#Should add no non-agression pacts but can't right now
+		}
 		prerequisite = { focus = RUS_armenia_status }
 		
 		ai_will_do = {
@@ -4406,9 +4425,16 @@ focus = {
 		icon = GFX_goal_generic_major_war
 		x = 17
 		y = 10
-		cost = 10
-		available = { }
+		cost = 2
+		available = { 
+		#Should add no non-agression pacts but can't right now
+		}
 		prerequisite = { focus = RUS_middle_east_focus }
+		bypass = {
+			AND = { OR = { owns_state = 773 any_country = { AND = { is_puppet_of = RUS owns_state = 773 } } }
+			OR = { owns_state = 774 any_country = { AND = { is_puppet_of = RUS owns_state = 774 } } }
+            OR = { owns_state = 340 any_country = { AND = { is_puppet_of = RUS owns_state = 340 } } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4424,7 +4450,13 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+         add_opinion_modifier = { target = TUR modifier = RUS_crush_turkey }
+		 add_state_claim = 773
+		 add_state_claim = 774
+		 add_state_claim = 340
+		 add_state_claim = 341
+	     if = { limit = { AND { country_exists = TUR TUR = { OR = { owns_state = 773 owns_state = 340 owns_state = 774 } } } }
+		 create_wargoal = { type = take_state_focus target = TUR generator = { 773 340 774 341 } } }   
 		}		
 	}
 	
@@ -4433,7 +4465,7 @@ focus = {
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		x = 18
 		y = 11
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_crush_turkey focus = RUS_crush_persia focus = RUS_protect_persia }
 		

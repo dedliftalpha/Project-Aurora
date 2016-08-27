@@ -4550,7 +4550,13 @@ focus = {
 			}
 		}	
 		completion_reward = {
-        set_country_flag = RUS_FE_focus    
+        set_country_flag = RUS_FE_focus
+        add_opinion_modifier = { target = JAP modifier = RUS_far_east_focus1 } 
+        add_opinion_modifier = { target = FNG modifier = RUS_far_east_focus1 }
+        add_opinion_modifier = { target = TRM modifier = RUS_far_east_focus1 }
+        add_opinion_modifier = { target = XSM modifier = RUS_far_east_focus1 } 
+        add_opinion_modifier = { target = SIK modifier = RUS_far_east_focus1 }
+        add_opinion_modifier = { target = MON modifier = RUS_far_east_focus2 }		
 		}		
 	}
 	
@@ -4559,37 +4565,9 @@ focus = {
 		icon = GFX_goal_generic_position_armies
 		x = 22
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_political_power < 0
-			}
-			modifier = {
-				factor = 0
-				OR = { has_idea = desaster
-				has_idea = very_low_stability
-				has_idea = low_stability }
-			}
-		}	
-		completion_reward = {
-            
-		}		
-	}
-	
-focus = {
-		id = RUS_join_CHI_JAP_war
-		icon = GFX_goal_generic_military_deal
-		x = 25
-		y = 8
-		cost = 10
-		available = { }
-		prerequisite = { focus = RUS_far_east_focus }
-		mutually_exclusive = { focus = RUS_intervene_CHI_JAP_war }
 		
 		ai_will_do = {
 			factor = 1
@@ -4612,12 +4590,13 @@ focus = {
 focus = {
 		id =  RUS_intervene_CHI_JAP_war
 		icon = GFX_goal_generic_major_war
-		x = 27
+		x = 25
 		y = 8
-		cost = 10
-		available = { }
+		cost = 1
+		available = { JAP = { has_war_with = QIE } controls_state = 566 controls_state = 562 NOT = { has_war_with = JAP has_war_with = QIE is_in_faction_with = JAP is_in_faction_with = QIE } }
 		prerequisite = { focus = RUS_far_east_focus }
-		mutually_exclusive = { focus = RUS_join_CHI_JAP_war }
+		cancel = { NOT = { OR = { JAP = { has_war_with = QIE } controls_state = 566 controls_state = 562 NOT = { has_war_with = JAP } NOT = { has_war_with = QIE } NOT = { is_in_faction_with = JAP } NOT = { is_in_faction_with = QIE } } } }
+		bypass = { has_country_flag = RUS_bypass_intervene_CHIJAP }
 		
 		ai_will_do = {
 			factor = 1
@@ -4633,7 +4612,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        country_event = { id = rusfor.1076 }    
 		}		
 	}
 	
@@ -4642,7 +4621,7 @@ focus = {
 		icon = GFX_goal_generic_major_alliance
 		x = 24
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_crush_transamur }
@@ -4670,7 +4649,7 @@ focus = {
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		x = 26
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_plebiscite_transamur }
@@ -4698,7 +4677,7 @@ focus = {
 		icon = GFX_goal_generic_more_territorial_claims
 		x = 24
 		y = 10
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_plebiscite_transamur focus = RUS_crush_transamur }
 		
@@ -4752,7 +4731,7 @@ focus = {
 		icon = GFX_goal_generic_occupy_states_coastal
 		x = 24
 		y = 11
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_claim_manchuria }
 		
@@ -4779,7 +4758,7 @@ focus = {
 		icon = GFX_goal_generic_occupy_start_war
 		x = 28
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_demand_northern_mongolia }
@@ -4807,7 +4786,7 @@ focus = {
 		icon = GFX_goal_demand_sudetenland
 		x = 30
 		y = 9
-		cost = 10
+		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_crush_mongolia }

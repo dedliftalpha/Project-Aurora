@@ -3941,7 +3941,7 @@ focus = {
          add_opinion_modifier = { target = GEO modifier = RUS_caucasus_focus1 }
          add_opinion_modifier = { target = ARM modifier = RUS_caucasus_focus1 }
          add_opinion_modifier = { target = AZB modifier = RUS_caucasus_focus1 }
-         add_opinion_modifier = { target = TUR modifier = RUS_caucasus_focus2 }
+         add_opinion_modifier = { target = OTT modifier = RUS_caucasus_focus2 }
          add_opinion_modifier = { target = GER modifier = RUS_caucasus_focus2 }
          if = { limit = { GER = { NOT = { has_war_with = RUS has_war_with = JAP is_in_faction_with = RUS } is_puppet = no controls_state = 64 } } GER = { country_event = { id = rusfor.1000 }	} }	 
 		}		
@@ -4303,7 +4303,8 @@ focus = {
         set_country_flag = RUS_ME_focus
         add_opinion_modifier = { target = GER modifier = RUS_middle_east_focus1 } 
         add_opinion_modifier = { target = PER modifier = RUS_middle_east_focus2 }
-        add_opinion_modifier = { target = TUR modifier = RUS_middle_east_focus2 } 		
+        add_opinion_modifier = { target = OTT modifier = RUS_middle_east_focus2 }
+#### WILL ADD FOR TURKEY ITSELF FOR ALL FOCUSES WHEN IT WILL EXIST	
 		}		
 	}
 	
@@ -4397,10 +4398,17 @@ focus = {
 		x = 12
 		y = 11
 		cost = 2
-		available = { has_completed_focus = RUS_middle_east_focus 
+		available = { has_completed_focus = RUS_middle_east_focus
+			AND = { OR = { owns_state = 231 any_country = { AND = { is_puppet_of = RUS owns_state = 231 } } }
+			        OR = { owns_state = 230 any_country = { AND = { is_puppet_of = RUS owns_state = 230 } } } }
+		country_exists = OTT OTT = { controls_state = 353 controls_state = 354 is_puppet = no } NOT = { OTT = { has_war_with = RUS } }
 		#Should add no non-agression pacts but can't right now
 		}
 		prerequisite = { focus = RUS_armenia_status }
+		bypass = { AND = { OR = { owns_state = 354 any_country = { AND = { is_puppet_of = RUS owns_state = 354 } } }
+			OR = { owns_state = 353 any_country = { AND = { is_puppet_of = RUS owns_state = 353 } } } }
+			}
+		cancel = { OR = { has_war_with = OTT NOT = { country_exists = OTT } NOT = { 353 = { is_controlled_by = OTT }  354 = { is_controlled_by = OTT } } OTT = { is_puppet = yes } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -4416,7 +4424,12 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+		 add_opinion_modifier = { target = OTT modifier = RUS_greater_armenia }
+		 if = { limit = { ARM = { NOT = { is_puppet_of = RUS } } } add_opinion_modifier = { target = ARM modifier = RUS_greater_armenia } }
+         add_state_claim = 353
+		 add_state_claim = 354
+		 if = { limit = { ARM = { is_puppet_of = RUS } } ARM = { add_state_core = 353 add_state_core = 354 } }
+         OTT = { country_event = { id = rusfor.1071 days = 4 } }	 
 		}		
 	}
 	
@@ -4426,7 +4439,7 @@ focus = {
 		x = 17
 		y = 10
 		cost = 2
-		available = { 
+		available = { NOT = { 773 = { is_claimed_by = RUS } 774 = { is_claimed_by = RUS } 340 = { is_claimed_by = RUS } 341 = { is_claimed_by = RUS } }
 		#Should add no non-agression pacts but can't right now
 		}
 		prerequisite = { focus = RUS_middle_east_focus }
@@ -4450,13 +4463,16 @@ focus = {
 			}
 		}	
 		completion_reward = {
-         add_opinion_modifier = { target = TUR modifier = RUS_crush_turkey }
+         add_opinion_modifier = { target = OTT modifier = RUS_crush_turkey }
 		 add_state_claim = 773
 		 add_state_claim = 774
 		 add_state_claim = 340
 		 add_state_claim = 341
-	     if = { limit = { AND { country_exists = TUR TUR = { OR = { owns_state = 773 owns_state = 340 owns_state = 774 } } } }
-		 create_wargoal = { type = take_state_focus target = TUR generator = { 773 340 774 341 } } }   
+		 add_state_claim = 353
+		 add_state_claim = 354
+		 if = { limit = { ARM = { is_puppet_of = RUS } } ARM = { add_state_core = 353 add_state_core = 354 } }
+	     if = { limit = { AND { country_exists = OTT OTT = { OR = { owns_state = 773 owns_state = 340 owns_state = 774 } } } }
+		 create_wargoal = { type = take_state_focus target = OTT generator = { 773 340 774 341 } } }   
 		}		
 	}
 	
@@ -4466,8 +4482,19 @@ focus = {
 		x = 18
 		y = 11
 		cost = 2
-		available = { }
+		available = { OR = { AND = { OR = { owns_state = 352 any_country = { AND = { is_puppet_of = RUS owns_state = 352 } } }
+			OR = { owns_state = 353 any_country = { AND = { is_puppet_of = RUS owns_state = 353 } } }
+            OR = { owns_state = 354 any_country = { AND = { is_puppet_of = RUS owns_state = 354 } } } }
+			AND = { OR = { owns_state = 413 any_country = { AND = { is_puppet_of = RUS owns_state = 413 } } }
+			OR = { owns_state = 421 any_country = { AND = { is_puppet_of = RUS owns_state = 421 } } }
+            OR = { owns_state = 419 any_country = { AND = { is_puppet_of = RUS owns_state = 419 } } }
+            OR = { owns_state = 266 any_country = { AND = { is_puppet_of = RUS owns_state = 266 } } } } }
+			}
 		prerequisite = { focus = RUS_crush_turkey focus = RUS_crush_persia focus = RUS_protect_persia }
+		bypass = {
+			AND = { OR = { owns_state = 291 any_country = { AND = { is_puppet_of = RUS owns_state = 291 } } }
+			OR = { owns_state = 676 any_country = { AND = { is_puppet_of = RUS owns_state = 676 } } } }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -4483,7 +4510,16 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+		 add_state_claim = 291
+		 add_state_claim = 676
+	     if = { limit = { OTT = { OR = { owns_state = 291 owns_state = 676 } } }
+		 create_wargoal = { type = take_state_focus target = OTT generator = { 291 676 } } }
+         if = { limit = { EGY = { OR = { owns_state = 291 owns_state = 676 } } }
+		 create_wargoal = { type = take_state_focus target = EGY generator = { 291 676 } } }
+         if = { limit = { PER = { OR = { owns_state = 291 owns_state = 676 } } }
+		 create_wargoal = { type = take_state_focus target = PER generator = { 291 676 } } }
+         if = { limit = { SAU = { OR = { owns_state = 291 owns_state = 676 } } }
+		 create_wargoal = { type = take_state_focus target = SAU generator = { 291 676 } } } 		 
 		}		
 	}
 	

@@ -165,8 +165,8 @@ country_event = { #Germany's Reaction on Russian plans in Caucasus
 		name = rusfor.1000.a #Demand that Russia respects the Brest-Litovsk treaty!
 		trigger = { NOT = { has_war_with = FRA has_war_with = JAP has_war_with = CAN is_in_faction_with = RUS } }
 		ai_chance = { factor = 30 }
-		give_guarantee = DKB
-		give_guarantee = AZB
+		#give_guarantee = DKB
+		#give_guarantee = AZB should wait untilwe can remove them
 		add_opinion_modifier = { target = RUS modifier = GER_respect_brest_litovsk1 }
 		add_opinion_modifier = { target = DKB modifier = GER_respect_brest_litovsk2 }
 		add_opinion_modifier = { target = GEO modifier = GER_respect_brest_litovsk2 }
@@ -182,8 +182,8 @@ country_event = { #Germany's Reaction on Russian plans in Caucasus
 		NOT = { has_war_with = FRA has_war_with = JAP has_war_with = CAN is_in_faction_with = RUS } }
 		ai_chance = { factor = 50 }
 		add_political_power = -60
-		give_guarantee = DKB
-		give_guarantee = AZB
+		#give_guarantee = DKB
+		#give_guarantee = AZB should wait untilwe can remove them
 		add_opinion_modifier = { target = RUS modifier = GER_respect_brest_litovsk3 }
 		add_opinion_modifier = { target = DKB modifier = GER_respect_brest_litovsk2 }
 		add_opinion_modifier = { target = GEO modifier = GER_respect_brest_litovsk2 }
@@ -728,7 +728,7 @@ country_event = { #The Baku Oil Fields
 		add_political_power = -50
 		 add_opinion_modifier = { target = AZB modifier = RUS_invest_AZB }
 		 add_opinion_modifier = { target = AZB modifier = RUS_invest_AZB_trade }
-		 give_guarantee = AZB
+		 #give_guarantee = AZB should wait untilwe can remove them
 		 remove_state_claim = 229
 	}
 	
@@ -1924,7 +1924,7 @@ country_event = { #Iran accepts !
 	option = {
 		name = rusfor.1067.a #Hurray !
 		add_political_power = 60
-		give_guarantee = PER
+		#give_guarantee = PER should wait untilwe can remove them
 		if = { limit = { is_in_faction = no } create_faction = "russo_persian_alliance" add_to_faction = PER }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = PER }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = PER } }
@@ -2017,7 +2017,7 @@ country_event = { #Iran accepts ! with port
 	option = {
 		name = rusfor.1070.a #Hurray !
 		add_political_power = 60
-		give_guarantee = PER
+		#give_guarantee = PER should wait untilwe can remove them
 		if = { limit = { is_in_faction = no } create_faction = "russo_persian_alliance" add_to_faction = PER }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = PER }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = PER } }
@@ -2259,7 +2259,7 @@ country_event = { #Intervention in the Sino-Japanese War
 		add_state_claim = 329
 		 add_state_claim = 330
 		 add_state_claim = 563
-		 add_state_claim = 534
+		 add_state_claim = 564
 		add_state_claim = 618
 		 add_state_claim = 617
 		 add_state_claim = 619
@@ -2289,7 +2289,7 @@ country_event = { #Intervention in the Sino-Japanese War
 		add_state_claim = 329
 		 add_state_claim = 330
 		 add_state_claim = 563
-		 add_state_claim = 534
+		 add_state_claim = 564
 		add_state_claim = 618
 		 add_state_claim = 617
 		 add_state_claim = 619
@@ -2399,6 +2399,477 @@ country_event = { #Russian aid arrives QIE
 		add_opinion_modifier = { target = RUS modifier = RUS_intervene_help_china }
 		load_oob = QIE_RUS_HELP
 		custom_effect_tooltip = received_equipment_2000
+	}
+
+}
+
+country_event = { #Crush Transamur
+	id = rusfor.1082
+	title = rusfor.1082.t
+	desc = rusfor.1082.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1082.a #all Russians must be under Russian rule! claim TRM
+		ai_chance = { factor = 50 }
+		trigger = { has_country_flag = RUS_REAL }
+		add_state_core = 408
+		add_state_core = 409
+		add_state_core = 655
+		if = { limit = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } JAP = { country_event = { id = rusfor.1083 } } }
+		if = { limit = { NOT = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } } country_event = { id = rusfor.1087 } }
+	}
+	
+	option = {
+		name = rusfor.1082.b #Send a detachment of troops to Vladivostok to dissolve Transamur!
+		ai_chance = { factor = 50 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_state_core = 408
+		add_state_core = 409
+		add_state_core = 655
+		if = { limit = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } JAP = { country_event = { id = rusfor.1084 } } }
+		if = { limit = { NOT = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } } country_event = { id = rusfor.1087 } }
+	}
+
+}
+
+country_event = { #The Russians claim Transamur!
+	id = rusfor.1083
+	title = rusfor.1083.t
+	desc = rusfor.1083.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1083.a #Send a warning, Transamur is our protectorate!
+		ai_chance = { factor = 55 }
+		RUS = { country_event = { id = rusfor.1088 } }
+	}
+	
+	option = {
+		name = rusfor.1083.b #A strong Russia would be a better ally than little Transamur.
+		ai_chance = { factor = 35 }
+		end_puppet = TRM
+		RUS = { country_event = { id = rusfor.1085 } }
+	}
+	
+	option = {
+		name = rusfor.1083.c #Abandon Transamur to its fate.
+		ai_chance = { factor = 10 }
+		end_puppet = TRM
+		add_political_power = -100
+		add_opinion_modifier = { target = RUS modifier = JAP_abandon_transamur }
+		RUS = { country_event = { id = rusfor.1087 } }
+	}
+
+}
+
+country_event = { #Russian Troops arrive in Vladivostok!
+	id = rusfor.1084
+	title = rusfor.1084.t
+	desc = rusfor.1084.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1084.a #We shall defend Transamur!
+		ai_chance = { factor = 45 }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1084.b #A strong Russia would be a better ally than little Transamur.
+		ai_chance = { factor = 25 }
+		end_puppet = TRM
+		add_political_power = -60
+		RUS = { country_event = { id = rusfor.1085 } }
+	}
+	
+	option = {
+		name = rusfor.1084.c #Abandon Transamur to its fate.
+		ai_chance = { factor = 30 }
+		end_puppet = TRM
+		add_political_power = -100
+		add_opinion_modifier = { target = RUS modifier = JAP_abandon_transamur }
+		RUS = { country_event = { id = rusfor.1087 } }
+	}
+
+}
+
+country_event = { #Japan offers us an alliance!
+	id = rusfor.1085
+	title = rusfor.1085.t
+	desc = rusfor.1085.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1085.a #That is an excellent idea!
+		ai_chance = { factor = 40 }
+		if = { limit = { is_in_faction = no } create_faction = "eurasian_alliance" add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = JAP } }
+		country_event = { id = rusfor.1087 }
+		#country_event = { id = rusfor.1000 }
+        #JAP = { country_event = { id = rusfor.1000 } }	#Eurasian Alliance
+	}
+	
+	option = {
+		name = rusfor.1085.b #Okay, but we demand Northern Sakhalin as well!
+		ai_chance = { factor = 45 }
+		add_state_core = 655
+		JAP = { country_event = { id = rusfor.1086 } }
+		country_event = { id = rusfor.1087 days = 1 }
+	}
+	
+	option = {
+		name = rusfor.1085.c #We cannot trust the treacherous Japanese!
+		ai_chance = { factor = 5 }
+		add_opinion_modifier = { target = JAP modifier = RUS_ally_japan_declined }
+		country_event = { id = rusfor.1087 }
+	}
+
+}
+
+country_event = { #The Russians demand Sakhalin!
+	id = rusfor.1086
+	title = rusfor.1086.t
+	desc = rusfor.1086.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1086.a #Very well, we are friends now.
+		ai_chance = { factor = 85 }
+		add_political_power = -100
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_sakhalin_accept }
+		remove_state_core = 655
+		RUS = { transfer_state = 655
+		if = { limit = { is_in_faction = no } create_faction = "eurasian_alliance" add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = JAP } } }
+		RUS = { country_event = { id = rusfor.1087 } }
+		#country_event = { id = rusfor.1000 }
+        #RUS = { country_event = { id = rusfor.1000 } }	#Eurasian Alliance
+		every_country = { limit = { is_puppet_of = RUS } add_opinion_modifier = { modifier = RUS_ally_japan_accept_puppets } }
+	}
+	
+	option = {
+		name = rusfor.1086.b #No, these territories are rightfully Japanese!
+		ai_chance = { factor = 10 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_sakhalin_declined }
+		add_political_power = -100
+	}
+	
+	option = {
+		name = rusfor.1086.c #How dare they insult Japan like this? Attack!
+		ai_chance = { factor = 5 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_declined }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #Transamur is Russian!
+	id = rusfor.1087
+	title = rusfor.1087.t
+	desc = rusfor.1087.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1087.a #Put their leaders on trial and incorporate Transamur!
+		ai_chance = { factor = 95 }
+		add_political_power = -100
+		annex_country = { target = TRM }
+		add_state_core = 408
+		add_state_core = 409
+		clr_country_flag = RUS_SIB_PANIC
+	}
+	
+	option = {
+		name = rusfor.1087.b #Administer Transamur as an autonomous zone for now.
+		ai_chance = { factor = 5 }
+		puppet = TRM
+		clr_country_flag = RUS_SIB_PANIC
+	}
+
+}
+
+country_event = { #The Japanese have sent a warning
+	id = rusfor.1088
+	title = rusfor.1088.t
+	desc = rusfor.1088.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1088.a #Sever relations with Japan and maintain commercial links with Transamur.
+		ai_chance = { factor = 75 }
+		add_opinion_modifier = { target = JAP modifier = RUS_warning_JAP_sever1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_warning_JAP_sever2 }
+	}
+	
+	option = {
+		name = rusfor.1088.b #Call their bluff, send in the troops!
+		ai_chance = { factor = 20 }
+		JAP = { country_event = { id = rusfor.1084 } }
+	}
+	
+	option = {
+		name = rusfor.1088.c #Renounce the claim.
+		ai_chance = { factor = 5 }
+		add_political_power = -300
+		remove_state_core = 408
+		remove_state_core = 409
+		add_opinion_modifier = { target = JAP modifier = RUS_back_down_JAP }
+	}
+
+}
+
+country_event = { #Business leaders demand a plebiscite
+	id = rusfor.1089
+	title = rusfor.1089.t
+	desc = rusfor.1089.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1089.a #Allow the plebiscite to continue.
+		ai_chance = { factor = 25 }
+		add_political_power = 100
+		RUS = { country_event = { id = rusfor.1090 } }
+	}
+	
+	option = {
+		name = rusfor.1089.b #Allow it, but rig the results.
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		RUS = { country_event = { id = rusfor.1093 } }
+	}
+	
+	option = {
+		name = rusfor.1089.c #No way!
+		ai_chance = { factor = 55 }
+		add_political_power = -300
+		RUS = { country_event = { id = rusfor.1095 } }
+	}
+
+}
+
+country_event = { #Transamur allows the plebiscite!
+	id = rusfor.1090
+	title = rusfor.1090.t
+	desc = rusfor.1090.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1090.a #we shall wait
+		add_political_power = 100
+		TRM = { country_event = { id = rusfor.1091 } }
+	}
+
+}
+
+country_event = { #The Transamur Plebiscite
+	id = rusfor.1091
+	title = rusfor.1091.t
+	desc = rusfor.1091.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1091.a #We shall join with Russia.
+		ai_chance = { factor = 75 }
+		JAP = { country_event = { id = rusfor.1096 } }
+		RUS = { country_event = { id = rusfor.1087 } }
+	}
+	
+	option = {
+		name = rusfor.1091.b #We shall remain independent.
+		ai_chance = { factor = 25 }
+		add_political_power = -200
+		RUS = { country_event = { id = rusfor.1092 } }
+	}
+
+}
+
+country_event = { #Transamur remains independent!
+	id = rusfor.1092
+	title = rusfor.1092.t
+	desc = rusfor.1092.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1092.a #We shall accept the will of the people.
+		ai_chance = { factor = 50 }
+		add_political_power = -200
+		add_opinion_modifier = { target = JAP modifier = RUS_accept_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_accept_lost_plebiscite_TRM }
+	}
+	
+	option = {
+		name = rusfor.1092.b #We shall keep an eye on Transamur.
+		ai_chance = { factor = 40 }
+		add_political_power = -100
+		add_opinion_modifier = { target = JAP modifier = RUS_keep_eye_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_keep_eye_lost_plebiscite_TRM }
+		add_state_core = 408
+		add_state_core = 409
+	}
+	
+	option = {
+		name = rusfor.1092.c #We shall send in the army!
+		ai_chance = { factor = 10 }
+		add_political_power = -200
+		add_state_core = 408
+		add_state_core = 409
+		add_opinion_modifier = { target = JAP modifier = RUS_send_army_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_send_army_lost_plebiscite_TRM }
+		if = { limit = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } JAP = { country_event = { id = rusfor.1084 } } }
+		if = { limit = { NOT = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } } country_event = { id = rusfor.1087 } }
+	}
+
+}
+
+country_event = { #Transamur allows the plebiscite! rigged
+	id = rusfor.1093
+	title = rusfor.1093.t
+	desc = rusfor.1093.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1093.a #Never mind, we shall await the results.
+		ai_chance = { factor = 70 }
+		TRM = { country_event = { id = rusfor.1094 } }
+	}
+	
+	option = {
+		name = rusfor.1093.b #How dare they? Send troops to oberve the election!
+		ai_chance = { factor = 30 }
+		add_political_power = -100
+		JAP = { country_event = { id = rusfor.1084 } }
+	}
+
+}
+
+country_event = { #The Transamur Plebiscite
+	id = rusfor.1094
+	title = rusfor.1094.t
+	desc = rusfor.1094.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1094.a #We shall join with Russia.
+		ai_chance = { factor = 30 }
+		JAP = { country_event = { id = rusfor.1096 } }
+		RUS = { country_event = { id = rusfor.1087 } }
+	}
+	
+	option = {
+		name = rusfor.1094.b #We shall remain independent.
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		RUS = { country_event = { id = rusfor.1092 } }
+	}
+
+}
+
+country_event = { #Transamur refuses plebiscite!
+	id = rusfor.1095
+	title = rusfor.1095.t
+	desc = rusfor.1095.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1095.a #We shall respect their wishes.
+		ai_chance = { factor = 5 }
+		add_political_power = -200
+		add_opinion_modifier = { target = JAP modifier = RUS_accept_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_accept_lost_plebiscite_TRM }
+	}
+	
+	option = {
+		name = rusfor.1095.b #We shall keep an eye on Transamur.
+		ai_chance = { factor = 25 }
+		add_political_power = -100
+		add_opinion_modifier = { target = JAP modifier = RUS_keep_eye_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_keep_eye_lost_plebiscite_TRM }
+		add_state_core = 408
+		add_state_core = 409
+	}
+	
+	option = {
+		name = rusfor.1095.c #We shall send in the army!
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		add_state_core = 408
+		add_state_core = 409
+		add_opinion_modifier = { target = JAP modifier = RUS_send_army_lost_plebiscite_TRM }
+		add_opinion_modifier = { target = TRM modifier = RUS_send_army_lost_plebiscite_TRM }
+		if = { limit = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } JAP = { country_event = { id = rusfor.1084 } } }
+		if = { limit = { NOT = { OR = { TRM = { is_puppet_of = JAP } TRM = { is_in_faction_with = JAP } } } } country_event = { id = rusfor.1087 } }
+	}
+
+}
+
+country_event = { #Russia has taken hold of Transamur! JAP
+	id = rusfor.1096
+	title = rusfor.1096.t
+	desc = rusfor.1096.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1096.a #We have more important things to fight over than this!
+		ai_chance = { factor = 35 }
+		add_opinion_modifier = { target = RUS modifier = JAP_RUS_seize_transamur }
+	}
+	
+	option = {
+		name = rusfor.1096.b #A strong Russia would be a better ally than little Transamur.
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+        RUS = { country_event = { id = rusfor.1085 } }
+	}
+	
+	option = {
+		name = rusfor.1096.c #We shall keep an eye on Transamur.
+		ai_chance = { factor = 35 }
+		add_political_power = -100
+		add_state_claim = 408
+		add_state_claim = 409
+		add_opinion_modifier = { target = RUS modifier = JAP_RUS_seize_transamur }
+	}
+	
+	option = {
+		name = rusfor.1096.e #How dare they insult Japan like this? Attack!
+		ai_chance = { factor = 10 }
+		add_state_claim = 408
+		add_state_claim = 409
+		add_opinion_modifier = { target = RUS modifier = JAP_attack_RUS_seize_transamur }
+		declare_war_on = { target = RUS type = annex_everything }
 	}
 
 }

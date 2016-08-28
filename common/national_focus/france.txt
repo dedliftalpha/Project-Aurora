@@ -14,7 +14,7 @@ focus_tree = {
 focus = {
 		id = FRA_Industrialisation
 		icon = GFX_goal_generic_production
-		x = 1
+		x = 2
 		y = 0
 		cost = 10
 		completion_reward = {
@@ -30,7 +30,7 @@ focus = {
 		id = FRA_construction_effort
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = FRA_Industrialisation }
-		x = 0
+		x = 1
 		y = 1
 		cost = 10
 
@@ -120,7 +120,7 @@ focus = {
 			id = FRA_armament_effort
 			icon = GFX_goal_generic_construct_mil_factory
 			prerequisite = { focus = FRA_Industrialisation }
-			x = 2
+			x = 3
 			y = 1
 			cost = 10
 
@@ -212,7 +212,7 @@ focus = {
 			icon = GFX_goal_generic_construct_infrastructure
 			prerequisite = { focus = FRA_armament_effort
 			                 focus = FRA_construction_effort }
-			x = 0
+			x = 1
 			y = 2
 			cost = 10
 			ai_will_do = {
@@ -266,7 +266,7 @@ focus = {
 				icon = GFX_goal_generic_construct_infrastructure
 				prerequisite = { focus = FRA_armament_effort
 				                 focus = FRA_construction_effort }
-				x = 2
+				x = 3
 				y = 2
 				cost = 10
 
@@ -321,6 +321,12 @@ focus = {
 
 						set_state_flag = FRA_construction_of_new_cities_2IC
 					}
+					random_owned_state = {
+
+						add_extra_state_shared_building_slots = 2
+
+						set_state_flag = FRA_construction_of_new_cities_2IC
+					}
 					add_tech_bonus = {
 						name = construction_tech_bonus
 						bonus = 0.5
@@ -335,7 +341,7 @@ focus = {
 					icon = GFX_goal_generic_construct_civ_factory
 					prerequisite = { focus = FRA_railway_network }
 		      prerequisite = { focus = FRA_construction_of_new_cities }
-					x = 0
+					x = 1
 					y = 3
 					cost = 10
 
@@ -427,7 +433,7 @@ focus = {
 						icon = GFX_goal_generic_construct_mil_factory
 						prerequisite = { focus = FRA_railway_network }
 						prerequisite = { focus = FRA_construction_of_new_cities }
-						x = 2
+						x = 3
 						y = 3
 						cost = 10
 
@@ -519,7 +525,7 @@ focus = {
 								icon = GFX_focus_research
 								prerequisite = { focus = FRA_nuclear_weapons
 						                focus = FRA_secret_weaponry }
-								x = 1
+								x = 2
 								y = 5
 								cost = 10
 								completion_reward = {
@@ -539,7 +545,7 @@ focus = {
 										add_tech_bonus = {
 											name = nuclear_bonus
 											ahead_reduction = 0.5
-											category = nuclear
+											category = nuclear 
 										}
 									}
 
@@ -551,13 +557,39 @@ focus = {
 										}
 									}
 								}
+								focus = {
+									id = FRA_synthetic_refineries
+									icon = GFX_goal_generic_oil_refinery
+									prerequisite = { focus = FRA_construction_effort_II
+							                     focus = FRA_armament_effort_II }
+									x = 2
+									y = 4
+									cost = 10
+									completion_reward = {
+										add_tech_bonus = {
+											name = refinery_bonus
+											ahead_reduction = 0.5
+											category = synth_resources
+										}
+									}
+
+									ai_will_do = {
+										factor = 1
+										modifier = {
+											factor = 0.25
+											always = yes
+										}
+									}
+								}
+				
+								
 
 						focus = {
 							id = FRA_secret_weaponry
 							icon = GFX_goal_generic_secret_weapon
 							prerequisite = { focus = FRA_construction_effort_II
 															 focus = FRA_armament_effort_II }
-							x = 2
+							x = 4
 							y = 4
 							cost = 10
 							completion_reward = {
@@ -796,8 +828,12 @@ focus = {
 																			available = {
 																			31 = { is_controlled_by = FRA }
 																			19 = { is_controlled_by = FRA }
-
 																			}
+                                                                            bypass = { OR = {
+																		    country_exists = SPR
+																			country_exists = CAR
+																			 
+																			} }
 
 																			completion_reward = {
 																				
@@ -920,8 +956,8 @@ focus = {
 																																																																																																																												mutually_exclusive = { focus = FRA_tanks
 
 																																																																																																																																							 }
-																																																																																																																												x = 4
-																																																																																																																												y = 1
+																																																																																																																												x = 5
+																																																																																																																												y = 2
 																																																																																																																												cost = 10
 																																																																																																																												completion_reward = {
 																																																																																																																													add_tech_bonus = {
@@ -940,8 +976,8 @@ focus = {
 																																																																																																																												mutually_exclusive = { focus = FRA_Mechanised_infantry
 
 																																																																																																																																							 }
-																																																																																																																												x = 6
-																																																																																																																												y = 1
+																																																																																																																												x = 7
+																																																																																																																												y = 2
 																																																																																																																												cost = 10
 																																																																																																																												completion_reward = {
 																																																																																																																													add_tech_bonus = {
@@ -1004,7 +1040,7 @@ focus = {
 																																																																																																																															army_experience = 5
 																																																																																																																															add_tech_bonus = {
 																																																																																																																																name = infantry_artillery_bonus
-																																																																																																																																ahead_reduction = 1
+																																																																																																																																ahead_reduction = 0.5
 																																																																																																																																uses = 1
 																																																																																																																																category = infantry_weapons
 																																																																																																																																category = artillery
@@ -1054,19 +1090,28 @@ focus = {
 
 																																																																																																																															x = 21
 																																																																																																																															y = 0
-																																																																																																																															cost = 10
+																																																																																																																															cost = 20
 																																																																																																																															#ai_will_do = {
-																																																																																																																															#	factor = 1
+																																																																																																																															#	factor = 2
 																																																																																																																															#}
-																																																																																																																															completion_reward = {
-																																																																																																																																add_political_power = 120
-																																																																																																																															}
-																																																																																																																														}
+																																																																																																																															select_effect = {
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	country_event = { id = comfrance.2 days = 1 }
+																																																																																																																															country_event = { id = comfrance.3 days = 2 } }
+					                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        completion_reward = {
+																																																																																																																															add_political_power = 240
+																																																																																																																															
+																																																																																																																														} }  
+                                                                           																																																																																																																														
+				                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+																																																																																																																															
+																																																																																																																														    
+																																																																																																																														   
+																																																																																																																														
 																																																																																																																														focus = {
 																																																																																																																															id = FRA_World_revolution
 																																																																																																																															icon = GFX_goal_generic_propaganda
 																																																																																																																															prerequisite = { focus = FRA_Host_the_Internationale }
-																																																																																																																															x = 19
+																																																																																																																															x = 18
 																																																																																																																															y = 1
 																																																																																																																															cost = 10
 																																																																																																																															completion_reward = {
@@ -1079,7 +1124,7 @@ focus = {
 																																																																																																																																	prerequisite = { focus = FRA_Host_the_Internationale }
 
 
-																																																																																																																																	x = 23
+																																																																																																																																	x = 24
 																																																																																																																																	y = 1
 																																																																																																																																	cost = 10
 
@@ -1095,7 +1140,7 @@ focus = {
 																																																																																																																																		id = FRA_africa_friend
 																																																																																																																																		icon = GFX_goal_generic_improve_relations
 																																																																																																																																		prerequisite = { focus = FRA_World_revolution }
-																																																																																																																																		x = 18
+																																																																																																																																		x = 17
 																																																																																																																																		y = 2
 																																																																																																																																		cost = 10
 																																																																																																																																		ai_will_do = {
@@ -1133,7 +1178,7 @@ add_ideas = totalist_influence
 																																																																																																																																			id = FRA_colombia_friend
 																																																																																																																																			icon = GFX_goal_generic_improve_relations
 																																																																																																																																			prerequisite = { focus = FRA_World_revolution }
-																																																																																																																																			x = 20
+																																																																																																																																			x = 19
 																																																																																																																																			y = 2
 																																																																																																																																			cost = 10
 																																																																																																																																			ai_will_do = {
@@ -1171,7 +1216,7 @@ add_ideas = totalist_influence
 																																																																																																																																		id = FRA_Muslim_commitee
 																																																																																																																																		icon = GFX_goal_generic_improve_relations
 																																																																																																																																		prerequisite = { focus = FRA_World_revolution }
-																																																																																																																																		x = 19
+																																																																																																																																		x = 18
 																																																																																																																																		y = 3
 																																																																																																																																		cost = 10
 																																																																																																																																		ai_will_do = {
@@ -1276,30 +1321,17 @@ add_ideas = totalist_influence
 																																																																																																																																		}
 																																																																																																																																	
 																											completion_reward = {
-																																																																																																																																			SUD = {
-																																																																																																																																				add_opinion_modifier = { target = FRA modifier = ita_diplomacy_focus }
-																																																																																																																																				if = {
-																																																																																																																																					limit = { ROOT = { has_government = syndicalist } }
-add_ideas = syndicalist_influence 
-																																																																																																																																				}
-																																																																																																																																				if = {
-																																																																																																																																					limit = { ROOT = { has_government = radical_socialist } }
-add_ideas = radical_socialist_influence
-																																																																																																																																				}
-																																																																																																																																				if = {
-																																																																																																																																					limit = { ROOT = { has_government = totalist } }
-add_ideas = totalist_influence
-																																																																																																																																				}
-																																																																																																																																				country_event = { id = generic.1 }
-																																																																																																																																			}
+																																																																																																																																			
 																																																																																																																																		}
 																																																																																																																																	}
+																																																																																																																																	
+																																																																																																																																																																																																																																																																
 																																																																																																																																																				focus = {
 																																																																																																																																				id = FRA_Support_Romandians
 																																																																																																																																				icon = GFX_goal_generic_demand_territory
 																																																																																																																																				prerequisite = { focus = FRA_Our_revolution }
 
-																																																																																																																																				x = 22
+																																																																																																																																				x = 21
 																																																																																																																																				y = 2
 																																																																																																																																				cost = 10
 																																																																																																																																				ai_will_do = {
@@ -1307,7 +1339,7 @@ add_ideas = totalist_influence
 																																																																																																																																				}
 
 																																																																																																																																				bypass = {
-																																																																																																																																					NOT = { country_exists = YUG }
+																																																																																																																																					NOT = { country_exists = SWI }
 																																																																																																																																				}
 
 																																																																																																																																				completion_reward = {
@@ -1334,7 +1366,7 @@ add_ideas = totalist_influence
 																																																																																																																																					FRA = { owns_state = 760 }
 																																																																																																																																					} }
 
-																																																																																																																																					x = 22
+																																																																																																																																					x = 21
 																																																																																																																																					y = 3
 																																																																																																																																					cost = 10
 																																																																																																																																					will_lead_to_war_with = SWI
@@ -1343,10 +1375,8 @@ add_ideas = totalist_influence
 
 																																																																																																																																					}
 																																																																																																																																					completion_reward = {
-																																																																																																																																					add_named_threat = { threat = 2 name = GER_war_with_france_threat }
-																																																																																																																																						SWI = {
-																																																																																																																																							country_event = italy.17
-																																																																																																																																						}
+																																																																																																																																					add_named_threat = { threat = 2 name = FRA_damand_romandy_threat }
+																																																																																																																																						SWI = { country_event = { id = comfrance.6 } }
 
 																																																																																																																																					}
 																																																																																																																																					}
@@ -1357,6 +1387,7 @@ add_ideas = totalist_influence
 																																																																																																																																							prerequisite = { focus = FRA_Our_revolution  }
 																																																																																																																																							available = { is_puppet = no }
 																																																																																																																																							bypass = { NOT = { country_exists = GER }
+																																																																																																																																							          
 
 		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	OR = {
 			                                                                                                                                                                                                                                                                      	                                                                                                                                                                                                                                                                        GER = { is_puppet_of = FRA }
@@ -1365,12 +1396,12 @@ add_ideas = totalist_influence
 																																																																																																																																							}
 																																																																																																																																							}
 
-																																																																																																																																							x = 24
+																																																																																																																																							x = 23
 																																																																																																																																							y = 2
 																																																																																																																																							cost = 10
 																																																																																																																																							will_lead_to_war_with = GER
 																																																																																																																																							ai_will_do = {
-																																																																																																																																								factor = 5
+																																																																																																																																								factor = 1
 
 																																																																																																																																							}
 																																																																																																																																							completion_reward = {
@@ -1383,15 +1414,15 @@ add_ideas = totalist_influence
 																																																																																																																																							}
 																																																																																																																																							focus = {
 																																																																																																																																									id = FRA_War_with_germany
-																																																																																																																																									available = {
+																																																																																																																																																																																																																																																																																	available = {
 																																																																																																																																										GER = { exists = yes }
 																																																																																																																																										has_war = no
 																																																																																																																																									}
 																																																																																																																																									available = { is_puppet = no }
-																																																																																																																																									will_lead_to_war_with = GER
+																																																																																																																																																																																																																																																																							will_lead_to_war_with = GER
 																																																																																																																																									prerequisite = { focus = FRA_Demand_Alsace_Lorraine }
 																																																																																																																																									icon = GFX_goal_generic_major_war
-																																																																																																																																									x = 24
+																																																																																																																																									x = 23
 																																																																																																																																									y = 3
 																																																																																																																																									cost = 10
 																																																																																																																																									ai_will_do = {
@@ -1406,6 +1437,31 @@ add_ideas = totalist_influence
 																																																																																																																																									}
 																																																																																																																																								}
 																																																																																																																																								focus = {
+																																																																																																																																									id = FRA_War_with_russia
+																																																																																																																																																																																																																																																																																	available = {
+																																																																																																																																										RUS = { exists = yes }
+																																																																																																																																										has_war = no
+																																																																																																																																									}
+																																																																																																																																									available = { is_puppet = no }
+																																																																																																																																																																																																																																																																							will_lead_to_war_with = GER
+																																																																																																																																									prerequisite = { focus = FRA_War_with_germany }
+																																																																																																																																									icon = GFX_goal_generic_major_war
+																																																																																																																																									x = 23
+																																																																																																																																									y = 4
+																																																																																																																																									cost = 10
+																																																																																																																																									ai_will_do = {
+																																																																																																																																										factor = 1
+																																																																																																																																									}
+																																																																																																																																									completion_reward = {
+																																																																																																																																									add_named_threat = { threat = 5 name = GER_war_with_france_threat }
+																																																																																																																																										create_wargoal = {
+																																																																																																																																											type = puppet_wargoal_focus
+																																																																																																																																											target = RUS
+																																																																																																																																										}
+																																																																																																																																									}
+																																																																																																																																								}
+																																																																																																																																								
+																																																																																																																																								focus = {
 		id = FRA_War_with_Italian_Federation
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = FRA_Our_revolution }
@@ -1415,12 +1471,12 @@ add_ideas = totalist_influence
 				OR = {
 					owns_state = 1
 					owns_state = 735
-					owns_state = 458
+					owns_state = 762
 				}
 			}
 		}
 		will_lead_to_war_with = FRA
-		x = 26
+		x = 25
 		y = 2
 		cost = 10
 		ai_will_do = {
@@ -1442,10 +1498,11 @@ add_ideas = totalist_influence
 			}
 		}			
 		completion_reward = {
+		add_named_threat = { threat = 3 name = GER_war_with_france_threat }
 			create_wargoal = {
 				target = ITA
 				type = take_state_focus
-				generator = { 1 735 458 }
+				generator = { 1 735 762 }
 			}
 		}
 	}	
@@ -1458,7 +1515,7 @@ add_ideas = totalist_influence
 
 																																																																																																																																									NOT = { is_in_faction_with = NFA }
 																																																																																																																																								}
-																																																																																																																																								x = 28
+																																																																																																																																								x = 27
 																																																																																																																																								y = 2
 																																																																																																																																								cost = 10
 																																																																																																																																								bypass = {
@@ -1496,7 +1553,7 @@ add_ideas = totalist_influence
 		icon = GFX_goal_generic_build_airforce
 	 	prerequisite = { 
 	 	}
-		x = 34
+		x = 33
 		y = 0
 		cost = 10
 
@@ -1578,7 +1635,7 @@ add_ideas = totalist_influence
 		id = FRA_fighter_focus_II
 		icon = GFX_goal_generic_air_fighter
 	 	prerequisite = { focus = FRA_air_focus_II }
-		x = 33
+		x = 32
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1595,7 +1652,7 @@ add_ideas = totalist_influence
 		id = FRA_heavy_fighter_focus_II
 		icon = GFX_goal_generic_air_fighter2
 	 	prerequisite = { focus = FRA_fighter_focus_II }
-		x = 32
+		x = 31
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1613,7 +1670,7 @@ add_ideas = totalist_influence
 		icon = GFX_goal_generic_air_bomber
 	 	prerequisite = { focus = FRA_air_focus_II }
 		mutually_exclusive = { focus = FRA_heavy_bomber_focus_II }
-		x = 35
+		x = 34
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1634,7 +1691,7 @@ add_ideas = totalist_influence
 	 		focus = FRA_light_bomber_focus
 			focus = FRA_heavy_bomber_focus_II
 	 	}
-		x = 34
+		x = 33
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1654,7 +1711,7 @@ add_ideas = totalist_influence
 		icon = GFX_goal_generic_occupy_start_war
 	 	prerequisite = { focus = FRA_air_focus_II }
 		mutually_exclusive = { focus = FRA_light_bomber_focus }
-		x = 37
+		x = 36
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1672,7 +1729,7 @@ add_ideas = totalist_influence
 		icon = GFX_goal_generic_air_naval_bomber
 	 	prerequisite = { focus = FRA_light_bomber_focus
                          focus = FRA_heavy_bomber_focus_II		}
-		x = 38
+		x = 37
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1691,7 +1748,7 @@ add_ideas = totalist_influence
                          focus = FRA_light_bomber_focus 
                          focus = FRA_fighter_focus_II						 }
 		
-		x = 36
+		x = 35
 		y = 2
 		cost = 10
 
@@ -1715,7 +1772,7 @@ focus = {
 	 	prerequisite = { 
 	 		focus = FRA_fighter_focus_II
 	 	}
-		x = 30
+		x = 29
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1730,7 +1787,7 @@ focus = {
 focus = {
 		id = FRA_navy_focus_II
 		icon = GFX_goal_generic_build_navy
-		x = 42
+		x = 41
 		y = 0
 		cost = 10
 
@@ -1782,7 +1839,7 @@ focus = {
 		icon = GFX_goal_generic_navy_submarine
 		prerequisite = { focus = FRA_navy_focus_II }
 		
-		x = 39
+		x = 38
 		y = 1
 		cost = 10
 
@@ -1803,7 +1860,7 @@ focus = {
 		id = FRA_improved_screen_ships_II
 		icon = GFX_goal_generic_navy_cruiser
 	 	prerequisite = { focus = FRA_navy_focus_II }
-		x = 41
+		x = 40
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1823,7 +1880,7 @@ focus = {
 		icon = GFX_goal_generic_navy_battleship
 	 	mutually_exclusive = { focus = FRA_carrier_focus_II }
 	 	prerequisite = { focus = FRA_navy_focus_II }
-		x = 43
+		x = 42
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1842,7 +1899,7 @@ focus = {
 		icon = GFX_goal_generic_navy_carrier
 	 	mutually_exclusive = { focus = FRA_capital_ship_focus_II }
 	 	prerequisite = { focus = FRA_navy_focus_II }
-		x = 45
+		x = 44
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1864,7 +1921,7 @@ focus = {
 	 		focus = FRA_improved_screen_ships_II
 			focus = FRA_submarines
 	 	}
-		x = 42
+		x = 41
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1881,7 +1938,7 @@ focus = {
 								id = FRA_Phalanstere_internationale
 								icon = GFX_goal_generic_production
 
-								x = 51
+								x = 50
 								y = 0
 								cost = 10
 								completion_reward = {
@@ -1897,9 +1954,8 @@ focus = {
 														prerequisite = { focus = FRA_Phalanstere_internationale }
 available = {
 			is_in_faction_with = GEO
-		} 
-														icon = GFX_goal_generic_construct_civ_factory
-														x = 49
+			 } 		                					icon = GFX_goal_generic_construct_civ_factory
+														x = 48
 														y = 1
 														cost = 10
 
@@ -1916,7 +1972,7 @@ available = {
 																	}
 																}
 															}
-														}
+														} 
 
 														complete_tooltip = {
 															GEO = {
@@ -1972,7 +2028,7 @@ available = {
 			is_in_faction_with = BHC
 		} 
 																										icon = GFX_goal_generic_construct_civ_factory
-																										x = 51
+																										x = 50
 																										y = 1
 																										cost = 10
 
@@ -2039,18 +2095,18 @@ available = {
 																									}												
 																									
 																																					focus = {
-																																																		id = FRA_Develop_Africa
+																																																		id = FRA_Develop_Spain
 																																																		prerequisite = { focus = FRA_Phalanstere_internationale }
 available = {
-			is_in_faction_with = SAF
+			is_in_faction_with = CNT
 		} 
 																																																		icon = GFX_goal_generic_construct_civ_factory
-																																																		x = 50
+																																																		x = 49
 																																																		y = 2
 																																																		cost = 10
 
 																																																		bypass = {
-																																																			SAF = {
+																																																			CNT = {
 																																																				custom_trigger_tooltip = {
 																																																					tooltip = construction_effort_tt
 																																																					all_owned_state = {
@@ -2065,7 +2121,7 @@ available = {
 																																																		}
 
 																																																		complete_tooltip = {
-																																																			SAF = {
+																																																			CNT = {
 																																																				add_opinion_modifier = { target = FRA modifier = aided_industry }
 																																																				every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
 																																																					add_extra_state_shared_building_slots = 2
@@ -2087,7 +2143,7 @@ available = {
 																																																		}
 
 																																																		completion_reward = {
-																																																			SAF = {
+																																																			CNT = {
 																																																				add_opinion_modifier = { target = FRA modifier = aided_industry }
 																																																				random_owned_state = {
 																																																					limit = {
@@ -2117,7 +2173,7 @@ available = {
 			is_in_faction_with = GUA
 		} 
 																																																														icon = GFX_goal_generic_construct_civ_factory
-																																																														x = 52
+																																																														x = 51
 																																																														y = 2
 																																																														cost = 10
 
@@ -2189,7 +2245,7 @@ available = {
 			is_in_faction_with = BRA
 		} 
 																																																																										icon = GFX_goal_generic_construct_civ_factory
-																																																																										x = 54
+																																																																										x = 53
 																																																																										y = 2
 																																																																										cost = 10
 
@@ -2261,7 +2317,7 @@ available = {
 			is_in_faction_with = MEX
 		} 
 																																																																																						icon = GFX_goal_generic_construct_civ_factory
-																																																																																						x = 53
+																																																																																						x = 52
 																																																																																						y = 1
 																																																																																						cost = 10
 
@@ -2333,7 +2389,7 @@ available = {
 			is_in_faction_with = TUR
 		} 
 																																																																																																		icon = GFX_goal_generic_construct_civ_factory
-																																																																																																		x = 48
+																																																																																																		x = 47
 																																																																																																		y = 2
 																																																																																																		cost = 10
 
@@ -2405,7 +2461,7 @@ available = {
 			is_in_faction_with = BOL
 		} 
 																																																																																																														icon = GFX_goal_generic_construct_civ_factory
-																																																																																																														x = 55
+																																																																																																														x = 54
 																																																																																																														y = 1
 																																																																																																														cost = 10
 
@@ -2477,7 +2533,7 @@ available = {
 			is_in_faction_with = SRI
 		} 
 																																																																																																																										icon = GFX_goal_generic_construct_civ_factory
-																																																																																																																										x = 47
+																																																																																																																										x = 46
 																																																																																																																										y = 1
 																																																																																																																										cost = 10
 

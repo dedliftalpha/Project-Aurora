@@ -2184,3 +2184,221 @@ country_event = { #Integration of Constantinople
 	}
 
 }
+
+country_event = { #The Sino-Japanese War
+	id = rusfor.1076
+	title = rusfor.1076.t
+	desc = rusfor.1076.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1076.a #We will send aid to China.
+		ai_chance = { factor = 60 }
+		QIE = { country_event = { id = rusfor.1081 } }
+		add_manpower = -5000
+		send_equipment = { target = QIE type = infantry_equipment amount = 2000 }
+	}
+	
+	option = {
+		name = rusfor.1076.b #We shall use the opportunity to claim Chinese Central Asia!
+		ai_chance = { factor = 25 }
+        add_named_threat = { threat = 5 name = rusfor.1076.t }
+		add_opinion_modifier = { target = QIE modifier = RUS_claimed_chinese_central_asia2 }
+		add_opinion_modifier = { target = JAP modifier = RUS_claimed_chinese_central_asia1 }
+		add_state_claim = 329
+		 add_state_claim = 330
+		 add_state_claim = 563
+		 add_state_claim = 564
+		add_state_claim = 618
+		 add_state_claim = 617
+		 add_state_claim = 619
+		 add_state_claim = 287
+	}
+	
+	option = {
+		name = rusfor.1076.c #We shall become involved in the war ourselves.
+		ai_chance = { factor = 15
+                    modifier = {
+				factor = 0
+				has_country_flag = RUS_EXP
+			} }
+        country_event = { id = rusfor.1077 }
+	}
+
+}
+
+country_event = { #Intervention in the Sino-Japanese War
+	id = rusfor.1077
+	title = rusfor.1077.t
+	desc = rusfor.1077.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1077.a #We shall attempt to ally with China against Japan.
+		ai_chance = { factor = 40 }
+		QIE = { country_event = { id = rusfor.1080 } }
+		declare_war_on = { target = JAP type = annex_everything }
+		add_opinion_modifier = { target = JAP modifier = RUS_intervene_ally_china }
+		add_state_core = 408
+		add_state_core = 409
+		add_state_core = 655
+	}
+	
+	option = {
+		name = rusfor.1077.b #We shall attempt to ally with Japan against China.
+		ai_chance = { factor = 20 }
+        JAP = { country_event = { id = rusfor.1079 } }
+		declare_war_on = { target = QIE type = annex_everything }
+		add_opinion_modifier = { target = QIE modifier = RUS_intervene_ally_japan }
+		add_opinion_modifier = { target = USA modifier = RUS_intervene_ally_japan }
+		add_opinion_modifier = { target = CAN modifier = RUS_intervene_ally_japan }
+		add_state_claim = 329
+		 add_state_claim = 330
+		 add_state_claim = 563
+		 add_state_claim = 534
+		add_state_claim = 618
+		 add_state_claim = 617
+		 add_state_claim = 619
+		 add_state_claim = 287
+	}
+	
+	option = {
+		name = rusfor.1077.c #We will attack Japan by ourselves.
+		ai_chance = { factor = 25 }
+		declare_war_on = { target = JAP type = annex_everything }
+		add_opinion_modifier = { target = JAP modifier = RUS_intervene_declared_japan1 }
+		add_opinion_modifier = { target = QIE modifier = RUS_intervene_declared_japan2 }
+		add_state_core = 408
+		add_state_core = 409
+		add_state_core = 655
+		set_country_flag = RUS_fight_alone_JAP
+	}
+	
+	option = {
+		name = rusfor.1077.e #We will attack China by ourselves.
+		ai_chance = { factor = 15 }
+        declare_war_on = { target = QIE type = annex_everything }
+		add_opinion_modifier = { target = JAP modifier = RUS_intervene_declared_china1 }
+		add_opinion_modifier = { target = QIE modifier = RUS_intervene_declared_china2 }
+		add_opinion_modifier = { target = CAN modifier = RUS_intervene_declared_china1 }
+		add_opinion_modifier = { target = USA modifier = RUS_intervene_declared_china1 }
+		add_state_claim = 329
+		 add_state_claim = 330
+		 add_state_claim = 563
+		 add_state_claim = 534
+		add_state_claim = 618
+		 add_state_claim = 617
+		 add_state_claim = 619
+		 add_state_claim = 287
+	}
+
+}
+
+country_event = { #Russia and China fight Japan
+	id = rusfor.1078
+	title = rusfor.1078.t
+	desc = rusfor.1078.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_war_with = JAP QIE = { has_war_with = JAP } NOT = { is_in_faction_with = JAP is_in_faction_with = QIE has_war_with = QIE has_country_flag = RUS_fight_alone_JAP } }
+	
+	mean_time_to_happen = { days = 20 }
+	
+	immediate = { set_country_flag = RUS_bypass_intervene_CHIJAP }
+	
+	option = {
+		name = rusfor.1078.a #Attempt to join the Qing Chinese alliance.
+		ai_chance = { factor = 35 }
+		QIE = { country_event = { id = rusfor.1080 } }
+		add_opinion_modifier = { target = JAP modifier = RUS_ally_china_event1 }
+		add_opinion_modifier = { target = QIE modifier = RUS_ally_china_event2 }
+	}
+	
+	option = {
+		name = rusfor.1078.b #We will send aid to China.
+		ai_chance = { factor = 40 }
+		QIE = { country_event = { id = rusfor.1081 } }
+		add_manpower = -5000
+		send_equipment = { target = QIE type = infantry_equipment amount = 2000 }
+	}
+	
+	option = {
+		name = rusfor.1078.c #Fight the japs alone !
+		ai_chance = { factor = 15 }
+		add_opinion_modifier = { target = JAP modifier = RUS_fight_JAP_alone_event }
+	}
+	
+}
+
+country_event = { #The Russians offer an alliance JAP
+	id = rusfor.1079
+	title = rusfor.1079.t
+	desc = rusfor.1079.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1079.a #We accept, Russia shall be a fine addition to our alliance!
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_accept }
+		if = { limit = { is_in_faction = no } create_faction = "eurasian_alliance" add_to_faction = RUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = RUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = JAP } add_to_faction = RUS } }
+	}
+	
+	option = {
+		name = rusfor.1079.b #No, we cannot trust the Russians!
+		ai_chance = { factor = 60 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_declined }
+	}
+
+}
+
+country_event = { #The Russians offer an alliance QIE
+	id = rusfor.1080
+	title = rusfor.1080.t
+	desc = rusfor.1080.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1080.a #We accept, Russia shall be a fine addition to our alliance!
+		ai_chance = { factor = 70 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_china_accept }
+		if = { limit = { is_in_faction = no } create_faction = "sino_russian_alliance" add_to_faction = RUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = RUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = QIE } add_to_faction = RUS } }
+	}
+	
+	option = {
+		name = rusfor.1080.b #No, we cannot trust the Russians!
+		ai_chance = { factor = 30 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_china_declined }
+	}
+
+}
+
+country_event = { #Russian aid arrives QIE
+	id = rusfor.1081
+	title = rusfor.1081.t
+	desc = rusfor.1081.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1081.a #Great !
+		add_opinion_modifier = { target = RUS modifier = RUS_intervene_help_china }
+		load_oob = QIE_RUS_HELP
+		custom_effect_tooltip = received_equipment_2000
+	}
+
+}

@@ -182,7 +182,7 @@ focus = {
 		icon = GFX_goal_generic_demand_territory
 		x = 3
 		y = 1
-		cost = 1
+		cost = 3
 		available = { custom_trigger_tooltip = { tooltip = russia_must_wait_unlock OR = { has_country_flag = unlock_dmitri has_country_flag = unlock_denikin has_country_flag = unlock_wrangel } } 
 		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
 		NOT = { OR = { has_country_flag = RUS_CON_MON has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_TSAR_DMI  has_country_flag = RUS_SOVIET has_country_flag = RUS_WRA_ambitions } } }
@@ -3429,6 +3429,8 @@ focus = {
 		}	
 		completion_reward = {
 		remove_ideas = rus_divided_marine
+		remove_ideas_with_trait = navy_chief
+		add_ideas = RUS_Robert_von_Wirn_cnav_sco
 		set_country_flag = reform_wiren
 		add_tech_bonus = {
 				name = navdoctrine_bonus
@@ -3467,6 +3469,8 @@ focus = {
 		completion_reward = {
 		remove_ideas = rus_divided_marine
 		set_country_flag = reform_berens
+		remove_ideas_with_trait = navy_chief
+		add_ideas = RUS_Mikhail_Berens_cnav_mli
 		add_tech_bonus = {
 				name = navdoctrine_bonus
 				bonus = 0.5
@@ -3504,6 +3508,8 @@ focus = {
 		completion_reward = {
 		remove_ideas = rus_divided_marine
 		set_country_flag = reform_bostrem
+		remove_ideas_with_trait = navy_chief
+		add_ideas = RUS_Ivan_F_Bosrem_cnav_sco
 		add_tech_bonus = {
 				name = navdoctrine_bonus
 				bonus = 0.5
@@ -4568,6 +4574,12 @@ focus = {
 		cost = 2
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
+		bypass = { OR = { AND = { OR = { owns_state = 617 any_country = { AND = { is_puppet_of = RUS owns_state = 617 } } }
+			OR = { owns_state = 618 any_country = { AND = { is_puppet_of = RUS owns_state = 618 } } }
+            OR = { owns_state = 619 any_country = { AND = { is_puppet_of = RUS owns_state = 619 } } }
+            OR = { owns_state = 287 any_country = { AND = { is_puppet_of = RUS owns_state = 287 } } } }
+            AND = { 617 = { is_claimed_by = RUS } 618 = { is_claimed_by = RUS } 619 = { is_claimed_by = RUS } 287 = { is_claimed_by = RUS } OR = { XSM = { OR = { controls_state = 617 controls_state = 618 controls_state = 619 controls_state = 287 } } SIK = { OR = { controls_state = 617 controls_state = 618 controls_state = 619 controls_state = 287 } } } }
+			} }
 		
 		ai_will_do = {
 			factor = 1
@@ -4583,7 +4595,16 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        if = { limit = { XSM = { OR = { owns_state = 617 owns_state = 618 owns_state = 619 owns_state = 287 } } } add_opinion_modifier = { target = XSM modifier = RUS_claim_sinkiang } }
+        add_opinion_modifier = { target = SIK modifier = RUS_claim_sinkiang }
+		add_state_claim = 618
+		 add_state_claim = 617
+		 add_state_claim = 619
+		 add_state_claim = 287
+		 if = { limit = { XSM = { OR = { owns_state = 617 owns_state = 618 owns_state = 619 owns_state = 287 } } }
+		 create_wargoal = { type = take_state_focus target = XSM generator = { 617 618 619 287 } } }
+		 if = { limit = { SIK = { OR = { owns_state = 617 owns_state = 618 owns_state = 619 owns_state = 287 } } }
+		 create_wargoal = { type = annex_everything target = SIK } }
 		}		
 	}
 	
@@ -4622,9 +4643,15 @@ focus = {
 		x = 24
 		y = 9
 		cost = 2
-		available = { }
+		available = { AND = { OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } }
+			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } } }
+			country_exists = TRM country_exists = JAP is_puppet = no NOT = { is_in_faction_with = TRM TRM = { is_puppet_of = RUS } has_war_with = JAP has_war_with = TRM } }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_crush_transamur }
+		bypass = { AND = { OR = { owns_state = 408 any_country = { AND = { is_puppet_of = RUS owns_state = 408 } } }
+			OR = { owns_state = 409 any_country = { AND = { is_puppet_of = RUS owns_state = 409 } } } }
+			}
+		cancel = { NOT = { OR = { country_exists = TRM country_exists = JAP is_puppet = no NOT = { is_in_faction_with = TRM } NOT = { TRM = { is_puppet_of = RUS } } NOT = { has_war_with = JAP } NOT = { has_war_with = TRM } } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -4640,7 +4667,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        TRM = { country_event = { id = rusfor.1089 } }   
 		}		
 	}
 	
@@ -4650,9 +4677,13 @@ focus = {
 		x = 26
 		y = 9
 		cost = 2
-		available = { }
+		available = { AND = { OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } }
+			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } } } }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_plebiscite_transamur }
+		bypass = { AND = { OR = { owns_state = 408 any_country = { AND = { is_puppet_of = RUS owns_state = 408 } } }
+			OR = { owns_state = 409 any_country = { AND = { is_puppet_of = RUS owns_state = 409 } } } }
+			}
 		
 		ai_will_do = {
 			factor = 1
@@ -4668,7 +4699,12 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        add_opinion_modifier = { target = TRM modifier = RUS_crush_transamur }
+		if = { limit = { TRM = { is_puppet_of = JAP } } add_opinion_modifier = { target = JAP modifier = RUS_crush_transamur } }
+		add_state_core = 408
+		 add_state_core = 409
+		 if = { limit = { country_exists = TRM NOT = { is_in_faction_with = TRM TRM = { is_puppet_of = RUS } has_war_with = JAP has_war_with = TRM } TRM = { OR = { owns_state = 408 owns_state = 409 } } }
+		country_event = { id = rusfor.1082 } }  
 		}		
 	}
 	

@@ -11,7 +11,9 @@ focus_tree = {
 	
 	default = no
 	
-	## Industry Focus Tree ##
+	####################
+	## INDUSTRY TREES ##
+	####################
 	
 	#Public Works
 	focus = {
@@ -27,6 +29,12 @@ focus_tree = {
 				uses = 1
 				category = construction_tech
 			}
+			if = {
+				limit = {
+					276 = { is_owned_by = CAN }
+				}
+				country_event = { id = canada.41 days = 1 }
+			}
 		}
 	}
 	
@@ -39,11 +47,23 @@ focus_tree = {
 		cost = 10
 		prerequisite = { focus = CAN_works }
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						CAN = { has_tech = basic_machine_tools }
+					}
+				}
+				set_technology = { basic_machine_tools = 1 }
+			}
+			if = {
+				limit = { CAN = { has_tech = basic_machine_tools } }
+			}			
 			add_tech_bonus = {
-				name = industry_bonus
+				name = production_bonus
 				bonus = 0.5
 				uses = 1
-				category = industry
+				technology = improved_machine_tools
+				technology = advanced_machine_tools
 			}
 		}
 	}
@@ -67,7 +87,7 @@ focus_tree = {
 				add_extra_state_shared_building_slots = 1 
 				add_resource = {
 					type = rubber
-					amount = 10
+					amount = 8
 				}
 			}
 			if = {
@@ -77,7 +97,7 @@ focus_tree = {
 				random_owned_state = {
 					add_resource = {
 						type = rubber
-						amount = 5
+						amount = 4
 					}
 				}
 			}
@@ -94,6 +114,7 @@ focus_tree = {
 		cost = 10 
 		prerequisite = { focus = CAN_works }
 		completion_reward {
+			country_event = { id = canada.24 days = 1 }
 			276 = {
 				if = {
 					limit = {
@@ -183,18 +204,6 @@ focus_tree = {
 		y = 1 
 		cost = 10 
 		completion_reward = {
-			276 = {
-				if = {
-					limit = {
-						is_owned_by = CAN
-					}
-					add_building_construction = {
-							type = infrastructure
-							level = 2
-							instant_build = yes
-					}
-				}
-			}
 			468 = {
 				if = {
 					limit = {
@@ -678,7 +687,7 @@ focus_tree = {
 					limit = {
 						is_owned_by = CAN
 					}
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = industrial_complex
 							level = 4
@@ -759,6 +768,9 @@ focus_tree = {
 		}
 	}
 	
+	########################
+	## SCIENCE & RESEARCH ##	
+	########################	
 		
 	#Fund the National Research Council
 	focus = {
@@ -778,7 +790,8 @@ focus_tree = {
 		id = CAN_extra_tech
 		icon = GFX_focus_research
 		prerequisite = { focus = CAN_nrc }
-		prerequisite = { focus = CAN_eti focus = CAN_synthetics_research }
+		prerequisite = { focus = CAN_eti }
+		prerequisite = { focus = CAN_synthetics_research }
 		x = 2 
 		y = 2
 		cost = 10 
@@ -944,9 +957,9 @@ focus_tree = {
 
 
 	
-	############
-	##Bill C-7##
-	############
+	##############
+	## Bill C-7 ##
+	##############
 
 	#Bill C7 Drafting#
 	focus = {
@@ -956,7 +969,7 @@ focus_tree = {
 		y = 0
 		cost = 1
 		available = {
-			date > 1936.2.1
+			has_country_flag = CAN_king_ed
 		}
 		completion_reward = {
 			add_ideas = CAN_bill_c_7_debate
@@ -965,7 +978,7 @@ focus_tree = {
 		
 	focus = {
 		id = CAN_C7_industry_debate
-		icon = GFX_generic_construct_mil_factory
+		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = CAN_C7_intro }
 		x = 19 
 		y = 1
@@ -1015,6 +1028,61 @@ focus_tree = {
 			country_event = { id = canada.103 days = 1 }
 		}
 	}
+
+##########################
+## MILITARY FOCUS TREES ##
+##########################	
+
+	focus = { #Reorganize the Army
+		id = CAN_army_command
+		icon = GFX_goal_generic_position_armies
+		x = 4
+		y = 6
+		cost = 10 
+		completion_reward = {
+			army_experience = 25
+			country_event = { id = canada.20 days = 1 } #Field Marshalls Event
+		}
+	}
+	
+	focus = { #Currie's Planned Battle
+		id = CAN_grand_battle_doctrine
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = CAN_army_command }
+		mutually_exclusive = { focus = CAN_mobile_doctrine }
+		x = 3
+		y = 7
+		cost = 10
+		completion_reward = {
+			add_ideas = CAN_Arthur_Currie_carm_sco
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_grand_battle_plan
+			}
+		}
+	}
+	
+	focus = { #Fuller's Combined Arms
+		id = CAN_mobile_doctrine
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = CAN_army_command }
+		mutually_exclusive = { focus = CAN_grand_battle_doctrine }
+		x = 5
+		y = 7
+		cost = 10
+		completion_reward = {
+			add_ideas = CAN_JFC_Fuller_carm_ade
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_mobile_warfare
+			}
+		}
+	}
+
 }
 	
 	

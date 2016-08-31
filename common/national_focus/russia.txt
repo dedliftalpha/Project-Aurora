@@ -4715,8 +4715,14 @@ focus = {
 		x = 24
 		y = 10
 		cost = 2
-		available = { }
+		available = { NOT = { AND = { is_in_faction_with = JAP OR = { FNG = { is_puppet_of = JAP } JAP = { OR = { owns_state = 714 owns_state = 715 owns_state = 328 } } } } } AND = { OR = { owns_state = 408 any_country = { AND = { is_puppet_of = RUS owns_state = 408 } } }
+			OR = { owns_state = 409 any_country = { AND = { is_puppet_of = RUS owns_state = 409 } } } } }
 		prerequisite = { focus = RUS_plebiscite_transamur focus = RUS_crush_transamur }
+		bypass = { AND = { OR = { owns_state = 328 any_country = { AND = { is_puppet_of = RUS owns_state = 328 } } }
+			OR = { owns_state = 715 any_country = { AND = { is_puppet_of = RUS owns_state = 715 } } }
+            OR = { owns_state = 714 any_country = { AND = { is_puppet_of = RUS owns_state = 714 } } } }
+			}
+		cancel = { AND = { is_in_faction_with = JAP OR = { FNG = { is_puppet_of = JAP } JAP = { OR = { owns_state = 714 owns_state = 715 owns_state = 328 } } } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -4732,7 +4738,23 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        add_opinion_modifier = { target = JAP modifier = RUS_claim_manchuria  }
+        add_opinion_modifier = { target = FNG modifier = RUS_claim_manchuria  }
+		if = { limit = { NOT = { country_exists = FNG } NOT = { JAP = { OR = { owns_state = 714 owns_state = 715 owns_state = 328 } } } } 
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328 }
+		if = { limit = { country_exists = FNG NOT = { FNG = { is_puppet_of = JAP } } } 
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328 
+		create_wargoal = { type = annex_everything target = FNG } }
+		if = { limit = { OR = { FNG = { is_puppet_of = JAP } JAP = { OR = { owns_state = 714 owns_state = 715 owns_state = 328 } } } } 
+		country_event = { id = rusfor.1097 } }
 		}		
 	}
 	

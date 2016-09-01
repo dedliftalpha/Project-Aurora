@@ -2873,3 +2873,336 @@ country_event = { #Russia has taken hold of Transamur! JAP
 	}
 
 }
+
+country_event = { #Claim Manchuria
+	id = rusfor.1097
+	title = rusfor.1097.t
+	desc = rusfor.1097.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1097.a #Claim only Manchuria
+		ai_chance = { factor = 60 }
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		JAP = { country_event = { id = rusfor.1098 } }
+	}
+	
+	option = {
+		name = rusfor.1097.b #Claim Manchuria and Port Arthur
+		ai_chance = { factor = 15 }
+		trigger = { 745 = { is_controlled_by = JAP is_owned_by = JAP } }
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		add_state_claim = 745
+		JAP = { country_event = { id = rusfor.1099 } }
+	}
+	
+	option = {
+		name = rusfor.1097.c #Agreement with japan for Port Arthur
+		ai_chance = { factor = 25 }
+		trigger = { 745 = { is_controlled_by = JAP is_owned_by = JAP } }
+		JAP = { country_event = { id = rusfor.1000 } }
+		add_state_claim = 745
+	}
+
+}
+
+country_event = { #Russia claims Manchuria JAP
+	id = rusfor.1098
+	title = rusfor.1098.t
+	desc = rusfor.1098.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1098.a #Let them come
+		ai_chance = { factor = 35 }
+		add_political_power = -60
+		RUS = { country_event = { id = rusfor.1100 } }
+	}
+	
+	option = {
+		name = rusfor.1098.b #Send a warning
+		ai_chance = { factor = 35 }
+		add_political_power = 40
+		add_opinion_modifier = { target = RUS modifier = RUS_JAP_send_warning_manchuria  }
+		RUS = { country_event = { id = rusfor.1101 } }
+	}
+	
+	option = {
+		name = rusfor.1098.c #Try to exchange manchuria for a non-agression pact
+		ai_chance = { factor = 30
+                      modifier = {
+				factor = 0
+				NOT = { has_war_with = GER has_war_with = QIE has_war_with = CAN has_war_with = USA }
+			}
+                      modifier = {
+				factor = 0.3
+				NOT = { RUS = { has_army_manpower = { size > 1500000 } } }
+			} }
+		RUS = { country_event = { id = rusfor.1104 } }
+	}
+
+}
+
+country_event = { #Russia claims Manchuria and Port Arthur JAP
+	id = rusfor.1099
+	title = rusfor.1099.t
+	desc = rusfor.1099.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1098.a #Let them come
+		ai_chance = { factor = 25 }
+		add_political_power = -80
+		RUS = { country_event = { id = rusfor.1100 } }
+	}
+	
+	option = {
+		name = rusfor.1098.b #Send a warning
+		ai_chance = { factor = 60 }
+		add_political_power = 40
+		add_opinion_modifier = { target = RUS modifier = RUS_JAP_send_warning_manchuria  }
+		RUS = { country_event = { id = rusfor.1101 } }
+	}
+	
+	option = {
+		name = rusfor.1098.c #Try to exchange manchuria for a non-agression pact
+		ai_chance = { factor = 15
+                      modifier = {
+				factor = 0
+				NOT = { has_war_with = GER has_war_with = QIE has_war_with = CAN has_war_with = USA }
+			}
+                      modifier = {
+				factor = 0.3
+				NOT = { RUS = { has_army_manpower = { size > 1500000 } } }
+			} }
+		RUS = { country_event = { id = rusfor.1105 } }
+	}
+
+}
+
+country_event = { #Japan didn't react
+	id = rusfor.1100
+	title = rusfor.1100.t
+	desc = rusfor.1100.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1100.a #Great !
+		if = { limit = { AND = { FNG = { is_puppet_of = JAP } NOT = { 745 = { is_claimed_by = RUS } } } } create_wargoal = { type = annex_everything target = FNG } }
+		if = { limit = { AND = { FNG = { is_puppet_of = JAP } 745 = { is_claimed_by = RUS } } } create_wargoal = { type = annex_everything target = FNG } create_wargoal = { type = take_state_focus target = JAP generator = { 745 } } }
+		if = { limit = { NOT = { FNG = { is_puppet_of = JAP } } } create_wargoal = { type = take_state_focus target = JAP generator = { 714 715 716 717 328 } } }
+	}
+
+}
+
+country_event = { #Japan sent a warning
+	id = rusfor.1101
+	title = rusfor.1101.t
+	desc = rusfor.1101.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1101.a #It's nothing, attack
+		ai_chance = { factor = 70 }
+		add_opinion_modifier = { target = JAP modifier = RUS_ignored_warning_manchuria  }
+		if = { limit = { AND = { FNG = { is_puppet_of = JAP } NOT = { 745 = { is_claimed_by = RUS } } } } create_wargoal = { type = annex_everything target = FNG } }
+		if = { limit = { AND = { FNG = { is_puppet_of = JAP } 745 = { is_claimed_by = RUS } } } create_wargoal = { type = annex_everything target = FNG } create_wargoal = { type = take_state_focus target = JAP generator = { 745 } } }
+		if = { limit = { NOT = { FNG = { is_puppet_of = JAP } } } create_wargoal = { type = take_state_focus target = JAP generator = { 714 715 716 717 328 } } }
+		JAP = { country_event = { id = rusfor.1102 } }
+	}
+	
+	option = {
+		name = rusfor.1101.b #Back down
+		ai_chance = { factor = 30 }
+		add_opinion_modifier = { target = JAP modifier = RUS_back_down_manchuria }
+		add_political_power = -60
+		remove_state_claim = 714
+		remove_state_claim = 715
+		remove_state_claim = 716
+		remove_state_claim = 717
+		remove_state_claim = 328
+		if = { limit = { 745 = { is_claimed_by = RUS } } remove_state_claim = 745 }
+		JAP = { country_event = { id = rusfor.1103 } }
+	}
+
+}
+
+country_event = { #Russia ignored our warning
+	id = rusfor.1102
+	title = rusfor.1102.t
+	desc = rusfor.1102.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1102.a 
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Russia backed down
+	id = rusfor.1103
+	title = rusfor.1103.t
+	desc = rusfor.1103.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #Hurray
+		name = rusfor.1103.a 
+		add_political_power = 60
+	}
+
+}
+
+country_event = { #Japan proposes an agreement
+	id = rusfor.1104
+	title = rusfor.1104.t
+	desc = rusfor.1104.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1104.a #Of course accept!
+		ai_chance = { factor = 90 }
+		add_political_power = 40
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		add_opinion_modifier = { target = JAP modifier = RUS_agreed_manchuria }
+		diplomatic_relation = { country = JAP relation = non_aggression_pact }
+		JAP = { country_event = { id = rusfor.1106 } }
+	}
+	
+	option = {
+		name = rusfor.1104.b #Never !
+		ai_chance = { factor = 10 }
+		add_opinion_modifier = { target = JAP modifier = RUS_denied_manchuria }
+		add_political_power = -40
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+        if = { limit = { FNG = { is_puppet_of = JAP } } create_wargoal = { type = annex_everything target = FNG } }
+		if = { limit = { NOT = { FNG = { is_puppet_of = JAP } } } create_wargoal = { type = take_state_focus target = JAP generator = { 714 715 716 717 328 } } }
+	}
+
+}
+
+country_event = { #Japan proposes an agreement w/ port arthur
+	id = rusfor.1105
+	title = rusfor.1104.t
+	desc = rusfor.1105.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1104.a #Of course accept!
+		ai_chance = { factor = 95 }
+		add_political_power = 40
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		add_state_claim = 745
+		add_opinion_modifier = { target = JAP modifier = RUS_agreed_manchuria }
+		diplomatic_relation = { country = JAP relation = non_aggression_pact }
+		JAP = { country_event = { id = rusfor.1107 } }
+	}
+	
+	option = {
+		name = rusfor.1104.b #Never !
+		ai_chance = { factor = 5 }
+		add_opinion_modifier = { target = JAP modifier = RUS_denied_manchuria }
+		add_political_power = -40
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		add_state_claim = 745
+        if = { limit = { FNG = { is_puppet_of = JAP } } create_wargoal = { type = annex_everything target = FNG } create_wargoal = { type = take_state_focus target = JAP generator = { 745 } } }
+		if = { limit = { NOT = { FNG = { is_puppet_of = JAP } } } create_wargoal = { type = take_state_focus target = JAP generator = { 714 715 716 717 328 } } }
+	}
+
+}
+
+country_event = { #Russia accepted the agreement
+	id = rusfor.1106
+	title = rusfor.1106.t
+	desc = rusfor.1106.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #oh the humiliation
+		name = rusfor.1106.a 
+		add_political_power = -40
+		RUS = { transfer_state = 714
+		        transfer_state = 715
+				transfer_state = 716
+				transfer_state = 717
+				transfer_state = 328 }
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		JAP = { remove_state_core = 714
+		        remove_state_core = 715
+				remove_state_core = 716
+				remove_state_core = 717
+				remove_state_core = 328 }
+	}
+
+}
+
+country_event = { #Russia accepted the agreement w/ port arthur
+	id = rusfor.1107
+	title = rusfor.1106.t
+	desc = rusfor.1107.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = { #oh the humiliation
+		name = rusfor.1106.a 
+		add_political_power = -40
+		RUS = { transfer_state = 714
+		        transfer_state = 715
+				transfer_state = 716
+				transfer_state = 717
+				transfer_state = 328
+                transfer_state = 745 }
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		JAP = { remove_state_core = 714
+		        remove_state_core = 715
+				remove_state_core = 716
+				remove_state_core = 717
+				remove_state_core = 328
+                remove_state_core = 745 }
+	}
+
+}

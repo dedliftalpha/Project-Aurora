@@ -241,9 +241,13 @@ country_event = { # The Republican Government
 
 		ai_chance = { factor = 80 }
 
-		add_opinion_modifier = { target = PRC modifier = CHI_PRC_ALL } # 200
+		add_opinion_modifier = { target = SQI modifier = CHI_SQI_ALL } # 200
 
-		declare_war_on = { target = CHI type = annex_everything	}
+		CHI = {
+			create_faction = "China First"
+
+			add_to_faction = SQI
+		}
 	}
 
 	option = {
@@ -370,7 +374,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = RUS
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 195
 		controls_state = 562
@@ -477,7 +481,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = SOV
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 195
 		controls_state = 562
@@ -584,7 +588,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = JAP
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 282
 		CHI = {
@@ -688,7 +692,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = QIE
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 608
 		CHI = {
@@ -847,7 +851,7 @@ country_event = { # The Seat of Republican Governance
 	
 	trigger = {
 		tag = CHI
-		controls_state = 694
+		controls_state = 594
 		owns_state = 594
 		NOT = {
 			country_exists = AOG
@@ -3295,7 +3299,7 @@ country_event = { # Civil War!
 	fire_only_once = yes
 	
 	trigger = {
-		tag = PRC
+		tag = SQI
 		is_puppet = no
 		NOT = {
 			country_exists = QIE
@@ -3312,7 +3316,7 @@ country_event = { # Civil War!
 
 		add_political_power = 100
 
-		load_oob = PRC_CIV_WAR
+		load_oob = SQI_CIV_WAR
 	}
 }
 
@@ -3451,6 +3455,12 @@ country_event = { # Japan Supports the Second Republic
 			end_puppet = FNG
 		}
 
+		CHI = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+		}
+
 		add_opinion_modifier = { target = JAP modifier = embargo } 
 
 		declare_war_on = { target = CHI type = annex_everything	}
@@ -3487,6 +3497,11 @@ country_event = { # The Fengtien Cave In
 		ai_chance = { factor = 0 }
 
 		add_opinion_modifier = { target = FNG modifier = Plebiscite_no_Need } # 300 
+
+		JAP = {
+			remove_from_faction = FNG
+			end_puppet = FNG
+		}
 
 		declare_war_on = { target = CHI type = annex_everything	}
 		declare_war_on = { target = JAP type = annex_everything	}
@@ -4174,6 +4189,19 @@ country_event = { # The Fading Sun over Port Arthur
 			end_puppet = PHI
 		}
 
+		if = {
+			limit = { RUS = { is_in_faction_with = CHI }}
+
+			RUS = {
+				transfer_state = 655
+				transfer_state = 637
+				transfer_state = 555
+
+				add_state_core = 655
+				add_state_core = 637
+			}
+		}
+
 		set_global_flag = JAP_ISO
 		clr_global_flag = JAP_EXP
 		clr_global_flag = JAP_GER1
@@ -4228,7 +4256,15 @@ country_event = { # The Fading Sun over Port Arthur
 			#add_core_of = CHI
 		#}
 
-		release = KOR
+		JAP = { release = KOR end_puppet = KOR }
+
+		KOR = {
+			transfer_state = 527
+			transfer_state = 525
+
+			add_state_core = 527
+			add_state_core = 525
+		}
 
 		set_global_flag = CHI_Crush_JAP
 	}
@@ -7082,6 +7118,7 @@ country_event = { # Republic of China wants to partition Mongolia
 		}
 
 		declare_war_on = { target = MON type = annex_everything	}
+		CHI = { declare_war_on = { target = MON type = annex_everything	} }
 	}
 }
 
@@ -7112,8 +7149,18 @@ country_event = { # Partition of Mongolia!
 	trigger = {
 		tag = CHI
 		has_war = no
-		controls_state = 303
-		controls_state = 604
+		OR = {
+			RUS = {
+				controls_state = 330
+				controls_state = 604
+			}
+			
+			CHI = {
+				controls_state = 330
+				controls_state = 604
+			}	
+		}
+		
 		has_global_flag = MONGOLIA_PARTITIONS
 		MON = {
 			NOT = {
@@ -7139,6 +7186,21 @@ country_event = { # Partition of Mongolia!
 			add_state_core = 564
 			add_state_core = 563
 			add_state_core = 329
+		}
+
+		CHI = {
+			transfer_state = 618
+			transfer_state = 330
+
+			add_state_core = 618
+			add_state_core = 618
+		}
+
+		MON = {
+			remove_state_core = 618
+			remove_state_core = 329
+			remove_state_core = 564
+			remove_state_core = 563
 		}
 
 		clr_global_flag = MONGOLIA_PARTITIONS

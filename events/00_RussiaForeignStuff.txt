@@ -2884,7 +2884,7 @@ country_event = { #Claim Manchuria
 	
 	option = {
 		name = rusfor.1097.a #Claim only Manchuria
-		ai_chance = { factor = 60 }
+		ai_chance = { factor = 25 }
 		add_state_claim = 714
 		add_state_claim = 715
 		add_state_claim = 716
@@ -2895,7 +2895,7 @@ country_event = { #Claim Manchuria
 	
 	option = {
 		name = rusfor.1097.b #Claim Manchuria and Port Arthur
-		ai_chance = { factor = 15 }
+		ai_chance = { factor = 50 }
 		trigger = { 745 = { is_controlled_by = JAP is_owned_by = JAP } }
 		add_state_claim = 714
 		add_state_claim = 715
@@ -2910,7 +2910,7 @@ country_event = { #Claim Manchuria
 		name = rusfor.1097.c #Agreement with japan for Port Arthur
 		ai_chance = { factor = 25 }
 		trigger = { 745 = { is_controlled_by = JAP is_owned_by = JAP } }
-		JAP = { country_event = { id = rusfor.1000 } }
+		JAP = { country_event = { id = rusfor.1108 } }
 		add_state_claim = 745
 	}
 
@@ -2980,6 +2980,7 @@ country_event = { #Russia claims Manchuria and Port Arthur JAP
 	
 	option = {
 		name = rusfor.1098.c #Try to exchange manchuria for a non-agression pact
+		trigger = { NOT = { has_global_flag = RUS_jap_denied_first_agreement_manchuria } }
 		ai_chance = { factor = 15
                       modifier = {
 				factor = 0
@@ -3203,6 +3204,148 @@ country_event = { #Russia accepted the agreement w/ port arthur
 				remove_state_core = 717
 				remove_state_core = 328
                 remove_state_core = 745 }
+	}
+
+}
+
+country_event = { #Russia demands Port Arthur
+	id = rusfor.1108
+	title = rusfor.1108.t
+	desc = rusfor.1108.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1108.a #Accept
+		ai_chance = { factor = 40 }
+		add_political_power = -100
+		RUS = { transfer_state = 745 }
+		JAP = { remove_state_core = 745 }
+		add_opinion_modifier = { target = RUS modifier = RUS_agreed_manchuria }
+		RUS = { country_event = { id = rusfor.1109 } }
+	}
+	
+	option = {
+		name = rusfor.1108.b #accept for a NAP
+		ai_chance = { factor = 25 }
+		add_political_power = -60
+		RUS = { country_event = { id = rusfor.1110 } }
+	}
+	
+	option = {
+		name = rusfor.1108.c #Never !
+		ai_chance = { factor = 35 }
+		add_opinion_modifier = { target = RUS modifier = RUS_denied_manchuria }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1112 } }
+	}
+
+}
+
+country_event = { #Japan accepts !
+	id = rusfor.1109
+	title = rusfor.1109.t
+	desc = rusfor.1109.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1109.a #great
+		add_political_power = 40
+	}
+
+}
+
+country_event = { #Japan demands NAP
+	id = rusfor.1110
+	title = rusfor.1110.t
+	desc = rusfor.1110.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1110.a #Accept
+		ai_chance = { factor = 50 }
+		add_political_power = -20
+		RUS = { transfer_state = 745 }
+		JAP = { remove_state_core = 745 }
+		add_opinion_modifier = { target = JAP modifier = RUS_agreed_manchuria }
+		diplomatic_relation = { country = JAP relation = non_aggression_pact }
+		JAP = { country_event = { id = rusfor.1111 } }
+	}
+	
+	option = {
+		name = rusfor.1110.b #who do they think they are ? claim manchuria too !
+		ai_chance = { factor = 45 }
+		add_political_power = 20
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		set_global_flag = RUS_jap_denied_first_agreement_manchuria
+		JAP = { country_event = { id = rusfor.1099 } }
+	}
+	
+	option = {
+		name = rusfor.1110.c #we won't reach to an agreement
+		ai_chance = { factor = 5 }
+		add_opinion_modifier = { target = JAP modifier = RUS_back_down_manchuria }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Russia accepts !
+	id = rusfor.1111
+	title = rusfor.1111.t
+	desc = rusfor.1111.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1109.a #great
+		add_political_power = 40
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+	}
+
+}
+
+country_event = { #Japan refuses
+	id = rusfor.1112
+	title = rusfor.1112.t
+	desc = rusfor.1112.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1112.a #Attack !
+		ai_chance = { factor = 45 }
+         create_wargoal = { type = take_state_focus target = JAP generator = { 745 } }
+	}
+	
+	option = {
+		name = rusfor.1112.b #who do they think they are ? claim manchuria too !
+		ai_chance = { factor = 40 }
+		add_state_claim = 714
+		add_state_claim = 715
+		add_state_claim = 716
+		add_state_claim = 717
+		add_state_claim = 328
+		set_global_flag = RUS_jap_denied_first_agreement_manchuria
+		JAP = { country_event = { id = rusfor.1099 } }
+	}
+	
+	option = {
+		name = rusfor.1112.c #Back down
+		ai_chance = { factor = 15 }
+		add_opinion_modifier = { target = JAP modifier = RUS_back_down_manchuria }
+		add_political_power = -40
 	}
 
 }

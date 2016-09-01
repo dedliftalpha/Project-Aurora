@@ -241,9 +241,13 @@ country_event = { # The Republican Government
 
 		ai_chance = { factor = 80 }
 
-		add_opinion_modifier = { target = PRC modifier = CHI_PRC_ALL } # 200
+		add_opinion_modifier = { target = SQI modifier = CHI_SQI_ALL } # 200
 
-		declare_war_on = { target = CHI type = annex_everything	}
+		CHI = {
+			create_faction = "China First"
+
+			add_to_faction = SQI
+		}
 	}
 
 	option = {
@@ -370,7 +374,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = RUS
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 195
 		controls_state = 562
@@ -477,7 +481,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = SOV
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 195
 		controls_state = 562
@@ -584,7 +588,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = JAP
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 282
 		CHI = {
@@ -688,7 +692,7 @@ country_event = { # The Second Chinese revolution
 	
 	trigger = {
 		tag = QIE
-		has_war = no
+		has_war = yes
 		is_puppet = no
 		controls_state = 608
 		CHI = {
@@ -805,6 +809,7 @@ country_event = { # The Seat of Republican Governance
 			country_exists = QIE
 			country_exists = AOG
 		}
+		NOT = { has_country_flag = yunnan_26 }
 	}
 
 	mean_time_to_happen = {
@@ -846,7 +851,7 @@ country_event = { # The Seat of Republican Governance
 	
 	trigger = {
 		tag = CHI
-		controls_state = 694
+		controls_state = 594
 		owns_state = 594
 		NOT = {
 			country_exists = AOG
@@ -859,6 +864,7 @@ country_event = { # The Seat of Republican Governance
 			has_government = authoritarian_democratist
 		}
 		date > 1936.4.1
+		NOT = { has_country_flag = yunnan_26 }
 	}
 
 	mean_time_to_happen = {
@@ -1320,7 +1326,7 @@ country_event = { # The Seat of Republican Governance
 	}
 }
 
-country_event = { # The Seat of Republican Governance
+country_event = { # The Legacy of Sun Yat-sen
 	id = repchi.23
 	title = repchi.23.t
 	desc = repchi.23.d
@@ -1562,7 +1568,10 @@ country_event = { # Launch the Western Expedition
 		is_puppet = no
 		has_war = no
 		has_global_flag = CHI_TPP
-		country_exists = YUN
+		OR = {
+			country_exists = YUN
+			country_exists = NPA
+		}	
 		owns_state = 592
 		controls_state = 592
 		NOT = {
@@ -1582,7 +1591,21 @@ country_event = { # Launch the Western Expedition
 
 		ai_chance = { factor = 60 }
 
-		hidden_effect = { YUN = { country_event =  { id = repchi.28 days = 3 }}}
+		if = {
+			limit = {
+				country_exists = YUN
+			}
+
+			hidden_effect = { YUN = { country_event =  { id = repchi.28 days = 3 }}}
+		}
+
+		if = {
+			limit = {
+				country_exists = NPA
+			}
+
+			hidden_effect = { NPA = { country_event =  { id = repchi.28 days = 3 }}}
+		}			
 	}
 
 	option = {
@@ -1590,7 +1613,21 @@ country_event = { # Launch the Western Expedition
 
 		ai_chance = { factor = 40 }
 
-		hidden_effect = { YUN = { country_event =  { id = repchi.31 days = 3 }}}
+		if = {
+			limit = {
+				country_exists = YUN
+			}
+
+			hidden_effect = { YUN = { country_event =  { id = repchi.31 days = 3 }}}
+		}
+
+		if = {
+			limit = {
+				country_exists = NPA
+			}
+
+			hidden_effect = { NPA = { country_event =  { id = repchi.31 days = 3 }}}
+		}
 	}
 
 	option = {
@@ -1600,10 +1637,10 @@ country_event = { # Launch the Western Expedition
 
 		trigger = {
 			has_global_flag = YUN_CHINA
-			YUN = { is_puppet = yes }
+			NPA = { is_puppet = no }
 		}
 
-		# hidden_effect = { YUN = { country_event = { id =  days = 6 }}} 6280042 in Yunnan.txt
+		# hidden_effect = { NPA = { country_event = { id =  days = 6 }}} 6280042 in Yunnan.txt
 	}
 }
 
@@ -1651,18 +1688,44 @@ country_event = { # Long Yun covers before us!
 	option = {
 		name = repchi.29.a
 
-		annex_country = { target = AOG transfer_troops = no }
+		if = {
+			limit = {
+				country_exists = YUN
+			}
 
-		every_state = { 
-			limit = { is_core_of = YUN } 
+			annex_country = { target = YUN transfer_troops = no }
 
-			add_core_of = CHI
+			every_state = { 
+				limit = { is_core_of = YUN } 
+
+				add_core_of = CHI
+			}
+
+			every_state = { 
+				limit = { is_core_of = YUN } 
+
+				remove_core_of = YUN
+			}
 		}
 
-		every_state = { 
-			limit = { is_core_of = YUN } 
+		if = {
+			limit = {
+				country_exists = NPA
+			}
 
-			remove_core_of = YUN
+			annex_country = { target = NPA transfer_troops = no }
+
+			every_state = { 
+				limit = { is_core_of = NPA } 
+
+				add_core_of = CHI
+			}
+
+			every_state = { 
+				limit = { is_core_of = NPA } 
+
+				remove_core_of = NPA
+			}
 		}
 	}
 }
@@ -1680,7 +1743,22 @@ country_event = { # The Warlord's Insolenc
 
 		ai_chance = { factor = 100 }
 
-		declare_war_on = { target = YUN type = annex_everything	}
+		if = {
+			limit = {
+				country_exists = YUN
+			}	
+
+			declare_war_on = { target = YUN type = annex_everything	}
+		}
+
+		if = {
+			limit = {
+				country_exists = NPA
+			}	
+
+			declare_war_on = { target = NPA type = annex_everything	}
+		}
+			
 		add_political_power = 200
 	}
 
@@ -1728,6 +1806,7 @@ country_event = { # The Offer from Guangzhou
 			}
 
 			remove_from_faction = YUN
+			remove_from_faction = NPA
 		}
 
 		declare_war_on = { target = CHI type = annex_everything	}
@@ -1755,18 +1834,44 @@ country_event = { # The Demands of a Bandit
 
 		ai_chance = { factor = 30 }
 
-		annex_country = { target = AOG transfer_troops = no }
+		if = {
+			limit = {
+				country_exists = YUN
+			}
 
-		every_state = { 
-			limit = { is_core_of = YUN } 
+			annex_country = { target = YUN transfer_troops = no }
 
-			add_core_of = CHI
+			every_state = { 
+				limit = { is_core_of = YUN } 
+
+				add_core_of = CHI
+			}
+
+			every_state = { 
+				limit = { is_core_of = YUN } 
+
+				remove_core_of = YUN
+			}
 		}
 
-		every_state = { 
-			limit = { is_core_of = YUN } 
+		if = {
+			limit = {
+				country_exists = NPA
+			}
 
-			remove_core_of = YUN
+			annex_country = { target = NPA transfer_troops = no }
+
+			every_state = { 
+				limit = { is_core_of = NPA } 
+
+				add_core_of = CHI
+			}
+
+			every_state = { 
+				limit = { is_core_of = NPA } 
+
+				remove_core_of = NPA
+			}
 		}
 
 		add_political_power = -200
@@ -1778,7 +1883,22 @@ country_event = { # The Demands of a Bandit
 
 		ai_chance = { factor = 70 }
 
-		declare_war_on = { target = YUN type = annex_everything	}
+
+		if = {
+			limit = {
+				country_exists = YUN
+			}
+
+			declare_war_on = { target = YUN type = annex_everything	}
+		}
+
+		if = {
+			limit = {
+				country_exists = NPA
+			}
+
+			declare_war_on = { target = NPA type = annex_everything	}
+		}
 	}
 }
 
@@ -3179,7 +3299,7 @@ country_event = { # Civil War!
 	fire_only_once = yes
 	
 	trigger = {
-		tag = PRC
+		tag = SQI
 		is_puppet = no
 		NOT = {
 			country_exists = QIE
@@ -3196,7 +3316,7 @@ country_event = { # Civil War!
 
 		add_political_power = 100
 
-		load_oob = PRC_CIV_WAR
+		load_oob = SQI_CIV_WAR
 	}
 }
 
@@ -3335,6 +3455,12 @@ country_event = { # Japan Supports the Second Republic
 			end_puppet = FNG
 		}
 
+		CHI = {
+			transfer_state = 612
+			transfer_state = 611
+			transfer_state = 610
+		}
+
 		add_opinion_modifier = { target = JAP modifier = embargo } 
 
 		declare_war_on = { target = CHI type = annex_everything	}
@@ -3371,6 +3497,11 @@ country_event = { # The Fengtien Cave In
 		ai_chance = { factor = 0 }
 
 		add_opinion_modifier = { target = FNG modifier = Plebiscite_no_Need } # 300 
+
+		JAP = {
+			remove_from_faction = FNG
+			end_puppet = FNG
+		}
 
 		declare_war_on = { target = CHI type = annex_everything	}
 		declare_war_on = { target = JAP type = annex_everything	}
@@ -4058,6 +4189,19 @@ country_event = { # The Fading Sun over Port Arthur
 			end_puppet = PHI
 		}
 
+		if = {
+			limit = { RUS = { is_in_faction_with = CHI }}
+
+			RUS = {
+				transfer_state = 655
+				transfer_state = 637
+				transfer_state = 555
+
+				add_state_core = 655
+				add_state_core = 637
+			}
+		}
+
 		set_global_flag = JAP_ISO
 		clr_global_flag = JAP_EXP
 		clr_global_flag = JAP_GER1
@@ -4112,7 +4256,15 @@ country_event = { # The Fading Sun over Port Arthur
 			#add_core_of = CHI
 		#}
 
-		release = KOR
+		JAP = { release = KOR end_puppet = KOR }
+
+		KOR = {
+			transfer_state = 527
+			transfer_state = 525
+
+			add_state_core = 527
+			add_state_core = 525
+		}
 
 		set_global_flag = CHI_Crush_JAP
 	}
@@ -6966,6 +7118,7 @@ country_event = { # Republic of China wants to partition Mongolia
 		}
 
 		declare_war_on = { target = MON type = annex_everything	}
+		CHI = { declare_war_on = { target = MON type = annex_everything	} }
 	}
 }
 
@@ -6996,8 +7149,18 @@ country_event = { # Partition of Mongolia!
 	trigger = {
 		tag = CHI
 		has_war = no
-		controls_state = 303
-		controls_state = 604
+		OR = {
+			RUS = {
+				controls_state = 330
+				controls_state = 604
+			}
+			
+			CHI = {
+				controls_state = 330
+				controls_state = 604
+			}	
+		}
+		
 		has_global_flag = MONGOLIA_PARTITIONS
 		MON = {
 			NOT = {
@@ -7023,6 +7186,21 @@ country_event = { # Partition of Mongolia!
 			add_state_core = 564
 			add_state_core = 563
 			add_state_core = 329
+		}
+
+		CHI = {
+			transfer_state = 618
+			transfer_state = 330
+
+			add_state_core = 618
+			add_state_core = 618
+		}
+
+		MON = {
+			remove_state_core = 618
+			remove_state_core = 329
+			remove_state_core = 564
+			remove_state_core = 563
 		}
 
 		clr_global_flag = MONGOLIA_PARTITIONS

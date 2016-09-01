@@ -1,4 +1,4 @@
-﻿####### Modder : Levi ######
+﻿####### Modder : Levi ###### And a bit by Nijato
 
 ###########################
 # Russian Domestic events 
@@ -1694,6 +1694,7 @@ country_event = { #Kyril the tsar is dead absolute
 		clr_country_flag = RUS_TSAR_KYR
 		set_country_flag = RUS_TSAR_VLA
 		set_country_flag = KYR_DEAD
+		country_event = { id = russia.35 }
 			}
 		}
 
@@ -1860,6 +1861,7 @@ country_event = { #Kyril the pretender is dead DEN
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RUS_Anton_I_Denikin_hog_ade
 		add_political_power = 50
+		country_event = { id = russia.35 }
 			}
 		option = {
 		name = rusd.59.b
@@ -1904,6 +1906,7 @@ country_event = { #Kyril the pretender is dead conservative
 		set_country_flag = RUS_TSAR_VLA
 		add_political_power = 50
 		set_country_flag = KYR_DEAD
+		country_event = { id = russia.35 }
 			}
 		option = {
 		name = rusd.60.b
@@ -4722,7 +4725,7 @@ country_event = { #The XI Duma Elections Trub
 		add_ideas = RUS_Vladimir_P_Smirnov_eco_sli
 		remove_ideas_with_trait = intel_minister
 		add_ideas = RUS_Vasily_A_Kharlamov_int_mli
-		set_country_flag = RUS_MILYU
+		set_country_flag = RUS_BOL
 		add_popularity = {
           			  ideology = market_liberalist
           			  popularity = 0.2
@@ -5357,14 +5360,17 @@ country_event = { # Denikin's death
 	trigger = { 
 	tag = RUS
 	date > 1947.8.8
-	date < 1947.9.8
 
 		 } 
-	mean_time_to_happen = { days = 5 } 
+	mean_time_to_happen = { days = 1 } 
 	option = { 
-	trigger = { NOT = { has_country_flag = RUS_DEN } }
+	trigger = { OR = { NOT = { has_country_flag = RUS_DEN } NOT = { AND = { has_country_flag = RUS_DEN_LEADER NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_CON_MON } } } } }
 	name = rusd.96.a
-	
+	set_country_flag = denikin_dead
+	remove_unit_leader = 401
+	 if = { limit = { has_idea = RUS_Anton_I_Denikin_carm_ade } remove_ideas = RUS_Anton_I_Denikin_carm_ade
+        add_ideas = RUS_Sergei_L_Markov_carm_ade }
+	if = { limit = { has_idea = RUS_Anton_I_Denikin_mhc_ade } remove_ideas = RUS_Anton_I_Denikin_mhc_ade }
 			}
 	option = { 
 	trigger = { has_country_flag = RUS_DEN }
@@ -5373,149 +5379,73 @@ country_event = { # Denikin's death
 	remove_ideas_with_trait = head_of_government
 	add_ideas = RUS_Vasily_Kanin_hog_ade
 	set_country_flag = RUS_KAN
-	add_political_power = -50
+	set_country_flag = denikin_dead
+	remove_unit_leader = 401
+	 if = { limit = { has_idea = RUS_Anton_I_Denikin_carm_ade } remove_ideas = RUS_Anton_I_Denikin_carm_ade
+        add_ideas = RUS_Sergei_L_Markov_carm_ade }
+	if = { limit = { has_idea = RUS_Anton_I_Denikin_mhc_ade } remove_ideas = RUS_Anton_I_Denikin_mhc_ade }
+				}
+	option = { 
+	trigger = { has_country_flag = RUS_DEN_LEADER NOT = { has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_CON_MON } }
+	name = rusd.96.b 
+	country_event = { id = rusd.961 }
 				}
 
 	}
 	
-	country_event = {
-		id = rusd.97
-		title = rusd.97.t
-		desc = rusd.97.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1936.01.13
-	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
-		}
-		
-		country_event = {
-		id = rusd.98
-		title = rusd.98.t
-		desc = rusd.98.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1944.02.22
-	}
-		option = { name = rusd.97.a remove_ideas = RUS_Pyotr_B_Struve_for_sli  }
-		}
-		
-	country_event = {
-		id = rusd.99
-		title = rusd.99.t
-		desc = rusd.99.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1948.02.04
-	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
-		}
-		
-		country_event = {
-		id = rusd.100
-		title = rusd.100.t
-		desc = rusd.100.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1943.03.29
-	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a
-				trigger = { NOT = { has_country_flag = RUS_MILYU } }
-		}
-			option = { name = rusd.100.b
-				trigger = { has_country_flag = RUS_MILYU }
-				clr_country_flag = RUS_MILYU
-				remove_ideas = RUS_Pavel_N_Milyukov_hog_mli
-				add_ideas = RUS_Vasily_G_Boldyrev_hog_mli
-		}
-		}
-		
-			country_event = {
-		id = rusd.101
-		title = rusd.101.t
-		desc = rusd.101.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1939.02.01
-	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a
-				trigger = { NOT = { has_country_flag = RUS_PUR } }
-		}
-			option = { name = rusd.101.b
-				trigger = { has_country_flag = RUS_PUR }
-				clr_country_flag = RUS_PUR
-				remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
-				add_ideas = RUS_Felix_F_Yusupov_hog_ade
-				set_country_flag = RUS_FEL
-		}
-		}
-		
-		country_event = {
-		id = rusd.102
-		title = rusd.102.t
-		desc = rusd.102.d
-		fire_only_once = yes
-		trigger = {
-		tag = RUS
-        date > 1940.08.23
-	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
-		}
-		
-		country_event = { #kill dmitry
-		id = rusd.103
-		title = rusd.103.t
-		desc = rusd.103.d
-		fire_only_once = yes
-		trigger = {
-		has_country_flag = RUS_TSAR_DMI
-		tag = RUS
-        date > 1941.03.05
-	}
-		mean_time_to_happen = { days = 5 }
-		
-		immediate = { set_country_flag = dmitri_romanov_dead }
-		
-		option = { name = rusd.103.a
-		ai_chance = { factor = 30 }
-		kill_country_leader = yes
+	country_event = { # Denikin's death DEN_LEADER
+	id = rusd.961
+	title = rusd.961.t
+	desc = rusd.961.d
+
+	is_triggered_only = yes
+	option = { 
+	name = rusd.961.a
+	ai_chance = { factor = 40 }
+	add_political_power = 20
+	set_country_flag = denikin_dead
+	remove_unit_leader = 401
+	 if = { limit = { has_idea = RUS_Anton_I_Denikin_carm_ade } remove_ideas = RUS_Anton_I_Denikin_carm_ade
+        add_ideas = RUS_Sergei_L_Markov_carm_ade }
+	if = { limit = { has_idea = RUS_Anton_I_Denikin_mhc_ade } remove_ideas = RUS_Anton_I_Denikin_mhc_ade }
+	kill_country_leader = yes
 		create_country_leader = {
-			name = "E.I.V. Pavel II Romanov"
+			name = "E.I.V. Vladimir III Romanov"
 			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
-			picture = "portrait_pavel_romanov.tga"
+			picture = "Portrait_Soviet_Vladimir_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		create_country_leader = {
+			name = "Vasily Kanin"
+			desc = "POLITICS_VASILY_KANIN_CON_DESC"
+			picture = "Portrait_Russia_Vasily_Kanin.tga"
 			expire = "1965.1.1"
 			ideology = authoritarian_democratist_subtype
 			traits = {
 			}
 		}
 		set_politics = {
-			ruling_party = authoritarian_democratist
+			ruling_party = paternal_autocratist
 			elections_allowed = no
-		
 		}
-			clr_country_flag = RUS_TSAR_DMI
-			set_country_flag = RUS_TSAR_PAV
-			add_political_power = -40
-		}
-		option = { 
-			name = rusd.103.c
-			ai_chance = { factor = 30 }
-			add_political_power = -50
-			clr_country_flag = RUS_TSAR_DMI
-			set_country_flag = RUS_CON_MON
-			set_country_flag = RUS_TSAR_VLA
-			kill_country_leader = yes
-			create_country_leader = {
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+	    country_event = { id = russia.35 }
+			}
+			
+	option = { 
+	name = rusd.961.b
+	ai_chance = { factor = 20 }
+	set_country_flag = denikin_dead
+	remove_unit_leader = 401
+	 if = { limit = { has_idea = RUS_Anton_I_Denikin_carm_ade } remove_ideas = RUS_Anton_I_Denikin_carm_ade
+        add_ideas = RUS_Sergei_L_Markov_carm_ade }
+	if = { limit = { has_idea = RUS_Anton_I_Denikin_mhc_ade } remove_ideas = RUS_Anton_I_Denikin_mhc_ade }
+	kill_country_leader = yes
+		create_country_leader = {
 			name = "E.I.V. Vladimir III Romanov"
 			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
 			picture = "Portrait_Soviet_Vladimir_Romanov.tga"
@@ -5595,8 +5525,389 @@ country_event = { # Denikin's death
 			ideology = paternal_autocratist_subtype
 			traits = {
 			}
-		}		
-						}
+		}
+		create_country_leader = {
+			name = "E.I.V. Vladimir III Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "Portrait_Soviet_Vladimir_Romanov.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		set_country_flag = rus_tsar
+		set_country_flag = RUS_TSAR_VLA
+		set_country_flag = RUS_CON_MON
+		set_country_flag = RUS_IGNA
+		remove_ideas_with_trait = head_of_government
+		add_ideas = RUS_Georgiy_P_Ignatiev_hog_sco
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = RUS_Aleksandr_I_Konovalov_for_mli
+		remove_ideas_with_trait = economy_minister
+		add_ideas = RUS_Vladimir_P_Smirnov_eco_sli
+		remove_ideas_with_trait = intel_minister
+		add_ideas = RUS_Vladimir_von_Kappel_int_ade
+				}
+	option = { 
+	name = rusd.961.c
+	ai_chance = { factor = 40 }
+	add_political_power = -100
+	set_country_flag = denikin_dead
+	remove_unit_leader = 401
+	 if = { limit = { has_idea = RUS_Anton_I_Denikin_carm_ade } remove_ideas = RUS_Anton_I_Denikin_carm_ade
+        add_ideas = RUS_Sergei_L_Markov_carm_ade }
+	if = { limit = { has_idea = RUS_Anton_I_Denikin_mhc_ade } remove_ideas = RUS_Anton_I_Denikin_mhc_ade }
+	kill_country_leader = yes
+	create_country_leader = {
+			name = "Sergei Markov"
+			desc = "POLITICS_SERGEI_MARKOV_CON_DESC"
+			picture = "Portrait_Soviet_Sergei_Markov.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+	set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+	set_country_flag = RUS_DEM_REP
+	set_country_flag = RUS_IGNA
+	remove_ideas_with_trait = head_of_government
+	add_ideas = RUS_Georgiy_P_Ignatiev_hog_sco
+	remove_ideas_with_trait = foreign_minister
+	add_ideas = RUS_Aleksandr_I_Konovalov_for_mli
+	remove_ideas_with_trait = economy_minister
+	add_ideas = RUS_Vladimir_P_Smirnov_eco_sli
+	remove_ideas_with_trait = intel_minister
+	add_ideas = RUS_Vladimir_von_Kappel_int_ade
+				}
+
+	}
+	
+	country_event = {
+		id = rusd.97
+		title = rusd.97.t
+		desc = rusd.97.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1936.01.13
+	}
+		mean_time_to_happen = { days = 3 }
+		option = { name = rusd.97.a 
+		set_country_flag = sturmer_dead
+        if = { limit = { has_idea = RUS_Boris_V_Strmer_for_pau } remove_ideas = RUS_Boris_V_Strmer_for_pau
+        add_ideas = RUS_Alexei_A_Ignatiev_for_pau }
+		} }
+		
+		country_event = {
+		id = rusd.98
+		title = rusd.98.t
+		desc = rusd.98.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1944.02.22
+	}
+		option = { name = rusd.97.a 
+		set_country_flag = struve_dead
+        if = { limit = { has_idea = RUS_Pyotr_B_Struve_for_sli } remove_ideas = RUS_Pyotr_B_Struve_for_sli
+        add_ideas = RUS_Ariadna_V_Tyrkova_Williams_for_sli }  }
+		}
+		
+	country_event = {
+		id = rusd.99
+		title = rusd.99.t
+		desc = rusd.99.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1948.02.04
+	}
+		option = { name = rusd.97.a 
+		set_country_flag = pokrovsky_dead
+        if = { limit = { has_idea = RUS_Viktor_L_Pokrovsky_int_npo } remove_ideas = RUS_Viktor_L_Pokrovsky_int_npo
+        add_ideas = RUS_Boris_V_Annenkov_int_npo } }
+		}
+		
+		country_event = {
+		id = rusd.100
+		title = rusd.100.t
+		desc = rusd.100.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1943.03.29
+	}
+	
+		option = { name = rusd.97.a
+				trigger = { NOT = { has_country_flag = RUS_MILYU } }
+		set_country_flag = milyukov_dead
+        if = { limit = { has_idea = RUS_Pavel_N_Milyukov_for_mli } remove_ideas = RUS_Pavel_N_Milyukov_for_mli
+        add_ideas = RUS_Vasily_G_Boldyrev_for_mli }
+		}
+			option = { name = rusd.100.b
+				trigger = { has_country_flag = RUS_MILYU }
+				clr_country_flag = RUS_MILYU
+				remove_ideas = RUS_Pavel_N_Milyukov_hog_mli
+				add_ideas = RUS_Vasily_G_Boldyrev_hog_mli
+				set_country_flag = milyukov_dead
+				set_country_flag = RUS_BOL
+        if = { limit = { has_idea = RUS_Pavel_N_Milyukov_for_mli } remove_ideas = RUS_Pavel_N_Milyukov_for_mli
+        add_ideas = RUS_Vasily_G_Boldyrev_for_mli }
+		}
+		}
+		
+			country_event = {
+		id = rusd.101
+		title = rusd.101.t
+		desc = rusd.101.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1939.02.01
+	}
+	
+		option = { name = rusd.97.a
+				trigger = { NOT = { has_country_flag = RUS_PUR } }
+		set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		}
+			option = { name = rusd.101.b
+				trigger = { has_country_flag = RUS_PUR NOT = { has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_TSAR_DMI has_country_flag = RUS_TSAR_WRANGEL } }
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Felix_F_Yusupov_hog_ade
+		set_country_flag = RUS_FEL
+		}
+		
+		option = { name = rusd.101.c
+			trigger = { has_country_flag = RUS_PUR OR = { has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_TSAR_DMI has_country_flag = RUS_TSAR_WRANGEL } }
+		if = { limit = { has_country_flag = RUS_TSAR_VLA } country_event = { id = rusd.1011 } }
+		if = { limit = { has_country_flag = RUS_TSAR_DMI } country_event = { id = rusd.1012 } }
+		if = { limit = { has_country_flag = RUS_TSAR_WRANGEL } country_event = { id = rusd.1013 } }
+		}
+		}
+		
+country_event = {
+		id = rusd.1011
+		title = rusd.1011.t
+		desc = rusd.1011.d
+is_triggered_only = yes
+	
+		option = { name = rusd.1011.a
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Anton_I_Denikin_hog_ade
+		set_country_flag = RUS_DEN
+		}
+			option = { name = rusd.1011.b
+			ai_chance = { factor = 25 }
+			add_political_power = -60
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Pyotr_N_Wrangel_hog_npo
+		set_country_flag = RUS_WRA_HOG
+		}
+		
+		option = { name = rusd.1011.c
+		ai_chance = { factor = 25 }
+		add_political_power = -60
+			set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Felix_F_Yusupov_hog_ade
+		set_country_flag = RUS_FEL
+		}
+		
+		option = { name = rusd.1011.e
+		ai_chance = { factor = 25 }
+		add_political_power = 20
+			set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Nikolai_S_Trubetskoy_hog_sco
+		set_country_flag = RUS_TRUB
+		}
+		}
+		
+country_event = {
+		id = rusd.1012
+		title = rusd.1011.t
+		desc = rusd.1012.d
+is_triggered_only = yes
+	
+		option = { name = rusd.1011.a
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Anton_I_Denikin_hog_ade
+		set_country_flag = RUS_DEN
+		}
+			option = { name = rusd.1011.b
+			ai_chance = { factor = 25 }
+			add_political_power = -60
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Pyotr_N_Wrangel_hog_npo
+		set_country_flag = RUS_WRA_HOG
+		}
+		
+		option = { name = rusd.1011.c
+		ai_chance = { factor = 25 }
+		add_political_power = -60
+			set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Felix_F_Yusupov_hog_ade
+		set_country_flag = RUS_FEL
+		}
+		
+		option = { name = rusd.1011.e
+		ai_chance = { factor = 25 }
+		add_political_power = 20
+			set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Nikolai_S_Trubetskoy_hog_sco
+		set_country_flag = RUS_TRUB
+		}
+		}
+		
+country_event = {
+		id = rusd.1013
+		title = rusd.1011.t
+		desc = rusd.1013.d
+is_triggered_only = yes
+	
+		option = { name = rusd.1011.a
+		ai_chance = { factor = 30 }
+		add_political_power = -20
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Anton_I_Denikin_hog_ade
+		set_country_flag = RUS_DEN
+		}
+			option = { name = rusd.1013.b
+			ai_chance = { factor = 40 }
+			add_political_power = -20
+				set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Pavel_N_Shatilov_hog_npo
+		set_country_flag = RUS_DEN
+		}
+		
+		option = { name = rusd.1011.c
+		ai_chance = { factor = 30 }
+		add_political_power = -60
+			set_country_flag = purishkevich_dead
+        if = { limit = { has_idea = RUS_Vladimir_M_Purishkevich_int_pau } remove_ideas = RUS_Vladimir_M_Purishkevich_int_pau
+        add_ideas = RUS_Mikhail_A_Meandrov_int_pau }
+		clr_country_flag = RUS_PUR
+		remove_ideas = RUS_Vladimir_M_Purishkevich_hog_pau
+		add_ideas = RUS_Felix_F_Yusupov_hog_ade
+		set_country_flag = RUS_FEL
+		}
+		
+		}
+		
+		country_event = {
+		id = rusd.102
+		title = rusd.102.t
+		desc = rusd.102.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1940.08.23
+	}
+	
+		option = { name = rusd.97.a 
+		set_country_flag = maklakov_dead
+        if = { limit = { has_idea = RUS_Nikolai_A_Maklakov_eco_pau } remove_ideas = RUS_Nikolai_A_Maklakov_eco_pau
+        add_ideas = RUS_Nikanor_V_Savic_eco_pau } }
+		}
+		
+		country_event = { #kill dmitry
+		id = rusd.103
+		title = rusd.103.t
+		desc = rusd.103.d
+		fire_only_once = yes
+		trigger = {
+		has_country_flag = RUS_TSAR_DMI
+		tag = RUS
+        date > 1941.03.05
+	}
+		
+		option = { name = rusd.103.a
+		ai_chance = { factor = 30 }
+		set_country_flag = dmitri_romanov_dead
+        if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_hog_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_hog_ade
+        add_ideas = RUS_Regency_Council_hog_pau }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_eco_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_eco_ade
+        add_ideas = RUS_Vladimir_N_Kokovtsov_eco_ade }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_carm_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_carm_ade
+        add_ideas = RUS_Anton_I_Denikin_carm_ade }
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "E.I.V. Pavel II Romanov"
+			desc = "POLITICS_KYRIL_ROMANOV_CON_DESC"
+			picture = "portrait_pavel_romanov.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		
+		}
+			clr_country_flag = RUS_TSAR_DMI
+			set_country_flag = RUS_TSAR_PAV
+			country_event = { id = russia.36 }
+			add_political_power = -120
+		}
+		
+		#Could add takeovers of Vladimir if we could remove focuses
+		
 		}
 		
 			country_event = {
@@ -5605,18 +5916,31 @@ country_event = { # Denikin's death
 		desc = rusd.104.d
 		fire_only_once = yes
 		trigger = {
+		NOT = { has_country_flag = RUS_TSAR_DMI }
 		tag = RUS
         date > 1941.03.05
 	}
-		mean_time_to_happen = { days = 5 }
-		
-		immediate = { set_country_flag = dmitri_romanov_dead }
 		
 		option = { name = rusd.104.a
 				trigger = { NOT = { AND = { OR = { has_country_flag = RUS_DEM_REP has_country_flag = RUS_ARI_REP }  has_country_flag = DMI_PRES } } }
+				set_country_flag = dmitri_romanov_dead
+        if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_hog_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_hog_ade
+        add_ideas = RUS_Felix_F_Yusupov_hog_ade }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_eco_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_eco_ade
+        add_ideas = RUS_Vladimir_N_Kokovtsov_eco_ade }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_carm_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_carm_ade
+        add_ideas = RUS_Anton_I_Denikin_carm_ade }
 		}
 			option = { name = rusd.104.a
 				trigger = { AND = { OR = { has_country_flag = RUS_DEM_REP has_country_flag = RUS_ARI_REP  } has_country_flag = DMI_PRES } }
+				add_political_power = -20
+				set_country_flag = dmitri_romanov_dead
+        if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_hog_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_hog_ade
+        add_ideas = RUS_Felix_F_Yusupov_hog_ade }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_eco_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_eco_ade
+        add_ideas = RUS_Vladimir_N_Kokovtsov_eco_ade }
+		if = { limit = { has_idea = RUS_Dmitri_Pavlovich_Romanov_carm_ade } remove_ideas = RUS_Dmitri_Pavlovich_Romanov_carm_ade
+        add_ideas = RUS_Anton_I_Denikin_carm_ade }
 				kill_country_leader = yes
 				clr_country_flag = DMI_PRES
 		 create_country_leader = {
@@ -5624,7 +5948,7 @@ country_event = { # Denikin's death
 			desc = "POLITICS_SENATE_DESC"
 			picture = "Portrait_Soviet_The_Senate.tga"
 			expire = "1965.1.1"
-			ideology = paternal_autocratist_subtype
+			ideology = totalist_subtype
 			traits = {
 			}
 		}
@@ -5634,6 +5958,15 @@ country_event = { # Denikin's death
 			picture = "Portrait_Soviet_The_Senate.tga"
 			expire = "1965.1.1"
 			ideology = syndicalist_subtype
+			traits = {
+			}
+		}
+		create_country_leader = {
+			name = "The Senate"
+			desc = "POLITICS_SENATE_DESC"
+			picture = "Portrait_Soviet_The_Senate.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
 			traits = {
 			}
 		}
@@ -5691,13 +6024,15 @@ country_event = { # Denikin's death
 			traits = {
 			}
 		}
+		create_country_leader = {
+			name = "The Senate"
+			desc = "POLITICS_SENATE_DESC"
+			picture = "Portrait_Soviet_The_Senate.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+			}
 		}
-		option = { name = rusd.104.c
-				trigger = { has_country_flag = RUS_DMI }
-				clr_country_flag = RUS_DMI
-				remove_ideas = RUS_Dmitri_Pavlovich_Romanov_hog_ade
-				add_ideas = RUS_Felix_F_Yusupov_hog_ade
-				set_country_flag = RUS_FEL
 		}
 	}
 	
@@ -5710,7 +6045,6 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1936.02.27
 	}
-		mean_time_to_happen = { days = 5 }
 		option = { name = rusd.105.a add_political_power = -10 }
 		}
 		
@@ -5723,7 +6057,6 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1936.06.18
 	}
-		mean_time_to_happen = { days = 5 }
 		option = { name = rusd.106.a add_political_power = -10 }
 		}
 		
@@ -5736,8 +6069,14 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1943.01.29
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a
+		set_country_flag = kokotsov_dead
+        if = { limit = { has_idea = RUS_Vladimir_N_Kokovtsov_eco_ade } remove_ideas = RUS_Vladimir_N_Kokovtsov_eco_ade
+        add_ideas = RUS_Alexei_P_Arkhangelskiy_eco_ade }
+		if = { limit = { has_idea = RUS_Vladimir_N_Kokovtsov_int_ade } remove_ideas = RUS_Vladimir_N_Kokovtsov_int_ade
+        add_ideas = RUS_Sergei_L_Markov_int_ade }
+        }
 		}
 		
 		
@@ -5750,8 +6089,10 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1939.12.08
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+		option = { name = rusd.97.a
+        set_country_flag = krasnov_dead
+        if = { limit = { has_idea = RUS_Nikolai_P_Krasnov_eco_npo } remove_ideas = RUS_Nikolai_P_Krasnov_eco_npo
+        add_ideas = RUS_Vladimir_N_Kokovtsov_eco_ade } }
 		}
 		
 			country_event = {
@@ -5763,8 +6104,32 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1938.10.04
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a remove_unit_leader = 402 }
+	
+		option = { name = rusd.97.a 
+		remove_unit_leader = 402 
+		set_country_flag = kornilov_dead
+        if = { limit = { has_idea = RUS_Lavr_Kornilov_mhc_sco } remove_ideas = RUS_Lavr_Kornilov_mhc_sco }
+		if = { limit = { has_idea = RUS_Lavr_Kornilov_carm_sco } remove_ideas = RUS_Lavr_Kornilov_carm_sco
+        random_list = { 40 = { add_ideas = RUS_Anton_I_Denikin_carm_ade }
+                        40 = { add_ideas = RUS_Pyotr_N_Wrangel_carm_npo } 
+						10 = { add_ideas = RUS_Sergei_L_Markov_carm_ade }
+                        10 = { add_ideas = RUS_Mikhail_Drozdovsky_carm_pau } } } }
+		}
+		
+		country_event = {
+		id = rusd.1091
+		title = rusd.1091.t
+		desc = rusd.1091.d
+		fire_only_once = yes
+		trigger = {
+		tag = RUS
+        date > 1943.05.15
+	}
+	
+		option = { name = rusd.97.a
+		set_country_flag = sergius_dead
+        if = { limit = { has_idea = RUS_Sergius_of_Nizhny_Novgorod_int_ade } remove_ideas = RUS_Sergius_of_Nizhny_Novgorod_int_ade
+        add_ideas = RUS_Sergei_L_Markov_int_ade } }
 		}
 		
 		country_event = {
@@ -5776,8 +6141,13 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1945.03.15
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+	
+		option = { name = rusd.97.a
+        set_country_flag = rykov_dead
+        if = { limit = { has_idea = RUS_Alexei_I_Rykov_int_rso } remove_ideas = RUS_Alexei_I_Rykov_int_rso
+        add_ideas = RUS_Maria_A_Spiridonova_int_rso }
+        if = { limit = { has_idea = RUS_Alexei_I_Rykov_hog_rso } remove_ideas = RUS_Alexei_I_Rykov_hog_rso
+        add_ideas = RUS_Iraklij_G_Tsereteliy_hog_sde } }
 		}
 		
 		country_event = {
@@ -5789,8 +6159,11 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1946.08.01
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		set_country_flag = meandrov_dead
+        if = { limit = { has_idea = RUS_Mikhail_A_Meandrov_int_pau } remove_ideas = RUS_Mikhail_A_Meandrov_int_pau
+        add_ideas = RUS_Aleksandr_I_Solzhenitsyn_int_pau } }
 		}
 		
 		country_event = {
@@ -5802,8 +6175,13 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1945.08.12
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a
+		set_country_flag = pavel_ignatiev_dead
+        if = { limit = { has_idea = RUS_Pavel_N_Ignatiev_eco_ade } remove_ideas = RUS_Pavel_N_Ignatiev_eco_ade
+        add_ideas = RUS_Alexei_P_Arkhangelskiy_eco_ade }
+		if = { limit = { has_idea = RUS_Pavel_N_Ignatiev_int_ade } remove_ideas = RUS_Pavel_N_Ignatiev_int_ade
+        add_ideas = RUS_Aleksandr_A_Kazakov_int_ade } }
 		}
 		
 			country_event = {
@@ -5815,8 +6193,9 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1939.02.27
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		add_political_power = -10}
 		}
 		
 		country_event = {
@@ -5828,8 +6207,9 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1939.03.02
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		remove_unit_leader = 450 }
 		}
 		
 			country_event = {
@@ -5841,7 +6221,7 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1938.01.02
 	}
-		mean_time_to_happen = { days = 5 }
+
 		option = { name = rusd.97.a }
 		}
 		
@@ -5854,8 +6234,9 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1945.02.02
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		remove_unit_leader = 451 }
 		}
 		
 		country_event = {
@@ -5867,8 +6248,9 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1939.03.02
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		remove_unit_leader = 406 }
 		}
 		
 		country_event = {
@@ -5880,8 +6262,9 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1943.11.02
 	}
-		mean_time_to_happen = { days = 5 }
-		option = { name = rusd.97.a }
+
+		option = { name = rusd.97.a 
+		remove_unit_leader = 415 }
 		}
 		
 		country_event = {
@@ -5893,7 +6276,7 @@ country_event = { # Denikin's death
 		tag = RUS
         date > 1940.08.02
 	}
-		mean_time_to_happen = { days = 5 }
+
 		option = { name = rusd.97.a }
 		}
 		
@@ -5912,6 +6295,7 @@ country_event = { # Denikin's death
 	option = {
 		name = rusd.120.a
 		add_ideas = rus_black_monday
+		add_political_power = -50
 			}
 	}
 	country_event = {
@@ -5922,7 +6306,9 @@ country_event = { # Denikin's death
 	trigger = {
 		tag = RUS
 		date > 1936.05.01
+		has_idea = rus_black_monday
 			}
+	mean_time_to_happen = { days = 90 }
 	option = {
 		name = rusd.121.a
 		remove_ideas = rus_black_monday
@@ -5938,32 +6324,16 @@ country_event = { # Denikin's death
 	trigger = {
 		tag = RUS
 		date > 1937.06.01
+		has_idea = rus_black_monday1
 			}
-			mean_time_to_happen = { days = 30 }
+			mean_time_to_happen = { days = 45 }
 	option = {
 		name = rusd.122.a
 		remove_ideas = rus_black_monday1
-		add_ideas = rus_black_monday2
+		add_timed_idea = { idea = rus_black_monday2 days = 730 }
 			}
 	}
 	
-	country_event = {
-	id = rusd.123
-	title = rusd.123.t
-	desc = rusd.123.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		date > 1938.01.01
-		NOT = { OR = { has_completed_focus = RUS_DEM_IND2 has_completed_focus = RUS_CON_IND3 has_completed_focus = RUS_DMI_IND3 has_completed_focus = RUS_WRA_IND2 }
-			}
-		}
-		mean_time_to_happen = { days = 30 }
-	option = {
-		name = rusd.123.a
-		remove_ideas = rus_black_monday2
-			}
-	}
 	###Culture###
 	country_event = {
 	id = rusd.124
@@ -5975,10 +6345,10 @@ country_event = { # Denikin's death
 		has_completed_focus = RUS_WRA_POL3
 		date > 1938.04.24
 		}
-		mean_time_to_happen = { days = 30 }
+		mean_time_to_happen = { days = 15 }
 	option = {
 		name = rusd.124.a
-			add_political_power = 50
+			add_political_power = 20
 			}
 	}
 	
@@ -5992,9 +6362,151 @@ country_event = { # Denikin's death
 		has_completed_focus = RUS_ARI_POL3
 		date > 1937.04.01
 		}
-		mean_time_to_happen = { days = 30 }
+		mean_time_to_happen = { days = 15 }
 	option = {
 		name = rusd.125.a
-			add_political_power = 50
+			add_political_power = 30
 			}
+	}
+	
+	country_event = { #Churchill Iron Curtain speech
+	id = rusd.126
+	title = rusd.126.t
+	desc = rusd.126.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RUS
+		country_exists = FRA
+		controls_state = 195 controls_state = 219 controls_state = 217 controls_state = 566 controls_state = 562
+		OR = { AND = { controls_state = 64 NOT = { GER = { controls_state = 51 } } }
+		       AND = { GER = { controls_state = 64 is_puppet_of = RUS } is_in_faction_with = GER }
+			   #AND = { GER = { controls_state = 64 is_puppet_of = RUS } is_in_faction_with = GER } German Union
+			   #AND = { GER = { controls_state = 64 is_puppet_of = RUS } is_in_faction_with = GER } Prussia
+			   }
+	     is_puppet = no FRA = { is_puppet = no controls_state = 16 } NOT = { OR = { has_government = paternal_autocratist has_government = national_populist has_government = radical_socialist has_government = syndicalist has_government = totalist } has_war_with = FRA has_war_with = CAN is_in_faction_with = FRA }  
+		}
+		
+	mean_time_to_happen = { days = 11 }
+	
+	option = {
+		name = rusd.126.a
+		ai_chance = { factor = 100 }
+			add_political_power = 20
+		add_opinion_modifier = { target = CAN modifier = RUS_vigilant_churchill1 }
+		add_opinion_modifier = { target = NFA modifier = RUS_vigilant_churchill1 }
+		add_opinion_modifier = { target = DEH modifier = RUS_vigilant_churchill1 }
+		add_opinion_modifier = { target = AST modifier = RUS_vigilant_churchill1 }
+		add_opinion_modifier = { target = FRA modifier = RUS_vigilant_churchill2 }
+		add_opinion_modifier = { target = ENG modifier = RUS_vigilant_churchill2 }
+		add_opinion_modifier = { target = SRI modifier = RUS_vigilant_churchill2 }
+			}
+			
+	option = {
+		name = rusd.126.b
+		ai_chance = { factor = 0 }
+			add_political_power = -40
+		add_opinion_modifier = { target = CAN modifier = RUS_denounce_churchill2 }
+		add_opinion_modifier = { target = NFA modifier = RUS_denounce_churchill2 }
+		add_opinion_modifier = { target = DEH modifier = RUS_denounce_churchill2 }
+		add_opinion_modifier = { target = AST modifier = RUS_denounce_churchill2 }
+		add_opinion_modifier = { target = FRA modifier = RUS_denounce_churchill1 }
+		add_opinion_modifier = { target = ENG modifier = RUS_denounce_churchill1 }
+		add_opinion_modifier = { target = SRI modifier = RUS_denounce_churchill1 }
+			}
+			
+	}
+	
+	country_event = { #Tsar Vladmir's Silver Jubilee
+	id = rusd.127
+	title = rusd.127.t
+	desc = rusd.127.d
+	fire_only_once = yes
+	trigger = {
+		tag = RUS
+		has_completed_focus = RUS_ARI_POL3
+		date > 1963.10.10
+		}
+
+	option = {
+		name = rusd.127.a
+			add_political_power = 60
+			}
+	}
+	
+country_event = { #1st Women's Division of Death
+	id = rusd.128
+	title = rusd.128.t
+	desc = rusd.128.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RUS
+        controls_state = 219
+	     is_puppet = no NOT = { OR = { has_government = syndicalist has_government = totalist } }
+		 date > 1936.05.01
+		}
+		
+	mean_time_to_happen = { days = 25 }
+	
+	option = {
+		name = rusd.128.a #Allow it
+		ai_chance = { factor = 50 }
+		add_political_power = -40
+		load_oob = RUS_WOMAN_DIVISION
+			}
+			
+	option = {
+		name = rusd.128.b #no
+		ai_chance = { factor = 50 }
+			add_political_power = 20
+			}
+			
+	}
+	
+country_event = { #Aleksander Kolchak dies
+	id = rusd.129
+	title = rusd.129.t
+	desc = rusd.129.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RUS
+        owns_state = 408
+	    owns_state = 409
+		 date > 1948.01.09
+		}
+		
+	mean_time_to_happen = { days = 40 }
+	
+	option = {
+		name = rusd.129.a
+		add_political_power = 20
+			}
+			
+	}
+	
+country_event = { #The Tsar is unhappy about food prices
+	id = rusd.130
+	title = rusd.130.t
+	desc = rusd.130.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RUS
+        has_country_flag = rus_tsar
+		 date > 1938.01.01
+		}
+		
+	mean_time_to_happen = { days = 40 }
+	
+	option = {
+		name = rusd.130.a
+		add_political_power = 100
+			}
+			
 	}

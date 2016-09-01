@@ -174,7 +174,7 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 							type = industrial_complex
-							level = 1
+							level = 2
 							instant_build = yes
 					}
 				}
@@ -187,7 +187,7 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 							type = industrial_complex
-							level = 1
+							level = 2
 							instant_build = yes
 					}
 				}
@@ -243,7 +243,7 @@ focus_tree = {
 		}
 	}
 	
-	#Trans-Canada Airlines
+	#Trans-Canada Airlines - Airbases everywhere
 	focus = {
 		id = CAN_aircanada
 		icon = GFX_goal_generic_build_airforce
@@ -316,7 +316,7 @@ focus_tree = {
 		}
 	}
 	
-	#Subsidize CPR
+	#Subsidize CPR - Infra in western provinces
 	focus = {
 		id = CAN_infra2
 		icon = GFX_goal_generic_construct_infrastructure
@@ -376,7 +376,7 @@ focus_tree = {
 		}
 	}
 	
-	#Maritime CN Expansion
+	#Maritime CN Expansion - infra in maritimes/east coast
 	focus = {
 		id = CAN_infra_3
 		icon = GFX_goal_generic_construct_infrastructure
@@ -851,7 +851,7 @@ focus_tree = {
 				name = rocket_bonus
 				bonus = 0.5
 				uses = 1 
-				category = rocketry
+				technology = rocket_artillery
 			}
 		}
 	}
@@ -1033,10 +1033,14 @@ focus_tree = {
 ## MILITARY FOCUS TREES ##
 ##########################	
 
+################
+## ARMY FOCUS ##
+################
+
 	focus = { #Reorganize the Army
 		id = CAN_army_command
 		icon = GFX_goal_generic_position_armies
-		x = 4
+		x = 3
 		y = 6
 		cost = 10 
 		completion_reward = {
@@ -1045,12 +1049,60 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #Currie's Planned Battle
+	
+	focus = { #Organic Support 
+		id = CAN_support_tech
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = CAN_motorize focus = CAN_infantry_equipment }
+		x = 3
+		y = 9
+		cost = 10 
+		completion_reward = {
+			if = {  #Get free maintnance company tech with Mobility focus
+				limit = { has_completed_focus = CAN_mobile_doctrine }
+				set_technology = { tech_maintenance_company = 1 }
+			}
+			if = { #Get free Engineer Brigade tech with Grand Battle focus
+				limit = { has_completed_focus = CAN_grand_battle_doctrine }
+				set_technology = { tech_engineers = 1 }
+			}
+			
+			add_tech_bonus = {
+				name = support_bonus
+				bonus = 0.5
+				uses = 1
+				category = support_tech
+			}
+		}
+	}
+	
+	focus = { #Cold Weather Training
+		id = CAN_winter_soldiers
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = CAN_support_tech }
+		x = 3 
+		y = 11
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_winter_soldiers  #Reduce winter attrition idea
+			army_experience = 25			
+			add_tech_bonus = {
+				name = mountain_bonus
+				bonus = 0.5
+				uses = 1 
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+				technology = tech_mountaineers3
+			}
+		}
+	}
+	
+	focus = { #Currie's Planned Battles - Grand Battle Plan and stuff for infantry, artillery, and heavy tanks.
 		id = CAN_grand_battle_doctrine
 		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = CAN_army_command }
 		mutually_exclusive = { focus = CAN_mobile_doctrine }
-		x = 3
+		x = 2
 		y = 7
 		cost = 10
 		completion_reward = {
@@ -1064,12 +1116,95 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #Fuller's Combined Arms
+	focus = { #Artillery Effort
+		id = CAN_artillery_effort
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = CAN_grand_battle_doctrine }
+		x = 0
+		y = 8
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = artillery_bonus
+				bonus = 0.5
+				uses = 1 
+				category = artillery 
+			}
+		}
+	}
+	
+	focus = { #Anti-Air and Anti-Tank Development
+		id = CAN_artillery_aaat
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = CAN_artillery_effort focus = CAN_infantry_equipment }
+		x = 1
+		y = 9
+		cost = 10 
+		completion_reward = {
+				add_tech_bonus = {
+				name = aaat_bonus
+				bonus = 0.5
+				uses = 2 
+				category = cat_anti_air
+				category = cat_anti_tank
+			}
+		}
+	}
+	
+	focus = { #Heavy Tank Focus
+		id = CAN_heavy_tank
+		icon = GFX_goal_generic_army_tanks 
+		prerequisite = { focus = CAN_infantry_equipment }
+		x = 2 
+		y = 10
+		cost = 10
+		bypass = { has_tech = basic_heavy_tank }
+		completion_reward = {
+			set_technology = { basic_heavy_tank = 1 }
+		}
+	}
+	
+	focus = { #Small Arms Development 
+		id = CAN_infantry_equipment
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = CAN_grand_battle_doctrine }
+		x = 2
+		y = 8
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = guns_bonus
+				bonus = 0.5
+				uses = 2 
+				category = infantry_weapons 
+			}
+		}
+	}
+	
+	focus = { #Heavy Tank 2
+		id = CAN_heavy_tank2
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = CAN_heavy_tank }
+		prerequisite = { focus = CAN_infantry_equipment focus = CAN_artillery_aaat }
+		x = 2 
+		y = 12 
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = heavy_tank_bonus
+				bonus = 0.5
+				uses = 1 
+				category = cat_heavy_armor
+			}
+		}
+	}
+	
+	focus = { #Fuller's Combined Arms -- Mobile Warfare doctrine and stuff for tanks, mech infantry.
 		id = CAN_mobile_doctrine
-		icon = GFX_goal_generic_army_tanks
+		icon = GFX_goal_generic_cavalry
 		prerequisite = { focus = CAN_army_command }
 		mutually_exclusive = { focus = CAN_grand_battle_doctrine }
-		x = 5
+		x = 4
 		y = 7
 		cost = 10
 		completion_reward = {
@@ -1082,7 +1217,60 @@ focus_tree = {
 			}
 		}
 	}
-
+	
+	focus = { #Light Tank Focus 
+		id = CAN_light_tank
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = CAN_mobile_doctrine }
+		x = 6
+		y = 8
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = light_tank_bonus
+				bonus = 0.5
+				uses = 1 
+				category = cat_light_armor
+			}
+		}
+	}
+	
+	
+	focus = { #Motorization Focus 
+		id = CAN_motorize
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = CAN_mobile_doctrine }
+		x = 4
+		y = 8
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = motor_bonus
+				bonus = 0.5
+				uses = 1 
+				category = motorized_equipment
+			}
+		}
+	}
+	
+	focus = { #Multipurpose Chassis
+		id = CAN_spg
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = CAN_light_tank focus = CAN_motorize }
+		x = 5
+		y = 9
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_multipurpose_chassis
+			add_tech_bonus = {
+				name = spg_bonus
+				bonus = 0.5
+				uses = 2 
+				category = cat_light_spg #created new categories, already implemented and working
+				category = cat_medium_spg
+			}
+		}
+	}
 }
 	
 	

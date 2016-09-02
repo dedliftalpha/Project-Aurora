@@ -343,10 +343,10 @@ focus_tree = {
 	focus = {
 		id = GER_doctrine_great_war
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = GER_doctrine_new }
+		prerequisite = { focus = GER_doctrine_great_war_2 }
 		mutually_exclusive = { focus = GER_doctrine_mobile }
 		x = 7
-		y = 4
+		y = 5
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -365,10 +365,10 @@ focus_tree = {
 	focus = {
 		id = GER_doctrine_great_war_2
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = GER_doctrine_great_war }
+		prerequisite = { focus = GER_doctrine_new }
 		mutually_exclusive = { focus = GER_doctrine_mobile }
 		x = 7
-		y = 5
+		y = 4
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -386,16 +386,17 @@ focus_tree = {
 	focus = {
 		id = GER_doctrine_mobile
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = GER_doctrine_new }
+		prerequisite = { focus = GER_doctrine_mobile }
 		mutually_exclusive = { focus = GER_doctrine_great_war }
 		x = 9
-		y = 4 
+		y = 5 
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
 				name = motorized_bonus
 				bonus = 0.75
-				technology = motorised_infantry
+			category = motorized_equipment
+			category = cat_mechanized_equipment
 			}
 			
 		}
@@ -406,10 +407,10 @@ focus_tree = {
 	focus = {
 		id = GER_doctrine_mobile_2
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = GER_doctrine_mobile }
+		prerequisite = { focus = GER_doctrine_new }
 		mutually_exclusive = { focus = GER_doctrine_great_war }
 		x = 9
-		y = 5 
+		y = 4 
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -440,10 +441,9 @@ focus_tree = {
 	#### Naval ####
 	focus = {
 		id = GER_mil_expansion_naval_1
-		prerequisite = { focus = GER_mil_expansion }
 		icon = GFX_goal_generic_construct_naval_dockyard
 		x = 13
-		y = 1
+		y = 0
 		
 		ai_will_do = {
 			factor = 1
@@ -458,12 +458,38 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+			random_owned_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				}
+				random_owned_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+		}
 		}
 	
 	}
@@ -517,165 +543,24 @@ focus_tree = {
 		y = 3
 		cost = 10
 		completion_reward = {
-			add_tech_bonus = {
-				name = fleet_in_being_bonus
-				bonus = 0.5
-				uses = 2
-				category = cat_base_strike
+		hidden_effect = {
+			country_event = { id = gerdom.16 days = 605 }
+			country_event = { id = gerdom.17 days = 954 }
+			country_event = { id = gerdom.18 days = 193 }
+			country_event = { id = gerdom.19 days = 391 }
+			country_event = { id = gerdom.20 days = 525 }
+			country_event = { id = gerdom.21 days = 910 }
+			country_event = { id = gerdom.22 days = 69 }
+			country_event = { id = gerdom.23 days = 209 }
+			country_event = { id = gerdom.24 days = 488 }
+			country_event = { id = gerdom.25 days = 156 }
+			country_event = { id = gerdom.26 days = 698 }
 			}
-			
-		}
-		available = { 
-			has_country_flag = GER_naval_construction_yes
+			}
+		custom_effect_tooltip = naval_construction
 
-		}
-		
 	}
 	
-	focus = {
-		id = GER_naval_plans_destroyer
-		icon = GFX_goal_generic_wolf_pack
-		prerequisite = { focus = GER_naval_plans }
-		x = 11
-		y = 4
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = dd_bonus
-				bonus = 0.5
-				ahead_reduction = 1
-				uses = 1
-				technology = early_destroyer
-				technology = basic_destroyer
-				technology = improved_destroyer
-				technology = advanced_destroyer
-			}
-			
-		}
-
-		
-	}
-	
-	focus = {
-		id = GER_naval_plans_destroyer_2
-		icon = GFX_goal_generic_wolf_pack
-		prerequisite = { focus = GER_naval_plans_destroyer }
-		x = 11
-		y = 5
-		cost = 10
-		completion_reward = {
-			
-			
-		}
-
-		
-	}
-	
-	focus = {
-		id = GER_naval_plans_cruiser
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = GER_naval_plans }
-		x = 13
-		y = 4
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = cr_bonus
-				bonus = 0.5
-				uses = 1
-				technology = improved_light_cruiser
-				technology = advanced_light_cruiser
-				technology = improved_heavy_cruiser
-				technology = advanced_heavy_cruiser
-			}
-			
-		}
-
-		
-	}
-	
-	focus = {
-		id = GER_naval_plans_cruiser_2
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = GER_naval_plans_cruiser }
-		x = 13
-		y = 5
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = cr_bonus
-				bonus = 0.5
-				ahead_reduction = 1
-				uses = 1
-				technology = improved_light_cruiser
-				technology = advanced_light_cruiser
-				technology = improved_heavy_cruiser
-				technology = advanced_heavy_cruiser
-			}
-			
-		}
-
-		
-	}
-	
-	focus = {
-		id = GER_naval_plans_capital
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = GER_naval_plans }
-		x = 15
-		y = 4
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = capital_ships_bonus
-				bonus = 0.5
-				uses = 1
-				technology = basic_battlecruiser
-				technology = basic_battleship
-				technology = improved_battleship
-				technology = advanced_battleship
-				technology = heavy_battleship
-				technology = heavy_battleship2
-				technology = early_carrier
-				technology = basic_carrier
-				technology = improved_carrier
-				technology = advanced_carrier
-			}
-			
-		}
-
-		
-	}
-	
-	focus = {
-		id = GER_naval_plans_capital_2
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = GER_naval_plans_capital }
-		x = 15
-		y = 5
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = capital_ships_bonus
-				bonus = 0.5
-				ahead_reduction = 1
-				uses = 1
-				technology = basic_battlecruiser
-				technology = basic_battleship
-				technology = improved_battleship
-				technology = advanced_battleship
-				technology = heavy_battleship
-				technology = heavy_battleship2
-				technology = early_carrier
-				technology = basic_carrier
-				technology = improved_carrier
-				technology = advanced_carrier
-			}
-			
-		}
-
-		
-	}
 	
 ### Political Part
 	focus = {

@@ -3349,3 +3349,121 @@ country_event = { #Japan refuses
 	}
 
 }
+
+country_event = { #Russia demands northern Mongolia
+	id = rusfor.1113
+	title = rusfor.1113.t
+	desc = rusfor.1113.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1113.a #Bow down
+		ai_chance = { factor = 50 }
+        add_political_power = -60
+		RUS = { add_opinion_modifier = { target = MON modifier = RUS_MON_accepted_demand_focus } }
+		RUS = { transfer_state = 563 transfer_state = 564 transfer_state = 329 }
+		remove_state_core = 563
+		remove_state_core = 564
+		remove_state_core = 329
+		RUS = { country_event = { id = rusfor.1114 } }
+		set_global_flag = RUS_mon_accepted_demand_normongolia_focus
+	}
+	
+	option = {
+		name = rusfor.1113.b #Attack
+		ai_chance = { factor = 40 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = MON modifier = RUS_MON_refused_demand_focus } }
+		declare_war_on = { target = RUS type = annex_everything }
+		RUS = { country_event = { id = rusfor.1115 } }
+	}
+	
+	option = {
+		name = rusfor.1113.c #refuse politely
+		ai_chance = { factor = 10 }
+		RUS = { add_opinion_modifier = { target = MON modifier = RUS_MON_refused_demand_focus } }
+		add_political_power = 40
+		RUS = { country_event = { id = rusfor.1116 } }
+	}
+
+}
+
+country_event = { #Mongolia accepts !
+	id = rusfor.1114
+	title = rusfor.1114.t
+	desc = rusfor.1114.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1114.a #Great !
+        add_political_power = 40
+	}
+
+}
+
+country_event = { #Mongolia attacks !
+	id = rusfor.1115
+	title = rusfor.1115.t
+	desc = rusfor.1115.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1115.a #We will crush them !
+	}
+
+}
+
+country_event = { #Mongolia refused politely
+	id = rusfor.1116
+	title = rusfor.1116.t
+	desc = rusfor.1116.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1116.a #Are they kidding ? crush them !
+		ai_chance = { factor = 95 }
+        add_political_power = 40
+		declare_war_on = { target = MON type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1116.b #Back down...
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = MON modifier = RUS_back_down_mongolia }
+	}
+
+}
+
+country_event = { #Russia offers us an alliance !
+	id = rusfor.1117
+	title = rusfor.1117.t
+	desc = rusfor.1117.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1117.a #Join them !
+		ai_chance = { factor = 75 }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "Inter-steppe alliance" add_to_faction = MON }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = MON }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = MON } } }
+		add_opinion_modifier = { target = MON modifier = RUS_MON_accepted_alliance }
+	}
+	
+	option = {
+		name = rusfor.1117.b #Refuse
+		ai_chance = { factor = 25 }
+		add_opinion_modifier = { target = MON modifier = RUS_MON_declined_alliance }
+	}
+
+}

@@ -4834,6 +4834,9 @@ focus = {
 		available = { }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_demand_northern_mongolia }
+		bypass = { AND = { OR = { owns_state = 330 any_country = { AND = { is_puppet_of = RUS owns_state = 330 } } }
+			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } }
+            OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -4849,7 +4852,14 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        add_opinion_modifier = { target = MON modifier = RUS_crush_mongolia }
+		add_state_core = 563
+		 add_state_core = 564
+		 add_state_claim = 330
+		 add_state_core = 329
+		 add_state_claim = 618
+		 if = { limit = { MON = { OR = { owns_state = 330 owns_state = 564 owns_state = 563 owns_state = 329 } } }
+		 create_wargoal = { type = annex_everything target = MON } }   
 		}		
 	}
 	
@@ -4859,9 +4869,14 @@ focus = {
 		x = 30
 		y = 9
 		cost = 2
-		available = { }
+		available = { country_exists = MON MON = { controls_state = 329 controls_state = 564 controls_state = 563 is_puppet = no } NOT = { MON = { has_war_with = RUS is_in_faction_with = RUS } } }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_crush_mongolia }
+		bypass = { AND = { OR = { owns_state = 329 any_country = { AND = { is_puppet_of = RUS owns_state = 329 } } }
+			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } }
+            OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } }
+            OR = { owns_state = 330 any_country = { AND = { is_puppet_of = RUS owns_state = 330	} } } } }
+		cancel = { NOT = { OR = { country_exists = MON MON = { controls_state = 329 } MON = { controls_state = 564 } MON = { controls_state = 563 } MON = { is_puppet = no } NOT = { MON = { has_war_with = RUS } } NOT = { is_in_faction_with = MON } } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -4877,7 +4892,11 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+		add_opinion_modifier = { target = MON modifier = RUS_demand_northern_mongolia }
+		add_state_core = 563
+		add_state_core = 564
+		add_state_core = 329
+        MON = { country_event = { id = rusfor.1113 } }  
 		}		
 	}
 	
@@ -4887,7 +4906,10 @@ focus = {
 		x = 30
 		y = 10
 		cost = 10
-		available = { }
+		available = { has_global_flag = RUS_mon_accepted_demand_normongolia_focus country_exists = MON MON = { is_puppet = no } NOT = { MON = { has_war_with = RUS } }
+		AND = { OR = { owns_state = 329 any_country = { AND = { is_puppet_of = RUS owns_state = 329 } } }
+			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } }
+            OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } } } }
 		prerequisite = { focus = RUS_demand_northern_mongolia }
 		
 		ai_will_do = {
@@ -4904,7 +4926,8 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        MON = { add_opinion_modifier = { target = RUS modifier = RUS_befriend_mongolia } }
+		if = { limit = { NOT = { MON = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } MON = { country_event = { id = rusfor.1117 } } }
 		}		
 	}
 	
@@ -5132,33 +5155,6 @@ focus = {
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		x = 5
 		y = 10
-		cost = 10
-		available = { }
-		prerequisite = { focus = RUS_crush_mitteleuropa focus = RUS_act_solo_syndie_ukraine focus = RUS_ask_germany_syndie_ukraine }
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_political_power < 0
-			}
-			modifier = {
-				factor = 0
-				OR = { has_idea = desaster
-				has_idea = very_low_stability
-				has_idea = low_stability }
-			}
-		}	
-		completion_reward = {
-            
-		}		
-	}
-	
-focus = {
-		id = RUS_rebuild_sevastopol
-		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 6
-		y = 11
 		cost = 10
 		available = { }
 		prerequisite = { focus = RUS_crush_mitteleuropa focus = RUS_act_solo_syndie_ukraine focus = RUS_ask_germany_syndie_ukraine }

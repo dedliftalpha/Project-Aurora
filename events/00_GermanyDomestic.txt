@@ -196,946 +196,249 @@ country_event = { #generals quit
 						}
 								}
 
+country_event = { #Agricultural Crisis in Mitteleuropa
+		id = gerdom.11
+		title = gerdom.11.t 
+		desc = gerdom.11.d 
+		fire_only_once = yes 
+		trigger = { tag = GER 
+		has_idea = black_monday
+										}
+			mean_time_to_happen = { days = 40 }
+		option = {#refuse aid 
+		name = gerdom.11.a 
+		ai_chance = { factor = 95 }
+	add_opinion_modifier = {target = POL modifier = agriculture_help_denied }
+	add_opinion_modifier = {target = UKR modifier = agriculture_help_denied }
+	add_opinion_modifier = {target = GAL modifier = agriculture_help_denied }
+	UKR = { country_event = { id = ukraine.5 days = 40 } }
+	add_political_power = 40
+									}
+	option = {#give aid 
+	name = gerdom.11.b 
+	ai_chance = { factor = 5 }
+	add_political_power = -150
+	add_opinion_modifier = {target = POL modifier = agriculture_help_granted }
+	add_opinion_modifier = {target = UKR modifier = agriculture_help_granted }
+	add_opinion_modifier = {target = GAL modifier = agriculture_help_granted }
+								}	
+						}
+###suffrage movement####
 
-
-#### gerdom Elections 37
-#### Trigger
-news_event = {
-	id = gerdom.201
-	title = gerdom.201.t
-	desc = gerdom.201.d
-	
-	fire_only_once = yes
-	
+country_event = {#The increasing activity of the suffragist movement
+	id = gerdom.12 
+	title = gerdom.12.t 
+	desc = gerdom.12.d 
+	fire_only_once = yes 
 	trigger = {
-		country_exists = GER
-		date > 1937.3.8
-	}
+	tag = GER
+					}
+	mean_time_to_happen = { days = 40 }
+	option = { #full
+	name = gerdom.12.a 
+	ai_chance = { factor = 5 }
+	add_political_power = -120 
+	add_opinion_modifier = {target = ENG modifier = women_yes }
+	add_opinion_modifier = {target = FRA modifier = women_yes }
+	add_opinion_modifier = {target = USA modifier = women_yes }
 	
-	immediate = {
-		GER = { news_event = {id = gerdom.202 }}
-		
-	}
-	
+						}
+					
+	option = {#part 
+	name = gerdom.12.b 
+	ai_chance = { factor = 70 }
+	set_country_flag = GER_PARW_RGT
+	add_political_power = -20 
+	add_opinion_modifier = {target = ENG modifier = women_maybe }
+	add_opinion_modifier = {target = FRA modifier = women_maybe }
+	add_opinion_modifier = {target = USA modifier = women_maybe }
+							}
+	option = {#none 
+	name = gerdom.12.c
+	ai_chance = { factor = 10 }
+	set_country_flag = GER_NO_RGT
+	add_political_power = -100 
+	add_opinion_modifier = {target = ENG modifier = women_no }
+	add_opinion_modifier = {target = FRA modifier = women_no }
+	add_opinion_modifier = {target = USA modifier = women_no }
+							}
+										}
+	country_event = {#German women demand recognition for their war effort
+		id = gerdom.13
+		title = gerdom.13.t 
+		desc = gerdom.13.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER 
+		is_puppet = no 
+		OR ={ has_country_flag = GER_PARW_RGT has_country_flag = GER_NO_RGT }
+		FRA = { exists = no }
+							}
+		option = { #full 
+		name = gerdom.13.a 
+		ai_chance = { factor = 45 }
+		IF = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -30 }
+		IF = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -100 }
+					}
+		option = { #part 
+		name = gerdom.13.b 
+		ai_chance = { factor = 45 }
+		IF = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -50 }
+		IF = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -20 }
+					}
+		option = { #none 
+		name = gerdom.13.c
+		ai_chance = { factor = 10 }
+		IF = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -300 }
+		IF = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -600 }
+					}
+										}
+###GANGS###
+country_event = { #Halbstarke terrorize the cities
+		id = gerdom.14
+		title = gerdom.14.t 
+		desc = gerdom.14.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER 
+		has_idea = black_monday 
+		date > 19.9.1936
+							}				
 	option = {
-		name = gerdom.201.a
-	}
-	
-} 
-#### Election Results
-country_event = {
-	id = gerdom.202
-	title = gerdom.202.t
-	desc = gerdom.202.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.202.a # DKP	
-		country_event = { id = gerdom.203 days = 7 }
-	}
-	option = {
-		name = gerdom.202.b # Zentrum
-		country_event = { id = gerdom.204 days = 7 }
-	}
-	option = {
-		name = gerdom.202.c # SPD
-		country_event = { id = gerdom.205 days = 7 }
-	}
-
-}
-### 3 Directions (Reactionary 203 /// Democtaric 204 /// Socialist 205)
-### DKP Wins
-### TODO: DKP Politicans
-country_event = {
-	id = gerdom.203
-	title = gerdom.203.t
-	desc = gerdom.203.d
-	
-	is_triggered_only = yes	
-	
-	option = {
-		name = gerdom.203.a 
-		
-	}
-}
-### Zentrum Wins
-### TODO: Zentrum Politicans
-country_event = {
-	id = gerdom.204
-	title = gerdom.204.t
-	desc = gerdom.204.d
-	
-	is_triggered_only = yes	
-	
-	option = {
-		name = gerdom.204.a
-		set_country_flag = Zentrum_victory		
-		
-	}
-}
-### SPD Wins
-### TODO: SPD Politicans
-country_event = {
-	id = gerdom.205
-	title = gerdom.205.t
-	desc = gerdom.205.d
-	
-	is_triggered_only = yes	
-	
-	option = {
-		name = gerdom.205.a 
-		
-	}
-}
-
-
-#### gerdom Elections 42
-#### Trigger
-news_event = {
-	id = gerdom.206
-	title = gerdom.206.t
-	desc = gerdom.206.d
-	
-	fire_only_once = yes
-	
+	name = gerdom.14.a 
+	add_political_power = -50
+	add_national_unity = -0.0.5
+					}
+					}
+	country_event = {
+	id = gerdom.15 
+	title = gerdom.15.t 
+	desc = gerdom.15.d 
+	fire_only_once = yes 
 	trigger = {
-		country_exists = GER
-		date > 1942.3.8
-	}
-	
-	immediate = {
-		GER = { news_event = {id = gerdom.207 }}
-		
-	}
-	
-	option = {
-		name = gerdom.206.a
-	}
-	
-} 
-#### Election Results
+	tag = GER 
+	date > 7.3.1937
+					}
+	option = { #no
+	name = gerdom.15.a 
+	ai_chance = { factor = 25 }
+	add_political_power = 10 
+					}
+	option = { #yes
+	name = gerdom.15.b
+	ai_chance = { factor = 75 }
+	add_national_unity = 0.05
+						}
+							}
+####BOATS####
 country_event = {
-	id = gerdom.207
-	title = gerdom.207.t
-	desc = gerdom.207.d
-	
-	is_triggered_only = yes
-	
+	id = gerdom.16
+	title = gerdom.16.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.207.a # DKP	
-		country_event = { id = gerdom.208 days = 7 }
-	}
-	option = {
-		name = gerdom.207.b # Zentrum
-		country_event = { id = gerdom.209 days = 7 }
-	}
-	option = {
-		name = gerdom.207.c # SPD
-		country_event = { id = gerdom.210 days = 7 }
-	}
-
-}
-### 3 Directions (Reactionary 208 /// Democtaric 209 /// Socialist 210)
-### DKP Wins
-### TODO: DKP Politicans
+	name = gerdom.16.a 
+	load_oob = GER_BB_1
+					}
+					}
 country_event = {
-	id = gerdom.208
-	title = gerdom.208.t
-	desc = gerdom.208.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.17 
+	title = gerdom.17.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.208.a 
-		
-	}
-}
-### Zentrum Wins
-### TODO: Zentrum Politicans
+	name = gerdom.16.a 
+	load_oob = GER_BB_2
+					}
+					}
 country_event = {
-	id = gerdom.209
-	title = gerdom.209.t
-	desc = gerdom.209.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.18 
+	title = gerdom.18.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.209.a 
-		set_country_flag = Zentrum_victory
-		
-	}
-}
-### SPD Wins
-### TODO: SPD Politicans
+	name = gerdom.16.a 
+	load_oob = GER_CA_1
+					}
+					}
 country_event = {
-	id = gerdom.210
-	title = gerdom.210.t
-	desc = gerdom.210.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.19 
+	title = gerdom.19.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.210.a 
-		
-	}
-}
-
-#### gerdom Elections 47
-#### Trigger
-news_event = {
-	id = gerdom.211
-	title = gerdom.211.t
-	desc = gerdom.211.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		country_exists = GER
-		date > 1947.3.8
-	}
-	
-	immediate = {
-		GER = { news_event = {id = gerdom.212 }}
-		
-	}
-	
-	option = {
-		name = gerdom.211.a
-	}
-	
-} 
-#### Election Results
+	name = gerdom.16.a 
+	load_oob = GER_CA_2
+					}
+					}		
 country_event = {
-	id = gerdom.212
-	title = gerdom.212.t
-	desc = gerdom.212.d
-	
-	is_triggered_only = yes
-	
+	id = gerdom.20  
+	title = gerdom.20.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.212.a # DKP	
-		country_event = { id = gerdom.213 days = 7 }
-	}
-	option = {
-		name = gerdom.212.b # Zentrum
-		country_event = { id = gerdom.214 days = 7 }
-	}
-	option = {
-		name = gerdom.212.c # SPD
-		country_event = { id = gerdom.215 days = 7 }
-	}
-
-}
-### 3 Directions (Reactionary 213 /// Democtaric 214 /// Socialist 215)
-### DKP Wins
-### TODO: DKP Politicans
+	name = gerdom.16.a 
+	load_oob = GER_CVE_1
+					}
+					}
 country_event = {
-	id = gerdom.213
-	title = gerdom.213.t
-	desc = gerdom.213.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.21  
+	title = gerdom.21.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.213.a 
-		
-	}
-}
-### Zentrum Wins
-### TODO: Zentrum Politicans
+	name = gerdom.16.a 
+	load_oob = GER_CVE_2
+					}
+					}
 country_event = {
-	id = gerdom.214
-	title = gerdom.214.t
-	desc = gerdom.214.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.22 
+	title = gerdom.22.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.214.a
-		set_country_flag = Zentrum_victory		
-		
-	}
-}
-### SPD Wins
-### TODO: SPD Politicans
+	name = gerdom.16.a 
+	load_oob = GER_Z_1
+					}
+					}
 country_event = {
-	id = gerdom.215
-	title = gerdom.215.t
-	desc = gerdom.215.d
-	
-	is_triggered_only = yes	
-	
+	id = gerdom.23 
+	title = gerdom.23.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.215.a 
-		
-	}
-}
-
-
-### 230+ General Events
-### gerdom Italien Relations
-### TODO: Industrial Buildup for option C
+	name = gerdom.16.a 
+	load_oob = GER_Z_2
+					}
+					}	
 country_event = {
-	id = gerdom.230
-	title = gerdom.230.t
-	desc = gerdom.230.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		has_country_flag = Zentrum_victory
-		date > 1936.4.1
-
-	}
-	
-	mean_time_to_happen = {
-		days = 20
-	}
-	
-	
-	
+	id = gerdom.24 
+	title = gerdom.24.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.230.a
-		add_opinion_modifier = {target = ITA modifier = catholic_bounds}
-		
-		
-	}
-	option = {
-		name = gerdom.230.b
-		add_opinion_modifier = {target = ITA modifier = catholic_bounds}
-		GER = { give_guarantee = ITA }
-		ITA = { country_event = { id = gerdom.231 days = 6 } }
-	}
-	option = {
-		name = gerdom.230.b
-		add_opinion_modifier = {target = ITA modifier = catholic_bounds}
-		GER = { give_guarantee = ITA }
-		ITA = { country_event = { id = gerdom.231 days = 6 } }
-
-	}
-
-}
-### gerdom proposial to italy
+	name = gerdom.16.a 
+	load_oob = GER_Z_3
+					}
+					}
 country_event = {
-	id = gerdom.231
-	title = gerdom.231.t
-	desc = gerdom.231.d
-	
-	is_triggered_only = yes
-	
+	id = gerdom.25 
+	title = gerdom.25.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.231.a
-		GER = { add_to_faction = ITA }
-		
-		
-	}
-	option = {
-		name = gerdom.231.b
-
-	}
-
-}
-### French people in gerdomy
-### TODO: Garrison OOB
+	name = gerdom.16.a 
+	load_oob = GER_U_1
+					}
+					}
 country_event = {
-	id = gerdom.232
-	title = gerdom.232.t
-	desc = gerdom.232.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		date > 1937.5.1
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	
-	
+	id = gerdom.26
+	title = gerdom.26.t
+	desc = gerdom.16.d
+	is_triggered_only = yes 
 	option = {
-		name = gerdom.232.a
-		add_national_unity = 0.01
-		FRA = { country_event = { id = gerdom.233 days = 6 } }
-		NFA = { country_event = { id = gerdom.233 days = 6 } }
-		
-	}
-	option = {
-		name = gerdom.232.b
-		add_national_unity = -0.01
-	}
-
-}
-
-### Event to france
-country_event = {
-	id = gerdom.233
-	title = gerdom.233.t
-	desc = gerdom.233.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.233.a
-		add_national_unity = 0.01
-		
-	}
-
-
-}
-
-### Increase Security
-country_event = {
-	id = gerdom.234
-	title = gerdom.234.t
-	desc = gerdom.234.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.234.a
-		add_national_unity = 0.01
-		
-	}
-	option = {
-		name = gerdom.234.b
-		add_national_unity = 0.05
-		FRA = { country_event = { id = gerdom.235 days = 6 } } 
-		
-	}
-	option = {
-		name = gerdom.234.c
-		add_national_unity = -0.01
-		set_country_flag = security_backdown
-		
-	}
-
-}
-
-### France responce
-country_event = {
-	id = gerdom.235
-	title = gerdom.235.t
-	desc = gerdom.235.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.235.a
-		add_national_unity = -0.01
-		
-	}
-	option = {
-		name = gerdom.235.b
-		add_national_unity = -0.1
-			declare_war_on = {
-				target = GER
-				type = take_state_focus
-				generator = { 42 28 8 741 } 
-			}
-		
-		
-	}
-	option = {
-		name = gerdom.235.c
-		add_national_unity = 0.05
-		GER = { country_event = { id = gerdom.236 days = 1 } } 
-		
-	}
-			
-
-}
-### gerdom Responce
-country_event = {
-	id = gerdom.236
-	title = gerdom.236.t
-	desc = gerdom.236.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.236.a
-		
-		
-	}
-	option = {
-		name = gerdom.236.b
-		add_national_unity = -0.05
-			declare_war_on = {
-				target = GER
-				type = take_state_focus
-				generator = { 42 28 8 741 } 
-			}
-		
-	}
-
-}
-
-### Von Hammerstein-Equord Affair
-### TODO: active Minister!
-country_event = {
-	id = gerdom.237
-	title = gerdom.237.t
-	desc = gerdom.237.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.237.a
-		add_national_unity = -0.03
-		
-	}
-	option = {
-		name = gerdom.237.b
-		add_national_unity = -0.02		
-		
-	}
-	option = {
-		name = gerdom.237.c
-		add_national_unity = -0.01
-			
-	}
-
-}
-
-
-
-
-### Minister Deaths
-### Otto Wells
-country_event = {
-	id = gerdom.250
-	title = gerdom.250.t
-	desc = gerdom.250.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		date > 1939.9.16
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.250.a
-	}
-
-}
-
-
-
-### gerdom foreign
-### Invasion of Denmark
-country_event = {
-	id = gerdom.400
-	title = gerdom.400.t
-	desc = gerdom.400.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		DEN = { OR = {has_war_with = ENG has_war_with = FRA}}
-		NOT = { GER = { OR = {has_war_with = ENG has_war_with = FRA }}}
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.400.a
-		GER = { add_to_faction = DEN}
-		add_national_unity = 0.05
-	}
-	option = {
-		name = gerdom.400.b
-		add_national_unity = -0.02
-	}
-
-}
-### Invasion of north Italy
-country_event = {
-	id = gerdom.401
-	title = gerdom.401.t
-	desc = gerdom.401.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		ITA = { OR = {has_war_with = ENG has_war_with = FRA}}
-		NOT = { GER = { OR = {has_war_with = ENG has_war_with = FRA }}}
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.401.a
-		GER = { add_to_faction = ITA}
-		add_national_unity = 0.05
-	}
-	option = {
-		name = gerdom.401.b
-		add_national_unity = -0.02
-	}
-
-}
-### Anexion of Netherlands
-### TODO:  Dutch fleeing into colonies
-country_event = {
-	id = gerdom.402
-	title = gerdom.402.t
-	desc = gerdom.402.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		controls_state = 35
-		controls_state = 7
-		controls_state = 36
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.402.a
-		
-		GER = { transfer_state = 35 }
-		GER = { transfer_state = 7 }
-		GER = { transfer_state = 36 }
-	}
-}
-
-
-### netherlands to wallonia
-
-country_event = {
-	id = gerdom.403
-	title = gerdom.403.t
-	desc = gerdom.403.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		owns_state = 35
-		owns_state = 7
-		owns_state = 36
-		country_exists = BEL
-		#GER = {is_puppet = BEL }
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.403.a
-		
-		BEL = { transfer_state = 35 }
-		BEL = { transfer_state = 7 }
-		BEL = { transfer_state = 36 }
-		BEL = { add_state_core = 35}
-		BEL = { add_state_core = 7}
-		BEL = { add_state_core = 36}
-	}
-	option = {
-		name = gerdom.403.b
-		
-	}
-
-}
-
-### The fate of spanish Marocco
-country_event = {
-	id = gerdom.404
-	title = gerdom.404.t
-	desc = gerdom.404.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		SPR = { has_civil_war = yes }
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.404.a
-		GER = { transfer_state = 290 }
-		GER = { transfer_state = 699 }
-		GER = { transfer_state = 178 }
-		
-		FRA = { country_event = { id = gerdom.405 days = 3 } } 
-
-	}
-	option = {
-		name = gerdom.404.b
-		
-	}
-
-}
-
-### French intervention?
-country_event = {
-	id = gerdom.405
-	title = gerdom.405.t
-	desc = gerdom.405.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.405.a
-
-	}
-	option = {
-		name = gerdom.405.b
-		declare_war_on = {
-				target = GER
-				type = take_state_focus
-				generator = { 290 699 178 461 462 } 
-			}
-	}
-
-}
-
-### Logging in Madagascar
-country_event = {
-	id = gerdom.406
-	title = gerdom.406.t
-	desc = gerdom.406.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		date > 1939.1.1
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.406.a
-		country_event = { id = gerdom.407 days = 30}
-
-	}
-	option = {
-		name = gerdom.406.b
-		
-	}
-
-}
-### Industry esteblished expand?
-### TODO: Resources and factory
-country_event = {
-	id = gerdom.407
-	title = gerdom.407.t
-	desc = gerdom.407.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.407.a
-		random_list = {
-			70 = {country_event = { id = gerdom.408 days = 30}}
-			30 = {country_event = { id = gerdom.409 days = 30}}
-		}
-	}
-	option = {
-		name = gerdom.407.b
-		
-	}
-
-}
-
-### Sucess of expansion
-### EVEN more factories
-country_event = {
-	id = gerdom.408
-	title = gerdom.408.t
-	desc = gerdom.408.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.408.a
-
-	}
-
-}
-### Fail of expansion
-### Remove factories keep resources
-country_event = {
-	id = gerdom.409
-	title = gerdom.409.t
-	desc = gerdom.409.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.409.a
-
-	}
-
-}
-### Trouble in Sri Lanca
-country_event = {
-	id = gerdom.410
-	title = gerdom.410.t
-	desc = gerdom.410.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		date > 1937.1.1
-
-	}
-	
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = gerdom.410.a
-		add_national_unity = -0.02
-
-	}
-
-
-}
-
-### Siemens
-country_event = {
-	id = gerdom.411
-	title = gerdom.411.t
-	desc = gerdom.411.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.411.a
-		add_national_unity = 0.01
-
-	}
-
-
-}
-### IG Farben
-country_event = {
-	id = gerdom.412
-	title = gerdom.412.t
-	desc = gerdom.412.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.412.a
-		add_national_unity = 0.01
-
-	}
-
-}
-### Zuse
-country_event = {
-	id = gerdom.413
-	title = gerdom.413.t
-	desc = gerdom.413.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.413.a
-		add_national_unity = 0.01
-
-	}
-
-}
-### Otto Hahn Liese Meitner
-country_event = {
-	id = gerdom.414
-	title = gerdom.414.t
-	desc = gerdom.414.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.414.a
-		add_national_unity = 0.01
-
-	}
-
-}
-
-### Werner von Braun
-country_event = {
-	id = gerdom.415
-	title = gerdom.415.t
-	desc = gerdom.415.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.415.a
-		add_national_unity = 0.01
-
-	}
-
-}
-### Kaiser wilhelm society
-country_event = {
-	id = gerdom.416
-	title = gerdom.416.t
-	desc = gerdom.416.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.416.a
-		add_national_unity = 0.01
-
-	}
-
-}
-### Werner von Braun
-country_event = {
-	id = gerdom.417
-	title = gerdom.417.t
-	desc = gerdom.417.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = gerdom.417.a
-		add_national_unity = 0.01
-
-	}
-
-}
-
+	name = gerdom.16.a 
+	load_oob = GER_U_2
+					}
+					}					
+####elections####

@@ -904,51 +904,35 @@ focus_tree = {
 	}
 
 ### Kaiserbund Proposial
-### TODO: EVENT
 	focus = {
 		id = GER_kaiserbund_proposial
 		icon = GFX_goal_generic_more_territorial_claims
+		available = { date > 1941.1.1 }
 		prerequisite = { focus = GER_political_1 }
 		x = 22
 		y = 1
-		cost = 10
+		cost = 1
 
 		completion_reward = {
 			
-			
+			country_event = { id = gerdom.67 }
 		}
 			
 		
 	}
-	### DENIED gives NU
-	focus = {
-		id = GER_kaiserbund_proposial_denied
-		icon = GFX_goal_generic_more_territorial_claims
-		prerequisite = { focus = GER_kaiserbund_proposial }
-		mutually_exclusive = { focus = GER_kaiserbund_proposial_agreed }
-		x = 21
-		y = 2
-		cost = 10
-
-		completion_reward = {
-			add_national_unity = 0.1
-			
-		}
-			
-		
-	}
-	### Agreed reduces NU
+	### Agreed 
 	focus = {
 		id = GER_kaiserbund_proposial_agreed
 		icon = GFX_goal_generic_national_unity
 		prerequisite = { focus = GER_kaiserbund_proposial }
-		mutually_exclusive = { focus = GER_kaiserbund_proposial_denied }
+		available = { has_country_flag = kaiserbund }
+		bypass = { has_country_flag = kaiserbund }
 		x = 23
 		y = 2
 		cost = 10
 
 		completion_reward = {
-			add_national_unity = -0.05
+			add_national_unity = 0.05
 			
 		}
 			
@@ -959,12 +943,14 @@ focus_tree = {
 		id = GER_kaiserbund_proposial_marocco
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
+		bypass = { NOT = { controls_state = 461 controls_state = 462 } }
 		x = 21
 		y = 3
-		cost = 10
+		cost = 4
 
 		completion_reward = {
-			add_national_unity = -0.01
+			add_national_unity = 0.01
+			IF = { limit = { OR = { controls_state = 461 controls_state = 462 } } country_event = { id = gerdom.68 } } 
 			
 		}
 			
@@ -975,12 +961,14 @@ focus_tree = {
 		id = GER_kaiserbund_proposial_sierra_leone
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
+		bypass = { NOT = { controls_state = 700 } }
 		x = 22
 		y = 4
-		cost = 10
+		cost = 4
 
 		completion_reward = {
-			add_national_unity = -0.01
+			add_national_unity = 0.01
+			IF = { limit = {  controls_state = 700  } country_event = { id = gerdom.69 } }
 			
 		}
 			
@@ -991,13 +979,14 @@ focus_tree = {
 		id = GER_kaiserbund_proposial_madagascar
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
+		bypass = { NOT = { controls_state = 543 } }
 		x = 23
 		y = 3
-		cost = 10
+		cost = 4
 
 		completion_reward = {
-			add_national_unity = -0.01
-			
+			add_national_unity = 0.01
+			IF = { limit = {  controls_state = 543  } country_event = { id = gerdom.70 } }
 		}
 			
 		
@@ -1007,13 +996,15 @@ focus_tree = {
 		id = GER_kaiserbund_proposial_lanca_mala_sarawak
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
+		bypass = { NOT = { controls_state = 422 controls_state = 333 controls_state = 336   } }
 		x = 24
 		y = 4
 		cost = 10
 
 		completion_reward = {
-			add_national_unity = -0.01
-			
+			add_national_unity = 0.01
+		IF = { limit = {  controls_state = 422  } country_event = { id = gerdom.71 } }	
+		IF = { limit = {  OR = {controls_state = 333  controls_state = 422 }} country_event = { id = gerdom.72 days = 2} }
 		}
 			
 		
@@ -1023,12 +1014,14 @@ focus_tree = {
 		id = GER_kaiserbund_cambodia_laos_vietnam
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
+		bypass = { NOT = { controls_state = 286 controls_state = 670 controls_state = 671 controls_state = 750  } }
 		x = 25
 		y = 3
 		cost = 10
 
 		completion_reward = {
-			add_national_unity = -0.01
+			add_national_unity = 0.01
+			IF = { limit = { OR = { controls_state = 286 controls_state = 670 controls_state = 671 controls_state = 750 } } country_event = { id = gerdom.73 days = 2} }
 			
 		}
 			

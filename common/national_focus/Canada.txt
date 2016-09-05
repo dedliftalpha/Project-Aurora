@@ -348,7 +348,7 @@ focus_tree = {
 	#Synthetics Research
 	focus = {
 		id = CAN_synthetics_research
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_army_motorized
 		prerequisite = { focus = CAN_nrc }
 		prerequisite = { focus = CAN_production }
 		x = 8 
@@ -478,7 +478,8 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #Secret Weapons
+	#Secret Weapons
+	focus = { 
 		id = CAN_secret_weapons
 		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = CAN_chalk_river }
@@ -496,9 +497,9 @@ focus_tree = {
 		id = CAN_halifax_project
 		icon = GFX_focus_wonderweapons
 		prerequisite = { focus = CAN_secret_weapons }
-		available = { has_completed_focus = CAN_uranium }
+		prerequisite = { focus = CAN_uranium }
 		x = 5
-		y = 5 
+		y = 6 
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -516,7 +517,7 @@ focus_tree = {
 		icon = GFX_focus_research
 		prerequisite = { focus = CAN_secret_weapons }
 		prerequisite = { focus = CAN_adv_electronics }
-		x = 3 
+		x = 4 
 		y = 5 
 		cost = 10 
 		completion_reward = {
@@ -537,7 +538,7 @@ focus_tree = {
 		icon = GFX_focus_rocketry
 		prerequisite = { focus = CAN_secret_weapons }
 		prerequisite = { focus = CAN_rocketfuel }
-		x = 7
+		x = 6
 		y = 5
 		cost = 10 
 		completion_reward = {
@@ -882,9 +883,9 @@ focus_tree = {
 	#Develop Steel Mills
 	focus = {
 		id = CAN_steelmill
-		icon = GFX_goal_generic_construction2
-		prerequisite = { focus = CAN_resource }
-		x = 16
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = CAN_resource focus = CAN_national_developmment }
+		x = 12
 		y = 1
 		cost = 10 
 		completion_reward = {
@@ -925,15 +926,20 @@ focus_tree = {
 				amount = 4
 				state = 466
 			}
+			add_resource = {
+				type = steel
+				amount = 4
+				state = 466
+			}
 		}
 	}
 	
 	#Aluminium Smelters
 	focus = {
 		id = CAN_alcan
-		icon = GFX_goal_generic_construction2
+		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = CAN_steelmill }
-		x = 16
+		x = 12
 		y = 2
 		cost = 10 
 		completion_reward = {
@@ -955,29 +961,13 @@ focus_tree = {
 		}
 	}
 	
-	#Experimental Extraction Techniques
-	focus = {
-		id = CAN_digit
-		icon = GFX_goal_generic_construction2
-		prerequisite = { focus = CAN_resource }
-		x = 12
-		y = 1
-		cost = 10 
-		completion_reward = {
-			add_tech_bonus = {
-			bonus = 0.5
-			technology = excavation2
-			}
-		}
-	}
-	
 	#Prairie Oil Prospecting
 	focus = {
 		id = CAN_oil
 		icon = GFX_goal_generic_oil_refinery
-		prerequisite = { focus = CAN_digit }
-		x = 12 
-		y = 2 
+		prerequisite = { focus = CAN_resource }
+		x = 16 
+		y = 1 
 		cost = 10 
 		available = {
 			CAN = {
@@ -1009,9 +999,8 @@ focus_tree = {
 		id = CAN_refineries
 		icon = GFX_goal_generic_oil_refinery
 		prerequisite = { focus = CAN_oil }
-		prerequisite = { focus = CAN_factory2 }
-		x = 11 
-		y = 3 
+		x = 16 
+		y = 2 
 		cost = 10
 		available = {
 			CAN = {
@@ -1044,24 +1033,56 @@ focus_tree = {
 		}
 	}
 
-	#Extraction 2
+	#Extraction 
 	focus = { 
 		id = CAN_digit2
 		icon = GFX_goal_generic_construct_civilian
-		prerequisite = { focus = CAN_oil focus = CAN_mine2 }
+		prerequisite = { focus = CAN_alcan }
+		prerequisite = { focus = CAN_mine2 }
 		x = 13
 		y = 3 
 		cost = 10
-		bypass = { has_tech = excavation3 }
 		completion_reward = {
 			add_tech_bonus = {
-			name = dig_bonus 
+			name = build_bonus 
 			bonus = 0.5 
-			uses = 1 
-			technology = excavation2
-			technology = excavation3
+			uses = 2 
+			category = construction_tech
 			}
 		}
+	}
+	
+	#Mine Games
+	focus = { 
+		id = CAN_mine3
+		icon = GFX_goal_generic_construction2
+		prerequisite = { focus = CAN_digit2 }
+		x = 13 
+		y = 4
+		cost = 10 
+		completion_reward = {
+			add_resource = {
+				type = aluminium
+				amount = 4
+				state = 471
+			}
+			add_resource = {
+				type = steel
+				amount = 4
+				state = 473
+			}
+			add_resource = {
+				type = chromium
+				amount = 4
+				state = 682
+			}
+			add_resource = {
+				type = chromium
+				amount = 4
+				state = 683
+			}
+		}
+	
 	}
 	
 	#Tar Sands Development
@@ -1069,9 +1090,9 @@ focus_tree = {
 		id = CAN_oil2
 		icon = GFX_goal_generic_oil_refinery
 		prerequisite = { focus = CAN_refineries }
-		prerequisite = { focus = CAN_digit2 }
-		x = 12
-		y = 4
+		prerequisite = { focus = CAN_mine2 }
+		x = 15
+		y = 3
 		cost = 10
 		available = {
 			CAN = {
@@ -1090,11 +1111,10 @@ focus_tree = {
 	#Uranium Deposits
 	focus = {
 		id = CAN_uranium
-		icon = GFX_focus_wonderweapons
-		prerequisite = { focus = CAN_mine2 }
-		prerequisite = { focus = CAN_digit2 }
-		x = 14 
-		y = 4
+		icon = GFX_focus_research
+		prerequisite = { focus = CAN_mine3 focus = CAN_factory3 }
+		x = 11 
+		y = 5
 		cost = 10
 		available = {
 			CAN = {
@@ -1205,7 +1225,7 @@ focus_tree = {
 	focus = { #Organic Support 
 		id = CAN_support_tech
 		icon = GFX_goal_generic_production
-		prerequisite = { focus = CAN_motorize focus = CAN_infantry_equipment }
+		prerequisite = { focus = CAN_grand_battle_doctrine focus = CAN_mobile_doctrine }
 		x = 3
 		y = 8
 		cost = 10 
@@ -1249,6 +1269,55 @@ focus_tree = {
 		}
 	}
 	
+	focus = { #parts commonality
+		id = CAN_common_parts
+		icon = GFX_goal_generic_production2
+		prerequisite = { focus = CAN_winter_soldiers }
+		x = 3 
+		y = 12 
+		cost = 10 
+		completion_reward = {
+			if = {  #Get different bonus depending on which doctrine tree
+				limit = { has_completed_focus = CAN_mobile_doctrine }
+				add_ideas = CAN_common_chassis_idea
+			}
+			if = { #Get free Engineer Brigade tech with Grand Battle focus
+				limit = { has_completed_focus = CAN_grand_battle_doctrine }
+				add_ideas = CAN_common_components_idea
+			}
+		}
+	}
+	
+	focus = { #Large Scale Exercises 
+		id = CAN_exercises
+		icon = GFX_goal_generic_army_doctrines 
+		prerequisite = { focus = CAN_common_parts }
+		prerequisite = { focus = CAN_heavy_tank2 focus = CAN_med_tank }
+		x = 3 
+		y = 14 
+		cost = 10 
+		completion_reward = {
+			if = {  #Get different bonus depending on which doctrine tree
+				limit = { has_completed_focus = CAN_mobile_doctrine }
+				add_tech_bonus = {
+					name = doctrine_bonus
+					bonus = 0.5
+					uses = 3
+					category = cat_mobile_warfare
+				}
+			}
+			if = { #Get free Engineer Brigade tech with Grand Battle focus
+				limit = { has_completed_focus = CAN_grand_battle_doctrine }
+				add_tech_bonus = {
+					name = doctrine_bonus
+					bonus = 0.5
+					uses = 3
+					category = cat_grand_battle_plan
+				}
+			}
+		}
+	}
+	
 	focus = { #Currie's Planned Battles - Grand Battle Plan and stuff for infantry, artillery, and heavy tanks.
 		id = CAN_grand_battle_doctrine
 		icon = GFX_goal_generic_army_doctrines
@@ -1271,7 +1340,7 @@ focus_tree = {
 	focus = { #Artillery Effort
 		id = CAN_artillery_effort
 		icon = GFX_goal_generic_army_artillery2
-		prerequisite = { focus = CAN_grand_battle_doctrine }
+		prerequisite = { focus = CAN_infantry_equipment }
 		x = 1
 		y = 10
 		cost = 10 
@@ -1279,36 +1348,19 @@ focus_tree = {
 			add_tech_bonus = {
 				name = artillery_bonus
 				bonus = 0.5
-				uses = 1 
+				uses = 2 
 				category = artillery 
 			}
 		}
 	}
-	
-	focus = { #Anti-Air and Anti-Tank Development
-		id = CAN_artillery_aaat
-		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = CAN_heavy_tank }
-		x = 2
-		y = 11
-		cost = 10 
-		completion_reward = {
-				add_tech_bonus = {
-				name = aaat_bonus
-				bonus = 0.5
-				uses = 2 
-				category = cat_anti_air
-				category = cat_anti_tank
-			}
-		}
-	}
-	
+		
 	focus = { #Flexible Fire Control
 		id = CAN_artillery_school
 		icon = GFX_goal_generic_army_artillery
 		prerequisite = { focus = CAN_artillery_effort }
-		x = 1
-		y = 12 
+		prerequisite = { focus = CAN_heavy_tank }
+		x = 2
+		y = 11 
 		cost = 10 
 		completion_reward = {
 			add_ideas = CAN_superior_gunnery
@@ -1318,19 +1370,6 @@ focus_tree = {
 				uses = 1 
 				category = cat_grand_battle_plan 
 			}
-		}
-	}
-	
-	focus = { #Heavy Tank Focus
-		id = CAN_heavy_tank
-		icon = GFX_goal_generic_army_tanks 
-		prerequisite = { focus = CAN_infantry_equipment }
-		x = 2 
-		y = 9
-		cost = 10
-		bypass = { has_tech = basic_heavy_tank }
-		completion_reward = {
-			set_technology = { basic_heavy_tank = 1 }
 		}
 	}
 	
@@ -1351,11 +1390,41 @@ focus_tree = {
 		}
 	}
 	
+	focus = { #Small Arms Development 2
+		id = CAN_infantry_equipment2
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = CAN_artillery_effort }
+		x = 1
+		y = 12
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = guns_bonus
+				bonus = 0.5
+				uses = 2 
+				category = infantry_weapons 
+			}
+		}
+	}
+	
+	focus = { #Heavy Tank Focus
+		id = CAN_heavy_tank
+		icon = GFX_goal_generic_army_tanks 
+		prerequisite = { focus = CAN_grand_battle_doctrine }
+		x = 2 
+		y = 9
+		cost = 10
+		bypass = { has_tech = basic_heavy_tank }
+		completion_reward = {
+			set_technology = { basic_heavy_tank = 1 }
+		}
+	}
+	
 	focus = { #Heavy Tank 2
 		id = CAN_heavy_tank2
-		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = CAN_artillery_aaat }
-		prerequisite = { focus = CAN_artillery_effort }
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = CAN_artillery_school }
+		prerequisite = { focus = CAN_infantry_equipment2 }
 		x = 2 
 		y = 13 
 		cost = 10 
@@ -1405,6 +1474,43 @@ focus_tree = {
 		}
 	}
 	
+	focus = { #a chicken in every pot, a radio in every tank
+		id = CAN_mobile_radio
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = CAN_light_tank }
+		available = { has_tech = radio }
+		x = 4 
+		y = 11 
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_mobile_radio_idea 
+			add_tech_bonus = {
+				name = doctrine_bonus
+				bonus = 0.5 
+				uses = 1 
+				category = cat_mobile_warfare
+			}
+		}
+	}
+	
+	focus = { #Tank focus 2: electric tank-aloo
+		id = CAN_med_tank
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = CAN_mobile_radio }
+		prerequisite = { focus = CAN_mech_infantry }
+		x = 4 
+		y = 13 
+		completion_reward = {
+			add_tech_bonus = {
+				name = tank_bonus
+				bonus = 0.5 
+				uses = 2 
+				category = cat_light_armor
+				category = cat_medium_armor
+			}
+		}
+	}
+	
 	
 	focus = { #Motorization Focus 
 		id = CAN_motorize
@@ -1427,8 +1533,9 @@ focus_tree = {
 		id = CAN_spg
 		icon = GFX_goal_generic_build_tank
 		prerequisite = { focus = CAN_light_tank }
-		x = 4
-		y = 11
+		prerequisite = { focus = CAN_motorize }
+		x = 5
+		y = 10
 		cost = 10 
 		completion_reward = {
 			add_ideas = CAN_shoot_scoot
@@ -1445,7 +1552,7 @@ focus_tree = {
 	focus = { #Mech Infantry focus 
 		id = CAN_mech_infantry
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CAN_motorize }
+		prerequisite = { focus = CAN_spg }
 		x = 5 
 		y = 12 
 		cost = 10 
@@ -1458,6 +1565,7 @@ focus_tree = {
 			}
 		}
 	}
+	
 }
 	
 	

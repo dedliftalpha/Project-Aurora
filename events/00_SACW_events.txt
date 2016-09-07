@@ -355,6 +355,7 @@ country_event = { # Natal Covenant
 	option = { # 
 		name = SACW.13.a
 		hidden_effect = {
+			set_global_flag = Fourth_Boer_War
 			start_civil_war = {
 				ruling_party = authoritarian_democratist 
 				ideology = market_liberalist
@@ -605,6 +606,7 @@ country_event = { # Restoration of the Z.A.R.
 	option = { # 
 		name = SACW.22.a
 		hidden_effect = {
+			set_global_flag = Fourth_Boer_War
 			set_capital = 681
 			start_civil_war = {
 				ruling_party = market_liberalist 
@@ -669,6 +671,7 @@ country_event = { # Natal Covenant
 	option = { # 
 		name = SACW.23.a
 		hidden_effect = {
+			set_global_flag = Fourth_Boer_War
 			start_civil_war = {
 				ruling_party = authoritarian_democratist 
 				ideology = market_liberalist
@@ -789,6 +792,7 @@ country_event = { # Nationalist Coup
 	option = { # 
 		name = SACW.25.a
 		hidden_effect = {
+			set_global_flag = Fourth_Boer_War
 			set_capital = 681
 			start_civil_war = {
 				ruling_party = market_liberalist 
@@ -828,4 +832,767 @@ country_event = { # Nationalist Coup
 		custom_effect_tooltip = SAF_choose_dominionist
 	}
 	
+}
+
+##############
+# Volunteers #
+##############
+
+# Canada
+
+country_event = { # Send volunteers
+	id = SACW.26
+	title = SACW.26.t
+	desc = SACW.26.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = CAN
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.26.a
+		ai_chance = { factor = 95 }
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = SAF_CAN_VOL
+	}
+
+	option = {
+		name = SACW.26.b
+		ai_chance = { factor = 5 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.27
+	title = SACW.27.t
+	desc = SACW.27.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = market_liberalist
+			has_government = social_conservatist
+			}
+		has_global_flag = SAF_CAN_VOL
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.27.a
+		
+		add_manpower = 10000
+        
+		custom_effect_tooltip = SACW_help_CAN
+		hidden_effect = { # 'cause, you know, people hate negative numbers
+			load_oob = SAF_CAN_VOL
+			send_equipment = {
+				target = CAN
+				type = infantry_equipment
+				amount = -1000
+			}
+		}
+        
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.28
+	title = SACW.28.t
+	desc = SACW.28.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAN
+		has_global_flag = SAF_CAN_VOL
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.28.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# Australasia
+
+country_event = { # Send volunteers
+	id = SACW.29
+	title = SACW.29.t
+	desc = SACW.29.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = AST
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.29.a
+		ai_chance = { factor = 95 }
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = SAF_AST_VOL
+	}
+
+	option = {
+		name = SACW.29.b
+		ai_chance = { factor = 5 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.30
+	title = SACW.30.t
+	desc = SACW.30.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = market_liberalist
+			has_government = social_conservatist
+			}
+		has_global_flag = SAF_AST_VOL
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.30.a
+		
+		add_manpower = 10000
+        
+		custom_effect_tooltip = SACW_help_AST
+		hidden_effect = { # 'cause, you know, people hate negative numbers
+			load_oob = SAF_AST_VOL
+			send_equipment = {
+				target = AST
+				type = infantry_equipment
+				amount = -1000
+			}
+		}
+        
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.31
+	title = SACW.31.t
+	desc = SACW.31.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = AST
+		has_global_flag = SAF_AST_VOL
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.31.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# Delhi
+
+country_event = { # Send volunteers
+	id = SACW.32
+	title = SACW.32.t
+	desc = SACW.32.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = DEH
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.32.a
+		ai_chance = { factor = 70 }
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = SAF_DEH_VOL
+	}
+
+	option = {
+		name = SACW.32.b
+		ai_chance = { factor = 30 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.33
+	title = SACW.33.t
+	desc = SACW.33.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = market_liberalist
+			has_government = social_conservatist
+			}
+		has_global_flag = SAF_DEH_VOL
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.33.a
+		
+		add_manpower = 10000
+        
+		custom_effect_tooltip = SACW_help_DEH
+		hidden_effect = { # 'cause, you know, people hate negative numbers
+			load_oob = SAF_DEH_VOL
+			send_equipment = {
+				target = DEH
+				type = infantry_equipment
+				amount = -1000
+			}
+		}
+        
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.34
+	title = SACW.34.t
+	desc = SACW.34.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = DEH
+		has_global_flag = SAF_DEH_VOL
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.34.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# Germany
+
+country_event = { # Send volunteers
+	id = SACW.35
+	title = SACW.35.t
+	desc = SACW.35.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = GER
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.35.a
+		ai_chance = { factor = 90 }
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = ZAR_GER_VOL
+	}
+
+	option = {
+		name = SACW.35.b
+		ai_chance = { factor = 10 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.36
+	title = SACW.36.t
+	desc = SACW.36.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = authoritarian_democratist
+			has_government = paternal_autocratist
+			}
+		has_global_flag = ZAR_GER_VOL
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.36.a
+		
+		add_manpower = 10000
+        
+		custom_effect_tooltip = SACW_help_GER
+		hidden_effect = { # 'cause, you know, people hate negative numbers
+			load_oob = ZAR_GER_VOL
+			send_equipment = {
+				target = GER
+				type = infantry_equipment
+				amount = -1000
+			}
+		}
+        
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.37
+	title = SACW.37.t
+	desc = SACW.37.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = GER
+		has_global_flag = ZAR_GER_VOL
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.37.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# Mittelafrika
+
+country_event = { # Send volunteers
+	id = SACW.38
+	title = SACW.38.t
+	desc = SACW.38.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = MAF
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.38.a
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = ZAR_MAF_VOL
+	}
+	
+	option = {
+		name = SACW.38.b
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = send_many_volunteers_SACW
+		
+		add_manpower = -45000
+		set_global_flag = ZAR_MAF_VOL_FULL
+	}
+
+	option = {
+		name = SACW.38.c
+		ai_chance = { factor = 10 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.39
+	title = SACW.39.t
+	desc = SACW.39.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = authoritarian_democratist
+			has_government = paternal_autocratist
+			}
+		OR = {	
+			has_global_flag = ZAR_MAF_VOL
+			has_global_flag = ZAR_MAF_VOL_FULL
+			}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.39.a
+			
+		add_manpower = 10000
+        
+		custom_effect_tooltip = SACW_help_MAF
+		hidden_effect = { # 'cause, you know, people hate negative numbers
+			load_oob = ZAR_MAF_VOL
+			if = { 
+				limit = { has_global_flag = ZAR_MAF_VOL_FULL } 
+				load_oob = ZAR_MAF_VOL_FULL
+				}
+			send_equipment = {
+				target = MAF
+				type = infantry_equipment
+				amount = -1500
+			}
+		}
+        
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.40
+	title = SACW.40.t
+	desc = SACW.40.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = MAF
+		OR = {	
+			has_global_flag = ZAR_MAF_VOL
+			has_global_flag = ZAR_MAF_VOL_FULL
+			}
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.40.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# Netherlands
+
+country_event = { # Send volunteers
+	id = SACW.41
+	title = SACW.41.t
+	desc = SACW.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes	
+	
+	trigger = {
+		tag = HOL
+		NOT = {
+			OR = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+		has_global_flag = Fourth_Boer_War
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = SACW.41.a
+		ai_chance = { factor = 75 }
+		trigger = { 
+			OR = {
+				has_government = authoritarian_democratist
+				has_government = paternal_autocratist
+				has_government = national_populist
+			} 
+		} 
+		
+		custom_effect_tooltip = send_many_volunteers_SACW
+		
+		add_manpower = -10000
+		set_global_flag = ZAR_HOL_VOL_FULL
+	}
+	
+	option = {
+		name = SACW.41.b
+		ai_chance = { factor = 10 }
+		trigger = { 
+			NOT = {
+				OR = {
+					has_government = authoritarian_democratist
+					has_government = paternal_autocratist
+					has_government = national_populist
+				} 
+			} 
+		}
+		
+		custom_effect_tooltip = send_volunteers_SACW
+		
+		add_manpower = -5000
+		set_global_flag = ZAR_HOL_VOL
+	}
+	
+
+
+	option = {
+		name = SACW.41.c
+		ai_chance = { factor = 25 }
+	
+		add_political_power = -50
+	}
+	
+}
+
+country_event = { # Volunteers arrive
+	id = SACW.42
+	title = SACW.42.t
+	desc = SACW.42.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes	
+	
+	trigger = {
+		original_tag = SAF
+		OR = {
+			has_government = authoritarian_democratist
+			has_government = paternal_autocratist
+			}
+		OR = {	
+			has_global_flag = ZAR_HOL_VOL
+			has_global_flag = ZAR_HOL_VOL_FULL
+			}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = { 
+		name = SACW.42.a
+		
+		if = { 
+			limit = { has_global_flag = ZAR_HOL_VOL } 
+			
+			add_manpower = 5000
+        
+			custom_effect_tooltip = SACW_help_HOL
+			hidden_effect = { 
+				load_oob = ZAR_HOL_VOL
+			}
+        }
+		
+		if = { 
+			limit = { has_global_flag = ZAR_MAF_VOL_FULL } 
+			
+			add_manpower = 10000
+        
+			custom_effect_tooltip = SACW_many_help_HOL
+			hidden_effect = { # 'cause, you know, people hate negative numbers
+				load_oob = ZAR_HOL_VOL_FULL
+				send_equipment = {
+					target = MAF
+					type = infantry_equipment
+					amount = -1000
+				}
+			}
+        }
+	}		
+}
+
+country_event = { # Volunteers return
+	id = SACW.43
+	title = SACW.43.t
+	desc = SACW.43.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = HOL
+		OR = {	
+			has_global_flag = ZAR_HOL_VOL
+			has_global_flag = ZAR_HOL_VOL_FULL
+			}
+		has_global_flag = SACW_END
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = SACW.43.a
+
+		add_manpower = 5000
+
+		add_political_power = 20
+		army_experience = 20 
+
+        hidden_effect = { 
+			add_opinion_modifier = { target = SAF modifier = SACW_Victory }
+		}
+	}		
+}
+
+# End of SACW
+
+country_event = { # Volunteers return
+	id = SACW.44
+	title = SACW.44.t
+	desc = SACW.44.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = SAF
+		has_global_flag = Fourth_Boer_War
+		has_civil_war = no
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		set_global_flag = SACW_END
+	}
+	
+	option = { 
+		name = SACW.44.a
+
+	}		
 }

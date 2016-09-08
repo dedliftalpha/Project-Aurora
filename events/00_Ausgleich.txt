@@ -1,4 +1,4 @@
-﻿### MODDER: DK ###
+﻿### MODDER: DK MODDER: esmaerla ###
 ### Ausgleich Events ###
 
 add_namespace = ausgleich
@@ -19,15 +19,15 @@ news_event = {
 	immediate = {
 		AUS = { country_event = {id = ausgleich.2 }}
 		set_global_flag = ausgleich_37
-		
 	}
 	
 	option = {
 		name = ausgleich.1.a
 	}
-	
 }
+
 ### Ausgleich Event for Austria
+
 ### Decides what course to take
 Country_event = {
 	id = ausgleich.2
@@ -38,56 +38,54 @@ Country_event = {
 	
 	option = {
 		name = ausgleich.2.a #Stay Dualism
+
+		ai_chance = { factor = 40 }
+
 		every_country = {
 			limit = {
 				has_idea = austria_dualism
 			}
-			add_opinion_modifier = {target = this modifier = dualism_disagree}
+
+			add_opinion_modifier = { modifier = dualism_disagree }
 		}
+
 		GER = { add_opinion_modifier = {target = AUS modifier = dualism_agree} }
 		add_opinion_modifier = {target = GER modifier = dualism_agree}
-		HUN = {country_event = { id = ausgleich.3 days = 1 }}
-		
-		add_political_power = -50
-		
-		ai_chance = {
-			base = 30
-		}
+
+		HUN = {country_event = { id = ausgleich.3 days = 1 }}	
 	}
 
 	option = {
 		name = ausgleich.2.b #Federalism
+
+		ai_chance = { factor = 30 }
+
 		every_country = {
 			limit = {
 				has_idea = austria_dualism
 			}
-			add_opinion_modifier = {target = this modifier = federalism_agree}
+
+			add_opinion_modifier = { modifier = federalism_agree }
 		}
+
 		GER = { add_opinion_modifier = {target = AUS modifier = federlism_disagree}}
-		HUN = {country_event = { id = ausgleich.4 days = 1 }}
-		
-		ai_chance = {
-			base = 20
-		}
-		
-		add_political_power = -200
+
+		HUN = {country_event = { id = ausgleich.4 days = 1 }}		
 	}
 	
 	option = {
 		name = ausgleich.2.c #Centralize
+
+		ai_chance = { factor = 25 }
+
 		every_country = {
 			limit = {
 				has_idea = austria_dualism
 			}
 			add_opinion_modifier = {target = this modifier = centralize_disagree}
 		}
-		HUN = {country_event = { id = ausgleich.5 days = 1 }}
-		
-		ai_chance = {
-			base = 50
-		}
-		
-		add_political_power = -100
+
+		HUN = {country_event = { id = ausgleich.5 days = 1 }}	
 	}
 }
 
@@ -101,23 +99,27 @@ country_event = {
 	
 	option = {
 		name = ausgleich.3.a # Accept
+
+		ai_chance = { factor = 60 }
+
 		AUS = {country_event = { id = ausgleich.6 days = 1 }}
-		
-		ai_chance = {
-			base = 50
-		}
+
+		add_opinion_modifier = {target = GER modifier = HUN_stay_dualism_GER } # 50
+		add_opinion_modifier = {target = BOM modifier = HUN_stay_dualism_EMP } # -30
+		add_opinion_modifier = {target = CRO modifier = HUN_stay_dualism_EMP } # -30
+		add_opinion_modifier = {target = GAL modifier = HUN_stay_dualism_EMP } # -30
+		add_opinion_modifier = {target = BOS modifier = HUN_stay_dualism_EMP } # -30
 	}
 	
 	option = {
 		name = ausgleich.3.b # Decline
 		
-		ai_chance = {
-			base = 50
-		}
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
+		ai_chance = { factor = 40 }
+
+		AUS = {country_event = { id = ausgleich.24 days = 3 }}
 	}
-	
 }
+
 ### Become Federation
 country_event = {
 	id = ausgleich.4
@@ -128,21 +130,31 @@ country_event = {
 	
 	option = {
 		name = ausgleich.4.a # Accept
-		AUS = {country_event = { id = ausgleich.10 days = 1 }}
-		ai_chance = {
-			base = 50
-		}
+
+		ai_chance = { factor = 50 }
+
+		AUS = { country_event = { id = ausgleich.10 days = 0 }}
+
+		end_puppet = CRO
+
+		add_political_power = -200
+
+		add_opinion_modifier = {target = GER modifier = HUN_federate_GER } # -80
+		add_opinion_modifier = {target = BOM modifier = HUN_federate_EMP } # 50
+		add_opinion_modifier = {target = CRO modifier = HUN_federate_EMP } # 50
+		add_opinion_modifier = {target = GAL modifier = HUN_federate_EMP } # 50
+		add_opinion_modifier = {target = BOS modifier = HUN_federate_EMP } # 50	
 	}
 	
 	option = {
 		name = ausgleich.4.b # Decline
-		ai_chance = {
-			base = 50
-		}
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
+
+		ai_chance = { factor = 50 }
+
+		AUS = { country_event = { id = ausgleich.25 days = 3 }}
 	}
-	
 }
+
 ### Centralize the State
 country_event = {
 	id = ausgleich.5
@@ -153,22 +165,25 @@ country_event = {
 	
 	option = {
 		name = ausgleich.5.a # Accept
-		AUS = {country_event = { id = ausgleich.15 days = 3 }}
+
+		ai_chance = { factor = 15 }
+
+		AUS = { country_event = { id = ausgleich.15 days = 1 }}
 		
-		ai_chance = {
-			base = 30
-		}
+		
 	}
 	option = {
 		name = ausgleich.5.b # Decline
-		AUS = {country_event = { id = ausgleich.26 days = 3 }}
-		ai_chance = {
-			base = 70
-		}
-	}
-	
+
+		ai_chance = { factor = 80 }
+
+		AUS = { country_event = { id = ausgleich.25 days = 1 }}
+	}	
 }
 
+########
+#Dualism
+########
 
 ### Dualism Agreed
 country_event = {
@@ -179,13 +194,15 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.6.a 
+		name = ausgleich.6.a
+
+		add_opinion_modifier = { target = HUN modifier = dualism_agreed } # 100
+
+		country_event = { id = ausgleich.7 days = 1 }
 	}
-	
 }
 
-### Federalism Agreed
-country_event = {
+country_event = { # Galicia and Poland
 	id = ausgleich.7
 	title = ausgleich.7.t
 	desc = ausgleich.7.d
@@ -194,38 +211,24 @@ country_event = {
 	
 	option = {
 		name = ausgleich.7.a
-		BOM = { country_event = {id = ausgleich.8 days = 1}}
-		CRO = { country_event = {id = ausgleich.8 days = 1}}
-		GAL = { country_event = {id = ausgleich.8 days = 1}}
-		BOS = { country_event = {id = ausgleich.8 days = 1}}
-		HUN = { country_event = {id = ausgleich.8 days = 1}}
-		HUN = { release = CRO}
-		AUS = { puppet = CRO}
-		
-		DNF = { transfer_state = 152 }
-		DNF = { change_tag_from = AUS }
-		DNF = { annex_country = { target = AUS transfer_troops = yes }}
-		DNF = {country_event = {id = ausgleich.9 days = 2}}
-		
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
+
+		ai_chance = { factor = 70 }
+
+		add_opinion_modifier = { target = HUN modifier = gal_to_poland } # -50
+
+		POL = {country_event = { id = ausgleich.8 days = 3 }}
 	}
-	
+
+	option = {
+		name = ausgleich.7.b
+
+		ai_chance = { factor = 30 }
+
+		add_opinion_modifier = { target = POL modifier = galitzia_in_empire } # -50
+	}
 }
-### Federalism: Annex other states
-country_event = {
+
+country_event = { # An offer from Austria
 	id = ausgleich.8
 	title = ausgleich.8.t
 	desc = ausgleich.8.d
@@ -234,2016 +237,50 @@ country_event = {
 	
 	option = {
 		name = ausgleich.8.a
-		DNF = {
-			annex_country = { target = ROOT transfer_troops = yes } 
-		 }
+
+		ai_chance = { factor = 80 }
+
+		annex_country = { target = GAL transfer_troops = no }
+
+		every_owned_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		set_country_flag = Galicia_Annexed
+
+		AUS = {country_event = { id = ausgleich.9 days = 3 }}
 	}
-	
+
+	option = {
+		name = ausgleich.8.b
+
+		ai_chance = { factor = 20 }
+
+		add_opinion_modifier = { target = POL modifier = galitzia_in_empire } # -50
+	}
 }
-#### Technology Takeover
-country_event = { 
+
+country_event = { # Poland has accepted our offer
 	id = ausgleich.9
 	title = ausgleich.9.t
 	desc = ausgleich.9.d
-
+	
 	is_triggered_only = yes
 	
 	option = {
 		name = ausgleich.9.a
-		hidden_effect = {
-		### Air doctrines ####
-			if = {
-				limit = {AUS = {has_tech = air_superiority} }
-				 set_technology = { air_superiority  = 1 } 
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infrastructure_destruction} }
-				set_technology = { infrastructure_destruction  = 1 }
-			}
-		###	
-			if = {
-				limit = {AUS = {has_tech = home_defence} }
-				set_technology = { home_defence  = 1 }
-			}
-		###	
-			if = {
-				limit = {AUS = {has_tech = naval_strike_tactics} }
-				set_technology = { naval_strike_tactics  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter_sweeps} }
-				set_technology = { fighter_sweeps  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dogfighting_experience} }
-				set_technology = { dogfighting_experience  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = multialtitude_flying} }
-				set_technology = { multialtitude_flying  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = logistical_bombing} }
-				set_technology = { logistical_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = night_bombing} }
-				set_technology = { night_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = day_bombing} }
-				set_technology = { day_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = massed_bomber_formations} }
-				set_technology = { massed_bomber_formations  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = air_offense} }
-				set_technology = { air_offense  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = flying_fortress} }
-				set_technology = { flying_fortress  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = offensive_formations} }
-				set_technology = { offensive_formations  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mass_destruction} }
-				set_technology = { mass_destruction  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = formation_flying} }
-				set_technology = { formation_flying  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dive_bombing} }
-				set_technology = { dive_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = direct_ground_support} }
-				set_technology = { direct_ground_support  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = formation_fighting} }
-				set_technology = { formation_fighting  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter_ace_initiative} }
-				set_technology = { fighter_ace_initiative  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = hunt_and_destroy} }
-				set_technology = { hunt_and_destroy  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = combat_unit_destruction} }
-				set_technology = { combat_unit_destruction  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = battlefield_support} }
-				set_technology = { battlefield_support  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = keypoint_bombing} }
-				set_technology = { keypoint_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = ground_support_integration} }
-				set_technology = { ground_support_integration  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_strike_torpedo_tactics} }
-				set_technology = { naval_strike_torpedo_tactics  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = strategic_destruction} }
-				set_technology = { strategic_destruction  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = forward_interception} }
-				set_technology = { forward_interception  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = force_rotation} }
-				set_technology = { force_rotation  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter_baiting} }
-				set_technology = { fighter_baiting  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = low_echelon_support} }
-				set_technology = { low_echelon_support  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_fighting} }
-				set_technology = { dispersed_fighting  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = operational_destruction} }
-				set_technology = { operational_destruction  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter_veteran_initiative} }
-				set_technology = { fighter_veteran_initiative  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_strike_torpedo_tactics_oi} }
-				set_technology = { naval_strike_torpedo_tactics_oi  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cas_veteran_initiative} }
-				set_technology = { cas_veteran_initiative  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = carousel_bombing} }
-				set_technology = { carousel_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infiltration_bombing} }
-				set_technology = { infiltration_bombing  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = air_skirmish} }
-				set_technology = { air_skirmish  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = high_level_bombing} }
-				set_technology = { high_level_bombing  = 1 }
-			}
-	
-		### air techs
-			if = {
-				limit = {AUS = {has_tech = early_fighter} }
-				set_technology = { early_fighter  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_early_fighter} }
-				set_technology = { cv_early_fighter  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter1} }
-				set_technology = { fighter1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_fighter1} }
-				set_technology = { cv_fighter1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter2} }
-				set_technology = { fighter2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_fighter2} }
-				set_technology = { cv_fighter2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = fighter3} }
-				set_technology = { fighter3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_fighter3} }
-				set_technology = { cv_fighter3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_fighter1} }
-				set_technology = { jet_fighter1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_fighter2} }
-				set_technology = { jet_fighter2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = CAS1} }
-				set_technology = { CAS1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_CAS1} }
-				set_technology = { cv_CAS1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = CAS2} }
-				set_technology = { CAS2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_CAS2} }
-				set_technology = { cv_CAS2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = CAS3} }
-				set_technology = { CAS3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_CAS3} }
-				set_technology = { cv_CAS3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_bomber1} }
-				set_technology = { naval_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_naval_bomber1} }
-				set_technology = { cv_naval_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_bomber2} }
-				set_technology = { naval_bomber2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_naval_bomber2} }
-				set_technology = { cv_naval_bomber2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_bomber3} }
-				set_technology = { naval_bomber3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = cv_naval_bomber3} }
-				set_technology = { cv_naval_bomber3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_bomber} }
-				set_technology = { early_bomber  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = heavy_fighter1} }
-				set_technology = { heavy_fighter1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = heavy_fighter2} }
-				set_technology = { heavy_fighter2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = heavy_fighter3} }
-				set_technology = { heavy_fighter3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tactical_bomber1} }
-				set_technology = { tactical_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tactical_bomber2} }
-				set_technology = { tactical_bomber2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tactical_bomber3} }
-				set_technology = { tactical_bomber3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_tactical_bomber1} }
-				set_technology = { jet_tactical_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_tactical_bomber2} }
-				set_technology = { jet_tactical_bomber2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = strategic_bomber1} }
-				set_technology = { strategic_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = strategic_bomber2} }
-				set_technology = { strategic_bomber2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = strategic_bomber3} }
-				set_technology = { strategic_bomber3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_strategic_bomber1} }
-				set_technology = { jet_strategic_bomber1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = suicide_craft} }
-				set_technology = { suicide_craft  = 1 }
-			}
-		### Armour techs
-			if = {
-				limit = {AUS = {has_tech = gwtank} }
-				set_technology = { gwtank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_light_tank} }
-				set_technology = { basic_light_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_light_td} }
-				set_technology = { basic_light_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_light_art} }
-				set_technology = { basic_light_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_light_spaa} }
-				set_technology = { basic_light_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_light_tank} }
-				set_technology = { improved_light_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_light_td} }
-				set_technology = { improved_light_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_light_art} }
-				set_technology = { improved_light_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_light_spaa} }
-				set_technology = { improved_light_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_light_tank} }
-				set_technology = { advanced_light_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_light_td} }
-				set_technology = { advanced_light_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_light_art} }
-				set_technology = { advanced_light_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_light_spaa} }
-				set_technology = { advanced_light_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_medium_tank} }
-				set_technology = { basic_medium_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_medium_td} }
-				set_technology = { basic_medium_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_medium_art} }
-				set_technology = { basic_medium_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_medium_spaa} }
-				set_technology = { basic_medium_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_medium_tank} }
-				set_technology = { improved_medium_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_medium_td} }
-				set_technology = { improved_medium_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_medium_art} }
-				set_technology = { improved_medium_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_medium_spaa} }
-				set_technology = { improved_medium_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_medium_tank} }
-				set_technology = { advanced_medium_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_medium_td} }
-				set_technology = { advanced_medium_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_medium_art} }
-				set_technology = { advanced_medium_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_medium_spaa} }
-				set_technology = { advanced_medium_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = main_battle_tank} }
-				set_technology = { main_battle_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = modern_td} }
-				set_technology = { modern_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = modern_art} }
-				set_technology = { modern_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = modern_spaa} }
-				set_technology = { modern_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_heavy_tank} }
-				set_technology = { basic_heavy_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_heavy_td} }
-				set_technology = { basic_heavy_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_heavy_art} }
-				set_technology = { basic_heavy_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_heavy_spaa} }
-				set_technology = { basic_heavy_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_heavy_tank} }
-				set_technology = { improved_heavy_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_heavy_td} }
-				set_technology = { improved_heavy_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_heavy_art} }
-				set_technology = { improved_heavy_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_heavy_spaa} }
-				set_technology = { improved_heavy_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_heavy_tank} }
-				set_technology = { advanced_heavy_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_heavy_td} }
-				set_technology = { advanced_heavy_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_heavy_art} }
-				set_technology = { advanced_heavy_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_heavy_spaa} }
-				set_technology = { advanced_heavy_spaa  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = super_heavy_tank} }
-				set_technology = { super_heavy_tank  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = super_heavy_td} }
-				set_technology = { super_heavy_td  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = super_heavy_art} }
-				set_technology = { super_heavy_art  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = super_heavy_spaa} }
-				set_technology = { super_heavy_spaa  = 1 }
-			}
-		### Art techs
-			if = {
-				limit = {AUS = {has_tech = gw_artillery} }
-				set_technology = { gw_artillery  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = interwar_artillery} }
-				set_technology = { interwar_artillery  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = artillery1} }
-				set_technology = { artillery1  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = artillery2} }
-				set_technology = { artillery2  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = artillery3} }
-				set_technology = { artillery3  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = artillery4} }
-				set_technology = { artillery4  = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = artillery5} }
-				set_technology = { artillery5 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = rocket_artillery} }
-				set_technology = { rocket_artillery = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = rocket_artillery2} }
-				set_technology = { rocket_artillery2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = rocket_artillery3} }
-				set_technology = { rocket_artillery3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = rocket_artillery4} }
-				set_technology = { rocket_artillery4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = interwar_antiair} }
-				set_technology = { interwar_antiair = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antiair2} }
-				set_technology = { antiair2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antiair3} }
-				set_technology = { antiair3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antiair4} }
-				set_technology = { antiair4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antiair4} }
-				set_technology = { antiair4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antiair5} }
-				set_technology = { antiair5 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = interwar_antitank} }
-				set_technology = { interwar_antitank = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antitank1} }
-				set_technology = { antitank1 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antitank2} }
-				set_technology = { antitank2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antitank3} }
-				set_technology = { antitank3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antitank4} }
-				set_technology = { antitank4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = antitank5} }
-				set_technology = { antitank5 = 1 }
-			}
-		### electronic mechanical engineering
-			if = {
-				limit = {AUS = {has_tech = electronic_mechanical_engineering} }
-				set_technology = { electronic_mechanical_engineering = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = radio} }
-				set_technology = { radio = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = radio_detection} }
-				set_technology = { radio_detection = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = decimetric_radar} }
-				set_technology = { decimetric_radar = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_decimetric_radar} }
-				set_technology = { improved_decimetric_radar = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = centimetric_radar} }
-				set_technology = { centimetric_radar = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_centimetric_radar} }
-				set_technology = { improved_centimetric_radar = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_centimetric_radar} }
-				set_technology = { advanced_centimetric_radar = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanical_computing} }
-				set_technology = { mechanical_computing = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = computing_machine} }
-				set_technology = { computing_machine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_computing_machine} }
-				set_technology = { improved_computing_machine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_computing_machine} }
-				set_technology = { advanced_computing_machine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_encryption} }
-				set_technology = { basic_encryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_encryption} }
-				set_technology = { improved_encryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_encryption} }
-				set_technology = { advanced_encryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_decryption} }
-				set_technology = { basic_decryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_decryption} }
-				set_technology = { improved_decryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_decryption} }
-				set_technology = { advanced_decryption = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = experimental_rockets} }
-				set_technology = { experimental_rockets = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = rocket_engines} }
-				set_technology = { rocket_engines = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_rocket_engines} }
-				set_technology = { improved_rocket_engines = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_rocket_engines} }
-				set_technology = { advanced_rocket_engines = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = jet_engines} }
-				set_technology = { jet_engines = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = atomic_research} }
-				set_technology = { atomic_research = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = nuclear_reactor} }
-				set_technology = { nuclear_reactor = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = nukes} }
-				set_technology = { nukes = 1 }
-			}
-		### industry
-			if = {
-				limit = {AUS = {has_tech = basic_machine_tools} }
-				set_technology = { basic_machine_tools = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_machine_tools} }
-				set_technology = { improved_machine_tools = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_machine_tools} }
-				set_technology = { advanced_machine_tools = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = assembly_line_production} }
-				set_technology = { assembly_line_production = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = flexible_line} }
-				set_technology = { flexible_line = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = streamlined_line} }
-				set_technology = { streamlined_line = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_industry} }
-				set_technology = { concentrated_industry = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_industry2} }
-				set_technology = { concentrated_industry2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_industry3} }
-				set_technology = { concentrated_industry3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_industry4} }
-				set_technology = { concentrated_industry4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_industry5} }
-				set_technology = { concentrated_industry5 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_industry} }
-				set_technology = { dispersed_industry = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_industry2} }
-				set_technology = { dispersed_industry2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_industry3} }
-				set_technology = { dispersed_industry3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_industry4} }
-				set_technology = { dispersed_industry4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_industry5} }
-				set_technology = { dispersed_industry5 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = synth_oil_experiments} }
-				set_technology = { synth_oil_experiments = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = oil_plant} }
-				set_technology = { oil_plant = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_oil_plant} }
-				set_technology = { improved_oil_plant = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_oil_plant} }
-				set_technology = { advanced_oil_plant = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = construction1} }
-				set_technology = { construction1 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = excavation1} }
-				set_technology = { excavation1 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = construction2} }
-				set_technology = { construction2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = excavation2} }
-				set_technology = { excavation2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = construction3} }
-				set_technology = { construction3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = excavation3} }
-				set_technology = { excavation3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = construction4} }
-				set_technology = { construction4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = excavation4} }
-				set_technology = { excavation4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = construction5} }
-				set_technology = { construction5 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = excavation5} }
-				set_technology = { excavation5 = 1 }
-			}
-		### infantry
-			if = {
-				limit = {AUS = {has_tech = infantry_weapons} }
-				set_technology = { infantry_weapons = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infantry_weapons1} }
-				set_technology = { infantry_weapons1 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infantry_weapons2} }
-				set_technology = { infantry_weapons2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_infantry_weapons} }
-				set_technology = { improved_infantry_weapons = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_infantry_weapons_2} }
-				set_technology = { improved_infantry_weapons_2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infantry_at} }
-				set_technology = { infantry_at = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infantry_at2} }
-				set_technology = { infantry_at2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_infantry_weapons} }
-				set_technology = { advanced_infantry_weapons = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_infantry_weapons2} }
-				set_technology = { advanced_infantry_weapons2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = paratroopers} }
-				set_technology = { paratroopers = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = paratroopers2} }
-				set_technology = { paratroopers2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = paratroopers3} }
-				set_technology = { paratroopers3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = marines} }
-				set_technology = { marines = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = marines2} }
-				set_technology = { marines2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = marines3} }
-				set_technology = { marines3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_mountaineers} }
-				set_technology = { tech_mountaineers = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_mountaineers2} }
-				set_technology = { tech_mountaineers2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_mountaineers3} }
-				set_technology = { tech_mountaineers3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = night_vision} }
-				set_technology = { night_vision = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = night_vision2} }
-				set_technology = { night_vision2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = support_weapons} }
-				set_technology = { support_weapons = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = support_weapons2} }
-				set_technology = { support_weapons2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = support_weapons3} }
-				set_technology = { support_weapons3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = support_weapons4} }
-				set_technology = { support_weapons4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = motorised_infantry} }
-				set_technology = { motorised_infantry = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = motorized_rocket_unit} }
-				set_technology = { motorized_rocket_unit = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanised_infantry} }
-				set_technology = { mechanised_infantry = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanised_infantry2} }
-				set_technology = { mechanised_infantry2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanised_infantry3} }
-				set_technology = { mechanised_infantry3 = 1 }
-			}
-		###	land_doctrines
-			if = {
-				limit = {AUS = {has_tech = mobile_warfare} }
-				set_technology = { mobile_warfare = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = delay} }
-				set_technology = { delay = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = elastic_defence} }
-				set_technology = { elastic_defence = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mobile_infantry} }
-				set_technology = { mobile_infantry = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mass_motorization} }
-				set_technology = { mass_motorization = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanised_offensive} }
-				set_technology = { mechanised_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = armored_spearhead} }
-				set_technology = { armored_spearhead = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = schwerpunk} }
-				set_technology = { schwerpunk = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = blitzkrieg} }
-				set_technology = { blitzkrieg = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = kampfgruppe} }
-				set_technology = { kampfgruppe = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = firebrigades} }
-				set_technology = { firebrigades = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = backhand_blow} }
-				set_technology = { backhand_blow = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = modern_blitzkrieg} }
-				set_technology = { modern_blitzkrieg = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = volkssturm} }
-				set_technology = { volkssturm = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = nd_conscription} }
-				set_technology = { nd_conscription = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = werwolf_guerillas} }
-				set_technology = { werwolf_guerillas = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = superior_firepower} }
-				set_technology = { superior_firepower = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = sup_delay} }
-				set_technology = { sup_delay = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mobile_defence} }
-				set_technology = { mobile_defence = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = intergrated_support} }
-				set_technology = { intergrated_support = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = regimental_combat_teams} }
-				set_technology = { regimental_combat_teams = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = dispersed_support} }
-				set_technology = { dispersed_support = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = overwhelming_firepower} }
-				set_technology = { overwhelming_firepower = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = sup_mechanized_offensive} }
-				set_technology = { sup_mechanized_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = concentrated_fire_plans} }
-				set_technology = { concentrated_fire_plans = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = combined_arms} }
-				set_technology = { combined_arms = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tactical_control} }
-				set_technology = { tactical_control = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = air_land_battle} }
-				set_technology = { air_land_battle = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = centralized_fire_control} }
-				set_technology = { centralized_fire_control = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = forward_observers} }
-				set_technology = { forward_observers = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_firebases} }
-				set_technology = { advanced_firebases = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = shock_and_awe} }
-				set_technology = { shock_and_awe = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = trench_warfare} }
-				set_technology = { trench_warfare = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = grand_battle_plan} }
-				set_technology = { grand_battle_plan = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = prepared_defense} }
-				set_technology = { prepared_defense = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = grand_assault} }
-				set_technology = { grand_assault = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = grand_mechanized_offensive} }
-				set_technology = { grand_mechanized_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = assault_concentration} }
-				set_technology = { assault_concentration = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = branch_interoperation} }
-				set_technology = { branch_interoperation = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = assault_breakthrough} }
-				set_technology = { assault_breakthrough = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = central_planning} }
-				set_technology = { central_planning = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = c3i_theory} }
-				set_technology = { c3i_theory = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infantry_offensive} }
-				set_technology = { infantry_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = armored_operations} }
-				set_technology = { armored_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infiltration_assault} }
-				set_technology = { infiltration_assault = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = night_assault_tactics} }
-				set_technology = { night_assault_tactics = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = attritional_containment} }
-				set_technology = { attritional_containment = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = infiltration_in_depth} }
-				set_technology = { infiltration_in_depth = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mass_assault} }
-				set_technology = { mass_assault = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = pocket_defence} }
-				set_technology = { pocket_defence = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = defence_in_depth} }
-				set_technology = { defence_in_depth = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = large_front_operations} }
-				set_technology = { large_front_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = deep_operations} }
-				set_technology = { deep_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = operational_concentration} }
-				set_technology = { operational_concentration = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = vast_offensives} }
-				set_technology = { vast_offensives = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = breakthrough_priority} }
-				set_technology = { breakthrough_priority = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = mechanized_wave} }
-				set_technology = { mechanized_wave = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = continuous_offensive} }
-				set_technology = { continuous_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = peoples_army} }
-				set_technology = { peoples_army = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = human_infantry_offensive} }
-				set_technology = { human_infantry_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = large_front_offensive} }
-				set_technology = { large_front_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = human_wave_offensive} }
-				set_technology = { human_wave_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = guerilla_warfare} }
-				set_technology = { guerilla_warfare = 1 }
-			}
-		### naval
-			if = {
-				limit = {AUS = {has_tech = early_destroyer} }
-				set_technology = { early_destroyer = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_destroyer} }
-				set_technology = { basic_destroyer = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_destroyer} }
-				set_technology = { improved_destroyer = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_destroyer} }
-				set_technology = { advanced_destroyer = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_light_cruiser} }
-				set_technology = { early_light_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_light_cruiser} }
-				set_technology = { basic_light_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_light_cruiser} }
-				set_technology = { improved_light_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_light_cruiser} }
-				set_technology = { advanced_light_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_heavy_cruiser} }
-				set_technology = { early_heavy_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_heavy_cruiser} }
-				set_technology = { basic_heavy_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_heavy_cruiser} }
-				set_technology = { improved_heavy_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_heavy_cruiser} }
-				set_technology = { advanced_heavy_cruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_battlecruiser} }
-				set_technology = { early_battlecruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_battlecruiser} }
-				set_technology = { basic_battlecruiser = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_battleship} }
-				set_technology = { early_battleship = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_battleship} }
-				set_technology = { basic_battleship = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_battleship} }
-				set_technology = { improved_battleship = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_battleship} }
-				set_technology = { advanced_battleship = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = heavy_battleship} }
-				set_technology = { heavy_battleship = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = heavy_battleship2} }
-				set_technology = { heavy_battleship2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = transport} }
-				set_technology = { transport = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = landing_craft} }
-				set_technology = { landing_craft = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tank_landing_craft} }
-				set_technology = { tank_landing_craft = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = early_carrier} }
-				set_technology = { early_carrier = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_carrier} }
-				set_technology = { basic_carrier = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_carrier} }
-				set_technology = { improved_carrier = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_carrier} }
-				set_technology = { advanced_carrier = 1 }
-			}
-		###	
-		if = {
-				limit = {AUS = {has_tech = early_submarine} }
-				set_technology = { early_submarine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = basic_submarine} }
-				set_technology = { basic_submarine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = improved_submarine} }
-				set_technology = { improved_submarine = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_submarine} }
-				set_technology = { advanced_submarine = 1 }
-			}
-		### naval doctrine
-			if = {
-				limit = {AUS = {has_tech = fleet_in_being} }
-				set_technology = { fleet_in_being = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = battlefleet_concentration} }
-				set_technology = { battlefleet_concentration = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = subsidiary_carrier_role} }
-				set_technology = { subsidiary_carrier_role = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = hunter_killer_groups} }
-				set_technology = { hunter_killer_groups = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_fortress} }
-				set_technology = { floating_fortress = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_airfield} }
-				set_technology = { floating_airfield = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = grand_battlefleet} }
-				set_technology = { grand_battlefleet = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_sailing} }
-				set_technology = { convoy_sailing = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_escorts} }
-				set_technology = { convoy_escorts = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = escort_carriers} }
-				set_technology = { escort_carriers = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = integrated_convoy_defence} }
-				set_technology = { integrated_convoy_defence = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = submarine_operations} }
-				set_technology = { submarine_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = undersea_blockade} }
-				set_technology = { undersea_blockade = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_interdiction} }
-				set_technology = { convoy_interdiction = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = submarine_offensive} }
-				set_technology = { submarine_offensive = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = trade_interdiction} }
-				set_technology = { trade_interdiction = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_interdiction_ti} }
-				set_technology = { convoy_interdiction_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = unrestricted_submarine_warfare} }
-				set_technology = { unrestricted_submarine_warfare = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = wolfpacks} }
-				set_technology = { wolfpacks = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = advanced_submarine_warfare} }
-				set_technology = { advanced_submarine_warfare = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = combined_operations_raiding} }
-				set_technology = { combined_operations_raiding = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = raider_patrols} }
-				set_technology = { raider_patrols = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = capital_ship_raiders} }
-				set_technology = { capital_ship_raiders = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = battlefleet_concentration_ti} }
-				set_technology = { battlefleet_concentration_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_fortress_ti} }
-				set_technology = { floating_fortress_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_airfield_ti} }
-				set_technology = { floating_airfield_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = carrier_operations} }
-				set_technology = { carrier_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_sailing_ti} }
-				set_technology = { convoy_sailing_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = subsidiary_carrier_role_ti} }
-				set_technology = { subsidiary_carrier_role_ti = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = naval_air_operations} }
-				set_technology = { naval_air_operations = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = base_strike} }
-				set_technology = { base_strike = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = carrier_primacy} }
-				set_technology = { carrier_primacy = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = carrier_task_forces} }
-				set_technology = { carrier_task_forces = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_airfield_bs} }
-				set_technology = { floating_airfield_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = massed_strikes} }
-				set_technology = { massed_strikes = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = floating_fortress_bs} }
-				set_technology = { floating_fortress_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = carrier_battlegroups} }
-				set_technology = { carrier_battlegroups = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = submarine_operations_bs} }
-				set_technology = { submarine_operations_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = undersea_blockade_bs} }
-				set_technology = { undersea_blockade_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_interdiction_bs} }
-				set_technology = { convoy_interdiction_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = submarine_offensive_bs} }
-				set_technology = { submarine_offensive_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_escorts_bs} }
-				set_technology = { convoy_escorts_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = escort_patrols} }
-				set_technology = { escort_patrols = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = convoy_sailing_bs} }
-				set_technology = { convoy_sailing_bs = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = integrated_convoy_defence_bs} }
-				set_technology = { integrated_convoy_defence_bs = 1 }
-			}
-		### support
-			if = {
-				limit = {AUS = {has_tech = tech_support} }
-				set_technology = { tech_support = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_engineers} }
-				set_technology = { tech_engineers = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_engineers2} }
-				set_technology = { tech_engineers2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_engineers3} }
-				set_technology = { tech_engineers3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_engineers4} }
-				set_technology = { tech_engineers4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_recon} }
-				set_technology = { tech_recon = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_recon2} }
-				set_technology = { tech_recon2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_recon3} }
-				set_technology = { tech_recon3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_recon4} }
-				set_technology = { tech_recon4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_military_police} }
-				set_technology = { tech_military_police = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_military_police2} }
-				set_technology = { tech_military_police2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_military_police3} }
-				set_technology = { tech_military_police3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_military_police4} }
-				set_technology = { tech_military_police4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_maintenance_company} }
-				set_technology = { tech_maintenance_company = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_maintenance_company2} }
-				set_technology = { tech_maintenance_company2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_maintenance_company3} }
-				set_technology = { tech_maintenance_company3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_maintenance_company4} }
-				set_technology = { tech_maintenance_company4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_field_hospital} }
-				set_technology = { tech_field_hospital = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_field_hospital2} }
-				set_technology = { tech_field_hospital2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_field_hospital3} }
-				set_technology = { tech_field_hospital3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_field_hospital4} }
-				set_technology = { tech_field_hospital4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_logistics_company} }
-				set_technology = { tech_logistics_company = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_logistics_company2} }
-				set_technology = { tech_logistics_company2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_logistics_company3} }
-				set_technology = { tech_logistics_company3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_logistics_company4} }
-				set_technology = { tech_logistics_company4 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_signal_company} }
-				set_technology = { tech_signal_company = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_signal_company2} }
-				set_technology = { tech_signal_company2 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_signal_company3} }
-				set_technology = { tech_signal_company3 = 1 }
-			}
-		###
-			if = {
-				limit = {AUS = {has_tech = tech_signal_company4} }
-				set_technology = { tech_signal_company4 = 1 }
-			}
-		###
-	}
-	}
 
+		puppet = POL
+	}
 }
 
-### Transfer focustree TOBEDONE
+###########
+#Federalism
+###########
+
+### Federalism Agreed
 country_event = {
 	id = ausgleich.10
 	title = ausgleich.10.t
@@ -2253,20 +290,103 @@ country_event = {
 	
 	option = {
 		name = ausgleich.10.a
-	}
+
+		add_opinion_modifier = { target = HUN modifier = AUS_accepted_federalism } # 100
+
+		puppet = CRO
+
+		BOM = { country_event = { id = ausgleich.11 days = 0 }}
+		CRO = { country_event = { id = ausgleich.11 days = 0 }}
+		GAL = { country_event = { id = ausgleich.11 days = 0 }}
+		BOS = { country_event = { id = ausgleich.11 days = 0 }}
+	}	
 }
 
-### Centralisation
-### Centralisation Agreed
+### Federalisation of the Empire
 country_event = {
-	id = ausgleich.15
-	title = ausgleich.15.t
-	desc = ausgleich.15.d
+	id = ausgleich.11
+	title = ausgleich.11.t
+	desc = ausgleich.11.d
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.15.a
+		name = ausgleich.11.a
+
+		hidden_effect = { retire_country_leader = yes }
+
+		if = {
+			limit = { tag = BOM }
+
+			create_country_leader = {
+				name = "Otto I von Habsburg-Lothringen"
+				desc = "POLITICS_OTTO_DESC"
+				picture = "Portrait_Austria_Otto_I_2.tga"
+				expire = "1965.1.1"
+				ideology = social_conservatist_subtype
+				traits = { }
+			}
+		}
+
+		if = {
+			limit = { tag = CRO }
+
+			create_country_leader = {
+				name = "Otto I von Habsburg-Lothringen"
+				desc = "POLITICS_OTTO_DESC"
+				picture = "Portrait_Austria_Otto_I_2.tga"
+				expire = "1965.1.1"
+				ideology = authoritarian_democratist_subtype
+				traits = { }
+			}
+		}
+
+		if = {
+			limit = { tag = GAL }
+
+			create_country_leader = {
+				name = "Otto I von Habsburg-Lothringen"
+				desc = "POLITICS_OTTO_DESC"
+				picture = "Portrait_Austria_Otto_I_2.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocratist_subtype
+				traits = { }
+			}
+		}
+
+		if = {
+			limit = { tag = BOS }
+
+			create_country_leader = {
+				name = "Otto I von Habsburg-Lothringen"
+				desc = "POLITICS_OTTO_DESC"
+				picture = "Portrait_Austria_Otto_I_2.tga"
+				expire = "1965.1.1"
+				ideology = authoritarian_democratist_subtype
+				traits = { }
+			}
+		}
+	}	
+}
+
+###############
+#Centralisation
+###############
+
+### Centralisation Agreed
+country_event = {
+	id = ausgleich.12
+	title = ausgleich.12.t
+	desc = ausgleich.12.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.12.a
+
+		add_political_power = -100
+		
+		AUS = { annex_country = { target = HUN transfer_troops = yes }}
 
 		every_state = {
 			limit = {
@@ -2278,27 +398,197 @@ country_event = {
 					is_core_of = HUN
 				}
 			}
-			DNF = {
-				add_state_core = PREV
-			}
+
+			add_core_of AUS
 		}
 		
-		AUS = { annex_country = { target = HUN transfer_troops = yes }}
-		
-		BOM = { country_event = {id = ausgleich.16 days = 1}}
-		CRO = { country_event = {id = ausgleich.17 days = 1}}
-		BOS = { country_event = {id = ausgleich.18 days = 1}}
-		GAL = { country_event = {id = ausgleich.19 days = 1}}
+		BOM = { country_event = { id = ausgleich.13 days = 1 }}
+		CRO = { country_event = { id = ausgleich.13 days = 1 }}
+		GAL = { country_event = { id = ausgleich.13 days = 1 }}
+		BOS = { country_event = { id = ausgleich.13 days = 1 }}
 		
 		AUS = { puppet = CRO}
 		
 		set_global_flag = centralize_success
 	}
-	
 }
 
-### Bohemia
+### Minor States
 country_event = {
+	id = ausgleich.13
+	title = ausgleich.13.t
+	desc = ausgleich.13.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.13.a # Accept
+
+		ai_chance = { 
+			factor = 100 
+			modifier = {
+				tag = GAL
+				factor = 80
+			}
+		}
+
+
+		if ={
+			limit = { tag = BOM }
+
+			AUS = { end_puppet = BOM }
+			AUS = { country_event = { id = ausgleich.16 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = CRO }
+			
+			AUS = { end_puppet = CRO }
+			AUS = { country_event = { id = ausgleich.17 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = GAL }
+			
+			AUS = { end_puppet = GAL }
+			AUS = { country_event = { id = ausgleich.18 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = BOS }
+			
+			AUS = { end_puppet = BOS }
+			AUS = { country_event = { id = ausgleich.19 days = 1 }}
+		}
+	}
+
+	option = {
+		name = ausgleich.13.b # Decline
+
+		ai_chance = { factor = 0 }
+
+		if ={
+			limit = { tag = BOM }
+
+			AUS = { end_puppet = BOM }
+			AUS = { country_event = { id = ausgleich.20 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = CRO }
+			
+			AUS = { end_puppet = CRO }
+			AUS = { country_event = { id = ausgleich.21 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = GAL }
+			
+			AUS = { end_puppet = GAL }
+			AUS = { country_event = { id = ausgleich.22 days = 1 }}
+		}
+
+		if ={
+			limit = { tag = BOS }
+			
+			AUS = { end_puppet = BOS }
+			AUS = { country_event = { id = ausgleich.23 days = 1 }}
+		}	
+	}
+
+	option = {
+		name = ausgleich.13.c # Join Poland
+
+		trigger = {
+			tag = GAL
+		}
+
+		ai_chance = { factor = 20 }
+
+		POL = { country_event = { id = ausgleich.14 days = 1 }}
+	}	
+}
+
+country_event = { # Galicia wants to join Poland!
+	id = ausgleich.14
+	title = ausgleich.14.t
+	desc = ausgleich.14.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.14.a
+
+		ai_chance = { factor = 100 }
+
+		annex_country = { target = GAL transfer_troops = no }
+
+		every_owned_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		set_country_flag = Galicia_Annexed
+
+		add_opinion_modifier = { target = AUS modifier = POL_ann_GAL_AUS } # -100
+		add_opinion_modifier = { target = HUN modifier = POL_ann_GAL_AUS } # -100
+		add_opinion_modifier = { target = GER modifier = POL_ann_GAL_GER } # -50
+		add_opinion_modifier = { target = UKR modifier = POL_ann_GAL_GER } # -50
+		add_opinion_modifier = { target = WHR modifier = POL_ann_GAL_BLR } # -5
+
+		AUS = {country_event = { id = ausgleich.15 days = 3 }}
+	}
+
+	option = {
+		name = ausgleich.14.b
+
+		ai_chance = { factor = 0 }
+
+		add_opinion_modifier = { target = AUS modifier = POL_no_ann_GAL_AUS } # 100
+		add_opinion_modifier = { target = HUN modifier = POL_no_ann_GAL_AUS } # 100
+		add_opinion_modifier = { target = GER modifier = POL_no_ann_GAL_GER } # 50
+		add_opinion_modifier = { target = GAL modifier = POL_no_ann_GAL_GAL } # -100
+
+		AUS = {country_event = { id = ausgleich.15 days = 3 }}
+	}
+}
+
+country_event = { # Galicia joins Poland!
+	id = ausgleich.15
+	title = ausgleich.15.t
+	desc = ausgleich.15.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.15.a
+
+		ai_chance = { factor = 20 }
+
+		declare_war_on = {
+			target = POL
+			type = take_core_state
+			generator = { 88 91 89 80 } 
+		}
+
+		add_political_power = -60 
+	}
+
+	option = {
+		name = ausgleich.15.b
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = -80 
+
+		add_opinion_modifier = { target = POL modifier = POL_ann_GAL_AUS_noth } # 100
+	}
+}
+
+### Acceptance declarations
+
+country_event = { # Bohemia submits!
 	id = ausgleich.16
 	title = ausgleich.16.t
 	desc = ausgleich.16.d
@@ -2306,27 +596,15 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.16.a # Accept
-		AUS = { annex_country = { target = BOM transfer_troops = yes }}
+		name = ausgleich.16.a
 
-		ai_chance = {
-			base = 70
-		}
+		set_country_flag = Bohemia_Submits
+
+		AUS = { annex_country = { target = BOM transfer_troops = yes }}	
 	}
-	option = {
-		name = ausgleich.16.b # Decline
-		AUS = { country_event = { id = ausgleich.22 days = 3}}
-		AUS = {end_puppet = BOM}
-		
-		ai_chance = {
-			base = 30
-		}
-		
-	}
-	
 }
-### Croatia
-country_event = {
+
+country_event = { # Croatia submits!
 	id = ausgleich.17
 	title = ausgleich.17.t
 	desc = ausgleich.17.d
@@ -2334,28 +612,15 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.17.a # Accept
-		AUS = { annex_country = { target = CRO transfer_troops = yes }}
-		
-		ai_chance = {
-			base = 70
-		}
-		
+		name = ausgleich.16.a
+
+		set_country_flag = Bohemia_Submits
+
+		AUS = { annex_country = { target = CRO transfer_troops = yes }}	
 	}
-	option = {
-		name = ausgleich.17.b # Decline
-		AUS = { country_event = { id = ausgleich.25 days = 3}}
-		AUS = {end_puppet = CRO}
-		
-		ai_chance = {
-			base = 30
-		}
-		
-	}
-	
 }
-### Bosnia
-country_event = {
+
+country_event = { # Galicia submits!
 	id = ausgleich.18
 	title = ausgleich.18.t
 	desc = ausgleich.18.d
@@ -2363,27 +628,15 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.18.a # Accept
-		AUS = { annex_country = { target = BOS transfer_troops = yes }}
-		
-		ai_chance = {
-			base = 70
-		}
+		name = ausgleich.16.a
+
+		set_country_flag = Bohemia_Submits
+
+		AUS = { annex_country = { target = GAL transfer_troops = yes }}	
 	}
-	option = {
-		name = ausgleich.18.b # Decline
-		AUS = { country_event = { id = ausgleich.23 days = 3}}
-		AUS = {end_puppet = BOS}
-		
-		ai_chance = {
-			base = 30
-		}
-		
-	}
-	
 }
-### Galicia
-country_event = {
+
+country_event = { # Bosnia submits!
 	id = ausgleich.19
 	title = ausgleich.19.t
 	desc = ausgleich.19.d
@@ -2391,36 +644,17 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.19.a # Accept
-		AUS = { annex_country = { target = GAL transfer_troops = yes }}		
-		
-		ai_chance = {
-			base = 50
-		}
-	}
-	option = {
-		name = ausgleich.19.b # Decline
-		AUS = { country_event = { id = ausgleich.24 days = 3}}
-		AUS = {end_puppet = GAL}
-		
-		ai_chance = {
-			base = 10
-		}
-		
-	}
-	option = {
-		name = ausgleich.19.c # Join Poland
-		POL = { country_event = { id = ausgleich.20 days = 3}}
-		AUS = {end_puppet = GAL}
-		
-		ai_chance = {
-			base = 40
-		}
-		
+		name = ausgleich.16.a
+
+		set_country_flag = Bohemia_Submits
+
+		AUS = { annex_country = { target = BOS transfer_troops = yes }}	
 	}
 }
 
-### request to Poland
+### Indipendance declarations
+
+### Bohemia
 country_event = {
 	id = ausgleich.20
 	title = ausgleich.20.t
@@ -2429,32 +663,23 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.20.a # Accept
-		annex_country ={ target = GAL transfer_troops = yes }
-		add_state_core = 88
-		add_state_core = 91
-		add_state_core = 89
-		add_state_core = 80
-		AUS = { country_event = { id = ausgleich.21 days = 3}}
-		
-		ai_chance = {
-			base = 50
-		}
-		
-		
+		name = ausgleich.20.a # To war
+
+		ai_chance = { factor = 90 }
+
+		declare_war_on = { target = BOM type = annex_everything	}
 	}
+
 	option = {
-		name = ausgleich.20.b # Decline
-		AUS = { country_event = { id = ausgleich.24 days = 3}}
+		name = ausgleich.20.b # No need	
 		
-		ai_chance = {
-			base = 50
-		}
+		ai_chance = { factor = 10 }
+
+		# BOM = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
-	
 }
 
-### Galicia breaks away
+### Croatia
 country_event = {
 	id = ausgleich.21
 	title = ausgleich.21.t
@@ -2464,32 +689,22 @@ country_event = {
 	
 	option = {
 		name = ausgleich.21.a # To war
-		add_national_unity = 0.05
-		
-		declare_war_on = {
-			target = POL
-			type = take_core_state
-			generator = { 88 91 89 80 } 
-		}
-		
-		ai_chance = {
-			base = 70
-		}
-		
-		add_political_power = -50
+
+		ai_chance = { factor = 90 }
+
+		declare_war_on = { target = CRO type = annex_everything	}
 	}
+
 	option = {
-		name = ausgleich.21.b # No need
-		add_national_unity = -0.1
+		name = ausgleich.21.b # No need	
 		
-		ai_chance = {
-			base = 30
-		}
+		ai_chance = { factor = 10 }
+
+		# CRO = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
-	
 }
-### Indipendance declarations
-### Bohemia
+
+### Galicia
 country_event = {
 	id = ausgleich.22
 	title = ausgleich.22.t
@@ -2499,28 +714,21 @@ country_event = {
 	
 	option = {
 		name = ausgleich.22.a # To war
-		declare_war_on = {
-			target = BOM
-			type = take_core_state
-			generator = { 9 72 74 75 69 786 }
-		}
-		
-		ai_chance = {
-			base = 70
-		}
-		
-		add_political_power = -50
+
+		ai_chance = { factor = 90 }
+
+		declare_war_on = { target = GAL type = annex_everything	}
 	}
+
 	option = {
-		name = ausgleich.22.b # No need
-		add_national_unity = -0.05
+		name = ausgleich.22.b # No need	
 		
-		ai_chance = {
-			base = 30
-		}
+		ai_chance = { factor = 10 }
+
+		# GAL = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
-	
 }
+
 ### Bosnia
 country_event = {
 	id = ausgleich.23
@@ -2531,29 +739,26 @@ country_event = {
 	
 	option = {
 		name = ausgleich.23.a # To war
-		declare_war_on = {
-			target = BOS
-			type = take_core_state
-			generator = { 104 }
-		}	
-		
-		ai_chance = {
-			base = 70
-		}
-		
-		add_political_power = -50
+
+		ai_chance = { factor = 90 }
+
+		declare_war_on = { target = BOS type = annex_everything	}
 	}
+
 	option = {
-		name = ausgleich.23.b # No need
-		add_national_unity = -0.05
+		name = ausgleich.23.b # No need	
 		
-		ai_chance = {
-			base = 30
-		}
+		ai_chance = { factor = 10 }
+
+		# BOS = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
-	
 }
-### Galicia
+
+#####################
+#First offer rejected
+#####################
+
+### Second round of Negotiations
 country_event = {
 	id = ausgleich.24
 	title = ausgleich.24.t
@@ -2562,30 +767,25 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.24.a # To war		
-		declare_war_on = {
-			target = GAL
-			type = take_core_state
-			generator = { 88 91 89 80 }
-		}	
+		name = ausgleich.24.a #accepts
 
-		ai_chance = {
-			base = 70
-		}		
-		
-		add_political_power = -50
+		ai_chance = { factor = 50 }
+
+		HUN = {country_event = { id = ausgleich.26 days = 1 }}
 	}
+
 	option = {
-		name = ausgleich.24.b # No need
-		add_national_unity = -0.05
-		
-		ai_chance = {
-			base = 30
-		}
+		name = ausgleich.24.b #decline
+
+		ai_chance = { factor = 50 }
+
+		add_opinion_modifier = { target = HUN modifier = AUS_fight_for_unity } # -150
+		end_puppet = HUN
+		GER = {country_event = {id = ausgleich.31 days = 1 }} # German intervention	
 	}
-	
 }
-### Croatia
+
+### Second round of Negotiations
 country_event = {
 	id = ausgleich.25
 	title = ausgleich.25.t
@@ -2594,35 +794,33 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.25.a # To war		
-		declare_war_on = {
-			target = CRO
-			type = take_core_state
-			generator = { 109 103 163 793 794}
-		}
-		
-		ai_chance = {
-			base = 70
-		}
-		
-		add_political_power = -50
-	}
-	option = {
-		name = ausgleich.25.b # No need
-		add_national_unity = -0.05
+		name = ausgleich.25.a #accepts
 
-		ai_chance = {
-			base = 30
-		}
+		ai_chance = { factor = 30 }
+
+		HUN = {country_event = { id = ausgleich.26 days = 1 }}
 	}
-	
+
+	option = {
+		name = ausgleich.25.b #decline
+
+		ai_chance = { factor = 35 }
+
+		HUN = {country_event = {id = ausgleich.29 days = 1 }}	
+	}
+
+	option = {
+		name = ausgleich.25.b #decline
+
+		ai_chance = { factor = 35 }
+
+		add_opinion_modifier = { target = HUN modifier = AUS_fight_for_unity } # -150
+		end_puppet = HUN
+		GER = {country_event = {id = ausgleich.31 days = 1 }} # German intervention	
+	}
 }
 
-
-
-### Hungary rejects first proposial
-### Offer Bosnia
-country_event = {
+country_event = { # Second round of Negotiations
 	id = ausgleich.26
 	title = ausgleich.26.t
 	desc = ausgleich.26.d
@@ -2630,48 +828,24 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.26.a
-		HUN = {country_event = { id = ausgleich.27 days = 1 }}
-		add_political_power = -50
-		ai_chance = {
-			base = 50
-		}
-		
+		name = ausgleich.26.a #accepts
+
+		ai_chance = { factor = 60 }
+
+		AUS = {country_event = { id = ausgleich.27 days = 1 }}
 	}
+
 	option = {
-		name = ausgleich.26.b
-		
-		AUS = {end_puppet = HUN}
+		name = ausgleich.26.b #decline
 
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
-		
-		declare_war_on = {
-			target = HUN
-			type = annex_everything
-		}
+		ai_chance = { factor = 40 }
 
-		set_global_flag = ausgleich_war
-		ai_chance = {
-			base = 50
-		}
+		add_opinion_modifier = { target = AUS modifier = HUN_fight_AUS } # -150
+		GER = {country_event = {id = ausgleich.31 days = 1 }} # German intervention	
 	}
-	
 }
-### Second round of Negotiations
-country_event = {
+
+country_event = { # Hungary accepts the offer
 	id = ausgleich.27
 	title = ausgleich.27.t
 	desc = ausgleich.27.d
@@ -2679,26 +853,14 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.27.a #accepts
-		AUS = { release = BOS}
-		HUN = { puppet = BOS}
+		name = ausgleich.27.a
+
 		HUN = {country_event = { id = ausgleich.28 days = 1 }}
-		ai_chance = {
-			base = 50
-		}
-		
+		end_puppet = BOS
 	}
-	option = {
-		name = ausgleich.27.b #decline
-		GER = {country_event = {id = ausgleich.30 days = 1}} # German intervention
-		ai_chance = {
-			base = 50
-		}
-	}
-	
 }
-### What todo with Bosnia
-country_event = {
+
+country_event = { # What do with Bosnia
 	id = ausgleich.28
 	title = ausgleich.28.t
 	desc = ausgleich.28.d
@@ -2706,35 +868,37 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.28.a #Give it to Croatia
-		add_political_power = -20
-		CRO = {country_event = {id = ausgleich.29 days = 3}}
-		ai_chance = {
-			factor = 70
-		}
+		name = ausgleich.28.a
+
+		ai_chance = { factor = 40 }
+
+		CRO = {country_event = { id = ausgleich.29 days = 1 }}
 	}
+
 	option = {
-		name = ausgleich.28.b #Keep as puppet
-		add_political_power = -50
-	    ai_chance = {
-			factor = 30
-		}
+		name = ausgleich.28.b
+
+		ai_chance = { factor = 60 }
+
+		puppet = BOS
 	}
+
 	option = {
-		name = ausgleich.28.c #Anex it
+		name = ausgleich.28.c
+
+		ai_chance = { factor = 0 }
+
 		HUN = { annex_country = { target = BOS transfer_troops = yes }}
-		HUN = { add_state_core = 104 }
-		add_political_power = -100
-		
-		ai_chance = {
-			factor = 0
-		}
-			
+
+		every_owned_state = {
+			limit = { is_core_of = BOS }
+
+			add_claim_by = HUN
+		}	
 	}
-	
 }
-### Bosnia given to us
-country_event = {
+
+country_event = { # Bosnia is now ours
 	id = ausgleich.29
 	title = ausgleich.29.t
 	desc = ausgleich.29.d
@@ -2742,16 +906,21 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.29.a #Welcome them
+		name = ausgleich.29.a
+
 		CRO = { annex_country = { target = BOS transfer_troops = yes }}
-		CRO = { add_state_core = 104 }
-		add_political_power = -50
-		
+
+		add_political_power = -200
+
+		every_owned_state = {
+			limit = { is_core_of = BOS }
+
+			add_core_of = CRO
+		}
 	}
-	
 }
-### German intervention
-country_event = {
+
+country_event = { # What do with Bosnia
 	id = ausgleich.30
 	title = ausgleich.30.t
 	desc = ausgleich.30.d
@@ -2759,35 +928,27 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.30.a # Pro Asutria
-		HUN = {country_event = {id = ausgleich.31 days = 1}}
-		ai_chance = {
-			factor = 20
-		}
-		add_political_power = -100
+		name = ausgleich.30.a
+
+		ai_chance = { factor = 50 }
+
+		AUS = {country_event = { id = ausgleich.3 days = 1 }}
 	}
+
 	option = {
-		name = ausgleich.30.b # Pro Hungary
-		AUS = {country_event = {id = ausgleich.32 days = 1}}
-		
-		ai_chance = {
-			factor = 10
-		}
-		add_political_power = -150
-		
-	}
-	option = {
-		name = ausgleich.30.c # Neutral
-		HUN = {country_event = {id = ausgleich.33 days = 1}}
-		AUS = {country_event = {id = ausgleich.33 days = 1}}
-		
-		ai_chance = {
-			factor = 80
-		}
-		add_political_power = -50
+		name = ausgleich.30.b
+
+		ai_chance = { factor = 50 }
+
+		GER = {country_event = {id = ausgleich.31 days = 1}} # German intervention	
 	}
 }
-### Pro Asutria
+
+######################
+#Ausgleich breaks down
+######################
+
+### German intervention
 country_event = {
 	id = ausgleich.31
 	title = ausgleich.31.t
@@ -2796,52 +957,35 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.31.a # Accept
-		AUS = {country_event = {id = ausgleich.36 days = 1}}
-		
-		ai_chance = {
-			factor = 40
-		}
-		
-		add_political_power = -50
-	}
-	option = {
-		name = ausgleich.31.b # Decline
-		AUS = {end_puppet = HUN}
-		
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
+		name = ausgleich.31.a # Pro Asutria
 
-		
-		declare_war_on = {
-			target = HUN
-			type = annex_everything
-		}
-		
-		ai_chance = {
-			factor = 60
-		}
+		ai_chance = { factor = 35 }
+
+		HUN = {country_event = {id = ausgleich.32 days = 1}}
 		
 		add_political_power = -100
-		
-		GER = {country_event = {id = ausgleich.33 days = 1}}
+	}
+	option = {
+		name = ausgleich.31.b # Pro Hungary
 
+		ai_chance = { factor = 30 }
+
+		AUS = {country_event = {id = ausgleich.34 days = 1}}
 		
+		add_political_power = -40	
+	}
+	option = {
+		name = ausgleich.31.c # Neutral
+
+		ai_chance = { factor = 35 }
+
+		AUS = {country_event = {id = ausgleich.40 days = 1}}
+		
+		add_political_power = -100
 	}
 }
-### Pro Hungary
+
+### Pro Asutria
 country_event = {
 	id = ausgleich.32
 	title = ausgleich.32.t
@@ -2851,42 +995,33 @@ country_event = {
 	
 	option = {
 		name = ausgleich.32.a # Accept
-		HUN = {country_event = {id = ausgleich.36 days = 1}}
-		add_political_power = -50
+
+		ai_chance = { factor = 60 }
+
+		AUS = { country_event = {id = ausgleich.33 days = 1 }}
+
+		add_opinion_modifier = { target = GER modifier = HUN_submits_GER } # 50
+
+		end_puppet = CRO
 		
+		add_political_power = -200
 	}
+
 	option = {
 		name = ausgleich.32.b # Decline
+
+		ai_chance = { factor = 60 }
+
+		AUS = { end_puppet = HUN }
 		
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
+		add_opinion_modifier = { target = GER modifier = HUN_war_AUS } # -200
+		add_opinion_modifier = { target = AUS modifier = HUN_war_AUS } # -200
 		
-		declare_war_on = {
-			target = HUN
-			type = annex_everything
-		}
-		
-		add_political_power = -100
-		
-		set_global_flag = ausgleich_war
-		
-		GER = {country_event = {id = ausgleich.35 days = 1}}
+		AUS = { country_event = {id = ausgleich.40 days = 1 }}
 	}
 }
-### Neutral
-country_event = {
+
+country_event = { # The Germans favour Austria!
 	id = ausgleich.33
 	title = ausgleich.33.t
 	desc = ausgleich.33.d
@@ -2894,13 +1029,16 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.33.a # Okay
-		AUS = {country_event = {id = ausgleich.41 days = 1}} #War
-		
-	}
+		name = ausgleich.33.a # Accept
 
+		puppet = CRO
+		puppet = HUN
+
+		add_opinion_modifier = { target = GER modifier = GER_supported_AUS } # 100
+	}
 }
-### German response to war (Austria)
+
+### Pro Hungary
 country_event = {
 	id = ausgleich.34
 	title = ausgleich.34.t
@@ -2910,19 +1048,35 @@ country_event = {
 	
 	option = {
 		name = ausgleich.34.a # Accept
-		add_to_war = {
-			targeted_alliance = AUS
-			enemy = HUN
-		}
-		add_political_power = -50
-		
+
+		ai_chance = { factor = 50 }
+
+		end_puppet = HUN
+		end_puppet = GAL
+		end_puppet = BOS
+
+		add_political_power = -200
+
+		add_opinion_modifier = { target = GER modifier = AUS_subbmits } # 50
+
+		HUN = {country_event = { id = ausgleich.35 days = 1 }}
+		POL = {country_event = { id = ausgleich.36 days = 1 }}
 	}
+
 	option = {
 		name = ausgleich.34.b # Decline
+
+		ai_chance = { factor = 50 }
+
+		end_puppet = HUN
 		
+		add_opinion_modifier = { target = GER modifier = AUS_war_HUN } # -200
+		add_opinion_modifier = { target = AUS modifier = AUS_war_HUN } # -200
+		
+		AUS = { country_event = {id = ausgleich.40 days = 1 }}
 	}
 }
-### German response to war (Hungary)
+
 country_event = {
 	id = ausgleich.35
 	title = ausgleich.35.t
@@ -2932,21 +1086,15 @@ country_event = {
 	
 	option = {
 		name = ausgleich.35.a # Accept
-		add_to_war = {
-			targeted_alliance = HUN
-			enemy = AUS
-		}
-		add_political_power = -50
-		
-		
-	}
-	option = {
-		name = ausgleich.35.b # Decline
-		
+
+		puppet = HUN
+		puppet = BOS
+
+		add_opinion_modifier = { target = GER modifier = GER_supported_HUN } # 100
 	}
 }
-### Past german intervention Hungary accepts
-country_event = {
+
+country_event = { # Galicia is ours
 	id = ausgleich.36
 	title = ausgleich.36.t
 	desc = ausgleich.36.d
@@ -2954,39 +1102,23 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.36.a
-		
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
+		name = ausgleich.36.a # Accept
+
+		POL = { annex_country = { target = GAL transfer_troops = yes }}
+
+		set_country_flag = Galicia_Annexed
+
+		every_owned_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
 		}
-		
-		AUS = { annex_country = { target = HUN transfer_troops = yes }}
-		
-		BOM = { country_event = {id = ausgleich.16 days = 1}}
-		CRO = { country_event = {id = ausgleich.17 days = 1}}
-		BOS = { country_event = {id = ausgleich.18 days = 1}}
-		GAL = { country_event = {id = ausgleich.19 days = 1}}
-		
-		AUS = { puppet = CRO}
-		
-		set_global_flag = centralize_success
 
+		BOM = { country_event = {id = ausgleich.37 days = 1 }}
 	}
-
 }
-### Past german intervention Austria accepts
-country_event = {
+
+country_event = { # Austria is weak
 	id = ausgleich.37
 	title = ausgleich.37.t
 	desc = ausgleich.37.d
@@ -2995,19 +1127,28 @@ country_event = {
 	
 	option = {
 		name = ausgleich.37.a
-		AUS = { release = BOS}
-		AUS = { release = GAL}
-		AUS = { release = HUN}
-		HUN = { puppet = BOS}
-		HUN = { puppet = GAL}
-		HUN = { country_event = {id = ausgleich.28 days = 1}}
-		HUN = { country_event = {id = ausgleich.38 days = 1}}
-		
+
+		ai_chance = { factor = 80 }
+
+		AUS = { remove_from_faction = BOM }
+
+		GER = { country_event = {id = ausgleich.38 days = 1 }}
+
+		add_opinion_modifier = { target = AUS modifier = BOM_joins_GER } # -200
+		add_opinion_modifier = { target = GER modifier = BOM_joins_us_GER } # 100
 	}
 
+	option = {
+		name = ausgleich.37.a
+
+		ai_chance = { factor = 20 }
+
+		add_opinion_modifier = { target = AUS modifier = BOM_joins_us_AUS } # 100
+		add_opinion_modifier = { target = GER modifier = BOM_remains_AUS } # -100
+	}
 }
-### What todo with Galicia
-country_event = {
+
+country_event = { # A message from Prague
 	id = ausgleich.38
 	title = ausgleich.38.t
 	desc = ausgleich.38.d
@@ -3015,104 +1156,604 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.38.a #Give it to Poland
-		add_national_unity = 0.05
-		POL = {country_event = {id = ausgleich.39 days = 3}}
-		
+		name = ausgleich.38.a
+
+		ai_chance = { factor = 95 }
+
+		GER = { add_to_faction = BOM }
+
+		AUS = { country_event = { id = ausgleich.38 days = 0 }}
 	}
+
 	option = {
-		name = ausgleich.38.b #Keep as puppet
-		add_national_unity = 0.02
+		name = ausgleich.38.b
+
+		ai_chance = { factor = 5 }
+
+		add_opinion_modifier = { target = AUS modifier = GER_BOM_no_acc } # 50
+		add_opinion_modifier = { target = BOM modifier = GER_BOM_no_acc_BOM } # -50
 	}
-	option = {
-		name = ausgleich.38.c #Anex it
-		HUN = { annex_country = { target = GAL transfer_troops = yes }}
-		HUN = { add_state_core = 88 }
-		HUN = { add_state_core = 91 }
-		HUN = { add_state_core = 89 }
-		HUN = { add_state_core = 80 }
-		add_national_unity = -0.05
-		
-	}
-	
 }
-### Request to poland
-country_event = {
+
+country_event = { # A message from Prague
 	id = ausgleich.39
 	title = ausgleich.39.t
 	desc = ausgleich.39.d
 	
 	is_triggered_only = yes
+
+	immediate = { AUS = { end_puppet = BOM }}
 	
 	option = {
-		name = ausgleich.39.a # Accept
-		annex_country ={ target = GAL transfer_troops = yes }
-		add_state_core = 88
-		add_state_core = 91
-		add_state_core = 89
-		add_state_core = 80
-		HUN = { country_event = { id = ausgleich.40 days = 3}}
+		name = ausgleich.39.a
+
+		add_political_power = -200
 	}
-	
-	option = {
-		name = ausgleich.39.b # Decline
-	}
-	
 }
-### Poland accepts
-country_event = {
+
+country_event = { # War in Austria-Hungary!
 	id = ausgleich.40
 	title = ausgleich.40.t
 	desc = ausgleich.40.d
 	
 	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.40.a 
-		POL = { give_guarantee = HUN }
-		HUN = { give_guarantee = POL }
+
+	immediate = { 
+		HUN = { country_event = { id = ausgleich.41 days = 0 }} 
+		declare_war_on = { target = HUN type = annex_everything }
+
+		#if = {
+			#not = { has_war_with = POL }
+
+			# POL = { country_event = { id = ausgleich. days = 0 }} 901126
+		#}
 	}
 	
+	option = {
+		name = ausgleich.40.a
+
+		load_oob = AUS_Ausgleich_war
+
+		add_manpower = 50000
+
+		every_state = {
+			limit = { is_core_of = HUN }
+
+			add_core_of = AUS
+		}
+
+		every_state = {
+			limit = { is_core_of = BOM is_core_of = GAL is_core_of = CRO is_core_of = BOS }
+
+			add_claim_by = AUS
+		}
+	}
 }
-### War breaks out
-country_event = {
+
+country_event = { # The end of Habsburg Tyranny!
 	id = ausgleich.41
 	title = ausgleich.41.t
 	desc = ausgleich.41.d
 	
 	is_triggered_only = yes
-	
-	option = {
-		AUS = {end_puppet = HUN}
-		name = ausgleich.41.a
-		AUS = {end_puppet = HUN}
 
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
-		
-		declare_war_on = {
-			target = HUN
-			type = annex_everything
-		}
-		
-		HUN = { country_event = { id = ausgleich.54 days = 1}}
+	immediate = { 
+
+		end_puppet = CRO
+		end_puppet = BOM
+		end_puppet = GAL
+		end_puppet = BOS
+
+		HUN = { country_event = { id = ausgleich.41 days = 0 }} 
+		declare_war_on = { target = HUN type = annex_everything }
+
+		#if = {
+			#not = { has_war_with = POL }
+
+			# POL = { country_event = { id = ausgleich. days = 0 }} 901126
+		#}
 	}
 	
+	option = {
+		name = ausgleich.41.a
+
+		load_oob = HUN_Ausgleich_war
+
+		add_manpower = 50000
+
+		hidden_effect = { retire_country_leader = yes remove_ideas_with_trait = head_of_government }
+
+		create_country_leader = {
+			name = "István Bethlen"
+			desc = "ISTVAN_BETHLEN_DESC"
+			picture = "Portrait_HUN_Istvan_Bethlen.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = { }
+		}
+
+		add_ideas = HUN_Pal_Teleki_de_Szek_hog_pau
+
+		add_political_power = 100
+
+		HUN = {
+			remove_state_core = 644
+			remove_state_core = 684
+			remove_state_core = 71
+			remove_state_core = 73
+			remove_state_core = 784
+
+			add_state_claim = 644
+			add_state_claim = 684
+			add_state_claim = 71
+			add_state_claim = 73
+			add_state_claim = 784
+		}
+
+		CRO = { country_event = { id = ausgleich.42 days = 1 }}
+		BOM = { country_event = { id = ausgleich.46 days = 1 }}
+		GAL = { country_event = { id = ausgleich.50 days = 1 }}
+		BOS = { country_event = { id = ausgleich.59 days = 1 }}
+	}
 }
-### War breaks out (Hungary)
-country_event = {
+
+########################
+# Minor nations line up
+########################
+
+#Croatia
+
+country_event = { # War in Austro-Hungary!
+	id = ausgleich.42
+	title = ausgleich.42.t
+	desc = ausgleich.42.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.42.a # Support the Hungarians
+
+		ai_chance = { factor = 50 }
+
+		load_oob = CRO_AusCivWar
+
+		add_opinion_modifier = { target = AUS modifier = CRO_sides_HUN } # -200
+
+		add_state_core = 102
+		add_state_core = 736
+
+		HUN = { country_event = { id = ausgleich.43 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.42.b # Support the Austrians
+
+		ai_chance = { factor = 25 }
+
+		load_oob = CRO_AusCivWar
+
+		add_opinion_modifier = { target = HUN modifier = CRO_sides_AUS } # -200
+
+		AUS = { country_event = { id = ausgleich.44 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.42.c # Declare Independence
+
+		ai_chance = { factor = 25 }
+
+		load_oob = CRO_AusCivWar
+
+		HUN = { country_event = { id = ausgleich.45 days = 1 }}
+	}
+}
+
+country_event = { # Croatia stays loyal to us!
+	id = ausgleich.43
+	title = ausgleich.43.t
+	desc = ausgleich.43.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.43.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = CRO
+
+		add_opinion_modifier = { target = HUN modifier = CRO_sides_HUN_HUN } # 200
+
+		CRO = {
+			add_to_war = {
+				targeted_alliance = HUN
+				enemy = AUS
+			}	
+		}
+
+		add_political_power = 100 
+	}
+
+	option = {
+		name = ausgleich.43.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = CRO modifier = HUN_refuses_CRO } # -100
+	}
+}
+
+country_event = { # Croatia stays loyal to us!
+	id = ausgleich.44
+	title = ausgleich.44.t
+	desc = ausgleich.44.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.44.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = CRO
+
+		add_opinion_modifier = { target = AUS modifier = CRO_sides_AUS_AUS } # 200
+
+		CRO = {
+			add_to_war = {
+				targeted_alliance = AUS
+				enemy = HUN
+			}	
+		}
+
+		add_political_power = 100 
+	}
+
+	option = {
+		name = ausgleich.44.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = CRO modifier = AUS_refuses_CRO } # -100
+	}
+}
+
+country_event = { # Croatia declares independence!
+	id = ausgleich.45
+	title = ausgleich.45.t
+	desc = ausgleich.45.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.45.a
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = -100 
+	}
+
+	option = {
+		name = ausgleich.45.b
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = 100
+
+		declare_war_on = { target = CRO type = annex_everything } 
+
+		add_opinion_modifier = { target = CRO modifier = HUN_att_CRO } # -200
+	}
+}
+
+#Bohemia
+
+country_event = { # War in Austro-Hungary!
+	id = ausgleich.46
+	title = ausgleich.46.t
+	desc = ausgleich.46.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.46.a # Support the Hungarians
+
+		ai_chance = { factor = 20 }
+
+		load_oob = BOM_AusCivWar
+
+		add_opinion_modifier = { target = AUS modifier = BOM_sides_HUN } # -200
+
+		HUN = { country_event = { id = ausgleich.47 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.46.b # Support the Austrians
+
+		ai_chance = { factor = 40 }
+
+		load_oob = BOM_AusCivWar
+
+		add_opinion_modifier = { target = HUN modifier = BOM_sides_AUS } # -200
+
+		AUS = { country_event = { id = ausgleich.48 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.46.c # Declare Independence
+
+		ai_chance = { factor = 40 }
+
+		load_oob = BOM_AusCivWar
+
+		add_state_core = 70
+		add_state_core = 71
+		add_state_core = 664
+		add_state_core = 73
+
+		AUS = { country_event = { id = ausgleich.49 days = 1 }}
+	}
+}
+
+country_event = { # Bohemia stays loyal to us!
+	id = ausgleich.47
+	title = ausgleich.47.t
+	desc = ausgleich.47.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.47.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = BOM
+
+		add_opinion_modifier = { target = HUN modifier = BOM_sides_HUN_HUN } # 200
+
+		BOM = {
+			add_to_war = {
+				targeted_alliance = HUN
+				enemy = AUS
+			}	
+		}
+
+		add_political_power = 100 
+	}
+
+	option = {
+		name = ausgleich.47.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = BOM modifier = HUN_refuses_BOM } # -100
+	}
+}
+
+country_event = { # Bohemia stays loyal to us!
+	id = ausgleich.48
+	title = ausgleich.48.t
+	desc = ausgleich.48.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.48.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = BOM
+
+		add_opinion_modifier = { target = AUS modifier = BOM_sides_AUS_AUS } # 200
+
+		BOM = {
+			add_to_war = {
+				targeted_alliance = AUS
+				enemy = HUN
+			}	
+		}
+
+		add_political_power = 100 
+	}
+
+	option = {
+		name = ausgleich.48.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = BOM modifier = AUS_refuses_BOM } # -100
+	}
+}
+
+country_event = { # Bohemia declares independence!
+	id = ausgleich.49
+	title = ausgleich.49.t
+	desc = ausgleich.49.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.49.a
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = -40
+
+		# BOM = { country_event = { id = ausgleich. days = 1 }} 901131
+	}
+
+	option = {
+		name = ausgleich.49.b
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = 100
+
+		declare_war_on = { target = BOM type = annex_everything } 
+
+		add_opinion_modifier = { target = BOM modifier = AUS_att_BOM } # -200
+	}
+}
+
+#Galicia
+
+country_event = { # War in Austro-Hungary!
+	id = ausgleich.50
+	title = ausgleich.50.t
+	desc = ausgleich.50.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.50.a # Support the Hungarians
+
+		ai_chance = { factor = 20 }
+
+		load_oob = GAL_AusCivWar
+
+		add_opinion_modifier = { target = AUS modifier = GAL_sides_HUN } # -200
+
+		HUN = { country_event = { id = ausgleich.51 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.50.b # Support the Austrians
+
+		ai_chance = { factor = 40 }
+
+		load_oob = GAL_AusCivWar
+
+		add_opinion_modifier = { target = HUN modifier = GAL_sides_AUS } # -200
+
+		AUS = { country_event = { id = ausgleich.55 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.50.c # Join Poland
+
+		ai_chance = { factor = 40 }
+
+		load_oob = GAL_AusCivWar
+
+		POL = { country_event = { id = ausgleich.56 days = 1 }}
+	}
+}
+
+country_event = { # Galicia stays loyal to us!
+	id = ausgleich.51
+	title = ausgleich.51.t
+	desc = ausgleich.51.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.51.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = GAL
+
+		add_opinion_modifier = { target = HUN modifier = GAL_sides_HUN_HUN } # 200
+
+		GAL = {
+			add_to_war = {
+				targeted_alliance = HUN
+				enemy = AUS
+			}	
+		}
+
+		add_political_power = 100
+
+		HUN = { country_event = { id = ausgleich.52 days = 1 }} 
+	}
+
+	option = {
+		name = ausgleich.51.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = GAL modifier = HUN_refuses_GAL } # -100
+	}
+}
+
+country_event = { # Galicia and Poland
+	id = ausgleich.52
+	title = ausgleich.52.t
+	desc = ausgleich.52.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.52.a
+
+		ai_chance = { factor = 70 }
+
+		POL = { country_event = { id = ausgleich.53 days = 1 }}
+
+		add_political_power = -20
+
+		add_opinion_modifier = { target = AUS modifier = HUN_offers_gal_to_POL } # -50 
+	}
+
+	option = {
+		name = ausgleich.52.b
+
+		ai_chance = { factor = 30 }
+
+		add_opinion_modifier = { target = POL modifier = HUN_retains_GAL } # -50
+		add_political_power = -80 
+	}
+}
+
+country_event = { # An offer from Hungary
+	id = ausgleich.53
+	title = ausgleich.53.t
+	desc = ausgleich.53.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.53.a
+
+		ai_chance = { factor = 60 }
+
+		annex_country = { target = GAL transfer_troops = no }
+
+		every_owned_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		add_political_power = 100
+
+		set_country_flag = Galicia_Annexed
+
+		HUN = { country_event = { id = ausgleich.54 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.53.b
+
+		ai_chance = { factor = 40 }
+
+		add_opinion_modifier = { target = HUN modifier = POL_refuses_galicia } # -50
+
+		add_political_power = -40
+	}
+}
+
+country_event = { # Poland has accepted our offer
 	id = ausgleich.54
 	title = ausgleich.54.t
 	desc = ausgleich.54.d
@@ -3121,1109 +1762,460 @@ country_event = {
 	
 	option = {
 		name = ausgleich.54.a
-		
-		HUN = {
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = BOM
-					is_core_of = CRO
-					is_core_of = GAL
-					is_core_of = BOS
-					is_core_of = HUN
-				}
-			}
-			DNF = {
-				add_state_core = PREV
-			}
-		}
-		}
-		
-		BOM = { country_event = {id = ausgleich.42 days = 1}}
-		CRO = { country_event = {id = ausgleich.43 days = 1}}
-		GAL = { country_event = {id = ausgleich.44 days = 1}}
-		BOS = { country_event = {id = ausgleich.45 days = 1}}
-		
-		
-	}
-	
-}
-### Minors lineup
-### Bohemia lineup
-country_event = {
-	id = ausgleich.42
-	title = ausgleich.42.t
-	desc = ausgleich.42.d
-	
-	is_triggered_only = yes
-	
-	option = { # Siede with Austria
-		name = ausgleich.42.a
-		set_country_flag = side_austria
-		
-		add_to_war = {
-			targeted_alliance = AUS
-			enemy = HUN
-		}
-		
-		AUS = { country_event = {id = ausgleich.46 days = 1}}
-		HUN = { country_event = {id = ausgleich.47 days = 1}}
-		
-	}
-	option = { # Side with Hungary
-		name = ausgleich.42.b
-		set_country_flag = side_hungary
-		
-		add_to_war = {
-			targeted_alliance = HUN
-			enemy = AUS
-		}
-		
-		AUS = { country_event = {id = ausgleich.47 days = 1}}
-		HUN = { country_event = {id = ausgleich.46 days = 1}}
-	}
-	option = { # Indipendance
-		name = ausgleich.42.c
-		AUS = { country_event = { id = ausgleich.22 days = 1}}
-	}
-	
-}
-### Croatia lineup
-country_event = {
-	id = ausgleich.43
-	title = ausgleich.43.t
-	desc = ausgleich.43.d
-	
-	is_triggered_only = yes
-	
-	option = { # Siede with Austria
-		name = ausgleich.43.a
-		set_country_flag = side_austria
-		
-		add_to_war = {
-			targeted_alliance = AUS
-			enemy = HUN
-		}
-		
-		AUS = { country_event = {id = ausgleich.48 days = 1}}
-		HUN = { country_event = {id = ausgleich.49 days = 1}}
-		
-	}
-	option = { # Side with Hungary
-		name = ausgleich.43.b
-		set_country_flag = side_hungary
-		
-		add_to_war = {
-			targeted_alliance = HUN
-			enemy = AUS
-		}
-		
-		AUS = { country_event = {id = ausgleich.49 days = 1}}
-		HUN = { country_event = {id = ausgleich.48 days = 1}}
-	}
-	option = { # Indipendance
-		name = ausgleich.43.c
-		HUN = { country_event = { id = ausgleich.25 days = 1}}
-	}
-	
-}
-### Galicia lineup
-country_event = {
-	id = ausgleich.44
-	title = ausgleich.44.t
-	desc = ausgleich.44.d
-	
-	is_triggered_only = yes
-	
-	option = { # Siede with Austria
-		name = ausgleich.44.a
-		set_country_flag = side_austria
-		
-		add_to_war = {
-			targeted_alliance = AUS
-			enemy = HUN
-		}
-		
-		AUS = { country_event = {id = ausgleich.50 days = 1}}
-		HUN = { country_event = {id = ausgleich.51 days = 1}}
-		
-	}
-	option = { # Side with Hungary
-		name = ausgleich.44.b
-		set_country_flag = side_hungary
-		
-		add_to_war = {
-			targeted_alliance = HUN
-			enemy = AUS
-		}
-		
-		AUS = { country_event = {id = ausgleich.51 days = 1}}
-		HUN = { country_event = {id = ausgleich.50 days = 1}}
-	}
-	option = { # Indipendance
-		name = ausgleich.44.c
-		random_list = {
-			40 = {AUS = { country_event = { id = ausgleich.24 days = 1}}}
-			60 = {POL = { country_event = { id = ausgleich.20 days = 3}}}
+
+		POL = {
+			add_to_war = {
+				targeted_alliance = HUN
+				enemy = AUS
+			}	
 		}
 	}
-	
 }
-### Bosnia lineup
-country_event = {
-	id = ausgleich.45
-	title = ausgleich.45.t
-	desc = ausgleich.45.d
-	
-	is_triggered_only = yes
-	
-	option = { # Siede with Austria
-		name = ausgleich.45.a
-		set_country_flag = side_austria
-		
-		add_to_war = {
-			targeted_alliance = AUS
-			enemy = HUN
-		}
-		
-		AUS = { country_event = {id = ausgleich.52 days = 1}}
-		HUN = { country_event = {id = ausgleich.53 days = 1}}
-		
-	}
-	option = { # Side with Hungary
-		name = ausgleich.45.b
-		set_country_flag = side_hungary
-		
-		add_to_war = {
-			targeted_alliance = HUN
-			enemy = AUS
-		}
-		
-		AUS = { country_event = {id = ausgleich.53 days = 1}}
-		HUN = { country_event = {id = ausgleich.52 days = 1}}
-	}
-	option = { # Indipendance
-		name = ausgleich.45.c
-		AUS = { country_event = { id = ausgleich.23 days = 1}}
-	}
-	
-}
-### Bohemia sides with us
-country_event = {
-	id = ausgleich.46
-	title = ausgleich.46.t
-	desc = ausgleich.46.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.46.a
 
-	}
-
-}
-### Bohemia doesnt side with us
-country_event = {
-	id = ausgleich.47
-	title = ausgleich.47.t
-	desc = ausgleich.47.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.47.a
-
-	}
-
-}
-### Croatia sides with us
-country_event = {
-	id = ausgleich.48
-	title = ausgleich.48.t
-	desc = ausgleich.48.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.48.a
-
-	}
-
-}
-### Croatia doesnt side with us
-country_event = {
-	id = ausgleich.49
-	title = ausgleich.49.t
-	desc = ausgleich.49.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.49.a
-
-	}
-
-}
-### Galicia sides with us
-country_event = {
-	id = ausgleich.50
-	title = ausgleich.50.t
-	desc = ausgleich.50.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.50.a
-
-	}
-
-}
-### Galicia doesnt side with us
-country_event = {
-	id = ausgleich.51
-	title = ausgleich.51.t
-	desc = ausgleich.51.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.51.a
-
-	}
-
-}
-### Bosnia sides with us
-country_event = {
-	id = ausgleich.52
-	title = ausgleich.52.t
-	desc = ausgleich.52.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.52.a
-
-	}
-
-}
-### Bosnia doesnt side with us
-country_event = {
-	id = ausgleich.53
-	title = ausgleich.53.t
-	desc = ausgleich.53.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.53.a
-
-	}
-
-
-}
-#################
-### 54 is above
-################
-
-### Claim Trento and Venice
-country_event = {
+country_event = { # Galicia stays loyal to us!
 	id = ausgleich.55
 	title = ausgleich.55.t
 	desc = ausgleich.55.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = ITA
-		AUS = {has_war_with = HUN}
-
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ausgleich.55.a
-		declare_war_on = {
-				target = AUS
-				type = take_state_focus
-				generator = { 160 39 } 
-			}
-		
-	}
-	option = {
-		name = ausgleich.55.b
+
+		ai_chance = { factor = 100 }
+
+		puppet = GAL
+
+		add_opinion_modifier = { target = AUS modifier = GAL_sides_AUS_AUS } # 200
+
+		GAL = {
+			add_to_war = {
+				targeted_alliance = AUS
+				enemy = HUN
+			}	
+		}
+
+		add_political_power = 100 
 	}
 
+	option = {
+		name = ausgleich.55.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = GAL modifier = AUS_refuses_GAL } # -100
+	}
 }
-### Taken Trento Venice
-country_event = {
+
+country_event = { # Galicia wants to join Poland!
 	id = ausgleich.56
 	title = ausgleich.56.t
 	desc = ausgleich.56.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = ITA
-		controls_state = 160
-		controls_state = 39
-
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ausgleich.56.a
-		AUS = { country_event = { id = ausgleich.57 days = 1}}
-		
-		
-	}
-	option = {
-		name = ausgleich.56.b
-		add_national_unity = -0.05
+
+		ai_chance = { factor = 100 }
+
+		annex_country = { target = GAL transfer_troops = yes }
+
+		every_owned_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		add_political_power = 100
+
+		set_country_flag = Galicia_Annexed
+
+		add_opinion_modifier = { target = AUS modifier = POL_ann_GAL } # -100
+		add_opinion_modifier = { target = HUN modifier = POL_ann_GAL } # -100
+		add_opinion_modifier = { target = GER modifier = POL_ann_GAL_MITT } # -50
+		add_opinion_modifier = { target = UKR modifier = POL_ann_GAL_MITT } # -50
+		add_opinion_modifier = { target = WHR modifier = POL_ann_GAL_WHR } # -5
+
+		AUS = { country_event = { id = ausgleich.57 days = 1 }}
 	}
 
+	option = {
+		name = ausgleich.56.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -200
+
+		add_opinion_modifier = { target = AUS modifier = POL_REF_GAL } # 100
+		add_opinion_modifier = { target = HUN modifier = POL_REF_GAL } # 100
+		add_opinion_modifier = { target = GER modifier = POL_REF_GAL_GER } # 50
+		add_opinion_modifier = { target = GAL modifier = POL_REF_GAL_GAL } # -100
+
+		AUS = { country_event = { id = ausgleich.58 days = 1 }}
+	}
 }
-### Peace offer from Italy
-country_event = {
+
+country_event = { # Galicia joins Poland!
 	id = ausgleich.57
 	title = ausgleich.57.t
 	desc = ausgleich.57.d
 	
 	is_triggered_only = yes
 	
-	option = { 
+	option = {
 		name = ausgleich.57.a
-		AUS = {white_peace = ITA}
-		ITA = {transfer_state = 160}
-		ITA = {transfer_state = 39}
-		
-		ITA = {add_state_core = 160}
-		ITA = {add_state_core = 39}
-		
-		AUS = {remove_state_core = 160}
-		AUS = {remove_state_core = 39}
 
-		ITA = { country_event = { id = ausgleich.58 days = 1}}
+		ai_chance = { factor = 0 }
 
+		add_political_power = -180
+
+		declare_war_on = { target = POL type = annex_everything }
 	}
-	option = { 
+
+	option = {
 		name = ausgleich.57.b
-		add_national_unity = -0.15
 
+		ai_chance = { factor = 100 }
+
+		add_political_power = -40
+
+		add_opinion_modifier = { target = POL modifier = AUS_letgo_POL } # 100
 	}
-
-
 }
-### Austria accepts
-country_event = {
+
+country_event = { # Galicia stays neutral!
 	id = ausgleich.58
 	title = ausgleich.58.t
 	desc = ausgleich.58.d
 	
 	is_triggered_only = yes
 	
-	option = { 
+	option = {
 		name = ausgleich.58.a
-		add_national_unity = 0.05
 
+		ai_chance = { factor = 90 }
+
+		add_political_power = -40
 	}
 
+	option = {
+		name = ausgleich.58.b
+
+		ai_chance = { factor = 10 }
+
+		add_political_power = 100
+
+		declare_war_on = { target = POL type = annex_everything }
+	}
 }
-### Claim transylvania
-country_event = {
+
+#Bosnia
+
+country_event = { # War in Austro-Hungary!
 	id = ausgleich.59
 	title = ausgleich.59.t
 	desc = ausgleich.59.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = ROM
-		AUS = {has_war_with = HUN}
-
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
+	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.59.a
-		declare_war_on = {
-				target = HUN
-				type = take_state_focus
-				generator = { 82 83 84 76 } 
-			}
-		
-	}
-	option = {
-		name = ausgleich.59.b
+		name = ausgleich.59.a # Support the Hungarians
+
+		ai_chance = { factor = 25 }
+
+		load_oob = BOS_AusCivWar
+
+		add_opinion_modifier = { target = AUS modifier = BOS_sides_HUN } # -200
+
+		HUN = { country_event = { id = ausgleich.60 days = 1 }}
 	}
 
+	option = {
+		name = ausgleich.59.b # Support the Austrians
+
+		ai_chance = { factor = 25 }
+
+		load_oob = BOS_AusCivWar
+
+		add_opinion_modifier = { target = HUN modifier = BOS_sides_AUS } # -200
+
+		AUS = { country_event = { id = ausgleich.61 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.59.c # Declare Independence
+
+		ai_chance = { factor = 65 }
+
+		trigger = {
+			country_exists = SER
+		}
+
+		load_oob = BOS_AusCivWar
+
+		add_state_core = 70
+		add_state_core = 71
+		add_state_core = 664
+		add_state_core = 73
+
+		AUS = { country_event = { id = ausgleich.62 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.59.e # Declare Independence
+
+		ai_chance = { factor = 30 }
+
+		load_oob = BOS_AusCivWar
+
+		add_opinion_modifier = { target = AUS modifier = BOS_declares_indepencence } # -200
+		add_opinion_modifier = { target = HUN modifier = BOS_declares_indepencence } # -200
+
+		add_state_core = 70
+		add_state_core = 71
+		add_state_core = 664
+		add_state_core = 73
+
+		AUS = { country_event = { id = ausgleich.64 days = 1 }}
+	}
 }
-### Taken Transylvania
-country_event = {
+
+country_event = { # Bosnia fights Austria!
 	id = ausgleich.60
 	title = ausgleich.60.t
 	desc = ausgleich.60.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = ROM
-		controls_state = 82
-		controls_state = 83
-		controls_state = 84
-		controls_state = 76
-
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
+	is_triggered_only = yes
 	
 	option = {
-		name = ausgleich.56.a
-		HUN = { country_event = { id = ausgleich.61 days = 1}}
-		
-		
-	}
-	option = {
-		name = ausgleich.56.b
-		add_national_unity = -0.05
+		name = ausgleich.60.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = BOS
+
+		add_opinion_modifier = { target = HUN modifier = BOS_sides_HUN_HUN } # 200
+
+		BOS = {
+			add_to_war = {
+				targeted_alliance = HUN
+				enemy = AUS
+			}	
+		}
+
+		add_political_power = 100 
 	}
 
+	option = {
+		name = ausgleich.60.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = BOS modifier = HUN_refuses_BOS } # -100
+	}
 }
-### Peace offer from Romania
-country_event = {
+
+country_event = { # Bosnia fights Hungary!
 	id = ausgleich.61
 	title = ausgleich.61.t
 	desc = ausgleich.61.d
 	
 	is_triggered_only = yes
 	
-	option = { 
+	option = {
 		name = ausgleich.61.a
-		HUN = {white_peace = ROM}
-		ROM = {transfer_state = 82}
-		ROM = {transfer_state = 83}
-		ROM = {transfer_state = 84}
-		ROM = {transfer_state = 76}
-		
-		ROM = { country_event = { id = ausgleich.62 days = 1}}
 
+		ai_chance = { factor = 100 }
+
+		puppet = BOS
+
+		add_opinion_modifier = { target = AUS modifier = BOS_sides_AUS_AUS } # 200
+
+		BOS = {
+			add_to_war = {
+				targeted_alliance = AUS
+				enemy = HUN
+			}	
+		}
+
+		add_political_power = 100 
 	}
-	option = { 
+
+	option = {
 		name = ausgleich.61.b
-		add_national_unity = -0.15
 
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100 
+
+		add_opinion_modifier = { target = BOS modifier = AUS_refuses_BOS } # -100
 	}
-
-
 }
-### Hungary accepts
-country_event = {
+
+country_event = { # Bosnia wants to join us
 	id = ausgleich.62
 	title = ausgleich.62.t
 	desc = ausgleich.62.d
 	
 	is_triggered_only = yes
 	
-	option = { 
+	option = {
 		name = ausgleich.62.a
-		add_national_unity = 0.05
 
+		ai_chance = { factor = 80 }
+
+		annex_country = { target = BOS transfer_troops = yes }
+
+		every_owned_state = {
+			limit = { is_core_of = BOS }
+
+			add_core_of = SER
+		}
+
+		add_political_power = 100
+
+		set_country_flag = Bosnia_Annexed
+
+		add_opinion_modifier = { target = CRO modifier = SER_ann_BOS } # -100
+		add_opinion_modifier = { target = AUS modifier = SER_ann_BOS } # -100
+		add_opinion_modifier = { target = HUN modifier = SER_ann_BOS } # -100
+		add_opinion_modifier = { target = GER modifier = SER_ann_BOS_GER } # -50
+
+		AUS = { country_event = { id = ausgleich.63 days = 1 }}
 	}
 
+	option = {
+		name = ausgleich.62.b
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -200
+
+		add_opinion_modifier = { target = AUS modifier = SER_REF_BOS } # 100
+		add_opinion_modifier = { target = CRO modifier = SER_REF_BOS } # 100
+		add_opinion_modifier = { target = HUN modifier = SER_REF_BOS } # 100
+		add_opinion_modifier = { target = GER modifier = SER_REF_BOS_GER } # 50
+		add_opinion_modifier = { target = BOS modifier = SER_REF_BOS_BOS } # -100
+	}
 }
 
-### Ionian Islands
-country_event = {
+country_event = { # Bosnia is now Serbian!
 	id = ausgleich.63
 	title = ausgleich.63.t
 	desc = ausgleich.63.d
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GRE
-		AUS = {has_war_with = HUN}
-
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ausgleich.63.a
-		GRE = {transfer_state = 758}
-		add_national_unity = 0.05
-		AUS = { country_event = { id = ausgleich.64 days = 1}}
-		
-	}
-	option = {
-		name = ausgleich.63.b
-		add_national_unity = -0.05
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -200
+
+		declare_war_on = { target = SER type = annex_everything } 
 	}
 
+	option = {
+		name = ausgleich.63.b
+
+		ai_chance = { factor = 95 }
+
+		add_political_power = -60
+
+		add_opinion_modifier = { target = SER modifier = AUS_letgo_SER } # 100
+	}
 }
-### Islands taken
-country_event = {
+
+country_event = { # Bosnia declares independence!
 	id = ausgleich.64
 	title = ausgleich.64.t
 	desc = ausgleich.64.d
 	
 	is_triggered_only = yes
 	
-	
 	option = {
 		name = ausgleich.64.a
-		add_national_unity = 0.05
-		declare_war_on = {
-				target = HUN
-				type = take_state_focus
-				generator = { 758 } 
-			}
-		
-		
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = -20
 	}
+
 	option = {
 		name = ausgleich.64.b
-		add_national_unity = -0.05
-	}
 
+		ai_chance = { factor = 20 }
+
+		add_political_power = 100
+
+		declare_war_on = { target = BOS type = annex_everything } 
+
+		add_opinion_modifier = { target = BOS modifier = AUS_att_BOS } # -200
+	}
 }
 
-### Montenegro independence
-country_event = {
-	id = ausgleich.65
-	title = ausgleich.65.t
-	desc = ausgleich.65.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = AUS
-		AUS = {has_war_with = HUN}
+############
+#Opportunism
+############
 
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
-	
-	option = {
-		name = ausgleich.65.a
-		add_national_unity = 0.05
-		MTN = {transfer_state = 105}
-		declare_war_on = {
-				target = MTN
-				type = take_state_focus
-				generator = { 105 } 
-			}
-		MTN = { country_event = { id = ausgleich.66 days = 1}}
-		
-		
-	}
-	option = {
-		name = ausgleich.65.b
-		add_national_unity = -0.05
-		MTN = {transfer_state = 105}
-		MTN = { country_event = { id = ausgleich.66 days = 1}}
-	}
+#########################################################################
+#  A-H Civil War - German Intervention
+#########################################################################
 
-}
-### Montenegro is free
-country_event = {
-	id = ausgleich.66
-	title = ausgleich.66.t
-	desc = ausgleich.66.d
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = ausgleich.66.a
-		add_national_unity = 0.05
-		#load_oob = 
+#########################################################################
+#  Austria-Hungary Civil War ends - An important experience (Germany)
+#########################################################################
 
-	}
+#########################################################################
+#  Austria-Hungary Civil War - Pace Events
+#########################################################################
 
-}
-### 67 Serbian help
-### 68 Serbian supply
-### 68 Serbian alliance
-### 69 alliance accepted
-### 70 Montenegro won the war
-### 71 Austrian defeat
-### Claim Bosnia
-country_event = {
-	id = ausgleich.72
-	title = ausgleich.72.t
-	desc = ausgleich.72.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SER
-		BOS = { is_puppet = no }
-		BOS = { exists = yes }
+#####################
+#Future of the Empire
+#####################
 
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
-	
-	option = {
-		name = ausgleich.72.a
-		declare_war_on = {
-				target = BOS
-				type = take_state_focus
-				generator = { 104 } 
-			}
-		SER = {add_state_core = 104}
-		
-	}
-	option = {
-		name = ausgleich.72.b
-	}
+################
+#Cabinet options
+################
 
-}
-### Bosnia request help
-country_event = {
-	id = ausgleich.73
-	title = ausgleich.73.t
-	desc = ausgleich.73.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BOS
-		BOS = {is_puppet = no }
-		BOS = {has_war_with = SER}	
+####################################################
+#A-H/Danubian Federation joins the Entente
+####################################################
 
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
-	
-	option = {
-		name = ausgleich.73.a
-		if = {
-			limit = {
-				BOS = { has_country_flag = side_austria }
-			}
-			AUS = { country_event = { id = ausgleich.77 days = 1}}
-			
-		}
-		if = {
-			limit = {
-				BOS = { has_country_flag = side_hungary }
-			}
-			HUN = { country_event = { id = ausgleich.77 days = 1}}
-			
-		}
-		
-	}
-	option = {
-		name = ausgleich.73.b
-		
-	}
+################################################################
+#A-H/Danubian Federation joins the Mitteleuropa
+################################################################
 
+##############################################################
+#A-H/Danubian Federation wants to join Syndicalist bloc
+##############################################################
 
-}
-### Serbia Claims Croatia
-country_event = {
-	id = ausgleich.75
-	title = ausgleich.75.t
-	desc = ausgleich.75.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SER
-		CRO = {is_puppet = no }
-		CRO = { exists = yes }
-		
-	}
-	
-	mean_time_to_happen = {
-		days = 20
-	}
-	
-	option = {
-		name = ausgleich.75.a
-		declare_war_on = {
-				target = CRO
-				type = take_state_focus
-				generator = { 103 163 109 } 
-			}
-		SER = {add_state_core = 103 }
-		SER = {add_state_core = 163 }
-		SER = {add_state_core = 109 }
-		
-	}
-	option = {
-		name = ausgleich.75.b
-	}
+##############################################################
+#A-H/Danubian Federation forms new bloc with Russia or Poland ?
+##############################################################
 
-}
-### Croatia request help
-country_event = {
-	id = ausgleich.76
-	title = ausgleich.76.t
-	desc = ausgleich.76.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CRO
-		BOS = {is_puppet = no }
-		CRO = {has_war_with = SER}	
+##############################################################
+#A-H/Danubian Federation forms new bloc with Russia
+##############################################################
 
-	}
-	
-	mean_time_to_happen = {
-		days = 90
-	}
-	
-	option = {
-		name = ausgleich.76.a
-		if = {
-			limit = {
-				BOS = { has_country_flag = side_austria }
-			}
-			AUS = { country_event = { id = ausgleich.77 days = 1}}
-			
-		}
-		
-		if = {
-			limit = {
-				BOS = { has_country_flag = side_hungary }
-			}
-			HUN = { country_event = { id = ausgleich.77 days = 1}}
-			
-		}
-		
-	}
-	option = {
-		name = ausgleich.76.b
-		
-	}
+##############################################################
+#A-H/Danubian Federation forms new bloc with Poland
+##############################################################
 
+#########################################################################
+#  A-H Civil War - Russian Intervention
+#########################################################################
 
-}
-### Help request
-country_event = {
-	id = ausgleich.77
-	title = ausgleich.77.t
-	desc = ausgleich.77.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.77.a
-		
-		if ={
-		limit= { SER = {has_war_with = CRO}}
-		add_to_war = {
-			targeted_alliance = CRO
-			enemy = SER
-		}
-		}
-		
-		if ={
-		limit= { SER = {has_war_with = BOS}}
-		add_to_war = {
-			targeted_alliance = BOS
-			enemy = SER
-		}
-		}
-		
-	}
+#########################################################################
+#  Austria-Hungary Civil War ends - An important experience (Russia)
+#########################################################################
 
-	option = {
-		name = ausgleich.77.b
-	}
+#### Terror events in civil war
 
-}
-### Fate of slovakia 
-country_event = {
-	id = ausgleich.78
-	title = ausgleich.78.t
-	desc = ausgleich.78.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-		owns_state = 664
-		owns_state = 70
-		owns_state = 71
-		owns_state = 73
-		
-		country_exists = HUN
-		country_exists = AUS
-		
-		NOT = {has_global_flag = centralize_success}
-		has_global_flag = ausgleich_37
-
-	}
-	
-	mean_time_to_happen = {
-		days = 100
-	}
-	
-	option = {
-		name = ausgleich.78.a
-		SLO = {add_state_core = 664 }
-		SLO = {add_state_core = 70 }
-		SLO = {add_state_core = 71 }
-		SLO = {add_state_core = 73 }
-		
-		SLO = {transfer_state = 664}
-		SLO = {transfer_state = 70}
-		SLO = {transfer_state = 71}
-		SLO = {transfer_state = 73}
-		
-		
-	}
-
-	option = {
-		name = ausgleich.78.b
-		if ={
-		limit = {
-			BOM = {is_puppet = no}
-			country_exists = BOM
-			
-		}
-		BOM = { country_event = { id = ausgleich.79 days = 1}}
-		set_country_flag = slovak_owner
-		}
-	}
-	
-
-
-}
-### Request Bohemia
-country_event = {
-	id = ausgleich.79
-	title = ausgleich.79.t
-	desc = ausgleich.79.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.79.a
-		every_country = {
-			limit={
-				has_country_flag = slovak_owner
-			
-			}
-			country_event = { id = ausgleich.80 days = 1}
-		}
-		
-	}
-
-	option = {
-		name = ausgleich.79.b
-	}
-
-}
-### Bohemia helps Slovakia
-country_event = {
-	id = ausgleich.80
-	title = ausgleich.80.t
-	desc = ausgleich.80.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.80.a
-		BOM = { country_event = { id = ausgleich.81 days = 1}}
-		SLO = { country_event = { id = ausgleich.82 days = 1}}
-		
-		SLO = {add_state_core = 664 }
-		SLO = {add_state_core = 70 }
-		SLO = {add_state_core = 71 }
-		SLO = {add_state_core = 73 }
-		
-		SLO = {transfer_state = 664}
-		SLO = {transfer_state = 70}
-		SLO = {transfer_state = 71}
-		SLO = {transfer_state = 73}
-		
-		declare_war_on = {
-			target = SLO
-			type = take_state_focus
-			generator = { 664 70 71 73 } 
-		}
-		
-		
-	}
-	
-	option = {
-		name = ausgleich.80.b
-		SLO = { country_event = { id = ausgleich.82 days = 1}}
-		
-		SLO = {add_state_core = 664 }
-		SLO = {add_state_core = 70 }
-		SLO = {add_state_core = 71 }
-		SLO = {add_state_core = 73 }
-		
-		SLO = {transfer_state = 664}
-		SLO = {transfer_state = 70}
-		SLO = {transfer_state = 71}
-		SLO = {transfer_state = 73}
-	}
-
-
-}
-### To war
-country_event = {
-	id = ausgleich.81
-	title = ausgleich.81.t
-	desc = ausgleich.81.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.81.a
-		if ={
-		limit= { SLO = {has_war_with = AUS}}
-		add_to_war = {
-			targeted_alliance = SLO
-			enemy = AUS
-		}
-		}
-		if ={
-		limit= { SLO = {has_war_with = HUN}}
-		add_to_war = {
-			targeted_alliance = SLO
-			enemy = HUN
-		}
-		}
-
-	}
-
-
-}
-### Slovakia is free
-country_event = {
-	id = ausgleich.82
-	title = ausgleich.82.t
-	desc = ausgleich.82.d
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.82.a
-		#load_oob
-
-	}
-
-
-}
-
-### War is over
-### Austria wins
-country_event = {
-	id = ausgleich.83
-	title = ausgleich.83.t
-	desc = ausgleich.83.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-
-		tag  = AUS
-		NOT = {country_exists = HUN}
-		country_exists = AUS
-		
-		NOT = {has_global_flag = centralize_success}
-		has_global_flag = ausgleich_war
-
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
-	
-	option = {
-		name = ausgleich.83.a
-		
-		BOM = { country_event = {id = ausgleich.16 days = 1}}
-		CRO = { country_event = {id = ausgleich.17 days = 1}}
-		BOS = { country_event = {id = ausgleich.18 days = 1}}
-		GAL = { country_event = {id = ausgleich.19 days = 1}}
-		
-		AUS = { puppet = CRO}
-		set_global_flag = centralize_success
-	}	
-
-}
-
-### Hungary Wins
-country_event = {
-	id = ausgleich.84
-	title = ausgleich.84.t
-	desc = ausgleich.84.d
-	
-	fire_only_once = yes
-	
-	trigger = {
-
-		tag = HUN
-		NOT = {country_exists = AUS}
-		country_exists = HUN
-		
-		NOT = {has_global_flag = centralize_success}
-		has_global_flag = ausgleich_war
-
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
-	
-	option = {
-		name = ausgleich.84.a
-		
-		country_event = {id = ausgleich.85 days = 1}
-		
-	}	
-
-}
-
-### Future of Hungary
-country_event = {
-	id = ausgleich.85
-	title = ausgleich.85.t
-	desc = ausgleich.85.d
-	
-	is_triggered_only = yes
-	
-	option = { # end all this
-		name = ausgleich.85.a
-		AUS = {end_puppet = BOS}
-		AUS = {end_puppet = CRO}
-		AUS = {end_puppet = GAL}
-		AUS = {end_puppet = BOM}
-		
-		HUN = {end_puppet = BOS}
-		puppet = CRO
-		HUN = {end_puppet = GAL}
-		HUN = {end_puppet = BOM}
-		
-		set_global_flag = aus_hun_empire_fallen
-
-	}
-
-
-}
+#### 1947/1957 Ausgleich

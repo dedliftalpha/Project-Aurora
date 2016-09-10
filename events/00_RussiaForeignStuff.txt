@@ -5385,3 +5385,218 @@ country_event = { #Malorossia wants to form union with russia
 	}
 
 }
+
+country_event = { #Bjorko pact RUS
+	id = rusfor.1171
+	title = rusfor.1171.t
+	desc = rusfor.1171.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1171.a #Send our foreign minister to Berlin to negotiate a pact!
+		GER = { country_event = { id = rusfor.1172 } }
+	}
+
+}
+
+country_event = { #Bjorko pact GER
+	id = rusfor.1172
+	title = rusfor.1172.t
+	desc = rusfor.1172.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1172.a #Sign and ratify the pact.
+		ai_chance = { factor = 75 }
+		#Should end guarantee but can't lol
+		add_opinion_modifier = { target = UKR modifier = RUS_bjorko_pact }
+		diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		RUS = { diplomatic_relation = { country = GER relation = non_aggression_pact } 
+		country_event = { id = rusfor.1158 } }
+		set_global_flag = GER_RUS_bjorko
+	}
+	
+	option = {
+		name = rusfor.1172.b #no
+		ai_chance = { factor = 25 }
+        RUS = { country_event = { id = rusfor.11721 } }
+	}
+
+}
+
+country_event = { #ger refused
+	id = rusfor.11721
+	title = rusfor.11721.t
+	desc = rusfor.11721.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.11721.a #continue operations in ukraine
+		ai_chance = { factor = 60 }
+		add_political_power = 40
+		country_event = { id = rusfor.1158 }
+		add_opinion_modifier = { target = GER modifier = RUS_bjorko_pact_continue }
+		#maybe something like hostility I don't know
+	}
+	
+	option = {
+		name = rusfor.11721.b #back down
+		ai_chance = { factor = 40 }
+		add_political_power = -80
+        add_opinion_modifier = { target = GER modifier = RUS_back_down_bjorko }
+	}
+
+}
+
+country_event = { #Break bjorko pact
+	id = rusfor.1173
+	title = rusfor.1173.t
+	desc = rusfor.1173.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = GER has_global_flag = GER_RUS_bjorko has_war_with = RUS }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1173.a #Burn it!
+		clr_global_flag = GER_RUS_bjorko
+	}
+
+}
+
+country_event = { #Bjorko pact war RUS JAP
+	id = rusfor.1174
+	title = rusfor.1174.t
+	desc = rusfor.1174.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = GER has_global_flag = GER_RUS_bjorko RUS = { has_war_with = JAP } NOT = { has_war_with = JAP } }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1174.a #honor it
+		ai_chance = { factor = 99 }
+		add_opinion_modifier = { target = RUS modifier = RUS_honored_bjorko }
+		declare_war_on = { target = JAP type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1174.b #break it
+		ai_chance = { factor = 1 }
+		add_opinion_modifier = { target = RUS modifier = RUS_broke_bjorko }
+		clr_global_flag = GER_RUS_bjorko
+	}
+
+}
+
+country_event = { #Bjorko pact war RUS FRA
+	id = rusfor.1175
+	title = rusfor.1175.t
+	desc = rusfor.1175.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = GER has_global_flag = GER_RUS_bjorko RUS = { has_war_with = FRA } NOT = { has_war_with = FRA } }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1174.a #honor it
+		ai_chance = { factor = 99 }
+		add_opinion_modifier = { target = RUS modifier = RUS_honored_bjorko }
+		declare_war_on = { target = FRA type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1174.b #break it
+		ai_chance = { factor = 1 }
+		add_opinion_modifier = { target = RUS modifier = RUS_broke_bjorko }
+		clr_global_flag = GER_RUS_bjorko
+	}
+
+}
+
+country_event = { #Bjorko pact war FRA GER
+	id = rusfor.1176
+	title = rusfor.1176.t
+	desc = rusfor.1176.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_global_flag = GER_RUS_bjorko GER = { has_war_with = FRA } NOT = { has_war_with = FRA } }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1174.a #honor it
+		ai_chance = { factor = 99 }
+		add_opinion_modifier = { target = GER modifier = RUS_honored_bjorko }
+		declare_war_on = { target = FRA type = annex_everything }
+		GER = { country_event = { id = rusfor.1178 } }
+	}
+	
+	option = {
+		name = rusfor.1176.b #break it
+		ai_chance = { factor = 1 }
+		add_opinion_modifier = { target = GER modifier = RUS_broke_bjorko }
+		clr_global_flag = GER_RUS_bjorko
+	}
+
+}
+
+country_event = { #Bjorko pact war GER JAP
+	id = rusfor.1177
+	title = rusfor.1177.t
+	desc = rusfor.1177.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_global_flag = GER_RUS_bjorko GER = { has_war_with = JAP } NOT = { has_war_with = JAP } }
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1174.a #honor it
+		ai_chance = { factor = 99 }
+		add_opinion_modifier = { target = GER modifier = RUS_honored_bjorko }
+		declare_war_on = { target = JAP type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1176.b #break it
+		ai_chance = { factor = 1 }
+		add_opinion_modifier = { target = GER modifier = RUS_broke_bjorko }
+		clr_global_flag = GER_RUS_bjorko
+	}
+
+}
+
+country_event = { #The Russians honor the Bjorko Pact
+	id = rusfor.1178
+	title = rusfor.1178.t
+	desc = rusfor.1178.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1178.a #hurrah
+		if = { limit = { RUS = { is_in_faction = no } } add_to_faction = RUS }
+	}
+
+}

@@ -5135,6 +5135,12 @@ focus = {
 		OR = { AND = { OR = { has_government = syndicalist has_government = totalist } NOT = { UKR = { OR = { is_in_faction_with = FRA is_in_faction_with = ENG } } } } NOT = { has_government = syndicalist has_government = totalist } } }
 		prerequisite = { focus = RUS_eastern_europe_focus }
 		mutually_exclusive = { focus = RUS_ask_germany_syndie_ukraine }
+		bypass = { AND = {
+            OR = { owns_state = 202 any_country = { AND = { is_puppet_of = RUS owns_state = 202	} } }
+            OR = { owns_state = 221 any_country = { AND = { is_puppet_of = RUS owns_state = 221	} } } 
+			OR = { owns_state = 137 any_country = { AND = { is_puppet_of = RUS owns_state = 137	} } } } }
+		cancel = { OR = { country_exists = SOV country_exists = SIB has_war_with = UKR UKR = { is_in_faction_with = RUS } UKR = { is_in_faction_with = GER } UKR = { is_puppet_of = RUS } NOT = { UKR = { controls_state = 202 } } NOT = { UKR = { OR = { has_country_flag = UKR_Syndicalist has_country_flag = UKR_Alone } } }
+		 } }
 		
 		ai_will_do = {
 			factor = 1
@@ -5162,9 +5168,16 @@ focus = {
 		x = 4
 		y = 9
 		cost = 2
-		available = { }
+		available = { is_puppet = no GER = { NOT = { is_in_faction_with = JAP } is_puppet = no } NOT = { country_exists = SOV country_exists = SIB has_war_with = UKR has_war_with = FRA has_war_with = JAP has_war_with = GER is_in_faction_with = GER is_in_faction_with = JAP is_in_faction_with = FRA UKR = { is_in_faction_with = RUS is_in_faction_with = GER is_puppet_of = RUS } } UKR = { controls_state = 202 OR = { has_country_flag = UKR_Syndicalist has_country_flag = UKR_Alone } }
+		NOT = { has_government = syndicalist has_government = totalist } }
 		prerequisite = { focus = RUS_eastern_europe_focus }
 		mutually_exclusive = { focus = RUS_act_solo_syndie_ukraine }
+		bypass = { AND = {
+            OR = { owns_state = 202 any_country = { AND = { is_puppet_of = RUS owns_state = 202	} } }
+            OR = { owns_state = 221 any_country = { AND = { is_puppet_of = RUS owns_state = 221	} } } 
+			OR = { owns_state = 137 any_country = { AND = { is_puppet_of = RUS owns_state = 137	} } } } }
+	    cancel = { OR = { is_puppet = yes GER = { is_in_faction_with = JAP } GER = { is_puppet = yes } country_exists = SOV country_exists = SIB has_war_with = UKR has_war_with = FRA has_war_with = JAP has_war_with = GER is_in_faction_with = GER is_in_faction_with = JAP is_in_faction_with = FRA UKR = { is_in_faction_with = RUS } UKR = { is_in_faction_with = GER } UKR = { is_puppet_of = RUS } NOT = { UKR = { controls_state = 202 } } NOT = { UKR = { OR = { has_country_flag = UKR_Syndicalist has_country_flag = UKR_Alone } } }
+		has_government = syndicalist has_government = totalist } }
 		
 		ai_will_do = {
 			factor = 1
@@ -5180,7 +5193,8 @@ focus = {
 			}
 		}	
 		completion_reward = {
-         add_opinion_modifier = { target = UKR modifier = RUS_syndie_ukraine_focus }   
+         add_opinion_modifier = { target = UKR modifier = RUS_syndie_ukraine_focus }
+         country_event = { id = rusfor.1171 }		 
 		}		
 	}
 	

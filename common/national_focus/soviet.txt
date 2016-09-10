@@ -688,9 +688,9 @@ focus = {
 		cost = 6
 		available = { always = yes }
 		prerequisite = { focus = SOV_EXP_FAR }
-		bypass = { OR = { MON = { is_puppet_of = SOV } controls_state = 330 } }
+		bypass = { OR = { MON = { is_puppet_of = SOV } controls_state = 330  MON = { exists = no } }
 		completion_reward = {
-		country_event = { id = sovf.54 }
+		IF = { limit = { MON = { exists = yes }  }  country_event = { id = sovf.54 } }
 						}
 				}
 		focus = {
@@ -925,7 +925,7 @@ focus = {
 		x = 17
 		y = 2
 		cost = 10
-		available = { NOT = { has_war_with = GER } NOT = { is_in_faction_with = FRA } }
+		available = { NOT = { has_war_with = GER } NOT = { is_in_faction_with = FRA } is_in_faction = no }
 		prerequisite = { focus = SOV_EXP_EUR }
 		mutually_exclusive = { focus = SOV_EUR_INT }
 		completion_reward = {
@@ -953,7 +953,8 @@ focus = {
 		y = 3
 		cost = 6
 		available = { GER = { exists = yes } }
-		prerequisite = { focus = SOV_EXP_EUR }
+		
+		prerequisite = { focus = SOV_EUR_PRO focus = SOV_EUR_INT }
 		completion_reward = {
 		create_wargoal = { type = annex_everything target = GER }
 						}
@@ -964,7 +965,7 @@ focus = {
 		x = 18
 		y = 4
 		cost = 10
-		prerequisite = { focus = SOV_EUR_PRO focus = SOV_EUR_INT }
+		prerequisite = { focus = SOV_EXP_EUR }
 		completion_reward = {
 		country_event = { id = sovf.75 }
 						}

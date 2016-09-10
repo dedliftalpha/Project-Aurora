@@ -3228,8 +3228,10 @@ country_event = { # Dealing with Yunnan
 		ai_chance = { factor = 30 }
 
 		hidden_effect = { YUN = { country_event = { id = qing.75 days = 1 }}}
+		hidden_effect = { NPA = { country_event = { id = qing.75 days = 1 }}}
 		add_political_power = 20
-		add_opinion_modifier = { target = YUN modifier = QIE_YUN_WAR_RES } # -50
+		add_opinion_modifier = { target = YUN modifier = QIE_YUN_WAR_RES } 
+		add_opinion_modifier = { target = NPA modifier = QIE_YUN_WAR_RES } 								# -50
 	}
 
 	option = {
@@ -3238,6 +3240,7 @@ country_event = { # Dealing with Yunnan
 		ai_chance = { factor = 50 }
 
 		hidden_effect = { YUN = { country_event = { id = qing.76 days = 1 }}}
+		hidden_effect = { NPA = { country_event = { id = qing.76 days = 1 }}}
 		add_political_power = 40
 	}
 
@@ -3247,7 +3250,8 @@ country_event = { # Dealing with Yunnan
 		ai_chance = { factor = 2 }
 
 		add_political_power = -80
-		add_opinion_modifier = { target = YUN modifier = QIE_YUN_LEAVE } # 10
+		add_opinion_modifier = { target = YUN modifier = QIE_YUN_LEAVE } 
+		add_opinion_modifier = { target = NPA modifier = QIE_YUN_LEAVE }# 10
 	}
 }
 
@@ -3334,7 +3338,8 @@ country_event = { # The Qing want to talk
 	option = {
 		name = qing.77.a
 
-		annex_country = { target = YUN transfer_troops = no }
+		IF = {  limit = { YUN = { exists = yes } }  annex_country = { target = YUN transfer_troops = yes } }
+		IF = {  limit = { NPA = { exists = yes } }  annex_country = { target = NPA transfer_troops = yes } }
 		add_political_power = 200
 		set_global_flag = YUN_annexed
 	}
@@ -3361,7 +3366,8 @@ country_event = { # We still haven't heard anything from Yunnan...
 
 		ai_chance = { factor = 30 }
 
-		declare_war_on = { target = YUN type = annex_everything	}
+		IF = {  limit = { YUN = { exists = yes } } declare_war_on = { target = YUN type = annex_everything	} }
+		IF = {  limit = { NPA = { exists = yes } } declare_war_on = { target = NPA type = annex_everything	}	}
 	}
 
 	option = {
@@ -3386,7 +3392,9 @@ country_event = { # The Yunnan Offer
 
 		ai_chance = { factor = 10 }
 
-		puppet = YUN
+		
+		IF = {  limit = { YUN = { exists = yes } } puppet = YUN }
+		IF = {  limit = { NPA = { exists = yes } } puppet = NPA }
 		add_political_power = 60
 	}
 
@@ -3395,7 +3403,8 @@ country_event = { # The Yunnan Offer
 
 		ai_chance = { factor = 60 }
 
-		hidden_effect = { YUN = { country_event = { id = qing.80 days = 1 }}}
+		IF = {  limit = { YUN = { exists = yes } }  hidden_effect = { YUN = { country_event = { id = qing.80 days = 1 }}} }
+		IF = {  limit = { NPA = { exists = yes } }  hidden_effect = { NPA = { country_event = { id = qing.80 days = 1 }}} }
 	}
 
 	option = {
@@ -3403,7 +3412,8 @@ country_event = { # The Yunnan Offer
 
 		ai_chance = { factor = 20 }
 
-		declare_war_on = { target = YUN type = annex_everything	}
+		IF = {  limit = { YUN = { exists = yes } } declare_war_on = { target = YUN type = annex_everything	} }
+		IF = {  limit = { NPA = { exists = yes } } declare_war_on = { target = NPA type = annex_everything	} }
 	}
 }
 
@@ -3420,7 +3430,8 @@ country_event = { # The Qing have mobilized troops
 
 		ai_chance = { factor = 10 }
 
-		puppet = YUN
+		 IF = {  limit = { YUN = { exists = yes } } QIE = { puppet = YUN } }
+		 IF = {  limit = { NPA = { exists = yes } } QIE = { puppet = NPA } }
 		add_political_power = 60
 	}
 
@@ -3429,7 +3440,9 @@ country_event = { # The Qing have mobilized troops
 
 		ai_chance = { factor = 60 }
 
-		hidden_effect = { YUN = { country_event = { id = qing.77 days = 1 }}}
+		  hidden_effect = { QIE = { country_event = { id = qing.77 days = 1 }}} 
+		
+		
 	}
 
 	option = {
@@ -3456,8 +3469,8 @@ country_event = { # The AoG is no more
 		NOT = {
 			country_exists = AOG
 			country_exists = CHI
-			has_war_with = GER
-			is_in_faction_with = GER
+			QIE = {  has_war_with = GER }
+			QIE = { is_in_faction_with = GER }
 		}
 	}
 
@@ -3657,24 +3670,7 @@ country_event = { # Dealing with Xibei San Ma
 	desc = qing.86.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = QIE
-		country_exists = XSM
-		owns_state = 622
-		owns_state = 599
-		owns_state = 325
-		NOT = {	
-			has_war = yes
-			country_exists = CHI
-			country_exists = AOG
-			country_exists = SQI
-			country_exists = YUN
-			XSM = { is_puppet = yes }
-			is_puppet = yes 
-		}
-	}
+	is_triggered_only = yes
 
 	mean_time_to_happen = {
 		days = 0
@@ -3718,7 +3714,7 @@ country_event = { # The Qing have issued an Ultimatium
 
 		ai_chance = { factor = 40 }
 
-		hidden_effect = { XSM = { country_event = { id = qing.89 days = 1 }}}
+		hidden_effect = { QIE = { country_event = { id = qing.89 days = 1 }}}
 	}
 
 	option = {
@@ -3743,7 +3739,7 @@ country_event = { # The Qing want to talk
 
 		ai_chance = { factor = 60 }
 
-		hidden_effect = { XSM = { country_event = { id = qing.89 days = 1 }}}
+		hidden_effect = { QIE = { country_event = { id = qing.89 days = 1 }}}
 	}
 
 	option = {
@@ -3774,7 +3770,7 @@ country_event = { # The Xibei have rejoined the fold!
 	option = {
 		name = qing.89.a
 
-		annex_country = { target = XSM transfer_troops = no }
+		annex_country = { target = XSM transfer_troops = yes }
 		add_political_power = 100
 	}
 }
@@ -4477,7 +4473,7 @@ country_event = { # Legation Cities capitulated
 	option = {
 		name = qing.109.a
 
-		annex_country = { target = LEC transfer_troops = no }
+		annex_country = { target = LEC transfer_troops = yes }
 		add_political_power = 60
 	}
 }
@@ -4575,7 +4571,7 @@ country_event = { # Legation Cities accept
 	option = {
 		name = qing.113.a
 
-		annex_country = { target = LEC transfer_troops = no }
+		annex_country = { target = LEC transfer_troops = yes }
 		add_political_power = 60
 	}
 }
@@ -4654,7 +4650,7 @@ country_event = { # Qing deal
 	option = {
 		name = qing.116.a
 
-		annex_country = { target = TIB transfer_troops = no }
+		annex_country = { target = TIB transfer_troops = yes }
 		add_political_power = 60
 	}
 }
@@ -5260,7 +5256,7 @@ country_event = { # Fengtiang gives up
 	option = {
 		name = qing.135.a
 
-		annex_country = { target = MON transfer_troops = no }
+		annex_country = { target = MON transfer_troops = yes }
 
 		add_political_power = 60
 	}

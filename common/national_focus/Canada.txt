@@ -305,7 +305,7 @@ focus_tree = {
 		id = CAN_nrc
 		icon = GFX_goal_generic_scientific_exchange
 		prerequisite = { focus = CAN_works focus = CAN_national_developmment }
-		x = 6 
+		x = 5 
 		y = 1 
 		cost = 10 
 		completion_reward = {
@@ -1610,9 +1610,8 @@ focus_tree = {
 			add_tech_bonus = {
 				name = navy_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = bb_tech
-				category = bc_tech
 			}
 			add_tech_bonus = {
 				name = naval_doctrine_bonus
@@ -1639,12 +1638,6 @@ focus_tree = {
 				category = cv_tech
 			}
 			add_tech_bonus = {
-				name = navy_air_bonus
-				bonus = 0.5 
-				uses = 1 
-				category = naval_air
-			}
-			add_tech_bonus = {
 				name = naval_doctrine_bonus
 				bonus = 0.5 
 				uses = 2 
@@ -1653,9 +1646,194 @@ focus_tree = {
 		}
 	}
 	
+	focus = { # screen ship focus
+		id = CAN_navy_escort
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = CAN_navy_cv focus = CAN_navy_bb }
+		x = 10 
+		y = 10 
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 2 
+				category = dd_tech
+				category = cl_tech
+			}
+		}
+	}
+	
+	focus = { #Heavy Cruiser Development
+		id = CAN_navy_cruiser
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = CAN_navy_bb }
+		x = 9 
+		y = 11
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1 
+				category = ca_tech
+				category = bc_tech
+			}
+		}
+	}
+	
+	focus = { #Naval Aviation Innovation
+		id = CAN_navy_aviation
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = CAN_navy_cv }
+		x = 11 
+		y = 11
+		cost = 10 
+		completion_reward = {
+			add_tech_bonus = {
+				name = navy_air_bonus
+				bonus = 0.5 
+				uses = 2 
+				category = naval_air
+			}
+		}
+	}
+	
+	focus = { #Destroyer Pickets
+		id = CAN_navy_asw
+		icon = GFX_goal_generic_navy_anti_submarine
+		prerequisite = { focus = CAN_navy_cruiser }
+		prerequisite = { focus = CAN_navy_escort }
+		x = 9 
+		y = 12
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_asw_idea
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1 
+				category = dd_tech
+			}
+		}
+	}
+	
+	
+	focus = { #Submarine Support
+		id = CAN_navy_submarine
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = CAN_navy_escort }
+		prerequisite = { focus = CAN_navy_aviation }
+		x = 11 
+		y = 12
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_sub_idea
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1 
+				category = ss_tech
+			}
+		}
+	}
+	
+	focus = { #Battleship Effort 2
+		id = CAN_navy_bb2
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite =  { focus = CAN_navy_asw }
+		x = 9 
+		y = 13
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1
+				category = bb_tech
+			}
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1
+				category = shbb_tech
+			}
+		}
+	}
+	
+	focus = { #Carrier Effort 2
+		id = CAN_navy_cv2
+		icon = GFX_goal_generic_navy_carrier
+		prerequisite =  { focus = CAN_navy_submarine }
+		x = 11 
+		y = 13
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = navy_bonus
+				bonus = 0.5 
+				uses = 1
+				category = cv_tech
+			}
+			add_tech_bonus = {
+				name = navy_aviation_bonus
+				bonus = 0.5 
+				uses = 1
+				category = naval_air
+			}
+		}
+	}
+	
+	focus = { #Innovative Theories of Naval Warfare
+		id = CAN_navy_doctrine_effort
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = CAN_navy_bb2 focus = CAN_navy_cv2 }
+		available = { has_completed_focus = CAN_navy_school }
+		x = 10 
+		y = 14 
+		cost = 10 
+		completion_reward = {
+			if = {
+				limit = { has_completed_focus = CAN_navy_bb }
+				add_tech_bonus = {
+					name = naval_doctrine_bonus
+					bonus = 0.5 
+					uses = 3 
+					category = cat_fleet_in_being
+				}
+				add_tech_bonus = {
+					name = naval_bonus
+					bonus = 0.5 
+					uses = 1 
+					category = ca_tech
+					category = bc_tech 
+					category = dd_tech
+				}
+			}
+			
+			if = {
+				limit = { has_completed_focus = CAN_navy_cv }
+				add_tech_bonus = {
+					name = naval_doctrine_bonus
+					bonus = 0.5 
+					uses = 3 
+					category = cat_base_strike
+				}
+				add_tech_bonus = {
+					name = naval_bonus
+					bonus = 0.5 
+					uses = 1 
+					category = cl_tech
+					category = ss_tech 
+					category = dd_tech
+				}
+			}
+		}
+	}
+		
 	focus = { #Royal Roads Naval College
 		id = CAN_navy_school
-		icon = GFX_goal_generic_occypy_states_coastal
+		icon = GFX_goal_generic_occupy_states_coastal
 		prerequisite = { focus = CAN_navy_focus }
 		x = 7 
 		y = 9
@@ -1683,6 +1861,28 @@ focus_tree = {
 				category = marine_tech
 			}
 		}
+	}
+	
+	focus = {
+		id = CAN_marines2 #Amphibious Landing Drills
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = CAN_marines }
+		x = 7 
+		y = 11 
+		cost = 10 
+		completion_reward = {
+			army_experience = 10 
+			navy_experience = 10
+			add_ideas = CAN_amphib_drills
+			add_tech_bonus = {
+				name = marines_bonus
+				bonus = 0.5 
+				uses = 2 
+				category = marine_tech
+				category = tp_tech
+			}
+		}
+		
 	}
 	
 	focus = { #National Shipbuilding Strategy
@@ -1713,7 +1913,7 @@ focus_tree = {
 		cost = 10 
 		completion_reward = {
 			464 = {
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
 					level = 2 
@@ -1743,6 +1943,7 @@ focus_tree = {
 			}
 		}
 	}
+	
 	focus = { #Pacific Dockyard Expansion 
 		id = CAN_dockyards3
 		icon = GFX_goal_generic_construct_naval_dockyard
@@ -1769,6 +1970,51 @@ focus_tree = {
 				add_building_construction = {
 					type = naval_base
 					level = 2 
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = CAN_victory_ships
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = CAN_dockyards3 }
+		available = { has_war = yes }
+		x = 13 
+		y = 12
+		cost = 10 
+		completion_reward = {
+			add_ideas = CAN_victory_ships_idea
+			464 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2 
+					instant_build = yes
+				}
+			}
+			468 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			465 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			740 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1 
 					instant_build = yes
 				}
 			}

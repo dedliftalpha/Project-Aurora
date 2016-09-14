@@ -4890,10 +4890,6 @@ focus = {
 		available = { country_exists = MON MON = { controls_state = 329 controls_state = 564 controls_state = 563 is_puppet = no } NOT = { MON = { has_war_with = RUS is_in_faction_with = RUS } } }
 		prerequisite = { focus = RUS_far_east_focus }
 		mutually_exclusive = { focus = RUS_crush_mongolia }
-		bypass = { AND = { OR = { owns_state = 329 any_country = { AND = { is_puppet_of = RUS owns_state = 329 } } }
-			OR = { owns_state = 564 any_country = { AND = { is_puppet_of = RUS owns_state = 564 } } }
-            OR = { owns_state = 563 any_country = { AND = { is_puppet_of = RUS owns_state = 563 } } }
-            OR = { owns_state = 330 any_country = { AND = { is_puppet_of = RUS owns_state = 330	} } } } }
 		cancel = { NOT = { OR = { country_exists = MON MON = { controls_state = 329 } MON = { controls_state = 564 } MON = { controls_state = 563 } MON = { is_puppet = no } NOT = { MON = { has_war_with = RUS } } NOT = { is_in_faction_with = MON } } } }
 		
 		ai_will_do = {
@@ -5106,6 +5102,14 @@ focus = {
 		add_state_claim = 190
 		add_state_claim = 13
 		add_state_claim = 191
+		if = { limit = { FIN = { is_in_faction_with = GER NOT = { is_puppet_of = RUS } OR = { owns_state = 146 owns_state = 147 owns_state = 213 owns_state = 215 owns_state = 722 } } }
+		add_state_core = 146
+		 add_state_core = 147
+		 add_state_core = 213
+		 add_state_core = 215
+		 add_state_core = 722
+		 add_state_core = 216
+		create_wargoal = { type = annex_everything target = FIN } }
 		add_opinion_modifier = { target = UKR modifier = RUS_crush_mitteleuropa }
 		add_opinion_modifier = { target = WHR modifier = RUS_crush_mitteleuropa }
 		add_opinion_modifier = { target = LIT modifier = RUS_crush_mitteleuropa }
@@ -5222,8 +5226,15 @@ focus = {
 		x = 9
 		y = 10
 		cost = 2
-		available = { }
+		available = { is_puppet = no NOT = { is_in_faction_with = GAL AND = { GAL = { is_puppet_of = AUS } is_in_faction_with = AUS } AND = { GAL = { is_puppet_of = POL } is_in_faction_with = POL } AND = { POL = { owns_state = 91 } is_in_faction_with = POL } AND = { AUS = { owns_state = 91 } is_in_faction_with = AUS } }
+		owns_state = 11 controls_state = 11 owns_state = 12 controls_state = 12 owns_state = 206 controls_state = 206 owns_state = 202 controls_state = 202 owns_state = 137 controls_state = 137 owns_state = 221 controls_state = 221 }
 		prerequisite = { focus = RUS_crush_mitteleuropa }
+		bypass = { AND = {
+            OR = { owns_state = 88 any_country = { AND = { is_puppet_of = RUS owns_state = 88	} } }
+            OR = { owns_state = 91 any_country = { AND = { is_puppet_of = RUS owns_state = 91	} } } 
+			OR = { owns_state = 89 any_country = { AND = { is_puppet_of = RUS owns_state = 89	} } } 
+			OR = { owns_state = 80 any_country = { AND = { is_puppet_of = RUS owns_state = 80	} } } } }
+		cancel = { is_puppet = yes }
 		
 		ai_will_do = {
 			factor = 1
@@ -5239,7 +5250,23 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        add_opinion_modifier = { target = GAL modifier = RUS_ultimatum_galicia }
+		add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia }
+		add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia1 }
+        add_state_claim = 88
+		add_state_claim = 91
+		add_state_claim = 89
+		add_state_claim = 80
+        if = { limit = { AUS = { owns_state = 91 NOT = { has_war_with = RUS } } }
+        AUS = { country_event = { id = rusfor.1210 } } }
+        if = { limit = { POL = { owns_state = 91 NOT = { has_war_with = RUS } } }
+        POL = { country_event = { id = rusfor.1214 } } }
+        if = { limit = { GAL = { is_puppet_of = AUS owns_state = 91 NOT = { has_war_with = RUS } } }
+        AUS = { country_event = { id = rusfor.1218 } } }
+		if = { limit = { GAL = { is_puppet_of = POL owns_state = 91 NOT = { has_war_with = RUS } } }
+        POL = { country_event = { id = rusfor.1224 } } }
+		if = { limit = { country_exists = GAL GAL = { is_puppet = no owns_state = 91 } }
+        create_wargoal = { type = annex_everything target = GAL } }
 		}		
 	}
 	
@@ -5328,9 +5355,17 @@ focus = {
 		x = 3
 		y = 8
 		cost = 2
-		available = { }
+		available = { NOT = { AND  = { FIN = { is_in_faction_with = GER } GER = { has_capitulated = no } } } }
 		prerequisite = { focus = RUS_eastern_europe_focus }
 		mutually_exclusive = { focus = RUS_demand_karelia }
+		bypass = { AND = {
+            OR = { owns_state = 146 any_country = { AND = { is_puppet_of = RUS owns_state = 146	} } }
+            OR = { owns_state = 147 any_country = { AND = { is_puppet_of = RUS owns_state = 147	} } } 
+			OR = { owns_state = 213 any_country = { AND = { is_puppet_of = RUS owns_state = 213	} } }
+            OR = { owns_state = 722 any_country = { AND = { is_puppet_of = RUS owns_state = 722	} } }
+            OR = { owns_state = 215 any_country = { AND = { is_puppet_of = RUS owns_state = 215	} } } } }
+		cancel = { OR = { AND = { FIN = { is_in_faction_with = GER } GER = { has_capitulated = no } }
+		} }
 		
 		ai_will_do = {
 			factor = 1
@@ -5346,7 +5381,17 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+		#should end guarantees but can't lol
+        add_opinion_modifier = { target = FIN modifier = RUS_crush_finland }
+		add_opinion_modifier = { target = GER modifier = RUS_crush_finland }
+		add_state_core = 146
+		 add_state_core = 147
+		 add_state_core = 213
+		 add_state_core = 215
+		 add_state_core = 722
+		 add_state_core = 216
+		 if = { limit = { FIN = { NOT = { is_puppet_of = RUS } OR = { owns_state = 146 owns_state = 147 owns_state = 213 owns_state = 215 owns_state = 722 } } }
+		 create_wargoal = { type = annex_everything target = FIN } }    
 		}		
 	}
 	
@@ -5356,9 +5401,12 @@ focus = {
 		x = 1
 		y = 8
 		cost = 2
-		available = { }
+		available = { is_puppet = no NOT = { FIN = { is_puppet_of = RUS OR = { owns_state = 146 owns_state = 147 owns_state = 213 owns_state = 215 owns_state = 722 } } AND  = { FIN = { is_in_faction_with = GER } GER = { has_capitulated = no } } } }
 		prerequisite = { focus = RUS_eastern_europe_focus }
 		mutually_exclusive = { focus = RUS_crush_finland }
+		cancel = { OR = { AND = { FIN = { is_in_faction_with = GER } GER = { has_capitulated = no } }
+		FIN = { AND = { NOT = { owns_state = 146 } NOT = { owns_state = 147 } NOT = { owns_state = 213 } NOT = { owns_state = 215 }  NOT = { owns_state = 722 } } }
+		FIN = { is_puppet_of = RUS } } }
 		
 		ai_will_do = {
 			factor = 1
@@ -5374,7 +5422,15 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        add_opinion_modifier = { target = FIN modifier = RUS_demand_karelia }
+		add_opinion_modifier = { target = GER modifier = RUS_demand_karelia }
+		add_state_core = 146
+		 add_state_core = 147
+		 add_state_core = 213
+		 add_state_core = 215
+		 add_state_core = 722
+		 add_state_core = 216
+		 FIN = { country_event = { id = rusfor.1229 } }
 		}		
 	}
 	

@@ -450,7 +450,7 @@ country_event = { # Rideau Hall
 	trigger = {
 		tag = CAN
 		date > 1936.5.20
-		has_country_flag = Bill-C7_Fail
+		has_country_flag = CAN_C7_fail
 		OR = {
 			has_country_flag = CAN_EVIII_PM
 			has_country_flag = CAN_LATER
@@ -545,14 +545,15 @@ country_event = { # 1936 Election Events
 	is_triggered_only = yes
 
 	option = {
-		name = canada.16.a
+		name = canada.16.a #Liberal Victory
 
 		ai_chance = {
 			factor = 35
 		}
 
 		hidden_effect = {
-
+			set_country_flag = CAN_liberal_win
+			
 			add_popularity = {
            	 ideology = totalist
             	popularity = -1
@@ -627,15 +628,16 @@ country_event = { # 1936 Election Events
         hidden_effect = { country_event = { id = canada.18 days = 1 }}
 	}
 
-	option = {
-		name = canada.16.b
+	option = { #Conservative Victory
+		name = canada.16.b 
 
 		ai_chance = {
 			factor = 80
 		}
 
 		hidden_effect = {
-
+			set_country_flag = CAN_tory_win
+			
 			add_popularity = {
            	 ideology = totalist
             	popularity = -1
@@ -710,7 +712,7 @@ country_event = { # 1936 Election Events
         hidden_effect = { country_event = { id = canada.17 days = 1 }}
 	}
 
-	option = {
+	option = { #Conservative/SoCred Coalition
 		name = canada.16.c
 
 		ai_chance = {
@@ -718,7 +720,7 @@ country_event = { # 1936 Election Events
 		}
 
 		hidden_effect = {
-
+			set_country_flag = CAN_socred_coalition
 			add_popularity = {
            	 ideology = totalist
             	popularity = -1
@@ -775,7 +777,7 @@ country_event = { # 1936 Election Events
         }
 
 		set_politics = { ruling_party = social_conservatist elections_allowed = no }
-
+		
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
         	remove_ideas_with_trait = foreign_minister
@@ -794,7 +796,7 @@ country_event = { # 1936 Election Events
 	}
 }
 
-country_event = { # The King congratulates the new Prime Minister
+country_event = { # The King congratulates the Prime Minister
 	id = canada.17
 	title = canada.17.t
 	desc = canada.17.d
@@ -804,42 +806,62 @@ country_event = { # The King congratulates the new Prime Minister
 
 	option = {
 		name = canada.17.a
-
-		add_political_power = 200
-		set_country_flag = market_liberalist_1936
+		if = {
+			limit = {
+				has_country_flag = CAN_liberal_win
+			}
+			clr_country_flag = CAN_liberal_win
+			add_political_power = 60
+		}
+		if = {
+			limit = {
+				has_country_flag = CAN_tory_win
+			}
+			clr_country_flag = CAN_tory_win
+			add_political_power = 200
+			set_country_flag = market_liberalist_1936
+		}
+		if = {
+			limit = {
+				has_country_flag = CAN_socred_coalition
+			}
+			clr_country_flag = CAN_socred_coalition
+			add_political_power = 200
+			set_country_flag = social_liberalist_1936
+		}
 	}
 }
 
-country_event = { # The King congratulates the new Prime Minister
-	id = canada.18
-	title = canada.18.t
-	desc = canada.18.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The King congratulates the new Prime Minister
+	# id = canada.18
+	# title = canada.18.t
+	# desc = canada.18.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.18.a
+	# option = {
+		# name = canada.18.a
 
-		add_political_power = 60
-	}
-}
+		# add_political_power = 60
+	# }
+# }
 
-country_event = { # The King congratulates the new Prime Minister
-	id = canada.19
-	title = canada.19.t
-	desc = canada.19.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The King congratulates the new Prime Minister
+	# id = canada.19
+	# title = canada.19.t
+	# desc = canada.19.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.19.a
+	# option = {
+		# name = canada.19.a
 
-		add_political_power = 200
-		set_country_flag = social_liberalist_1936 
-	}
-}
+		# add_political_power = 200
+		# set_country_flag = social_liberalist_1936 
+	# }
+# }
 
 #######################
 ## Canadian military ##
@@ -1024,13 +1046,12 @@ country_event = { # Investing in Canadian Industry
 		}
 
 		add_timed_idea = { idea = king_new_companies days = 90 }
-
-		add_political_power = 50
+		add_political_power = -50
 	}
 
 	option = {
 		name = canada.24.b
-
+		add_political_power = 50
 		ai_chance = {
 			factor = 20
 		}
@@ -1182,18 +1203,18 @@ country_event = { # The appointment of Curtis
 		add_political_power = 20
 	}
 
-	option = {
-		name = canada.27.c
+	# option = {
+		# name = canada.27.c
 
-		ai_chance = {
-			factor = 5
-		}
+		# ai_chance = {
+			# factor = 5
+		# }
 
-		add_political_power = -40
-		add_manpower = 50000
+		# add_political_power = -40
+		# add_manpower = 50000
 
-		hidden_effect = { country_event = { id = canada.29 days = 31 }}
-	}
+		# hidden_effect = { country_event = { id = canada.29 days = 31 }}
+	# }
 }
 
 country_event = { # The King Complains
@@ -1640,6 +1661,12 @@ country_event = { # Emergency Reserves
 
 	option = {
 		name = canada.40.a
+
+		add_manpower = 10000
+		load_oob = CAN_RESERVES
+	}
+	option = {
+		name = canada.40.b
 
 		add_manpower = 10000
 		load_oob = CAN_RESERVES
@@ -3185,7 +3212,68 @@ country_event = { # Dupleissis Protests SocCred
 # Dealing with the Progressives #
 #################################
 
-country_event = { # Implementing Social Credit
+country_event = { 
+	id = canada.250
+	title = canada.250.t
+	desc = canada.250.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		AND = {
+			NOT = { has_country_flag = CAN_has_cbc }
+			OR = {
+				has_country_flag = market_liberalist_1936
+				has_country_flag = social_liberalist_1936
+			}
+		}	
+		date > 1937.1.10
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = canada.250.a
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = canada.250.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = canada.250.c
+
+		ai_chance = {
+			factor = 40
+		}
+
+		add_political_power = 60
+
+		add_opinion_modifier = { target = ENG modifier = CAN_BROADCAST_ENG } # -50
+		add_opinion_modifier = { target = FRA modifier = CAN_BROADCAST_FRA } # -50
+		add_opinion_modifier = { target = SRI modifier = CAN_BROADCAST_SRI } # -50
+		add_opinion_modifier = { target = SOV modifier = CAN_BROADCAST_SOV } # -50
+		add_opinion_modifier = { target = CSA modifier = CAN_BROADCAST_CSA } # -100
+	}
+}
+
+country_event = { 
 	id = canada.50
 	title = canada.50.t
 	desc = canada.50.d
@@ -3196,6 +3284,7 @@ country_event = { # Implementing Social Credit
 	trigger = {
 		tag = CAN
 		AND = {
+			has_country_flag = CAN_has_cbc 
 			OR = {
 				has_country_flag = market_liberalist_1936
 				has_country_flag = social_liberalist_1936
@@ -3244,6 +3333,7 @@ country_event = { # Implementing Social Credit
 		add_opinion_modifier = { target = CSA modifier = CAN_BROADCAST_CSA } # -100
 	}
 }
+
 
 ##########################
 # Dealing with Duplessis #
@@ -3998,79 +4088,79 @@ country_event = { # Disturbances in the USA!
 		random_owned_state = { remove_building = { type = industrial_complex level = 1 }}
 	}
 }
-
-country_event = { # Edward VIII sends a letter to Hoover
-	id = canada.69
-	title = canada.69.t
-	desc = canada.69.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+### These are USA response events and should be located there if used ###
+# country_event = { # Edward VIII sends a letter to Hoover
+	# id = canada.69
+	# title = canada.69.t
+	# desc = canada.69.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		date > 1936.7.20
-	}
+	# trigger = {
+		# tag = USA
+		# date > 1936.7.20
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.69.a
+	# option = {
+		# name = canada.69.a
 
-		add_political_power = -20
-	}
-}
+		# add_political_power = -20
+	# }
+# }
 
-country_event = { # Edward VIII sends a letter to Mac Arthur
-	id = canada.70
-	title = canada.70.t
-	desc = canada.70.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # Edward VIII sends a letter to Mac Arthur
+	# id = canada.70
+	# title = canada.70.t
+	# desc = canada.70.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		date > 1936.7.20
-	}
+	# trigger = {
+		# tag = USA
+		# date > 1936.7.20
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.70.a
+	# option = {
+		# name = canada.70.a
 
-		add_political_power = 20
-	}
-}
+		# add_political_power = 20
+	# }
+# }
 
-country_event = { # Canada supports us!
-	id = canada.71
-	title = canada.71.t
-	desc = canada.71.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # Canada supports us!
+	# id = canada.71
+	# title = canada.71.t
+	# desc = canada.71.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		date > 1936.7.20
-	}
+	# trigger = {
+		# tag = USA
+		# date > 1936.7.20
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.71.a
+	# option = {
+		# name = canada.71.a
 
-		add_political_power = 20
-		add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
-	}
-}
+		# add_political_power = 20
+		# add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
+	# }
+# }
 
 country_event = { # The Union of Britain at War.
 	id = canada.72
@@ -4161,21 +4251,22 @@ country_event = { # Honduras descends into civil war!
 	}
 }
 
-country_event = { # Weapons and officers from Canada!
-	id = canada.74
-	title = canada.74.t
-	desc = canada.74.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+## Event for Honduras tag ##
+# country_event = { # Weapons and officers from Canada!
+	# id = canada.74
+	# title = canada.74.t
+	# desc = canada.74.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.74.a
+	# option = {
+		# name = canada.74.a
 
-		add_political_power = 40
-		add_manpower = 3000
-	}
-}
+		# add_political_power = 40
+		# add_manpower = 3000
+	# }
+# }
 
 ############################################################
 #Canada and Central American War
@@ -4665,7 +4756,7 @@ country_event = {
 		add_opinion_modifier = { target = ENG modifier = CAN_NO_GREENLAND } # 25
 	}
 }
-
+##Actually a Danish event##
 country_event = {
 	id = canada.83
 	title = canada.83.t
@@ -6171,12 +6262,23 @@ country_event = { # Vote on Bill C7
 		remove_ideas = CAN_bill_c_7_debate
 		add_national_unity = -0.10
 	}
+	
+	# option = { #Bill C7 fails!
+		# name = canada.103.c
+		
+		# ai_chance = { factor = 40 }
+		
+		# remove_ideas = CAN_divided_nation
+		# remove_ideas = CAN_conscription_debate
+		# remove_ideas = CAN_bill_c_7_debate
+		# set_country_flag = CAN_C7_fail
+	# }
 }
 
 country_event = { #remove work camps 
-	id = canada.300 #using 300 series for new events 
-	title = canada.300.t 
-	desc = canada.300.d 
+	id = canada.300 
+	title = canada.201.t 
+	desc = canada.201.d 
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes 
@@ -6197,13 +6299,13 @@ country_event = { #remove work camps
 	}	
 	
 	option = { 
-		name = canada.300.a 
+		name = canada.201.a 
 		remove_ideas = CAN_work_camps
 		add_national_unity = 0.05
 	}
 	
-	option = { #Both options have same result, just different localizations for fun/flavour.
-		name = canada.300.b 
+	option = { #Both options have same result, just different text
+		name = canada.201.b 
 		remove_ideas = CAN_work_camps
 		add_national_unity = 0.05
 	}

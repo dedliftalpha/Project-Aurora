@@ -3484,7 +3484,7 @@ country_event = { #Russia offers us an alliance !
 	option = {
 		name = rusfor.1117.a #Join them !
 		ai_chance = { factor = 75 }
-		RUS = { if = { limit = { is_in_faction = no } create_faction = "Inter-steppe alliance" add_to_faction = MON }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "Inter_steppe_alliance" add_to_faction = MON }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = MON }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = MON } } }
 		add_opinion_modifier = { target = MON modifier = RUS_MON_accepted_alliance }
@@ -4947,7 +4947,7 @@ country_event = { #A new power in the east!
 	
 	option = {
 		name = rusfor.1160.a #yeah
-		RUS = { if = { limit = { is_in_faction = no } create_faction = "slavic_proletarian_alliance" add_to_faction = UKR }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "proletarian_alliance" add_to_faction = UKR }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = UKR }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = UKR } } }
 		add_opinion_modifier = { target = UKR modifier = RUS_ally_syndie_ukraine_accept }
@@ -5597,6 +5597,1502 @@ country_event = { #The Russians honor the Bjorko Pact
 	option = {
 		name = rusfor.1178.a #hurrah
 		if = { limit = { RUS = { is_in_faction = no } } add_to_faction = RUS }
+	}
+
+}
+
+country_event = { #Claiming Bessarabia
+	id = rusfor.1179
+	title = rusfor.1179.t
+	desc = rusfor.1179.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1179.a #Insist on returning of Bessarabia
+		ai_chance = { factor = 50 }
+		trigger = { country_exists = ROM NOT = { country_exists = RRM } }
+		ROM = { country_event = { id = rusfor.1180 } }
+	}
+	
+	option = {
+		name = rusfor.1179.b #Insist on returning of Bessarabia
+		ai_chance = { factor = 50 }
+		trigger = { country_exists = RRM NOT = { country_exists = ROM } }
+		RRM = { country_event = { id = rusfor.1185 } }
+	}
+	
+	option = {
+		name = rusfor.1179.c #Take part in Romanian civil war
+		ai_chance = { factor = 50 }
+		trigger = { country_exists = RRM country_exists = ROM ROM = { has_war_with = RRM is_puppet = no } RRM = { is_puppet = no } }
+		country_event = { id = rusfor.1190 }
+	}
+
+}
+
+country_event = { #Russian demands ROM
+	id = rusfor.1180
+	title = rusfor.1180.t
+	desc = rusfor.1180.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1180.a #accept
+		ai_chance = { factor = 50 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+	
+	option = {
+		name = rusfor.1180.b #Never !
+		ai_chance = { factor = 20 }
+		trigger = { NOT = { is_puppet_of = RUS } }
+		add_political_power = 40
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_refused }
+		RUS = { country_event = { id = rusfor.1181 } }
+	}
+	
+	option = {
+		name = rusfor.1180.c #Counteroffer - Bessarabia for alliance
+		ai_chance = { factor = 30 }
+		trigger = { ROM = { is_puppet = no controls_state = 46 } NOT = { RUS = { is_in_faction_with = CAN is_in_faction_with = JAP is_in_faction_with = GER is_in_faction_with = FRA } } }
+		add_political_power = -60
+		RUS = { country_event = { id = rusfor.1182 } }
+	}
+
+}
+
+country_event = { #Iron Guard Romania refuses!
+	id = rusfor.1181
+	title = rusfor.1181.t
+	desc = rusfor.1181.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1181.a #Then it is war
+		ai_chance = { factor = 90 }
+		add_political_power = 40
+		declare_war_on = { target = ROM type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1181.b #we don't need bessarabia
+		ai_chance = { factor = 10 }
+	}
+
+}
+
+country_event = { #Romanian proposal
+	id = rusfor.1182
+	title = rusfor.1182.t
+	desc = rusfor.1182.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1182.a #Accept their terms
+		ai_chance = { factor = 50 }
+		trigger = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		ROM = { country_event = { id = rusfor.1183 } }
+		add_opinion_modifier = { target = ROM modifier = RUS_claim_bessarabia_ally }
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = ROM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = ROM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = ROM } }
+	}
+	
+	option = {
+		name = rusfor.1182.b #refuse
+		ai_chance = { factor = 50 }
+		ROM = { country_event = { id = rusfor.1184 } }
+		add_opinion_modifier = { target = ROM modifier = RUS_claim_bessarabia_refused }
+	}
+
+}
+
+country_event = { #Russia agreed!
+	id = rusfor.1183
+	title = rusfor.1183.t
+	desc = rusfor.1183.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1183.a
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_ally }
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+
+}
+
+country_event = { #Russia refused
+	id = rusfor.1184
+	title = rusfor.1184.t
+	desc = rusfor.1184.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1184.a #Accept their terms
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+	
+	option = {
+		name = rusfor.1184.b #fight for bessarabia
+		ai_chance = { factor = 30 }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #Russian demands RRM
+	id = rusfor.1185
+	title = rusfor.1185.t
+	desc = rusfor.1185.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1185.a #accept
+		ai_chance = { factor = 50 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+	
+	option = {
+		name = rusfor.1185.b #Never !
+		ai_chance = { factor = 20 }
+		trigger = { NOT = { is_puppet_of = RUS } }
+		add_political_power = 40
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_refused }
+		RUS = { country_event = { id = rusfor.1186 } }
+	}
+	
+	option = {
+		name = rusfor.1185.c #Counteroffer - Bessarabia for alliance
+		ai_chance = { factor = 30 }
+		trigger = { RRM = { is_puppet = no controls_state = 46 } NOT = { RUS = { is_in_faction_with = CAN is_in_faction_with = JAP is_in_faction_with = GER is_in_faction_with = FRA } } }
+		add_political_power = 20
+		RUS = { country_event = { id = rusfor.1187 } }
+	}
+
+}
+
+country_event = { #Romania refuses!
+	id = rusfor.1186
+	title = rusfor.1186.t
+	desc = rusfor.1186.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1186.a #Then it is war
+		ai_chance = { factor = 90 }
+		add_political_power = 40
+		declare_war_on = { target = RRM type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1186.b #we don't need bessarabia
+		ai_chance = { factor = 10 }
+	}
+
+}
+
+country_event = { #Romanian proposal
+	id = rusfor.1187
+	title = rusfor.1187.t
+	desc = rusfor.1187.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1187.a #Accept their terms
+		ai_chance = { factor = 50 }
+		trigger = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		RRM = { country_event = { id = rusfor.1188 } }
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_ally }
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = RRM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = RRM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = RRM } }
+	}
+	
+	option = {
+		name = rusfor.1187.b #refuse
+		ai_chance = { factor = 50 }
+		RRM = { country_event = { id = rusfor.1189 } }
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_refused }
+	}
+
+}
+
+country_event = { #Russia agreed!
+	id = rusfor.1188
+	title = rusfor.1188.t
+	desc = rusfor.1188.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1188.a
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_ally }
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+
+}
+
+country_event = { #Russia refused
+	id = rusfor.1189
+	title = rusfor.1189.t
+	desc = rusfor.1189.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1189.a #Accept their terms
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+	}
+	
+	option = {
+		name = rusfor.1189.b #fight for bessarabia
+		ai_chance = { factor = 30 }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #Romanian civil war
+	id = rusfor.1190
+	title = rusfor.1190.t
+	desc = rusfor.1190.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1190.a #Offer support to Monarchists
+		ai_chance = { factor = 50 }
+		trigger = { RRM = { is_puppet = no } } #Have to disable it if you brought aid to legionaries
+		RRM = { country_event = { id = rusfor.1191 } }
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_support_side }
+	}
+	
+	option = {
+		name = rusfor.1190.b #Offer support to Legionaries
+		ai_chance = { factor = 50 }
+		trigger = { ROM = { is_puppet = no } } #Have to disable it if you brought aid to monarchists
+		ROM = { country_event = { id = rusfor.1199 } }
+		add_opinion_modifier = { target = ROM modifier = RUS_claim_bessarabia_support_side }
+	}
+	
+	option = {
+		name = rusfor.1190.c #This is a perfect chance to gain control over Romania !
+		ai_chance = { factor = 20 }
+		declare_war_on = { target = ROM type = annex_everything }
+		declare_war_on = { target = RRM type = annex_everything }
+	}
+
+}
+
+country_event = { #Russian offer RRM
+	id = rusfor.1191
+	title = rusfor.1191.t
+	desc = rusfor.1191.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1191.a #Accept their proposition
+		ai_chance = { factor = 65 }
+		trigger = { RUS = { NOT = { is_in_faction_with = GER is_in_faction_with = FRA is_in_faction_with = CAN is_in_faction_with = JAP } } }
+		RUS = { country_event = { id = rusfor.1192 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_accept_support }
+	}
+	
+	option = {
+		name = rusfor.1191.b #we need such an ally
+		ai_chance = { factor = 70 }
+		trigger = { RUS = { OR = { is_in_faction_with = GER is_in_faction_with = FRA is_in_faction_with = CAN is_in_faction_with = JAP } } }
+		RUS = { country_event = { id = rusfor.1193 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_accept_support }
+	}
+	
+	option = {
+		name = rusfor.1191.c #Never! We don`t sell our land!
+		ai_chance = { factor = 35 }
+		set_country_flag = RUS_RRM_refuse_support
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_refused_support }
+		if = { limit = { has_country_flag = RUS_ROM_refuse_support } RUS = { country_event = { id = rusfor.1206 } } }
+		if = { limit = { NOT = { has_country_flag = RUS_ROM_refuse_support } } RUS = { country_event = { id = rusfor.1198 } } }
+	}
+
+}
+
+country_event = { #Alliance with Romania
+	id = rusfor.1192
+	title = rusfor.1192.t
+	desc = rusfor.1192.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1192.a
+		set_country_flag = RUS_RRM_bess
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_ally_cw }
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = RRM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = RRM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = RRM } }
+	}
+
+}
+
+country_event = { #Reinforcements for Romania
+	id = rusfor.1193
+	title = rusfor.1193.t
+	desc = rusfor.1193.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1193.a
+		set_country_flag = RUS_RRM_bess
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_ally_cw }
+		add_manpower = -3000
+		send_equipment = { target = RRM type = infantry_equipment amount = 1000 }
+		RRM = { country_event = { id = rusfor.1194 days = 2 } }
+	}
+
+}
+
+country_event = { #Russian Aid Arrives!
+	id = rusfor.1194
+	title = rusfor.1194.t
+	desc = rusfor.1194.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1194.a
+		add_manpower = 3000
+		custom_effect_tooltip = received_equipment_1000
+		load_oob = RRM_RUS_HELP
+	}
+
+}
+
+country_event = { #Bessarabia question
+	id = rusfor.1195
+	title = rusfor.1195.t
+	desc = rusfor.1195.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RRM RUS = { has_country_flag = RUS_RRM_bess } controls_state = 78 NOT = { country_exists = ROM has_war_with = HUN has_war_with = AUS has_war_with = DNF has_war_with = BUL has_war_with = OTT has_war_with = POL } } #must add AH and commonwealth
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1195.a #Secede Bessarabia to Russia
+		ai_chance = { factor = 85 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+		RUS = { country_event = { id = rusfor.1196 } }
+	}
+	
+	option = {
+		name = rusfor.1195.b #No, we will fight for our land!
+		ai_chance = { factor = 15 }
+		RUS = { country_event = { id = rusfor.1197 } }
+		add_political_power = -100
+		if = { limit = { is_in_faction_with = RUS } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RRM } remove_from_faction = RRM } } 
+	}
+
+}
+
+country_event = { #Bessarabia is ours !
+	id = rusfor.1196
+	title = rusfor.1196.t
+	desc = rusfor.1196.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1196.a
+		add_political_power = 100
+	}
+
+}
+
+country_event = { #Bessarabian problem 
+	id = rusfor.1197
+	title = rusfor.1197.t
+	desc = rusfor.1197.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1197.a #Fight for Bessarabia!
+		ai_chance = { factor = 90 }
+		add_political_power = 200
+		declare_war_on = { target = RRM type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1197.b #We're not ready
+		ai_chance = { factor = 10 }
+		add_political_power = -200
+	}
+
+}
+
+country_event = { #Kingdom of Romania refuses 
+	id = rusfor.1198
+	title = rusfor.1198.t
+	desc = rusfor.1198.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1198.a #Send ambassador to legionaries!
+		ai_chance = { factor = 70 }
+		trigger = { ROM = { is_puppet = no } } #Have to disable it if you brought aid to monarchists
+		ROM = { country_event = { id = rusfor.1199 } }
+	}
+	
+	option = {
+		name = rusfor.1198.b #Forget about Bessarabia!
+		ai_chance = { factor = 15 }
+		add_political_power = -60
+	}
+	
+	option = {
+		name = rusfor.1198.c #This is a perfect chance to gain control over Romania !
+		ai_chance = { factor = 20 }
+		declare_war_on = { target = RRM type = annex_everything }
+		declare_war_on = { target = ROM type = annex_everything }
+	}
+
+}
+
+country_event = { #Russian offer ROM
+	id = rusfor.1199
+	title = rusfor.1199.t
+	desc = rusfor.1199.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1199.a #we need such an ally
+		ai_chance = { factor = 70 }
+		trigger = { RUS = { NOT = { is_in_faction_with = GER is_in_faction_with = FRA is_in_faction_with = CAN is_in_faction_with = JAP } } }
+		RUS = { country_event = { id = rusfor.1202 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_accept_support }
+	}
+	
+	option = {
+		name = rusfor.1199.b #we need such an ally
+		ai_chance = { factor = 70 }
+		trigger = { RUS = { OR = { is_in_faction_with = GER is_in_faction_with = FRA is_in_faction_with = CAN is_in_faction_with = JAP } } }
+		RUS = { country_event = { id = rusfor.1200 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_claim_bessarabia_accept_support }
+	}
+	
+	option = {
+		name = rusfor.1199.c #Never! We don`t sell our land!
+		ai_chance = { factor = 35 }
+		add_political_power = 100
+		set_country_flag = RUS_ROM_refuse_support
+		if = { limit = { has_country_flag = RUS_RRM_refuse_support } RUS = { country_event = { id = rusfor.1206 } } }
+		if = { limit = { NOT = { has_country_flag = RUS_RRM_refuse_support } } RUS = { country_event = { id = rusfor.1207 } } }
+	}
+
+}
+
+country_event = { #Reinforcements for Romania
+	id = rusfor.1200
+	title = rusfor.1200.t
+	desc = rusfor.1200.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1200.a
+		set_country_flag = RUS_ROM_bess
+		add_opinion_modifier = { target = RRM modifier = RUS_claim_bessarabia_ally_cw }
+		add_manpower = -3000
+		send_equipment = { target = RRM type = infantry_equipment amount = 1000 }
+		ROM = { country_event = { id = rusfor.1201 days = 2 } }
+	}
+
+}
+
+country_event = { #Russian Aid Arrives!
+	id = rusfor.1201
+	title = rusfor.1201.t
+	desc = rusfor.1201.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1201.a
+		add_manpower = 3000
+		custom_effect_tooltip = received_equipment_1000
+		load_oob = ROM_RUS_HELP
+	}
+
+}
+
+country_event = { #Alliance with Romania
+	id = rusfor.1202
+	title = rusfor.1202.t
+	desc = rusfor.1202.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1202.a
+		set_country_flag = RUS_ROM_bess
+		add_opinion_modifier = { target = ROM modifier = RUS_claim_bessarabia_ally_cw }
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = ROM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = ROM }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = ROM } }
+	}
+
+}
+
+country_event = { #Bessarabia question
+	id = rusfor.1203
+	title = rusfor.1203.t
+	desc = rusfor.1203.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = ROM RUS = { has_country_flag = RUS_ROM_bess } controls_state = 78 NOT = { country_exists = RRM has_war_with = HUN has_war_with = AUS has_war_with = DNF has_war_with = BUL has_war_with = OTT has_war_with = POL } } #must add AH and commonwealth
+	
+	mean_time_to_happen = { days = 2 }
+	
+	option = {
+		name = rusfor.1203.a #Secede Bessarabia to Russia
+		ai_chance = { factor = 70 }
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		RUS = { transfer_state = 78 }
+		if = { limit = { owns_state = 192 } RUS = { transfer_state = 192 } }
+		if = { limit = { owns_state = 791 } RUS = { transfer_state = 791 } }
+		RUS = { country_event = { id = rusfor.1204 } }
+	}
+	
+	option = {
+		name = rusfor.1203.b #No, we will fight for our land!
+		ai_chance = { factor = 30 }
+		RUS = { country_event = { id = rusfor.1205 } }
+		add_political_power = -100
+		if = { limit = { is_in_faction_with = RUS } every_country = { limit = { is_faction_leader = yes is_in_faction_with = ROM } remove_from_faction = ROM } } 
+	}
+
+}
+
+country_event = { #Bessarabia is ours !
+	id = rusfor.1204
+	title = rusfor.1204.t
+	desc = rusfor.1204.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1204.a
+		add_political_power = 100
+	}
+
+}
+
+country_event = { #Bessarabian problem 
+	id = rusfor.1205
+	title = rusfor.1205.t
+	desc = rusfor.1205.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1205.a #Fight for Bessarabia!
+		ai_chance = { factor = 90 }
+		add_political_power = 100
+		declare_war_on = { target = ROM type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1205.b #We're not ready
+		ai_chance = { factor = 10 }
+		add_political_power = -200
+	}
+
+}
+
+country_event = { #Bessarabian problem two refusals
+	id = rusfor.1206
+	title = rusfor.1206.t
+	desc = rusfor.1206.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1206.a #declare on both
+		ai_chance = { factor = 70 }
+		declare_war_on = { target = ROM type = annex_everything }
+		declare_war_on = { target = RRM type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1206.b #forget about it
+		ai_chance = { factor = 30 }
+		add_political_power = -100
+	}
+
+}
+
+country_event = { #Iron Guard Romania refuses!
+	id = rusfor.1207
+	title = rusfor.1207.t
+	desc = rusfor.1207.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1207.a #Send ambassador to monarchists
+		ai_chance = { factor = 70 }
+		trigger = { ROM = { is_puppet = no } } #Have to disable it if you brought aid to monarchists
+		RRM = { country_event = { id = rusfor.1191 } }
+	}
+	
+	option = {
+		name = rusfor.1207.b #Forget about Bessarabia!
+		ai_chance = { factor = 15 }
+		add_political_power = -100
+	}
+	
+	option = {
+		name = rusfor.1207.c #This is a perfect chance to gain control over Romania !
+		ai_chance = { factor = 20 }
+		declare_war_on = { target = RRM type = annex_everything }
+		declare_war_on = { target = ROM type = annex_everything }
+	}
+
+}
+
+country_event = { #Vladivostok is Russian! HAVE TO ADD CONVOYS PDX FIX PLZ
+	id = rusfor.1208
+	title = rusfor.1208.t
+	desc = rusfor.1208.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = SOV owns_state = 408 owns_state = 409 controls_state = 408 controls_state = 409 }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = rusfor.1208.a #We shall seize and convert all of the ships in the harbour!
+		ai_chance = { factor = 20 }
+        if = { limit = { tag = RUS } load_oob = RUS_TRM_NAVY_BIG }
+		add_political_power = -80
+		408 = { remove_building = { type = industrial_complex level = 2 }
+                add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}	}
+		add_opinion_modifier = { target = JAP modifier = RUS_vladivostok_big }
+		if = { limit = { tag = SOV } load_oob = SOV_TRM_NAVY_BIG
+		408 = { add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} } }
+	}
+	
+	option = {
+		name = rusfor.1208.b #We shall merely use Transamur's old naval designs.
+		ai_chance = { factor = 50 }
+		if = { limit = { tag = RUS } load_oob = RUS_TRM_NAVY_SMALL }
+		add_political_power = -40
+		add_opinion_modifier = { target = JAP modifier = RUS_vladivostok_small }
+		if = { limit = { tag = SOV } load_oob = SOV_TRM_NAVY_SMALL
+		408 = { add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} } }
+	}
+	
+	option = {
+		name = rusfor.1208.c #Sell off Transamur's navy and convert the harbour for civilian purposes.
+		ai_chance = { factor = 20 }
+		add_political_power = 100
+		add_opinion_modifier = { target = JAP modifier = RUS_vladivostok_sold }
+		408 = { add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	}
+		if = { limit = { tag = SOV } 408 = { add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} } }
+	}
+	
+	option = {
+		name = rusfor.1208.e #Sell off Transamur's navy and keep the money.
+		ai_chance = { factor = 0 }
+		add_political_power = 20
+		add_opinion_modifier = { target = JAP modifier = RUS_vladivostok_sold }
+		if = { limit = { tag = SOV } 408 = { add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				} } }
+		random_owned_state = {
+				limit = {
+					state_population > 200000
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+	}
+
+}
+
+country_event = { #Sevastopol is Russian! HAVE TO ADD CONVOYS PDX FIX PLZ
+	id = rusfor.1209
+	title = rusfor.1209.t
+	desc = rusfor.1209.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { OR = { tag = SOV tag = RUS } owns_state = 137 controls_state = 137 }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = rusfor.1209.a #We shall seize and convert all of the ships in the harbour!
+		ai_chance = { factor = 30 }
+        if = { limit = { tag = RUS } load_oob = RUS_UKR_NAVY_BIG }
+		if = { limit = { tag = SOV } load_oob = SOV_UKR_NAVY_BIG }
+		add_political_power = -100
+		137 = { remove_building = { type = industrial_complex level = 1 }
+                }
+	}
+	
+	option = {
+		name = rusfor.1209.b #We shall upgrade the Ukrainian ships.
+		ai_chance = { factor = 50 }
+		if = { limit = { tag = RUS } load_oob = RUS_UKR_NAVY_SMALL }
+		if = { limit = { tag = SOV } load_oob = SOV_UKR_NAVY_SMALL }
+		add_political_power = -50
+	}
+	
+	option = {
+		name = rusfor.1209.c #Sell off Ukraine's navy and convert the harbour for civilian purposes.
+		ai_chance = { factor = 15 }
+		add_political_power = 100
+		137 = { add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}	}
+	}
+	
+	option = {
+		name = rusfor.1209.e #Sell off Ukraine's navy and keep the money.
+		ai_chance = { factor = 5 }
+		add_political_power = 20
+		random_owned_state = {
+				limit = {
+					state_population > 200000
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+	}
+
+}
+
+country_event = { #Ultimatum for Galicia AUS owns it
+	id = rusfor.1210
+	title = rusfor.1210.t
+	desc = rusfor.1210.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1210.a #Accept
+		ai_chance = { factor = 15 }
+        add_political_power = -100
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_accept } }
+		RUS = { transfer_state = 80 transfer_state = 88 transfer_state = 89 transfer_state = 91 }
+		remove_state_core = 80
+		remove_state_core = 88
+		remove_state_core = 89
+		remove_state_core = 91
+		RUS = { country_event = { id = rusfor.1211 } }
+	}
+	
+	option = {
+		name = rusfor.1210.b #refuse
+		ai_chance = { factor = 75 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1212 } }
+	}
+	
+	option = {
+		name = rusfor.1210.c #Pre-emptive strike
+		ai_chance = { factor = 10 }
+		add_political_power = 50
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1213 } }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #AUS accepts
+	id = rusfor.1211
+	title = rusfor.1211.t
+	desc = rusfor.1211.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1211.a #great
+        add_political_power = 40
+	}
+
+}
+
+country_event = { #AUS refuses
+	id = rusfor.1212
+	title = rusfor.1212.t
+	desc = rusfor.1212.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1212.a #then it's war
+		ai_chance = { factor = 98 }
+       declare_war_on = { target = AUS type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1212.b #back down
+		ai_chance = { factor = 2 }
+		add_political_power = -200
+		add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_back_down }
+	}
+
+}
+
+country_event = { #AUS attacks
+	id = rusfor.1213
+	title = rusfor.1213.t
+	desc = rusfor.1213.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1213.a #we will show them !
+        add_political_power = 20
+	}
+
+}
+
+country_event = { #Ultimatum for Galicia POL owns it
+	id = rusfor.1214
+	title = rusfor.1214.t
+	desc = rusfor.1214.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1214.a #Accept
+		ai_chance = { factor = 30 }
+        add_political_power = -100
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_accept } }
+		RUS = { transfer_state = 80 transfer_state = 88 transfer_state = 89 transfer_state = 91 }
+		remove_state_core = 80
+		remove_state_core = 88
+		remove_state_core = 89
+		remove_state_core = 91
+		RUS = { country_event = { id = rusfor.1215 } }
+	}
+	
+	option = {
+		name = rusfor.1214.b #refuse
+		ai_chance = { factor = 65 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1216 } }
+	}
+	
+	option = {
+		name = rusfor.1214.c #Pre-emptive strike
+		ai_chance = { factor = 5 }
+		add_political_power = 50
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1217 } }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #POL accepts
+	id = rusfor.1215
+	title = rusfor.1215.t
+	desc = rusfor.1215.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1215.a #great
+        add_political_power = 40
+	}
+
+}
+
+country_event = { #POL refuses
+	id = rusfor.1216
+	title = rusfor.1216.t
+	desc = rusfor.1216.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1216.a #then it's war
+		ai_chance = { factor = 98 }
+       declare_war_on = { target = POL type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1216.b #back down
+		ai_chance = { factor = 2 }
+		add_political_power = -200
+		add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_back_down }
+	}
+
+}
+
+country_event = { #POL attacks
+	id = rusfor.1217
+	title = rusfor.1217.t
+	desc = rusfor.1217.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1217.a #we will show them !
+        add_political_power = 20
+	}
+
+}
+
+country_event = { #Ultimatum for Galicia puppet of AUS
+	id = rusfor.1218
+	title = rusfor.1218.t
+	desc = rusfor.1218.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1218.a #Accept
+		ai_chance = { factor = 25 }
+        add_political_power = -100
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_accept } }
+		remove_state_core = 80
+		remove_state_core = 88
+		remove_state_core = 89
+		remove_state_core = 91
+		GAL = { country_event = { id = rusfor.1222 } }
+		end_puppet = GAL
+		every_country = { limit = { is_in_faction_with = GAL is_faction_leader = yes } remove_from_faction = GAL }
+	}
+	
+	option = {
+		name = rusfor.1218.b #refuse
+		ai_chance = { factor = 65 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1220 } }
+	}
+	
+	option = {
+		name = rusfor.1218.c #Pre-emptive strike
+		ai_chance = { factor = 10 }
+		add_political_power = 50
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1221 } }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #AUS accepts
+	id = rusfor.1219
+	title = rusfor.1219.t
+	desc = rusfor.1219.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1219.a #great
+        add_political_power = 40
+		annex_country = { target = GAL }
+	}
+
+}
+
+country_event = { #AUS refuses
+	id = rusfor.1220
+	title = rusfor.1220.t
+	desc = rusfor.1220.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1220.a #then it's war
+		ai_chance = { factor = 98 }
+       declare_war_on = { target = AUS type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1220.b #back down
+		ai_chance = { factor = 2 }
+		add_political_power = -200
+		add_opinion_modifier = { target = AUS modifier = RUS_ultimatum_galicia_back_down }
+	}
+
+}
+
+country_event = { #AUS attacks
+	id = rusfor.1221
+	title = rusfor.1221.t
+	desc = rusfor.1221.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1221.a #we will show them !
+        add_political_power = 20
+	}
+
+}
+
+country_event = { #AUS betrayed us
+	id = rusfor.1222
+	title = rusfor.1222.t
+	desc = rusfor.1222.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1222.a #there is nothing we can do...
+		ai_chance = { factor = 95 }
+		add_political_power = -200
+	   RUS = { country_event = { id = rusfor.1219 } }
+	}
+	
+	option = {
+		name = rusfor.1222.b #resist
+		ai_chance = { factor = 5 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = GAL modifier = RUS_ultimatum_galicia_refuse } }
+		declare_war_on = { target = RUS type = annex_everything }
+		RUS = { country_event = { id = rusfor.1223 } }
+	}
+
+}
+
+country_event = { #GAL attacks
+	id = rusfor.1223
+	title = rusfor.1223.t
+	desc = rusfor.1223.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1223.a #we will show them !
+        add_political_power = 20
+	}
+
+}
+
+country_event = { #Ultimatum for Galicia puppet of POL
+	id = rusfor.1224
+	title = rusfor.1224.t
+	desc = rusfor.1224.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1224.a #Accept
+		ai_chance = { factor = 35 }
+        add_political_power = -100
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_accept } }
+		remove_state_core = 80
+		remove_state_core = 88
+		remove_state_core = 89
+		remove_state_core = 91
+		GAL = { country_event = { id = rusfor.1228 } }
+		end_puppet = GAL
+		every_country = { limit = { is_in_faction_with = GAL is_faction_leader = yes } remove_from_faction = GAL }
+	}
+	
+	option = {
+		name = rusfor.1224.b #refuse
+		ai_chance = { factor = 60 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1226 } }
+	}
+	
+	option = {
+		name = rusfor.1224.c #Pre-emptive strike
+		ai_chance = { factor = 5 }
+		add_political_power = 50
+		RUS = { add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_refuse } }
+		RUS = { country_event = { id = rusfor.1227 } }
+		declare_war_on = { target = RUS type = annex_everything }
+	}
+
+}
+
+country_event = { #POL accepts
+	id = rusfor.1225
+	title = rusfor.1225.t
+	desc = rusfor.1225.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1225.a #great
+        add_political_power = 40
+		annex_country = { target = GAL }
+	}
+
+}
+
+country_event = { #POL refuses
+	id = rusfor.1226
+	title = rusfor.1226.t
+	desc = rusfor.1226.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1226.a #then it's war
+		ai_chance = { factor = 99 }
+       declare_war_on = { target = POL type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1226.b #back down
+		ai_chance = { factor = 1 }
+		add_political_power = -200
+		add_opinion_modifier = { target = POL modifier = RUS_ultimatum_galicia_back_down }
+	}
+
+}
+
+country_event = { #POL attacks
+	id = rusfor.1227
+	title = rusfor.1227.t
+	desc = rusfor.1227.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1227.a #we will show them !
+        add_political_power = 20
+	}
+
+}
+
+country_event = { #POL betrayed us
+	id = rusfor.1228
+	title = rusfor.1228.t
+	desc = rusfor.1228.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1228.a #there is nothing we can do...
+		ai_chance = { factor = 85 }
+		add_political_power = -200
+	   RUS = { country_event = { id = rusfor.1225 } }
+	}
+	
+	option = {
+		name = rusfor.1228.b #resist
+		ai_chance = { factor = 15 }
+		add_political_power = 100
+		RUS = { add_opinion_modifier = { target = GAL modifier = RUS_ultimatum_galicia_refuse } }
+		declare_war_on = { target = RUS type = annex_everything }
+		RUS = { country_event = { id = rusfor.1223 } }
+	}
+
+}
+
+country_event = { #Russian claims FIN
+	id = rusfor.1229
+	title = rusfor.1229.t
+	desc = rusfor.1229.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1229.a #Never!
+		ai_chance = { factor = 95 }
+	   RUS = { country_event = { id = rusfor.1230 } }
+	}
+	
+	option = {
+		name = rusfor.1229.b #All right.
+		ai_chance = { factor = 5 }
+		add_political_power = -300
+		RUS = { transfer_state = 146
+		 transfer_state = 147
+		 transfer_state = 213
+		 transfer_state = 215
+		 transfer_state = 722
+		 transfer_state = 216 }
+		 remove_state_core = 146
+		 remove_state_core = 147
+		 remove_state_core = 213
+		 remove_state_core = 215
+		 remove_state_core = 722
+		 remove_state_core = 216
+		custom_effect_tooltip = received_equipment_5000
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		RUS = { country_event = { id = rusfor.1231 } }
+	}
+
+}
+
+country_event = { #Finland refused!
+	id = rusfor.1230
+	title = rusfor.1230.t
+	desc = rusfor.1230.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1230.a #Take it back by force!
+		ai_chance = { factor = 70 }
+	   #should end guarantees but cant lol
+	   add_political_power = 100
+	   add_opinion_modifier = { target = FIN modifier = RUS_crush_finland }
+		add_opinion_modifier = { target = GER modifier = RUS_crush_finland }
+	   declare_war_on = { target = FIN type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.1230.b #Forget about it.
+		ai_chance = { factor = 30 }
+		add_political_power = -60
+	}
+
+}
+
+country_event = { #Transfer of the territory
+	id = rusfor.1231
+	title = rusfor.1231.t
+	desc = rusfor.1231.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1231.a #Another victory for Russian diplomacy!
+	   add_political_power = 100
+	   #have  to add guarantee
+	   send_equipment = { target = FIN type = infantry_equipment amount = 5000 }
+	   diplomatic_relation = { country = FIN relation = non_aggression_pact }
+		FIN = { diplomatic_relation = { country = RUS relation = non_aggression_pact }  }
 	}
 
 }

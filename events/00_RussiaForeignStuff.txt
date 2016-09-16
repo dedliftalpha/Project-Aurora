@@ -7089,10 +7089,140 @@ country_event = { #Transfer of the territory
 	option = {
 		name = rusfor.1231.a #Another victory for Russian diplomacy!
 	   add_political_power = 100
+	   set_country_flag = RUS_fin_accepted_demand_karelia
 	   #have  to add guarantee
 	   send_equipment = { target = FIN type = infantry_equipment amount = 5000 }
 	   diplomatic_relation = { country = FIN relation = non_aggression_pact }
 		FIN = { diplomatic_relation = { country = RUS relation = non_aggression_pact }  }
+	}
+
+}
+
+country_event = { #We've been defeated! FIN
+	id = rusfor.1232
+	title = rusfor.1232.t
+	desc = rusfor.1232.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN is_puppet = no NOT = { is_in_faction_with = CSA is_in_faction_with = GER is_in_faction_with = FRA } has_war_with = RUS
+	RUS = { OR = { controls_state = 111 AND = { controls_state = 146 controls_state = 215 } } } }
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rusfor.1232.a #Sue for peace!
+		ai_chance = { factor = 60 }
+	   add_political_power = -40
+	   RUS = { country_event = { id = rusfor.1233 } }
+	}
+	
+	option = {
+		name = rusfor.1232.b #We can still win this!
+		ai_chance = { factor = 40 }
+		add_political_power = -80
+	}
+
+}
+
+country_event = { #Peace with Finland?
+	id = rusfor.1233
+	title = rusfor.1233.t
+	desc = rusfor.1233.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1233.a #Accept the peace offer!
+		ai_chance = { factor = 50 }
+	   white_peace = FIN
+	   FIN = { country_event = { id = rusfor.1234 } }
+	}
+	
+	option = {
+		name = rusfor.1233.b #No, they shall be crushed!
+		ai_chance = { factor = 50 
+		              modifier = {
+				factor = 0
+				has_country_flag = RUS_EXP
+			} }
+		add_political_power = -40
+	}
+
+}
+
+country_event = { #Treaty of Petrograd FIN
+	id = rusfor.1234
+	title = rusfor.1234.t
+	desc = rusfor.1234.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1234.a #at least we still exist
+	    diplomatic_relation = { country = RUS relation = non_aggression_pact }
+		RUS = { diplomatic_relation = { country = FIN relation = non_aggression_pact }  }
+		RUS = { transfer_state = 146
+		 transfer_state = 147
+		 transfer_state = 213
+		 transfer_state = 215
+		 transfer_state = 722
+		 transfer_state = 216 }
+		 remove_state_core = 146
+		 remove_state_core = 147
+		 remove_state_core = 213
+		 remove_state_core = 215
+		 remove_state_core = 722
+		 remove_state_core = 216
+	   RUS = { country_event = { id = rusfor.1235 } }
+	}
+
+}
+
+country_event = { #Treaty of Petrograd RUS
+	id = rusfor.1235
+	title = rusfor.1235.t
+	desc = rusfor.1235.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1235.a #Russia stands triumphant!
+	    add_political_power = 200
+	}
+
+}
+
+country_event = { #Russia offers us an alliance ! FIN
+	id = rusfor.1236
+	title = rusfor.1236.t
+	desc = rusfor.1236.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1236.a #Join them !
+		ai_chance = { factor = 75 }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "Finno_russian_coalition" add_to_faction = FIN }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = FIN }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = FIN } } }
+		add_opinion_modifier = { target = FIN modifier = RUS_FIN_accepted_alliance }
+		add_ai_strategy = {
+				type = alliance
+				id = "RUS"
+				value = 200
+			}
+	}
+	
+	option = {
+		name = rusfor.1236.b #Refuse
+		ai_chance = { factor = 25 }
+		add_opinion_modifier = { target = FIN modifier = RUS_FIN_declined_alliance }
 	}
 
 }

@@ -2535,8 +2535,8 @@ country_event = { #Japan offers us an alliance!
 				id = "RUS"
 				value = 200
 			} }
-		#country_event = { id = rusfor.1000 }
-        #JAP = { country_event = { id = rusfor.1000 } }	#Eurasian Alliance
+		country_event = { id = rusfor.1252 }
+        JAP = { country_event = { id = rusfor.1253 } }
 	}
 	
 	option = {
@@ -2585,8 +2585,8 @@ country_event = { #The Russians demand Sakhalin!
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = JAP }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = JAP } } }
 		RUS = { country_event = { id = rusfor.1087 } }
-		#country_event = { id = rusfor.1000 }
-        #RUS = { country_event = { id = rusfor.1000 } }	#Eurasian Alliance
+		country_event = { id = rusfor.1252 }
+        JAP = { country_event = { id = rusfor.1253 } }
 		every_country = { limit = { is_puppet_of = RUS } add_opinion_modifier = { modifier = RUS_ally_japan_accept_puppets } }
 	}
 	
@@ -3484,7 +3484,7 @@ country_event = { #Russia offers us an alliance !
 	option = {
 		name = rusfor.1117.a #Join them !
 		ai_chance = { factor = 75 }
-		RUS = { if = { limit = { is_in_faction = no } create_faction = "Inter_steppe_alliance" add_to_faction = MON }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "inter_steppe_alliance" add_to_faction = MON }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = MON }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = MON } } }
 		add_opinion_modifier = { target = MON modifier = RUS_MON_accepted_alliance }
@@ -7208,7 +7208,7 @@ country_event = { #Russia offers us an alliance ! FIN
 	option = {
 		name = rusfor.1236.a #Join them !
 		ai_chance = { factor = 75 }
-		RUS = { if = { limit = { is_in_faction = no } create_faction = "Finno_russian_coalition" add_to_faction = FIN }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "finno_russian_coalition" add_to_faction = FIN }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = FIN }
 		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = FIN } } }
 		add_opinion_modifier = { target = FIN modifier = RUS_FIN_accepted_alliance }
@@ -7223,6 +7223,974 @@ country_event = { #Russia offers us an alliance ! FIN
 		name = rusfor.1236.b #Refuse
 		ai_chance = { factor = 25 }
 		add_opinion_modifier = { target = FIN modifier = RUS_FIN_declined_alliance }
+	}
+
+}
+
+country_event = { #ai event for alliance choice
+	id = rusfor.1237
+	title = rusfor.1237.t
+	desc = rusfor.1237.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { is_puppet = no is_ai = yes date > 1942.05.03 date < 1942.06.03 tag = RUS #have to add not in faction with A-H
+	NOT = { is_in_faction_with = CAN is_in_faction_with = GER is_in_faction_with = JAP is_in_faction_with = FRA is_in_faction_with = DNF is_in_faction_with = GBR is_in_faction_with = USA is_in_faction_with = CSA is_in_faction_with = TEX is_in_faction_with = UKR } }
+	
+	option = {
+		name = rusfor.1237.a #We have special bonds with the entente
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 9
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_DEM_REP
+			}
+                      modifier = {
+				factor = 11
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_DEM_REP
+			}
+			modifier = {
+				factor = 8
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 7
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = RUS_EXP
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 10
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 10
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_WRA_ambitions
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_WRA_ambitions
+			} }
+		trigger = { NOT = { has_war_with = CAN has_government = syndicalist has_government = totalist } country_exists = CAN CAN = { is_puppet = no is_faction_leader = yes } }
+		set_country_flag = RUS_ai_choose_entente
+	}
+	
+	option = {
+		name = rusfor.1237.b #we can cooperate with germany
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_DEM_REP
+			}
+                      modifier = {
+				factor = 1
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_DEM_REP
+			}
+			modifier = {
+				factor = 7
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 6
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 10
+				has_country_flag = RUS_REAL
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 10
+				has_country_flag = RUS_EXP
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 3
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_WRA_ambitions
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_WRA_ambitions
+			} }
+		trigger = { NOT = { has_war_with = GER has_government = syndicalist has_government = totalist } country_exists = GER GER = { is_puppet = no is_faction_leader = yes } }
+		set_country_flag = RUS_ai_choose_mitteleuropa
+	}
+	
+	option = {
+		name = rusfor.1237.c #We will create a new global alliance!
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 3
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_DEM_REP
+			}
+                      modifier = {
+				factor = 7
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_DEM_REP
+			}
+			modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 6
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 5
+				has_country_flag = RUS_REAL
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 7
+				has_country_flag = RUS_EXP
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 5
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 6
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 15
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_WRA_ambitions
+			}
+			modifier = {
+				factor = 18
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_WRA_ambitions
+			} }
+		trigger = { NOT = { has_government = syndicalist has_government = totalist } }
+		set_country_flag = RUS_ai_choose_new_alliance
+	}
+	
+	option = {
+		name = rusfor.1237.e #We don't need any allies, we shall stay out of global affairs.
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_DEM_REP
+			}
+                      modifier = {
+				factor = 1
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_DEM_REP
+			}
+			modifier = {
+				factor = 1
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 1
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_TSAR_VLA
+			}
+			modifier = {
+				factor = 1
+				has_country_flag = RUS_REAL
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 0.2
+				has_country_flag = RUS_EXP
+				OR = { has_country_flag = RUS_ARI_REP has_country_flag = RUS_TSAR_DMI }
+			}
+			modifier = {
+				factor = 1
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 0.2
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_den_wait
+			}
+			modifier = {
+				factor = 1
+				has_country_flag = RUS_REAL
+				has_country_flag = RUS_WRA_ambitions
+			}
+			modifier = {
+				factor = 0.2
+				has_country_flag = RUS_EXP
+				has_country_flag = RUS_WRA_ambitions
+			} }
+	  trigger = { NOT = { has_government = syndicalist has_government = totalist } }
+	  if = { limit = { has_country_flag = RUS_REAL NOT = { has_country_flag = RUS_DEM_REP } } add_political_power = -20 }
+	  if = { limit = { has_country_flag = RUS_REAL has_country_flag = RUS_DEM_REP } add_political_power = 20 }
+	  if = { limit = { has_country_flag = RUS_EXP } add_political_power = -100 }
+	}
+	
+	option = {
+		name = rusfor.1237.f #We will fight for a better world with the Commune of France!
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 15
+				has_country_flag = RUS_REAL
+			}
+                      modifier = {
+				factor = 12
+				has_country_flag = RUS_EXP
+			} }
+		trigger = { OR = { has_government = syndicalist has_government = totalist } NOT = { has_war_with = FRA } country_exists = FRA FRA = { is_puppet = no is_faction_leader = yes } }
+		set_country_flag = RUS_ai_choose_internationale
+		}
+		
+	option = {
+		name = rusfor.1237.g #We will create a new global alliance to spread Bolshevism!
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 4
+				has_country_flag = RUS_REAL
+			}
+                      modifier = {
+				factor = 8
+				has_country_flag = RUS_EXP
+			} }
+		trigger = { OR = { has_government = syndicalist has_government = totalist } }
+		set_country_flag = RUS_ai_choose_new_alliance
+		}
+		
+	option = {
+		name = rusfor.1237.h #We don't need any allies, we will stay out of global affairs.
+		ai_chance = { factor = 5
+                      modifier = {
+				factor = 1
+				has_country_flag = RUS_REAL
+			}
+                      modifier = {
+				factor = 0.2
+				has_country_flag = RUS_EXP
+			} }
+		trigger = { OR = { has_government = syndicalist has_government = totalist } }
+		if = { limit = { has_country_flag = RUS_REAL } add_political_power = -20 }
+	  if = { limit = { has_country_flag = RUS_EXP } add_political_power = -80 }
+		}
+
+}
+
+country_event = { #Russia wants to join the Entente CAN not wrangel
+	id = rusfor.1238
+	title = rusfor.1238.t
+	desc = rusfor.1238.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1238.a #Yes, let them join!
+		ai_chance = { factor = 94 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente }
+		RUS = { add_opinion_modifier = { target = CAN modifier = RUS_join_entente } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "CAN"
+				value = 200
+			} }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1239 } }
+	}
+	
+	option = {
+		name = rusfor.1238.b #We'd rather not.
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente_refused }
+		RUS = { add_opinion_modifier = { target = CAN modifier = RUS_join_entente_refused } }
+	}
+	
+	option = {
+		name = rusfor.1238.c #How about signing a non-aggression pact instead?
+		ai_chance = { factor = 1 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1243 } }
+	}
+
+}
+
+country_event = { #We join the Entente Cordiale
+	id = rusfor.1239
+	title = rusfor.1239.t
+	desc = rusfor.1239.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1239.a #This time we will win!
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = RUS_join_entente2 }
+		add_opinion_modifier = { target = ENG modifier = RUS_join_entente2 }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		every_country = { limit = { is_in_faction_with = CAN } add_opinion_modifier = { modifier = RUS_join_entente3 } }
+	}
+
+}
+
+country_event = { #Russia wants to join the Entente GBR
+	id = rusfor.1240
+	title = rusfor.1240.t
+	desc = rusfor.1240.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1240.a #Yes, let them join!
+		ai_chance = { factor = 99 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente }
+		RUS = { add_opinion_modifier = { target = GBR modifier = RUS_join_entente } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "GBR"
+				value = 200
+			} }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1241 } }
+	}
+	
+	option = {
+		name = rusfor.1240.b #We'd rather not.
+		ai_chance = { factor = 1 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente_refused }
+		RUS = { add_opinion_modifier = { target = GBR modifier = RUS_join_entente_refused } }
+	}
+
+}
+
+country_event = { #We join the Entente Cordiale
+	id = rusfor.1241
+	title = rusfor.1241.t
+	desc = rusfor.1241.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1241.a #This time we will win!
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = RUS_join_entente2 }
+		add_opinion_modifier = { target = ENG modifier = RUS_join_entente2 }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		every_country = { limit = { is_in_faction_with = CAN } add_opinion_modifier = { modifier = RUS_join_entente3 } }
+	}
+
+}
+
+country_event = { #Russia wants to join the Entente CAN wrangel
+	id = rusfor.1242
+	title = rusfor.1242.t
+	desc = rusfor.1242.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1242.a #Yes, let them join!
+		ai_chance = { factor = 50 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente }
+		RUS = { add_opinion_modifier = { target = CAN modifier = RUS_join_entente } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "CAN"
+				value = 200
+			} }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1241 } }
+	}
+	
+	option = {
+		name = rusfor.1242.b #We'd rather not.
+		ai_chance = { factor = 10 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_entente_refused }
+		RUS = { add_opinion_modifier = { target = CAN modifier = RUS_join_entente_refused } }
+	}
+	
+	option = {
+		name = rusfor.1242.c #How about signing a non-aggression pact instead?
+		ai_chance = { factor = 20 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1243 } }
+	}
+
+}
+
+country_event = { #Canadians propose a non-aggression pact
+	id = rusfor.1243
+	title = rusfor.1243.t
+	desc = rusfor.1243.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1243.a #If it's all you can offer...
+		ai_chance = { factor = 75 }
+		add_opinion_modifier = { target = CAN modifier = RUS_join_entente_NAP }
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+		CAN = { diplomatic_relation = { country = RUS relation = non_aggression_pact }  }
+	}
+	
+	option = {
+		name = rusfor.1243.b #no means no
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+	}
+
+}
+
+country_event = { #Russia wants to join the german bloc dmitri
+	id = rusfor.1244
+	title = rusfor.1244.t
+	desc = rusfor.1244.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1244.a #Yes, let them join!
+		ai_chance = { factor = 94 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_mittel }
+		RUS = { add_opinion_modifier = { target = GER modifier = RUS_join_mittel } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "GER"
+				value = 200
+			} }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1245 } }
+	}
+	
+	option = {
+		name = rusfor.1244.b #We'd rather not.
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_mittel_refused }
+		RUS = { add_opinion_modifier = { target = GER modifier = RUS_join_mittel_refused } }
+	}
+	
+	option = {
+		name = rusfor.1244.c #How about signing a non-aggression pact instead?
+		ai_chance = { factor = 1 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1247 } }
+	}
+
+}
+
+country_event = { #We join the German bloc
+	id = rusfor.1245
+	title = rusfor.1245.t
+	desc = rusfor.1245.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1245.a #Now we are a superpower!
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = RUS_join_mittel2 }
+		add_opinion_modifier = { target = ENG modifier = RUS_join_mittel2 }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		every_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = RUS_join_mittel3 } }
+	}
+
+}
+
+country_event = { #Russia wants to join the german bloc not dmitri
+	id = rusfor.1246
+	title = rusfor.1246.t
+	desc = rusfor.1246.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1246.a #Yes, let them join!
+		ai_chance = { factor = 55 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_mittel }
+		RUS = { add_opinion_modifier = { target = GER modifier = RUS_join_mittel } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "GER"
+				value = 200
+			} }
+		add_political_power = 60
+		RUS = { country_event = { id = rusfor.1245 } }
+	}
+	
+	option = {
+		name = rusfor.1246.b #We'd rather not.
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_mittel_refused }
+		RUS = { add_opinion_modifier = { target = GER modifier = RUS_join_mittel_refused } }
+	}
+	
+	option = {
+		name = rusfor.1246.c #How about signing a non-aggression pact instead?
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+		RUS = { country_event = { id = rusfor.1247 } }
+	}
+
+}
+
+country_event = { #Germans propose a non-aggression pact
+	id = rusfor.1247
+	title = rusfor.1247.t
+	desc = rusfor.1247.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1247.a #If it's all you can offer...
+		ai_chance = { factor = 75 }
+		add_opinion_modifier = { target = GER modifier = RUS_join_mittel_NAP }
+		diplomatic_relation = { country = GER relation = non_aggression_pact }
+		GER = { diplomatic_relation = { country = RUS relation = non_aggression_pact }  }
+	}
+	
+	option = {
+		name = rusfor.1246.b #No means no!
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+	}
+
+}
+
+country_event = { #Russia wants to join the Syndicalists
+	id = rusfor.1248
+	title = rusfor.1248.t
+	desc = rusfor.1248.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1248.a #Yes, let them join!
+		ai_chance = { factor = 95 }
+		add_to_faction = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_join_internationale }
+		RUS = { add_opinion_modifier = { target = FRA modifier = RUS_join_internationale } }
+		RUS = { add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			} }
+		add_political_power = 140
+		RUS = { country_event = { id = rusfor.1249 } }
+	}
+	
+	option = {
+		name = rusfor.1248.b #We'd rather not.
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_join_internationale_refused }
+		RUS = { add_opinion_modifier = { target = FRA modifier = RUS_join_internationale_refused } }
+	}
+
+}
+
+country_event = { #We join the Syndicalist bloc
+	id = rusfor.1249
+	title = rusfor.1249.t
+	desc = rusfor.1249.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1249.a #This time we will win
+		add_political_power = 60
+		add_opinion_modifier = { target = CAN modifier = RUS_join_internationale2 }
+		add_opinion_modifier = { target = GER modifier = RUS_join_internationale2 }
+		add_opinion_modifier = { target = CAN modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+		every_country = { limit = { is_in_faction_with = FRA } add_opinion_modifier = { modifier = RUS_join_internationale3 } }
+	}
+
+}
+
+country_event = { #New Global Alliance ?
+	id = rusfor.1250
+	title = rusfor.1250.t
+	desc = rusfor.1250.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1250.a #Search for allies in Pacific region !
+		ai_chance = { factor = 50 }
+		trigger = { country_exists = JAP JAP = { is_puppet = no NOT = { has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		JAP = { country_event = { id = rusfor.1251 days = 1 } }
+	}
+	
+	option = {
+		name = rusfor.1250.b #search for allies in europe !
+		ai_chance = { factor = 50 } #Must add A-H
+		trigger = { OR = { AND = { country_exists = SER SER = { is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		AND = { country_exists = YUG YUG = { is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		AND = { country_exists = DNF DNF = { owns_state = 102 controls_state = 102 owns_state = 9 controls_state = 9 is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		AND = { country_exists = AUS AUS = { owns_state = 102 controls_state = 102 owns_state = 9 controls_state = 9 is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } } } }
+		country_event = { id = rusfor.1254 days = 1 }
+	}
+	
+	option = {
+		name = rusfor.1250.c #create a completely new alliance !
+		ai_chance = { factor = 0 }
+		set_rule = { can_create_factions = yes }
+	}
+
+}
+
+country_event = { #Alliance with Russia ? JAP
+	id = rusfor.1251
+	title = rusfor.1251.t
+	desc = rusfor.1251.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1251.a #yes
+		ai_chance = { factor = 60 }
+		RUS = { if = { limit = { is_in_faction = no } create_faction = "eurasian_alliance" add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = JAP }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = JAP } } }
+		RUS = { country_event = { id = rusfor.1252 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_focus }
+	}
+	
+	option = {
+		name = rusfor.1251.b #no
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_japan_focus_refuse }
+	}
+
+}
+
+country_event = { #The Euroasian block RUS
+	id = rusfor.1252
+	title = rusfor.1252.t
+	desc = rusfor.1252.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1252.a #this time we shall win !
+		add_political_power = 60
+		add_opinion_modifier = { target = CAN modifier = RUS_ally_japan_focus2 }
+		add_opinion_modifier = { target = GER modifier = RUS_ally_japan_focus2 }
+		add_opinion_modifier = { target = CAN modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+		every_country = { limit = { is_in_faction_with = JAP } add_opinion_modifier = { modifier = RUS_ally_japan_focus3 } }
+	}
+
+}
+
+country_event = { #The Euroasian block JAP
+	id = rusfor.1253
+	title = rusfor.1253.t
+	desc = rusfor.1253.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1253.a #this time we shall win !
+		add_political_power = 60
+		every_country = { limit = { is_puppet_of = RUS } add_opinion_modifier = { modifier = JAP_ally_russia_puppets } }
+	}
+
+}
+
+country_event = { #Allies in Europe
+	id = rusfor.1254
+	title = rusfor.1254.t
+	desc = rusfor.1254.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1254.a #serbia
+		ai_chance = { factor = 20 }
+		trigger = { country_exists = SER SER = { is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		add_political_power = 20
+		SER = { country_event = { id = rusfor.1255 } }
+	}
+	
+	option = {
+		name = rusfor.1254.b #yugoslavia
+		ai_chance = { factor = 20 }
+		trigger = { country_exists = YUG YUG = { is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		add_political_power = 20
+		YUG = { country_event = { id = rusfor.1257 } }
+	}
+	
+	option = {
+		name = rusfor.1254.c #austria
+		ai_chance = { factor = 20 }
+		trigger = { country_exists = AUS AUS = { owns_state = 102 controls_state = 102 owns_state = 9 controls_state = 9 is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		add_political_power = -60
+		AUS = { country_event = { id = rusfor.1259 } }
+	}
+	
+	option = {
+		name = rusfor.1254.e #danubian fed
+		ai_chance = { factor = 20 }
+		trigger = { country_exists = DNF DNF = { owns_state = 102 controls_state = 102 owns_state = 9 controls_state = 9 is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		add_political_power = -60
+		DNF = { country_event = { id = rusfor.1261 } }
+	}
+	
+	#option = {
+		#name = rusfor.1254.f #austria hungary
+		#ai_chance = { factor = 20 }
+		#trigger = { country_exists = DNF DNF = { owns_state = 102 controls_state = 102 owns_state = 9 controls_state = 9 is_puppet = no NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = JAP is_in_faction_with = FRA has_war_with = RUS has_government = syndicalist has_government = totalist } } }
+		#add_political_power = -40
+		#DNF = { country_event = { id = rusfor.1000 } }
+	#}
+
+}
+
+country_event = { #Russia wants to form new block SER
+	id = rusfor.1255
+	title = rusfor.1255.t
+	desc = rusfor.1255.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1255.a #yes
+		ai_chance = { factor = 95 }
+		add_political_power = 140
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = SER } remove_from_faction = SER }
+		RUS = { country_event = { id = rusfor.1256 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_accept }
+		RUS = { add_opinion_modifier = { target = SER modifier = RUS_global_alliance_accept } }
+	}
+	
+	option = {
+		name = rusfor.1255.b #no
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_refused }
+	}
+
+}
+
+country_event = { #New power in Europe
+	id = rusfor.1256
+	title = rusfor.1256.t
+	desc = rusfor.1256.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1256.a
+		add_political_power = 60
+		if = { limit = { is_in_faction = no } create_faction = "slavic_brothers" add_to_faction = SER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = SER }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = SER } }
+	}
+
+}
+
+country_event = { #Russia wants to form new block YUG
+	id = rusfor.1257
+	title = rusfor.1257.t
+	desc = rusfor.1257.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1257.a #yes
+		ai_chance = { factor = 95 }
+		add_political_power = 140
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = YUG } remove_from_faction = YUG }
+		RUS = { country_event = { id = rusfor.1258 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_accept }
+		RUS = { add_opinion_modifier = { target = YUG modifier = RUS_global_alliance_accept } }
+	}
+	
+	option = {
+		name = rusfor.1257.b #no
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_refused }
+	}
+
+}
+
+country_event = { #New power in Europe
+	id = rusfor.1258
+	title = rusfor.1258.t
+	desc = rusfor.1258.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1258.a
+		add_political_power = 60
+		if = { limit = { is_in_faction = no } create_faction = "slavic_brothers" add_to_faction = YUG }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = YUG }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = YUG } }
+	}
+
+}
+
+country_event = { #Russia wants to form new block AUS
+	id = rusfor.1259
+	title = rusfor.1259.t
+	desc = rusfor.1259.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1259.a #yes
+		ai_chance = { factor = 95 }
+		add_political_power = 140
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = AUS } remove_from_faction = AUS }
+		RUS = { country_event = { id = rusfor.1260 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_accept }
+		RUS = { add_opinion_modifier = { target = AUS modifier = RUS_global_alliance_accept } }
+	}
+	
+	option = {
+		name = rusfor.1259.b #no
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_refused }
+	}
+
+}
+
+country_event = { #New power in Europe
+	id = rusfor.1260
+	title = rusfor.1260.t
+	desc = rusfor.1260.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1260.a
+		add_political_power = 60
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = AUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = AUS }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = AUS } }
+	}
+
+}
+
+country_event = { #Russia wants to form new block DNF
+	id = rusfor.1261
+	title = rusfor.1261.t
+	desc = rusfor.1261.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1261.a #yes
+		ai_chance = { factor = 85 }
+		add_political_power = 140
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = DNF } remove_from_faction = DNF }
+		RUS = { country_event = { id = rusfor.1262 } }
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_accept }
+		RUS = { add_opinion_modifier = { target = DNF modifier = RUS_global_alliance_accept } }
+	}
+	
+	option = {
+		name = rusfor.1261.b #no
+		ai_chance = { factor = 15 }
+		add_political_power = -20
+		add_opinion_modifier = { target = RUS modifier = RUS_global_alliance_refused }
+	}
+
+}
+
+country_event = { #New power in Europe
+	id = rusfor.1262
+	title = rusfor.1262.t
+	desc = rusfor.1262.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.1262.a
+		add_political_power = 60
+		if = { limit = { is_in_faction = no } create_faction = "volga_danubian_alliance" add_to_faction = DNF }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = DNF }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = DNF } }
 	}
 
 }

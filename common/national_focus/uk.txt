@@ -445,6 +445,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
+			add_national_unity = 0.05
 			custom_effect_tooltip = ENG_devolution_tp	
 			hidden_effect = {
 				release = WAL
@@ -641,7 +642,7 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-		
+			add_national_unity = 0.1
 		}
 	}
 	
@@ -695,6 +696,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -200
+			add_national_unity = 0.05
 			custom_effect_tooltip = ENG_revolution_tp
 			hidden_effect = {
 				country_event = { id = uob.201 days = 1 }
@@ -1115,30 +1117,667 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 3
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 4
+			338 = {
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = arms_factory
-					level = 4
+					level = 3
 					instant_build = yes	
 				}
 			}
 		}
 	}
 	
+	focus = {
+		id = ENG_mobilized_industry
+		icon = GFX_goal_generic_construct_civilian
+		prerequisite = { focus = ENG_synthetic_industry focus = ENG_military_industry }
+		x = 0
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			128 = {
+				remove_building = { 
+					type = industrial_complex level = 2 
+				} 
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_mobilized_industry2
+		icon = GFX_goal_generic_construct_civilian
+		prerequisite = { focus = ENG_mobilized_industry }
+		x = 0
+		y = 10
+		cost = 10
+		
+		completion_reward = {
+			129 = {
+				remove_building = { 
+					type = industrial_complex level = 2 
+				} 
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_military_industry2
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = ENG_military_industry }
+		x = 1
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			123 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes	
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_military_industry3
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = ENG_military_industry2 }
+		x = 1
+		y = 11
+		cost = 10
+		
+		completion_reward = {
+			132 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes	
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_conscript_vessels
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = ENG_military_industry }
+		x = 2
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			hidden_effect = {
+				#add_equipment_production = { 
+				#	equipment = { 
+				#		type = convoy_1  
+				#		version_name = "Conscripted_Vessels" 
+				#	} 
+				#	requested_factories = 5 
+				#	progress = 0.90 
+				#	amount = 200 
+				#}
+				
+				### Todo
+				# how do add convoys ;_;
+				
+				load_oob = ENG_conscript_vessels
+			}
+			custom_effect_tooltip = ENG_conscript_vessels_tp
+		}
+	}
+	
+	focus = {
+		id = ENG_naval_dockyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = ENG_conscript_vessels }
+		prerequisite = { focus = ENG_military_industry2 }
+		x = 2
+		y = 10
+		cost = 10
+		
+		completion_reward = {
+			121 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes	
+				}
+			}
+			130 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
+			132 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_provision
+		icon = GFX_goal_generic_consumer_goods
+		prerequisite = { focus = ENG_military_industry }
+		x = 3
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_propaganda
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ENG_provision }
+		x = 3
+		y = 11
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_military_industry_experience
+		icon = GFX_goal_generic_scientific_exchange
+		prerequisite = { focus = ENG_military_industry }
+		x = 4
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = industry
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_statistical_warfare
+		icon = GFX_focus_research
+		prerequisite = { focus = ENG_military_industry_experience }
+		x = 4
+		y = 10
+		cost = 10
+		
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+	
+	focus = {
+		id = ENG_home_front_victory
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = ENG_military_industry3 }
+		prerequisite = { focus = ENG_propaganda }
+		available = { }
+		x = 2
+		y = 12
+		cost = 10
+		
+		completion_reward = {
+			add_ideas = ENG_home_front_victory_idea
+		}
+	}
+	
+	# Total War
+	
+	focus = {
+		id = ENG_westminster_project
+		icon = GFX_goal_generic_secret_weapon
+		prerequisite = { focus = ENG_military_industry_experience }
+		prerequisite = { focus = ENG_class_war }
+		x = 5
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = nuclear
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_total_mobilization
+		icon = GFX_goal_generic_soviet_construction
+		prerequisite = { focus = ENG_class_war }
+		x = 7
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			add_manpower = 250000
+		}
+	}
+	
+	focus = {
+		id = ENG_fortress_britain
+		icon = GFX_goal_generic_fortify_city
+		prerequisite = { focus = ENG_expand_army }
+		prerequisite = { focus = ENG_class_war }
+		x = 9
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			hidden_effect = {
+				127 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 3501
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11446
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 9458
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 13070
+						instant_build = yes
+					}
+				}
+				127 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 3422
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 3463
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 540
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 6526
+						instant_build = yes
+					}
+				}
+				126 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11374
+						instant_build = yes
+					}
+				}
+				221 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 221
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 271
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 322
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 3287
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 296
+						instant_build = yes
+					}
+				}
+				129 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 9322
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 3353
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 9250
+						instant_build = yes
+					}
+				}
+				130 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11297
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11317
+						instant_build = yes
+					}
+				}
+				131 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11270
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 351
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11299
+						instant_build = yes
+					}
+				}
+				131 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 11378
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 9392
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 9383
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 3
+						province = 6300
+						instant_build = yes
+					}
+				}
+			}
+			custom_effect_tooltip = ENG_fortress_britain_tp
+		}
+	}
+
+	# Internal
+
+	focus = {
+		id = ENG_emergency_powers
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ENG_devolution focus = ENG_evolution }
+		mutually_exclusive = { focus = ENG_new_country }
+		available = { has_war = yes threat > 0.5 }
+		x = 6
+		y = 7
+		cost = 10
+		
+		completion_reward = {
+			add_political_power = 500
+		}
+	}
+	
+	focus = {
+		id = ENG_new_country
+		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = ENG_evolution focus = ENG_revolution }
+		mutually_exclusive = { focus = ENG_emergency_powers }
+		available = { has_war = yes threat > 0.5 }
+		x = 8
+		y = 7
+		cost = 10
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = ENG_class_war
+		icon = GFX_goal_generic_war_with_comintern
+		prerequisite = { focus = ENG_emergency_powers focus = ENG_new_country }
+		available = {
+			hidden_trigger = {
+				OR = {
+					has_idea = partial_economic_mobilisation
+					has_idea = war_economy
+					has_idea = tot_economic_mobilisation
+				}
+			}
+		}
+		x = 7
+		y = 8
+		cost = 20
+		
+		completion_reward = {
+			add_political_power = 100
+			add_national_unity = 0.05
+			hidden_effect = {
+				add_ideas = tot_economic_mobilisation
+				add_ideas = closed_economy
+			}
+			custom_effect_tooltip = ENG_total_war_tp
+		}
+	}
+	
 	# Military
+	
+	focus = {
+		id = ENG_expand_army
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = ENG_improve_army2 }
+		x = 10
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			army_experience = 100
+			navy_experience = 100
+			air_experience = 100
+		}
+	}
+	
+	focus = {
+		id = ENG_expand_army2
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = ENG_improve_army2 }
+		x = 10
+		y = 10
+		cost = 10
+		
+		completion_reward = {	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = support_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_artillery_research
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = ENG_expand_army2 }
+		x = 11
+		y = 11
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = artillery
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_small_boat_research
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = ENG_improve_army2 }
+		x = 12
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_navy_doctrine
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = ENG_small_boat_research }
+		x = 11
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_big_boat_research
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = ENG_small_boat_research }
+		x = 12
+		y = 10
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = bc_tech
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_motorized
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = ENG_improve_army2 }
+		x = 13
+		y = 9
+		cost = 10
+		
+		completion_reward = {	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = motorized_equipment
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_tank_research
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = ENG_motorized }
+		x = 13
+		y = 11
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = armor
+			}	
+		}
+	}
 	
 	focus = {
 		id = ENG_improve_army2
 		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_red focus = ENG_raf }
+		prerequisite = { focus = ENG_red }
+		prerequisite = { focus = ENG_raf }
 		available = { has_war = yes threat > 0.5}
 		x = 13
 		y = 7
@@ -1148,8 +1787,83 @@ focus_tree = {
 			add_tech_bonus = {
 				bonus = 0.5
 				uses = 1
-				category = support_tech
+				category = infantry_weapons
 			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_fighter_research
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = ENG_improve_army2 focus = ENG_raf }
+		x = 14
+		y = 8
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = light_fighter
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_heavy_fighter
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_air_doctrine
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = ENG_fighter_research }
+		x = 15
+		y = 9
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = air_doctrine
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_bomber_research
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ENG_fighter_research }
+		x = 14
+		y = 10
+		cost = 10
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_blood
+		icon = GFX_goal_generic_attack_allies
+		prerequisite = { focus = ENG_artillery_research }
+		prerequisite = { focus = ENG_tank_research }
+		x = 12
+		y = 12
+		cost = 10
+		
+		completion_reward = {
+			add_ideas = ENG_blood_idea
 		}
 	}
 	
@@ -1167,7 +1881,7 @@ focus_tree = {
 		completion_reward = {
 		}
 	}
-	
+
 	#focus = {
 	#	id = ENG_military_factories
 	#	icon = GFX_goal_generic_construct_mil_factory

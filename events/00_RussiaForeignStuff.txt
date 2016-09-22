@@ -2023,6 +2023,798 @@ country_event = { #Autonomy of the Transamur Republic
 
 }
 
+country_event = { #The Trans-Siberian Crisis
+	id = rusfor.62
+	title = rusfor.62.t
+	desc = rusfor.62.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+
+	trigger = { tag = RUS date > 1938.05.01 controls_state = 566 OR = { has_country_flag = RUS_REAL has_country_flag = RUS_EXP } NOT = { has_war_with = MON is_in_faction_with = MON } MON = { is_puppet = no } }
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rusfor.62.a #We must increase the security on our trains.
+		ai_chance = { factor = 1 }
+		trigger = { NOT = { has_country_flag = RUS_EXP } }
+		add_opinion_modifier = { target = MON modifier = RUS_security_train1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_security_train2 }
+		add_opinion_modifier = { target = TAN modifier = RUS_security_train2 }
+		add_opinion_modifier = { target = JAP modifier = RUS_security_train3 }
+		set_country_flag = RUS_SIB_PANIC
+	}
+	
+	option = {
+		name = rusfor.62.b #Demand a formal apology from the Mongolian government!
+		ai_chance = { factor = 5 }
+		add_opinion_modifier = { target = MON modifier = RUS_formal_apology1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_formal_apology1 }
+		add_opinion_modifier = { target = TAN modifier = RUS_formal_apology1 }
+		add_opinion_modifier = { target = JAP modifier = RUS_formal_apology2 }
+		MON = { country_event = { id = rusfor.63 } }
+	}
+	
+	option = {
+		name = rusfor.62.c #Enough! We demand full sovereignty over OUR Trans-Siberian railway!
+		ai_chance = { factor = 70 }
+		add_political_power = 100
+		add_opinion_modifier = { target = MON modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TAN modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = JAP modifier = RUS_full_sovereignty_siberian2 }
+		MON = { country_event = { id = rusfor.66 } }
+		add_state_core = 563
+		add_state_core = 564
+	}
+	
+	option = {
+		name = rusfor.62.e #We shall bring civilization where there is barbarism, send the troops!
+		ai_chance = { factor = 50 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_political_power = 100
+		add_opinion_modifier = { target = MON modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TAN modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = JAP modifier = RUS_full_sovereignty_siberian2 }
+		MON = { country_event = { id = rusfor.69 } }
+		declare_war_on = { target = MON type = annex_everything }
+		add_state_core = 563
+		add_state_core = 564
+	}
+
+}
+
+country_event = { #Russia demands a formal apology
+	id = rusfor.63
+	title = rusfor.63.t
+	desc = rusfor.63.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.63.a #We express our deepest regrets, send gifts to the bereaved.
+		ai_chance = { factor = 30 }
+		RUS = { country_event = { id = rusfor.64 } }
+		add_political_power = -100
+	}
+	
+	option = {
+		name = rusfor.63.b #We cannot be held responsible for the actions of bandits.
+		ai_chance = { factor = 50 }
+		RUS = { country_event = { id = rusfor.65 } }
+	}
+	
+	option = {
+		name = rusfor.63.c #What!? Siberia is ours!
+		ai_chance = { factor = 20 }
+		RUS = { country_event = { id = rusfor.68 } }
+		load_oob = MON_ATTACK_RUS
+		add_state_claim = 583
+		        add_state_claim = 572
+                add_state_claim = 653
+				add_state_claim = 580
+				add_state_claim = 579
+				add_state_claim = 590
+				add_state_claim = 588
+				add_state_claim = 403
+				add_state_claim = 571
+				add_state_claim = 570
+				add_state_claim = 578
+				add_state_claim = 40
+				add_state_claim = 569
+				add_state_claim = 654
+				add_state_claim = 568
+				add_state_claim = 567
+				add_state_claim = 566
+				add_state_claim = 577
+				add_state_claim = 516
+				add_state_claim = 576
+				add_state_claim = 575
+
+				add_state_claim = 565
+				add_state_claim = 561
+				add_state_claim = 657
+				add_state_claim = 560
+				add_state_claim = 574
+				add_state_claim = 644
+				add_state_claim = 562
+				add_state_claim = 637
+	}
+
+}
+
+country_event = { #The Mongolians Apologis
+	id = rusfor.64
+	title = rusfor.64.t
+	desc = rusfor.64.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.64.a #that is good
+		ai_chance = { factor = 5 }
+		add_political_power = -40
+		add_opinion_modifier = { target = MON modifier = RUS_mongolia_apologises1 }
+	}
+	
+	option = {
+		name = rusfor.64.b #Okay, but we shall be watching the railroad in future!
+		ai_chance = { factor = 95 }
+		add_opinion_modifier = { target = MON modifier = RUS_mongolia_apologises2 }
+		add_state_core = 563
+		add_state_core = 564
+	}
+
+}
+
+country_event = { #The Mongolians refuse our request!
+	id = rusfor.65
+	title = rusfor.65.t
+	desc = rusfor.65.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.65.a #He is right, it was not his fault.
+		ai_chance = { factor = 5 }
+		trigger = { NOT = { has_country_flag = RUS_EXP } }
+		add_political_power = -40
+		add_opinion_modifier = { target = MON modifier = RUS_mongolia_apologises1 }
+	}
+	
+	option = {
+		name = rusfor.65.b #We shall not forget this!
+		ai_chance = { factor = 15 }
+		add_political_power = -60
+		add_opinion_modifier = { target = MON modifier = RUS_refused_apologise_mon }
+		add_state_core = 563
+		add_state_core = 564
+	}
+	
+	option = {
+		name = rusfor.65.c #Then it is war!
+		ai_chance = { factor = 70 }
+		add_political_power = 100
+		add_state_core = 563
+		add_state_core = 564
+		MON = { country_event = { id = rusfor.69 } }
+		declare_war_on = { target = MON type = annex_everything }
+		add_opinion_modifier = { target = MON modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TRM modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = TAN modifier = RUS_full_sovereignty_siberian1 }
+		add_opinion_modifier = { target = JAP modifier = RUS_full_sovereignty_siberian2 }
+	}
+
+}
+
+country_event = { #Russia demands full control over the railroad
+	id = rusfor.66
+	title = rusfor.66.t
+	desc = rusfor.66.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.66.a #We shall abandon our portion of the railroad.
+		ai_chance = { factor = 40 }
+		if = { limit = { NOT = { has_global_flag = RUS_railroad_event } } RUS = { country_event = { id = rusfor.67 } } }
+		add_political_power = -100
+		RUS = { transfer_state = 563 transfer_state = 564 }
+		remove_state_core = 563
+		remove_state_core = 564
+	}
+	
+	option = {
+		name = rusfor.66.b #We cannot be held responsible for the actions of bandits.
+		ai_chance = { factor = 20 }
+		RUS = { country_event = { id = rusfor.65 } }
+	}
+	
+	option = {
+		name = rusfor.66.c #Mobilise, Siberia is ours!
+		ai_chance = { factor = 40 }
+		RUS = { country_event = { id = rusfor.68 } }
+		load_oob = MON_ATTACK_RUS
+		add_state_claim = 583
+		        add_state_claim = 572
+                add_state_claim = 653
+				add_state_claim = 580
+				add_state_claim = 579
+				add_state_claim = 590
+				add_state_claim = 588
+				add_state_claim = 403
+				add_state_claim = 571
+				add_state_claim = 570
+				add_state_claim = 578
+				add_state_claim = 40
+				add_state_claim = 569
+				add_state_claim = 654
+				add_state_claim = 568
+				add_state_claim = 567
+				add_state_claim = 566
+				add_state_claim = 577
+				add_state_claim = 516
+				add_state_claim = 576
+				add_state_claim = 575
+
+				add_state_claim = 565
+				add_state_claim = 561
+				add_state_claim = 657
+				add_state_claim = 560
+				add_state_claim = 574
+				add_state_claim = 644
+				add_state_claim = 562
+				add_state_claim = 637
+	}
+
+}
+
+country_event = { #The Russian Railroad!
+	id = rusfor.67
+	title = rusfor.67.t
+	desc = rusfor.67.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { OR = { tag = RUS tag = SOV } controls_state = 563 controls_state = 564 NOT = { has_global_flag = RUS_railroad_event has_war_with = MON } }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = rusfor.67.a #Excellent!
+		add_political_power = 300
+		set_global_flag = RUS_railroad_event
+	}
+
+}
+
+country_event = { #The Bloody Baron
+	id = rusfor.68
+	title = rusfor.68.t
+	desc = rusfor.68.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.68.a #We shall wipe Mongolia from the map!
+		ai_chance = { factor = 90 }
+		add_political_power = 100
+		add_state_core = 563
+		add_state_core = 564
+		declare_war_on = { target = MON type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.68.b #Evacuate all Russian citizens from Mongolia and seal the border.
+		ai_chance = { factor = 5 }
+		trigger = { NOT = { has_country_flag = RUS_EXP } }
+		set_country_flag = RUS_SIB_PANIC
+		add_political_power = -200
+	}
+
+}
+
+country_event = { #The Russians Attack!
+	id = rusfor.69
+	title = rusfor.69.t
+	desc = rusfor.69.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.69.a #Let the Russians come, we shall chase them out of Asia!
+		load_oob = MON_ATTACK_RUS
+		add_state_claim = 583
+		        add_state_claim = 572
+                add_state_claim = 653
+				add_state_claim = 580
+				add_state_claim = 579
+				add_state_claim = 590
+				add_state_claim = 588
+				add_state_claim = 403
+				add_state_claim = 571
+				add_state_claim = 570
+				add_state_claim = 578
+				add_state_claim = 40
+				add_state_claim = 569
+				add_state_claim = 654
+				add_state_claim = 568
+				add_state_claim = 567
+				add_state_claim = 566
+				add_state_claim = 577
+				add_state_claim = 516
+				add_state_claim = 576
+				add_state_claim = 575
+
+				add_state_claim = 565
+				add_state_claim = 561
+				add_state_claim = 657
+				add_state_claim = 560
+				add_state_claim = 574
+				add_state_claim = 644
+				add_state_claim = 562
+				add_state_claim = 637
+	}
+
+}
+
+country_event = { #Urga Has Fallen!
+	id = rusfor.70
+	title = rusfor.70.t
+	desc = rusfor.70.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS country_exists = MON has_war_with = MON controls_state = 330 controls_state = 564 }
+	
+	mean_time_to_happen = { days = 3 }
+	
+	option = {
+		name = rusfor.70.a #Let the Mongols join us on OUR terms!
+		ai_chance = { factor = 95 }
+		add_state_core = 563
+		add_state_core = 564
+		MON = { country_event = { id = rusfor.75 } }
+		clr_country_flag = RUS_SIB_PANIC
+	}
+	
+	option = {
+		name = rusfor.70.b #Make an example out of them, unconditional surrender!
+		ai_chance = { factor = 5 }
+		clr_country_flag = RUS_SIB_PANIC
+		add_opinion_modifier = { target = DKB modifier = RUS_mon_unconditional_surrender1 }
+		add_opinion_modifier = { target = ALO modifier = RUS_mon_unconditional_surrender1 }
+		add_opinion_modifier = { target = TRK modifier = RUS_mon_unconditional_surrender1 }
+		add_opinion_modifier = { target = JAP modifier = RUS_mon_unconditional_surrender2 }
+	}
+
+}
+
+country_event = { #Mongols Accept!
+	id = rusfor.71
+	title = rusfor.71.t
+	desc = rusfor.71.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.71.a 
+		if = { limit = { MON = { controls_state = 329 } } country_event = { id = rusfor.76 } }
+		add_political_power = 200
+		puppet = MON
+		if = { limit = { SIK = { is_puppet_of = MON } } annex_country = { target = SIK } }
+		if = { limit = { XSM = { is_puppet_of = MON } } annex_country = { target = XSM } }
+		MON = { country_event = { id = rusfor.73 } }
+		if = { limit = { has_war_with = TIB } TIB = { country_event = { id = rusfor.72 } } }
+	}
+
+}
+
+country_event = { #Tibet abandons Mongolia
+	id = rusfor.72
+	title = rusfor.72.t
+	desc = rusfor.72.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.72.a 
+		white_peace = RUS
+		add_political_power = -100
+	}
+
+}
+
+country_event = { #Independent Mongolia
+	id = rusfor.73
+	title = rusfor.73.t
+	desc = rusfor.73.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.73.a #It's still better than an occupation!
+		#have to add bunch of ministers for mongolia
+		add_opinion_modifier = { target = RUS modifier = RUS_independent_mongolia1 }
+		add_opinion_modifier = { target = MAF modifier = RUS_independent_mongolia2 }
+		add_opinion_modifier = { target = AOG modifier = RUS_independent_mongolia2 }
+		add_opinion_modifier = { target = BUL modifier = RUS_independent_mongolia2 }
+		add_opinion_modifier = { target = BOM modifier = RUS_independent_mongolia2 }
+		add_opinion_modifier = { target = CRO modifier = RUS_independent_mongolia2 }
+	}
+
+}
+
+country_event = { #The Mongols are Suicidal!
+	id = rusfor.74
+	title = rusfor.74.t
+	desc = rusfor.74.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.74.a 
+		add_political_power = -100
+	}
+
+}
+
+country_event = { #Urga Captured MON
+	id = rusfor.75
+	title = rusfor.75.t
+	desc = rusfor.75.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.75.a #We have no choice but to submit...
+		ai_chance = { factor = 90 }
+		white_peace = RUS
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = MON } remove_from_faction = MON } }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } dismantle_faction = yes }
+		RUS = { transfer_state = 563 transfer_state = 564 }
+		remove_state_core = 563
+		remove_state_core = 564
+		remove_state_claim = 572
+                remove_state_claim = 653
+				remove_state_claim = 580
+				remove_state_claim = 579
+				remove_state_claim = 590
+				remove_state_claim = 588
+				remove_state_claim = 403
+				remove_state_claim = 571
+				remove_state_claim = 570
+				remove_state_claim = 578
+				remove_state_claim = 40
+				remove_state_claim = 569
+				remove_state_claim = 654
+				remove_state_claim = 568
+				remove_state_claim = 567
+				remove_state_claim = 566
+				remove_state_claim = 577
+				remove_state_claim = 516
+				remove_state_claim = 576
+				remove_state_claim = 575
+
+				remove_state_claim = 565
+				remove_state_claim = 561
+				remove_state_claim = 657
+				remove_state_claim = 560
+				remove_state_claim = 574
+				remove_state_claim = 644
+				remove_state_claim = 562
+				remove_state_claim = 637
+		RUS = { country_event = { id = rusfor.71 } }
+	}
+	
+	option = {
+		name = rusfor.75.b #The Baron shall lead us to victory or death!
+		ai_chance = { factor = 10 }
+		RUS = { country_event = { id = rusfor.74 } }
+	}
+
+}
+
+country_event = { #The Tuvan Question
+	id = rusfor.76
+	title = rusfor.76.t
+	desc = rusfor.76.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.76.a #Order Mongolia to release Tannu Tuva!
+		ai_chance = { factor = 75 }
+		MON = { country_event = { id = rusfor.78 } }
+		add_opinion_modifier = { target = MON modifier = RUS_mon_order_tannu_tuva }
+	}
+	
+	option = {
+		name = rusfor.76.b #Tannu Tuva will be Russian once more!
+		ai_chance = { factor = 5 }
+		RUS = { country_event = { id = rusfor.80 } }
+		add_opinion_modifier = { target = MON modifier = RUS_mon_order_tannu_tuva }
+		add_state_core = 329
+		add_political_power = -60
+	}
+	
+	option = {
+		name = rusfor.76.c #They are still Mongols for all we care!
+		ai_chance = { factor = 25 }
+		add_opinion_modifier = { target = MON modifier = RUS_not_mon_order_tannu_tuva }
+	}
+
+}
+
+country_event = { #The Tuvan Question
+	id = rusfor.77
+	title = rusfor.77.t
+	desc = rusfor.77.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS owns_state = 329 controls_state = 329 NOT = { 329 = { is_core_of = RUS } has_war_with = MON } }
+	
+	mean_time_to_happen = { days = 5 }
+	
+	option = {
+		name = rusfor.77.a #Give them total freedom, once and for all!
+		ai_chance = { factor = 75 }
+		TAN = { transfer_state = 329 }
+		add_opinion_modifier = { target = MON modifier = RUS_mon_order_tannu_tuva }
+	}
+	
+	option = {
+		name = rusfor.77.b #Give them limited freedom, they shall remain loyal to us!
+		ai_chance = { factor = 5 }
+		country_event = { id = rusfor.79 }
+		TAN = { transfer_state = 329 }
+		add_opinion_modifier = { target = MON modifier = RUS_mon_order_tannu_tuva }
+	}
+	
+	option = {
+		name = rusfor.77.c #Tannu Tuva will be Russian once more!
+		ai_chance = { factor = 25 }
+		add_opinion_modifier = { target = MON modifier = RUS_mon_order_tannu_tuva }
+		add_state_core = 329
+		add_political_power = -100
+	}
+
+}
+
+country_event = { #The Russian Ultimatum tannu tuva
+	id = rusfor.78
+	title = rusfor.78.t
+	desc = rusfor.78.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.78.a
+		RUS = { country_event = { id = rusfor.79 } }
+		TAN = { transfer_state = 329 }
+		remove_state_core = 329
+	}
+
+}
+
+country_event = { #Tuvan Freedom
+	id = rusfor.79
+	title = rusfor.79.t
+	desc = rusfor.79.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.79.a
+		puppet = TAN
+		add_opinion_modifier = { target = TAN modifier = RUS_puppet_tannu_tuva }
+	}
+
+}
+
+country_event = { #The Russian Ultimatum
+	id = rusfor.80
+	title = rusfor.80.t
+	desc = rusfor.80.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.80.a
+		RUS = { transfer_state = 329 }
+		remove_state_core = 329
+	}
+
+}
+
+country_event = { #Ultimatum to the Cossacks? passing through caucasus
+	id = rusfor.81
+	title = rusfor.81.t
+	desc = rusfor.81.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS country_exists = DKB OR = { has_war_with = GEO has_war_with = ARM has_war_with = AZB } NOT = { is_in_faction_with = DKB has_war_with = DKB DKB = { is_puppet_of = RUS gives_military_access_to = RUS } } }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = rusfor.81.a #Demand that the Cossacks grant us military access.
+		ai_chance = { factor = 45 }
+		add_political_power = -40
+		DKB = { country_event = { id = rusfor.82 } }
+	}
+	
+	option = {
+		name = rusfor.81.b #Use the opportunity to demand that the Cossacks submit to Russia!
+		ai_chance = { factor = 15 }
+		DKB = { country_event = { id = rusfor.83 } }
+		add_political_power = -80
+	}
+	
+	option = {
+		name = rusfor.81.c #Attack the Cossacks!
+		ai_chance = { factor = 10 }
+		add_opinion_modifier = { target = DKB modifier = RUS_attacks_cossacks }
+		 add_state_claim = 245
+		 add_state_claim = 218
+		 add_state_claim = 238
+		 add_state_claim = 237
+		 add_state_claim = 234
+         add_state_claim = 235
+         add_state_claim = 787	
+         add_state_claim = 233	
+         add_state_claim = 232
+		declare_war_on = { target = DKB type = annex_everything }
+	}
+	
+	option = {
+		name = rusfor.81.e #Leave the Cossacks in peace.
+		ai_chance = { factor = 30 }
+		add_opinion_modifier = { target = DKB modifier = RUS_leave_cossacks_alone }
+	}
+
+}
+
+country_event = { #The Russians demand access!
+	id = rusfor.82
+	title = rusfor.82.t
+	desc = rusfor.82.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.82.a #Allow them.
+		ai_chance = { factor = 50 }
+		add_political_power = -200
+		give_military_access = RUS
+		add_opinion_modifier = { target = RUS modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = ARM modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = GEO modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = AZB modifier = RUS_access_cossacks2 }
+	}
+	
+	option = {
+		name = rusfor.82.b #Refuse!
+		ai_chance = { factor = 50 }
+		add_opinion_modifier = { target = RUS modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = ARM modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = GEO modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = AZB modifier = RUS_access_cossacks1 }
+		RUS = { country_event = { id = rusfor.84 } }
+	}
+
+}
+
+country_event = { #The Russians demand we submit!
+	id = rusfor.83
+	title = rusfor.83.t
+	desc = rusfor.83.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.83.a #Agree to the proposals.
+		ai_chance = { factor = 25 }
+		add_political_power = -300
+		RUS = { country_event = { id = rusfor.85 } }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = DKB } remove_from_faction = DKB } }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } dismantle_faction = yes }
+		add_opinion_modifier = { target = RUS modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = ARM modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = GEO modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = AZB modifier = RUS_access_cossacks2 }
+	}
+	
+	option = {
+		name = rusfor.83.b #Refuse!
+		ai_chance = { factor = 75 }
+		add_opinion_modifier = { target = RUS modifier = RUS_access_cossacks2 }
+		add_opinion_modifier = { target = ARM modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = GEO modifier = RUS_access_cossacks1 }
+		add_opinion_modifier = { target = AZB modifier = RUS_access_cossacks1 }
+		RUS = { country_event = { id = rusfor.84 } }
+	}
+
+}
+
+country_event = { #The Cossacks Refuse!
+	id = rusfor.84
+	title = rusfor.84.t
+	desc = rusfor.84.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.84.a #Then we shall find another route to the Caucasus.
+		ai_chance = { factor = 40 }
+		add_political_power = -200
+		add_opinion_modifier = { target = DKB modifier = RUS_back_down_route_caucasus }
+	}
+	
+	option = {
+		name = rusfor.84.b #Then we will attack them as well!
+		ai_chance = { factor = 60 }
+		add_opinion_modifier = { target = DKB modifier = RUS_attacks_cossacks }
+		 add_state_claim = 245
+		 add_state_claim = 218
+		 add_state_claim = 238
+		 add_state_claim = 237
+		 add_state_claim = 234
+         add_state_claim = 235
+         add_state_claim = 787	
+         add_state_claim = 233	
+         add_state_claim = 232
+		declare_war_on = { target = DKB type = annex_everything }
+	}
+
+}
+
+country_event = { #The Cossacks Resolve
+	id = rusfor.85
+	title = rusfor.85.t
+	desc = rusfor.85.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.85.a
+		puppet = DKB
+		add_to_faction = DKB
+		add_opinion_modifier = { target = DKB modifier = RUS_puppet_route_caucasus }
+		if = { limit = { is_in_faction = no } create_faction = "great_russian_alliance" add_to_faction = DKB }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = DKB }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_country = { limit = { is_faction_leader = yes is_in_faction_with = RUS } add_to_faction = DKB } }
+	}
+
+}
+
 #Foreign Politics Focuses Events
 ###########################
 

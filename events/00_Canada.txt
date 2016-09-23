@@ -6322,18 +6322,24 @@ country_event = { #Entente Air Training Scheme -- gives canada allies an event t
 	
 	option = {
 		name = canada.202.a 
-		
+		ai_chance = { factor = 90 }
 		hidden_effect = {
 			every_country = {
 				if = {
-					limit = { is_in_faction_with = CAN }
-					country_event = { days = 1 id = canada.203}
+					limit = {
+						AND = { 
+							is_in_faction_with = CAN 
+							NOT = { tag = CAN }
+						}
+					}
+					country_event = { days = 1 id = canada.203 }
 				}
 			}
 		}
 	}
 	option = {
 		name = canada.202.b 
+		ai_chance = { factor = 10 }
 		add_political_power = 100
 	}
 }
@@ -6348,9 +6354,10 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 	
 	option = {
 		name = canada.203.a 
+		ai_chance = { factor = 60 }
 		add_ideas = entente_training_plan_idea
 		CAN = {
-			air_experience = 25
+			country_event = { days = 1 id = canada.204 }
 		}
 		add_opinion_modifier = {
 			target = CAN
@@ -6359,10 +6366,25 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 	}
 	option = {
 		name = canada.203.b
+		ai_chance = { factor = 40 }
 		add_opinion_modifier = {
 			target = CAN
 			modifier = CAN_reject_EATS
 		}
 		add_political_power = 100
 	}
-}	
+}
+
+country_event = {
+	id = canada.204 
+	title = canada.204.t 
+	desc = canada.204.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.204.a 
+		air_experience = 25
+	}
+}

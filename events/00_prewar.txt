@@ -1,0 +1,173 @@
+﻿####### Modder : Levi ######
+
+###########################
+# Prewar Events
+###########################
+
+add_namespace = prewar
+
+###########################
+# Switzerland - 1937
+###########################
+country_event = {#The 5 year anniversary of the 1932 Geneva Strike SWI
+	id = prewar.1 
+	title = prewar.1.t 
+	desc = prewar.1.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = SWI
+	FRA = { exists = yes }
+	controls_state = 760 
+	FRA = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist } }
+	 NOT = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist } } 
+	 is_puppet = no 
+		date > 1937.2.2
+						}
+	option = {
+	name = prewar.1.a 
+	add_political_power = -20 
+	add_opinion_modifier = {target = FRA modifier = FRA_SWI_1 }
+	FRA = { country_event = { id = prewar.2 } }
+					}
+				}
+				
+	country_event = {#The 5 year anniversary of the 1932 Geneva Strike FRA
+		id = prewar.2
+		title = prewar.1.t 
+		desc = prewar.1.d 
+		is_triggered_only = yes
+		option = {
+			name = prewar.2.a 
+		
+							}
+					}
+					
+	country_event = {#Socialist election victory in the Romandy SWI 
+		id = prewar.3
+		title = prewar.3.t 
+		desc = prewar.3.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = SWI
+	FRA = { exists = yes }
+	 controls_state = 760 
+	FRA = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist } }
+	 NOT = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist } } 
+	 is_puppet = no 
+		date > 1937.2.14
+						}
+		mean_time_to_happen = { days = 15 }
+	option = {
+	name = prewar.3.a 
+	add_political_power = -60 
+	add_opinion_modifier = {target = FRA modifier = FRA_SWI_2 }
+	FRA = { country_event = { id = prewar.4 } }
+					}
+					}
+		country_event = {#Socialist election victory in the Romandy FRA 
+				id = prewar.4 
+				title = prewar.4.t 
+				desc = prewar.4.d 
+				is_triggered_only = yes 
+				option = {#yes 
+					name = prewar.4.a 
+					ai_chance = { factor = 97 }
+					add_opinion_modifier = {target = FRA modifier = FRA_SWI_3 }
+					add_political_power = 20 
+					SWI = { country_event = { id = prewar.5 days = 20 } }
+								}
+					option = {#no 
+					name = prewar.4.b	 
+					ai_chance = { factor = 3 }
+				add_opinion_modifier = {target = FRA modifier = FRA_SWI_3_no }
+				add_political_power = -20 
+										}
+		
+						}
+		country_event = {#Syndicalist subversion at work in Romandy !
+			id = prewar.5
+			title = prewar.5.t 
+			desc = prewar.5.d 
+			is_triggered_only = yes 
+			option = {#opress
+			name = prewar.5.a 
+			ai_chance = { factor = 75 }
+			add_opinion_modifier = {target = FRA modifier = FRA_SWI_4_disband }
+			set_country_flag = SCH_FREOP
+			set_country_flag = can_demand_romandy
+			add_political_power = -100
+			
+									}
+			option = {#respect
+				name = prewar.5.b 
+				ai_chance = { factor = 25 }
+				add_opinion_modifier = {target = FRA modifier = FRA_SWI_4_respect }
+				add_political_power = -20 
+				set_country_flag = SCH_FRERE
+								}
+				
+								}
+								
+			country_event = {#Unrest in Romandy !
+				id = prewar.6 	
+				title = prewar.6.t 
+				desc = prewar.6.d 
+				fire_only_once = yes 
+				trigger = {
+				tag = SWI 
+				FRA = { exists = yes }
+				FRA = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+				is_puppet = no 
+				SWI = { NOT = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+				has_country_flag = SCH_FREOP
+									}
+				mean_time_to_happen = { days = 5 }
+				option = {
+					name = prewar.6.a 
+					add_political_power = -40 
+				add_opinion_modifier = {target = FRA modifier = FRA_SWI_5 }
+									}
+								}
+								
+								
+				
+				country_event = {#Geneva and the Swiss French
+					id = prewar.7 
+					title = prewar.7.t 
+					desc = prewar.7.d 
+					is_triggered_only = yes 
+					option = {#demand 
+					name = prewar.7.a 
+					ai_chance = { factor = 97 }
+					add_named_threat = { threat = 2 name = FRA_damand_romandy_threat }
+					add_opinion_modifier = {target = GER modifier = FRA_demand_romandy }
+					add_opinion_modifier = {target = ITA modifier = FRA_demand_romandy }
+					add_opinion_modifier = {target = AUS modifier = FRA_demand_romandy }
+					add_opinion_modifier = {target = SWI modifier = FRA_demand_romandy }
+					SWI = { clr_country_flag = SCH_FREOP }
+					SWI = { country_event = { id = prewar.8 days = 1 } }
+										}
+						option = {#leave 
+							name = prewar.7.b 
+							ai_chance = { factor = 3 }
+					add_opinion_modifier = {target = SWI modifier = FRA_romandy_ease }
+					add_named_threat = { threat = 2 name = FRA_damand_romandy_threat_no }
+					add_political_power = -60
+											}
+				
+				
+											}
+											
+				country_event = {#Dissent in the Romandy Province and the French Ultimatum"
+					id = prewar.8 
+					title = prewar.8.t 
+					desc = prewar.8.d 
+					is_triggered_only = yes 
+					option = {#accept 
+					name = prewar.8.a 
+					ai_chance = { factor = 25 }
+					
+					
+											}
+				
+																		}

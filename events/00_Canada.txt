@@ -1,6 +1,7 @@
-﻿#################################
-# Canadian Events by esmaerla ###
-#################################
+﻿#####################
+### CANADA EVENTS ###
+#####################
+## KR Darkest Hour ported by esmaerla 
 
 add_namespace = canada
 
@@ -6276,7 +6277,7 @@ country_event = { # Vote on Bill C7
 }
 
 country_event = { #remove work camps 
-	id = canada.300 
+	id = canada.201
 	title = canada.201.t 
 	desc = canada.201.d 
 	picture = GFX_report_event_spain_civil_war_soldiers
@@ -6309,5 +6310,81 @@ country_event = { #remove work camps
 		remove_ideas = CAN_work_camps
 		add_national_unity = 0.05
 	}
+}
+
+country_event = { #Entente Air Training Scheme -- gives canada allies an event to add entente air training scheme idea
+	id = canada.202
+	title = canada.202.t 
+	desc = canada.202.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
 	
-}	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.202.a 
+		ai_chance = { factor = 90 }
+		hidden_effect = {
+			every_country = {
+				if = {
+					limit = {
+						AND = { 
+							is_in_faction_with = CAN 
+							NOT = { tag = CAN }
+						}
+					}
+					country_event = { days = 1 id = canada.203 }
+				}
+			}
+		}
+	}
+	option = {
+		name = canada.202.b 
+		ai_chance = { factor = 10 }
+		add_political_power = 100
+	}
+}
+
+country_event = { #Entente Air Training Scheme -- event for Entente Allies if Canada takes Dominion Air Training Plan focus
+	id = canada.203
+	title = canada.203.t 
+	desc = canada.203.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.203.a 
+		ai_chance = { factor = 60 }
+		add_ideas = entente_training_plan_idea
+		CAN = {
+			country_event = { days = 1 id = canada.204 }
+		}
+		add_opinion_modifier = {
+			target = CAN
+			modifier = CAN_accept_EATS
+		}
+	}
+	option = {
+		name = canada.203.b
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = {
+			target = CAN
+			modifier = CAN_reject_EATS
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	id = canada.204 
+	title = canada.204.t 
+	desc = canada.204.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.204.a 
+		air_experience = 25
+	}
+}

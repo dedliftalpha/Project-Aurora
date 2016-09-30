@@ -166,8 +166,406 @@ country_event = {#The 5 year anniversary of the 1932 Geneva Strike SWI
 					option = {#accept 
 					name = prewar.8.a 
 					ai_chance = { factor = 25 }
+					FRA = { transfer_state = 760 }
+					remove_from_faction = SWI
+					add_opinion_modifier = {target = GER modifier = SWI_accept_romandy }
+					add_opinion_modifier = {target = AUS modifier = SWI_accept_romandy }
+					add_opinion_modifier = {target = ITA modifier = SWI_accept_romandy }
+					add_political_power = -200
+					add_named_threat = { threat = 1 name = FRA_annex_romandy }
+					FRA = { country_event = { id = prewar.15 days = 1 } }
+											}
+					option = {#refuse 
+					name = prewar.8.b 
+					ai_chance = { factor = 15 }
+					remove_from_faction = SWI
+					add_political_power = 200 
+					add_opinion_modifier = {target = FRA modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = ENG modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = AUS modifier = SWI_refuse_romandy_ger }
+					add_opinion_modifier = {target = GER modifier = SWI_refuse_romandy_ger }
+					FRA = { country_event = { id = prewar.17 days = 1 } }
 					
+					
+													}
+					option = {#Ask Germany 
+					name = prewar.8.c 
+					ai_chance = { factor = 60 }
+					trigger = {   
+					GER = {
+					exists = yes 
+					NOT = {
+					OR = {
+					is_in_faction_with = FRA
+					has_war_with = RUS 
+					has_war_with = SOV 
+					has_war_with = JAP
+					has_war_with = SWI
+										}
+										}
+					controls_state = 64
+					controls_state = 28
+										}
+					GRU = { exists = no }
+					}
+					add_opinion_modifier = {target = FRA modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = ENG modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = AUS modifier = SWI_refuse_romandy_ger }
+					add_opinion_modifier = {target = GER modifier = SWI_refuse_romandy_ger }
+					add_opinion_modifier = {target = ITA modifier = SWI_refuse_romandy_ger }
+					add_political_power = 200 
+					GER = { country_event = { id = prewar.9 days = 1 } }
+										}
 					
 											}
 				
-																		}
+	
+																		
+			country_event = {#The Commune of France threatens Switzerland!
+				id = prewar.9
+				title = prewar.9.t 
+				desc = prewar.9.d 
+				is_triggered_only = yes 
+				option = {#help 
+				name = prewar.9.a 
+				ai_chance = { factor = 70 }
+					add_opinion_modifier = {target = FRA modifier = GER_warning_FRA }
+					add_opinion_modifier = {target = SWI modifier = GER_warning_SWI }
+				add_political_power = -20 
+				FRA = { country_event = { id = prewar.11 days = 1 } }
+				add_named_threat = { threat = 1 name = GER_warning_FRA }
+				
+											}
+				option = {#abandon 
+					name = prewar.9.b 
+					ai_chance = { factor = 30 }
+					add_named_threat = { threat = -3 name = FRA_SWI_neutral  }
+					add_opinion_modifier = { target = SWI modifier = SWI_abandon  }
+					add_opinion_modifier = { target = FRA modifier = SWI_abandon_FRA }
+					SWI = { country_event = { id = prewar.10 days = 1 } }
+					set_country_flag = GER_abandon_SWI
+										}
+															}
+			
+			country_event = {#The German Empire has abandoned us!
+				id = prewar.10 
+				title = prewar.10.t 
+				desc = prewar.10.d 
+				is_triggered_only = yes 
+				option = {#surrender 
+				name = prewar.8.a 
+				ai_chance = { factor = 97 }
+				FRA = { transfer_state = 760 }
+					remove_from_faction = SWI
+					add_opinion_modifier = {target = GER modifier = SWI_accept_romandy }
+					add_opinion_modifier = {target = AUS modifier = SWI_accept_romandy }
+					add_opinion_modifier = {target = ITA modifier = SWI_accept_romandy }
+					add_political_power = -200
+					add_named_threat = { threat = 1 name = FRA_annex_romandy }
+					FRA = { country_event = { id = prewar.15 days = 1 } }
+										}
+				option = {#refuse 
+				name = prewar.8.b 
+				ai_chance = { factor = 3 }
+				remove_from_faction = SWI
+					add_political_power = 200 
+					add_opinion_modifier = {target = FRA modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = ENG modifier = SWI_refuse_romandy }
+					add_opinion_modifier = {target = AUS modifier = SWI_refuse_romandy_ger }
+					add_opinion_modifier = {target = GER modifier = SWI_refuse_romandy_ger }
+					FRA = { country_event = { id = prewar.17 days = 1 } }
+								}
+								}
+		
+			country_event = {#The Germans send an ultimatum!
+			id = prewar.11 
+			title = prewar.11.t 
+			desc = prewar.11.d 
+			is_triggered_only = yes 
+			option = {#back down 
+				name = prewar.11.a 
+				ai_chance = { factor = 50 }
+			add_named_threat = { threat = -3 name = FRA_SWI_back_down }
+			add_political_power = -60 
+			add_opinion_modifier = {target = GER modifier = FRA_SWI_back_down }
+			add_opinion_modifier = {target = SWI modifier = FRA_SWI_back_down }
+			GER = { country_event = { id = prewar.12 days = 1 } }
+			SWI = { country_event = { id = prewar.14 days = 1 } }
+									}
+			option = {#ignore ultimatum
+				name = prewar.11.b
+				ai_chance = { factor = 50 }
+			add_named_threat = { threat = 3 name = FRA_SWI_ignore_ultimatum }
+			add_political_power = 60 
+			add_opinion_modifier = {target = GER modifier = FRA_SWI_ignore_ultimatum }
+			add_opinion_modifier = {target = SWI modifier = FRA_SWI_ignore_ultimatum }
+			GER = { country_event = { id = prewar.13 days = 1 } }
+									}
+			
+			
+								}
+			
+			country_event = {#The Commune of France Backs Down!
+				id = prewar.12 
+				title = prewar.12.t 
+				desc = prewar.12.d 
+				is_triggered_only = yes 
+				option = {
+				name = prewar.12.a 
+				add_political_power = 100 
+				add_opinion_modifier = { target = SWI modifier = SWI_FRA_victory }
+									}
+													}
+			country_event = {#The French Ignore our Ultimatum
+				id = prewar.13 
+				title = prewar.13.t 
+				desc = prewar.13.d 
+				is_triggered_only = yes 
+				option = {#war 
+				name = prewar.13.a 
+				ai_chance = { factor = 40 }
+				declare_war_on = { target = FRA type = annex_everything }
+				add_to_faction = SWI
+				add_political_power = -60
+										}
+				option = {#back down 
+				name = prewar.13.b 
+				ai_chance = { factor = 60 }
+				add_political_power = -60 
+				SWI = { country_event = { id = prewar.10 days = 1 } }
+				set_country_flag = GER_abandon_SWI
+									}
+															}
+			country_event = {#Commune of France abandons its claims!
+				id = prewar.14 
+				title = prewar.14.t 
+				desc = prewar.14.d 
+				is_triggered_only = yes 
+				option = {
+				name = prewar.14.a 
+				add_political_power = 200 
+				add_opinion_modifier = { target = GER modifier = SWI_GER_gratitude }
+				
+										}
+																	}
+			country_event = {#The Swiss Federation Accepts
+				id = prewar.15 
+				title = prewar.15.t 
+				desc = prewar.15.d 
+				is_triggered_only = yes 
+				option = {
+				name = prewar.15.a 
+				add_political_power = 100 
+				IF = { limit = { GER = { NOT = { has_war_with = FRA } } } GER = { country_event = { id = prewar.16 days = 7 } } } 
+									}
+													}
+				country_event = {#The Swiss cave in
+				id = prewar.16 
+				title = prewar.16.t 
+				desc = prewar.16.d 
+				is_triggered_only = yes 
+				option = {
+				name = prewar.16.a 
+				add_manpower = 15000
+				add_ideas = SWI_cave_in
+									}
+													}
+													
+				country_event = {#The Swiss Federation Refuses
+				id = prewar.17 
+				title = prewar.17.t 
+				desc = prewar.17.d 
+				is_triggered_only = yes 
+				option = {#wait
+				name = prewar.17.a 
+				ai_chance = { factor = 25 }
+				add_political_power = -40	
+						}
+				option = {#war 
+				name = prewar.17.b 
+				ai_chance = { factor = 75 }
+				add_named_threat = { threat = 3 name = SWI_FRA_war }
+				add_political_power = 60 
+				declare_war_on = { target = SWI type = annex_everything }
+										}
+										
+				
+											}
+				country_event = {#Romandy war ITA 
+				id = prewar.18 
+				title = prewar.18.t 
+				desc = prewar.18.d 
+				fire_only_once = yes 
+				trigger = { 
+				tag = ITA 
+				is_puppet = no 
+				has_war = no 
+				NOT = { has_government = social_democratist }
+				FRA = { has_war_with = SWI }
+				}
+				option = {#Join SWI 
+				name = prewar.18.a 
+				ai_chance = { factor = 25 }
+				add_political_power = -100 
+				declare_war_on = { target = FRA type = annex_everything }
+				IF = { limit = { SWI = { is_in_faction = no } } create_faction = anti_FRA_block
+				add_to_faction = SWI
+				}
+				add_named_threat = { threat = 2 name = SWI_FRA_war }
+									}
+				option = {#decline 
+				name = prewar.18.b 
+				ai_chance = { factor = 75 }
+				add_opinion_modifier = { target = SWI modifier = SWI_abandon }
+				add_political_power = -60 
+											}
+										}
+				country_event = {#Romandy war GER 
+				id = prewar.19
+				title = prewar.19.t 
+				desc = prewar.19.d 
+				fire_only_once = yes 
+				trigger = {
+				tag = GER 
+				is_puppet = no 
+				has_war = no 
+				NOT = { has_country_flag = GER_abandon_SWI }
+				SWI = { has_war_with = FRA }
+				controls_state = 64
+				controls_state = 28
+				NOT = { is_in_faction_with = SWI }
+									}
+				mean_time_to_happen = { days = 10 }
+				
+				option = {#help 
+				name = prewar.19.a 
+				ai_chance = { factor = 99 }
+				IF = { limit = { ITA = { is_in_faction_with = SWI  } } add_to_faction = ITA }
+				add_to_faction = SWI 
+				add_named_threat = { threat = 2 name = SWI_FRA_war }
+				declare_war_on = { target = FRA type = annex_everything }
+												}
+				option = {#refuse 
+				name = prewar.19.b 
+				ai_chance = { factor = 1 }
+				add_opinion_modifier = { target = SWI modifier = SWI_abandon }
+				add_political_power = -100 
+									}
+										}
+			country_event = {#Romandy war GER 
+				id = prewar.20
+				title = prewar.19.t 
+				desc = prewar.19.d 
+				fire_only_once = yes 
+				trigger = {
+				tag = GER 
+				is_puppet = no 
+				has_war = yes 
+				NOT = { has_war_with = FRA }
+				NOT = { has_country_flag = GER_abandon_SWI }
+				SWI = { has_war_with = FRA }
+				controls_state = 64
+				controls_state = 28
+				NOT = { is_in_faction_with = SWI }
+									}
+				mean_time_to_happen = { days = 10 }
+				
+				option = {#help 
+				name = prewar.19.a 
+				ai_chance = { factor = 70 }
+				IF = { limit = { ITA = { is_in_faction_with = SWI  } } add_to_faction = ITA }
+				add_to_faction = SWI 
+				add_named_threat = { threat = 2 name = SWI_FRA_war }
+				declare_war_on = { target = FRA type = annex_everything }
+												}
+				option = {#refuse 
+				name = prewar.19.b 
+				ai_chance = { factor = 30 }	
+				add_opinion_modifier = { target = SWI modifier = SWI_abandon }
+				add_political_power = -100 
+									}
+										}
+			country_event = {#French-speaking Socialists call for union with Commune of France
+				id = prewar.21 
+				title = prewar.21.t 
+				desc = prewar.21.d 
+				fire_only_once = yes 
+				trigger = {
+				tag = SWI 
+				controls_state = 760
+				FRA = { exists = yes }
+			NOT = { has_war_with = FRA }
+			has_country_flag = SCH_FRERE
+									}
+			mean_time_to_happen = { days = 10 }
+			option = {
+			name = prewar.21.a 
+			add_political_power = -40 
+			country_event = { id = prewar.22 days = 25 }
+								}
+									}
+			country_event = {#Socialists are trying to take control over Romandy !
+				id = prewar.22 
+				title = prewar.22.t 
+				desc = prewar.22.d 
+				is_triggered_only = yes 
+				option = {#revolution
+				name = prewar.22.a 
+				ai_chance = { factor = 65 }
+				add_political_power = -200 
+				add_opinion_modifier = { target = FRA modifier = FRA_demand_romandy }
+				add_manpower = -7000
+				country_event = { id = prewar.24 days = 1 }
+				FRA = { country_event = { id = prewar.23 days = 1 } }
+				FRA = { transfer_state = 760 }
+											}
+				option = {#crush 
+				name = prewar.22.b 
+				ai_chance = { factor = 35 }
+				add_political_power = -100 
+				add_opinion_modifier = { target = FRA modifier = FRA_demand_romandy }
+				FRA = { country_event = { id = prewar.25 days = 1 } }
+										}
+										
+													}
+				country_event = {#Annexation of Romandy !
+					id = prewar.23 
+					title = prewar.23.t 
+					desc = prewar.23.d 
+					is_triggered_only = yes 
+					option = {
+					add_political_power = 100 
+					add_named_threat = { threat = 1 name = romandy_annex }
+					load_oob = romandy 
+										}
+																}
+				country_event = {#Commune of France have occupied the Romandy!
+					id = prewar.24 
+					title = prewar.24.t 
+					desc = prewar.24.d 
+					is_triggered_only = yes
+					option = {#bear it 
+					name = prewar.24.a 
+					ai_chance = { factor = 100 }
+					add_political_power = -200 
+											}
+					option = { #war 
+					name = prewar.24.b 
+					ai_chance = { factor = 0 }
+					add_political_power = -200 
+					declare_war_on = { target = FRA type = annex_everything }
+						}
+													}
+				country_event = {#White terror in Switzerland
+					 id = prewar.25 
+					 title = prewar.25.t 
+					 desc = prewar.25.d 
+					 is_triggered_only = yes 
+					 option = {
+					 name = prewar.25.a 
+					 set_country_flag = can_demand_romandy
+					 custom_effect_tooltip = SWI_white
+											}
+														}
+				
+						

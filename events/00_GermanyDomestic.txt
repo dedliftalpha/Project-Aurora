@@ -31,8 +31,7 @@ country_event = {
 
 #### General Staff Event Chain (2-8) ####
 
-#### Hans von Seeckt Dies 
-#### TODO: Remove the minister...
+#### Hans von Seeckt Dies .
 country_event = {
 	id = gerdom.2
 	title = gerdom.2.t
@@ -2935,3 +2934,74 @@ country_event = {#Johann von Bernstorff dies
 						}
 		
 							}
+	####improve security chain 
+	country_event = {#Further increasing our internal security
+			id = gerdom.104 	
+			title = gerdom.104.t 
+			desc = gerdom.104.d 
+			is_triggered_only = yes 
+			option = {#increase 
+			name = gerdom.104.a 
+			ai_chance = { factor = 80 }
+			set_country_flag = surpress_french
+			add_national_unity = 0.05
+			add_ideas = GER_improved_security
+			add_political_power = -60 
+			FRA = { country_event = { id = gerdom.105 days = 1 } }
+								}
+			option = {#Don't 
+			name = gerdom.104.b 
+			ai_chance = { factor = 20 }
+			
+				
+									}
+							}
+	country_event = {#Germany Suppresses its French Population !
+		id = gerdom.105 
+		title = gerdom.105.t 
+		desc = gerdom.105.d 
+		is_triggered_only = yes 
+		option = {
+		name = gerdom.105.a 
+		add_political_power = 20 
+		add_manpower = 5000 
+							}
+								}
+	country_event = {#Further increasing our internal security
+		id = gerdom.106 
+		title = gerdom.106.t 
+		desc = gerdom.106.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER 
+		date > 1938.1.1 
+		has_country_flag = surpress_french
+		is_puppet = no 
+		NOT = { has_war_with = FRA }
+		
+								}
+		mean_time_to_happen = { days = 45 }
+		option = {#Current security measures are sufficient !
+			name = gerdom.106.a 
+			ai_chance = { factor = 30 }
+			add_political_power = -20 
+			clr_country_flag = surpress_french 
+			
+										}
+		option = {#It's the time to ban all French organisations in Germany !"
+			name = gerdom.106.b 
+			ai_chance = { factor = 50 }
+			add_political_power = -40 
+			FRA = { country_event = { id = gerdom.85 days = 1 } }
+			add_named_threat = { threat = 3 name = ger_cult_gen }
+										}
+			option = {#This plan was madness from the beginning, abandon it....
+				name = gerdom.106.c 
+				ai_chance = { factor = 20 }
+				add_political_power = -40 
+				clr_country_flag = surpress_french
+				remove_ideas = GER_improved_security
+						}
+													}
+	####mittleafrika revolt 
+		#country_event = {#}

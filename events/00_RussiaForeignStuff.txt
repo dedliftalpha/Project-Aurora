@@ -3111,7 +3111,7 @@ country_event = { #The fate of Finland
 		 transfer_state = 150
 		 transfer_state = 111 }
 		 puppet = FIN
-		 FIN = { country_event = { id = rusfor.1 } }
+		 FIN = { country_event = { id = rusfor.113 } }
                 
 	}
 	
@@ -3207,7 +3207,7 @@ country_event = { #The fate of Manchuria
 		 transfer_state = 717
          transfer_state = 328 }
 		 puppet = FNG
-		 FNG = { country_event = { id = rusfor.1 } }
+		 FNG = { country_event = { id = rusfor.128 } }
                 
 	}
 	
@@ -3261,7 +3261,7 @@ country_event = { #The fate of Manchuria
 		 transfer_state = 717
          transfer_state = 328 }
 		 puppet = FNG
-		 FNG = { country_event = { id = rusfor.1 } }
+		 FNG = { country_event = { id = rusfor.131 } }
 	}
 	
     option = {
@@ -3416,7 +3416,7 @@ country_event = { #Fate of the North-Western China
 		 transfer_state = 616
 		 transfer_state = 283 }
 		 puppet = XSM
-		 SIK = { country_event = { id = rusfor.1 } }
+		 SIK = { country_event = { id = rusfor.129 } }
                 
 	}
 	
@@ -3445,7 +3445,7 @@ country_event = { #Fate of the North-Western China
 		 add_state_core = 616
 		 add_state_core = 283 }
 		 puppet = SIK
-		 SIK = { country_event = { id = rusfor.1 } }
+		 SIK = { country_event = { id = rusfor.129 } }
                 
 	}
 	
@@ -3528,7 +3528,7 @@ country_event = { #Fate of the North-Western China
          add_state_core = 619
          add_state_core = 287 }
 		 puppet = SIK
-		 SIK = { country_event = { id = rusfor.1 } }
+		 SIK = { country_event = { id = rusfor.129 } }
          if = { limit = { OR = { is_in_faction_with = SQI SQI = { is_puppet_of = RUS } } } SQI = { add_opinion_modifier = { target = SQI modifier = RUS_ceded_xibei_china } transfer_state = 604 transfer_state = 616 transfer_state = 283 } }
          if = { limit = { OR = { is_in_faction_with = FNG FNG = { is_puppet_of = RUS } } } FNG = { add_opinion_modifier = { target = FNG modifier = RUS_ceded_xibei_china } transfer_state = 604 transfer_state = 616 transfer_state = 283 } }
          if = { limit = { OR = { is_in_faction_with = NCH NCH = { is_puppet_of = RUS } } } NCH = { add_opinion_modifier = { target = NCH modifier = RUS_ceded_xibei_china } transfer_state = 604 transfer_state = 616 transfer_state = 283 } }
@@ -3620,7 +3620,7 @@ country_event = { #The fate of Mongolia
 		remove_state_claim = 330
 		 MON = { transfer_state = 330 }
 		 puppet = MON
-		 MON = { country_event = { id = rusfor.1 } }
+		 MON = { country_event = { id = rusfor.73 } }
                 
 	}
 	
@@ -3837,6 +3837,599 @@ country_event = { #The integration of Eastern Galicia
 	}
 
 }
+
+country_event = { #The fate of Poland
+	id = rusfor.111
+	title = rusfor.111.t
+	desc = rusfor.111.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS NOT = { country_exists = POL 10 = { is_core_of = RUS } } owns_state = 10 controls_state = 10 }
+	
+	mean_time_to_happen = { days = 50 }
+	
+	option = {
+		name = rusfor.111.a #Restore independent Poland!
+		ai_chance = { factor = 40 }
+		remove_state_claim = 10
+		 remove_state_claim = 92
+		 remove_state_claim = 87
+		 remove_state_claim = 90
+		 remove_state_claim = 97
+		 remove_state_claim = 98
+		POL = { transfer_state = 10
+		 transfer_state = 92
+		 transfer_state = 87
+		 transfer_state = 90
+		 transfer_state = 97
+		 country_event = { id = rusfor.1 } }
+         if = { limit = { owns_state = 98 controls_state = 98 } POL = { transfer_state = 98 } }     
+	}
+	
+	option = {
+		name = rusfor.111.b #integrate poland
+		ai_chance = { factor = 60 }
+		trigger = { has_country_flag = RUS_EXP }
+		add_state_claim = 10
+		 add_state_claim = 92
+		 add_state_claim = 87
+		 add_state_claim = 90
+		 add_state_claim = 97
+		 add_state_claim = 98
+		add_political_power = -100
+        hidden_effect = { country_event = { id = rusfor.2111 days = 3860 } }      
+	}
+	
+	option = {
+		name = rusfor.111.c #continue military occupation
+		ai_chance = { factor = 0 }
+		add_political_power = -100   
+	}
+
+}
+
+country_event = { #hidden event to check integration POL
+	id = rusfor.2111
+	title = rusfor.2111.t
+	desc = rusfor.2111.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.2111.a
+		if = { limit = { OR = { AND = { controls_state = 10 owns_state = 10 } POL = { owns_state = 10 controls_state = 10 } } OR = { NOT = { country_exists = POL } POL = { is_puppet_of = RUS } } NOT = { 10 = { is_core_of = RUS } } } country_event = { id = rusfor.112 } }
+		if = { limit = { OR = { NOT = { controls_state = 10 } NOT = { owns_state = 10 } POL = { NOT = { controls_state = 10 } } POL = { NOT = { owns_state = 10 } } 10 = { is_core_of = RUS } AND = { country_exists = POL NOT = { POL = { is_puppet_of = RUS } } } } } country_event = { id = rusfor.2111 days = 100 } }
+	}
+
+}
+
+country_event = { #The integration of Poland
+	id = rusfor.112
+	title = rusfor.112.t
+	desc = rusfor.112.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.112.a #integrate
+		ai_chance = { factor = 100 }
+		add_political_power = -100
+		add_state_core = 10
+		 add_state_core = 92
+		 add_state_core = 87
+		 add_state_core = 90
+		 add_state_core = 97
+		 add_state_core = 98
+                
+	}
+
+}
+
+country_event = { #Independent Finland
+	id = rusfor.113
+	title = rusfor.113.t
+	desc = rusfor.113.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.113.a #Form up the troops!
+		load_oob = FIN_independent_RUS
+		add_opinion_modifier = { target = RUS modifier = WHR_independent_RUS1 }
+		add_opinion_modifier = { target = MAF modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = AOG modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BUL modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BOM modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = CRO modifier = WHR_independent_RUS2 }
+        #Have to add ministers and all for FIN
+		set_global_flag = RUS_independent_FIN
+		remove_state_core = 146
+		 remove_state_core = 147
+		 remove_state_core = 213
+		 remove_state_core = 215
+		 remove_state_core = 722
+		 remove_state_core = 216
+	}
+
+}
+
+country_event = { #Independent Poland
+	id = rusfor.114
+	title = rusfor.114.t
+	desc = rusfor.114.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.114.a #Form up the troops!
+		load_oob = POL_independent_RUS
+		add_opinion_modifier = { target = RUS modifier = WHR_independent_RUS1 }
+		add_opinion_modifier = { target = MAF modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = AOG modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BUL modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BOM modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = CRO modifier = WHR_independent_RUS2 }
+        #Have to add ministers and all for POL
+		set_global_flag = RUS_independent_POL
+		remove_state_core = 11
+		 remove_state_core = 94
+		 remove_state_core = 95
+		 remove_state_core = 93
+		 remove_state_core = 88
+		 if = { limit = { RUS = { has_country_flag = RUS_EXP } } remove_state_core = 80
+		 remove_state_core = 89
+		 remove_state_core = 91 }
+	}
+
+}
+
+country_event = { #Status of Poland
+	id = rusfor.115
+	title = rusfor.115.t
+	desc = rusfor.115.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_country_flag = RUS_EXP has_global_flag = RUS_independent_POL POL = { owns_state = 10 controls_state = 10 is_puppet_of = RUS } }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = rusfor.115.a #Poland remains independent
+		ai_chance = { factor = 40 }
+		add_political_power = -100   
+		add_opinion_modifier = { target = POL modifier = RUS_let_poland_independent }
+	}
+	
+	option = {
+		name = rusfor.115.b #integrate poland
+		ai_chance = { factor = 60 }
+		add_political_power = -100   
+		add_opinion_modifier = { target = POL modifier = RUS_reintegrate_poland }
+        POL = { country_event = { id = rusfor.117 } }      
+	}
+
+}
+
+country_event = { #Status of Finland
+	id = rusfor.116
+	title = rusfor.116.t
+	desc = rusfor.116.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS has_country_flag = RUS_EXP has_global_flag = RUS_independent_FIN FIN = { owns_state = 111 controls_state = 111 is_puppet_of = RUS } }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = rusfor.116.a #Finland remains independent
+		ai_chance = { factor = 40 }
+		add_political_power = -100   
+		add_opinion_modifier = { target = FIN modifier = RUS_let_poland_independent }
+	}
+	
+	option = {
+		name = rusfor.116.b #integrate finland
+		ai_chance = { factor = 60 }
+		add_political_power = -100   
+		add_opinion_modifier = { target = FIN modifier = RUS_reintegrate_poland }
+        FIN = { country_event = { id = rusfor.118 } }      
+	}
+
+}
+
+country_event = { #Reintroduction of the Russian legislature POL
+	id = rusfor.117
+	title = rusfor.117.t
+	desc = rusfor.117.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.117.a #we must obey
+		ai_chance = { factor = 100 }
+		add_political_power = -200   
+		clr_global_flag = RUS_independent_POL
+		set_global_flag = RUS_legislature_POL
+	}
+
+}
+
+country_event = { #Reintroduction of the Russian legislature FIN
+	id = rusfor.118
+	title = rusfor.118.t
+	desc = rusfor.118.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.118.a #we must obey
+		ai_chance = { factor = 100 }
+		add_political_power = -200   
+		clr_global_flag = RUS_independent_FIN
+		set_global_flag = RUS_legislature_FIN
+	}
+
+}
+
+country_event = { #Reintroduction of the Russian language POL
+	id = rusfor.119
+	title = rusfor.119.t
+	desc = rusfor.119.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = POL has_global_flag = RUS_legislature_POL owns_state = 10 controls_state = 10 is_puppet_of = RUS }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = rusfor.119.a #we must obey
+		ai_chance = { factor = 100 }
+		add_political_power = -200   
+		clr_global_flag = RUS_legislature_POL
+		set_global_flag = RUS_language_POL
+		hidden_effect = { RUS = { country_event = { id = rusfor.2120 days = 2000 } } }
+	}
+
+}
+
+country_event = { #Reintroduction of the Russian language FIN
+	id = rusfor.120
+	title = rusfor.120.t
+	desc = rusfor.120.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN has_global_flag = RUS_legislature_FIN owns_state = 111 controls_state = 111 is_puppet_of = RUS }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = rusfor.120.a #we must obey
+		ai_chance = { factor = 100 }
+		add_political_power = -200   
+		clr_global_flag = RUS_legislature_FIN
+		set_global_flag = RUS_language_FIN
+		hidden_effect = { RUS = { country_event = { id = rusfor.2121 days = 1900 } } }
+	}
+
+}
+
+country_event = { #hidden event to check integration POL puppet
+	id = rusfor.2120
+	title = rusfor.2120.t
+	desc = rusfor.2120.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.2120.a
+		if = { limit = { POL = { owns_state = 10 controls_state = 10 is_puppet_of = RUS } NOT = { 10 = { is_core_of = RUS } } } country_event = { id = rusfor.121 } }
+		if = { limit = { OR = { POL = { NOT = { controls_state = 10 } } POL = { NOT = { owns_state = 10 } } 10 = { is_core_of = RUS } NOT = { POL = { is_puppet_of = RUS } } } } country_event = { id = rusfor.2120 days = 100 } }
+	}
+
+}
+
+country_event = { #The integration of Poland
+	id = rusfor.121
+	title = rusfor.121.t
+	desc = rusfor.121.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.121.a #integrate
+		ai_chance = { factor = 90 }
+		add_political_power = -100
+		add_state_core = 10
+		 add_state_core = 92
+		 add_state_core = 87
+		 add_state_core = 90
+		 add_state_core = 97
+		 add_state_core = 98
+         annex_country = { target = POL }       
+	}
+	
+	option = {
+		name = rusfor.121.b #no
+		ai_chance = { factor = 10 }
+		add_political_power = -100
+                
+	}
+
+}
+
+country_event = { #hidden event to check integration FIN puppet
+	id = rusfor.2121
+	title = rusfor.2121.t
+	desc = rusfor.2121.d
+	picture = GFX_petain_NFA
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.2121.a
+		if = { limit = { FIN = { owns_state = 111 controls_state = 111 is_puppet_of = RUS } NOT = { 111 = { is_core_of = RUS } } } country_event = { id = rusfor.122 } }
+		if = { limit = { OR = { FIN = { NOT = { controls_state = 111 } } FIN = { NOT = { owns_state = 111 } } 111 = { is_core_of = RUS } NOT = { FIN = { is_puppet_of = RUS } } } } country_event = { id = rusfor.2121 days = 100 } }
+	}
+
+}
+
+country_event = { #The integration of Finland
+	id = rusfor.122
+	title = rusfor.122.t
+	desc = rusfor.122.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.122.a #integrate
+		ai_chance = { factor = 90 }
+		add_political_power = -100
+		add_state_core = 111
+		 add_state_core = 149
+		 add_state_core = 148
+		 add_state_core = 150
+         annex_country = { target = FIN }       
+	}
+	
+	option = {
+		name = rusfor.122.b #no
+		ai_chance = { factor = 10 }
+		add_political_power = -100
+                
+	}
+
+}
+
+country_event = { #Students uprising FIN
+	id = rusfor.123
+	title = rusfor.123.t
+	desc = rusfor.123.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FIN has_global_flag = RUS_language_FIN is_puppet_of = RUS }
+	
+	mean_time_to_happen = { days = 1000 }
+	
+	option = {
+		name = rusfor.123.a #Goddamnit!
+		ai_chance = { factor = 100 }
+		add_political_power = -200
+	}
+
+}
+
+country_event = { #Students uprising POL
+	id = rusfor.124
+	title = rusfor.124.t
+	desc = rusfor.124.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = POL has_global_flag = RUS_language_POL is_puppet_of = RUS }
+	
+	mean_time_to_happen = { days = 1000 }
+	
+	option = {
+		name = rusfor.124.a #Goddamnit!
+		ai_chance = { factor = 100 }
+		add_political_power = -200
+	}
+
+}
+
+country_event = { #Students uprising helsinki
+	id = rusfor.125
+	title = rusfor.125.t
+	desc = rusfor.125.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS NOT = { country_exists = FIN } owns_state = 111 controls_state = 111 NOT = { 111 = { is_core_of = RUS } } }
+	
+	mean_time_to_happen = { days = 1000 }
+	
+	option = {
+		name = rusfor.125.a #Goddamnit!
+		ai_chance = { factor = 100 }
+		add_political_power = -140
+	}
+
+}
+
+country_event = { #Students uprising warsaw
+	id = rusfor.126
+	title = rusfor.126.t
+	desc = rusfor.126.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS NOT = { country_exists = POL } owns_state = 10 controls_state = 10 NOT = { 10 = { is_core_of = RUS } } }
+	
+	mean_time_to_happen = { days = 1000 }
+	
+	option = {
+		name = rusfor.126.a #Goddamnit!
+		ai_chance = { factor = 100 }
+		add_political_power = -140
+	}
+
+}
+
+country_event = { #Alash-Orda Autonomy
+	id = rusfor.127
+	title = rusfor.127.t
+	desc = rusfor.127.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS ALO = { is_puppet_of = RUS } }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = rusfor.127.a #It is time for Russia to directly rule over the Kazakh steppes!
+		ai_chance = { factor = 99 }
+		add_political_power = -140
+		annex_country = { target = ALO }
+		add_state_core = 236
+		 add_state_core = 406
+		 add_state_core = 407
+		 add_state_core = 587
+		 add_state_core = 404
+		 add_state_core = 589
+		 add_state_core = 586
+		 add_state_core = 810
+	}
+	
+	option = {
+		name = rusfor.127.b #Cossacks must remain autonomous
+		ai_chance = { factor = 1 }
+	}
+
+}
+
+country_event = { #Independent Manchuria
+	id = rusfor.128
+	title = rusfor.128.t
+	desc = rusfor.128.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.128.a #Still better than an occupation!
+		load_oob = FNG_independent_RUS
+		add_opinion_modifier = { target = RUS modifier = WHR_independent_RUS1 }
+		add_opinion_modifier = { target = MAF modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = AOG modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BUL modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BOM modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = CRO modifier = WHR_independent_RUS2 }
+        #Have to add ministers and all for FNG
+	}
+
+}
+
+country_event = { #Independent Uighuria
+	id = rusfor.129
+	title = rusfor.129.t
+	desc = rusfor.129.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.129.a #Still better than an occupation!
+		load_oob = SIK_independent_RUS
+		add_opinion_modifier = { target = RUS modifier = WHR_independent_RUS1 }
+		add_opinion_modifier = { target = MAF modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = AOG modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BUL modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = BOM modifier = WHR_independent_RUS2 }
+		add_opinion_modifier = { target = CRO modifier = WHR_independent_RUS2 }
+        #Have to add ministers and all for FNG
+	}
+
+}
+
+country_event = { #Pu-Yi's Offer
+	id = rusfor.130
+	title = rusfor.130.t
+	desc = rusfor.130.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = RUS country_exists = FNG country_exists = SQI FNG = { is_puppet_of = RUS } NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist country_exists = QIE is_in_faction_with = SQI is_in_faction_with = CHI } is_puppet = no SQI = { is_puppet = no controls_state = 622 controls_state = 608 } FNG = { controls_state = 328 } controls_state = 562 controls_state = 566 }
+	
+	mean_time_to_happen = { days = 3 }
+	
+	option = {
+		name = rusfor.130.a #Establish Pu-Yi as the new emperor of Manchuria!
+		ai_chance = { factor = 95 }
+		add_political_power = -20
+		FNG = { country_event = { id = rusfor.131 } }
+		add_opinion_modifier = { target = FNG modifier = RUS_established_puyi_manchuria }
+	}
+	
+	option = {
+		name = rusfor.130.b #This is useless.
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		add_opinion_modifier = { target = FNG modifier = RUS_not_established_puyi_manchuria }
+	}
+
+}
+
+country_event = { #Great Empire of Manchuria
+	id = rusfor.131
+	title = rusfor.131.t
+	desc = rusfor.131.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = rusfor.131.a #The Manchu Empire is reborn!
+		load_oob = FNG_independent_RUS_manchu_empire
+		add_political_power = -100
+		add_opinion_modifier = { target = RUS modifier = WHR_independent_RUS1 }
+        #Have to add ministers and all for FNG and change name and all of this shit
+	}
+
+}
+
 
 #Foreign Politics Focuses Events
 ###########################

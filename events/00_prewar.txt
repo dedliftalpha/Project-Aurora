@@ -903,6 +903,7 @@ country_event = {#The 5 year anniversary of the 1932 Geneva Strike SWI
 			50 = { country_event = { id = prewar.39 days = 5 } } 
 			50 = { GER = { country_event = { id = prewar.40 days = 5 } } } 
 								}
+			set_country_flag = FRA_manuver
 											}
 											}
 			country_event = {#Shelling of Leval
@@ -1221,3 +1222,72 @@ country_event = {#The 5 year anniversary of the 1932 Geneva Strike SWI
 
 										}
 															}
+####
+##############################
+#### Alsace-Lorraine
+##############################
+####
+
+		country_event = {#Alsace-Lorraine or war!
+		id = prewar.55 
+		title = prewar.55 
+		desc = prewar.55 
+		is_triggered_only = yes 
+		option = {#war
+		name = prewar.55.a
+		add_political_power = 100 
+		FRA = { country_event = { id = prewar.56 days = 1 } }
+						}
+		option = {#give in 
+		name = prewar.55.b 
+		trigger = {
+		OR = {
+		is_ai = no
+		surrender_progress > 0.25 
+							} }
+		ai_chance = { factor = 40 }
+		FRA = { country_event = { id = prewar.57 days = 1 } }
+		
+		add_political_power = -500
+		}
+		
+		
+										}
+										
+		country_event = {#The Germans Refuse
+		id = prewar.56 	
+		title = prewar.56.t 
+		desc = prewar.56.d 
+		is_triggered_only = yes 
+		option = {#war 
+		name = prewar.56.a 
+		ai_chance = { factor = 100 }
+		set_country_flag = FRA_GER_WAR_FINAL_1 
+		if = { limit = { NOT = { has_country_flag = FRA_manuver } } add_political_power = -120 }
+		add_manpower = 200000 
+		declare_war_on = { target = GER type = annex_everything } 
+								}
+		option = {#back down 
+		name = prewar.56.b 
+		ai_chance = { factor = 0 }
+		add_political_power = -200 
+		add_named_threat = { threat = -5 name = alsace_back_down }
+		
+								}
+						
+						}
+		country_event = {#The Germans Fold
+		id = prewar.57 
+		title = prewar.57.t 
+		desc = prewar.57.d 
+		is_triggered_only = yes 
+		option = {
+		name = prewar.57.a 
+		transfer_state = 28 
+		transfer_state = 779 
+		set_country_flag = GER_FOLD
+		add_political_power = 200 
+		add_manpower = 30000 
+		add_named_threat = { threat = 2 name = alsac_annex }
+							}
+								}

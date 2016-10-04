@@ -1,0 +1,50 @@
+﻿#####German foreign events by Levi######
+
+add_namespace = gerfor 
+
+###### British Landing in Denmark####
+
+country_event = {#The Union of Britain invade Denmark
+	id = gerfor.1
+	title = gerfor.1.t 
+	desc = gerfor.1.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	ENG = { has_war_with = DEN }
+	NOT = {
+	has_war_with = FRA 
+	has_war_with = ENG 
+	has_war_with = DEN
+	DEN = {
+	OR = { 
+	is_in_faction_with = CAN
+	is_in_faction_with = RUS
+	is_in_faction_with = FRA 
+						}
+							}
+		
+								}
+	controls_state = 64 
+								}
+	mean_time_to_happen = { days = 15 }
+	option = {#ultimatum 
+	name = gerfor.1.a 
+	ai_chance = { factor = 80 }
+	add_opinion_modifier  = { target = DEN modifier = DEN_position_plus }
+	add_opinion_modifier = { target = ENG modifier = DEN_position_minus }
+	add_named_threat = { threat = 1 name = DEN_ENG_ultimatum }
+	add_political_power = 60 
+	ENG = { country_event = { id = gerfor.2 days = 1 } }
+	DEN = { country_event = { id = gerfor.3 days = 1 } }
+	
+								}									
+	option = {#let it go 
+	name = gerfor.1.b 
+	ai_chance = { factor = 20 }
+	add_opinion_modifier  = { target = ENG modifier = DEN_position_plus }
+	add_opinion_modifier = { target = DEN modifier = DEN_position_minus }
+	add_named_threat = { threat = -3 name = DEN_abandon }
+	add_political_power = -60 
+							}									
+										}

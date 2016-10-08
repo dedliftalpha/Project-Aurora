@@ -1,7 +1,7 @@
 ﻿#####################
 ### CANADA EVENTS ###
 #####################
-## KR Darkest Hour ported by esmaerla 
+## KR Darkest Hour events ported by esmaerla 
 
 add_namespace = canada
 
@@ -354,7 +354,7 @@ country_event = { # The King's Radio Address
 		add_opinion_modifier = { target = SRI modifier = CAN_RAD_SRI } # -75
 		add_opinion_modifier = { target = CSA modifier = CAN_RAD_CSA } # -35
 	}
-}
+} 
 
 # country_event = { # The King's Radio Address
 	# id = canada.10
@@ -3427,89 +3427,71 @@ country_event = { # 'Imperial' version
 ### FOREIGN POLICIES ###
 ########################
 
-###########################
-### Treaty with Ireland ###
-###########################
-
-country_event = { # Treaty with Ireland
+country_event = { # Naval Exercises in the Atlantic
 	id = canada.53
 	title = canada.53.t
 	desc = canada.53.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CAN
-		country_exists = IRE
-		NOT = {
-			has_government = totalist
-			has_government = radical_socialist
-			has_government = syndicalist
-			has_war_with = USA
-			has_war_with = CSA
-			has_war_with = TEX
-			has_war_with = CAL
-			has_war_with = IRE
-			CAN = { is_puppet = yes }
-			IRE = { is_puppet = yes }
-			IRE = { is_in_faction_with = FRA }
-		}
-		OR = {
-			has_global_flag = IRE_ENT
-			is_in_faction_with = IRE 
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = canada.53.a
-
 		ai_chance = {
-			factor = 70
+			factor = 50
 		}
-
-		add_opinion_modifier = { target = IRE modifier = CAN_MIL_AID_IRE } # 15
-		hidden_effect = { country_event = { id = canada.54 days = 1 }}
+		navy_experience = 100
+		add_opinion_modifier = { target = ENG modifier = CAN_navy_drill_ENG }
 	}
 
 	option = {
 		name = canada.53.b
-
 		ai_chance = {
-			factor = 30
+			factor = 10
 		}
-
-		add_opinion_modifier = { target = IRE modifier = CAN_ECO_AID_IRE } # 15
-		hidden_effect = { country_event = { id = canada.55 days = 1 }}
+		navy_experience = 100
+		add_opinion_modifier = { target = GER modifier = CAN_navy_drill_GER }
 	}
 
 	option = {
 		name = canada.53.c
-
-		ai_chance = {
-			factor = 30
-		}
-
-		add_opinion_modifier = { target = IRE modifier = CAN_FULL_AID_IRE } # 30
-		hidden_effect = { country_event = { id = canada.56 days = 1 }}
-	}
-
-	option = {
-		name = canada.53.e
-
 		ai_chance = {
 			factor = 10
 		}
+		navy_experience = 100
+		if = {
+			limit = { 
+				USA = { NOT = { is_in_faction_with = CAN } }
+			}
+			add_opinion_modifier = { target = USA modifier = CAN_navy_drill_US }
+			#TODO - reaction event for receiving tag
+		}
+		if = {
+			limit = { 
+				CSA = { NOT = { is_in_faction_with = CAN } }
+			}
+			add_opinion_modifier = { target = AUS modifier = CAN_navy_drill_US }
+			#TODO - reaction event for receiving tag
+		}
+		if = {
+			limit = { 
+				AUS = { NOT = { is_in_faction_with = CAN } }
+			}
+			add_opinion_modifier = { target = CSA modifier = CAN_navy_drill_US }
+			#TODO - reaction event for receiving tag
+		}
+	}	
 
-		add_opinion_modifier = { target = IRE modifier = CAN_NO_AID_IRE } # -15
+	option = {
+		name = canada.53.e
+		ai_chance = {
+			factor = 30
+		}
+		navy_experience = 25
 	}
 }
 
-country_event = { # Terms of the Treaty 
+country_event = { # Irish-Canadian Treaty
 	id = canada.54
 	title = canada.54.t
 	desc = canada.54.d
@@ -3517,41 +3499,32 @@ country_event = { # Terms of the Treaty
 	
 	is_triggered_only = yes
 
-	option = {
+	option = { #Accept
 		name = canada.54.a
-
 		ai_chance = {
-			factor = 50
+			factor = 80
 		}
-
-		set_country_flag = CAN_IRE_MILALI
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+				
+		set_global_flag = CAN_IRE_treaty
+		add_opinion_modifier = { target = CAN modifier = CAN_IRE_treaty_accept }
+		CAN = {
+			give_guarantee = IRE 
+			country_event = { id = canada.55 days = 1 }
+		}
 	}
 
-	option = {
+	option = { #Reject
 		name = canada.54.b
-
 		ai_chance = {
-			factor = 40
+			factor = 20
 		}
-
-		set_country_flag = CAN_IRE_MILACS
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
-	}
-
-	option = {
-		name = canada.54.c
-
-		ai_chance = {
-			factor = 10
-		}
-
-		set_country_flag = CAN_IRE_MILNON
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+		add_opinion_modifier = { target = CAN modifier = CAN_IRE_treaty_reject }
+		CAN = { country_event = { id = canada.56 days = 1 } }
+		
 	}
 }
 
-country_event = { # Terms of the Treaty 
+country_event = { # Ireland accepts treaty
 	id = canada.55
 	title = canada.55.t
 	desc = canada.55.d
@@ -3561,39 +3534,12 @@ country_event = { # Terms of the Treaty
 
 	option = {
 		name = canada.55.a
-
-		ai_chance = {
-			factor = 50
-		}
-
-		set_country_flag = CAN_IRE_ECOALI
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
-	}
-
-	option = {
-		name = canada.55.b
-
-		ai_chance = {
-			factor = 40
-		}
-
-		set_country_flag = CAN_IRE_ECOACS
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
-	}
-
-	option = {
-		name = canada.55.c
-
-		ai_chance = {
-			factor = 10
-		}
-
-		set_country_flag = CAN_IRE_ECONON
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+		add_opinion_modifier = { target = IRE modifier = has_CAN_IRE_treaty }
+		add_named_threat = { threat = 1 name = CAN_IRE_treaty_t}
 	}
 }
 
-country_event = { # Terms of the Treaty 
+country_event = { # Ireland rejects treaty
 	id = canada.56
 	title = canada.56.t
 	desc = canada.56.d
@@ -3601,38 +3547,24 @@ country_event = { # Terms of the Treaty
 	
 	is_triggered_only = yes
 
-	option = {
+	option = { #So be it
 		name = canada.56.a
-
 		ai_chance = {
-			factor = 50
+			factor = 70
 		}
 
-		set_country_flag = CAN_IRE_FULALI
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
 	}
 
-	option = {
+	option = { #War with Ireland
 		name = canada.56.b
-
 		ai_chance = {
-			factor = 40
+			factor = 30
 		}
-
-		set_country_flag = CAN_IRE_FULACS
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
+		add_named_threat = { threat = 6 name = CAN_IRE_war_t}
+		declare_war_on = { target = IRE type = annex_everything }
 	}
 
-	option = {
-		name = canada.56.c
-
-		ai_chance = {
-			factor = 10
-		}
-
-		set_country_flag = CAN_IRE_FULNON
-		hidden_effect = { IRE = { country_event = { id = canada.57 days = 1 }}}
-	}
+	
 }
 
 country_event = { # Military Alliance

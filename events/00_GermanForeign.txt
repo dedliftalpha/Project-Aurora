@@ -361,4 +361,300 @@ country_event = {#The Union of Britain invade Denmark
 		#### Flandern-Wallonien####
 		
 		
+		country_event = {#Liberation of Flandern-Wallonien
+		id = gerfor.18
+		title = gerfor.18.t 
+		desc = gerfor.18.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER 
+		has_war_with = FRA 
+		BEL = { exists = no }
+		FLN = { exists = no }
+		WLL = { exists = no }
+		controls_state = 6 
+		controls_state = 34 
+					}
+		option = {#restore BEL 
+		name = gerfor.18.a 
+		ai_chance = { factor = 55 }	
+		BEL = { transfer_state = 6 transfer_state = 34 }
+		puppet = BEL 
+		add_to_faction = BEL  	
+		send_equipment = { target = BEL type = infantry_equipment amount = 6000 }
+		add_political_power = 60
 		
+							
+							}
+		option = {#Divide Flanders-Wallonia !
+		name = gerfor.18.b 
+		ai_chance = { factor = 35 }
+		FLN = { transfer_state = 6 }
+		puppet = FLN
+		add_to_faction = FLN 
+		send_equipment = { target = FLN type = infantry_equipment amount = 3000 }
+		WLL = { transfer_state = 34 }
+		puppet = WLL
+		add_to_faction = WLL
+		send_equipment = { target = WLL type = infantry_equipment amount = 3000 }
+		add_political_power = 60 
+								}
+		option = {#occupy 
+		name = gerfor.18.c 
+		ai_chance = { factor = 10 }
+		add_named_threat = { threat = 3 name = occupy_wall }
+										}
+									}
+#########################################################################
+#  Southern Wallonia given to Flandern-Wallonia
+#########################################################################
+	country_event = {#Fate of the Southern Wallonia
+	id = gerfor.19 
+	title = gerfor.19.t 
+	desc = gerfor.19.d 
+	trigger = {
+	tag = GER 
+	controls_state = 741 
+	controls_state = 778 
+	OR = {
+	GER = { controls_state = 16 }
+	any_country = {
+	is_in_faction_with = GER 
+	controls_state = 16
+	}
+								}
+	OR = {
+	is_in_faction_with = BEL 
+	is_in_faction_with = WLL
+							}
+								}
+	mean_time_to_happen = { days = 30 }
+	option = {#return it 
+	name = gerfor.19.a 
+	ai_chance = { factor = 50 }
+	add_political_power = -40 
+	if = { limit = { is_in_faction_with = BEL BEL = { exists = yes } } BEL = { transfer_state = 741 transfer_state = 778 } }
+	if = { limit = { is_in_faction_with = WLL WLL = { exists = yes } } WLL = { transfer_state = 741 transfer_state = 778 } }
+	remove_state_claim = 741 
+	remove_state_claim = 778
+	add_opinion_modifier = { target = BEL modifier = return_wll	}
+	add_opinion_modifier = { target = WLL modifier = return_wll	}
+	if = { limit = { is_in_faction_with = WLL } WLL = { country_event = { id = gerfor.21 days = 1 } } }
+	if = { limit = { is_in_faction_with = BEL } BEL = { country_event = { id = gerfor.20 days = 1 } } }
+							}
+	option = {#integrate 
+	name = gerfor.19.b 
+	ai_chance = { factor = 50 }
+	add_political_power = -140 
+	add_state_core = 741 
+	add_state_core = 778 
+	add_opinion_modifier = { target = BEL modifier = wll_int }
+	add_opinion_modifier = { target = WLL modifier = wll_int }
+	add_named_threat = { threat = 3 name = wll_int }
+								}
+											}
+#########################################################################
+#  Southern Wallonia given to Flandern-Wallonia FLA-WLL response
+#########################################################################
+	country_event = {#Southern Wallonia
+	id = gerfor.20 
+	title = gerfor.20.t 
+	desc = gerfor.20.d 
+	is_triggered_only = yes 
+	option = {
+	name = gerfor.20.a
+	add_political_power = 60 
+	add_state_core = 741 
+	add_state_core = 778 
+								}
+	
+												}
+	country_event = {#Southern Wallonia
+	id = gerfor.21
+	title = gerfor.20.t 
+	desc = gerfor.20.d 
+	is_triggered_only = yes 
+	option = {
+	name = gerfor.20.a 
+	add_political_power = 60 
+	add_state_core = 741 
+	add_state_core = 778 
+								}
+	
+												}
+#########################################################################
+#  Germany splitting Netherlands with FLAWLL
+#########################################################################
+	country_event = {#The partitioning of the Netherlands
+	id = gerfor.22
+	title = gerfor.22.t 
+	desc = gerfor.22.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	controls_state = 7 
+	controls_state = 35 
+	controls_state = 36
+								}
+	mean_time_to_happen = { days = 30 }
+	option = {#Partition Netherlands
+	name = gerfor.22.a 
+	ai_chance = { factor = 70 }
+	trigger = {
+	OR = {
+	is_in_faction_with = BEL 
+	is_in_faction_with = FLN
+						
+						}
+	NOT = { is_in_faction_with = HOL }	
+	#NEED TO ADD INDONESIAN TRIGGERS 
+	
+						}
+	add_political_power = -20 
+	if = { limit = { is_in_faction_with = BEL BEL = { exists = yes } } BEL = { transfer_state = 7 transfer_state = 35 } }
+	if = { limit = { is_in_faction_with = FLN FLN = { exists = yes } } FLN = { transfer_state = 7 transfer_state = 35 } }
+	 
+	add_state_claim = 36
+	add_opinion_modifier = { target = BEL modifier = give_holl	}
+	add_opinion_modifier = { target = FLN modifier = give_holl	}
+	if = { limit = { is_in_faction_with = FLN } FLN = { country_event = { id = gerfor.23 days = 1 } } }
+	if = { limit = { is_in_faction_with = BEL } BEL = { country_event = { id = gerfor.23 days = 1 } } }
+											}
+	option = {#restore netherlands 
+	name = gerfor.22.b 
+	ai_chance = { factor = 60 }
+	trigger = {
+	HOL = { exists = no }
+	}
+	add_political_power = 20 
+	release = HOL 
+	add_to_faction = HOL 
+	HOL = { add_political_power = 100 load_oob = HOL_LIBER }
+	#some indonesian bullshit
+						}
+	option = {#occupy 
+	name = gerfor.22.c 
+	ai_chance = { factor = 5 }
+	add_political_power = -60 			
+								}				
+										
+										}
+#########################################################################
+#  Splitting Netherlands FLA-WLL response
+#########################################################################
+	country_event = {#The partitioning of the Netherlands
+	id = gerfor.23 
+	title = gerfor.23.t 
+	desc = gerfor.23.d 
+	is_triggered_only = yes 
+	option = {
+	name = gerfor.23.a 
+	add_political_power = 60 
+	add_state_core = 7 
+							
+							}
+									}
+#########################################################################
+#  German War events 	
+#########################################################################
+	country_event = {#Enemy at the gates
+	id = gerfor.24
+	title = gerfor.24.t 
+	desc = gerfor.24.d 
+	fire_only_once = yes 
+	trigger = {
+	63 = { OR = { is_owned_by = RUS is_owned_by = SOV } }
+	86 = { OR = { is_owned_by = RUS is_owned_by = SOV } }
+	68 = { OR = { is_owned_by = RUS is_owned_by = SOV } }
+	controls_state = 64 
+	OR = { has_war_with = SOV has_war_with = RUS }
+	
+						}
+	option = {
+	name = gerfor.24.a 
+	add_political_power = -40 
+	64 = {
+			add_building_construction = {
+				type = bunker
+				province = 3207 
+				level = 3
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6521
+				level = 5
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 9496
+				level = 3
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 9472
+				level = 3
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11415
+				level = 3
+				instant_build = yes
+			}
+		}
+		add_manpower = 120000 
+		load_oob = GER_RUS_WAR
+		
+								}
+	
+	
+	
+	}
+	country_event = {#Die Wacht am Rhein
+	id = gerfor.25 
+	title = gerfor.25.t 
+	desc = gerfor.25.d 
+	fire_only_once = yes 
+	trigger = { 
+	tag = GER 
+	has_war_with = FRA 
+	FRA = { controls_state = 781 controls_state = 42 }	
+							}
+	option = {
+	name = gerfor.25.a 
+	add_political_power = -40 
+	51 = {
+			add_building_construction = {
+				type = bunker
+				province = 3512  
+				level = 3
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6469 
+				level = 5
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6570 
+				level = 3
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = bunker
+				province = 529 
+				level = 3
+				instant_build = yes
+			}
+			
+		}
+				add_manpower = 120000
+				load_oob = GER_FRA_WAR
+			}
+												}
+	

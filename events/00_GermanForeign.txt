@@ -657,4 +657,179 @@ country_event = {#The Union of Britain invade Denmark
 				load_oob = GER_FRA_WAR
 			}
 												}
+###Spanish Morocco
+	country_event = {#The Fate of Spanish Morocco
+	id = gerfor.26
+	title = gerfor.26.t 
+	desc = gerfor.26.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	CAR = { exists = no }
+	SPR = { exists = no }
+	CNT = { exists = yes } 
+	NOT = { OR = { has_war_with = CNT is_in_faction_with = CNT } }
+		}
+	option = {#occupy
+	name = gerfor.26.a 
+	ai_chance = { factor = 95 }
+	add_equipment_to_stockpile = { type = infantry_equipment_1 amount = -10}
+	add_equipment_to_stockpile = { type = support_equipment_1 amount = -20 }
+	add_opinion_modifier = { target = CNT modifier = occupy_mor }
+	add_manpower = -100 
+	CNT = { country_event = { id = gerfor.27 days = 1 } }
+	
+							}
+	option = {#ignore 
+	name = gerfor.26.b 
+	ai_chance = { factor = 5 }
+	add_political_power = -20 
+									}
+						
+											}
+	country_event = {#German Empire occupies Spanish Morocco
+	id = gerfor.27 
+	title = gerfor.27.t 
+	desc = gerfor.27.d 
+	is_triggered_only = yes 
+	option = {#Nothing we can do 
+	name = gerfor.27.a 
+	ai_chance = { factor = 100 }
+	add_political_power = -40 
+	GER = {
+	transfer_state = 699 transfer_state = 290
+							}
+	
+								}
+	option = {#war
+	name = gerfor.27.b 
+	ai_chance = { factor = 0 }
+	add_political_power = -200 
+	GER = {
+	transfer_state = 699 transfer_state = 290
+							}
+	declare_war_on = { target = GER type = annex_everything }
+	
+									}
+												
+											}
+	####Madagascar
+	
+	country_event = {#Logging in Madagascar
+	id = gerfor.28 
+	title = gerfor.28.t 
+	desc = gerfor.28.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	controls_state = 543 
+	NOT = { has_war_with = FRA has_war_with = RUS has_war_with = SOV }
+	MAG = { exists = no }
+	date > 1942.1.1 
+							}
+	mean_time_to_happen = { days = 50 }	
+	option = {#Yes
+	name = gerfor.28.a 
+	ai_chance = { factor = 80 }
+	add_political_power = -40 
+	add_equipment_to_stockpile = { type = support_equipment_1 amount = -300 }
+	set_country_flag = madagascar_logging
+							}
+	option = {#no 
+	name = gerfor.28.b 
+	ai_chance = { factor = 20 }
+	add_political_power = -20 
+								}
+	
+		}
+	country_event = {#Logging in Madagascar has been expanded!
+	id = gerfor.29 
+	title = gerfor.29.t 
+	desc = gerfor.29.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	has_country_flag = madagascar_logging
+	controls_state = 543 
+						}
+	mean_time_to_happen = { days = 105 }
+	option = {#yes 
+	name = gerfor.29.a 
+	ai_chance = { factor = 80 }
+	add_equipment_to_stockpile = { type = support_equipment_1 amount = -500 }
+	543 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+			set_country_flag = madagascar_factory
+							}
+	option = {#no 
+	name = gerfor.29.b 
+	ai_chance = { factor = 20 }
+	add_political_power = -20 
+	543 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+	set_country_flag = madagascar_unemployment
+								}
+				}
+	country_event = {#The processing complex has opened
+	id = gerfor.30 
+	title = gerfor.30.t 
+	desc = gerfor.30.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	has_country_flag = madagascar_factory 
+	controls_state = 543 
+				}
+	mean_time_to_happen = { days = 105 }
+	option = {
+	name = gerfor.30.a 
+	add_political_power = 20 
+	543 = {
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 3
+                    instant_build = yes
+                }
+            }
+		543 = {
+                
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+								}
+							
+								}
+	country_event = {#colonial revolt in madagascar 
+	id = gerfor.31 
+	title = gerfor.31.t 
+	desc = gerfor.31.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = GER 
+	has_country_flag = madagascar_unemployment 
+	controls_state = 543 
+						}
+	option = {
+	name = gerfor.31.a 
+	add_political_power = -40 
+	MAG = { transfer_state = 543 declare_war_on = { target = GER type = annex_everything } 	set_politics = { ruling_party = social_democratist elections_allowed = no } }
+						}
+	
+								}
 	

@@ -1,4 +1,5 @@
-﻿### Ottoman Events ###
+﻿### MODDER: dedlift ###
+### Ottoman Events ###
 
 add_namespace = ottoman
 
@@ -9,28 +10,119 @@ country_event = {
 	desc = ottoman.1.d
 	
 	fire_only_once = yes
-	
+		
 	trigger = {
 		tag = OTT
-
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 0
 	}
+	
 	
 	option = {
 		name = ottoman.1.a
 		
-		
-		################## 
+		####### 
 		# THIS WAS NECESSARY BECAUSE OF A BUG LEAVE IT IN 
-		######
+		#######
 		puppet = OMA
 		puppet = ALB
 		puppet = LYB
 		puppet = ARM
-		########
+		#######
 	}
 
 }
+
+
+################################################################################
+# OTTOMAN BLACK MONDAY EVENTS
+################################################################################
+
+### black monday hits ottoman
+
+news_event = {
+	id = ottoman.2
+	title = ottoman.2.t
+	desc = ottoman.2.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1936.3.3
+	}
+
+	
+	option = {
+		name = ottoman.2.a			
+
+		add_ideas = ott_black_monday
+		add_political_power = -180
+		news_event = { id = ottoman.3 days = 430 } #initial stabilisation
+		}
+
+}
+
+
+### initial stabilisation
+
+news_event = {
+	id = ottoman.3
+	title = ottoman.3.t
+	desc = ottoman.3.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.3.a
+
+		remove_ideas = ott_black_monday
+		add_ideas = ott_black_monday1
+		add_political_power = 20
+		news_event = { id = ottoman.4 days = 30 } #government intervention
+	}
+
+}
+
+
+### government intervention
+
+news_event = {
+	id = ottoman.4
+	title = ottoman.4.t
+	desc = ottoman.4.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.4.a
+
+		remove_ideas = ott_black_monday1
+		add_ideas = ott_black_monday2
+		add_political_power = 20
+		news_event = { id = ottoman.5 days = 210 } #fuhrer stabilisation
+	}
+
+}
+
+
+### further stabilisation
+
+news_event = {
+	id = ottoman.5
+	title = ottoman.5.t
+	desc = ottoman.5.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.5.a
+		
+		remove_ideas = ott_black_monday2
+		add_political_power = 20
+	}
+
+}
+

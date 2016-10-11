@@ -17,7 +17,7 @@ news_event = {
 	}
 	
 	immediate = {
-		AUS = { country_event = {id = ausgleich.2 }}
+		AUS = { country_event = { id = ausgleich.2 }}
 		set_global_flag = ausgleich_37
 	}
 	
@@ -102,7 +102,7 @@ country_event = {
 
 		ai_chance = { factor = 60 }
 
-		AUS = {country_event = { id = ausgleich.6 days = 1 }}
+		AUS = { country_event = { id = ausgleich.6 days = 1 }}
 
 		add_opinion_modifier = {target = GER modifier = HUN_stay_dualism_GER } # 50
 		add_opinion_modifier = {target = BOM modifier = HUN_stay_dualism_EMP } # -30
@@ -116,7 +116,7 @@ country_event = {
 		
 		ai_chance = { factor = 40 }
 
-		AUS = {country_event = { id = ausgleich.24 days = 3 }}
+		AUS = { country_event = { id = ausgleich.24 days = 3 }}
 	}
 }
 
@@ -701,8 +701,6 @@ country_event = {
 		name = ausgleich.21.b # No need	
 		
 		ai_chance = { factor = 10 }
-
-		# CRO = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
 }
 
@@ -726,8 +724,6 @@ country_event = {
 		name = ausgleich.22.b # No need	
 		
 		ai_chance = { factor = 10 }
-
-		# GAL = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
 }
 
@@ -751,8 +747,6 @@ country_event = {
 		name = ausgleich.23.b # No need	
 		
 		ai_chance = { factor = 10 }
-
-		# BOS = { country_event = { id = ausgleich. days = 1 }} 901131
 	}
 }
 
@@ -812,7 +806,7 @@ country_event = {
 	}
 
 	option = {
-		name = ausgleich.25.b #decline
+		name = ausgleich.25.c #decline
 
 		ai_chance = { factor = 35 }
 
@@ -2777,6 +2771,197 @@ country_event = { # Submission to Austria
 }
 
 country_event = { # Peace with Italy?
+	id = ausgleich.231
+	title = ausgleich.231.t
+	desc = ausgleich.231.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = AHE
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		has_war_with = ITA
+		controls_state = 160
+		controls_state = 161
+		controls_state = 162
+		is_puppet = no
+		not = { is_in_faction_with = FRA }
+	}
+	
+	option = {
+		name = ausgleich.231.a
+
+		ai_chance = { factor = 20 }
+
+		add_state_core = 160
+		ITA = { country_event = {id = ausgleich.232 }}
+	}
+
+	option = {
+		name = ausgleich.231.b
+
+		ai_chance = { factor = 80 }
+
+		add_state_core = 160
+		ITA = { country_event = {id = ausgleich.233 }}
+	}
+
+	option = {
+		name = ausgleich.231.c
+
+		ai_chance = { factor = 0 }
+
+		add_opinion_modifier = { target = GER modifier = AUS_cont_war_ITA } # -20
+	}
+}
+
+country_event = { # Austria offers peace
+	id = ausgleich.232
+	title = ausgleich.232.t
+	desc = ausgleich.232.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.232.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AHE }
+
+		AHE = {
+			transfer_state = 160
+		}
+
+		ITA = {
+			remove_state_core = 160
+			remove_state_core = 783
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = ausgleich.232.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+
+country_event = { # Austria offers peace
+	id = ausgleich.233
+	title = ausgleich.233.t
+	desc = ausgleich.233.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.233.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AHE }
+
+		AHE = {
+			transfer_state = 160
+		}
+
+		ITA = {
+			remove_state_core = 160
+			remove_state_core = 783
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+
+		add_political_power = -200
+
+		AHE = { country_event = {id = ausgleich.234 }}
+	}
+
+	option = {
+		name = ausgleich.233.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+
+country_event = { # Italy submits !
+	id = ausgleich.234
+	title = ausgleich.234.t
+	desc = ausgleich.234.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.234.a
+
+		puppet = ITA
+
+		add_opinion_modifier = { target = ITA modifier = friendly_gov } # 150
+
+		add_political_power = 50 
+
+		ITA = { country_event = {id = ausgleich.235 }}
+	}
+}
+
+country_event = { # Submission to Austria
+	id = ausgleich.235
+	title = ausgleich.235.t
+	desc = ausgleich.235.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.235.a
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.1
+        }
+        add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.3
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Joseph I von Österreich-Toskana"
+			desc = "JOSEPH_I_DESC"
+			picture = "Portrait_ITA_Joseph_I_von_Osterreich.dds"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
+
+		set_country_flag = joseph_I_von_osterreich_hos
+
+        add_ideas = {
+        	# Stephen X (HoG)
+        }
+	}
+}
+
+country_event = { # Peace with Italy?
 	id = ausgleich.79
 	title = ausgleich.79.t
 	desc = ausgleich.79.d
@@ -2817,7 +3002,7 @@ country_event = { # Peace with Italy?
 	}
 
 	option = {
-		name = ausgleich.74.c
+		name = ausgleich.79.c
 
 		ai_chance = { factor = 0 }
 
@@ -3002,8 +3187,8 @@ country_event = { # Kefalonia is cut off from supply!
 
 country_event = { # Occupy Kefalonia?
 	id = ausgleich.85
-	title = ausgleich.84.t
-	desc = ausgleich.84.d
+	title = ausgleich.85.t
+	desc = ausgleich.85.d
 	
 	is_triggered_only = yes
 	
@@ -4014,6 +4199,165 @@ country_event = { # Romania submits !
 	
 	option = {
 		name = ausgleich.109.a
+
+		ai_chance = { factor = 100 }
+
+		puppet = ROM
+		add_opinion_modifier = { target = ROM modifier = Puppet_Gov } # 150
+		add_political_power = 100
+	}
+}
+
+country_event = { # Peace with Romania?
+	id = ausgleich.236
+	title = ausgleich.236.t
+	desc = ausgleich.236.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		has_war_with = ROM
+		controls_state = 789
+		controls_state = 84
+		OR = {
+			controls_state = 81
+			controls_state = 46
+		}
+		OR = {
+			controls_state = 79
+			controls_state = 78
+		}
+		AHE = { is_puppet = no }
+		ROM = { is_puppet = no }
+		NOT = {
+			AHE = {
+				is_in_faction_with = FRA
+				is_in_faction_with = AHE
+				is_in_faction_with = RUS
+			}
+		}
+	}
+	
+	option = {
+		name = ausgleich.236.a
+
+		ai_chance = { factor = 90 }
+
+		ROM = { country_event = { id = ausgleich.237 }}
+		add_state_claim = 81
+	}
+
+	option = {
+		name = ausgleich.236.b
+
+		ai_chance = { factor = 10 }
+
+		ROM = { country_event = { id = ausgleich.238 }}
+		add_state_claim = 81
+	}
+
+	option = {
+		name = ausgleich.236.c
+
+		ai_chance = { factor = 0 }
+
+		add_opinion_modifier = { target = GER modifier = AHE_cont_war } # -20
+	}
+}
+
+country_event = { # Austria offers peace
+	id = ausgleich.237
+	title = ausgleich.237.t
+	desc = ausgleich.237.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.237.a
+
+		ai_chance = { factor = 100 }
+
+		remove_from_faction = ROM
+		white_peace = AHE
+
+		AHE = {
+			transfer_state = 81
+		}
+
+		remove_state_core = 789
+		remove_state_core = 84
+
+		add_ideas = {
+			disarmed_nation
+		}
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = ausgleich.237.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}	
+}
+
+country_event = { # Austria offers peace
+	id = ausgleich.238
+	title = ausgleich.238.t
+	desc = ausgleich.238.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.238.a
+
+		ai_chance = { factor = 100 }
+
+		remove_from_faction = ROM
+		white_peace = AHE
+
+		AHE = {
+			transfer_state = 81
+		}
+
+		remove_state_core = 789
+		remove_state_core = 84
+
+		add_ideas = {
+			disarmed_nation
+		}
+
+		add_political_power = -200
+
+		AHE = { country_event = { id = ausgleich.239 }}
+	}
+
+	option = {
+		name = ausgleich.238.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}	
+}
+
+country_event = { # Romania submits !
+	id = ausgleich.239
+	title = ausgleich.239.t
+	desc = ausgleich.239.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.239.a
 
 		ai_chance = { factor = 100 }
 
@@ -6023,7 +6367,7 @@ country_event = { # Republic or Kingdom ?
 			transfer_state = 9
 		}
 
-		change_tag_from = CZE	
+		CZE = { change_tag_from = BOM }	
 
 		CZE = { annex_country = { target = BOM transfer_troops = yes }}
 
@@ -6128,7 +6472,7 @@ country_event = { # Hungarian demise !
 	fire_only_once = yes
 	
 	trigger = { 
-		tag = HUN
+		tag = AUS
 		is_puppet = no
 		NOT = {
 			has_government = totalist
@@ -6156,6 +6500,11 @@ country_event = { # Hungarian demise !
 		ai_chance = { factor = 100 }
 
 		add_state_core = 784
+		remove_state_claim = 784
+
+		AUS = {
+			transfer_state = 784
+		}
 
 		every_state = { 
 			limit = { is_core_of = HUN } 
@@ -6175,7 +6524,7 @@ country_event = { # Hungarian demise !
 				NOT = { BOM = { is_in_faction_with = GER }}
 			}
 
-			BOM = { country_event = { id = ausgleich.165 }}
+			BOM = { country_event = { id = ausgleich.165 days = 1 }}
 		}
 
 		if = {
@@ -6186,7 +6535,7 @@ country_event = { # Hungarian demise !
 				NOT = { CRO = { is_in_faction_with = GER }}
 			}
 
-			CRO = { country_event = { id = ausgleich.166 }}
+			CRO = { country_event = { id = ausgleich.166 days = 1 }}
 		}
 
 		if = {
@@ -6197,7 +6546,7 @@ country_event = { # Hungarian demise !
 				NOT = { BOS = { is_in_faction_with = GER }}
 			}
 
-			BOS = { country_event = { id = ausgleich.167 }}
+			BOS = { country_event = { id = ausgleich.167 days = 1 }}
 		}
 
 		if = {
@@ -6208,7 +6557,7 @@ country_event = { # Hungarian demise !
 				NOT = { GAL = { is_in_faction_with = GER }}
 			}
 
-			GAL = { country_event = { id = ausgleich.168 }}
+			GAL = { country_event = { id = ausgleich.168 days = 1 }}
 		}
 	}
 
@@ -6233,17 +6582,17 @@ country_event = { # The centralisation of the Empire
 
 		ai_chance = { factor = 60 }
 
-		AUS = { country_event = { id = ausgleich.169 }}
+		AUS = { country_event = { id = ausgleich.169 days = 2 }}
 	}
 
 	option = {
-		name = ausgleich.165.a
+		name = ausgleich.165.b
 
 		ai_chance = { factor = 40 }
 
 		end_puppet = BOM
 		AUS = { remove_from_faction = BOM }
-		AUS = { country_event = { id = ausgleich.170 }}
+		AUS = { country_event = { id = ausgleich.170 days = 2 }}
 	}
 }
 
@@ -6259,16 +6608,16 @@ country_event = { # The centralisation of the Empire
 
 		ai_chance = { factor = 90 }
 
-		AUS = { country_event = { id = ausgleich.171 }}
+		AUS = { country_event = { id = ausgleich.171 days = 2 }}
 	}
 
 	option = {
-		name = ausgleich.166.a
+		name = ausgleich.166.b
 
 		ai_chance = { factor = 10 }
 
 		end_puppet = CRO
-		AUS = { country_event = { id = ausgleich.172 }}
+		AUS = { country_event = { id = ausgleich.172 days = 2 }}
 	}
 }
 
@@ -6284,16 +6633,16 @@ country_event = { # The centralisation of the Empire
 
 		ai_chance = { factor = 100 }
 
-		AUS = { country_event = { id = ausgleich.173 }}
+		AUS = { country_event = { id = ausgleich.173 days = 2 }}
 	}
 
 	option = {
-		name = ausgleich.167.a
+		name = ausgleich.167.b
 
 		ai_chance = { factor = 0 }
 
 		end_puppet = BOS
-		AUS = { country_event = { id = ausgleich.174 }}
+		AUS = { country_event = { id = ausgleich.174 days = 2 }}
 	}
 }
 
@@ -6309,16 +6658,16 @@ country_event = { # The centralisation of the Empire
 
 		ai_chance = { factor = 100 }
 
-		AUS = { country_event = { id = ausgleich.175 }}
+		AUS = { country_event = { id = ausgleich.175 days = 2 }}
 	}
 
 	option = {
-		name = ausgleich.168.a
+		name = ausgleich.168.b
 
 		ai_chance = { factor = 0 }
 
 		end_puppet = GAL
-		AUS = { country_event = { id = ausgleich.176 }}
+		AUS = { country_event = { id = ausgleich.176 days = 2 }}
 	}
 }
 
@@ -6361,11 +6710,12 @@ country_event = { # Bohemia leaves the Empire!
 
 		ai_chance = { factor = 90 }
 
+		end_puppet = BOM
 		declare_war_on = { target = BOM type = annex_everything }
 	}
 
 	option = {
-		name = ausgleich.170.a
+		name = ausgleich.170.b
 
 		ai_chance = { factor = 10 }
 	}
@@ -6407,11 +6757,12 @@ country_event = { # Croatia leaves the Empire!
 
 		ai_chance = { factor = 90 }
 
+		end_puppet = CRO
 		declare_war_on = { target = CRO type = annex_everything }
 	}
 
 	option = {
-		name = ausgleich.172.a
+		name = ausgleich.172.b
 
 		ai_chance = { factor = 10 }
 	}
@@ -6453,11 +6804,12 @@ country_event = { # Bosnia leaves the Empire!
 
 		ai_chance = { factor = 90 }
 
+		end_puppet = BOS
 		declare_war_on = { target = BOS type = annex_everything }
 	}
 
 	option = {
-		name = ausgleich.174.a
+		name = ausgleich.174.b
 
 		ai_chance = { factor = 10 }
 	}
@@ -6499,11 +6851,12 @@ country_event = { # Galicia leaves the Empire!
 
 		ai_chance = { factor = 90 }
 
+		end_puppet = GAL
 		declare_war_on = { target = GAL type = annex_everything }
 	}
 
 	option = {
-		name = ausgleich.176.a
+		name = ausgleich.176.b
 
 		ai_chance = { factor = 10 }
 	}
@@ -6513,42 +6866,2290 @@ country_event = { # Galicia leaves the Empire!
 #Future of the Empire
 #####################
 
+country_event = { # The future of our empire
+	id = ausgleich.229
+	title = ausgleich.229.t
+	desc = ausgleich.229.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AUS
+		is_puppet = no
+		has_war = no
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+			country_exists = HUN
+			country_exists = BOM
+			country_exists = CZE
+			country_exists = CRO
+		}
+		controls_state = 75
+		controls_state = 9
+		controls_state = 74
+		controls_state = 4
+		controls_state = 70
+		controls_state = 664
+		controls_state = 43
+		controls_state = 155
+		controls_state = 154
+		controls_state = 109
+	}
+	
+	option = {
+		name = ausgleich.229.a
+
+		ai_chance = { factor = 1 }
+
+		add_political_power = -100
+		set_country_flag = aus_175_a
+	}
+
+	option = {
+		name = ausgleich.229.b
+
+		ai_chance = { factor = 50 }
+
+		add_political_power = -200
+		set_global_flag = AUS_HUN_yes
+		set_country_flag = aus_175_b
+	}
+
+	option = {
+		name = ausgleich.229.c
+
+		ai_chance = { factor = 49 }
+
+		add_political_power = -200
+		set_global_flag = AUS_Danube_yes
+		set_country_flag = aus_175_c
+	}
+}
+
+country_event = { # The future of our empire
+	id = ausgleich.230
+	title = ausgleich.230.t
+	desc = ausgleich.230.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AUS
+		has_global_flag = AUS_HUN_yes
+		NOT = { has_global_flag = aus_175_c has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.230.a
+
+		AHE = { transfer_state = 4 }
+
+		every_state = { 
+			limit = { is_core_of = AUS } 
+
+			add_core_of = AHE
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AUS } 
+
+			add_claim_by = AHE
+		}
+
+		AHE = { change_tag_from = AUS }
+
+		AHE = { annex_country = { target = AUS transfer_troops = yes }}
+
+		AHE = { country_event = { id = ausgleich.177 days = 1 }}
+
+		clr_global_flag = AUS_HUN_yes
+
+		set_country_flag = AUS_HUN_For
+
+		add_political_power = -400
+
+		add_popularity = {
+            ideology = paternal_autocratist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+        
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = { }
+		}	
+	}
+}
+
+country_event = { # Reorganisation of the Dual-Monarchy
+	id = ausgleich.177
+	title = ausgleich.177.t
+	desc = ausgleich.177.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.177.a
+
+		if = {
+			limit = {
+				controls_state = 105
+			}
+
+			add_state_core = 105
+		}
+
+		if = {
+			limit = {
+				controls_state = 160
+			}
+
+			add_state_core = 160
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AUS } 
+
+			add_core_of = AHE
+		}
+
+		add_manpower = 200000
+
+		load_oob = "AHE"
+
+		AHE = { country_event = { id = ausgleich.188 days = 1 }}	
+	}
+}
+
+country_event = { # Reorganisation of the Dual-Monarchy
+	id = ausgleich.178
+	title = ausgleich.178.t
+	desc = ausgleich.178.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.178.a
+
+		add_ideas = Industrial_Reorganisation_AHE
+
+		add_resource = { type = oil amount = 8 state = 4 }
+		add_resource = { type = rubber amount = 4 state = 4 }
+		add_resource = { type = steel amount = 75 state = 152 }
+		add_resource = { type = aluminium amount = 10 state = 152 }
+		add_resource = { type = steel amount = 75 state = 9 }
+		add_resource = { type = tungsten amount = 20 state = 70 }
+
+		set_global_flag = AH_Cabinet_yes
+
+		set_country_flag = aus_178
+	}
+}
+
+country_event = { # Establishment of the Danubian Federation
+	id = ausgleich.179
+	title = ausgleich.179.t
+	desc = ausgleich.179.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AUS
+		has_global_flag = AUS_Danube_yes
+		NOT = { has_global_flag = aus_175_b has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.179.a
+
+		DNF = { transfer_state = 4 }
+
+		every_state = { 
+			limit = { is_core_of = AUS } 
+
+			add_core_of = DNF
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AUS } 
+
+			add_claim_by = DNF
+		}
+
+		DNF = { change_tag_from = AUS }
+
+		DNF = { annex_country = { target = AUS transfer_troops = yes }}
+
+		DNF = { country_event = { id = ausgleich.180 days = 1 }}
+
+		clr_global_flag = AUS_Danube_yes
+
+		set_country_flag = DNF_For
+
+		add_political_power = -300	
+	}
+}
+
+country_event = { # Reorganisation of the Federation
+	id = ausgleich.180
+	title = ausgleich.180.t
+	desc = ausgleich.180.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.180.a
+
+		if = {
+			limit = {
+				controls_state = 105
+			}
+
+			add_state_core = 105
+		}
+
+		if = {
+			limit = {
+				controls_state = 160
+			}
+
+			add_state_core = 160
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AUS } 
+
+			add_core_of = DNF
+		}
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+
+		add_manpower = 200000
+
+		load_oob = "DNF"
+
+		set_country_flag = aus_180
+
+		DNF = { country_event = { id = ausgleich.181 days = 1 }}
+	}
+}
+
+country_event = { # Reorganisation of the Federation
+	id = ausgleich.181
+	title = ausgleich.181.t
+	desc = ausgleich.181.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.181.a
+
+		add_ideas = Industrial_Reorganisation_DNF
+
+		add_resource = { type = oil amount = 8 state = 4 }
+		add_resource = { type = rubber amount = 4 state = 4 }
+		add_resource = { type = steel amount = 75 state = 152 }
+		add_resource = { type = aluminium amount = 10 state = 152 }
+		add_resource = { type = steel amount = 75 state = 9 }
+		add_resource = { type = tungsten amount = 20 state = 70 }
+
+		set_global_flag = DF_Cabinet_yes
+
+		set_country_flag = aus_181
+	}
+}
+
 ################
 #Cabinet options
 ################
+
+country_event = { # Establishment of the Danubian Federation
+	id = ausgleich.182
+	title = ausgleich.182.t
+	desc = ausgleich.182.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		has_global_flag = AH_Cabinet_yes
+		NOT = { has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.182.a
+
+		ai_chance = { factor = 35 }
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+
+		add_ideas = { 
+			AUS_Kurt_von_Schuschnigg_hog_pau
+		}
+	}
+
+	option = {
+		name = ausgleich.182.b
+
+		ai_chance = { factor = 45 }
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+
+		add_ideas = { 
+			AUS_Albert_Mensdorff_Pouilly_hog_ade
+		}
+	}
+
+	option = {
+		name = ausgleich.182.c
+
+		ai_chance = { factor = 20 }
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+
+		#add_ideas = { 
+			# Laszlo Bardossy hog
+		#}
+	}
+}
+
+country_event = { # Schuschnigg decides on the cabinet
+	id = ausgleich.183
+	title = ausgleich.183.t
+	desc = ausgleich.183.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		has_idea = AUS_Kurt_von_Schuschnigg_hog_pau
+		NOT = { has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.183.a
+
+		ai_chance = { factor = 70 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Julius Raab Eco
+			# Robert Winterstein Int
+			# Eduard von Böhm-Ermolli CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.183.b
+
+		ai_chance = { factor = 20 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Albert Mendsdorff-Pouilly Eco
+			# Alois Schönburg-Hartenstein Int
+			# Eugen von Habsburg-Lothringen CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.183.c
+
+		ai_chance = { factor = 10 }
+
+		#add_ideas = { 
+			# Pál Teleki de Szek For
+			# Felix zu Schwarzenberg Eco
+			# Ferenc Keresztes-Fischer Int
+			# Alois Schönburg-Hartenstein CoS
+			# Béla Miklós de Dalnók CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+}
+
+country_event = { # Mendsdorff-Pouilly decides on the cabinet
+	id = ausgleich.184
+	title = ausgleich.184.t
+	desc = ausgleich.184.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		has_idea = AUS_Albert_Mensdorff_Pouilly_hog_ade 
+		NOT = { has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.184.a
+
+		ai_chance = { factor = 20 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Julius Raab Eco
+			# Robert Winterstein Int
+			# Eduard von Böhm-Ermolli CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.184.b
+
+		ai_chance = { factor = 70 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Albert Mendsdorff-Pouilly Eco
+			# Alois Schönburg-Hartenstein Int
+			# Eugen von Habsburg-Lothringen CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.184.c
+
+		ai_chance = { factor = 10 }
+
+		#add_ideas = { 
+			# Pál Teleki de Szek For
+			# Felix zu Schwarzenberg Eco
+			# Ferenc Keresztes-Fischer Int
+			# Alois Schönburg-Hartenstein CoS
+			# Béla Miklós de Dalnók CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+}
+
+country_event = { # Bárdossy decides on the cabinet
+	id = ausgleich.185
+	title = ausgleich.185.t
+	desc = ausgleich.185.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		# has_idea = Laszlo Bardossy hog
+		NOT = { has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.185.a
+
+		ai_chance = { factor = 20 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Julius Raab Eco
+			# Robert Winterstein Int
+			# Eduard von Böhm-Ermolli CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.185.b
+
+		ai_chance = { factor = 10 }
+
+		#add_ideas = { 
+			# O. Löwenfels-Aarengau For
+			# Albert Mendsdorff-Pouilly Eco
+			# Alois Schönburg-Hartenstein Int
+			# Eugen von Habsburg-Lothringen CoS
+			# Eduard von Böhm-Ermolli CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+
+	option = {
+		name = ausgleich.185.c
+
+		ai_chance = { factor = 70 }
+
+		#add_ideas = { 
+			# Pál Teleki de Szek For
+			# Felix zu Schwarzenberg Eco
+			# Ferenc Keresztes-Fischer Int
+			# Alois Schönburg-Hartenstein CoS
+			# Béla Miklós de Dalnók CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+}
+
+country_event = { # Now we must choose our Prime Minister
+	id = ausgleich.186
+	title = ausgleich.186.t
+	desc = ausgleich.186.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = DNF
+		has_global_flag = DF_Cabinet_yes
+		NOT = { has_global_flag = aus_175_a }
+	}
+	
+	option = {
+		name = ausgleich.186.a
+
+		ai_chance = { factor = 40 }
+
+		add_ideas = { 
+			AUS_Karl_Renner_hog_sco
+		}
+
+		DNF = { country_event = { id = ausgleich.188 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.186.b
+
+		ai_chance = { factor = 30 }
+
+		#add_ideas = { 
+			#Zoltán Tildy HOG 
+		#}
+
+		DNF = { country_event = { id = ausgleich.188 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.186.c
+
+		ai_chance = { factor = 20 }
+
+		#add_ideas = { 
+			#Josef Bíly HOG 
+		#}
+
+		DNF = { country_event = { id = ausgleich.188 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.186.e # More Options
+
+		ai_chance = { factor = 20 }
+
+		DNF = { country_event = { id = ausgleich.187 days = 0 }}
+	}
+}
+
+country_event = { # Now we must choose our Prime Minister
+	id = ausgleich.187
+	title = ausgleich.187.t
+	desc = ausgleich.187.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.187.a
+
+		ai_chance = { factor = 40 }
+
+		#add_ideas = { 
+			#Jakub Bojko HOG 
+		#}
+
+		DNF = { country_event = { id = ausgleich.188 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.187.b
+
+		ai_chance = { factor = 40 }
+
+		#add_ideas = { 
+			#Vavro Srobar HOG 
+		#}
+
+		DNF = { country_event = { id = ausgleich.188 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.187.c
+
+		ai_chance = { factor = 20 }
+
+		DNF = { country_event = { id = ausgleich.186 days = 0 }}
+	}
+}
+
+country_event = { # Now we must choose our Prime Minister
+	id = ausgleich.188
+	title = ausgleich.188.t
+	desc = ausgleich.188.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.188.a
+
+		ai_chance = { factor = 40 }
+
+		add_popularity = {
+            ideology = market_liberalist
+            popularity = 0.2
+        }
+
+        set_politics = { ruling_party = market_liberalist elections_allowed = no }
+
+        hidden_effect = { retire_country_leader = yes }
+
+        create_country_leader = {
+			name = "S.K.u.K.M. Otto I von Habsburg"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = { }
+		}
+
+		#add_ideas = {
+			# Ján Masaryk For
+			# Albert Mendsdorff-Pouilly Eco
+			# Bohumil Nemec Int
+			# Wilhelm Zehner CoS
+			# Ferenc Szombathelyi CoAarm
+			# Janko Vukovic CoN
+			# Godwin Brumowski CoAir
+		#}
+	}
+}
+
+####################################################
+#A-H/Danubian Federation Chose Sides
+####################################################
+
+country_event = { # Choosing the sides
+	id = ausgleich.189
+	title = ausgleich.189.t
+	desc = ausgleich.189.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		has_country_flag = AUS_HUN_For
+		is_puppet = no
+		has_war = no
+		NOT = { 
+			is_in_faction_with = CAN
+			is_in_faction_with = GER
+			is_in_faction_with = RUS
+			is_in_faction_with = JAP
+			is_in_faction_with = FRA
+		}
+	}
+
+	mean_time_to_happen = { days = 200 }
+	
+	option = {
+		name = ausgleich.189.a # Canada
+
+		trigger = {
+			country_exists = CAN
+			CAN = { is_puppet = no }
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+
+		ai_chance = { factor = 20 }
+
+		CAN = { country_event = { id = ausgleich.194 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.189.b # Germany
+
+		trigger = {
+			country_exists = GER
+			GER = { is_puppet = no }
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+
+		ai_chance = { factor = 45 }
+
+		AHE = { country_event = { id = ausgleich.197 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.189.c # France
+
+		trigger = {
+			country_exists = FRA
+			FRA = { is_puppet = no }
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+
+		ai_chance = { factor = 15 }
+
+		AHE = { country_event = { id = ausgleich.203 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.189.e # New Bloc
+
+		trigger = {
+			country_exists = RUS
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+			OR = {
+				AND = {
+					POL = { is_puppet = no }
+					NOT = { is_in_faction_with = POL }
+				}
+				AND = {
+					RUS = { is_puppet = no }
+					RUS = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 583
+						controls_state = 566
+						controls_state = 562
+					}
+					NOT = {
+						RUS = {
+							is_in_faction_with = CAN
+							is_in_faction_with = NFA
+							is_in_faction_with = GER
+							is_in_faction_with = JAP
+							is_in_faction_with = CHI
+						}
+					}
+				}
+			}
+		}
+
+		ai_chance = { factor = 20 }
+
+		AHE = { country_event = { id = ausgleich.207 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.189.f
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = 200
+	}
+}
+
+country_event = { # Choosing the sides
+	id = ausgleich.190
+	title = ausgleich.190.t
+	desc = ausgleich.190.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = DNF
+		has_country_flag = DNF_For
+		is_puppet = no
+		has_war = no
+		NOT = { 
+			is_in_faction_with = CAN
+			is_in_faction_with = GER
+			is_in_faction_with = RUS
+			is_in_faction_with = JAP
+			is_in_faction_with = FRA
+		}
+	}
+
+	mean_time_to_happen = { days = 200 }
+	
+	option = {
+		name = ausgleich.190.a # Canada
+
+		trigger = {
+			country_exists = CAN
+			CAN = { is_puppet = no }
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+
+		ai_chance = { factor = 20 }
+
+		CAN = { country_event = { id = ausgleich.191 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.190.b # Germany
+
+		trigger = {
+			country_exists = GER
+			GER = { is_puppet = no }
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+
+		ai_chance = { factor = 45 }
+
+		DNF = { country_event = { id = ausgleich.199 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.190.c # France
+
+		trigger = {
+			country_exists = FRA
+			FRA = { is_puppet = no }
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+
+		ai_chance = { factor = 15 }
+
+		DNF = { country_event = { id = ausgleich.205 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.190.e # New Bloc
+
+		trigger = {
+			country_exists = RUS
+			NOT = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+			OR = {
+				AND = {
+					POL = { is_puppet = no }
+					NOT = { is_in_faction_with = POL }
+				}
+				AND = {
+					RUS = { is_puppet = no }
+					RUS = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 583
+						controls_state = 566
+						controls_state = 562
+					}
+					NOT = {
+						RUS = {
+							is_in_faction_with = CAN
+							is_in_faction_with = NFA
+							is_in_faction_with = GER
+							is_in_faction_with = JAP
+							is_in_faction_with = CHI
+						}
+					}
+				}
+			}
+		}
+
+		ai_chance = { factor = 20 }
+
+		DNF = { country_event = { id = ausgleich.208 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.189.f
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = 200
+	}
+}
 
 ####################################################
 #A-H/Danubian Federation joins the Entente
 ####################################################
 
+country_event = { # Danubian Federation wants to join the Entente
+	id = ausgleich.191
+	title = ausgleich.191.t
+	desc = ausgleich.191.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.191.a # YES
+
+		ai_chance = { factor = 94 }
+
+		CAN = { add_to_faction = DNF }
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_CAN } # 100
+		add_political_power = 60
+		DNF = { country_event = { id = ausgleich.193 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.191.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_CAN } # -100
+	}
+
+	option = {
+		name = ausgleich.191.c # NAP ?
+
+		ai_chance = { factor = 1 }
+
+		DNF = { country_event = { id = ausgleich.196 days = 1 }}
+		add_political_power = -20
+	}
+}
+
+country_event = { # We join the Entente Cordiale
+	id = ausgleich.192
+	title = ausgleich.192.t
+	desc = ausgleich.192.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.192.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = AHE_ally_CAN_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = AHE_ally_CAN_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # We join the Entente Cordiale
+	id = ausgleich.193
+	title = ausgleich.193.t
+	desc = ausgleich.193.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.193.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = AHE_ally_CAN_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = AHE_ally_CAN_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # Danubian Federation wants to join the Entente
+	id = ausgleich.194
+	title = ausgleich.194.t
+	desc = ausgleich.194.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.194.a # YES
+
+		ai_chance = { factor = 94 }
+
+		CAN = { add_to_faction = AHE }
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_CAN } # 100
+		add_political_power = 60
+		AHE = { country_event = { id = ausgleich.192 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.194.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_CAN } # -100
+	}
+
+	option = {
+		name = ausgleich.194.c # NAP ?
+
+		ai_chance = { factor = 1 }
+
+		AHE = { country_event = { id = ausgleich.195 days = 1 }}
+		add_political_power = -20
+	}
+}
+
+country_event = { # Canadians propose a non-aggression pact
+	id = ausgleich.195
+	title = ausgleich.195.t
+	desc = ausgleich.195.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.195.a # YES
+
+		ai_chance = { factor = 75 }
+
+		add_opinion_modifier = { target = CAN modifier = AHE_nap_CAN } # 20
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+	}
+
+	option = {
+		name = ausgleich.195.b # NO
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = -20
+	}
+}
+
+country_event = { # Canadians propose a non-aggression pact
+	id = ausgleich.196
+	title = ausgleich.196.t
+	desc = ausgleich.196.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.196.a # YES
+
+		ai_chance = { factor = 75 }
+
+		add_opinion_modifier = { target = CAN modifier = DNF_nap_CAN } # 20
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+	}
+
+	option = {
+		name = ausgleich.196.b # NO
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = -20
+	}
+}
+
 ################################################################
 #A-H/Danubian Federation joins the Mitteleuropa
 ################################################################
+
+country_event = { # Austria-Hungary wants to join the German bloc
+	id = ausgleich.197
+	title = ausgleich.197.t
+	desc = ausgleich.197.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.197.a # YES
+
+		ai_chance = { factor = 94 }
+
+		GER = { add_to_faction = AHE }
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_GER } # 100
+		add_political_power = 60
+		AHE = { country_event = { id = ausgleich.198 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.197.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_GER } # -100
+	}
+
+	option = {
+		name = ausgleich.197.c # NAP ?
+
+		ai_chance = { factor = 1 }
+
+		AHE = { country_event = { id = ausgleich.200 days = 1 }}
+		add_political_power = -20
+	}
+}
+
+country_event = { # We join the German bloc
+	id = ausgleich.198
+	title = ausgleich.198.t
+	desc = ausgleich.198.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.199.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = AHE_ally_GER_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = AHE_ally_GER_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+	}
+}
+
+country_event = { # Danubian Federation wants to join the German bloc
+	id = ausgleich.199
+	title = ausgleich.199.t
+	desc = ausgleich.199.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.199.a # YES
+
+		ai_chance = { factor = 94 }
+
+		GER = { add_to_faction = DNF }
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_GER } # 100
+		add_political_power = 60
+		DNF = { country_event = { id = ausgleich.202 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.199.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_GER } # -100
+	}
+
+	option = {
+		name = ausgleich.199.c # NAP ?
+
+		ai_chance = { factor = 1 }
+
+		DNF = { country_event = { id = ausgleich.201 days = 1 }}
+		add_political_power = -20
+	}
+}
+
+country_event = { # Germans propose a non-aggression pact
+	id = ausgleich.200
+	title = ausgleich.200.t
+	desc = ausgleich.200.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.200.a # YES
+
+		ai_chance = { factor = 75 }
+
+		add_opinion_modifier = { target = GER modifier = AHE_nap_GER } # 20
+		diplomatic_relation = { country = GER relation = non_aggression_pact }
+	}
+
+	option = {
+		name = ausgleich.200.b # NO
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = -20
+	}
+}
+
+country_event = { # Germans propose a non-aggression pact
+	id = ausgleich.201
+	title = ausgleich.201.t
+	desc = ausgleich.201.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.201.a # YES
+
+		ai_chance = { factor = 75 }
+
+		add_opinion_modifier = { target = GER modifier = DNF_nap_GER } # 20
+		diplomatic_relation = { country = GER relation = non_aggression_pact }
+	}
+
+	option = {
+		name = ausgleich.201.b # NO
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = -20
+	}
+}
+
+country_event = { # We join the German bloc
+	id = ausgleich.202
+	title = ausgleich.202.t
+	desc = ausgleich.202.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.202.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = FRA modifier = DNF_ally_GER_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = DNF_ally_GER_INT } # -150
+		add_opinion_modifier = { target = ENG modifier = embargo }
+		add_opinion_modifier = { target = FRA modifier = embargo }
+	}
+}
 
 ##############################################################
 #A-H/Danubian Federation wants to join Syndicalist bloc
 ##############################################################
 
+country_event = { # Austria-Hungary wants to join the Syndicalists
+	id = ausgleich.203
+	title = ausgleich.203.t
+	desc = ausgleich.203.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.203.a # YES
+
+		ai_chance = { factor = 95 }
+
+		FRA = { add_to_faction = AHE }
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_FRA } # 100
+		add_political_power = 140
+		AHE = { country_event = { id = ausgleich.204 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.203.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_FRA } # -100
+	}
+}
+
+country_event = { # We join the syndicalist bloc
+	id = ausgleich.204
+	title = ausgleich.204.t
+	desc = ausgleich.204.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.204.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = CAN modifier = AHE_ally_FRA_INT } # -150
+		add_opinion_modifier = { target = GER modifier = AHE_ally_FRA_INT } # -150
+		add_opinion_modifier = { target = CAN modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # Danubian Federation wants to join the Syndicalists
+	id = ausgleich.205
+	title = ausgleich.205.t
+	desc = ausgleich.205.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.205.a # YES
+
+		ai_chance = { factor = 95 }
+
+		FRA = { add_to_faction = DNF }
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_FRA } # 100
+		add_political_power = 140
+		DNF = { country_event = { id = ausgleich.206 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.205.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_FRA } # -100
+	}
+}
+
+country_event = { # We join the syndicalist bloc
+	id = ausgleich.206
+	title = ausgleich.206.t
+	desc = ausgleich.206.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.206.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = CAN modifier = DNF_ally_FRA_INT } # -150
+		add_opinion_modifier = { target = GER modifier = DNF_ally_FRA_INT } # -150
+		add_opinion_modifier = { target = CAN modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
 ##############################################################
 #A-H/Danubian Federation forms new bloc with Russia or Poland ?
 ##############################################################
+
+country_event = { # Where lays the Austro-Hungarian future?
+	id = ausgleich.207
+	title = ausgleich.207.t
+	desc = ausgleich.207.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.207.a # Poland
+
+		ai_chance = { factor = 30 }
+
+		POL = { country_event = { id = ausgleich.213 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.207.b # Russia
+
+		ai_chance = { factor = 70 }
+
+		RUS = { country_event = { id = ausgleich.209 days = 1 }}
+	}
+}
+
+country_event = { # Where lays future of the Danubian Federation?
+	id = ausgleich.208
+	title = ausgleich.208.t
+	desc = ausgleich.208.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.208.a # Poland
+
+		ai_chance = { factor = 10 }
+
+		POL = { country_event = { id = ausgleich.215 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.208.b # Russia
+
+		ai_chance = { factor = 90 }
+
+		RUS = { country_event = { id = ausgleich.211 days = 1 }}
+	}
+}
 
 ##############################################################
 #A-H/Danubian Federation forms new bloc with Russia
 ##############################################################
 
+country_event = { # Austria-Hungary wants to form new block
+	id = ausgleich.209
+	title = ausgleich.209.t
+	desc = ausgleich.209.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.209.a # YES
+
+		ai_chance = { factor = 95 }
+
+		RUS = { add_to_faction = AHE }
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_RUS } # 100
+		add_political_power = 140
+		AHE = { country_event = { id = ausgleich.210 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.209.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_RUS } # -100
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.210
+	title = ausgleich.210.t
+	desc = ausgleich.210.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.210.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_AHE } # 200
+		add_opinion_modifier = { target = FRA modifier = AHE_ally_RUS_FRA } # -150
+		add_opinion_modifier = { target = GER modifier = AHE_ally_RUS_GER } # -70
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # Danubian Federation wants to form new block
+	id = ausgleich.211
+	title = ausgleich.211.t
+	desc = ausgleich.211.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.211.a # YES
+
+		ai_chance = { factor = 95 }
+
+		RUS = { add_to_faction = DNF }
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_RUS } # 100
+		add_political_power = 140
+		DNF = { country_event = { id = ausgleich.210 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.211.b # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_RUS } # -100
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.212
+	title = ausgleich.212.t
+	desc = ausgleich.212.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.212.a
+	
+		add_political_power = 60
+		add_opinion_modifier = { target = RUS modifier = RUS_ally_DNF } # 200
+		add_opinion_modifier = { target = FRA modifier = DNF_ally_RUS_FRA } # -150
+		add_opinion_modifier = { target = GER modifier = DNF_ally_RUS_GER } # -70
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
 ##############################################################
 #A-H/Danubian Federation forms new bloc with Poland
 ##############################################################
+
+country_event = { # Austria-Hungary wants to form new block
+	id = ausgleich.213
+	title = ausgleich.213.t
+	desc = ausgleich.213.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.213.a # YES
+
+		ai_chance = { factor = 30 }
+
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_POL } # 100
+		add_political_power = 140
+		AHE = { country_event = { id = ausgleich.214 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.213.b # Exchange Galicia
+
+		trigger = {
+			OR = {
+				AND = {
+					AHE = { 
+						controls_state = 88
+						controls_state = 91
+					}
+					NOT = {
+						country_exists = GAL
+					}	
+				}
+				AND = {
+					country_exists = GAL
+					NOT = { GAL = { is_puppet_of = POL }}
+					GAL = {
+						controls_state = 88
+						controls_state = 91
+					}
+				}
+			}
+		}
+
+		ai_chance = { factor = 90 }
+
+		every_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		AHE = { country_event = { id = ausgleich.219 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.213.c # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_POL } # -100
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.214
+	title = ausgleich.214.t
+	desc = ausgleich.214.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.214.a
+	
+		add_political_power = 60
+
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+
+			create_faction = "Central Powers"
+		}
+
+		AHE = { add_to_faction = POL }
+		add_opinion_modifier = { target = POL modifier = POL_ally_AHE } # 200
+		add_opinion_modifier = { target = FRA modifier = AHE_ally_POL_FRA } # -150
+		add_opinion_modifier = { target = GER modifier = AHE_ally_POL_GER } # -70
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # Danubian Federation wants to form new block
+	id = ausgleich.215
+	title = ausgleich.215.t
+	desc = ausgleich.215.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.215.a # YES
+
+		ai_chance = { factor = 95 }
+
+		POL = { add_to_faction = DNF }
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_POL } # 100
+		add_political_power = 140
+		DNF = { country_event = { id = ausgleich.216 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.213.b # Exchange Galicia
+
+		trigger = {
+			OR = {
+				AND = {
+					DNF = { 
+						controls_state = 88
+						controls_state = 91
+					}
+					NOT = {
+						country_exists = GAL
+					}	
+				}
+				AND = {
+					country_exists = GAL
+					NOT = { GAL = { is_puppet_of = POL }}
+					GAL = {
+						controls_state = 88
+						controls_state = 91
+					}
+				}
+			}
+		}
+
+		ai_chance = { factor = 90 }
+
+		every_state = {
+			limit = { is_core_of = GAL }
+
+			add_core_of = POL
+		}
+
+		DNF = { country_event = { id = ausgleich.217 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.215.c # NO
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_POL } # -100
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.216
+	title = ausgleich.216.t
+	desc = ausgleich.216.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.216.a
+	
+		add_political_power = 60
+
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+
+			create_faction = "Central Powers"
+		}
+
+		add_opinion_modifier = { target = POL modifier = POL_ally_DNF } # 200
+		add_opinion_modifier = { target = FRA modifier = DNF_ally_POL_FRA } # -150
+		add_opinion_modifier = { target = GER modifier = DNF_ally_POL_GER } # -70
+		add_opinion_modifier = { target = FRA modifier = embargo }
+		add_opinion_modifier = { target = GER modifier = embargo }
+	}
+}
+
+country_event = { # The Polish Answer
+	id = ausgleich.217
+	title = ausgleich.217.t
+	desc = ausgleich.217.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.217.a # YES
+
+		ai_chance = { factor = 80 }
+
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+
+			create_faction = "Central Powers"
+		}
+
+		DNF = { add_to_faction = POL }
+
+		add_opinion_modifier = { target = POL modifier = DNF_ally_POL } # 200
+
+		POL = {
+			transfer_state = 88
+			transfer_state = 91
+			transfer_state = 89
+			transfer_state = 80
+		}
+
+		DNF = {
+			remove_state_core = 88
+			remove_state_core = 91
+			remove_state_core = 89
+			remove_state_core = 80
+		}
+
+		POL = { country_event = { id = ausgleich.218 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.217.b # NO
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = DNF modifier = DNF_no_ally_POL } # -200
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.218
+	title = ausgleich.218.t
+	desc = ausgleich.218.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.218.a
+	
+		add_political_power = 100
+		add_opinion_modifier = { target = DNF modifier = DNF_ally_POL } # 200
+	}
+}
+
+country_event = { # The Polish Answer
+	id = ausgleich.219
+	title = ausgleich.219.t
+	desc = ausgleich.219.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.219.a # YES
+
+		ai_chance = { factor = 80 }
+
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+
+			create_faction = "Central Powers"
+		}
+
+		AHE = { add_to_faction = POL }
+
+		add_opinion_modifier = { target = POL modifier = AHE_ally_POL } # 200
+
+		POL = {
+			transfer_state = 88
+			transfer_state = 91
+			transfer_state = 89
+			transfer_state = 80
+		}
+
+		AHE = {
+			remove_state_core = 88
+			remove_state_core = 91
+			remove_state_core = 89
+			remove_state_core = 80
+		}
+
+		POL = { country_event = { id = ausgleich.218 days = 1 }}
+	}
+
+	option = {
+		name = ausgleich.219.b # NO
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = AHE modifier = AHE_no_ally_POL } # -200
+	}
+}
+
+country_event = { # New power in Europe
+	id = ausgleich.220
+	title = ausgleich.220.t
+	desc = ausgleich.220.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.220.a
+	
+		add_political_power = 100
+		add_opinion_modifier = { target = AHE modifier = AHE_ally_POL } # 200
+	}
+}
 
 #########################################################################
 #  A-H Civil War - Russian Intervention
 #########################################################################
 
+country_event = { # Civil War in Austria-Hungary!
+	id = ausgleich.221
+	title = ausgleich.221.t
+	desc = ausgleich.221.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = RUS
+		AUS = { has_war_with = HUN }
+		NOT = {
+			RUS = {
+				has_war_With = AUS
+				has_war_With = HUN
+				has_country_flag = RUS_ISO
+				has_global_flag = RUS_ISO
+			}
+			country_exists = SOV
+		}
+		OR = {
+			AND = {
+				NOT = {
+					country_exists = UKR
+					RUS = { controls_state = 202 }
+				}
+			}
+			AND = {
+				country_exists = UKR
+				UKR = { controls_state = 202 }
+				OR = {
+					UKR = { is_in_faction_with = RUS }
+					UKR = { is_puppet_of = RUS }
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ausgleich.221.a # Support Austria
+
+		ai_chance = { factor = 35 }
+
+		add_opinion_modifier = { target = AUS modifier = RUS_supp_AUS_AUS } # 20
+		add_opinion_modifier = { target = HUN modifier = RUS_supp_AUS_HUN } # -20
+		add_opinion_modifier = { target = FRA modifier = RUS_supp_AUS } # -5
+		add_opinion_modifier = { target = ENG modifier = RUS_supp_AUS } # -5
+		add_opinion_modifier = { target = ITA modifier = RUS_supp_AUS } # -5
+		add_manpower = -10000
+		AUS = { country_event = { id = ausgleich.222 }}
+	}
+
+	option = {
+		name = ausgleich.221.b # Support Hungary
+
+		ai_chance = { factor = 25 }
+
+		add_opinion_modifier = { target = AUS modifier = RUS_supp_HUN_AUS } # -20
+		add_opinion_modifier = { target = HUN modifier = RUS_supp_HUN_HUN } # 20
+		add_opinion_modifier = { target = FRA modifier = RUS_supp_HUN } # -5
+		add_opinion_modifier = { target = ENG modifier = RUS_supp_HUN } # -5
+		add_opinion_modifier = { target = ITA modifier = RUS_supp_HUN } # -5
+		add_manpower = -10000
+		HUN = { country_event = { id = ausgleich.223 }}
+	}
+
+	option = {
+		name = ausgleich.221.c # No Intervention
+
+		ai_chance = { factor = 40 }
+
+		add_opinion_modifier = { target = AUS modifier = RUS_no_intervention_AUS } # -20
+		add_opinion_modifier = { target = HUN modifier = RUS_no_intervention_HUN } # 20
+		add_political_power = -40
+	}
+}
+
+country_event = { # Russian Aid Arrives!
+	id = ausgleich.222
+	title = ausgleich.222.t
+	desc = ausgleich.222.d
+	
+	is_triggered_only = yes
+
+	immediate = { set_global_flag = russian_vol_austrian_cw }
+	
+	option = {
+		name = ausgleich.222.a
+
+		add_manpower = 10000
+
+		RUS = {
+			send_equipment = {
+            	target = AUS
+            	type = infantry_equipment
+            	amount = 1500
+        	}
+        }	
+
+		load_oob = "AUS_russian_aid"
+	}
+}
+
+country_event = { # Russian Aid Arrives!
+	id = ausgleich.223
+	title = ausgleich.223.t
+	desc = ausgleich.223.d
+	
+	is_triggered_only = yes
+
+	immediate = { set_global_flag = russian_vol_austrian_cw }
+	
+	option = {
+		name = ausgleich.223.a
+
+		add_manpower = 10000
+
+		RUS = {
+			send_equipment = {
+            	target = HUN
+            	type = infantry_equipment
+            	amount = 1500
+        	}
+        }	
+
+		load_oob = "HUN_russian_aid"
+	}
+}
+
 #########################################################################
 #  Austria-Hungary Civil War ends - An important experience (Russia)
 #########################################################################
 
+country_event = { # The End of the Austro-Hungarian civil war
+	id = ausgleich.224
+	title = ausgleich.224.t
+	desc = ausgleich.224.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = RUS
+		has_global_flag = russian_vol_austrian_cw
+		NOT = { AUS = { has_war_with = HUN }}
+		date > 1936.6.18
+	}
+	
+	option = {
+		name = ausgleich.224.a
+
+		add_manpower = 5000
+		add_political_power = 20
+
+		load_oob = "RUS_AusCW_vol_return"
+	}
+}
+
 #### Terror events in civil war
 
+country_event = { # Austrian terror
+	id = ausgleich.225
+	title = ausgleich.225.t
+	desc = ausgleich.225.d
+	
+	fire_only_once = no
+	
+	trigger = { 
+		tag = AUS
+		has_war_with = HUN
+	}
+
+	mean_time_to_happen = {
+		days = 50
+	}
+	
+	option = {
+		name = ausgleich.225.a
+
+		add_political_power = -20
+	}
+}
+
+country_event = { # Hungarian terror
+	id = ausgleich.226
+	title = ausgleich.226.t
+	desc = ausgleich.226.d
+	
+	fire_only_once = no
+	
+	trigger = { 
+		tag = HUN
+		has_war_with = AUS
+	}
+
+	mean_time_to_happen = {
+		days = 50
+	}
+	
+	option = {
+		name = ausgleich.226.a
+
+		add_political_power = -20
+	}
+}
+
 #### 1947/1957 Ausgleich
+
+country_event = { # 1947 Ausgleich
+	id = ausgleich.227
+	title = ausgleich.227.t
+	desc = ausgleich.227.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		is_puppet = no
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		date > 1947.2.15
+	}
+	
+	option = {
+		name = ausgleich.227.a
+
+		ai_chance = { factor = 75 }
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = ausgleich.227.b
+
+		ai_chance = { factor = 24 }
+
+		add_political_power = -100
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.1
+        }
+	}
+
+	option = {
+		name = ausgleich.227.c
+
+		ai_chance = { factor = 1 }
+
+		DNF = { transfer_state = 4 }
+
+		every_state = { 
+			limit = { is_core_of = AHE } 
+
+			add_core_of = DNF
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AHE } 
+
+			add_claim_by = DNF
+		}
+
+		DNF = { change_tag_from = AUS }
+
+		DNF = { annex_country = { target = AHE transfer_troops = yes }}
+
+		DNF = { country_event = { id = ausgleich.180 days = 1 }}
+
+		add_political_power = -300	
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Otto I von Habsburg-Lothringen"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+	}
+}
+
+country_event = { # 1957 Ausgleich
+	id = ausgleich.228
+	title = ausgleich.228.t
+	desc = ausgleich.228.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AHE
+		is_puppet = no
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		date > 1957.2.15
+	}
+	
+	option = {
+		name = ausgleich.228.a
+
+		ai_chance = { factor = 75 }
+
+		add_political_power = -60
+	}
+
+	option = {
+		name = ausgleich.228.b
+
+		ai_chance = { factor = 24 }
+
+		add_political_power = -100
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.1
+        }
+	}
+
+	option = {
+		name = ausgleich.228.c
+
+		ai_chance = { factor = 1 }
+
+		DNF = { transfer_state = 4 }
+
+		every_state = { 
+			limit = { is_core_of = AHE } 
+
+			add_core_of = DNF
+		}
+
+		every_state = { 
+			limit = { is_claimed_by = AHE } 
+
+			add_claim_by = DNF
+		}
+
+		DNF = { change_tag_from = AUS }
+
+		AHE = { annex_country = { target = AHE transfer_troops = yes }}
+
+		DNF = { country_event = { id = ausgleich.180 days = 1 }}
+
+		add_political_power = -300	
+
+		add_popularity = {
+            ideology = social_conservatist
+            popularity = 0.2
+        }
+
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Otto I von Habsburg-Lothringen"
+			desc = "POLITICS_OTTO_DESC"
+			picture = "Portrait_Austria_Otto_I_2.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = { }
+		}
+	}
+}

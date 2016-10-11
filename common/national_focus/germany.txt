@@ -581,7 +581,7 @@ focus_tree = {
 		id = GER_political_1
 		icon = GFX_goal_anschluss
 		prerequisite = {  }
-		x = 20
+		x = 23
 		y = 0
 		cost = 10
 		completion_reward = {
@@ -909,7 +909,7 @@ focus_tree = {
 		icon = GFX_goal_generic_more_territorial_claims
 		available = { date > 1941.1.1 }
 		prerequisite = { focus = GER_political_1 }
-		x = 22
+		x = 23
 		y = 1
 		cost = 1
 
@@ -1241,5 +1241,101 @@ focus = {
 			
 		
 	}
+	
+	focus = {
+		id = GER_foreign_aid
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GER_political_1 }
+		x = 36
+		y = 1
+		cost = 10
 
+		completion_reward = {	
+		every_country = { limit = { is_puppet_of = GER } random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}  }
+			
+		}
+			
+		
+	}
+	focus = {
+		id = GER_IRE_deal
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = GER_foreign_aid }
+		available = { 
+		IRE = { exists = yes }
+		NOT = { 
+		has_war_with = FRA 
+		has_war_with = SOV 
+		has_war_with = IRE 
+		has_war_with = FRA 
+						}
+		OR = {
+		has_country_flag = ENG_GER_protection
+		is_in_faction_with = IRE
+						
+						}
+		IRE = {	
+		NOT = { is_in_faction_with = FRA is_in_faction_with = ENG }
+						}
+								}
+		x = 35
+		y = 2
+		cost = 6
+
+		completion_reward = {	
+			country_event = { id = gerfor.43 }
+			
+		}
+		}
+		focus = {
+		id = GER_DKB_deal
+		icon = GFX_goal_generic_military_deal
+		prerequisite = { focus = GER_foreign_aid }
+		available = {  
+			is_in_faction_with = DKB 
+			NOT = { has_war_with = RUS has_war_with = SOV has_war_with = JAP  }
+						
+						}
+		x = 37
+		y = 2
+		cost = 6
+
+		completion_reward = {	
+			country_event = { id = gerdom.90 }
+			
+		}	
+		
+	}
+	
+			
+							
 }

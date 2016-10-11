@@ -126,3 +126,382 @@ news_event = {
 
 }
 
+
+################################################################################
+# GREAT ARABIAN REVOLTS 1944-1946
+################################################################################
+
+### great arabian revolt 1944
+
+news_event = {
+	id = ottoman.8
+	title = ottoman.8.t
+	desc = ottoman.8.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		controls_state = 554
+		controls_state = 455
+		controls_state = 291
+		SYR = { exists = no } 
+		IRQ = { exists = no }
+		date > 1944.6.1
+	}
+	
+	mean_time_to_happen = {
+		days = 40
+	}
+	
+	option = {
+		name = ottoman.8.a
+
+		add_political_power = -200
+		add_national_unity = -0.05		
+		SYR = {
+			transfer_state = 455
+			add_state_core = 455
+			add_state_core = 454
+			add_state_core = 553
+			add_state_core = 554
+			add_state_core = 677
+			
+			hidden_effect = { 
+				load_oob = OTT_syr
+				set_technology = { infantry_weapons = 1 }
+				set_technology = { basic_machine_tools = 1 }
+				set_politics = { ruling_party = social_liberalist elections_allowed = no }
+			}
+		}
+		
+		IRQ = {
+			transfer_state = 291
+			add_state_core = 291
+			add_state_core = 656
+			add_state_core = 675
+			add_state_core = 812
+			add_state_core = 680
+			add_state_core = 676
+			
+			hidden_effect = { 
+				load_oob = OTT_irq
+				set_technology = { infantry_weapons = 1 }
+				set_technology = { basic_machine_tools = 1 }
+				set_politics = { ruling_party = social_liberalist elections_allowed = no }
+			}
+		}
+
+		SYR = { declare_war_on = { target = OTT type = annex_everything	} }
+		IRQ = { declare_war_on = { target = OTT type = annex_everything	} }
+		add_timed_idea = { idea = ott_arab_revolt days = 365 }
+		set_country_flag = arab_revolt
+	}
+}
+
+
+### second arabian revolt
+
+news_event = {
+	id = ottoman.9
+	title = ottoman.9.t
+	desc = ottoman.9.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		controls_state = 554
+		controls_state = 455
+		controls_state = 291
+		SYR = { exists = no } 
+		IRQ = { exists = no }
+		date > 1946.6.1
+	}
+	
+	mean_time_to_happen = {
+		days = 40
+	}
+	
+	option = {
+		name = ottoman.9.a
+
+		add_political_power = -200
+		add_national_unity = -0.05
+		
+		SYR = {
+			transfer_state = 455
+			
+			hidden_effect = { 
+				load_oob = OTT_syr
+				set_technology = { infantry_weapons = 1 }
+				set_technology = { basic_machine_tools = 1 }
+			}
+		}
+		
+		IRQ = {
+			transfer_state = 291
+			
+			hidden_effect = { 
+				load_oob = OTT_irq
+				set_technology = { infantry_weapons = 1 }
+				set_technology = { basic_machine_tools = 1 }
+			}
+		}
+
+		SYR = { declare_war_on = { target = OTT type = annex_everything	} }
+		IRQ = { declare_war_on = { target = OTT type = annex_everything	} }
+		add_timed_idea = { idea = ott_arab_revolt days = 365 }
+		set_country_flag = arab_revolt
+	}
+}
+
+
+### arabian revolt crushed
+
+country_event = {
+	id = ottoman.10
+	title = ottoman.10.t
+	desc = ottoman.10.d
+	
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		has_country_flag = arab_revolt
+		SYR = { exists = no } 
+		IRQ = { exists = no }		
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = ottoman.10.a
+			add_political_power = 100
+			clr_country_flag = arab_revolt
+			remove_ideas = ott_arab_revolt
+	}
+}
+
+
+### arabian revolt successful
+
+country_event = {
+	id = ottoman.11
+	title = ottoman.11.t
+	desc = ottoman.11.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		has_country_flag = arab_revolt
+		OR = {
+			SYR = { controls_state = 455 }
+			IRQ = { controls_state = 291 }
+		}
+		NOT = { has_idea = ott_arab_revolt }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = ottoman.11.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = -400
+		annex_country = { target = SYR } ### TODO - this is a temporary fix to end war between ottoman puppets and revolters 
+		annex_country = { target = IRQ } 
+		
+		if = {
+			limit = {
+				ROOT = { owns_state = 455 }
+			}
+			SYR = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 454 }
+			}
+			SYR = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 553 }
+			}
+			SYR = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 554 }
+			}
+			SYR = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 677 }
+			}
+			SYR = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 291 }
+			}
+			IRQ = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 656 }
+			}
+			IRQ = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 675 }
+			}
+			IRQ = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 812 }
+			}
+			IRQ = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 680 }
+			}
+			IRQ = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 676 }
+			}
+			IRQ = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 754 }
+				SAU = { exists = yes }
+			}
+			SAU = { transfer_state = 754 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 453 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 453 }
+		}
+		SYR = { country_event = { id = ottoman.12 days = 3 } } #setup event
+		IRQ = { country_event = { id = ottoman.13 days = 3 } } #setup event
+		EGY = { country_event = { id = ottoman.14 days = 1 } } #our lands expand
+		SAU = { country_event = { id = ottoman.14 days = 1 } } #our lands expand
+		clr_country_flag = arab_revolt
+		remove_ideas = ott_arab_revolt
+		set_country_flag = ott_broken
+	}
+	
+	option = {
+		name = ottoman.11.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -600
+		add_national_unity = -0.05
+	}
+}
+
+country_event = { #setup event for syria
+	id = ottoman.12
+	title = ottoman.12.t
+	desc = ottoman.12.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.12.a
+
+		add_political_power = 100
+		add_popularity = {
+			ideology = authoritarian_democratist
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Yusuf al-'Azma"
+			#desc = ""
+			#picture = ""
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		}
+		remove_ideas_with_trait = head_of_government
+	
+	}
+}
+
+country_event = { #setup event for iraq
+	id = ottoman.13
+	title = ottoman.13.t
+	desc = ottoman.13.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.13.a
+
+		add_political_power = 100
+		add_popularity = {
+			ideology = authoritarian_democratist
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Jafar al-Askari"
+			#desc = ""
+			#picture = ""
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		}
+		remove_ideas_with_trait = head_of_government
+	
+	}
+}
+
+country_event = { #our lands expand (EGY and SAU get some lands after revolt)
+	id = ottoman.14
+	title = ottoman.14.t
+	desc = ottoman.14.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ottoman.14.a
+
+		add_political_power = 20
+	}
+}
+

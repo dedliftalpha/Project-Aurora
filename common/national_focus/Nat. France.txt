@@ -11,14 +11,238 @@ focus_tree = {
 	}
 	
 	default = no
+	
+### Political Focuses ###
+focus = {
+		id = NFA_restore_constitution
+		icon = GFX_goal_generic_neutrality_focus
+		mutually_exclusive = { focus = NFA_monarchy focus = NFA_empire }
+		x = 1
+		y = 0
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+focus = {
+		id = NFA_monarchy
+		icon = GFX_goal_anschluss
+		mutually_exclusive = { focus = NFA_empire focus = NFA_restore_constitution }
+		x = 4
+		y = 0
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+focus = {
+		id = NFA_empire
+		icon = GFX_goal_anschluss
+		mutually_exclusive = { focus = NFA_monarchy focus = NFA_restore_constitution }
+		x = 6
+		y = 0
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
 
+focus = {
+		id = NFA_Petain_president
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = NFA_restore_constitution }
+		mutually_exclusive = { focus = NFA_new_president }
+		x = 0
+		y = 1
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = {
+		id = NFA_new_president
+		available = {
+		}
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = NFA_restore_constitution }
+		mutually_exclusive = { focus = NFA_Petain_president }
+		x = 2
+		y = 1
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+		id = NFA_Judiciary_reform
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = NFA_Petain_president 
+						 focus = NFA_new_president
+						 focus = NFA_Constitutionalism
+						}
+		mutually_exclusive = { focus = NFA_judiciary_frenchmen }
+		x = 1
+		y = 2
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+		id = NFA_judiciary_frenchmen
+		icon = GFX_goal_support_fascism 
+		prerequisite = { focus = NFA_Petain_president 
+						 focus = NFA_new_president
+						 focus = NFA_Constitutionalism
+						}
+		mutually_exclusive = { focus = NFA_Judiciary_reform }
+		x = 3
+		y = 2
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+
+	focus = { 
+		id = NFA_extended_suffrage
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = NFA_judiciary_frenchmen 
+						 focus = NFA_Judiciary_reform
+						}
+		mutually_exclusive = { focus = NFA_limited_suffrage }
+		x = 1
+		y = 3
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+		id = NFA_limited_suffrage
+		icon = GFX_goal_support_fascism 
+		prerequisite = { focus = NFA_judiciary_frenchmen 
+						 focus = NFA_Judiciary_reform
+						}
+		mutually_exclusive = { focus = NFA_extended_suffrage }
+		x = 3
+		y = 3
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = {
+		id = NFA_Constitutionalism
+		available = {
+		}
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = NFA_monarchy 
+						 focus = NFA_empire
+						}
+		mutually_exclusive = { focus = NFA_Absolutism }
+		x = 4
+		y = 1
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = {
+		id = NFA_Absolutism
+		available = {
+		}
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = NFA_monarchy 
+						 focus = NFA_empire
+						}
+		mutually_exclusive = { focus = NFA_Constitutionalism }
+		x = 6
+		y = 1
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+	id = NFA_puppet_chamber 
+	available = { 
+		}
+	icon = GFX_goal_generic_forceful_treaty
+	prerequisite = { focus = NFA_Absolutism }
+	x = 6 
+	y = 2
+	cost = 10 
+	completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+	id = NFA_monarch_prestige 
+	available = { 
+		}
+	prerequisite = { focus = NFA_puppet_chamber }
+	icon = GFX_goal_generic_cavalry
+	x = 6
+	y = 3 
+	cost = 10 
+	completion_reward = {
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+	id = NFA_strenghthened_governement 
+	icon = GFX_goal_generic_demand_territory
+	available = { 
+		}
+	prerequisite = { focus = NFA_monarch_prestige
+					 focus = NFA_extended_suffrage 
+					 focus = NFA_limited_suffrage }
+	x = 3
+	y = 4
+	cost = 10 
+	completion_reward = {
+			army_experience = 5
+		}
+	}	
+	
+### Industry Focuses ###
+
+    focus = {
+		id = NFA_industrial_revival
+		icon = GFX_goal_generic_construct_civilian
+		available = {
+		}
+		x = 11
+		y = 0
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+		}
+	}
+	
 	focus = {
 		id = NFA_develop_ALG
 		icon = GFX_goal_generic_construct_infrastructure
 		available = {
 		}
-		x = 0
-		y = 0
+		prerequisite = { focus = NFA_industrial_revival }
+		x = 12
+		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -69,46 +293,11 @@ focus_tree = {
 		available = {
 		}
 		prerequisite = { focus = NFA_develop_ALG }
-		x = 0
-		y = 1
+		x = 12
+		y = 2
 		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
-
-		bypass = {
-			custom_trigger_tooltip = {
-				NOT = {
-					any_owned_state = {
-						free_building_slots = {
-							building = industrial_complex
-							size > 1
-							include_locked = yes
-						}	
-					}
-				}
-			}
-		}
-
-		complete_tooltip = {
-			every_state = {
-				limit = { has_state_flag = FRA_industrial_expansion_2IC }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			every_state = {
-				limit = { has_state_flag = FRA_industrial_expansion_1IC }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
+		ai_will_do = {
+			factor = 1
 		}
 
 		completion_reward = {
@@ -164,46 +353,11 @@ focus_tree = {
 		available = {
 		}
 		prerequisite = { focus = NFA_industrial_expansion_ALG }
-		x = 0
-		y = 2
+		x = 12
+		y = 3
 		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
-		
-		bypass = {
-			custom_trigger_tooltip = {
-				NOT = {
-					any_owned_state = {
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}	
-					}
-				}
-			}
-		}
-
-		complete_tooltip = {
-			every_state = {
-				limit = { has_state_flag = FRA_military_factories_2MF }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			every_state = {
-				limit = { has_state_flag = FRA_military_factories_1MF }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
+		ai_will_do = {
+			factor = 1
 		}
 
 		completion_reward = {
@@ -253,7 +407,125 @@ focus_tree = {
 			}			
 		}
 	}
+	
+	focus = {
+		id = NFA_more_military_factories_ALG
+		icon = GFX_goal_generic_construct_mil_factory
+		available = {
+		}
+		prerequisite = { focus = NFA_military_factories_ALG }
+		prerequisite = { focus = NFA_improve_maritime_links }
+		x = 13
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
 
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					NOT = { OR = {
+						region = 557
+						region = 514
+						}
+					}					
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = FRA_military_factories_1MF
+			}
+
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}	
+					NOT = { OR = {
+						region = 557
+						region = 514
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = FRA_military_factories_1MF
+
+			}			
+		}
+	}
+	
+	focus = {
+		id = NFA_dakar_algiers_airway
+		icon = GFX_goal_generic_air_fighter2
+		available = {
+		NFA = {
+				controls_state = 556
+			}
+		}
+		prerequisite = { focus = NFA_develop_ALG }
+		x = 10
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 0.2
+		}
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = NFA_expand_airway
+		icon = GFX_goal_generic_air_production
+		available = {
+		NFA = {
+				controls_state = 556
+			}
+		}
+		prerequisite = { focus = NFA_dakar_algiers_airway }
+		x = 10
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 0.2
+		}
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = NFA_improve_maritime_links
+		icon = GFX_goal_generic_navy_cruiser
+		available = {
+		NFA = {
+				controls_state = 556
+			}
+		}
+		prerequisite = { focus = NFA_develop_mines }
+		x = 14
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 0.2
+		}
+		completion_reward = {
+		}
+	}
 
 	focus = {
 		id = NFA_colonial_resources
@@ -263,8 +535,9 @@ focus_tree = {
 				controls_state = 556
 			}
 		}
-		x = 2
-		y = 0
+		prerequisite = { focus = NFA_industrial_revival }
+		x = 14
+		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 0.2
@@ -282,22 +555,57 @@ focus_tree = {
 			}
 		}
 	}
+	
+	focus = {
+		id = NFA_develop_mines
+		icon = GFX_goal_generic_construction2
+		available = {
+		NFA = {
+				controls_state = 556
+			}
+		}
+		prerequisite = { focus = NFA_colonial_resources }
+		x = 14
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 0.2
+		}
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = NFA_sahara_census
+		icon = GFX_goal_generic_position_armies
+		available = {
+		}
+		x = 9
+		y = 0
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		}
+	}
 
 	focus = {
 		id = NFA_sahara
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_production
 		available = {
 		NFA = {
 				controls_state = 514
 			}
 		}
-		prerequisite = { focus = NFA_colonial_resources }
-		x = 2
+		prerequisite = { focus = NFA_industrial_revival }
+		prerequisite = { focus = NFA_sahara_census }
+		x = 9
 		y = 1
 		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
+		ai_will_do = {
+			factor = 1
+		}
 		completion_reward = {
 			add_resource = {
 				type = oil
@@ -316,12 +624,12 @@ focus_tree = {
 			}
 		}
 		prerequisite = { focus = NFA_sahara }
-		x = 2
+		x = 9
 		y = 2
 		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
+		ai_will_do = {
+			factor = 1
+		}
 
 		completion_reward = {
 			460 = {
@@ -342,81 +650,20 @@ focus_tree = {
 		available = {
 		}
 		prerequisite = {
-			focus = NFA_military_factories_ALG
-			focus = NFA_algerie_refinery
+			focus = NFA_more_military_factories_ALG
 		}
-		x = 1
-		y = 3
-		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-
-	focus = {
-		id = NFA_nuclear_effort
-		icon = GFX_focus_wonderweapons
-		available = {
-		}
-		prerequisite = { focus = NFA_extra_research_slot }
-		x = 0
-		y = 4
-		cost = 15
-		#ai_will_do = {
-		#	factor = 1
-		#}
-		completion_reward = {
-			add_tech_bonus = {
-				name = FRA_nuclear_effort
-				bonus = 0.5
-				category = nuclear
-				category = rocketry
-			}
-			news_event = { id = news.174 } 
-		}
-	}
-
-	focus = {
-		id = NFA_effort_national 
-		icon = GFX_goal_generic_construct_mil_factory
-		available = { 
-		NOT = { country_exists = FRA } 
-		}
-		prerequisite = { focus = NFA_extra_research_slot }
-		x = 2
-		y = 4
-		cost = 10
-		#ai_will_do = {
-		#	factor = 1
-		#}
-		completion_reward = {
-		army_experience = 5 
-			}
-		}
-	
-	focus = {
-		id = NFA_amnistia
-		icon = GFX_focus_research
-		prerequisite = { 
-			focus = NFA_effort_national
-			
-		}
-		available = {
-			num_of_factories > 75
-			NOT = { country_exists = FRA } 
-		}
-		x = 2
+		x = 13
 		y = 5
 		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
 		completion_reward = {
 			add_research_slot = 1
 		}
 	}	
 
-	#### END ####
+#### Military Focuses ####
 
 	focus = {
 		id = NFA_Darlan_Focus
@@ -424,7 +671,7 @@ focus_tree = {
 		available = {
 		}
 		mutually_exclusive = { focus = NFA_DeGaulle_focus }
-		x = 6
+		x = 24
 		y = 0
 		cost = 10
 
@@ -439,8 +686,7 @@ focus_tree = {
 		id = NFA_fortification_focus
 		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = NFA_Darlan_Focus }
-		mutually_exclusive = { focus = NFA_navy_expansion }
-		x = 4
+		x = 24
 		y = 1
 		cost = 10
 		completion_reward = { #cheaper fortifications
@@ -451,7 +697,7 @@ focus_tree = {
 		id = NFA_mediteranean_forts 
 		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = NFA_fortification_focus }
-		x = 4
+		x = 24
 		y = 2
 		cost = 10
 
@@ -468,7 +714,8 @@ focus_tree = {
 		id = NFA_protect_the_air
 		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = NFA_mediteranean_forts }
-		x = 4
+		prerequisite = { focus = NFA_aviation_home_defense }
+		x = 24
 		y = 3
 		cost = 10
 
@@ -480,23 +727,75 @@ focus_tree = {
 		
 		}
 	}
+	
+	focus = {
+		id = NFA_radar_effort
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = NFA_protect_the_air }
+		x = 24
+		y = 4
+		cost = 10
+
+		available = {
+			18 = { is_controlled_by = FRA }
+			29 = { is_controlled_by = FRA }
+		}
+		completion_reward = { #adds DCA in Algeria and Tunisia
+		
+		}
+	}
+	
+	focus = {
+		id = NFA_aviation_home_defense
+		icon = GFX_goal_generic_fortify_city
+		prerequisite = { focus = NFA_Darlan_Focus }
+		x = 22
+		y = 2
+		cost = 10
+
+		available = {
+			18 = { is_controlled_by = FRA }
+			29 = { is_controlled_by = FRA }
+		}
+		completion_reward = { #adds DCA in Algeria and Tunisia
+		
+		}
+	}
+	
+	focus = {
+		id = NFA_cas_effort
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = NFA_aviation_home_defense }
+		x = 22
+		y = 3
+		cost = 10
+
+		available = {
+			18 = { is_controlled_by = FRA }
+			29 = { is_controlled_by = FRA }
+		}
+		completion_reward = { #adds DCA in Algeria and Tunisia
+		
+		}
+	}
+	
 	focus = {
 		id = NFA_navy_expansion
-		icon = GFX_goal_generic_navy_doctrines_tactics
+		icon = GFX_goal_generic_build_navy
 		prerequisite = { focus = NFA_Darlan_Focus }
-		mutually_exclusive = { focus = NFA_fortification_focus }
-		x = 6
+		x = 20
 		y = 1
 		cost = 10
 		completion_reward = { #unlocks events giving new ships 
 			army_experience = 5
 		}
 	}
+	
 	focus = {
 		id = NFA_dockyard_focus
-		icon = GFX_goal_generic_navy_doctrines_tactics
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = NFA_navy_expansion }
-		x = 6
+		x = 20
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -510,23 +809,73 @@ focus_tree = {
 				}
 			}
 		}
+	
 	focus = {
-		id = NFA_battleship_focus
-		icon = GFX_goal_generic_navy_battleship
+		id = NFA_naval_doctrine
+		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = NFA_dockyard_focus }
-		x = 6
+		x = 20
 		y = 3
 		cost = 10
 		completion_reward = { #Gives Navy experience and blueprints for Battleships
 		}
 	}
+	
+	focus = {
+		id = NFA_battleship_focus
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = NFA_dockyard_focus }
+		mutually_exclusive = { focus = NFA_destroyer_focus }
+		x = 21
+		y = 4
+		cost = 10
+		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		}
+	}
+	
+	focus = {
+		id = NFA_destroyer_focus
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = NFA_dockyard_focus }
+		mutually_exclusive = { focus = NFA_battleship_focus }
+		x = 19
+		y = 4
+		cost = 10
+		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		}
+	}
+	
+	focus = {
+		id = NFA_light_cruiser_focus
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = NFA_destroyer_focus focus = NFA_battleship_focus }
+		mutually_exclusive = { focus = NFA_heavy_cruiser_focus }
+		x = 19
+		y = 5
+		cost = 10
+		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		}
+	}
+	
+	focus = {
+		id = NFA_heavy_cruiser_focus
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = NFA_destroyer_focus focus = NFA_battleship_focus }
+		mutually_exclusive = { focus = NFA_light_cruiser_focus }
+		x = 21
+		y = 5
+		cost = 10
+		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		}
+	}
+	
 	focus = {
 		id = NFA_DeGaulle_focus
 		available = {
 		}
 		icon = GFX_goal_generic_major_war
 		mutually_exclusive = { focus = NFA_Darlan_Focus }
-		x = 8
+		x = 26
 		y = 0
 		cost = 10
 
@@ -536,25 +885,206 @@ focus_tree = {
 		completion_reward = { #Bonus to planning maybe ? 
 		}
 	}
+	
+	focus = {
+		id = NFA_southern_conscription
+		available = {
+		}
+		icon = GFX_goal_generic_military_sphere
+		x = 29
+		y = 0
+		cost = 10
+
+		ai_will_do = {
+			factor = 0.2
+		}
+		completion_reward = {
+		}
+	}
+	
 	focus = {
 		id = NFA_native_conscription
-		icon = GFX_goal_generic_allies_build_infantry
+		icon = GFX_goal_generic_political_pressure
 		mutually_exclusive = { focus = NFA_legionary_campaign }
 		prerequisite = { focus = NFA_DeGaulle_focus }
-		x = 8
+		prerequisite = { focus = NFA_southern_conscription }
+		x = 26
 		y = 1
 		cost = 10
 		completion_reward = { #see what National Idea Nat.France will get
 			army_experience = 5
 		}
 	}
+	
+	focus = {
+		id = NFA_continue_native_conscription
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = NFA_native_conscription }
+		x = 26
+		y = 2
+		cost = 10
+		completion_reward = { #see what National Idea Nat.France will get
+			army_experience = 5
+		}
+	}
+	
+	focus = { 
+		id = NFA_legionary_campaign 
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = NFA_DeGaulle_focus }
+		prerequisite = { focus = NFA_southern_conscription }
+		mutually_exclusive = { focus = NFA_native_conscription }
+		x = 28
+		y = 1
+		cost = 10 
+		completion_reward = { #gives legionary units
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_continue_legionary_campaign 
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = NFA_legionary_campaign }
+		x = 28
+		y = 2
+		cost = 10 
+		completion_reward = { #gives legionary units
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_aviation_invasion 
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = NFA_DeGaulle_focus }
+		x = 32
+		y = 1
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_aviation_doctrine
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = NFA_aviation_invasion }
+		x = 32
+		y = 2
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_naval_bomber_focus
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = NFA_aviation_doctrine }
+		x = 32
+		y = 3
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_paratrooper_focus
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = NFA_aviation_invasion }
+		prerequisite = { focus = NFA_troupes_de_marine }
+		x = 33
+		y = 4
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_invasion_navy
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = NFA_DeGaulle_focus }
+		x = 30
+		y = 1
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_naval_invasion_focus
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = NFA_invasion_navy }
+		x = 30
+		y = 2
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_battleship_focus_degaulle
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = NFA_naval_invasion_focus }
+		mutually_exclusive = { focus = NFA_submarine_focus }
+		x = 27
+		y = 3
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_submarine_focus
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = NFA_naval_invasion_focus }
+		mutually_exclusive = { focus = NFA_battleship_focus_degaulle }
+		x = 29
+		y = 3
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_carrier_effort
+		icon = GFX_goal_generic_navy_carrier
+		prerequisite = { focus = NFA_naval_invasion_focus }
+		prerequisite = { focus = NFA_naval_bomber_focus }
+		x = 31
+		y = 4
+		cost = 10 
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = {
+		id = NFA_military_preparation
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = NFA_homeland_reconquest }
+		x = 36
+		y = 1 
+		cost = 10
+		completion_reward = {
+			army_experience = 5
+		}
+	}
+	
 	focus = {
 		id = NFA_Infantry_focus
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = NFA_native_conscription }
-		x = 8
+		x = 38
 		y = 2
 		cost = 10
+		prerequisite = { focus = NFA_military_preparation }
 		completion_reward = {
 			army_experience = 5
 			add_tech_bonus = { #blueprints for infantry equipment
@@ -566,40 +1096,77 @@ focus_tree = {
 		}
 	}
 	
-	focus = { 
-		id = NFA_legionary_campaign 
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = NFA_DeGaulle_focus }
-		mutually_exclusive = { focus = NFA_native_conscription }
-		x = 10
-		y = 1 
-		cost = 10 
-		completion_reward = { #gives legionary units
-		army_experience = 5 
+	focus = {
+		id = NFA_artillery_focus
+		icon = GFX_goal_generic_army_artillery2
+		x = 38
+		y = 3
+		cost = 10
+		available = { has_completed_focus = NFA_Darlan_Focus }
+		prerequisite = { focus = NFA_Infantry_focus }
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = FRA_mechanized_focus
+				bonus = 0.5
+				uses = 1
+				category = cat_mechanized_equipment
+			}
 		}
 	}
 	
 	focus = { 
 		id = NFA_legionary_motorization
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = NFA_legionary_campaign }
-		x = 10
+		x = 34
 		y = 2
 		cost = 10 
-		completion_reward = { #blueprints for motorization ? Maybe some motorized brigades
+		prerequisite = { focus = NFA_military_preparation }
+		prerequisite = { focus = NFA_DeGaulle_focus }
+		completion_reward = {
+		army_experience = 5 
+		}
+	}
+	
+	focus = { 
+		id = NFA_tank_research
+		icon = GFX_goal_generic_army_tanks
+		x = 34
+		y = 3
+		cost = 10 
+		prerequisite = { focus = NFA_legionary_motorization }
+		completion_reward = {
 		army_experience = 5 
 		}
 	}
 	
 	focus = {
-		id = NFA_special_forces
-		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = NFA_Infantry_focus 
-						 focus = NFA_legionary_motorization }
-		x = 8
+		id = NFA_troupes_de_marine
+		icon = GFX_goal_generic_amphibious_assault
+		x = 36
 		y = 3
 		cost = 10
-		completion_reward = { #blueprints for special forces
+		prerequisite = { focus = NFA_military_preparation }
+		completion_reward = { #blueprints for marines
+			army_experience = 5
+			add_tech_bonus = {
+				name = FRA_light_medium_armor
+				bonus = 0.5
+				uses = 1
+				category = cat_light_armor
+				category = cat_medium_armor
+			}
+		}
+	}
+	
+	focus = {
+		id = NFA_mountain_elites
+		icon = GFX_goal_generic_special_forces
+		x = 36
+		y = 4
+		cost = 10
+		prerequisite = { focus = NFA_troupes_de_marine }
+		completion_reward = { #blueprints for mountaineers
 			army_experience = 5
 			add_tech_bonus = {
 				name = FRA_light_medium_armor
@@ -611,176 +1178,14 @@ focus_tree = {
 		}
 	}
 
-#### END ####
-
-	focus = {
-		id = NFA_Petain_president
-		icon = GFX_goal_generic_national_unity
-		mutually_exclusive = { focus = NFA_new_president }
-		x = 12
-		y = 0
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = {
-		id = NFA_new_president
-		available = {
-		}
-		icon = GFX_goal_generic_national_unity
-		mutually_exclusive = { focus = NFA_Petain_president }
-		x = 14
-		y = 0
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-		id = NFA_Judiciary_reform
-		icon = GFX_goal_support_democracy
-		prerequisite = { focus = NFA_Petain_president 
-						 focus = NFA_new_president
-						 focus = NFA_Constitutionalism
-						}
-		mutually_exclusive = { focus = NFA_judiciary_frenchmen }
-		x = 13
-		y = 1
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-		id = NFA_judiciary_frenchmen
-		icon = GFX_goal_support_fascism 
-		prerequisite = { focus = NFA_Petain_president 
-						 focus = NFA_new_president
-						 focus = NFA_Constitutionalism
-						}
-		mutually_exclusive = { focus = NFA_Judiciary_reform }
-		x = 15
-		y = 1
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-
-	focus = { 
-		id = NFA_extended_suffrage
-		icon = GFX_goal_support_democracy
-		prerequisite = { focus = NFA_judiciary_frenchmen 
-						 focus = NFA_Judiciary_reform
-						}
-		mutually_exclusive = { focus = NFA_limited_suffrage }
-		x = 13
-		y = 2
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-		id = NFA_limited_suffrage
-		icon = GFX_goal_support_fascism 
-		prerequisite = { focus = NFA_judiciary_frenchmen 
-						 focus = NFA_Judiciary_reform
-						}
-		mutually_exclusive = { focus = NFA_extended_suffrage }
-		x = 15
-		y = 2
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = {
-		id = NFA_Constitutionalism
-		available = {
-		}
-		icon = GFX_goal_generic_national_unity
-		mutually_exclusive = { focus = NFA_Absolutism }
-		x = 16
-		y = 0
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = {
-		id = NFA_Absolutism
-		available = {
-		}
-		icon = GFX_goal_generic_national_unity
-		mutually_exclusive = { focus = NFA_Constitutionalism }
-		x = 18
-		y = 0
-		cost = 10
-		completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-	id = NFA_puppet_chamber 
-	available = { 
-		}
-	icon = GFX_goal_generic_forceful_treaty
-	prerequisite = { focus = NFA_Absolutism }
-	x = 18 
-	y = 1 
-	cost = 10 
-	completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-	id = NFA_monarch_prestige 
-	available = { 
-		}
-	prerequisite = { focus = NFA_puppet_chamber }
-	icon = GFX_goal_generic_cavalry
-	x = 18 
-	y = 2 
-	cost = 10 
-	completion_reward = {
-			army_experience = 5
-		}
-	}
-	
-	focus = { 
-	id = NFA_strenghthened_governement 
-	icon = GFX_goal_generic_demand_territory
-	available = { 
-		}
-	prerequisite = { focus = NFA_monarch_prestige
-					 focus = NFA_extended_suffrage 
-					 focus = NFA_limited_suffrage }
-	x = 16
-	y = 3
-	cost = 10 
-	completion_reward = {
-			army_experience = 5
-		}
-	}
-
-	##### END ###########
+#### Foreign Focuses ####
 
 	focus = { 
 	id = NFA_homeland_reconquest 
 	icon = GFX_goal_generic_occupy_states_ongoing_war
 	available = { 
 		}
-	x = 26
+	x = 47
 	y = 0 
 	cost = 10 
 	completion_reward = { 
@@ -792,7 +1197,7 @@ focus_tree = {
 	icon = GFX_goal_support_democracy 
 	prerequisite = { focus = NFA_homeland_reconquest }
 	mutually_exclusive = { focus = NFA_alliance_catholic }
-	x = 24
+	x = 42
 	y = 1
 	cost = 10 
 	completion_reward = { 
@@ -802,9 +1207,9 @@ focus_tree = {
 	focus = { 
 	id = NFA_entente_fighters 
 	icon = GFX_goal_generic_build_airforce
-	prerequisite = { focus = NFA_reenforce_the_Entente }
-	x = 22 
-	y = 2
+	prerequisite = { focus = NFA_entente_research }
+	x = 40 
+	y = 3
 	cost = 10 
 	}
 	
@@ -812,10 +1217,10 @@ focus_tree = {
 	id = NFA_entente_navy 
 	icon = GFX_goal_generic_navy_battleship
 	prerequisite = { 
-	focus = NFA_reenforce_the_Entente
+	focus = NFA_entente_research
 	}
-	x = 24 
-	y = 2 
+	x = 42
+	y = 3
 	cost = 10 
 	completion_reward = { 
 		}
@@ -823,11 +1228,14 @@ focus_tree = {
 	
 	focus = { 
 	id = NFA_entente_research 
-	icon = GFX_focus_research 
+	icon = GFX_goal_generic_scientific_exchange
 	prerequisite = { 
 	focus = NFA_reenforce_the_Entente
 		}
-	x = 26
+	prerequisite = { 
+	focus = NFA_military_preparation
+		}
+	x = 41
 	y = 2 
 	cost = 10 
 	completion_reward = { 
@@ -839,7 +1247,7 @@ focus_tree = {
 	icon = GFX_goal_support_democracy
 	prerequisite = { focus = NFA_homeland_reconquest }
 	mutually_exclusive = { focus = NFA_support_carlists }
-	x = 30
+	x = 45
 	y = 1 
 	cost = 10 
 	completion_reward = { 
@@ -848,10 +1256,10 @@ focus_tree = {
 	
 	focus = { 
 	id = NFA_influence_kos 
-	icon = GFX_goal_support_democracy
+	icon = GFX_goal_generic_improve_relations
 	prerequisite = { focus = NFA_support_kos }
 	prerequisite = { focus = NFA_reenforce_the_Entente }
-	x = 28
+	x = 44
 	y = 2 
 	cost = 10 
 	completion_reward = { 
@@ -863,18 +1271,7 @@ focus_tree = {
 	icon = GFX_goal_support_fascism
 	prerequisite = { focus = NFA_homeland_reconquest }
 	mutually_exclusive = { focus = NFA_support_kos }
-	x = 32
-	y = 1 
-	cost = 10 
-	completion_reward = { 
-		}
-	}
-	
-	focus = { 
-	id = NFA_seize_rif
-	icon = GFX_goal_generic_territory_or_war
-	prerequisite = { focus = NFA_homeland_reconquest }
-	x = 34
+	x = 47
 	y = 1 
 	cost = 10 
 	completion_reward = { 
@@ -886,7 +1283,7 @@ focus_tree = {
 	icon = GFX_goal_generic_major_alliance
 	prerequisite = { focus = NFA_support_carlists }
 	mutually_exclusive = { focus = NFA_reenforce_the_Entente }
-	x = 32
+	x = 47
 	y = 2
 	cost = 10 
 	completion_reward = { 
@@ -897,7 +1294,7 @@ focus_tree = {
 	id = NFA_Church_support
 	icon = GFX_goal_generic_national_unity
 	prerequisite = { focus = NFA_alliance_catholic }
-	x = 30
+	x = 45
 	y = 3
 	cost = 10 
 	completion_reward = { 
@@ -908,7 +1305,7 @@ focus_tree = {
 	id = NFA_military_cooperation
 	icon = GFX_goal_generic_military_deal
 	prerequisite = { focus = NFA_alliance_catholic }
-	x = 32 
+	x = 47
 	y = 3 
 	cost = 10 
 	completion_reward = { 
@@ -919,8 +1316,165 @@ focus_tree = {
 	id = NFA_aumoniers 
 	icon = GFX_goal_support_fascism
 	prerequisite = { focus = NFA_alliance_catholic }
-	x = 34 
+	x = 49
 	y = 3
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_return_to_paris 
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 51
+	y = 1
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_return_to_marseille
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 53
+	y = 1
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_underground_railroad
+	icon = GFX_goal_generic_construct_infrastructure
+	prerequisite = { focus = NFA_return_to_marseille }
+	x = 55
+	y = 2
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_restore_consitution_mainland
+	icon = GFX_goal_generic_neutrality_focus
+	prerequisite = { focus = NFA_return_to_paris focus = NFA_return_to_marseille }
+	mutually_exclusive = { focus = NFA_absolutism_mainland }
+	x = 51
+	y = 2
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_absolutism_mainland
+	icon = GFX_goal_generic_political_pressure
+	prerequisite = { focus = NFA_return_to_paris focus = NFA_return_to_marseille }
+	mutually_exclusive = { focus = NFA_restore_consitution_mainland }
+	x = 53
+	y = 2
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = {
+	id = NFA_amnistia
+	icon = GFX_focus_research
+	available = { OR = { has_completed_focus = NFA_return_to_paris has_completed_focus = NFA_underground_railroad } }
+	prerequisite = { focus = NFA_underground_railroad focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
+	x = 55
+	y = 3
+	cost = 10 
+	completion_reward = {
+		}
+	}
+	
+	focus = {
+	id = NFA_nuclear_effort
+	icon = GFX_focus_wonderweapons
+	prerequisite = { focus = NFA_amnistia }
+	x = 54
+	y = 4
+	cost = 10 
+	completion_reward = {
+		}
+	}
+	
+	focus = {
+	id = NFA_rocket_effort
+	icon = GFX_focus_rocketry
+	prerequisite = { focus = NFA_amnistia }
+	x = 56
+	y = 4
+	cost = 10 
+	completion_reward = {
+		}
+	}
+	
+	focus = {
+	id = NFA_effort_national
+	icon = GFX_goal_generic_allies_build_infantry
+	prerequisite = { focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
+	x = 53
+	y = 3
+	cost = 10 
+	completion_reward = {
+		}
+	}
+	
+	focus = {
+	id = NFA_demand_caribbean
+	icon = GFX_goal_generic_occupy_states_coastal
+	prerequisite = { focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
+	x = 51
+	y = 3
+	cost = 10 
+	completion_reward = {
+		}
+	}
+	
+	focus = { 
+	id = NFA_establish_maquisards
+	icon = GFX_goal_generic_military_sphere
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 55
+	y = 1
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_seize_morocco
+	icon = GFX_goal_demand_sudetenland
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 58
+	y = 2 
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_seize_rif
+	icon = GFX_goal_generic_territory_or_war
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 57
+	y = 1
+	cost = 10 
+	completion_reward = { 
+		}
+	}
+	
+	focus = { 
+	id = NFA_seize_portuguese_guinea
+	icon = GFX_goal_generic_territory_or_war
+	prerequisite = { focus = NFA_homeland_reconquest }
+	x = 59
+	y = 1
 	cost = 10 
 	completion_reward = { 
 		}

@@ -3463,21 +3463,21 @@ country_event = { # Naval Exercises in the Atlantic
 			limit = { 
 				USA = { NOT = { is_in_faction_with = CAN } }
 			}
-			add_opinion_modifier = { target = USA modifier = CAN_navy_drill_US }
+			add_opinion_modifier = { target = USA modifier = CAN_navy_drill_USA }
 			#TODO - reaction event for receiving tag
 		}
 		if = {
 			limit = { 
 				CSA = { NOT = { is_in_faction_with = CAN } }
 			}
-			add_opinion_modifier = { target = AUS modifier = CAN_navy_drill_US }
+			add_opinion_modifier = { target = AUS modifier = CAN_navy_drill_USA }
 			#TODO - reaction event for receiving tag
 		}
 		if = {
 			limit = { 
 				AUS = { NOT = { is_in_faction_with = CAN } }
 			}
-			add_opinion_modifier = { target = CSA modifier = CAN_navy_drill_US }
+			add_opinion_modifier = { target = CSA modifier = CAN_navy_drill_USA }
 			#TODO - reaction event for receiving tag
 		}
 	}	
@@ -3567,7 +3567,7 @@ country_event = { # Ireland rejects treaty
 	
 }
 
-country_event = { # Military Alliance
+country_event = { # Ireland - Aid for Alliance 
 	id = canada.57
 	title = canada.57.t
 	desc = canada.57.d
@@ -3575,31 +3575,101 @@ country_event = { # Military Alliance
 	
 	is_triggered_only = yes
 
-	option = {
+	option = { #accept, aid to civ economy 
 		name = canada.57.a
 
 		ai_chance = {
 			factor = 50
 		}
-
-		CAN = { add_to_faction = IRE }
-		add_opinion_modifier = { target = CAN modifier = IRE_ALI_CAN } # 150
-		hidden_effect = { CAN = { country_event = { id = canada.84 days = 1 }}}
+		113 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = industrial_complex
+				level = 2 
+				instant_build = yes
+			}
+		} 
+		135 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = industrial_complex
+				level = 2 
+				instant_build = yes
+			}
+		}
+				
+		add_timed_idea = { idea = IRE_canaid_civ days = 365 }
+		hidden_effect = { CAN = { country_event = { id = canada.58 days = 1 }}}
 	}
-
-	option = {
+	
+	option = { #accept, aid to army 
 		name = canada.57.b
 
 		ai_chance = {
-			factor = 40
+			factor = 34
+		}
+		
+		113 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = arms_factory
+				level = 2 
+				instant_build = yes
+			}
+		} 
+		135 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = arms_factory
+				level = 2 
+				instant_build = yes
+			}
+		}
+		
+		add_timed_idea = { idea = IRE_canaid_mil days = 365 }
+		hidden_effect = { CAN = { country_event = { id = canada.58 days = 1 }}}
+	}
+	
+	option = { #accept, aid to navy
+		name = canada.57.c
+
+		ai_chance = {
+			factor = 15
+		}
+		
+		113 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = dockyard
+				level = 2 
+				instant_build = yes
+			}
+		} 
+		135 = {
+			add_extra_state_shared_building_slots = 2 
+			add_building_construction= {
+				type = dockyard
+				level = 2 
+				instant_build = yes
+			}
+		}
+		
+		add_timed_idea = { idea = IRE_canaid_nav days = 365 }
+		hidden_effect = { CAN = { country_event = { id = canada.58 days = 1 }}}
+	}
+
+	option = { #reject 
+		name = canada.57.e
+
+		ai_chance = {
+			factor = 1
 		}
 
-		add_opinion_modifier = { target = CAN modifier = IRE_NO_CAN } # -5
-		hidden_effect = { CAN = { country_event = { id = canada.88 days = 1 }}}
+		hidden_effect = { CAN = { country_event = { id = canada.59 days = 1 }}}
 	}
 }
 
-country_event = { # Military Acces
+country_event = { # Ireland accepts aid deal, joins Entente
 	id = canada.58
 	title = canada.58.t
 	desc = canada.58.d
@@ -3609,64 +3679,13 @@ country_event = { # Military Acces
 
 	option = {
 		name = canada.58.a
-
-		ai_chance = {
-			factor = 50
-		}
-
-		give_military_access = CAN
-		add_opinion_modifier = { target = CAN modifier = IRE_ACS_CAN } # 75
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_MILACS
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.60 days = 1 }}}
-		}
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_ECOACS
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.61 days = 1 }}}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-		}
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_FULACS
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.62 days = 1 }}}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-		}
-	}
-
-	option = {
-		name = canada.58.b
-
-		ai_chance = {
-			factor = 40
-		}
-
-		add_opinion_modifier = { target = CAN modifier = IRE_NO_CAN } # -5
-		hidden_effect = { CAN = { country_event = { id = canada.63 days = 1 }}}
+				
+		CAN = { add_to_faction = IRE }
+		add_opinion_modifier = { target = CAN modifier = IRE_ALI_CAN } # 150
 	}
 }
 
-country_event = { # Non
+country_event = { # Ireland rejects aid deal
 	id = canada.59
 	title = canada.59.t
 	desc = canada.59.d
@@ -3676,240 +3695,189 @@ country_event = { # Non
 
 	option = {
 		name = canada.59.a
-
-		ai_chance = {
-			factor = 50
-		}
-
-		add_opinion_modifier = { target = CAN modifier = IRE_NON_CAN } # 35
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_MILNON
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.60 days = 1 }}}
-		}
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_ECONON
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.61 days = 1 }}}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-		}
-
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = CAN_IRE_FULNON
-				}	
-			}
-
-			hidden_effect = { CAN = { country_event = { id = canada.62 days = 1 }}}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-			random_owned_state = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes }}
-		}
-	}
-
-	option = {
-		name = canada.59.b
-
-		ai_chance = {
-			factor = 40
-		}
-
+		
 		add_opinion_modifier = { target = CAN modifier = IRE_NO_CAN } # -5
-		hidden_effect = { CAN = { country_event = { id = canada.63 days = 1 }}}
 	}
 }
 
-country_event = { # The Irish accept our offer
-	id = canada.60
-	title = canada.60.t
-	desc = canada.60.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Irish accept our offer
+	# id = canada.60
+	# title = canada.60.t
+	# desc = canada.60.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.60.a
+	# option = {
+		# name = canada.60.a
 
-		add_ideas = IRE_BUILDUP_MIL
+		# add_ideas = IRE_BUILDUP_MIL
 
-		set_global_flag = CAN_IRE_buildup
-		clr_global_flag = CAN_IRE_MILALI
-		clr_global_flag = CAN_IRE_MILACS
-		clr_global_flag = CAN_IRE_MILNON
-	}
-}
+		# set_global_flag = CAN_IRE_buildup
+		# clr_global_flag = CAN_IRE_MILALI
+		# clr_global_flag = CAN_IRE_MILACS
+		# clr_global_flag = CAN_IRE_MILNON
+	# }
+# }
 
-country_event = { # The Irish accept our offer
-	id = canada.61
-	title = canada.61.t
-	desc = canada.61.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Irish accept our offer
+	# id = canada.61
+	# title = canada.61.t
+	# desc = canada.61.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.61.a
+	# option = {
+		# name = canada.61.a
 
-		add_timed_idea = { idea = IRE_BUILDUP_ECO days = 120 }
+		# add_timed_idea = { idea = IRE_BUILDUP_ECO days = 120 }
 
-		clr_global_flag = CAN_IRE_ECOALI
-		clr_global_flag = CAN_IRE_ECOACS
-		clr_global_flag = CAN_IRE_ECONON
-	}
-}
+		# clr_global_flag = CAN_IRE_ECOALI
+		# clr_global_flag = CAN_IRE_ECOACS
+		# clr_global_flag = CAN_IRE_ECONON
+	# }
+# }
 
-country_event = { # The Irish accept our offer
-	id = canada.62
-	title = canada.62.t
-	desc = canada.62.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Irish accept our offer
+	# id = canada.62
+	# title = canada.62.t
+	# desc = canada.62.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.62.a
+	# option = {
+		# name = canada.62.a
 
-		add_ideas = IRE_BUILDUP_FUL
+		# add_ideas = IRE_BUILDUP_FUL
 
-		clr_global_flag = CAN_IRE_FULALI
-		clr_global_flag = CAN_IRE_FULACS
-		clr_global_flag = CAN_IRE_FULNON
-	}
-}
+		# clr_global_flag = CAN_IRE_FULALI
+		# clr_global_flag = CAN_IRE_FULACS
+		# clr_global_flag = CAN_IRE_FULNON
+	# }
+# }
 
-country_event = { # The Irish reject our offer
-	id = canada.63
-	title = canada.63.t
-	desc = canada.63.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Irish reject our offer
+	# id = canada.63
+	# title = canada.63.t
+	# desc = canada.63.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.63.a
+	# option = {
+		# name = canada.63.a
 
-		set_global_flag = CAN_IRE_buildup
-		clr_global_flag = CAN_IRE_FULALI
-		clr_global_flag = CAN_IRE_FULACS
-		clr_global_flag = CAN_IRE_FULNON
-		clr_global_flag = CAN_IRE_ECOALI
-		clr_global_flag = CAN_IRE_ECOACS
-		clr_global_flag = CAN_IRE_ECONON
-		clr_global_flag = CAN_IRE_MILALI
-		clr_global_flag = CAN_IRE_MILACS
-		clr_global_flag = CAN_IRE_MILNON
+		# set_global_flag = CAN_IRE_buildup
+		# clr_global_flag = CAN_IRE_FULALI
+		# clr_global_flag = CAN_IRE_FULACS
+		# clr_global_flag = CAN_IRE_FULNON
+		# clr_global_flag = CAN_IRE_ECOALI
+		# clr_global_flag = CAN_IRE_ECOACS
+		# clr_global_flag = CAN_IRE_ECONON
+		# clr_global_flag = CAN_IRE_MILALI
+		# clr_global_flag = CAN_IRE_MILACS
+		# clr_global_flag = CAN_IRE_MILNON
 
-		add_opinion_modifier = { target = IRE modifier = IRE_NO_CAN } # -5
-	}
-}
+		# add_opinion_modifier = { target = IRE modifier = IRE_NO_CAN } # -5
+	# }
+# }
 
-country_event = { # Buildup Completed
-	id = canada.64
-	title = canada.64.t
-	desc = canada.64.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # Buildup Completed
+	# id = canada.64
+	# title = canada.64.t
+	# desc = canada.64.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		country_exists = IRE
-		has_global_flag = CAN_IRE_buildup
-		NOT = {
-			has_global_flag = CAN_IRE_buildup_aborted
-		}
-		date > 1938.6.1
-	}
+	# trigger = {
+		# tag = CAN
+		# country_exists = IRE
+		# has_global_flag = CAN_IRE_buildup
+		# NOT = {
+			# has_global_flag = CAN_IRE_buildup_aborted
+		# }
+		# date > 1938.6.1
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.64.a
+	# option = {
+		# name = canada.64.a
 
-		remove_ideas = IRE_BUILDUP_FUL
-		remove_ideas = IRE_BUILDUP_MIL
-		remove_ideas = IRE_BUILDUP_ECO
-		set_global_flag = CAN_IRE_buildup_completed
-		clr_global_flag = CAN_IRE_buildup
+		# remove_ideas = IRE_BUILDUP_FUL
+		# remove_ideas = IRE_BUILDUP_MIL
+		# remove_ideas = IRE_BUILDUP_ECO
+		# set_global_flag = CAN_IRE_buildup_completed
+		# clr_global_flag = CAN_IRE_buildup
 
-		hidden_effect = { IRE = { country_event = { id = canada.65 days = 1 }}}
-	}
-}
+		# hidden_effect = { IRE = { country_event = { id = canada.65 days = 1 }}}
+	# }
+# }
 
-country_event = { # The Irish reject our offer
-	id = canada.65
-	title = canada.65.t
-	desc = canada.65.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Irish reject our offer
+	# id = canada.65
+	# title = canada.65.t
+	# desc = canada.65.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = canada.65.a
+	# option = {
+		# name = canada.65.a
 
-		load_oob = CAN_IRE_WEAPONS
-	}
-}
+		# load_oob = CAN_IRE_WEAPONS
+	# }
+# }
 
-country_event = { # Buildup aborted
-	id = canada.66
-	title = canada.66.t
-	desc = canada.66.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # Buildup aborted
+	# id = canada.66
+	# title = canada.66.t
+	# desc = canada.66.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		date > 1938.6.1
-		has_global_flag = CAN_IRE_buildup
-		NOT = { has_global_flag = CAN_IRE_buildup_completed }
-		OR = { 
-			NOT = {
-				country_exists = IRE
-			}
-		}
-		has_war_with = IRE
-		IRE = {
-			is_in_faction_with = ENG
-			is_in_faction_with = FRA
-			is_in_faction_with = CSA
-			is_in_faction_with = GER
-		}
-		is_puppet = yes
-	}
+	# trigger = {
+		# tag = CAN
+		# date > 1938.6.1
+		# has_global_flag = CAN_IRE_buildup
+		# NOT = { has_global_flag = CAN_IRE_buildup_completed }
+		# OR = { 
+			# NOT = {
+				# country_exists = IRE
+			# }
+		# }
+		# has_war_with = IRE
+		# IRE = {
+			# is_in_faction_with = ENG
+			# is_in_faction_with = FRA
+			# is_in_faction_with = CSA
+			# is_in_faction_with = GER
+		# }
+		# is_puppet = yes
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.66.a
+	# option = {
+		# name = canada.66.a
 
-		remove_ideas = IRE_BUILDUP_FUL
-		remove_ideas = IRE_BUILDUP_MIL
-		remove_ideas = IRE_BUILDUP_ECO
-		set_global_flag = CAN_IRE_buildup_aborted
-		clr_global_flag = CAN_IRE_buildup
+		# remove_ideas = IRE_BUILDUP_FUL
+		# remove_ideas = IRE_BUILDUP_MIL
+		# remove_ideas = IRE_BUILDUP_ECO
+		# set_global_flag = CAN_IRE_buildup_aborted
+		# clr_global_flag = CAN_IRE_buildup
 
-		load_oob = CAN_WEAPONS
-	}
-}
+		# load_oob = CAN_WEAPONS
+	# }
+# }
 
 #########################################
 ### Disturbing development in the USA ###

@@ -17,7 +17,7 @@ focus_tree = {
 	focus = {
 		id = GER_mil_expansion
 		icon = GFX_goal_generic_build_tank
-		x = 7
+		x = 5
 		y = 0
 		
 		ai_will_do = {
@@ -64,16 +64,11 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
-			random_owned_state = {
-					limit = {
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
+			741 = {
+			
 					add_building_construction = {
 						type = air_base
-						level = 2
+						level = 5
 						instant_build = yes
 					}
 			}
@@ -175,7 +170,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_Henschel_Albatros
-		icon = GFX_goal_generic_air_production
+		icon = GFX_goal_generic_air_naval_bomber
 		prerequisite = { focus = GER_Luftwaffe_airbases_1}
 		x = 1
 		y = 4
@@ -264,7 +259,7 @@ focus_tree = {
 		id = GER_mil_expansion_land_1
 		prerequisite = { focus = GER_mil_expansion }
 		icon = GFX_goal_generic_allies_build_infantry
-		x = 7
+		x = 5
 		y = 1
 		
 		ai_will_do = {
@@ -280,12 +275,8 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+			remove_ideas = GER_quenched_militarism
+			add_ideas = GER_renwed_militarism
 		}
 	
 	}
@@ -294,7 +285,7 @@ focus_tree = {
 		id = GER_Infantry_divs
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = GER_mil_expansion_land_1 }
-		x = 7
+		x = 5
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -316,7 +307,37 @@ focus_tree = {
 		y = 3
 		cost = 10
 		completion_reward = {
-			
+		custom_effect_tooltip = mauser_werke_desc
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 		
 		available = { 
@@ -331,8 +352,9 @@ focus_tree = {
 		id = GER_doctrine_new
 		icon = GFX_goal_generic_army_doctrines
 		available = { has_country_flag = mackensen_retires }
+		prerequisite = { focus = GER_mil_expansion }
 		x = 8
-		y = 3
+		y = 1
 		cost = 1
 		completion_reward = {
 			
@@ -346,7 +368,7 @@ focus_tree = {
 		prerequisite = { focus = GER_doctrine_great_war_2 }
 		mutually_exclusive = { focus = GER_doctrine_mobile_2 }
 		x = 7
-		y = 5
+		y = 3
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -368,7 +390,7 @@ focus_tree = {
 		prerequisite = { focus = GER_doctrine_new }
 		mutually_exclusive = { focus = GER_doctrine_mobile }
 		x = 7
-		y = 4
+		y = 2
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -388,7 +410,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_motorized
 		prerequisite = { focus = GER_doctrine_mobile_2 }
 		x = 9
-		y = 5 
+		y = 3
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -409,7 +431,7 @@ focus_tree = {
 		prerequisite = { focus = GER_doctrine_new }
 		mutually_exclusive = { focus = GER_doctrine_great_war }
 		x = 9
-		y = 4 
+		y = 2
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -428,7 +450,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = GER_doctrine_mobile }
 		x = 10
-		y = 6
+		y = 4
 		cost = 10
 		completion_reward = {
 		country_event = { id = gerdom.5 }
@@ -442,7 +464,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war }
 		x = 8
-		y = 6
+		y = 4
 		cost = 10
 		completion_reward = {
 		remove_ideas = GER_victors_of_wwi
@@ -513,7 +535,7 @@ focus_tree = {
 		prerequisite = { focus = GER_mil_expansion_naval_1 }
 		mutually_exclusive = { focus = GER_doctrine_base_strike }
 		x = 12
-		y = 2
+		y = 1
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -533,7 +555,7 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = GER_mil_expansion_naval_1 }
 		x = 14
-		y = 2
+		y = 1
 		cost = 10
 		completion_reward = {
 			add_tech_bonus = {
@@ -553,7 +575,7 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = GER_doctrine_base_strike focus = GER_doctrine_fleet_in_beeing }
 		x = 13
-		y = 3
+		y = 2
 		cost = 10
 		completion_reward = {
 		hidden_effect = {
@@ -889,6 +911,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = GER_civ_industry_3 }
 		prerequisite = { focus = GER_mil_industry_3 }
+		bypass = { has_country_flag = eco_reco }
 		x = 18
 		y = 5
 		cost = 10
@@ -1060,11 +1083,11 @@ focus = {
 		prerequisite = { focus = GER_political_1 }
 		x = 29
 		y = 1
-		cost 10
+		cost = 10
 		
 		completion_reward = {
-			add_national_unity = 0.01
-			
+			add_national_unity = 0.05
+			add_political_power = 150	
 			
 		}
 	}
@@ -1141,7 +1164,8 @@ focus = {
 		y = 2
 		cost = 10
 
-		completion_reward = {			
+		completion_reward = {	
+		add_ideas = GER_research_boost
 		
 		}
 			
@@ -1150,7 +1174,7 @@ focus = {
 ### IG Farben
 	focus = {
 		id = GER_ig_farben
-		icon = GFX_goal_generic_production2
+		icon = GFX_goal_generic_oil_refinery
 		prerequisite = { focus = GER_research_expansion }
 		x = 29
 		y = 3
@@ -1180,7 +1204,7 @@ focus = {
 ### Otto Hahn Liese Meitner
 	focus = {
 		id = GER_hahn_meitner
-		icon = GFX_focus_research
+		icon = GFX_focus_wonderweapons
 		prerequisite = { focus = GER_research_expansion }
 		x = 31
 		y = 3

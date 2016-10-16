@@ -16,28 +16,35 @@ focus_tree = {
 	
 	####Political######	
 focus = {
-		id = niigata_riots_focus
+		id = JAP_NSA_focus
 		icon = GFX_goal_generic_alliance
-		available = {  has_idea = niigata_riots }
-		bypass = { has_idea = niigata_riots }
-		x = 6
+		available = { date > 1936.6.1 }
+			ai_will_do = {
+            factor = 10
+        }
+		x = 4
 		y = 0
 		cost = 10
 		completion_reward = {
-		custom_effect_tooltip = niigata_focus
+		country_event = { id = japdom.9 }
 		}
 	}
 	focus = {
 		id = JAP_imperialist_path
 		icon = GFX_goal_japanese_imperialism
-		available = { has_country_flag = jap_martial_law }
-		prerequisite = { focus = niigata_riots_focus }
+		available = { has_country_flag = JAP_longest_winter }
+		mutually_exclusive = { focus = JAP_democratic_path }
+		prerequisite = { focus = JAP_NSA_focus }
 		continue_if_invalid = no
-		x = 7
+		ai_will_do = {
+            factor = 10
+        }
+		x = 5
 		y = 1
-		cost = 10
+		cost = 4
 		completion_reward = {
-		country_event = { id = japdom.6 }
+		country_event = { id = japdom.16 }
+		set_country_flag = JAP_auth
 		add_ideas = JAP_imperial_gov
 		
 		}
@@ -45,45 +52,123 @@ focus = {
 	focus = {
 		id = JAP_democratic_path
 		icon = GFX_goal_japanese_democracy
-		available = { has_country_flag = jap_democratic_reforms }
-		prerequisite = { focus = niigata_riots_focus }
+		mutually_exclusive = { focus = JAP_imperialist_path }
+		prerequisite = { focus = JAP_NSA_focus }
 		continue_if_invalid = no
-		x = 5
+			ai_will_do = {
+            factor = 10
+        }	
+		x = 3
 		y = 1
-		cost = 10
+		cost = 4
 		completion_reward = {
-		country_event = { id = japdom.7 }
+		country_event = { id = japdom.17 }
 		add_ideas = JAP_DEM_GOV
-		
+		set_country_flag = JAP_democracy
 		}
 	}
 	focus = {
-		id = JAP_kodoha
+		id = JAP_ishinha
 		icon = GFX_goal_JAP_kohoda
 		prerequisite = { focus = JAP_imperialist_path }
+		available = { has_country_flag = JAP_power_struggle }
 		continue_if_invalid = no
-		x = 8
+					ai_will_do = {
+            factor = 10
+        }	
+		x = 6
 		y = 2
-		cost = 10
+		cost = 4
 		completion_reward = {
-		country_event = { id = japdom.8 }
+		country_event = { id = japdom.19 }
 		add_ideas = warrior_traditions_idea
 		
 		}
 	}
 	focus = {
-		id = JAP_toseiha
+		id = JAP_chuou
 		icon = GFX_goal_JAP_toseiha
+		available = { has_country_flag = JAP_power_struggle }
 		prerequisite = { focus = JAP_imperialist_path }
 		continue_if_invalid = no
-		x = 6
+					ai_will_do = {
+            factor = 10
+        }	
+		x = 4
 		y = 2
-		cost = 10
+		cost = 4
 		completion_reward = {
-		country_event = { id = japdom.9 }
+		country_event = { id = japdom.20 }
 		add_ideas = control_faction 
 		
 		}
 	}
-}
+#####################
+#military tree 
+#####################
+	focus = {
+		id = JAP_MIL_DOC_DEF
+		icon = GFX_goal_generic_defence
+		available = { has_country_flag = JAP_NAG_DOC }
+		mutually_exclusive = { focus = JAP_MIL_DOC_MAS focus = JAP_MIL_DOC_FIR focus = JAP_MIL_DOC_MOB }
+		x = 10
+		y = 0
+		cost = 10
+		completion_reward = {
+		add_tech_bonus = {
+		bonus = 0.5 
+		uses = 1 
+		category = cat_grand_battle_plan }
+		
+		}
+	}
+	focus = {
+		id = JAP_MIL_DOC_MAS
+		icon = GFX_goal_generic_allies_build_infantry
+		available = { OR = { has_country_flag = JAP_NAG_DOC has_country_flag = JAP_NEU_DOC } }
+		mutually_exclusive = { focus = JAP_MIL_DOC_DEF focus = JAP_MIL_DOC_FIR focus = JAP_MIL_DOC_MOB }
+		x = 12
+		y = 0
+		cost = 10
+		completion_reward = {
+		add_tech_bonus = {
+		bonus = 0.5 
+		uses = 1 
+		category = cat_mass_assault }
+		
+		}
+	}
+	focus = {
+		id = JAP_MIL_DOC_FIR
+		icon = GFX_goal_generic_army_artillery2
+		available = { has_country_flag = JAP_OBA_DOC }
+		mutually_exclusive = { focus = JAP_MIL_DOC_DEF focus = JAP_MIL_DOC_MAS focus = JAP_MIL_DOC_MOB }
+		x = 14
+		y = 0
+		cost = 10
+		completion_reward = {
+		add_tech_bonus = {
+		bonus = 0.5 
+		uses = 1 
+		category = cat_superior_firepower }
+		
+		}
+	}
+	focus = {
+		id = JAP_MIL_DOC_MOB
+		icon = GFX_goal_generic_army_tanks
+		available = { has_country_flag = JAP_OBA_DOC }
+		mutually_exclusive = { focus = JAP_MIL_DOC_DEF focus = JAP_MIL_DOC_MAS focus = JAP_MIL_DOC_FIR }
+		x = 16
+		y = 0
+		cost = 10
+		completion_reward = {
+		add_tech_bonus = {
+		bonus = 0.5 
+		uses = 1 
+		category = cat_mobile_warfare }
+		
+		}
+	}
+			}
 	

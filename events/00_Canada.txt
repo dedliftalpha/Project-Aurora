@@ -15,15 +15,13 @@ country_event = { # The Political Situation
 	
 	trigger = {
 		tag = CAN
-		date > 1936.1.1
-	}
-
-	mean_time_to_happen = {
-		days = 0
+		date = 1936.1.1
 	}
 
 	option = {
 		name = canada.1.a
+		
+		set_country_flag = CAN_start
 	}
 }
 
@@ -37,11 +35,12 @@ country_event = { # Death of King George V
 	
 	trigger = {
 		tag = CAN
-		date > 1936.1.12
+		date > 1936.1.1
+		has_country_flag = CAN_start
 	}
 
 	mean_time_to_happen = {
-		days = 7
+		days = 4
 	}
 
 	option = {
@@ -52,13 +51,15 @@ country_event = { # Death of King George V
 		set_global_flag = KING_GEORGE_V_DEATH
 		
 		set_country_flag = CAN_king_ed
+		
+		add_ideas = CAN_divided_nation
 
 		create_country_leader = {
 			name = "King Edward VIII"
 			desc = "EDWARD_DESC"
 			picture = "Portrait_CAN_King_Edward_viii.tga"
 			expire = "1965.1.1"
-			ideology = social_conservatist_subtype
+			ideology = market_liberalist_subtype
 			traits = {}
 		}
 
@@ -658,6 +659,15 @@ country_event = { # 1936 Election Events
         }
 
 		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		
+		create_country_leader = {
+			name = "King Edward VIII"
+			desc = "EDWARD_DESC"
+			picture = "Portrait_CAN_King_Edward_viii.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -3834,50 +3844,83 @@ country_event = { # Ireland rejects aid deal
 	# }
 # }
 
-# country_event = { # Buildup aborted
-	# id = canada.66
-	# title = canada.66.t
-	# desc = canada.66.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+ country_event = { # Canada Claims Greenland and Iceland
+	 id = canada.66
+	 title = canada.66.t
+	 desc = canada.66.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
-	
-	# trigger = {
-		# tag = CAN
-		# date > 1938.6.1
-		# has_global_flag = CAN_IRE_buildup
-		# NOT = { has_global_flag = CAN_IRE_buildup_completed }
-		# OR = { 
-			# NOT = {
-				# country_exists = IRE
-			# }
-		# }
-		# has_war_with = IRE
-		# IRE = {
-			# is_in_faction_with = ENG
-			# is_in_faction_with = FRA
-			# is_in_faction_with = CSA
-			# is_in_faction_with = GER
-		# }
-		# is_puppet = yes
-	# }
+	is_triggered_only = yes
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	option = { #Concede 
+		name = canada.66.a
 
-	# option = {
-		# name = canada.66.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				OR = {
+					DEN = { is_in_faction_with = GER }
+					DEN = { is_in_faction_with = ENG }
+				}
+			}
+			modifier = {
+				factor = 2 
+				DEN = { has_war = yes }
+			}
+		}
 
-		# remove_ideas = IRE_BUILDUP_FUL
-		# remove_ideas = IRE_BUILDUP_MIL
-		# remove_ideas = IRE_BUILDUP_ECO
-		# set_global_flag = CAN_IRE_buildup_aborted
-		# clr_global_flag = CAN_IRE_buildup
+		if = {
+			limit = {
+				DEN = { controls_state = 100 }
+			}
 
-		# load_oob = CAN_WEAPONS
-	# }
-# }
+			CAN = { transfer_state = 100 }
+		}
+
+		if = {
+			limit = {
+				DEN = { controls_state = 101 }
+			}
+
+			CAN = { transfer_state = 101 }
+		}
+		
+		add_opinion_modifier = { target = CAN modifier = CAN_OCC_GREE } # -25
+
+		hidden_effect = { CAN = { country_event = { id = canada.64 days = 1 }}}
+	}	
+
+	option = { #Reject 
+		name = canada.66.b
+
+		ai_chance = {
+			factor = 30
+		}
+
+		add_political_power = -100
+		declare_war_on = { target = CAN type = annex_everything	}
+		add_opinion_modifier = { target = CAN modifier = DEN_CAN_REJ } # -50
+		
+		hidden_effect = { CAN = { country_event = { id = canada.65 days = 1 }}}
+
+		if = {
+			limit = {
+				DEN = { controls_state = 100 }
+			}
+
+			CAN = { transfer_state = 100 }
+		}
+
+		if = {
+			limit = {
+				DEN = { controls_state = 101 }
+			}
+
+			CAN = { transfer_state = 101 }
+		}
+	}
+ }
 
 #########################################
 ### Disturbing development in the USA ###
@@ -3954,15 +3997,15 @@ country_event = { # Disturbances in the USA!
 		add_political_power = 20
 	}
 
-	option = {
-		name = canada.68.b
+	# option = {
+		# name = canada.68.b
 
-		ai_chance = {
-			factor = 0
-		}
+		# ai_chance = {
+			# factor = 0
+		# }
 
-		declare_war_on = { target = USA type = annex_everything	}
-	}
+		# declare_war_on = { target = USA type = annex_everything	}
+	# }
 
 	option = {
 		name = canada.68.c
@@ -4575,11 +4618,15 @@ country_event = {
 
 	trigger = {
 		tag = CAN
-		surrender_progress < 100
-		surrender_progress > 90
+		CAN = { has_completed_focus = CAN_claim_greenland }
 		DEN = {
 			controls_state = 100
 			controls_state = 101
+		}
+		DEN = {
+			has_war = yes
+			surrender_progress < 100
+			surrender_progress > 50
 		}
 		AND = {
 			OR = {
@@ -4627,7 +4674,7 @@ country_event = {
 		name = canada.82.a
 
 		ai_chance = {
-			factor = 100
+			factor = 90
 		}
 
 		add_opinion_modifier = { target = DEN modifier = CAN_OCC_GREENLAND } # -100
@@ -4639,14 +4686,14 @@ country_event = {
 		name = canada.82.b
 
 		ai_chance = {
-			factor = 0
+			factor = 10
 		}
 
 		add_political_power = -100
 		add_opinion_modifier = { target = ENG modifier = CAN_NO_GREENLAND } # 25
 	}
 }
-##Actually a Danish event##
+##Danish Response##
 country_event = {
 	id = canada.83
 	title = canada.83.t
@@ -4655,7 +4702,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { 
+	option = { #Yes
 		name = canada.83.a
 
 		ai_chance = {
@@ -4684,7 +4731,7 @@ country_event = {
 		hidden_effect = { DEN = { country_event = { id = canada.84 days = 1 }}}
 	}	
 
-	option = { 
+	option = { #No
 		name = canada.83.b
 
 		ai_chance = {
@@ -4713,42 +4760,42 @@ country_event = {
 	}
 }
 
-country_event = {
-	id = canada.84
-	title = canada.84.t
-	desc = canada.84.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = {
+	# id = canada.84
+	# title = canada.84.t
+	# desc = canada.84.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = { 
-		name = canada.84.a
+	# option = { 
+		# name = canada.84.a
 
-		if = {
-			limit = {
-				CAN = { controls_state = 100 }
-			}
+		# if = {
+			# limit = {
+				# CAN = { controls_state = 100 }
+			# }
 
-			CAN = { add_state_claim = 100 }
-		}
+			# CAN = { add_state_claim = 100 }
+		# }
 
-		if = {
-			limit = {
-				CAN = { controls_state = 101 }
-			}
+		# if = {
+			# limit = {
+				# CAN = { controls_state = 101 }
+			# }
 
-			CAN = { add_state_claim = 101 }
-		}
+			# CAN = { add_state_claim = 101 }
+		# }
 
-		if = {
-			limit = { is_ai = yes }
+		# if = {
+			# limit = { is_ai = yes }
 
-			load_oob = CAN_AI_GREE
-		}
+			# load_oob = CAN_AI_GREE
+		# }
 
-		add_political_power = 20
-	}	
-}
+		# add_political_power = 20
+	# }	
+# }
 
 ##########################################
 # Anti-Syndicalist Volunteers in Ireland #

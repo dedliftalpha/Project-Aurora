@@ -890,7 +890,14 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-		completion_reward = { #should give bonuses to fighting on its own territory
+		completion_reward = {
+		add_tech_bonus = {
+				name = doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		add_ideas = NFA_darlan_plan
 		}
 	}
 
@@ -901,7 +908,8 @@ focus = {
 		x = 21
 		y = 1
 		cost = 10
-		completion_reward = { #cheaper fortifications
+		completion_reward = {
+		add_ideas = NFA_fortification_darlan
 		}
 	}
 	
@@ -914,11 +922,85 @@ focus = {
 		cost = 10
 
 		available = {
-			735 = { is_controlled_by = FRA }
+			OR = { 458 = { is_controlled_by = NFA }
+			459 = { is_controlled_by = NFA } }
 		}
 
-		completion_reward = { #Builds coastal fort in Algeria and Tunisia
-			
+		completion_reward = {
+		if = { limit = { 458 = { is_controlled_by = NFA } }
+		458 = { add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 11969
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 9994
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 10091
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					level = 3
+					province = 11969
+					instant_build = yes
+				} } }
+		if = { limit = { 459 = { is_controlled_by = NFA } }
+		459 = { add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 7132
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 4116
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 11923
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					level = 3
+					province = 7132
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 1145
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 9964
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					province = 11939
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					level = 3
+					province = 1145
+					instant_build = yes
+				} } }
 			}
 		}
 	
@@ -932,11 +1014,32 @@ focus = {
 		cost = 10
 
 		available = {
-			18 = { is_controlled_by = FRA }
-			29 = { is_controlled_by = FRA }
+			OR = { 459 = { is_controlled_by = NFA }
+			460 = { is_controlled_by = NFA }
+			458 = { is_controlled_by = NFA } }
 		}
-		completion_reward = { #adds DCA in Algeria and Tunisia
-		
+		completion_reward = {
+		if = { limit = { 459 = { is_controlled_by = NFA } }
+		459 = { 
+                add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				} } }
+		if = { limit = { 460 = { is_controlled_by = NFA } }
+		460 = { 
+                add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				} } }
+		if = { limit = { 458 = { is_controlled_by = NFA } }
+		458 = { 
+                add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				} } }
 		}
 	}
 	
@@ -949,11 +1052,15 @@ focus = {
 		cost = 10
 
 		available = {
-			18 = { is_controlled_by = FRA }
-			29 = { is_controlled_by = FRA }
 		}
-		completion_reward = { #adds DCA in Algeria and Tunisia
 		
+		completion_reward = {
+		add_tech_bonus = {
+				name = radar_bonus
+				bonus = 0.5
+				uses = 1
+				category = radar_tech
+			}
 		}
 	}
 	
@@ -966,11 +1073,17 @@ focus = {
 		cost = 10
 
 		available = {
-			18 = { is_controlled_by = FRA }
-			29 = { is_controlled_by = FRA }
 		}
-		completion_reward = { #adds DCA in Algeria and Tunisia
 		
+		completion_reward = {
+		add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.5
+				uses = 1
+				category = light_fighter
+				category = cat_heavy_fighter
+			}
+		air_experience = 35
 		}
 	}
 	
@@ -983,11 +1096,14 @@ focus = {
 		cost = 10
 
 		available = {
-			18 = { is_controlled_by = FRA }
-			29 = { is_controlled_by = FRA }
 		}
-		completion_reward = { #adds DCA in Algeria and Tunisia
-		
+		completion_reward = {
+		add_tech_bonus = {
+				name = cas_bonus
+				bonus = 0.5
+				uses = 1
+				category = cas_bomber
+			}
 		}
 	}
 	
@@ -998,8 +1114,12 @@ focus = {
 		x = 17
 		y = 1
 		cost = 10
-		completion_reward = { #unlocks events giving new ships 
-			army_experience = 5
+		completion_reward = { 
+		navy_experience = 35
+		add_ideas = NFA_navy_expansion_idea
+		custom_effect_tooltip = NFA_navy_expansion_tooltip
+		hidden_effect = { country_event = { id = nfa.34 days = 200 }
+		country_event = { id = nfa.36 days = 380 } }
 		}
 	}
 	
@@ -1010,12 +1130,15 @@ focus = {
 		x = 17
 		y = 2
 		cost = 10
+		available = {
+			272 = { is_controlled_by = NFA }
+		}
 		completion_reward = {
 		272 = {
 			add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = dockyard
-					level = 3
+					level = 4
 					instant_build = yes
 					}
 				}
@@ -1029,7 +1152,13 @@ focus = {
 		x = 17
 		y = 3
 		cost = 10
-		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		completion_reward = {
+		add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+	            category = naval_doctrine
+			}
 		}
 	}
 	
@@ -1041,7 +1170,15 @@ focus = {
 		x = 18
 		y = 4
 		cost = 10
-		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		completion_reward = {
+		add_tech_bonus = {
+				name = battleship_bonus
+				bonus = 0.5
+				uses = 1
+				category = bc_tech
+	            category = bb_tech
+				category = shbb_tech
+			}
 		}
 	}
 	
@@ -1053,7 +1190,13 @@ focus = {
 		x = 16
 		y = 4
 		cost = 10
-		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		completion_reward = {
+		add_tech_bonus = {
+				name = destroyer_bonus
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}
 		}
 	}
 	
@@ -1065,7 +1208,13 @@ focus = {
 		x = 16
 		y = 5
 		cost = 10
-		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		completion_reward = {
+		add_tech_bonus = {
+				name = cruiser_bonus
+				bonus = 0.5
+				uses = 2
+	            category = cl_tech
+			}
 		}
 	}
 	
@@ -1077,7 +1226,13 @@ focus = {
 		x = 18
 		y = 5
 		cost = 10
-		completion_reward = { #Gives Navy experience and blueprints for Battleships
+		completion_reward = {
+		add_tech_bonus = {
+				name = cruiser_bonus
+				bonus = 0.5
+				uses = 2
+				category = ca_tech
+			}
 		}
 	}
 	
@@ -1092,9 +1247,16 @@ focus = {
 		cost = 10
 
 		ai_will_do = {
-			factor = 0.2
+			factor = 1
 		}
-		completion_reward = { #Bonus to planning maybe ? 
+		completion_reward = {
+		add_tech_bonus = {
+				name = doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		add_ideas = NFA_degaulle_plan
 		}
 	}
 	
@@ -1108,7 +1270,7 @@ focus = {
 		cost = 10
 
 		ai_will_do = {
-			factor = 0.2
+			factor = 1
 		}
 		completion_reward = {
 		}

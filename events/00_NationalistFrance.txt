@@ -2685,3 +2685,322 @@ country_event = { #Darlan accuses government of recklesness
 	}
 
 }
+
+country_event = { #The Dakar Algiers Airways Goes Bankrupt
+	id = nfa.41
+	title = nfa.41.t
+	desc = nfa.41.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.41.a #Arrest the managers
+		ai_chance = { factor = 90 }
+		add_political_power = -40
+		random_owned_state = {
+				limit = {
+					has_state_flag = NFA_expand_airway_1IC
+					}
+				
+				 remove_building = { type = industrial_complex level = 1 }
+
+			}
+	}
+	
+	option = {
+		name = nfa.41.b #This is our fault
+		ai_chance = { factor = 10 }
+		add_political_power = -100
+        random_owned_state = {
+				limit = {
+					has_state_flag = NFA_expand_airway_1IC
+					}
+				
+				 remove_building = { type = industrial_complex level = 1 }
+
+			}		
+	}
+
+}
+
+country_event = { #The Dakar Algiers Airways is a Success
+	id = nfa.42
+	title = nfa.42.t
+	desc = nfa.42.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.42.a #Fabulous
+		remove_ideas = NFA_dakar_algiers_airway_idea
+		add_ideas = NFA_dakar_algiers_airway_idea2
+	}
+
+}
+
+country_event = { #The Algeria-Central Africa Census Complete
+	id = nfa.43
+	title = nfa.43.t
+	desc = nfa.43.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = NFA NOT = { country_exists = TUA } has_country_flag = NFA_census_progress }
+	
+	mean_time_to_happen = { days = 50 }
+	
+	option = {
+		name = nfa.43.a #Tax the caravans and herders, conduct drafts
+		ai_chance = { factor = 80 }
+		clr_country_flag = NFA_census_progress
+		add_manpower = 5000
+        set_country_flag = NFA_taxed_tuaregs
+	}
+	
+	option = {
+		name = nfa.43.b #This is not worth the effort
+		ai_chance = { factor = 20 }
+                
+	}
+
+}
+
+country_event = { #The Algeria-Central Africa Inventory Complete
+	id = nfa.44
+	title = nfa.44.t
+	desc = nfa.44.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = NFA NOT = { country_exists = TUA } has_country_flag = NFA_inventory_progress }
+	
+	mean_time_to_happen = { days = 50 }
+	
+	option = {
+		name = nfa.44.a #One day it will be fully exploited
+		clr_country_flag = NFA_inventory_progress
+		custom_effect_tooltip = NFA_inventory_complete
+	}
+
+}
+
+country_event = { #The Tamanghasset Incident
+	id = nfa.45
+	title = nfa.45.t
+	desc = nfa.45.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = NFA NOT = { country_exists = TUA } has_country_flag = NFA_taxed_tuaregs }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = nfa.45.a #Fight back!
+		ai_chance = { factor = 80 }
+		clr_country_flag = NFA_taxed_tuaregs
+		hidden_effect = { country_event = { id = nfa.46 days = 2 } }
+	}
+	
+	option = {
+		name = nfa.45.b #Suck in our Pride and Repeal the Caravan Tax
+		ai_chance = { factor = 20 }
+        clr_country_flag = NFA_taxed_tuaregs
+        add_political_power = -200		
+	}
+
+}
+
+country_event = { #Tuareg Revolt NFA
+	id = nfa.46
+	title = nfa.46.t
+	desc = nfa.46.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.46.a #Wait and see
+        TUA = { transfer_state = 513 
+		add_state_core = 513 }
+		hidden_effect = { TUA = { country_event = { id = nfa.47 } } }
+	}
+
+}
+
+country_event = { #Tuareg Revolt TUA
+	id = nfa.47
+	title = nfa.47.t
+	desc = nfa.47.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.47.a #We will fight to the last man!
+        513 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		load_oob = TUA_rise
+		add_manpower = 50000
+		country_event = { id = nfa.48 days = 7 }
+	}
+
+}
+
+country_event = { #The Terror TUA
+	id = nfa.48
+	title = nfa.48.t
+	desc = nfa.48.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.48.a #Pillage as far south as the Niger
+		ai_chance = { factor = 95 }
+       add_manpower = -5000
+	   NFA = { country_event = { id = nfa.49 } }
+	}
+	
+	option = {
+		name = nfa.48.b #Raid the Atlas mountains
+		ai_chance = { factor = 5 }
+       add_manpower = -1000
+	   NFA = { country_event = { id = nfa.53 } }
+	}
+
+}
+
+country_event = { #The Terror NFA
+	id = nfa.49
+	title = nfa.49.t
+	desc = nfa.49.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.49.a #Those Tuaregs will not go unpunished!
+		TUA = { set_state_controller = 557
+		set_state_controller = 809
+		add_state_claim = 557
+		add_state_claim = 809
+        load_oob = TUA_niger }
+       declare_war_on = { target = TUA type = annex_everything }
+	   country_event = { id = nfa.50 }
+	}
+
+}
+
+country_event = { #Unrest on the Gold Coast
+	id = nfa.50
+	title = nfa.50.t
+	desc = nfa.50.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.50.a #Damnit!
+		add_political_power = -100
+		#GUI = {  transfer_state = 806                    triggers a weird error saying that GUI is an invalid effect have to fix urgently
+		#country_event = { id = nfa.54 } }
+		#country_event = { id = nfa.51 days = 1 }
+	}
+
+}
+
+country_event = { #War in the south
+	id = nfa.51
+	title = nfa.51.t
+	desc = nfa.51.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.51.a #They'll wish they were still Second class citizens when we're through!
+		declare_war_on = { target = GUI type = annex_everything }
+	}
+
+}
+
+country_event = { #National France in Chaos LBR
+	id = nfa.52
+	title = nfa.52.t
+	desc = nfa.52.d
+	picture = GFX_petain_NFA
+	
+	fire_only_once = yes
+	
+	trigger = { tag = LBR is_puppet_of = NFA NFA = { has_war_with = TUA has_war_with = GUI } has_country_flag = LBR_protected_by_france }
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {
+		name = nfa.52.a #Why does this always happen to us!?
+		ai_chance = { factor = 50 }
+		NFA = { end_puppet = LBR add_opinion_modifier = { target = LBR modifier = NFA_liberia_abandoned_us } }
+		add_opinion_modifier = { target = NFA modifier = NFA_liberia_abandoned_us }
+	}
+	
+	option = {
+		name = nfa.52.b #We will stand with the French! To war
+		ai_chance = { factor = 50 }
+        add_political_power = -100	
+		declare_war_on = { target = GUI type = annex_everything }
+	}
+
+}
+
+country_event = { #The Tuaregs Raid the Atlas
+	id = nfa.53
+	title = nfa.53.t
+	desc = nfa.53.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.53.a #It's time to finally put these thugs back in their place
+		ai_chance = { factor = 99 }
+		TUA = { 
+        load_oob = TUA_atlas }
+       declare_war_on = { target = TUA type = annex_everything }
+	}
+	
+	option = {
+		name = nfa.53.b #Let them have their desert, what do we care?
+		ai_chance = { factor = 1 }
+        add_political_power = -100	
+		TUA = { 
+        load_oob = TUA_atlas }
+	}
+
+}
+
+country_event = { #Independence GUI
+	id = nfa.54
+	title = nfa.54.t
+	desc = nfa.54.d
+	picture = GFX_petain_NFA
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = nfa.54.a #Let the French come!
+        load_oob = GUI_rise
+		#have to shut down ministers if liberia exists
+	}
+
+}

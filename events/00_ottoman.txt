@@ -539,8 +539,24 @@ country_event = {
 		
 		ai_chance = { factor = 100 }
 		add_political_power = -400
-		annex_country = { target = SYR } ### TODO - this is a temporary fix to end war between ottoman puppets and revolters 
-		annex_country = { target = IRQ } 
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = SYR
+							is_puppet_of = ROOT
+						}
+						AND = {
+							has_war_with = IRQ
+							is_puppet_of = ROOT
+						}
+					}				
+				}
+				white_peace = SYR		
+				white_peace = IRQ		
+		}
 		
 		if = {
 			limit = {
@@ -628,6 +644,19 @@ country_event = {
 		SAU = { country_event = { id = ott.14 days = 1 } } #our lands expand
 		clr_country_flag = arab_revolt
 		remove_ideas = ott_arab_revolt
+			remove_state_core = 455
+			remove_state_core = 454
+			remove_state_core = 553
+			remove_state_core = 554
+			remove_state_core = 677
+			remove_state_core = 291
+			remove_state_core = 656
+			remove_state_core = 675
+			remove_state_core = 812
+			remove_state_core = 680
+			remove_state_core = 676
+			remove_state_core = 754
+			remove_state_core = 453
 		if = {
 			limit = { tag = OTT }
 			set_country_flag = ott_broken		#Ottomans broken, revolution soon
@@ -874,7 +903,7 @@ country_event = {
 		
 		ai_chance = { factor = 100 }
 		declare_war_on = { target = KUR type = annex_everything	}
-		country_event = { id = ott.19 days = 200 } #revolt success event
+# TODO		country_event = { id = ott.19 days = 200 } #revolt success event
 	}
 
 	option = {
@@ -882,6 +911,10 @@ country_event = {
 
 		ai_chance = { factor = 0 }		
 		add_political_power = -200
+		remove_state_core = 676
+		remove_state_core = 350
+		remove_state_core = 352
+		remove_state_core = 680
 	}
 	
 }
@@ -932,7 +965,7 @@ country_event = {
 	trigger = {
 		KUR = {
 			exists = yes
-			controls_state = 676	# Mosul
+			has_war_with = ROOT
 		}
 	}
 
@@ -941,22 +974,19 @@ country_event = {
 		name = ott.19.a
 
 		ai_chance = { factor = 30 }
-		every_country = {
-				limit = { 
+		every_country = {	# TODO - fix puppet peace
+				limit = {
 					OR = {
-						TAG = OTT
+						tag = OTT
+						tag = TUR
 						AND = {
 							has_war_with = KUR
-							is_puppet_of = OTT
+							is_puppet_of = ROOT
 						}
 					}
-					
 				}
-				white_peace = KUR
-		
+				white_peace = KUR		
 		}
-		
-					
 		add_political_power = -100
 		if = {
 			limit = { tag = OTT }
@@ -1318,7 +1348,7 @@ country_event = {	#KUR receives formal rejection
 ###############################################################################
 
 
-### The Imperial Camel Corps
+### Ottoman Camel Regiments
 
 country_event = {
 	id = ott.29
@@ -1342,6 +1372,7 @@ country_event = {
 		
 		ai_chance = { factor = 65 }
 		add_ideas = ott_camels
+		load_oob = OTT_camels
 		add_political_power = 20
 		add_timed_idea = { idea = ott_denbts_large days = 50  } #money
 	}
@@ -1359,7 +1390,6 @@ country_event = {
 ###############################################################################
 # Hejaz Revolts
 ###############################################################################
-
 
 ### Dissatisfaction in Hejaz
 
@@ -1479,7 +1509,7 @@ country_event = {
 }
 
 
-### hejaz actually revolts
+### Hejaz actually revolts
 
 country_event = {
 	id = ott.32
@@ -1630,3 +1660,666 @@ country_event = {		#EGY intervenes
 	}
 
 }
+
+
+
+###############################################################################
+# EGY seizes Suez
+###############################################################################
+
+### EGY seizes Suez
+
+country_event = {
+	id = ott.37
+	title = ott.37.t
+	desc = ott.37.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = EGY
+		# TODO - german capitulation
+		# TODO - german capitulation
+		has_global_flag = GER_capitulation
+		GER = { controls_state = 753} # the canal
+		EGY = {
+			NOT = {
+				is_puppet_of = GER
+				is_in_faction_with = GER 
+				has_war_with = GER
+			}
+			controls_state = 446 #cairo
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {					# take suez
+		name = ott.37.a
+		
+		ai_chance = { factor = 100 }
+		reverse_add_opinion_modifier = {target = GER modifier = egy_suez } #-100
+		GER = { country_event = { id = ott.38 days = 0 } } #german response
+	}
+
+	option = {					# rather not
+		name = ott.37.b
+		
+		ai_chance = { factor = 0 }
+		reverse_add_opinion_modifier = {target = GER modifier = egy_suez1 } #+50
+		add_political_power = -100
+	}
+
+}
+
+
+country_event = { # German response
+	id = ott.38
+	title = ott.38.t
+	desc = ott.38.d
+	
+	is_triggered_only = yes
+	
+	option = {					# there's nothing we can do
+		name = ott.38.a
+			
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				GER = { owns_state = 753 }
+			}
+			EGY = { transfer_state = 753 }
+		}
+		add_political_power = -20
+	}
+
+	option = {					# this means war
+		name = ott.38.b
+			
+		ai_chance = { factor = 0 }
+		declare_war_on = { target = EGY type = annex_everything }
+		add_political_power = -100
+	}
+
+}
+
+
+###############################################################################
+# Cypriot Upising
+###############################################################################
+
+### Cypriot Uprising
+
+news_event = {
+	id = ott.39
+	title = ott.39.t
+	desc = ott.39.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		has_global_flag = kurdish_revolt
+		has_country_flag = kurd_revolt
+		owns_state = 183 #Cyprus
+		controls_state = 183
+		date > 1938.5.4		
+	}
+	
+	mean_time_to_happen = {
+		days = 40
+	}
+	
+	option = {
+		name = ott.39.a
+		
+		add_political_power = -40
+		remove_state_core = 183
+		add_state_claim = 183
+		CYP = {
+			transfer_state = 183 #Cyprus
+			add_state_core = 183
+
+			hidden_effect = { 
+				load_oob = CYP
+				183 = {
+					add_building_construction = {
+						type = bunker
+						province = 7193
+						level = 3
+						instant_build = yes
+					}
+				}
+				retire_country_leader = yes
+				create_country_leader = {
+					name = "Makarios III"
+					#desc = ""
+					#picture = ""
+					expire = "1965.1.1"
+					ideology = authoritarian_democratist_subtype
+					traits = {}
+				}
+				set_technology = { infantry_weapons = 1 }
+				set_technology = { basic_machine_tools = 1 }
+				set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+			}
+		}
+		set_country_flag = cyprus_revolt
+		country_event = { id = ott.40 days = 0 } #reaction
+	}
+}
+
+country_event = { # Ottoman response
+	id = ott.40
+	title = ott.40.t
+	desc = ott.40.d
+	
+	is_triggered_only = yes
+	
+	option = {					# crush them
+		name = ott.40.a
+			
+		ai_chance = { factor = 100 }
+		declare_war_on = { target = CYP type = annex_everything }
+		load_oob = OTT_cyp
+# TODO		country_event = { id = ott.43 days = 300 } #revolt success event
+	}
+
+	option = {					# they deserve independence
+		name = ott.40.b
+			
+		ai_chance = { factor = 0 }
+		add_political_power = -200
+		clr_country_flag = cyprus_revolt
+	}
+}
+
+country_event = { # Cypriot uprising crushed
+	id = ott.41
+	title = ott.41.t
+	desc = ott.41.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		has_country_flag = cyprus_revolt
+		CYP = { exists = no }
+		controls_state = 183
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = ott.41.a
+		
+		add_political_power = 60
+		add_state_core = 183
+	}
+
+}
+
+country_event = { # Destroying the Cypriot forts
+	id = ott.42
+	title = ott.42.t
+	desc = ott.42.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
+		has_country_flag = cyprus_revolt
+		CYP = { exists = no }
+		controls_state = 183
+		183 = { is_core_of = ROOT }
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = ott.42.a
+
+		7193 = { remove_building = { type = bunker level = 3 } }
+		clr_country_flag = cyprus_revolt
+	}
+
+}
+
+country_event = { # Cypriot uprising successful
+	id = ott.43
+	title = ott.43.t
+	desc = ott.43.d
+	
+	is_triggered_only = yes
+	
+	### this triggered event will only fire if the trigger is fulfilled >>>	
+	trigger = {
+		CYP = {
+			exists = yes
+			has_war_with = ROOT
+		}
+	}
+
+	option = {					# accept their independence
+		name = ott.43.a
+			
+		ai_chance = { factor = 60 }
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = CYP
+							is_puppet_of = ROOT
+						}
+					}
+				}
+				white_peace = CYP		
+		}
+		add_political_power = -40		
+		clr_country_flag = cyprus_revolt
+	}
+	
+	option = {					# never!
+		name = ott.43.b
+			
+		ai_chance = { factor = 40 }
+		add_political_power = -80		
+	}
+
+}
+
+country_event = { # Grease help Cyprus uprising
+	id = ott.44
+	title = ott.44.t
+	desc = ott.44.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GRE
+		is_puppet = no
+		CYP = {
+			exists = yes
+			is_puppet = no
+			OR = {
+				has_war_with = OTT
+				has_war_with = TUR
+			}
+		}
+		NOT = {
+			has_war_with = OTT
+			has_war_with = TUR
+			has_war_together_with = OTT 
+			has_war_together_with = TUR
+		}
+		controls_state = 47 #Atina
+		controls_state = 186 #Mora
+		controls_state = 768 #Tesalya		
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {					# send aid to cyprus
+		name = ott.44.a
+
+		ai_chance = { factor = 70 }
+		add_manpower = -6000
+		send_equipment = { target = CYP type = infantry_equipment amount = 750 }
+		reverse_add_opinion_modifier = {target = OTT modifier = ott_cyprus } #-50
+		reverse_add_opinion_modifier = {target = TUR modifier = ott_cyprus }
+		reverse_add_opinion_modifier = {target = CYP modifier = cyp_cyprus } #+200
+		CYP = { country_event = { id = ott.45 days = 7 } } #help arrives
+	}
+
+	option = {					# we can't help them
+		name = ott.44.b
+			
+		ai_chance = { factor = 30 }
+		add_political_power = -100
+		reverse_add_opinion_modifier = {target = OTT modifier = ott_cyprus1 } #+50
+		reverse_add_opinion_modifier = {target = TUR modifier = ott_cyprus1 }
+		reverse_add_opinion_modifier = {target = CYP modifier = cyp_cyprus1 } #-200		
+	}
+
+}
+
+country_event = { # Grease help arrives
+	id = ott.45
+	title = ott.45.t
+	desc = ott.45.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.45.a
+
+		load_oob = CYP_gre
+		add_political_power = 50
+	}
+
+}
+
+country_event = { # Grease Cypriot uprising ends
+	id = ott.46
+	title = ott.46.t
+	desc = ott.46.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GRE
+		CYP = {
+			exists = yes
+			has_opinion_modifier = cyp_cyprus
+			NOT = {
+				has_war_with = OTT
+				has_war_with = TUR
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = ott.46.a
+		
+		add_manpower = 5000		#soldiers return home
+		add_political_power = 20
+		army_experience = 25
+	}
+
+}
+
+country_event = { # Future of Cyprus
+	id = ott.47
+	title = ott.47.t
+	desc = ott.47.d
+	
+	trigger = {
+		tag = CYP
+		has_war = no
+		controls_state = 183 #cyprus
+		is_puppet = no
+		GRE = {
+			controls_state = 47 #Atina
+			controls_state = 186 #Mora
+			controls_state = 768 #Tesalya
+		}	
+	}
+	
+	mean_time_to_happen = {
+		days = 50
+	}
+	
+	option = {					#reunite with grease
+		name = ott.47.a
+		trigger = { NOT = { has_opinion_modifier = cyp_cyprus1 } }
+		
+		ai_chance = { factor = 100 }
+		GRE = { country_event = { id = ott.48 days = 2 } } #grease response
+	}
+
+	option = {					#cyprus shall stand alone!
+		name = ott.47.b
+
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { # Cyprus wants unification
+	id = ott.48
+	title = ott.48.t
+	desc = ott.48.d
+	
+	is_triggered_only = yes
+	
+	option = {					# alright whatever
+		name = ott.48.a
+
+		ai_chance = { factor = 100 }
+		annex_country = { target = CYP transfer_troops = yes }
+		add_political_power = 100
+		add_state_core = 183
+	}
+
+	option = {					# no :P
+		name = ott.48.b
+
+		ai_chance = { factor = 0 }
+		add_political_power = -60
+		reverse_add_opinion_modifier = {target = OTT modifier = ott_cyprus1 } #+50
+		reverse_add_opinion_modifier = {target = TUR modifier = ott_cyprus1 }
+		reverse_add_opinion_modifier = {target = CYP modifier = cyp_cyprus1 } #-200				
+	}
+
+}
+
+
+###############################################################################
+# Armenian Independence
+###############################################################################
+
+### Status of Armenia
+
+country_event = {
+	id = ott.49
+	title = ott.49.t
+	desc = ott.49.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ARM
+		is_puppet_of = OTT
+		OTT = { has_war_with = KUR }
+		LYB = { NOT = { is_puppet_of = OTT } }
+		controls_state = 230	
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {					# declare independence
+		name = ott.49.a
+		
+		ai_chance = { factor = 80 }
+		OTT = { end_puppet = ARM }
+		load_oob = ARM_1
+		every_country = {
+			limit = { has_war_with = ARM }
+			white_peace = ARM
+		}
+		add_state_claim = 353 # Erzurum
+		add_state_claim = 354 # Trabzon
+		OTT = { country_event = { id = ott.50 days = 0 } } #ottoman response
+	}
+	
+	option = {					# time is not right
+		name = ott.49.b
+		
+		ai_chance = { factor = 20 }
+		add_political_power = -20
+	}
+}
+
+country_event = { # Ottoman response
+	id = ott.50
+	title = ott.50.t
+	desc = ott.50.d
+	
+	is_triggered_only = yes
+	
+	option = {					# crush it
+		name = ott.50.a
+		
+		ai_chance = { factor = 100 }
+		declare_war_on = { target = ARM type = annex_everything }
+		ARM = { set_province_controller = 10403 }
+		ARM = { set_province_controller = 10472 }
+# TODO		country_event = { id = ott.51 days = 300 } #revolt success event
+	}
+
+	option = {					# let it go
+		name = ott.50.b
+			
+		ai_chance = { factor = 0 }
+	}
+
+}
+
+country_event = { # Armenian uprising successful
+	id = ott.51
+	title = ott.51.t
+	desc = ott.51.d
+	
+	is_triggered_only = yes
+	
+	### this triggered event will only fire if the trigger is fulfilled >>>	
+	trigger = {
+		ARM = {
+			exists = yes
+			has_war_with = ROOT
+		}
+	}
+
+	
+	option = {	# accept their independence
+		name = ott.51.a
+
+		ai_chance = { factor = 70 }
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = ARM
+							is_puppet_of = ROOT
+						}
+					}
+				}
+				white_peace = ARM		
+		}
+		add_political_power = -40
+	}
+
+	option = {	# never!
+		name = ott.51.b
+
+		ai_chance = { factor = 30 }
+		add_political_power = -60
+	}
+
+}
+
+
+###############################################################################
+# Yemen seizes Aden
+###############################################################################
+
+### Yemen seizes Aden
+
+country_event = {
+	id = ott.52
+	title = ott.52.t
+	desc = ott.52.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YEM
+		# TODO - german capitulation
+		# TODO - german capitulation
+		has_global_flag = GER_capitulation
+		GER = { controls_state = 659} # aden
+		YEM = {
+			NOT = {
+				is_puppet_of = GER
+				is_in_faction_with = GER 
+				has_war_with = GER
+			}
+			controls_state = 293 # yemen
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {					# take aden
+		name = ott.52.a
+		
+		ai_chance = { factor = 100 }
+		reverse_add_opinion_modifier = {target = GER modifier = yem_aden } #-100
+		GER = { country_event = { id = ott.53 days = 0 } } #german response
+	}
+
+	option = {					# rather not
+		name = ott.52.b
+		
+		ai_chance = { factor = 0 }
+		reverse_add_opinion_modifier = {target = GER modifier = yem_aden1 } #+50
+		add_political_power = -100
+	}
+
+}
+
+
+country_event = { # German response
+	id = ott.53
+	title = ott.53.t
+	desc = ott.53.d
+	
+	is_triggered_only = yes
+	
+	option = {					# there's nothing we can do
+		name = ott.53.a
+			
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				GER = { owns_state = 659 }
+			}
+			YEM = { transfer_state = 659 }
+		}
+		add_political_power = -20
+	}
+
+	option = {					# this means war
+		name = ott.53.b
+			
+		ai_chance = { factor = 0 }
+		declare_war_on = { target = YEM type = annex_everything }
+		add_political_power = -100
+	}
+
+}
+
+
+
+###############################################################################
+# Treaty of Jerusalem
+###############################################################################
+

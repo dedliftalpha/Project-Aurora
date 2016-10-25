@@ -365,6 +365,7 @@ focus = {
 		}
 	icon = GFX_goal_generic_forceful_treaty
 	prerequisite = { focus = NFA_Absolutism }
+	bypass = { has_country_flag = NFA_demo }
 	x = 6 
 	y = 2
 	cost = 10 
@@ -378,6 +379,7 @@ focus = {
 	available = { 
 		}
 	prerequisite = { focus = NFA_puppet_chamber }
+	bypass = { has_country_flag = NFA_demo }
 	icon = GFX_goal_generic_cavalry
 	x = 6
 	y = 3 
@@ -1372,7 +1374,7 @@ focus = {
 	
 	focus = {
 		id = NFA_southern_conscription
-		available = {
+		available = { NOT = { has_completed_focus = NFA_return_to_marseille has_completed_focus = NFA_return_to_paris }
 		}
 		icon = GFX_goal_generic_military_sphere
 		x = 27
@@ -1393,6 +1395,8 @@ focus = {
 		mutually_exclusive = { focus = NFA_legionary_campaign }
 		prerequisite = { focus = NFA_DeGaulle_focus }
 		prerequisite = { focus = NFA_southern_conscription }
+		available = { NOT = { has_completed_focus = NFA_return_to_marseille has_completed_focus = NFA_return_to_paris }
+		}
 		x = 24
 		y = 1
 		cost = 10
@@ -1408,6 +1412,8 @@ focus = {
 		id = NFA_continue_native_conscription
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = NFA_native_conscription }
+		available = { NOT = { has_completed_focus = NFA_return_to_marseille has_completed_focus = NFA_return_to_paris }
+		}
 		x = 24
 		y = 2
 		cost = 10
@@ -1426,6 +1432,8 @@ focus = {
 		prerequisite = { focus = NFA_DeGaulle_focus }
 		prerequisite = { focus = NFA_southern_conscription }
 		mutually_exclusive = { focus = NFA_native_conscription }
+		available = { NOT = { has_completed_focus = NFA_return_to_marseille has_completed_focus = NFA_return_to_paris }
+		}
 		x = 26
 		y = 1
 		cost = 10 
@@ -1440,12 +1448,15 @@ focus = {
 		id = NFA_continue_legionary_campaign 
 		icon = GFX_goal_generic_allies_build_infantry
 		prerequisite = { focus = NFA_legionary_campaign }
+		available = { NOT = { has_completed_focus = NFA_return_to_marseille has_completed_focus = NFA_return_to_paris }
+		}
 		x = 26
 		y = 2
 		cost = 10 
 		completion_reward = {
 		custom_effect_tooltip = NFA_legionary_campaign2_tooltip
 			hidden_effect = { load_oob = NFA_legionary_campaign2 }
+			remove_ideas = NFA_legionary_campaign1
 			add_ideas = NFA_legionary_campaign2
 		}
 	}
@@ -1742,12 +1753,13 @@ focus = {
 	focus = { 
 	id = NFA_homeland_reconquest 
 	icon = GFX_goal_generic_occupy_states_ongoing_war
-	available = { 
+	available = { is_puppet = no
 		}
 	x = 45
 	y = 0 
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	add_political_power = 50
 		}
 	}
 	
@@ -1755,21 +1767,49 @@ focus = {
 	id = NFA_reenforce_the_Entente 
 	icon = GFX_goal_support_democracy 
 	prerequisite = { focus = NFA_homeland_reconquest }
-	mutually_exclusive = { focus = NFA_alliance_catholic }
+	available = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } }
+	is_puppet = no }
+	cancel = { OR = { is_puppet = yes NOT = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } } } } }
 	x = 40
 	y = 1
 	cost = 10 
-	completion_reward = { 
-		}
+	completion_reward = {
+	add_political_power = 40
+	if = { limit = { is_in_faction_with = CAN } add_opinion_modifier = { target = CAN modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = AST } add_opinion_modifier = { target = AST modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = CAF } add_opinion_modifier = { target = CAF modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = DEH } add_opinion_modifier = { target = DEH modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = USA } add_opinion_modifier = { target = USA modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = GBR } add_opinion_modifier = { target = GBR modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = SAF } add_opinion_modifier = { target = SAF modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = POR } add_opinion_modifier = { target = POR modifier = NFA_reinforce_entente } }
+	if = { limit = { is_in_faction_with = SPR } add_opinion_modifier = { target = SPR modifier = NFA_reinforce_entente } }
+	}
 	}
 	
 	focus = { 
 	id = NFA_entente_fighters 
 	icon = GFX_goal_generic_build_airforce
 	prerequisite = { focus = NFA_entente_research }
+	available = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } }
+	}
+	cancel = { NOT = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } } } }
 	x = 38
 	y = 3
-	cost = 10 
+	cost = 10
+    completion_reward = {
+    air_experience = 40
+    add_tech_bonus = {
+				name = air_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}	
+		}	
 	}
 	
 	focus = { 
@@ -1778,10 +1818,23 @@ focus = {
 	prerequisite = { 
 	focus = NFA_entente_research
 	}
+	available = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } }
+	}
+	cancel = { NOT = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } } } }
 	x = 40
 	y = 3
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	navy_experience = 40
+    add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+	#maybe an cof reaction event in the future ? something like "they are provoking us in the med blah blah" -do nothing : -pp -build forts -?
 		}
 	}
 	
@@ -1794,11 +1847,17 @@ focus = {
 	prerequisite = { 
 	focus = NFA_military_preparation
 		}
+	available = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } }
+	}
 	x = 39
 	y = 2 
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	add_ideas = NFA_entente_research_idea
 		}
+	cancel = { NOT = { OR = { AND = { is_in_faction_with = CAN CAN = { is_faction_leader = yes } }
+	AND = { is_in_faction_with = GBR GBR = { is_faction_leader = yes } } } } }
 	}
 	
 	focus = { 
@@ -1806,10 +1865,29 @@ focus = {
 	icon = GFX_goal_support_democracy
 	prerequisite = { focus = NFA_homeland_reconquest }
 	mutually_exclusive = { focus = NFA_support_carlists }
+	available = { OR = { SPR = { has_war_with = CAR } SPR = { has_war_with = CNT } CAR = { has_war_with = CNT } }
+	NOT = { has_war_with = SPR has_war_with = SOV has_war_with = ENG has_war_with = USA }
+    SPR = { exists = yes OR = { has_war_with = CAR has_war_with = CNT } is_puppet = no }
+	}
+	cancel = { NOT = { OR = { SPR = { has_war_with = CAR } SPR = { has_war_with = CNT } CAR = { has_war_with = CNT } }
+	NOT = { has_war_with = SPR has_war_with = SOV has_war_with = ENG has_war_with = USA }
+    SPR = { exists = yes OR = { has_war_with = CAR has_war_with = CNT } is_puppet = no } }
+	}
 	x = 43
 	y = 1 
-	cost = 10 
-	completion_reward = { 
+	cost = 1 
+	completion_reward = {
+	add_manpower = -3000
+		send_equipment = {
+            target = SPR
+            type = infantry_equipment
+            amount = 1500
+       }
+        SPR = { country_event = { id = nfa.62 days = 1 } }
+		add_opinion_modifier = { target = SPR modifier = NFA_supported_us_scw }
+		add_opinion_modifier = { target = CNT modifier = NFA_supported_others_scw }
+		add_opinion_modifier = { target = CAR modifier = NFA_supported_others_scw }
+		add_opinion_modifier = { target = ITA modifier = NFA_supported_others_scw }
 		}
 	}
 	
@@ -1818,10 +1896,12 @@ focus = {
 	icon = GFX_goal_generic_improve_relations
 	prerequisite = { focus = NFA_support_kos }
 	prerequisite = { focus = NFA_reenforce_the_Entente }
+	available = { always = no }
 	x = 42
 	y = 2 
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	#Nothing for the moment, have to account for spanish events
 		}
 	}
 	
@@ -1830,10 +1910,29 @@ focus = {
 	icon = GFX_goal_support_fascism
 	prerequisite = { focus = NFA_homeland_reconquest }
 	mutually_exclusive = { focus = NFA_support_kos }
+	available = { OR = { SPR = { has_war_with = CAR } SPR = { has_war_with = CNT } CAR = { has_war_with = CNT } }
+	NOT = { has_war_with = SPR has_war_with = SOV has_war_with = ENG has_war_with = USA }
+    CAR = { exists = yes OR = { has_war_with = SPR has_war_with = CNT } is_puppet = no }
+	}
+	cancel = { NOT = { OR = { SPR = { has_war_with = CAR } SPR = { has_war_with = CNT } CAR = { has_war_with = CNT } }
+	NOT = { has_war_with = SPR has_war_with = SOV has_war_with = ENG has_war_with = USA }
+    CAR = { exists = yes OR = { has_war_with = SPR has_war_with = CNT } is_puppet = no } }
+	}
 	x = 45
 	y = 1 
-	cost = 10 
-	completion_reward = { 
+	cost = 1
+	completion_reward = {
+	add_manpower = -3000
+		send_equipment = {
+            target = CAR
+            type = infantry_equipment
+            amount = 1500
+       }
+        CAR = { country_event = { id = nfa.63 days = 1 } }
+		add_opinion_modifier = { target = SPR modifier = NFA_supported_others_scw }
+		add_opinion_modifier = { target = CNT modifier = NFA_supported_others_scw }
+		add_opinion_modifier = { target = CAR modifier = NFA_supported_us_scw }
+		add_opinion_modifier = { target = ITA modifier = NFA_supported_us_scw }
 		}
 	}
 	
@@ -1841,11 +1940,13 @@ focus = {
 	id = NFA_alliance_catholic
 	icon = GFX_goal_generic_major_alliance
 	prerequisite = { focus = NFA_support_carlists }
-	mutually_exclusive = { focus = NFA_reenforce_the_Entente }
+	available = { always = no #have to account for spanish events
+	}
 	x = 45
 	y = 2
-	cost = 10 
-	completion_reward = { 
+	cost = 3
+	completion_reward = {
+    remove_ideas = NFA_entente_research_idea	
 		}
 	}
 	
@@ -1856,7 +1957,8 @@ focus = {
 	x = 43
 	y = 3
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+    add_ideas = NFA_church_support_idea	
 		}
 	}
 	
@@ -1867,7 +1969,9 @@ focus = {
 	x = 45
 	y = 3 
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+    add_ideas = NFA_latin_high_command_idea
+    army_experience = 35	
 		}
 	}
 	
@@ -1878,18 +1982,31 @@ focus = {
 	x = 47
 	y = 3
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+    add_ideas = NFA_aumoniers_idea	
 		}
 	}
 	
-	focus = { 
+	focus = {
 	id = NFA_return_to_paris 
 	icon = GFX_goal_generic_demand_territory
 	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { FRA = { exists = no } controls_state = 16 controls_state = 21 }
 	x = 49
 	y = 1
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	country_event = { id = nfa.67 }
+	add_political_power = 200
+	remove_ideas = NFA_french_in_exile
+	remove_ideas = NFA_legionary_campaign1
+	remove_ideas = NFA_legionary_campaign2
+	remove_ideas = NFA_native_conscription1
+	remove_ideas = NFA_native_conscription2
+	remove_ideas = NFA_southern_conscript_regular
+	remove_ideas = NFA_southern_conscript_colonial
+	remove_ideas = NFA_underground_railroad_idea
+	
 		}
 	}
 	
@@ -1897,10 +2014,22 @@ focus = {
 	id = NFA_return_to_marseille
 	icon = GFX_goal_generic_demand_territory
 	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { controls_state = 21 
+	NOT = { has_completed_focus = NFA_return_to_paris has_war_with = GER has_war_with = FRP has_war_with = OCC
+    country_exists = FRA controls_state = 16 16 = { is_core_of = NFA } } }
 	x = 51
 	y = 1
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+    country_event = { id = nfa.68 }
+	add_political_power = 200
+	remove_ideas = NFA_french_in_exile
+	remove_ideas = NFA_legionary_campaign1
+	remove_ideas = NFA_legionary_campaign2
+	remove_ideas = NFA_native_conscription1
+	remove_ideas = NFA_native_conscription2
+	remove_ideas = NFA_southern_conscript_regular
+	remove_ideas = NFA_southern_conscript_colonial
 		}
 	}
 	
@@ -1908,22 +2037,45 @@ focus = {
 	id = NFA_underground_railroad
 	icon = GFX_goal_generic_construct_infrastructure
 	prerequisite = { focus = NFA_return_to_marseille }
+	available = { NOT = { has_completed_focus = NFA_return_to_paris } country_exists = FRP FRP = { is_puppet = yes } OR = { has_government = social_democratist has_government = social_liberalist has_government = market_liberalist has_government = social_conservatist }
+	owns_state = 21 controls_state = 21 is_puppet = no NOT = { country_exists = FRA has_war_with = FRP country_exists = OCC }
+	}
+	cancel = { NOT = { country_exists = FRP FRP = { is_puppet = yes } OR = { has_government = social_democratist has_government = social_liberalist has_government = market_liberalist has_government = social_conservatist }
+	owns_state = 21 controls_state = 21 is_puppet = no NOT = { country_exists = FRA has_war_with = FRP country_exists = OCC }
+	} }
 	x = 53
 	y = 2
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	add_political_power = 20
+	add_opinion_modifier = { target = GER modifier = NFA_established_under_railroad }
+	add_opinion_modifier = { target = FRP modifier = NFA_established_under_railroad }
+	country_event = { id = nfa.69 }
 		}
 	}
 	
-	focus = { 
+	focus = {
 	id = NFA_restore_consitution_mainland
 	icon = GFX_goal_generic_neutrality_focus
 	prerequisite = { focus = NFA_return_to_paris focus = NFA_return_to_marseille }
 	mutually_exclusive = { focus = NFA_absolutism_mainland }
+	bypass = { has_country_flag = NFA_demo }
+	available = { NOT = { has_country_flag = NFA_demo } }
 	x = 49
 	y = 2
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+	add_political_power = 120
+	set_country_flag = NFA_demo
+	country_event = { id = nfa.6 }
+	add_popularity = { ideology = social_conservatist popularity = 0.05 }
+		  add_popularity = { ideology = market_liberalist popularity = 0.05 }
+		  add_popularity = { ideology = social_democratist popularity = 0.05 }
+		  add_popularity = { ideology = social_liberalist popularity = 0.05 }
+    remove_ideas = NFA_anti_parlementarisme
+	remove_ideas = NFA_idealized_sovereign
+	add_ideas = NFA_conservative_monarchy
+	custom_effect_tooltip = NFA_restore_consitution_mainland_tooltip
 		}
 	}
 	
@@ -1932,10 +2084,12 @@ focus = {
 	icon = GFX_goal_generic_political_pressure
 	prerequisite = { focus = NFA_return_to_paris focus = NFA_return_to_marseille }
 	mutually_exclusive = { focus = NFA_restore_consitution_mainland }
+	available = { NOT = { has_country_flag = NFA_demo } }
 	x = 51
 	y = 2
 	cost = 10 
-	completion_reward = { 
+	completion_reward = {
+    add_political_power = -280	
 		}
 	}
 	
@@ -1948,6 +2102,7 @@ focus = {
 	y = 3
 	cost = 10 
 	completion_reward = {
+	add_research_slot = 1
 		}
 	}
 	
@@ -1959,6 +2114,12 @@ focus = {
 	y = 4
 	cost = 10 
 	completion_reward = {
+	add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear
+			}
 		}
 	}
 	
@@ -1970,6 +2131,12 @@ focus = {
 	y = 4
 	cost = 10 
 	completion_reward = {
+	add_tech_bonus = {
+				name = rocket_bonus
+				bonus = 0.5
+				uses = 1
+				category = rocketry
+			}
 		}
 	}
 	
@@ -1981,6 +2148,8 @@ focus = {
 	y = 3
 	cost = 10 
 	completion_reward = {
+	add_equipment_to_stockpile = { type = infantry_equipment amount = 12000 producer = NFA }
+	add_timed_idea = { idea = NFA_effort_national_idea days = 150 }
 		}
 	}
 	
@@ -1988,10 +2157,19 @@ focus = {
 	id = NFA_demand_caribbean
 	icon = GFX_goal_generic_occupy_states_coastal
 	prerequisite = { focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
+	available = { has_completed_focus = NFA_return_to_paris
+	controls_state = 16 has_war = no CAF = { has_war = no is_puppet = no } NOT = { country_exists = FRA } is_puppet = no
+    is_in_faction_with = CAF CAF = { OR = { controls_state = 694 controls_state = 310 } } }
+	cancel = { NOT = { 
+	controls_state = 16 has_war = no CAF = { has_war = no is_puppet = no } NOT = { country_exists = FRA } is_puppet = no
+    is_in_faction_with = CAF CAF = { OR = { controls_state = 694 controls_state = 310 } } } }
 	x = 49
 	y = 3
 	cost = 10 
 	completion_reward = {
+	add_state_claim = 694
+	add_state_claim = 310
+	CAF = { country_event = { id = nfa.70 } }
 		}
 	}
 	
@@ -2006,36 +2184,59 @@ focus = {
 		}
 	}
 	
-	focus = { 
+	focus = {
 	id = NFA_seize_morocco
 	icon = GFX_goal_demand_sudetenland
 	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { is_puppet = no GER = { is_puppet = no } NOT = { is_in_faction_with = GER has_war_with = GER GER = { controls_state = 64 } country_exists = MOR }
+	OR = { AND = { GER = { controls_state = 546 } MAF = { exists = no } } has_global_flag = GER_capitulation } surrender_progress < 0.05
+	OR = { controls_state = 290 controls_state = 805 controls_state = 513 }
+	GER = { OR = { controls_state = 461 controls_state = 462 controls_state = 290 } }
+	ENG = { NOT = { controls_state = 461 controls_state = 462 controls_state = 290 } } }
+	cancel = { NOT = { is_puppet = no GER = { is_puppet = no } NOT = { is_in_faction_with = GER has_war_with = GER GER = { controls_state = 64 } country_exists = MOR }
+	OR = { AND = { GER = { controls_state = 546 } MAF = { exists = no } } has_global_flag = GER_capitulation } surrender_progress < 0.05
+	OR = { controls_state = 290 controls_state = 805 controls_state = 513 }
+	GER = { OR = { controls_state = 461 controls_state = 462 controls_state = 290 } }
+	ENG = { NOT = { controls_state = 461 controls_state = 462 controls_state = 290 } } } }
 	x = 56
 	y = 2 
-	cost = 10 
-	completion_reward = { 
+	cost = 1 
+	completion_reward = {
+	add_political_power = 20
+	GER = { country_event = { id = nfa.73 days = 2 } }
+	add_opinion_modifier = { target = GER modifier = NFA_seized_morocco }
 		}
 	}
 	
-	focus = { 
+	focus = {
 	id = NFA_seize_rif
 	icon = GFX_goal_generic_territory_or_war
 	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { CNT = { OR = { controls_state = 290 controls_state = 699 } } }
+	cancel = { NOT = { CNT = { controls_state = 290 controls_state = 699 } } }
 	x = 55
 	y = 1
-	cost = 10 
-	completion_reward = { 
+	cost = 1 
+	completion_reward = {
+	country_event = { id = nfa.64 }
 		}
 	}
 	
-	focus = { 
+	focus = {
 	id = NFA_seize_portuguese_guinea
 	icon = GFX_goal_generic_territory_or_war
 	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { country_exists = POR POR = { controls_state = 296 NOT = { has_war_with = NFA is_in_faction_with = NFA is_in_faction_with = GER is_in_faction_with = RUS } is_puppet = no OR = { has_war_with = GER has_war_with = MAF has_war_with = CNT has_capitulated = yes } }
+	is_puppet = no controls_state = 806 }
+	cancel = { NOT = { country_exists = POR POR = { controls_state = 296 NOT = { has_war_with = NFA is_in_faction_with = NFA is_in_faction_with = GER is_in_faction_with = RUS } is_puppet = no OR = { has_war_with = GER has_war_with = MAF has_war_with = CNT has_capitulated = yes } }
+	is_puppet = no controls_state = 806 } }
 	x = 57
 	y = 1
-	cost = 10 
-	completion_reward = { 
+	cost = 1
+	completion_reward = {
+	add_state_claim = 296
+	add_opinion_modifier = { target = POR modifier = NFA_seized_guinea }
+	POR = { country_event = { id = nfa.78 } }
 		}
 	}
 }

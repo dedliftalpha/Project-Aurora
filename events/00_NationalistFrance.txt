@@ -2515,6 +2515,10 @@ country_event = { #De Lattre de Tassigny dies
 	
 	option = {
 		name = nfa.31.a
+		if = { limit = { has_idea = NFA_Jean_de_Lattre_de_Tassigny_hog_ade } remove_ideas = NFA_Jean_de_Lattre_de_Tassigny_hog_ade
+		add_ideas = NFA_Charles_Huntzinger_hog_ade }
+		if = { limit = { has_idea = NFA_Jean_de_Lattre_de_Tassigny_carm_ade } remove_ideas = NFA_Jean_de_Lattre_de_Tassigny_carm_ade
+		add_ideas = NFA_Maxime_Weygand_carm_ade }
 		set_country_flag = lattre_de_tassigny_dead
 		remove_unit_leader = 801
 	}
@@ -3054,7 +3058,7 @@ country_event = { #The Liberation of Metropolitan France
 	fire_only_once = yes
 	
 	trigger = { OR = { tag = USA tag = CAN tag = AST tag = CAF tag = DEH tag = GBR tag = SAF tag = POR tag = SPR }
-	NOT = { country_exists = FRA } NFA = { is_puppet = no } is_in_faction_with = NFA 
+	NOT = { country_exists = FRA } NFA = { is_puppet = no } is_in_faction_with = NFA
 	any_state = { AND = { OR = { state = 31 state = 21 state = 763 state = 22 state = 32 state = 817 state = 26 state = 20 state = 25 state = 19 state = 23 state = 33 state = 27 state = 17 state = 24 state = 30 state = 14 state = 18 state = 785 state = 16 state = 15 state = 29 state = 779 state = 28 state = 735 state = 762 state = 1 }
 	OR = { is_owned_by = ROOT is_controlled_by = ROOT } } } 
 	}
@@ -3790,7 +3794,7 @@ country_event = { #Divided France GER
 	fire_only_once = yes
 	
 	trigger = { tag = GER controls_state = 16 is_puppet = no NOT = { country_exists = FRA country_exists = FRP has_war_with = NFA }
-	OR = { NFA = { controls_state = 21 } any_country = { AND = { is_in_faction_with = NFA controls_state = 21 } } } }
+	OR = { NFA = { controls_state = 21 } any_other_country = { AND = { is_in_faction_with = NFA NOT = { tag = NFA } controls_state = 21 } } } }
 	
 	mean_time_to_happen = { days = 1 }
 	
@@ -3833,16 +3837,16 @@ country_event = { #German Empire Offers a Partition of France
 		GER = { country_event = { id = nfa.81 } }
 		add_political_power = -40
 		add_opinion_modifier = { target = NFA modifier = NFA_accepted_share_france }
-		if = { limit = { AND = { NOT = { OR = { controls_state = 31 any_country = { AND = { is_in_faction_with = NFA controls_state = 31 } } } }
-		NOT = { OR = { controls_state = 20 any_country = { AND = { is_in_faction_with = NFA controls_state = 20 } } } } } } set_global_flag = NFA_LIMC }
-		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_country = { AND = { is_in_faction_with = NFA controls_state = 31 } } }
-		OR = { controls_state = 20 any_country = { AND = { is_in_faction_with = NFA controls_state = 20 } } } } 
-		AND = { NOT = { OR = { controls_state = 19 any_country = { AND = { is_in_faction_with = NFA controls_state = 19 } } } }
-		NOT = { OR = { controls_state = 24 any_country = { AND = { is_in_faction_with = NFA controls_state = 24 } } } } } } } set_global_flag = NFA_EXNC }
-		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_country = { AND = { is_in_faction_with = NFA controls_state = 31 } } }
-		OR = { controls_state = 20 any_country = { AND = { is_in_faction_with = NFA controls_state = 20 } } } } 
-		OR = { OR = { controls_state = 19 any_country = { AND = { is_in_faction_with = NFA controls_state = 19 } } }
-		OR = { controls_state = 24 any_country = { AND = { is_in_faction_with = NFA controls_state = 24 } } } } } } set_global_flag = NFA_MAXC }
+		if = { limit = { AND = { NOT = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } } }
+		NOT = { OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } } } set_global_flag = NFA_LIMC }
+		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } }
+		OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } 
+		AND = { NOT = { OR = { controls_state = 19 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 19 } } } }
+		NOT = { OR = { controls_state = 24 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 24 } } } } } } } set_global_flag = NFA_EXNC }
+		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } }
+		OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } 
+		OR = { OR = { controls_state = 19 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 19 } } }
+		OR = { controls_state = 24 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 24 } } } } } } set_global_flag = NFA_MAXC }
 	}
 	
 	option = {
@@ -3883,10 +3887,10 @@ country_event = { #Treaty of Bordeaux GER
 		NFA = { transfer_state = 23 transfer_state = 24 transfer_state = 33 } }
 		
 		NFA = { country_event = { id = nfa.82 } }
-		every_country = { limit = { is_in_faction_with = NFA } country_event = { id = nfa.83 } }
+		every_other_country = { limit = { is_in_faction_with = NFA NOT = { tag = NFA } } country_event = { id = nfa.83 } }
 		add_political_power = -40
 		add_opinion_modifier = { target = NFA modifier = NFA_treaty_bordeaux1 }
-		every_country = { limit = { is_in_faction_with = NFA } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
+		every_other_country = { limit = { is_in_faction_with = NFA NOT = { tag = NFA } } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
 	}
 	
 }
@@ -3920,7 +3924,7 @@ transfer_state = 785 }
 		NFA = { country_event = { id = nfa.85 days = 2 } }
 		GER = { country_event = { id = nfa.84 days = 2 } }
 		add_opinion_modifier = { target = GER modifier = NFA_treaty_bordeaux1 }
-		every_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
+		every_other_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
 	    clr_global_flag = NFA_LIMC
 		clr_global_flag = NFA_EXNC
 		clr_global_flag = NFA_MAXC
@@ -3939,7 +3943,7 @@ country_event = { #Treaty of Bordeaux allies of nat france
 	option = {
 		name = nfa.83.a #A new order in the western Europe !
 		add_opinion_modifier = { target = GER modifier = NFA_treaty_bordeaux1 }
-		every_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
+		every_other_country = { limit = { is_in_faction_with = GER } add_opinion_modifier = { modifier = NFA_treaty_bordeaux2 } }
 	    #is supposed to secede territory but since no secede command : not needed. It's managed by the events up there
 	}
 	
@@ -4259,7 +4263,7 @@ country_event = { #Maquisards coup !!
 		if = { limit = { is_puppet_of = CAR } CAR = { country_event = { id = nfa.110 } } }
 		add_political_power = 200
 		end_puppet = OCC
-		every_country = { limit = { is_faction_leader = yes is_in_faction_with = OCC } 	remove_from_faction = OCC }
+		every_other_country = { limit = { is_faction_leader = yes is_in_faction_with = OCC } 	remove_from_faction = OCC }
 		white_peace = NFA
 		white_peace = RUS
 		white_peace = JAP
@@ -4358,7 +4362,7 @@ country_event = { #Maquisards coup in Occitania NFA
 		name = nfa.95.b #Ignore them
 		ai_chance = { factor = 0 }
 		add_political_power = -200
-		add_opinion_modifier = { target = NFA modifier = NFA_abandoned_OCC }
+		OCC = { add_opinion_modifier = { target = NFA modifier = NFA_abandoned_OCC } }
 	}
 	
 }

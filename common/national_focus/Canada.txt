@@ -1085,7 +1085,7 @@ focus_tree = {
 	#Develop Steel Mills
 	focus = {
 		id = CAN_steelmill
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_Steel
 		prerequisite = { focus = CAN_resource focus = CAN_national_developmment }
 		x = 12
 		y = 1
@@ -1139,7 +1139,7 @@ focus_tree = {
 	#Aluminium Smelters
 	focus = {
 		id = CAN_alcan
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_Aluminium
 		prerequisite = { focus = CAN_steelmill }
 		x = 12
 		y = 2
@@ -1166,7 +1166,7 @@ focus_tree = {
 	#Prairie Oil Prospecting
 	focus = {
 		id = CAN_oil
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_Oil
 		prerequisite = { focus = CAN_resource }
 		x = 16 
 		y = 1 
@@ -1290,7 +1290,7 @@ focus_tree = {
 	#Tar Sands Development
 	focus = {
 		id = CAN_oil2
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_Oil
 		prerequisite = { focus = CAN_refineries }
 		prerequisite = { focus = CAN_mine2 }
 		x = 15
@@ -1445,7 +1445,7 @@ focus_tree = {
 	
 	focus = {
 		id = CAN_constitutional_monarchy
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_goal_government_icon
 		prerequisite = { focus = CAN_constitution }
 		mutually_exclusive = { focus = CAN_abolish_parliament }
 		mutually_exclusive = { focus = CAN_abolish_monarchy }
@@ -1485,7 +1485,7 @@ focus_tree = {
 	
 	focus = { #Abolish Parliament
 		id = CAN_abolish_parliament
-		icon = GFX_goal_generic_support_fascism
+		icon = GFX_goal_monarchism_3
 		prerequisite = { focus = CAN_constitution }
 		mutually_exclusive = { focus = CAN_abolish_monarchy }
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
@@ -1560,6 +1560,8 @@ focus_tree = {
 	#######################
 	## DIPLOMACY AND WAR ##
 	#######################
+	
+	### NORTH ATLANTIC ###
 	
 	focus = { #Secure the North Atlantic
 		id = CAN_north_atlantic
@@ -1680,6 +1682,54 @@ focus_tree = {
 			CAN = { add_state_claim = 100 }
 			CAN = { add_state_claim = 101 }
 			add_opinion_modifier = { target = DEN modifier = CAN_CLAIM_GRICE }
+		}
+	}
+	
+	focus = { #War with the UoB
+		id = CAN_war_uob
+		icon = GFX_goal_generic_major_war
+		prerequisite = { focus = CAN_north_atlantic }
+		x = 22
+		y = 7 
+		cost = 4
+		available = {
+			CAN = {
+				NOT = { is_in_faction_with = ENG }
+			}
+			OR = { 
+				ENG = { has_war_with = GER }
+				threat > 0.75
+			}
+		}
+		bypass = {
+			CAN = { has_war_with = ENG }
+		}
+		completion_reward = {
+			declare_war_on = { target = ENG type = annex_everything }
+		}
+	}
+	
+	focus = { #War with Germany
+		id = CAN_war_ger
+		icon = GFX_goal_generic_major_war
+		prerequisite = { focus = CAN_north_atlantic }
+		x = 24
+		y = 7 
+		cost = 4
+		available = {
+			CAN = {
+				NOT = { is_in_faction_with = GER }
+			}
+			OR = { 
+				GER = { has_war_with = ENG }
+				threat > 0.75
+			}
+		}
+		bypass = {
+			CAN = { has_war_with = GER }
+		}
+		completion_reward = {
+			declare_war_on = { target = GER type = annex_everything }
 		}
 	}
 	

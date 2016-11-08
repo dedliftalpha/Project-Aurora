@@ -5,29 +5,29 @@
 
 add_namespace = canada
 
-country_event = { # The Political Situation
-	id = canada.1
-	title = canada.1.t
-	desc = canada.1.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Political Situation
+	# id = canada.1
+	# title = canada.1.t
+	# desc = canada.1.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		date > 1936.1.1
-	}
+	# trigger = {
+		# tag = CAN
+		# date > 1936.01.01
+	# }
 	
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 1
+	# }
 
-	option = {
-		name = canada.1.a
+	# option = {
+		# name = canada.1.a
 		
-		set_country_flag = CAN_start
-	}
-}
+		# set_country_flag = CAN_start
+	# }
+# }
 
 country_event = { # Death of King George V
 	id = canada.2
@@ -40,11 +40,10 @@ country_event = { # Death of King George V
 	trigger = {
 		tag = CAN
 		date > 1936.1.1
-		has_country_flag = CAN_start
 	}
 
 	mean_time_to_happen = {
-		days = 5
+		days = 2
 	}
 
 	option = {
@@ -56,7 +55,13 @@ country_event = { # Death of King George V
 		
 		set_country_flag = CAN_king_ed
 		
-		add_ideas = CAN_divided_nation
+		if = {
+			limit = {
+				CAN = { NOT = { has_idea = CAN_divided_nation }}
+			}
+			add_ideas = CAN_divided_nation
+		}
+		
 
 		create_country_leader = {
 			name = "King Edward VIII"
@@ -67,7 +72,7 @@ country_event = { # Death of King George V
 			traits = {}
 		}
 
-		hidden_effect = { country_event = { id = canada.3 days = 1 }}
+		#hidden_effect = { country_event = { id = canada.3 days = 1 }}
 	}
 }
 
@@ -143,12 +148,12 @@ country_event = { # The Heir Apparent
             popularity = 0.25
         }
 
-		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		#set_politics = { ruling_party = social_conservatist elections_allowed = no }
 
 		hidden_effect = { 
 			#country_event = { id = canada.4 days = 1 }
 			country_event = { id = canada.9 days = 1 }
-			set_country_flag = CAN_CONSERVATIVE
+			#set_country_flag = CAN_CONSERVATIVE
 		}
 	}
 
@@ -1499,129 +1504,105 @@ country_event = { # Conscription Riots
 	}	
 }
 
-############################
-#The Georgian Line
-############################
-
-country_event = { # The Georgian Line
-	id = canada.37
-	title = canada.37.t
+country_event = { #PSA response to treaty offer
+	id = canada.37 
+	title = canada.37.t 
 	desc = canada.37.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 	
-	trigger = {
-		tag = CAN
-		country_exists = CSA
-		NOT = { is_in_faction_with = CSA }
-		NOT = { is_puppet_of = CSA }
-		NOT = { has_war_with = CSA }
-		has_global_flag = END_ACW
-		owns_state = 467
-		owns_state = 682
-		owns_state = 276
-		controls_state = 467
-		controls_state = 682
-		controls_state = 276
+	option = { #accept
+		name = canada.37.a 
+		
+		ai_chance = {
+			factor = 95
+			modifier = {
+				factor = 0.5
+				OR = {
+					is_guaranteed_by = JAP
+					is_guaranteed_by = GER 
+					is_guaranteed_by = RUS
+				}
+			}
+			modifier = {
+				factor = 0 
+				is_guaranteed_by = USA 
+			}
+		}
+		
+		give_military_access = CAN
+		
+		hidden_effect = { set_country_flag = PSA_ACCEPT_CAN_TREATY }
+		
+		CAN = { 
+			give_guarantee = CAL 
+			add_opinion_modifier = { target = CAL modifier = CANADA_GUARANTEE_PSA }
+			country_event = { id = canada.38 days = 1 }
+		}
 	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	option = {
-		name = canada.37.a
-
-		add_ideas = CAN_FORTS
-
-		set_country_flag = CAN_FORTS
+	
+	option = { #reject 
+		name = canada.37.b 
+		
+		ai_chance = {
+			factor = 5 
+		}
+		
+		add_opinion_modifier = { target = CAN modifier = PSA_REJECT_CAN }
+		add_political_power = 100
+		
+		CAN = { country_event = { id = canada.39 days = 1 }}
 	}
 }
 
-country_event = { # The Georgian Line
-	id = canada.38
-	title = canada.38.t
+country_event = {
+	id = canada.38 
+	title = canada.38.t 
 	desc = canada.38.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	is_triggered_only = yes 
 	
-	trigger = {
-		tag = CAN
-		has_country_flag = CAN_FORTS
-		NOT = { has_war_with = CSA }
-		NOT = { has_country_flag = CAN_FORTS_CONSTRUCTED }
-	}
-
-	mean_time_to_happen = {
-		days = 180
-	}
-
 	option = {
-		name = canada.38.a
-
-		remove_ideas = CAN_FORTS
-		clr_country_flag = CAN_FORTS
-		set_country_flag = CAN_FORTS_CONSTRUCTED
-		add_political_power = 20
-
-		467 = { add_building_construction = { type = bunker province = 1873 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 4790 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 1848 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 12145 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 4875 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 7899 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 1769 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 4270 	level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 6625 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 3605 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 749 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 9667 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 9711 level = 2 instant_build = yes }}
+		name = canada.38.a 
 	}
 }
 
-country_event = { # The Georgian Line
-	id = canada.39
-	title = canada.39.t
-	desc = canada.39.d
+country_event = {
+	id = canada.39 
+	title = canada.39.t 
+	desc = canada.39.d 
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	is_triggered_only = yes 
 	
-	trigger = {
-		tag = CAN
-		has_country_flag = CAN_FORTS
-		has_war_with = CSA
-		NOT = { has_country_flag = CAN_FORTS_CONSTRUCTED }
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
-
 	option = {
 		name = canada.39.a
-
-		remove_ideas = CAN_FORTS
-		clr_country_flag = CAN_FORTS
-		set_country_flag = CAN_FORTS_CONSTRUCTED
-		add_political_power = 20
-
-		467 = { add_building_construction = { type = bunker province = 1873 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 4790 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 1848 level = 2 instant_build = yes }}
-		467 = { add_building_construction = { type = bunker province = 12145 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 4875 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 7899 level = 2 instant_build = yes }}
-		682 = { add_building_construction = { type = bunker province = 1769 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 4270 	level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 6625 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 3605 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 749 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 9667 level = 2 instant_build = yes }}
-		276 = { add_building_construction = { type = bunker province = 9711 level = 2 instant_build = yes }}
+		
+		ai_chance = {
+			factor = 90
+		}
+	}
+	
+	option = {
+		name = canada.39.b 
+		
+		ai_chance = {
+			factor = 10 
+			modifier = {
+				factor = 0
+				OR = { 
+					CAN = { has_war_with = USA }
+					CAN = { has_war_with = CSA }
+					CAN = { has_war_with = ENG }
+					CAN = { has_war_with = GER }
+				}
+			}
+		}
+		
+		add_named_threat = { threat = 8 name = CAN_PSA_war_t }
+		declare_war_on = { target = CAL type = annex_everything }
 	}
 }
 
@@ -6142,14 +6123,15 @@ country_event = { #Entente Air Training Scheme -- gives canada allies an event t
 		ai_chance = { factor = 90 }
 		hidden_effect = {
 			every_country = {
-					limit = {
-						AND = { 
-							is_in_faction_with = CAN 
-							NOT = { tag = CAN }
-						}
+				limit = {
+					AND = { 
+						is_in_faction_with = CAN 
+						NOT = { tag = CAN }
 					}
-					country_event = { days = 1 id = canada.203 }
+				}
+				country_event = { days = 1 id = canada.203 }
 			}
+			set_global_flag = EATS_ACTIVE
 		}
 	}
 	option = {

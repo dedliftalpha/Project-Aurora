@@ -1504,6 +1504,8 @@ country_event = { # Conscription Riots
 	}	
 }
 
+### PSA Events ###
+
 country_event = { #PSA response to treaty offer
 	id = canada.37 
 	title = canada.37.t 
@@ -1536,7 +1538,8 @@ country_event = { #PSA response to treaty offer
 		hidden_effect = { set_country_flag = PSA_ACCEPT_CAN_TREATY }
 		
 		CAN = { 
-			give_guarantee = CAL 
+			give_guarantee = CAL
+			diplomatic_relation = { country = CAL relation = non_aggression_pact }
 			add_opinion_modifier = { target = CAL modifier = CANADA_GUARANTEE_PSA }
 			country_event = { id = canada.38 days = 1 }
 		}
@@ -1556,7 +1559,7 @@ country_event = { #PSA response to treaty offer
 	}
 }
 
-country_event = {
+country_event = { 
 	id = canada.38 
 	title = canada.38.t 
 	desc = canada.38.d
@@ -1569,7 +1572,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { #PSA rejects treaty
 	id = canada.39 
 	title = canada.39.t 
 	desc = canada.39.d 
@@ -1577,7 +1580,7 @@ country_event = {
 	
 	is_triggered_only = yes 
 	
-	option = {
+	option = { #oh well
 		name = canada.39.a
 		
 		ai_chance = {
@@ -1585,7 +1588,7 @@ country_event = {
 		}
 	}
 	
-	option = {
+	option = { #declare war
 		name = canada.39.b 
 		
 		ai_chance = {
@@ -1601,8 +1604,59 @@ country_event = {
 			}
 		}
 		
-		add_named_threat = { threat = 8 name = CAN_PSA_war_t }
+		add_named_threat = { threat = 10 name = CAN_PSA_war_t }
 		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #PSA gets alliance offer from CAN 
+	id = canada.207
+	title = canada.207.t 
+	desc = canada.207.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #accept
+		name = canada.207.a 
+			
+		CAN = { country_event = { id = canada.208 days = 1 }}
+		add_opinion_modifier = { target = CAN modifier = CAN_PSA_JOINS_ENTENTE }
+	}
+	
+	option = { #reject 
+		name = canada.207.b 
+		
+		add_opinion_modifier = { target = CAN modifier = PSA_REJECTS_ALLIANCE }
+	}
+}
+
+country_event = {
+	id = canada.208 
+	title = canada.208.t 
+	desc = canada.208.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.208.a
+		
+		add_to_faction = CAL 
+		add_opinion_modifier = { target = CAL modifier = PSA_JOINS_ENTENTE }
+	}
+}
+
+country_event = {
+	id = canada.209 
+	title = canada.209.t 
+	desc = canada.209.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		 name = canada.209.a
 	}
 }
 
@@ -3504,6 +3558,7 @@ country_event = { # Irish-Canadian Treaty
 		add_opinion_modifier = { target = CAN modifier = CAN_IRE_treaty_accept }
 		CAN = {
 			give_guarantee = IRE 
+			diplomatic_relation = { country = IRE relation = non_aggression_pact }
 			country_event = { id = canada.55 days = 1 }
 		}
 	}
@@ -3899,79 +3954,79 @@ country_event = { # Disturbances in the USA!
 		random_owned_state = { remove_building = { type = industrial_complex level = 1 }}
 	}
 }
-### These are USA response events and should be located there if used ###
-# country_event = { # Edward VIII sends a letter to Hoover
-	# id = canada.69
-	# title = canada.69.t
-	# desc = canada.69.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+
+ country_event = { # Edward VIII sends a letter to Hoover
+	 id = canada.69
+	 title = canada.69.t
+	 desc = canada.69.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.69.a
+	 option = {
+		 name = canada.69.a
 
-		# add_political_power = -20
-	# }
-# }
+		 add_political_power = -20
+	 }
+ }
 
-# country_event = { # Edward VIII sends a letter to Mac Arthur
-	# id = canada.70
-	# title = canada.70.t
-	# desc = canada.70.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+ country_event = { # Edward VIII sends a letter to Mac Arthur
+	 id = canada.70
+	 title = canada.70.t
+	 desc = canada.70.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.70.a
+	 option = {
+		 name = canada.70.a
 
-		# add_political_power = 20
-	# }
-# }
+		 add_political_power = 20
+	 }
+ }
 
-# country_event = { # Canada supports us!
-	# id = canada.71
-	# title = canada.71.t
-	# desc = canada.71.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+ country_event = { # Canada supports us!
+	 id = canada.71
+	 title = canada.71.t
+	 desc = canada.71.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.71.a
+	 option = {
+		 name = canada.71.a
 
-		# add_political_power = 20
-		# add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
-	# }
-# }
+		 add_political_power = 20
+		 add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
+	 }
+ }
 
 country_event = { # The Union of Britain at War.
 	id = canada.72
@@ -6239,4 +6294,5 @@ country_event = { #Loyalist Dissent
 		add_manpower = -1000
 	}
 	
+	## Events 207-209 located with PSA evenets 37-39
 }

@@ -1,0 +1,953 @@
+﻿####Japan foreign Events by Levi####
+add_namespace = japfor
+####################################
+
+	country_event = { #Economic exploatation of Fengtieng republic
+	id = japfor.1 
+	title = japfor.1.t 
+	desc = japfor.1.d 
+	fire_only_once = yes
+	trigger = {
+	tag = JAP 
+	OR = {
+	FNG = {
+	is_puppet_of = JAP
+					}
+					
+	controls_state = 328
+					}
+	date > 1936.1.7
+							}
+	mean_time_to_happen = { days = 1 }
+	option = {
+	name = japfor.1.a 
+	add_opinion_modifier = { target = FNG modifier = JAP_FNG_exploit }
+	add_political_power = 20
+	add_named_threat = { threat = 2 name = JAP_FNG_exploit_threat }
+	FNG = {	
+	send_equipment = { target = JAP type = support_equipment amount = 2500 
+									}
+									 }
+	add_ideas = fengiten_exploitation
+							}
+							
+					}
+					
+	country_event = {#Economic exploatation of Fengtieng republic is no longer possible
+	id = japfor.2
+	title = japfor.2.t 
+	desc = japfor.2.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = JAP 
+	has_idea = fengiten_exploitation
+	NOT = {  
+	FNG = {
+	is_puppet_of = JAP
+					}
+	AND = {
+	FNG = { NOT = { is_puppet_of = JAP } }
+	controls_state = 328
+							}
+								}
+								}
+								
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+	name = japfor.2.a 
+	add_political_power = -20 
+	remove_ideas = fengiten_exploitation
+	
+									}
+										}
+										
+##################################
+#	China and Germany expansion	 #
+##################################
+
+	news_event = {#The Great Railway Incident
+	id = japfor.3 
+	title = japfor.3.t 
+	desc = japfor.3.d 
+	is_triggered_only = yes 
+	option = {#OK
+	trigger = { NOT = { tag = JAP } }
+	name = japfor.3.a 
+										}
+	option = {#Territory will be fitting compensation
+	trigger = { tag = JAP }
+	name = japfor.3.b 
+	ai_chance = { factor = 60 }
+	add_opinion_modifier = { target = QIE modifier = JAP_railway_demand }
+	add_named_threat = { threat = 2 name = JAP_railway_demand_land }
+	QIE = {
+	country_event = { id = japfor.4 days = 2 }
+						}
+											}
+	option = {#Demand financial sanctions and monetary compensation
+	trigger = { tag = JAP }
+	name = japfor.3.c 
+	ai_chance = { factor = 30 }
+	add_opinion_modifier = { target = QIE modifier = JAP_railway_demand }
+	add_named_threat = { threat = 1 name = JAP_railway_demand_money}
+	QIE = {
+	country_event = { id = japfor.16 days = 2 }
+						}
+										}
+										
+	option = {#A Show of Force is the only course of action!
+	trigger = { tag = JAP }
+	name = japfor.3.e
+	ai_chance = { factor = 10 }
+	add_opinion_modifier = { target = QIE modifier = JAP_railway_demand }
+	add_named_threat = { threat = 3 name = JAP_railway_war }
+	add_political_power = -60 
+	QIE = {
+	country_event = { id = japfor.18 days = 2 }
+	
+						}
+	declare_war_on = { target = QIE type = annex_everything }
+										}
+										
+										}
+										
+	country_event = {#Territorial Demands
+	id = japfor.4 
+	title = japfor.4.t 
+	desc = japfor.4.d 
+	is_triggered_only = yes 
+	option = {
+	name = japfor.4.a 
+	ai_chance = { factor = 23 }
+	add_political_power = -200
+	JAP = {
+	country_event = { id = japfor.5 days = 2 }
+							}
+							}								
+	option = {#Put our fate in Berlin's hands, appeal to Germany for Intervention
+	name = japfor.4.b 
+	ai_chance = { factor = 43 }
+	trigger = {
+	GER = { exists = yes }
+	NOT = {
+	QIE = { has_war_with = GER }
+	
+					}
+	
+								}
+	GER = {
+	country_event = { id = japfor.6 days = 2 }
+							}
+	
+												}
+	option = {#Reject their demands outright
+	name = japfor.4.c 
+	ai_chance = { factor = 34 }
+	JAP = {
+	country_event = { id = japfor.7 days = 2 }
+							}
+									}
+												}
+												
+	country_event = {#The Qing Empire bows to our demands
+	id = japfor.5 
+	title = japfor.5.t 
+	desc = japfor.5.d 
+	is_triggered_only = yes 
+	option = {
+	name = japfor.5.a 
+	add_political_power = 100
+	transfer_state = 608
+	transfer_state = 611
+									}
+				}
+				
+	country_event = {#The Qing Asks for Intervention 
+	id = japfor.6 
+	title = japfor.6.t 
+	desc = japfor.6.d 
+	is_triggered_only = yes 
+	option = {#The Japanese claims are fabricated, reject them
+	name = japfor.6.a 
+	ai_chance = { factor = 74 }
+	add_opinion_modifier = { target = QIE modifier = JAP_GER_QIE_QIE }		
+	add_opinion_modifier = { target = JAP modifier = JAP_GER_QIE_JAP }
+	JAP = { country_event = { id = japfor.9 days = 2  } }
+
+									}
+	option = {#Offer a compromise to appease the Japanese
+	name = japfor.6.b 
+	ai_chance = { factor = 24 }
+	JAP = { country_event = { id = japfor.12 days = 2 } }
+											}
+	option = {#Back Japan in their demands
+	name = japfor.6.c 
+	ai_chance = { factor = 5 }
+	add_opinion_modifier = { target = JAP modifier = JAP_GER_QIE_QIE }		
+	add_opinion_modifier = { target = QIE modifier = JAP_GER_QIE_JAP }
+	QIE = {
+	country_event = { id = japfor.7 days = 2 }
+						}
+								}
+									}
+									
+	country_event = {#Germany backs Japan !
+	id = japfor.7 
+	title = japfor.7.t 
+	desc = japfor.7.d 
+	is_triggered_only = yes 
+	option = {#Give into the demands of the Japanese
+	name = japfor.7.a 
+	ai_chance = { factor = 50 }
+	add_opinion_modifier = { target = GER modifier = QIE_GER_ABANDON }
+	JAP = { 
+	country_event = { id = japfor.5 days = 2 }				
+					}
+														}
+	option = {#Reject their demands outright
+	name = japfor.7.b
+	ai_chance = { factor = 20 }
+	if = { limit = { is_in_faction_with = GER } GER = { remove_from_faction = QIE } }
+	JAP = {
+	country_event = { id = japfor.8 days = 2  }
+								}
+									}
+										}
+	
+	country_event = {#A lonely Qing refuses our Demands
+	id = japfor.8 
+	title = japfor.8.t 
+	desc = japfor.8.d 
+	is_triggered_only = yes 
+	option = {#War it is!
+	name = japfor.8.a 
+	ai_chance = { factor = 90 }
+	declare_war_on = { target = QIE type = annex_everything }
+										}
+	option = {#Back down!
+	name = japfor.8.b 
+	ai_chance = { factor = 10 }
+	add_political_power = -160
+											}
+											
+											
+														}
+		
+		
+	country_event = {#A German-Backed Qing refuses our Demands
+	id = japfor.9 
+	title = japfor.9.t 
+	desc = japfor.9.d 
+	is_triggered_only = yes 
+	option = {#No Matter, we will carry through!
+	name = japfor.9.a 
+	ai_chance = { factor = 75 }
+	set_global_flag = JAP_GER_WAR
+	declare_war_on = { target = QIE type = annex_everything }
+	declare_war_on = { target = GER type = annex_everything }
+	GER = { country_event = { id = japfor.10 days = 2 } }
+						
+						
+						}
+						
+	option = {#back down
+	name = japfor.9.b 
+	ai_chance = { factor = 25 }
+	add_political_power = -200 
+	add_named_threat = { threat = -5 name = jap_back_down }
+										}
+	
+														}
+														
+	country_event = {#Japan Attacks the Qing and German Empires
+	id = japfor.10 
+	title = japfor.10.t 
+	desc = japfor.10.d 
+	is_triggered_only = yes 
+	option = {#We must Ally with the Qing
+	name = japfor.10.a 
+	ai_chance = { factor = 99 }
+	add_to_faction = QIE 
+							}
+							
+	option = {#They will stand seperately
+	name = japfor.10.b 
+	ai_chance = { factor = 1 }
+	add_opinion_modifier = { target = QIE modifier = GER_QIE_NO_ALLY }
+	
+							}
+									}
+	
+	country_event = {#Offer of Appeasement
+	id = japfor.11 
+	title = japfor.11.t 
+	desc = japfor.11.d 
+	is_triggered_only = yes 
+	option = {#Their offer is fair, we accept the German's comprimise
+	name = japfor.11.a 
+	ai_chance = { factor = 50 }
+	add_named_threat = { threat = -5 name = JAP_accepted_offer }
+	QIE = { 
+	country_event = { id = japfor.12 days = 2 }
+	
+					}
+					}
+	option = {#This is offer is not worth the paper it is written on!
+	name = japfor.11.b 
+	ai_chance = { factor = 50 }
+	GER = { 
+		country_event = { id = japfor.15 days = 2 }
+		
+		}
+							}
+										}
+	
+
+									
+	country_event = {	#Comprimise	
+	id = japfor.12 
+	title = japfor.12.t 
+	desc = japfor.12.d 
+	is_triggered_only = yes 
+	option = {#One worthless state in exchange for peace? Its a deal!
+	name = japfor.12.a
+	ai_chance = { factor = 95 }
+	set_global_flag = QIE_JAP_COMPRIMISE
+	diplomatic_relation = { country = JAP relation = non_aggression_pact }
+	JAP = { 
+	country_event = { id = japfor.13 days = 2 }	
+				
+						
+										}
+										
+	add_named_threat = { threat = -3 name = QIE_COMPROMISE  }
+	add_political_power = -60 		
+	
+									}
+	option = {#We won't give them an inch!
+	name = japfor.12.b 
+	ai_chance = { factor = 5 }
+	add_political_power = 60
+	JAP = { country_event = { id = japfor.14 days = 2 } }
+									}
+										}
+										
+	country_event = {#The Qing Empire Accepts The Comprimise
+	id = japfor.13 
+	title = japfor.13.t 
+	desc = japfor.13.d 
+	is_triggered_only = yes 
+	option = {#Huzzah! Our Fengtian allies will administrate the new territory!
+	name = japfor.13.a 
+	trigger = { FNG = { is_puppet_of = JAP } }
+		FNG = { 
+			transfer_state = 621
+			transfer_state = 611
+									}
+	add_political_power = 100
+										}
+	option = {#huzzah!
+	name = japfor.13.b 
+	trigger = { NOT = { FNG = { is_puppet_of = JAP } } }
+		JAP = { 
+			transfer_state = 621
+			transfer_state = 611
+									}
+	add_political_power = 100
+									}
+		
+		}
+	country_event = {#The Qing refuses the German Comprimise
+	id = japfor.14 
+	title = japfor.14.t 
+	desc = japfor.14.d 
+	is_triggered_only = yes 
+	option = {
+	name = japfor.14.a 
+	declare_war_on = { target = QIE type = annex_everything }
+	GER = { 
+		country_event = { id = japfor.15 days = 2 }
+								}
+								}
+											}
+											
+	country_event = {#The Negotiations Break Down; The War Begins
+	id = japfor.15
+	title = japfor.15.t 
+	desc = japfor.15.d 
+	is_triggered_only = yes 
+	option = {#We must Protect the Qing; Declare War on Japan!
+	ai_chance = { factor = 80 }
+	add_to_faction = QIE
+	declare_war_on = { target = JAP type = annex_everything }
+											}
+	option = {#We tried to solve the conflict peacefully, we can not afford war
+	name = japfor.15.b 
+	ai_chance = { factor = 20 }
+	add_opinion_modifier = { target = QIE modifier = GER_QIE_NO_ALLY }
+	add_political_power = -60
+														}
+															}
+															
+	country_event = {#Japanese Sanctions and Monetary Compensasion
+	id = japfor.16
+	title = japfor.16.t
+	desc = japfor.16.d 
+	is_triggered_only = yes 
+	option = {#Give into the demands of the Japanese
+	name = japfor.16.a 
+	ai_chance = { factor = 50 }
+	JAP = { 
+	country_event = { id = japfor.17 days = 2	}
+	}
+	send_equipment = { target = JAP type = support_equipment amount = 500
+	
+								}
+	add_political_power = -100
+
+							}
+	option = {#reject
+	name = japfor.16.b 
+	ai_chance = { factor = 50 }
+	JAP = { 
+	country_event = { id = japfor.9 days = 2 }
+							}
+	
+							}
+												}
+												
+	country_event = {#The Qing Empire bows to our demands
+	id = japfor.17 
+	title = japfor.5.t 
+	desc = japfor.5.d 
+	is_triggered_only = yes 
+	option = {
+	name = japfor.5.a 
+	add_political_power = 100
+									}
+				}
+				
+	country_event = {#The Qing appeal for help
+	id = japfor.18 
+	title = japfor.18.t 
+	desc = japfor.18.d 
+	is_triggered_only = yes 
+	option = {#Japanese expansion into Asia must be stopped at all costs!
+	name = japfor.18.a 
+	ai_chance = { factor = 75 }
+		add_to_faction = QIE
+	declare_war_on = { target = JAP type = annex_everything }
+		
+		
+												}
+	option = {#We must help the Qing, but we can not get militarily involved"
+	name = japfor.18.b 
+	ai_chance = { factor = 22 }
+	set_global_flag = CSX_GER_AID
+											}
+	option = {#Japan is justified, we refuse to get involved
+	name = japfor.18.c
+	ai_chance = { factor = 3 }
+	add_opinion_modifier = { target = QIE modifier = QIE_GER_ABANDON }
+								}
+										}
+	country_event = {#Qing pushed back Japan
+	id = japfor.19 
+	title = japfor.19.t 
+	desc = japfor.19.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = QIE 
+	has_war_with = JAP
+	is_puppet = no 
+	controls_state = 716
+	controls_state = 328 
+	OR = {
+	AND = {
+	controls_state = 527 
+	controls_state = 525 
+	}
+	AND = {
+	KOR = {
+	is_puppet_of = QIE 
+	controls_state = 527 
+	controls_state = 525 
+	
+	}
+						}
+							}
+	controls_state = 613 
+	controls_state = 608 
+	
+								}
+	mean_time_to_happen = { days = 20 }
+	option = {#humiliate japan 
+	name = japfor.19.a 
+	ai_chance = { factor = 95 }
+	add_political_power = 400
+	JAP = { country_event = { id = japfor.20 days = 2 } }
+								}
+	option = {#push on
+	name = japfor.19.b 
+	ai_chance = { factor = 5 }
+	add_political_power = -100
+						}
+												}
+	
+	country_event = {#The Fading Sun
+	id = japfor.20  
+	title = japfor.20.t 
+	desc = japfor.20.d 
+	is_triggered_only = yes 
+	option = {#surrender
+	name = japfor.20.a 
+	ai_chance = { factor = 90 }
+	white_peace = QIE
+	white_peace = CHI 
+	white_peace = XSM
+	white_peace = YUN
+	white_peace = TIB 
+	white_peace = LEC
+	white_peace = BUR
+			add_state_claim = 757
+		remove_state_claim = 737
+		remove_state_claim = 634
+		remove_state_claim = 647
+		remove_state_claim = 684
+		remove_state_claim = 646
+		remove_state_claim = 633 
+		remove_state_claim = 639
+		remove_state_claim = 725
+		remove_state_claim = 634 
+		remove_state_claim = 734 
+		remove_state_claim = 635
+		remove_state_claim = 643 
+		QIE = {
+		transfer_state = 612 
+		transfer_state = 610 
+		transfer_state = 715 
+		transfer_state = 714 
+		transfer_state = 717 
+		transfer_state = 328 
+		transfer_state = 716 
+		if = {
+		limit = { OR = { KOR = { is_in_faction_with = JAP } JAP = {owns_state = 527 owns_state = 525 }  } }
+		transfer_state = 527 
+		transfer_state = 525 
+						}
+						}
+			if = {
+		limit = { OR = { TAI = { is_in_faction_with = JAP } JAP = { owns_state = 524 } } }
+		transfer_state = 524 
+						}
+		
+		if = {
+		limit = {
+		AOG = { exists = no
+		
+						}
+		controls_state = 595
+		}
+		release = AOG		
+		QIE = {
+		annex_country = { target = AOG transfer_troops = no }
+							}
+							}
+		if = {
+		limit = {
+		YUN = { exists = no
+		
+		
+						}
+		controls_state = 325
+		}
+		release = YUN 
+		QIE = {
+		annex_country = { target = YUN transfer_troops = no }
+							}
+							}
+		end_puppet = FNG
+		end_puppet = TAI
+		end_puppet = KOR
+		end_puppet = HAW
+		end_puppet = AST
+		end_puppet = TRM
+		end_puppet = PHL
+		end_puppet = SIA 
+		end_puppet = NCH
+		end_puppet = LEC
+		end_puppet = INC 
+		end_puppet = VIE 
+		end_puppet = LAO
+		diplomatic_relation = { country = JAP relation = non_aggression_pact }
+		set_global_flag = JAP_Defeated_CSX
+		set_country_flag = JAP_ISO
+		clr_country_flag = JAP_EXP
+		clr_country_flag = JAP_EXP1
+		clr_country_flag = JAP_EXP2 
+		clr_country_flag = JAP_GER1
+		clr_country_flag = JAP_GER2 
+		clr_country_flag = JAP_RUS_CAMP
+		clr_country_flag = JAP_SIB_CAMP
+		clr_country_flag = JAP_MON_CAMP
+		clr_country_flag = JAP_RUS
+		clr_country_flag = JAP_MONRUS_CAMP
+		clr_country_flag = JAP_WEAK
+		clr_country_flag = JAP_COLONY
+		clr_country_flag = JAP_ANZAC
+		clr_country_flag = JAP_NUTS
+		QIE = {
+		country_event = { id = japfor.21 days = 3 }
+								}
+									}
+		option = {#no surrender
+		name = japfor.20.b 
+		ai_chance = { factor = 10 }
+		add_political_power = -100 
+									}
+						}
+
+		
+		country_event = {#Japan is defeated and Korea is freed
+		id = japfor.21 
+		title = japfor.21.t 
+		desc = japfor.21.d 
+		is_triggered_only = yes 
+		option = {
+		name = japfor.21.a 
+		release = KOR 
+		puppet = KOR
+		annex_country = { target = FNG transfer_troops = yes }
+		add_state_core = 612 
+		add_state_core = 610 
+		add_state_core = 715 
+		add_state_core = 714 
+		add_state_core = 717 
+		add_state_core = 328 
+		add_state_core = 716  
+							}
+		
+										}
+		
+		country_event = {#Transamur is isolated
+		id = japfor.22 
+		title = japfor.22.t 
+		desc = japfor.22.d 
+		fire_only_once = yes 
+		trigger = {
+		OR = {
+		tag = RUS 
+		tag = SOV
+		}
+		has_global_flag = JAP_Defeated_CSX	
+		TRM = {
+		controls_state = 408
+		controls_state = 409
+									}
+									}
+		mean_time_to_happen = { days = 15 }
+		option = {
+		name = japfor.22.a 
+		add_political_power = 60 
+		annex_country = { target = TRM transfer_troops = yes  }
+		add_state_core = 408
+		add_state_core = 409
+								}
+
+										
+		
+											}
+											
+		country_event =  {#Qing pushed back Japan - Germany
+		id = japfor.23 
+		title = japfor.23.t 
+		desc = japfor.23.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER
+		has_global_flag = JAP_Defeated_CSX
+		has_war_with = JAP 
+		NOT = { has_global_flag = GER_Capitulation  }
+									}
+									
+		option = {#yes 
+		name = japfor.23.a 
+		ai_chance = { factor = 75 }
+		JAP = {
+		country_event = { id = japfor.24 days = 1 }
+		
+									}
+							}
+		option = {#no 
+		name = japfor.23.b 
+		ai_chance = { factor = 25 }
+		add_political_power = -60
+								}
+													}
+		country_event = {#The Germans demand our oversea territory
+		id = japfor.24 
+		title = japfor.24.t 
+		desc = japfor.24.d 
+		is_triggered_only = yes 
+		option = {#We Give up! As long as our sacred homeland is intact!
+		name = japfor.24.a 
+		ai_chance = { factor = 25 }
+		white_peace = GER 
+		clr_country_flag = JAP_Defeated_CSX 
+		GER = {
+		transfer_state = 526 
+		transfer_state = 645
+						}
+		if = {
+		limit = {
+		PHL = { exists = no
+		
+		
+						}
+		controls_state = 327
+		}
+		release = PHL 
+		GER = {
+		annex_country = { target = PHI transfer_troops = no }
+							}
+							}
+							}
+												
+		option = {#no 
+		name = japfor.24.b 
+		ai_chance = { factor = 25 }
+		
+												}
+													}											
+		country_event = {#Qing - Early Surrender - Japan
+		id = japfor.25 
+		title = japfor.25.t
+		desc = japfor.25.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = QIE 
+		surrender_progress >0.49
+		NOT = {
+		JAP = {
+		surrender_progress > 0.05
+							}
+		controls_state = 613 
+		controls_state = 608 
+						}
+		
+								}
+								
+		option = {#surrender 
+		name = japfor.25.a 
+		ai_chance = { factor = 50 }
+		JAP = {
+		country_event = { id = japfor.26 days = 1  }
+		
+						}
+		remove_from_faction = QIE 
+		white_peace = JAP 
+								}
+		option = {#never
+		name = japfor.25.b 
+		ai_chance = { factor = 50 }
+		add_political_power = 40
+								}
+														}
+		country_event = {#Qing Empire was defeated
+		id = japfor.26 
+		title = japfor.26.t 
+		desc = japfor.26.d 
+		is_triggered_only = yes 
+		option = {#We will control the Chinese from the shadows...
+		name = japfor.26.a 
+		ai_chance = { factor = 50 }
+		puppet = QIE 
+		if = { limit = {
+		OR = {
+		FNG = { is_puppet_of = JAP }
+		FNG = { is_in_faction_with = JAP }
+							}
+					}
+		FNG = { 
+		transfer_state = 610
+		transfer_state = 612					
+									}
+									}
+		add_political_power = 200
+															}
+															
+		option = {#The Manchurians will keep the Chinese people under control
+		trigger = { 
+		OR = {
+		FNG = { is_puppet_of = JAP}
+		FNG = { is_in_faction_with = JAP }
+									}
+								}
+		name = japfor.26.b 
+		ai_chance = { factor = 50 }
+		add_political_power = 200
+			FNG = { 
+		transfer_state = 610
+		transfer_state = 612
+		country_event = { id = japfor.27 days = 1 }
+									}
+														}
+		option = {#reorganize china 
+		name = japfor.26.c 
+		trigger = { NCH = { exists = no } }
+		ai_chance = { factor = 20 }
+		     every_state = { limit = { is_controlled_by = QIE } NCH = { add_state_claim = PREV } }
+		annex_country = { target = QIE transfer_troops = no }
+		release = NCH
+		puppet = NCH
+								}
+		option = {#occupy
+		name = japfor.26.e  
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+											}
+											}
+		country_event = {#The Transfer of China
+		id = japfor.27 
+		title = japfor.27.t 
+		desc = japfor.27.d 
+		is_triggered_only = yes 
+		option = {
+		name = japfor.27.a 
+		add_political_power = 100
+		     every_state = { limit = { is_controlled_by = QIE } FNG = { add_state_claim = PREV } }
+			annex_country = { target = QIE transfer_troops = no }
+								}
+													}
+
+
+		country_event = {#Japanese proposal
+		id = japfor.28 
+		title = japfor.28.t 
+		desc = japfor.28.d 
+		is_triggered_only = yes 
+		option = {#yes 
+		name = japfor.28.a 
+		ai_chance = { factor = 85 }
+		add_opinion_modifier = { target = JAP modifier = JAP_ALLIANCE }
+		add_opinion_modifier = { target = GER modifier = JAP_ALLIANCE_BAD }
+		add_state_claim = 671 
+		add_state_claim = 670 
+		add_state_claim = 286 
+		add_state_claim = 336 
+		JAP = { country_event = { id = japfor.29 days = 3 } }
+										}
+										
+		option = {#no 
+		name = japfor.28.b 
+		ai_chance = { factor = 15 }
+		add_opinion_modifier = { target = JAP modifier = SIAM_refused }
+		add_opinion_modifier = { target = GER modifier = SIAM_refused_GER }
+		add_manpower = 5000 
+												}
+												}
+
+		country_event = {#Siam joins Co-prosperity sphere !
+		id = japfor.29 
+		title = japfor.29.t 
+		desc = japfor.29.d 
+		is_triggered_only = yes 
+		option = {
+		name = japfor.29.a 
+		add_to_faction = SIA 
+		add_opinion_modifier = { target = GER modifier = SIAM_refused_GER }
+		add_political_power = 60 
+		add_manpower = -5000
+		remove_state_claim = 336 
+								}
+												}
+												
+		country_event = {#German proposal
+		id = japfor.30 
+		title = japfor.30.t 
+		desc = japfor.30.d 
+		is_triggered_only = yes 
+		option = {#This is the only way to secure our independence !
+		name = japfor.30.a 
+		ai_chance = { factor = 85 }
+		add_opinion_modifier = { target = JAP modifier = JAP_ALLIANCE_BAD }
+		add_opinion_modifier = { target = SIA modifier = JAP_ALLIANCE_BAD }
+		add_opinion_modifier = { target = GER modifier = JAP_ALLIANCE }
+		GER = { country_event = { id = japfor.31 days = 5 } }
+		
+													}
+		option = {#Refuse their offer !
+		name = japfor.30.b 
+		ai_chance = { factor = 15 }
+		add_opinion_modifier = { target = JAP modifier = SIAM_refused_GER }
+		add_opinion_modifier = { target = GER modifier = SIAM_refused }
+		
+										}
+													}
+													
+		country_event = {#Burma joins Mitteleuropa !
+		id = japfor.31 
+		title = japfor.31.t 
+		desc = japfor.31.d 
+		is_triggered_only = yes 
+		option = {
+		name = japfor.31.a 
+		add_to_faction = BUR 
+		add_political_power = 60
+		add_manpower = -5000
+							}
+														}
+														
+		country_event = {#Involvement of AOG !
+		id = japfor.32 
+		title = japfor.32.t 
+		desc = japfor.32.d 
+		fire_only_once = yes 
+		trigger = {
+		tag = GER  
+		
+		OR = {
+		GER = { has_war_with = JAP }
+		AND = {
+		has_war_with = CHI 
+		QIE = { exists = no }
+		}
+		has_war_with = QIE 
+		
+								}
+		AOG = { 
+		exists = yes 
+		is_puppet_of = GER 
+		
+					}
+		controls_state = 64 
+		NOT = {
+		CHI = {
+		exists = yes 
+									}
+		is_in_faction_with = AOG 
+	
+										
+						}
+		AOG = {
+			has_war = no
+						}
+								}
+		mean_time_to_happen = { days = 15 }
+		option = {#Involve AOG into Asian war
+		name = japfor.32.a 
+		ai_chance = { factor = 90 }
+		add_political_power = 20 
+		AOG = {
+		country_event = { id = japfor.33 days = 2 }
+							}
+										}
+		option = {#There is no need for alliance
+		name = japfor.32.b
+		ai_chance = { factor = 10 }
+		add_political_power = -40 
+									}
+												}
+												
+		

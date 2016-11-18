@@ -256,9 +256,9 @@ country_event = { # The New Constitution
 }
 
 country_event = { # The American Union State Youth
-	id = unionstate.57
-	title = unionstate.57.t
-	desc = unionstate.57.d
+	id = unionstate.571
+	title = unionstate.571.t
+	desc = unionstate.571.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	fire_only_once = yes
@@ -273,7 +273,7 @@ country_event = { # The American Union State Youth
 	}
 
 	option = {
-		name = unionstate.57.a
+		name = unionstate.571.a
 
 		ai_chance = {
 			factor = 75
@@ -284,7 +284,7 @@ country_event = { # The American Union State Youth
 	}
 
 	option = {
-		name = unionstate.57.b
+		name = unionstate.571.b
 
 		ai_chance = {
 			factor = 25
@@ -2667,5 +2667,106 @@ country_event = { # Canada refuses!
 
 		declare_war_on = { target = CAN type = take_core_state }
 		TEX = { add_state_core = 685 }
+	}
+}
+
+country_event = { #the case of the Guantanamo bay naval base
+	id = unionstate.57
+	title = unionstate.57.t
+	desc = unionstate.57.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		TAG = TEX
+		has_global_flag = END_ACW
+		CUB = { controls_state = 818 owns_state = 818 }
+        is_puppet = no
+        NOT = { has_war_with = CUB has_war_with = CAN }		
+	}
+
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	option = { 
+		name = unionstate.57.a #demand return of the naval base
+        ai_chance = { factor = 90 }
+		add_political_power = 20
+		#should end non agression pacts between tex and cub
+		add_opinion_modifier = { target = CUB modifier = asked_return_guantanamo }
+		CUB = { country_event = { id = unionstate.58 } }
+	}
+	
+	option = { 
+		name = unionstate.57.b #our concerns are elsewhere
+        ai_chance = { factor = 10 }
+		add_political_power = -100
+	}
+}
+
+country_event = { #The Demands of the American Union State
+	id = unionstate.58
+	title = unionstate.58.t
+	desc = unionstate.58.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = unionstate.58.a #We must comply
+        ai_chance = { factor = 80 }
+		add_political_power = -20
+		TEX = { transfer_state = 818 }
+		add_opinion_modifier = { target = TEX modifier = accept_return_guantanamo }
+		TEX = { country_event = { id = unionstate.59 } }
+	}
+	
+	option = { 
+		name = unionstate.58.b #they'll get over it
+        ai_chance = { factor = 20 }
+		add_political_power = 20
+		add_opinion_modifier = { target = TEX modifier = refuse_return_guantanamo }
+		TEX = { country_event = { id = unionstate.60 } }
+	}
+}
+
+country_event = { #The Cubans Have Complied
+	id = unionstate.59
+	title = unionstate.59.t
+	desc = unionstate.59.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = unionstate.59.a
+		add_state_core = 818
+		add_political_power = 20
+		add_opinion_modifier = { target = CUB modifier = accept_return_guantanamo }
+	}
+}
+
+country_event = { #The Cubans Defies Us!
+	id = unionstate.60
+	title = unionstate.60.t
+	desc = unionstate.60.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = unionstate.60.a #this slight won't go unanswered
+        ai_chance = { factor = 80 }
+		add_state_core = 818
+		add_opinion_modifier = { target = CUB modifier = maintained_claim_guantanamo }
+	}
+	
+	option = { 
+		name = unionstate.60.b #This hubris will be met with arms!
+        ai_chance = { factor = 20 }
+		add_state_core = 818
+		declare_war_on = { target = CUB type = annex_everything }
 	}
 }

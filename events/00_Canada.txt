@@ -5901,105 +5901,40 @@ country_event = { # Military Industry Reform
 	desc = canada.100.d 
 	picture = GFX_report_event_spain_civil_war_soldiers 
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		NOT = { has_completed_focus = CAN_C7 }
+		focus_progress = {
+			focus = CAN_C7
+			progress > 0.20
+		}
+	}
 	
 	option = { #CD Howe's Plan
 		name = canada.100.a 
 		
 		ai_chance = { factor = 30 }
-		
-		331 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-			}
-		}
-		332 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-			}
-		}
-		464 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 4
-			}
-		}
-		465 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 4
-			}
-		}
-		add_ideas = CAN_howes_conversion
+		set_country_flag = HOWES_PLAN
+		country_event = { days = 7 id = canada.101 }
 	}
 	
-	option = { #Compromise 
-		name = canada.100.b 
+	# option = { #Compromise 
+		# name = canada.100.b 
 		
-		ai_chance = { factor = 40 }
+		# ai_chance = { factor = 40 }
 	
-		add_ideas = CAN_industrial_compromise
-	}
+		# add_ideas = CAN_industrial_compromise
+	# }
 	
 	option = { #Tory Plan and remove Howe 
 		name = canada.100.c 
 		
 		ai_chance = { factor = 30 }
 		
-		473 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = arms_factory
-						level = 4
-						instant_build = yes
-				}
-			}
-		}
-		466 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = arms_factory
-						level = 4
-						instant_build = yes
-				}
-			}
-		}
+		set_country_flag = TORY_PLAN
+		country_event = { days = 7 id = canada.101 }
 	}
 }
 
@@ -6016,8 +5951,9 @@ country_event = { # Conscription Debate
 		
 		ai_chance = { factor = 30 }
 		
-		add_ideas = extensive_conscription
+		set_country_flag = YES_CONSCRIPTION
 		add_national_unity  = -0.05
+		country_event = { days = 7 id = canada.102 }
 	}
 	
 	option = { #Compromise for limited conscription
@@ -6025,23 +5961,19 @@ country_event = { # Conscription Debate
 		
 		ai_chance = { factor = 40 }
 		
-		add_ideas = limited_conscription
+		set_country_flag = LIMITED_CONSCRIPTION
+		country_event = { days = 7 id = canada.102 }	
 	}
 	
-	option = { #No Conscription and focus on quality
+	option = { #No Conscription
 		name = canada.101.c 
 		
 		ai_chance = { factor = 30 }
 		
+		set_country_flag = NO_CONSCRIPTION
+		
 		add_national_unity = 0.05
-		add_tech_bonus = {		
-			name = army_reform_bonus
-			bonus = 0.5
-			uses = 3
-			category = land_doctrine
-			category = air_doctrine
-			category = naval_doctrine
-		}
+		country_event = { days = 7 id = canada.102 }
 	}
 }
 
@@ -6058,26 +5990,27 @@ country_event = { # Domestic Security Debate
 		
 		ai_chance = { factor = 30 }
 		
+		set_country_flag = NO_SECRET_POLICE
 		add_timed_idea = {
 			idea = CAN_country_united
-			days = 1095
+			days = 365
 		}
 	}
 	
-	option = { #Secret Police Compromise 
-		name = canada.102.b 
+	# option = { #Secret Police Compromise 
+		# name = canada.102.b 
 		
-		ai_chance = { factor = 40 }
+		# ai_chance = { factor = 40 }
 		
-		add_ideas = CAN_Progressive_Intelligence
-	}
+		# add_ideas = CAN_Progressive_Intelligence
+	# }
 	
 	option = { #Police Crackdown
 		name = canada.102.c 
 		
 		ai_chance = { factor = 30 }
 		
-		add_ideas = CAN_Mounties
+		set_country_flag = YES_SECRET_POLICE
 		add_national_unity = -0.05
 	}
 }
@@ -6093,13 +6026,122 @@ country_event = { # Vote on Bill C7
 	option = { #Bill C7 passes with strong support
 		name = canada.103.a 
 		
-		ai_chance = { factor = 60 }
+		ai_chance = { factor = 80 }
 		
 		remove_ideas = CAN_divided_nation
 		remove_ideas = CAN_conscription_debate
 		remove_ideas = CAN_bill_c_7_debate
 		set_country_flag = CAN_C7_pass
 		add_national_unity = 0.05
+		
+		# Arms Industry Reform
+		if = {
+			limit = { has_country_flag = HOWES_PLAN }
+			331 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 2
+				}
+			}
+			332 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 2
+				}
+			}
+			464 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 4
+				}
+			}
+			465 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 4
+				}
+			}
+			add_ideas = CAN_howes_conversion
+		}
+		if = {
+			limit = { has_country_flag = TORY_PLAN }
+			473 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes
+					}
+				}
+			}
+			466 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes
+					}
+				}
+			}
+		}
+		
+		# Conscription Law 
+		if = {
+			limit = { has_country_flag = YES_CONSCRIPTION }
+			add_ideas = extensive_conscription
+		}
+		if = {
+			limit = { has_country_flag = LIMITED_CONSCRIPTION }
+			add_ideas = limited_conscription
+		}
+		if = {
+			limit = { has_country_flag = NO_CONSCRIPTION}
+			add_ideas = can_professional_army
+		}
+		
+		# Secret Police 
+		if = {
+			limit = { has_country_flag = YES_SECRET_POLICE }
+			add_ideas = CAN_Mounties
+		}
+		if = {
+			limit = { has_country_flag = NO_SECRET_POLICE }
+			#Currently nothing happens.
+		}
 	}
 
 	# option = { #Bill C7 barely passes with strong opposition
@@ -6116,15 +6158,13 @@ country_event = { # Vote on Bill C7
 	option = { #Bill C7 fails!
 		name = canada.103.c
 		
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 20 }
 		
 		#remove_ideas = CAN_divided_nation
 		remove_ideas = CAN_conscription_debate
 		remove_ideas = CAN_bill_c_7_debate
-		remove_ideas = CAN_Mounties
-		remove_ideas = CAN_Progressive_Intelligence
 		set_country_flag = CAN_C7_fail
-		add_national_unity = -0.1
+		add_national_unity = -0.10
 		country_event = { days = 1 id = canada.13 }
 	}
 }

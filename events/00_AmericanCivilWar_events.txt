@@ -14737,6 +14737,157 @@ country_event = {
 	}	
 }
 
+country_event = { #United states in disarray CUB
+	id = amcivwar.342
+	title = amcivwar.342.t
+	desc = amcivwar.342.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		TAG = CUB
+		country_exists = TEX
+        USA = { controls_state = 818 }		
+	}
+
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = { 
+		name = amcivwar.342.a #Seize the naval base
+        ai_chance = { factor = 100 }
+		add_state_core = 818
+		USA = { country_event = { id = amcivwar.343 } }
+	}
+	
+	option = { 
+		name = amcivwar.342.b #naaah
+        ai_chance = { factor = 0 }
+		add_political_power = -40
+		add_opinion_modifier = { target = USA modifier = CUB_not_seize_guan }
+	}
+}
+
+country_event = { #Cuba Seizes Guantanamo naval base
+	id = amcivwar.343
+	title = amcivwar.343.t
+	desc = amcivwar.343.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = amcivwar.343.a #too bad
+		CUB = { transfer_state = 818 }
+		remove_state_core = 818
+		add_state_claim = 818
+	}
+	
+}
+
+country_event = { #Guantanamo bay naval base return
+	id = amcivwar.344
+	title = amcivwar.344.t
+	desc = amcivwar.344.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		TAG = USA
+		has_global_flag = END_ACW
+		CUB = { controls_state = 818 owns_state = 818 }
+        is_puppet = no
+        NOT = { has_war_with = CUB has_war_with = CAN }		
+	}
+
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	option = { 
+		name = amcivwar.344.a #demand return of the naval base
+        ai_chance = { factor = 90 }
+		add_political_power = 20
+		#should end non agression pacts between us and cub
+		add_opinion_modifier = { target = CUB modifier = asked_return_guantanamo }
+		CUB = { country_event = { id = amcivwar.345 } }
+	}
+	
+	option = { 
+		name = amcivwar.344.b #our concerns are elsewhere
+        ai_chance = { factor = 10 }
+		add_political_power = -100
+	}
+}
+
+country_event = { #The United States' request
+	id = amcivwar.345
+	title = amcivwar.345.t
+	desc = amcivwar.345.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = amcivwar.345.a #We must comply
+        ai_chance = { factor = 80 }
+		add_political_power = -20
+		USA = { transfer_state = 818 }
+		add_opinion_modifier = { target = USA modifier = accept_return_guantanamo }
+		USA = { country_event = { id = amcivwar.346 } }
+	}
+	
+	option = { 
+		name = amcivwar.345.b #they'll get over it
+        ai_chance = { factor = 20 }
+		add_political_power = 20
+		add_opinion_modifier = { target = USA modifier = refuse_return_guantanamo }
+		USA = { country_event = { id = amcivwar.347 } }
+	}
+}
+
+country_event = { #The United States' request cubans agreed
+	id = amcivwar.346
+	title = amcivwar.346.t
+	desc = amcivwar.346.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = amcivwar.346.a
+		add_state_core = 818
+		add_political_power = 20
+		add_opinion_modifier = { target = CUB modifier = accept_return_guantanamo }
+	}
+}
+
+country_event = { #The United States' request cubans refuse
+	id = amcivwar.347
+	title = amcivwar.347.t
+	desc = amcivwar.347.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = amcivwar.347.a #this slight won't go unanswered
+        ai_chance = { factor = 80 }
+		add_state_core = 818
+		add_opinion_modifier = { target = CUB modifier = maintained_claim_guantanamo }
+	}
+	
+	option = { 
+		name = amcivwar.347.b #This hubris will be met with arms!
+        ai_chance = { factor = 20 }
+		add_state_core = 818
+		declare_war_on = { target = CUB type = annex_everything }
+	}
+}
+
 country_event = { 
 	id = amcivwar.341
 	title = amcivwar.341.t

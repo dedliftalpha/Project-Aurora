@@ -577,7 +577,7 @@ focus_tree = {
 			NOT = { has_idea = CAN_divided_nation } 
 		}
 		completion_reward = {
-			country_event = { id = canada.24 days = 1 }
+			#country_event = { id = canada.24 days = 1 }
 			276 = {
 				if = {
 					limit = {
@@ -669,7 +669,7 @@ focus_tree = {
 	}
 	
 		
-	#Industrial Subsidies I
+	#Crown Corporations
 	focus = {
 		id = CAN_factory
 		icon = GFX_goal_generic_construct_civ_factory
@@ -678,6 +678,7 @@ focus_tree = {
 		cost = 10 
 		prerequisite = { focus = CAN_national_developmment }
 		completion_reward {
+			add_timed_idea = { idea = king_new_companies days = 180 }
 			276 = {
 				if = {
 					limit = {
@@ -1377,38 +1378,71 @@ focus_tree = {
 	
 	##After C-7##
 	
-	focus = {
-		id = CAN_constitution
+	focus = { #Purge the Opposition
+		id = CAN_purge_opposition
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = CAN_C7 }
-		x = 20 
+		x = 18 
 		y = 2
-		cost = 2
+		cost = 6
 		available = { 
 			has_country_flag = CAN_king_ed
-			not = { has_country_flag = ongoing_election } 
+			not = { has_country_flag = ongoing_election }
+			has_country_flag = CAN_king_ed
+			has_country_flag = CAN_C7_fail
+			OR = {
+					has_government = paternal_autocratist
+					has_government = social_conservatist
+			}
 		}
 		completion_reward = {
-			if = {
-				limit = { has_country_flag = CAN_C7_pass }
-				add_political_power = 150
-			}
-			if = {
-				limit = { has_country_flag = CAN_C7_fail }
-				add_political_power = 50
+			add_political_power = 150
+			custom_effect_tooltip = purge_opposition_tt
+			hidden_effect = {
+				set_country_flag = social_liberalist_banned
+				set_country_flag = market_liberalist_banned
+				set_country_flag = social_democratist_banned
 			}
 		}
 	}
 	
-	focus = {
+	focus = { #Remove the Royalists
+		id = CAN_remove_royalists
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = CAN_C7 }
+		x = 22 
+		y = 2
+		cost = 6
+		available = { 
+			has_country_flag = CAN_king_ed
+			not = { has_country_flag = ongoing_election }
+			has_country_flag = CAN_C7_fail
+			OR = {
+				has_idea = CAN_Mackenzie_King_hog_mli
+				NOT = { has_government = social_conservatist }
+				NOT = { has_government = paternal_autocratist }
+			}
+			
+		}
+		completion_reward = {
+			add_political_power = 150
+			custom_effect_tooltip = purge_opposition_tt
+			hidden_effect = {
+				set_country_flag = social_conservatist_banned
+				set_country_flag = paternal_autocratist_banned
+			}
+		}
+	}
+	
+	focus = { #Constitution Act
 		id = CAN_constitutional_monarchy
 		icon = GFX_goal_government_icon
-		prerequisite = { focus = CAN_constitution }
+		prerequisite = { focus = CAN_C7 }
 		mutually_exclusive = { focus = CAN_abolish_parliament }
 		mutually_exclusive = { focus = CAN_abolish_monarchy }
 		x = 20 
 		y = 3
-		cost = 3
+		cost = 4
 		available = {
 			has_country_flag = CAN_king_ed
 			NOT = { 
@@ -1443,23 +1477,18 @@ focus_tree = {
 	focus = { #Abolish Parliament
 		id = CAN_abolish_parliament
 		icon = GFX_goal_monarchism_3
-		prerequisite = { focus = CAN_constitution }
+		prerequisite = { focus = CAN_purge_opposition }
 		mutually_exclusive = { focus = CAN_abolish_monarchy }
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
 		x = 18 
 		y = 3 
-		cost = 8
+		cost = 4
 		available = {
 			has_country_flag = CAN_king_ed
+			has_country_flag = CAN_C7_fail
 			OR = {
-				AND = {
-					has_country_flag = CAN_C7_pass
-					has_idea = CAN_Mackenzie_King_hog_mli
-				}
-				OR = {
 					has_government = paternal_autocratist
 					has_government = social_conservatist
-				}
 			}
 		}
 		completion_reward = {
@@ -1468,7 +1497,8 @@ focus_tree = {
 			add_ideas = CAN_edward_viii_hog_pau
 			#add_timed_idea = { idea = CAN_liberal_dissent days = 180 }
 			set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
-			set_country_flag = CAN_parliament_abolished
+			hidden_effect = { set_country_flag = CAN_PARLIAMENT_ABOLISHED }
+			country_event = { days = 1 id = canada.205 }
 			custom_effect_tooltip = abolish_parliament_tt
 		}
 		
@@ -1477,12 +1507,12 @@ focus_tree = {
 	focus = { #Abolish Monarchy
 		id = CAN_abolish_monarchy
 		icon = GFX_goal_generic_support_democracy
-		prerequisite = { focus = CAN_constitution }
+		prerequisite = { focus = CAN_remove_royalists }
 		mutually_exclusive = { focus = CAN_abolish_parliament }
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
 		x = 22 
 		y = 3 
-		cost = 8
+		cost = 4
 		available = {
 			has_country_flag = CAN_king_ed
 			has_country_flag = CAN_C7_fail
@@ -1509,7 +1539,8 @@ focus_tree = {
 				limit = { NOT  = { has_government = market_liberalist } }
 				set_politics = { ruling_party = market_liberalist elections_allowed = no }
 			}
-			set_country_flag = CAN_monarchy_abolished
+			hidden_effect = { set_country_flag = CAN_MONARCHY_ABOLISHED }
+			country_event = { days = 1 id = canada.206 }
 			custom_effect_tooltip = monarchy_abolished_tt
 		}
 	}

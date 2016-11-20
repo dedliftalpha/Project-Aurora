@@ -32,7 +32,9 @@ focus = {
 	focus = {
 		id = JAP_imperialist_path
 		icon = GFX_goal_japanese_imperialism
-		available = { has_country_flag = JAP_longest_winter }
+		available = { has_country_flag = JAP_longest_winter
+		date > 1936.12.20
+										}
 		mutually_exclusive = { focus = JAP_democratic_path }
 		prerequisite = { focus = JAP_NSA_focus }
 		continue_if_invalid = no
@@ -56,6 +58,9 @@ focus = {
 		mutually_exclusive = { focus = JAP_imperialist_path }
 		prerequisite = { focus = JAP_NSA_focus }
 		continue_if_invalid = no
+		available = {
+		date > 1936.12.20
+							}
 			ai_will_do = {
             factor = 10
         }	
@@ -1168,6 +1173,7 @@ focus = {
 
 		}
 	}
+	######Germany######
 	focus = {
 		id = JAP_SUN_GERMAN
 		icon = GFX_goal_generic_army_tanks
@@ -1225,7 +1231,7 @@ focus = {
 						
 		
 											
-		x = 33
+		x = 32
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1247,7 +1253,7 @@ focus = {
 						
 		
 											
-		x = 35
+		x = 36
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -1273,6 +1279,44 @@ focus = {
 								}
 							}
 	}
+	
+	focus = {
+		id = JAP_SUN_GERMAN_ULT
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = JAP_SUN_GERMAN_COL }
+		available = {
+		GER = {
+		controls_state = 737 
+		controls_state = 633
+		controls_state = 634 
+		controls_state = 336 
+								}
+		has_war = no						
+		NOT = {
+		has_country_flag = JAP_ISO
+		is_in_faction_with = GER 
+		
+							}
+		GER = {
+		has_war_with = ENG 
+		has_war_with = FRA 
+		has_war_with = SRI 
+						}
+		
+									}
+						
+		
+											
+		x = 37
+		y = 3
+		cost = 10
+		completion_reward = {
+		GER = {
+		country_event = { id = japfor.41 }
+										}
+									}
+									}
+	
 	focus = {
 	id = JAP_SUN_SIA
 	icon = GFX_goal_JAP_PAR
@@ -1291,12 +1335,101 @@ focus = {
 								}
 	continue_if_invalid = no
 	x = 34 
-	y = 3 
+	y = 2 
 	completion_reward = {
 	add_political_power = 20
 	SIA = {
 	country_event = { id = japfor.28 }
 									}
+									}
+									}
+									
+	focus = {
+	id = JAP_CHI_WAR
+	icon = GFX_goal_JAP_PAR
+	prerequisite = { focus = JAP_SUN_RAILROAD }
+	mutually_exclusive = { focus = JAP_CHI_puppet }
+	available = {
+	OR = {
+	FNG = { is_puppet_of = JAP  }
+	controls_state = 328 
+	
+									}
+	OR = {
+	QIE = {
+	exists = yes 
+	NOT = {
+	is_puppet_of = JAP 
+	is_in_faction_with = JAP 
+	is_in_faction_with = GER
+							}
+								}							
+								}
+	has_war = no 
+	NOT = {
+	has_country_flag = JAP_ISO
+	
+										}
+	GER = {
+	OR = {
+	has_war_with = ENG 
+	has_war_with = SRI 
+	has_war_with = FRA 
+												}
+									}
+	
+								}
+	continue_if_invalid = no
+	x = 33 
+	y = 3 
+	completion_reward = {
+	declare_war_on = { target = QIE type = annex_everything }
+	GER = { country_event = { id = japfor.44 days = 2 } }
+									}
+									}
+									
+	focus = {
+	id = JAP_CHI_puppet
+	icon = GFX_goal_JAP_PAR
+	prerequisite = { focus = JAP_SUN_RAILROAD }
+	mutually_exclusive = { focus = JAP_CHI_WAR }
+	available = {
+	OR = {
+	FNG = { is_puppet_of = JAP  }
+	controls_state = 328 
+	
+									}
+	OR = {
+	QIE = {
+	exists = yes 
+	NOT = {
+	is_puppet_of = JAP 
+	is_in_faction_with = JAP 
+	is_in_faction_with = GER
+							}
+								}							
+								}
+	has_war = no 
+	NOT = {
+	has_country_flag = JAP_ISO
+	
+										}
+	GER = {
+	OR = {
+	has_war_with = ENG 
+	has_war_with = SRI 
+	has_war_with = FRA 
+												}
+									}
+	
+								}
+	continue_if_invalid = no
+	x = 31 
+	y = 3 
+	completion_reward = {
+	QIE = {
+	country_event = { id = japfor.47 days = 1  }
+										}
 									}
 									}
 	focus = {
@@ -1319,8 +1452,11 @@ focus = {
 		add_opinion_modifier = { target = GER modifier = JAP_GER_PATH_2 }
 		set_country_flag = JAP_RUS
 		}
+
 	}
+	###colonialism####
 	
+		
 		focus = {
 		id = JAP_SUN_COLONY
 		icon = GFX_goal_generic_army_tanks
@@ -1334,7 +1470,7 @@ focus = {
 								}
 
 							}
-		x = 28
+		x = 24
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1349,6 +1485,34 @@ focus = {
 	}
 	
 	
-	
+	focus = {
+		id = JAP_SUN_PHIL_invite
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = JAP_SUN_COLONY }
+		available = {
+		has_war = no 
+		NOT = { has_country_flag = JAP_ISO }
+		PHL = {
+		exists = yes 
+		NOT = {
+		is_puppet = yes
+		is_puppet_of = USA 
+		is_in_faction_with = JAP
+		is_in_faction_with = FRA 
+		is_in_faction_with = GER
+		is_in_faction_with = CAN 
+									}
+									}
+
+							}
+		x = 26
+		y = 4
+		cost = 10
+		completion_reward = {
+		PHL = {
+		country_event = { id = japfor.50  }
+										}
+		}
+	}
 			}
 	

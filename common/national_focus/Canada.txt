@@ -673,7 +673,7 @@ focus_tree = {
 	focus = {
 		id = CAN_factory
 		icon = GFX_goal_generic_construct_civ_factory
-		x = 10
+		x = 10 
 		y = 1
 		cost = 10 
 		prerequisite = { focus = CAN_national_developmment }
@@ -1063,7 +1063,7 @@ focus_tree = {
 	#Mineral Exploration I
 	focus = {
 		id = CAN_mine
-		icon = GFX_goal_generic_construction2
+		icon = GFX_goal_tungsten
 		prerequisite = { focus = CAN_resource}
 		x = 14
 		y = 1
@@ -1094,8 +1094,8 @@ focus_tree = {
 	
 	#Develop Steel Mills
 	focus = {
-		id = CAN_steelmill
-		icon = GFX_Steel
+		id = CAN_steelmill 
+		icon = GFX_goal_steel
 		prerequisite = { focus = CAN_resource focus = CAN_national_developmment }
 		x = 12
 		y = 1
@@ -1118,7 +1118,7 @@ focus_tree = {
 	#Mineral Exploration II
 	focus = {
 		id = CAN_mine2
-		icon = GFX_goal_generic_construction2 
+		icon = GFX_goal_tungsten 
 		prerequisite = { focus = CAN_mine }
 		x = 14 
 		y = 2 
@@ -1150,7 +1150,7 @@ focus_tree = {
 	#Aluminium Smelters
 	focus = {
 		id = CAN_alcan
-		icon = GFX_Aluminium
+		icon = GFX_goal_aluminium
 		prerequisite = { focus = CAN_steelmill }
 		x = 12
 		y = 2
@@ -1177,7 +1177,7 @@ focus_tree = {
 	#Prairie Oil Prospecting
 	focus = {
 		id = CAN_oil
-		icon = GFX_Oil
+		icon = GFX_goal_oil
 		prerequisite = { focus = CAN_resource }
 		x = 16 
 		y = 1 
@@ -1269,7 +1269,7 @@ focus_tree = {
 	#Mine Games
 	focus = { 
 		id = CAN_mine3
-		icon = GFX_goal_generic_construction2
+		icon = GFX_goal_chromium
 		prerequisite = { focus = CAN_digit2 }
 		x = 13 
 		y = 4
@@ -1302,7 +1302,7 @@ focus_tree = {
 	#Tar Sands Development
 	focus = {
 		id = CAN_oil2
-		icon = GFX_Oil
+		icon = GFX_goal_oil
 		prerequisite = { focus = CAN_refineries }
 		prerequisite = { focus = CAN_mine2 }
 		x = 15
@@ -1380,7 +1380,7 @@ focus_tree = {
 	
 	focus = { #Purge the Opposition
 		id = CAN_purge_opposition
-		icon = GFX_goal_generic_improve_relations
+		icon = GFX_goal_authoritarian
 		prerequisite = { focus = CAN_C7 }
 		x = 18 
 		y = 2
@@ -1408,7 +1408,7 @@ focus_tree = {
 	
 	focus = { #Remove the Royalists
 		id = CAN_remove_royalists
-		icon = GFX_goal_generic_improve_relations
+		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = CAN_C7 }
 		x = 22 
 		y = 2
@@ -1476,7 +1476,7 @@ focus_tree = {
 	
 	focus = { #Abolish Parliament
 		id = CAN_abolish_parliament
-		icon = GFX_goal_monarchism_3
+		icon = GFX_goal_monarchism_black
 		prerequisite = { focus = CAN_purge_opposition }
 		mutually_exclusive = { focus = CAN_abolish_monarchy }
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
@@ -1506,7 +1506,7 @@ focus_tree = {
 	
 	focus = { #Abolish Monarchy
 		id = CAN_abolish_monarchy
-		icon = GFX_goal_generic_support_democracy
+		icon = GFX_goal_support_democracy
 		prerequisite = { focus = CAN_remove_royalists }
 		mutually_exclusive = { focus = CAN_abolish_parliament }
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
@@ -1693,6 +1693,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			declare_war_on = { target = ENG type = annex_everything }
+			add_named_threat = { threat = 10 name = CAN_attack_ENG }
 		}
 	}
 	
@@ -1717,6 +1718,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			declare_war_on = { target = GER type = annex_everything }
+			add_named_threat = { threat = 10 name = CAN_attack_GER }
 		}
 	}
 	
@@ -1984,12 +1986,83 @@ focus_tree = {
 	focus = { #Defense Scheme No. 2
 		id = CAN_scheme_2
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = 40 
+		x = 42 
 		y = 0 
 		cost = 6 
 		completion_reward = {
 			add_political_power = 150 
-			add_named_threat = { threat = 4 name = CAN_ACW_intervene }
+			add_named_threat = { threat = 2 name = CAN_ACW_intervene }
+		}
+	}
+	
+	focus = { #Reclaim the Oregon Territory
+		id = CAN_claim_oregon
+		icon = GFX_goal_generic_more_territorial_claims
+		prerequisite = { focus = CAN_scheme_2 }
+		mutually_exclusive = { focus = CAN_psa_friend }
+		x = 38 
+		y = 1
+		cost = 8
+		available = {
+			OR = {
+				has_government = paternal_autocratist
+				has_government = authoritarian_democratist
+				has_government = national_populist
+			}
+			country_exists = CAL
+			NOT = { has_war_with = CAL }
+			CAL = { is_puppet = no }
+			NOT = { 
+				is_in_faction_with = CAN
+			}
+			CAL = {
+				controls_state = 386
+				controls_state = 385
+				controls_state = 387
+			}
+			CAN = {
+				controls_state = 473
+			}
+		}
+		completion_reward = {
+			add_state_claim = 386 
+			add_state_claim = 385 
+			add_state_claim = 387 
+			
+			CAL = { country_event = { days = 1 id = canada.210 } }
+		}
+	}
+	
+	focus = { #Demand Oregon Territory
+		id = CAN_demand_oregon
+		icon = GFX_generic_demand_territory
+		prerequisite = { focus = CAN_claim_oregon }
+		x = 38 
+		y = 2 
+		cost = 4
+		available = {
+			OR = {
+				has_government = paternal_autocratist
+				has_government = authoritarian_democratist
+				has_government = national_populist
+			}
+			country_exists = CAL
+			NOT = { has_war_with = CAL }
+			CAL = { is_puppet = no }
+			NOT = { 
+				is_in_faction_with = CAN
+			}
+			CAL = {
+				controls_state = 386
+				controls_state = 385
+				controls_state = 387
+			}
+			CAN = {
+				controls_state = 473
+			}
+		}
+		completion_reward = {
+			CAL = {	country_event = { days = 1 id = canada.211 } }
 		}
 	}
 	

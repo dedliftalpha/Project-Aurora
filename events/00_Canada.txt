@@ -1512,8 +1512,9 @@ country_event = { # Conscription Riots
 		remove_ideas = quebec_riots
 	}	
 }
-
-### PSA Events ###
+#########################
+### PSA Treaty Events ###
+#########################
 
 country_event = { #PSA response to treaty offer
 	id = canada.37 
@@ -1593,7 +1594,7 @@ country_event = { #PSA rejects treaty
 		name = canada.39.a
 		
 		ai_chance = {
-			factor = 90
+			factor = 95
 		}
 	}
 	
@@ -1601,15 +1602,33 @@ country_event = { #PSA rejects treaty
 		name = canada.39.b 
 		
 		ai_chance = {
-			factor = 10 
+			factor = 5 
 			modifier = {
 				factor = 0
 				OR = { 
 					CAN = { has_war_with = USA }
 					CAN = { has_war_with = CSA }
+					CAN = { has_war_with = TEX }
 					CAN = { has_war_with = ENG }
 					CAN = { has_war_with = GER }
 				}
+			}
+			modifier = {
+				factor = 0
+				CAL = {
+					OR = {
+						is_guaranteed_by = JAP 
+						is_guaranteed_by = SOV
+						is_guaranteed_by = GER 
+						is_guaranteed_by = ENG
+						is_guaranteed_by = FRA
+						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 10
+				CAL = { has_defensive_war = yes }
 			}
 		}
 		
@@ -1812,7 +1831,7 @@ country_event = { # 1941 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1941.5.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2152,7 +2171,7 @@ country_event = { # 1946 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1946.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2468,7 +2487,7 @@ country_event = { # 1951 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1951.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2783,7 +2802,7 @@ country_event = { # 1956 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1956.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -5740,8 +5759,8 @@ country_event = {
 
 		create_country_leader = {
 			name = "Frank McDermott"
-			desc = "EDWARD_DESC"
-			picture = "Portrait_CAN_King_Edward_viii.tga"
+			desc = "MCDERMOTT_DESC"
+			picture = "misc.tga"
 			expire = "1965.1.1"
 			ideology = social_conservatist_subtype
 			traits = {}
@@ -6558,4 +6577,207 @@ country_event = { #Loyalist Dissent
 	}
 	
 	## Events 207-209 located with PSA evenets 37-39
+}
+########################################
+## CANADA DEMANDS/WAR WITH PSA EVENTS ##
+########################################	
+	
+country_event = { #Canada claims Oregon Territory (PSA Event)
+	id = canada.210
+	title = canada.210.t 
+	desc = canada.210.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.210.a 
+		
+		CAN = { add_named_threat = { threat = 2 name = CAN_claim_oregon_threat } }
+	}
+}
+
+country_event = { #Canada demands the Oregon Territory (PSA Event) 
+	id = canada.211
+	title = canada.211.t 
+	desc = canada.211.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #Cede all territory
+		name = canada.211.a
+		
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 4
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { 
+			country_event = { days = 0 id = canada.212 } 
+			add_named_threat = { threat = 4 name = CAN_annex_oregon }
+		}
+	}
+	
+	option = { #Compromise
+		name = canada.211.b 
+		
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 3
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { 
+			country_event = { days = 0 id = canada.213 } 
+			add_named_threat = { threat = 2 name = CAN_annex_washington }
+		}
+	}
+	
+	option = { #Refuse - Canada invades
+		name = canada.211.c 
+		
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 2
+				CAL = {
+					OR = {
+						is_guaranteed_by = JAP 
+						is_guaranteed_by = SOV
+						is_guaranteed_by = GER 
+						is_guaranteed_by = USA 
+						is_guaranteed_by = ENG
+						is_guaranteed_by = FRA
+						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 0.3
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { country_event = { days = 0 id = canada.214 } }
+	}
+}
+
+country_event = { #Pacific States cede the Oregon Territory 
+	id = canada.212 
+	title = canada.212.t 
+	desc = canada.212.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.212.a 
+		
+		CAN = {
+			set_state_controller = 386
+			set_state_controller = 385 
+			set_state_controller = 387
+		}
+	}
+}
+
+country_event = { #Pacific States offer a compromise
+	id = canada.213 
+	title = canada.213.t 
+	desc = canada.213.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #Accept
+		name = canada.213.a 
+		
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5 
+				CAL = { has_defensive_war = yes }
+			}
+			modifier = {
+				factor = 1.5 
+				CAN = { 
+					OR = {
+						has_war_with = ENG 
+						has_war_with = GER 
+						has_war_with = CSA 
+						has_war_with = USA 
+						has_war_with = TEX
+					}
+				}
+			}
+		}
+		
+		CAN = {
+			set_state_controller = 386
+			set_province_controller = 1832
+			set_province_controller = 12124
+			set_province_controller = 4778
+			set_province_controller = 3781
+			remove_state_claim = 385
+			remove_state_claim = 387
+		}
+		CAL = { country_event = { days = 0 id = canada.215 } }
+	}
+	
+	option = { #Reject and declare war
+		name = canada.213.b 
+		
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				CAL = { has_defensive_war = yes }
+			}
+		}
+		add_named_threat = { threat = 4 name = CAN_PSA_war_t }
+		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #Pacific States refuses demands
+	id = canada.214 
+	title = canada.214.t 
+	desc = canada.214.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.214.a 
+		add_named_threat = { threat = 4 name = CAN_PSA_war_t }
+		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #Canada accepts compromise (PSA)
+	id = canada.215 
+	title = canada.215.t 
+	desc = canada.215.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.215.a
+	}
+}
+
+
 }

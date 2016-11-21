@@ -1167,7 +1167,7 @@ focus = {
 		add_ideas = JAP_rising_sun
 		set_country_flag = JAP_EXP
 		add_named_threat = { threat = 1 name = JAP_SUN_THREAT }
-		create_faction = "co_prosperity_sphere"
+		if = { limit = { is_in_faction = no } create_faction = "co_prosperity_sphere" }
 	
 		every_other_country = { limit = { is_puppet_of = JAP  } add_to_faction = FROM }
 
@@ -1197,6 +1197,7 @@ focus = {
 		add_opinion_modifier = { target = AUS modifier = JAP_GER_PATH_2 }
 		add_opinion_modifier = { target = CAN modifier = JAP_GER_PATH_2 }
 		set_country_flag = JAP_GER
+		add_named_threat = { threat = 1 name = agressive_expansion }
 		}
 	}
 	focus = {
@@ -1336,6 +1337,7 @@ focus = {
 	continue_if_invalid = no
 	x = 34 
 	y = 2 
+	cost = 10
 	completion_reward = {
 	add_political_power = 20
 	SIA = {
@@ -1382,6 +1384,7 @@ focus = {
 	continue_if_invalid = no
 	x = 33 
 	y = 3 
+	cost = 10
 	completion_reward = {
 	declare_war_on = { target = QIE type = annex_everything }
 	GER = { country_event = { id = japfor.44 days = 2 } }
@@ -1451,6 +1454,7 @@ focus = {
 		add_opinion_modifier = { target = MON modifier = JAP_GER_PATH_1 }
 		add_opinion_modifier = { target = GER modifier = JAP_GER_PATH_2 }
 		set_country_flag = JAP_RUS
+		add_named_threat = { threat = 1 name = agressive_expansion }
 		}
 
 	}
@@ -1470,7 +1474,7 @@ focus = {
 								}
 
 							}
-		x = 24
+		x = 25
 		y = 1
 		cost = 10
 		completion_reward = {
@@ -1481,6 +1485,7 @@ focus = {
 		add_opinion_modifier = { target = CAL modifier = JAP_GER_PATH_1 }
 		add_opinion_modifier = { target = GER modifier = JAP_GER_PATH_2 }
 		set_country_flag = JAP_COLONY
+		add_named_threat = { threat = 1 name = agressive_expansion }
 		}
 	}
 	
@@ -1489,6 +1494,38 @@ focus = {
 		id = JAP_SUN_PHIL_invite
 		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = JAP_SUN_COLONY }
+		mutually_exclusive = { focus = JAP_SUN_PHIL_fold }
+		available = {
+		has_war = no 
+		NOT = { has_country_flag = JAP_ISO }
+		PHL = {
+		exists = yes 
+		NOT = {
+		is_puppet = yes
+		is_puppet_of = USA 
+		is_in_faction_with = JAP
+		is_in_faction_with = FRA 
+		is_in_faction_with = GER
+		is_in_faction_with = CAN 
+									}
+									}
+
+							}
+		x = 28
+		y = 4
+		cost = 10
+		completion_reward = {
+		PHL = {
+		country_event = { id = japfor.50  }
+										}
+		}
+	}
+	
+		focus = {
+		id = JAP_SUN_PHIL_fold
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = JAP_SUN_COLONY }
+		mutually_exclusive = { focus = JAP_SUN_PHIL_invite }
 		available = {
 		has_war = no 
 		NOT = { has_country_flag = JAP_ISO }
@@ -1510,9 +1547,61 @@ focus = {
 		cost = 10
 		completion_reward = {
 		PHL = {
-		country_event = { id = japfor.50  }
+		country_event = { id = japfor.55 }
+		add_named_threat = { threat = 3 name = agressive_expansion }
 										}
 		}
-	}
-			}
+					}
+					
+		focus = {
+		id = JAP_SUN_HAW_alliance
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = JAP_SUN_COLONY }
+		mutually_exclusive = { focus = JAP_SUN_HAW_annex }
+		available = {
+		HAW = {
+		exists = yes 
+							}
+		NOT = {
+		has_country_flag = JAP_ISO 
+							}
+									}
+
+							
+		x = 22
+		y = 4
+		cost = 10
+		completion_reward = {
+		HAW = {
+		country_event = { id = japfor.60 }
+										}
+								}
+							}
+		focus = {
+		id = JAP_SUN_HAW_annex
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = JAP_SUN_COLONY }
+		mutually_exclusive = { focus = JAP_SUN_HAW_alliance }
+		available = {
+		HAW = {
+		exists = yes 
+							}
+		NOT = {
+		has_country_flag = JAP_ISO 
+							}
+									}
+
+							
+		x = 24
+		y = 4
+		cost = 10
+		completion_reward = {
+		HAW = {
+		country_event = { id = japfor.62 }
+		add_named_threat = { threat = 1 name = agressive_expansion }
+										}
+								}
+							}
+					}
+			
 	

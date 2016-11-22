@@ -5,6 +5,8 @@
 
 add_namespace = canada
 
+### A lot of Prince Edward events have been removed because all they did in DH was tweak sliders which no longer exist.
+
 # country_event = { # The Political Situation
 	# id = canada.1
 	# title = canada.1.t
@@ -469,7 +471,7 @@ country_event = { # Rideau Hall
 	}
 }
 
-country_event = { #Vote of Non-Confidence
+country_event = { #Vote of Non-Confidence - triggers an election 
 	id = canada.14
 	title = canada.14.t
 	desc = canada.14.d
@@ -1524,22 +1526,23 @@ country_event = { #PSA response to treaty offer
 	
 	is_triggered_only = yes
 	
-	option = { #accept
+	option = { #accept - guarantee, non-agression and mil-access treaties
 		name = canada.37.a 
 		
-		ai_chance = {
+		ai_chance = { 
 			factor = 95
-			modifier = {
-				factor = 0.5
-				OR = {
+			modifier = { #Less likely to accept if already has big friends
+				factor = 0.3
+				OR = { 
 					is_guaranteed_by = JAP
 					is_guaranteed_by = GER 
 					is_guaranteed_by = RUS
 				}
 			}
-			modifier = {
+			modifier = { #Won't accept if already in a sweet gang
 				factor = 0 
 				is_guaranteed_by = USA 
+				is_in_faction = yes
 			}
 		}
 		
@@ -1559,7 +1562,15 @@ country_event = { #PSA response to treaty offer
 		name = canada.37.b 
 		
 		ai_chance = {
-			factor = 5 
+			factor = 5
+			modifier = { #Less likely to accept if already has big friends
+				factor = 15
+				OR = { 
+					is_guaranteed_by = JAP
+					is_guaranteed_by = GER 
+					is_guaranteed_by = RUS
+				}
+			}
 		}
 		
 		add_opinion_modifier = { target = CAN modifier = PSA_REJECT_CAN }
@@ -6150,8 +6161,10 @@ country_event = {
 ### NOT POSSIBLE ###
 
 ####################
-### HoI4 Events ####
+### BILL C-7 CHAIN ####
 ####################
+
+#C7 focus takes 4 weeks to complete.  Drafting events should fire weeks 1, 2, and 3, w/vote event firing when the focus completes.
 
 country_event = { # Military Industry Reform 
 	id = canada.100 
@@ -6174,7 +6187,7 @@ country_event = { # Military Industry Reform
 		name = canada.100.a 
 		
 		ai_chance = { factor = 30 }
-		set_country_flag = HOWES_PLAN
+		set_country_flag = HOWES_PLAN #for C7 events, laws now don't go into effect until/unless the bill passes.  
 		country_event = { days = 7 id = canada.101 }
 	}
 	
@@ -6204,7 +6217,7 @@ country_event = { # Conscription Debate
 	
 	is_triggered_only = yes
 	
-	option = { #Heavy Conscription -trigger protest events -trigger liberal party events
+	option = { #Heavy Conscription 
 		name = canada.101.a 
 		
 		ai_chance = { factor = 30 }
@@ -6281,7 +6294,7 @@ country_event = { # Vote on Bill C7
 	
 	is_triggered_only = yes
 	
-	option = { #Bill C7 passes with strong support
+	option = { #Bill C7 passes with strong support - all laws chosen in drafting events go into effect
 		name = canada.103.a 
 		
 		ai_chance = { factor = 80 }
@@ -6292,7 +6305,7 @@ country_event = { # Vote on Bill C7
 		set_country_flag = CAN_C7_pass
 		add_national_unity = 0.05
 		
-		# Arms Industry Reform
+		# Arms Industry Reform laws go into effect
 		if = {
 			limit = { has_country_flag = HOWES_PLAN }
 			331 = {
@@ -6377,7 +6390,7 @@ country_event = { # Vote on Bill C7
 			}
 		}
 		
-		# Conscription Law 
+		# Conscription Law goes into effect
 		if = {
 			limit = { has_country_flag = YES_CONSCRIPTION }
 			add_ideas = extensive_conscription
@@ -6391,14 +6404,14 @@ country_event = { # Vote on Bill C7
 			add_ideas = can_professional_army
 		}
 		
-		# Secret Police 
+		# Secret Police law goes into effect
 		if = {
 			limit = { has_country_flag = YES_SECRET_POLICE }
 			add_ideas = CAN_Mounties
 		}
 		if = {
 			limit = { has_country_flag = NO_SECRET_POLICE }
-			#Currently nothing happens.
+			#Currently nothing happens
 		}
 	}
 
@@ -6413,7 +6426,7 @@ country_event = { # Vote on Bill C7
 		# add_national_unity = -0.05
 	# }
 	
-	option = { #Bill C7 fails!
+	option = { #Bill C7 fails! - Triggers an election.  This is necessary to ultimatley unlock "Abolish Parliament" or "Abolish Monarchy" focuses.
 		name = canada.103.c
 		
 		ai_chance = { factor = 20 }
@@ -6427,7 +6440,7 @@ country_event = { # Vote on Bill C7
 	}
 }
 
-country_event = { #Remove work camps 
+country_event = { #Remove work camps - no more cheap labour when there is employment
 	id = canada.201
 	title = canada.201.t 
 	desc = canada.201.d 
@@ -6487,7 +6500,7 @@ country_event = { #Entente Air Training Scheme -- gives canada allies an event t
 			set_global_flag = EATS_ACTIVE
 		}
 	}
-	option = {
+	option = { 
 		name = canada.202.b 
 		ai_chance = { factor = 10 }
 		add_political_power = 100
@@ -6502,7 +6515,7 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 	
 	is_triggered_only = yes 
 	
-	option = {
+	option = { #If ally joins they get a nat'l spirit like the DATP
 		name = canada.203.a 
 		ai_chance = { factor = 60 }
 		add_ideas = entente_training_plan_idea
@@ -6514,7 +6527,7 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 			modifier = CAN_accept_EATS
 		}
 	}
-	option = {
+	option = { #Telling canada to fuck off gives you some pp and hurts relations.
 		name = canada.203.b
 		ai_chance = { factor = 40 }
 		add_opinion_modifier = {
@@ -6535,11 +6548,11 @@ country_event = { #Ally joins the entente air training scheme
 	
 	option = {
 		name = canada.204.a 
-		air_experience = 20
+		air_experience = 20 #Canada gets small air XP boost for every ally that joins
 	}
 }
 
-country_event = { #Liberal Dissent
+country_event = { #Liberal Dissent - Fires if parliament is abolished
 	id = canada.205
 	title = canada.205.t 
 	desc = canada.205.d
@@ -6550,7 +6563,7 @@ country_event = { #Liberal Dissent
 	option = { #Crush them
 		name = canada.205.a
 		add_timed_idea = { idea = CAN_liberal_dissent days = 540 }
-		add_manpower = -2000
+		add_manpower = -5000
 	}
 	option = { #Wait them out
 		name = canada.205.b
@@ -6558,7 +6571,7 @@ country_event = { #Liberal Dissent
 	}
 }
 
-country_event = { #Loyalist Dissent
+country_event = { #Loyalist Dissent - Fires if the monarchy is abolished
 	id = canada.206
 	title = canada.206.t 
 	desc = canada.206.d
@@ -6573,10 +6586,10 @@ country_event = { #Loyalist Dissent
 	option = { #Send in the troops
 		name = canada.206.b
 		add_timed_idea = { idea = CAN_loyalist_dissent days = 180 }
-		add_manpower = -1000
+		add_manpower = -5000
 	}
 	
-	## Events 207-209 located with PSA evenets 37-39
+	## Events 207-209 located with PSA evenets 37-39, details diplomacy w/PSA, triggered by focus
 }
 ########################################
 ## CANADA DEMANDS/WAR WITH PSA EVENTS ##
@@ -6608,7 +6621,7 @@ country_event = { #Canada demands the Oregon Territory (PSA Event)
 	option = { #Cede all territory
 		name = canada.211.a
 		
-		ai_chance = {
+		ai_chance = { #PSA should be very unlikely to say yes unless they are being attacked.
 			factor = 5
 			modifier = {
 				factor = 4
@@ -6624,10 +6637,10 @@ country_event = { #Canada demands the Oregon Territory (PSA Event)
 		}
 	}
 	
-	option = { #Compromise
+	option = { #Compromise 
 		name = canada.211.b 
 		
-		ai_chance = {
+		ai_chance = { #Should be 4x more likely than full scession, but still fairly unlikely if PSA isn't under attack.
 			factor = 20
 			modifier = {
 				factor = 3
@@ -6643,12 +6656,12 @@ country_event = { #Canada demands the Oregon Territory (PSA Event)
 		}
 	}
 	
-	option = { #Refuse - Canada invades
+	option = { #Refuse - Canada invades 
 		name = canada.211.c 
 		
-		ai_chance = {
+		ai_chance = { #PSA be strongly in favour of rejecting the demand unless under attack
 			factor = 70
-			modifier = {
+			modifier = { #If PSA has a guarantee or alliance, rejecting Canada's demand should be a certainty
 				factor = 2
 				CAL = {
 					OR = {

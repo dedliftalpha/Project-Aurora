@@ -1602,6 +1602,7 @@ focus_tree = {
 		y = 1
 		cost = 4
 		available = {
+			is_puppet = no 
 			country_exists = IRE
 			NOT = {
 				has_government = totalist
@@ -1632,6 +1633,7 @@ focus_tree = {
 		cost = 6
 		bypass = { is_in_faction_with = IRE  }
 		available = {
+			is_puppet = no 
 			country_exists = IRE
 			NOT = {
 				has_government = totalist
@@ -1661,6 +1663,10 @@ focus_tree = {
 		x = 28 
 		y = 1
 		cost = 6
+		available = {
+			is_puppet = no 
+			NOT = { has_war_with = DEN }
+		}
 		bypass = { 
 			CAN = { controls_state = 100 }
 			CAN = { controls_state = 101 }
@@ -1669,9 +1675,10 @@ focus_tree = {
 			CAN = { add_state_claim = 100 }
 			CAN = { add_state_claim = 101 }
 			add_opinion_modifier = { target = DEN modifier = CAN_CLAIM_GRICE }
+			DEN = { country_event = { days = 1 id = canada.66 } }
 		}
 	}
-	
+		
 	focus = { #War with the UoB
 		id = CAN_war_uob
 		icon = GFX_goal_generic_major_war
@@ -1686,7 +1693,9 @@ focus_tree = {
 			OR = { 
 				ENG = { has_war_with = GER }
 				threat > 0.75
+				has_completed_focus = CAN_war_ger
 			}
+			NOT = {	has_war_with = GER }
 		}
 		bypass = {
 			CAN = { has_war_with = ENG }
@@ -1711,6 +1720,13 @@ focus_tree = {
 			OR = { 
 				GER = { has_war_with = ENG }
 				threat > 0.75
+				has_completed_focus = CAN_war_uob
+			}
+			NOT = { 
+				OR = {
+					has_war_with = ENG 
+					has_war_with = FRA
+				} 
 			}
 		}
 		bypass = {
@@ -1724,6 +1740,8 @@ focus_tree = {
 	
 	### The Americas and ACW2 ###
 	
+	## Annex border states, build forts, and befriend the PSA ##
+	
 	focus = { # National Defense Scheme No. 1
 		id = CAN_scheme_1
 		icon = GFX_goal_generic_position_armies
@@ -1734,9 +1752,7 @@ focus_tree = {
 			add_timed_idea = { idea = CAN_forts days = 365 }
 		}
 	}
-	
-	# Forts Tree #
-	
+		
 	focus = { # Fortify the Great Lakes
 		id = CAN_lakes_forts
 		icon = GFX_goal_generic_construct_military
@@ -1816,8 +1832,6 @@ focus_tree = {
 		}
 	}
 	
-	### Reacting to the ACW ###
-	
 	focus = { # Occupy New England
 		id = CAN_occupy_new_england
 		icon = GFX_goal_generic_occupy_states_ongoing_war
@@ -1889,7 +1903,7 @@ focus_tree = {
 			country_exists = CSA
 			country_exists = USA
 			USA = { 
-				has_defensive_war_with = CSA
+				has_war_with = CSA
 			}
 			463 = { is_owned_by = USA }
 		}
@@ -1917,6 +1931,7 @@ focus_tree = {
 			NOT = {
 				has_war_with = USA
 				has_war_together_with = USA
+				is_in_faction_with = USA
 			}
 		}
 		completion_reward = {
@@ -1936,11 +1951,16 @@ focus_tree = {
 			country_exists = CAL
 			NOT = { has_war_with = CAL }
 			CAL = { is_puppet = no }
-			NOT = { 
-				is_in_faction_with = USA
-				is_in_faction_with = GER 
-				is_in_faction_with = JAP 
-				is_in_faction_with = RUS  
+			CAN = { is_puppet = no }
+			CAL = {
+				NOT = {
+					OR = {
+						is_in_faction_with = USA
+						is_in_faction_with = GER 
+						is_in_faction_with = JAP 
+						is_in_faction_with = RUS 
+					}
+				}
 			}
 		}
 		bypass = {
@@ -1965,6 +1985,7 @@ focus_tree = {
 			country_exists = CAL
 			NOT = { has_war_with = CAL }
 			CAL = { is_puppet = no }
+			CAN = { is_puppet = no }
 			NOT = { 
 				is_in_faction_with = USA
 				is_in_faction_with = GER 
@@ -1985,10 +2006,11 @@ focus_tree = {
 	
 	focus = { #Defense Scheme No. 2
 		id = CAN_scheme_2
-		icon = GFX_goal_generic_occupy_states_ongoing_war
+		icon = GFX_goal_generic_political_pressure
 		x = 42 
 		y = 0 
 		cost = 6 
+		available = { CAN = { is_puppet = no } }
 		completion_reward = {
 			add_political_power = 150 
 			add_named_threat = { threat = 2 name = CAN_ACW_intervene }
@@ -2004,6 +2026,7 @@ focus_tree = {
 		y = 1
 		cost = 8
 		available = {
+			is_puppet = no 
 			OR = {
 				has_government = paternal_autocratist
 				has_government = authoritarian_democratist
@@ -2046,6 +2069,7 @@ focus_tree = {
 				has_government = authoritarian_democratist
 				has_government = national_populist
 			}
+			is_puppet = no 
 			country_exists = CAL
 			NOT = { has_war_with = CAL }
 			CAL = { is_puppet = no }
@@ -2063,6 +2087,91 @@ focus_tree = {
 		}
 		completion_reward = {
 			CAL = {	country_event = { days = 1 id = canada.211 } }
+		}
+	}
+	
+	focus = {
+		id = CAN_recognize_usa
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = CAN_scheme_2 }
+		mutually_exclusive = { focus = CAN_recognize_csa }
+		mutually_exclusive = { focus = CAN_recognize_aus }
+		x = 40 
+		y = 1 
+		cost = 4 
+		available = {
+			country_exists = USA
+			OR = {
+				USA = { has_war_with = CAL }
+				USA = { has_war_with = TEX }
+			}
+			OR = {
+				has_government = market_liberalist
+				has_government = social_conservatist
+				has_government = social_liberalist 
+				has_government = authoritarian_democratist
+			}
+			NOT = { has_war_with = USA }
+		}
+		completion_reward = {
+			add_opinion_modifier = { target = USA modifier = CAN_RECOGNIZE_OP }
+			USA = { country_event = { days = 1 id = canada.216 } }
+		}
+	}
+	
+	focus = {
+		id = CAN_recognize_aus
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = CAN_scheme_2 }
+		mutually_exclusive = { focus = CAN_recognize_csa }
+		mutually_exclusive = { focus = CAN_recognize_aus }
+		x = 42 
+		y = 1 
+		cost = 4 
+		available = {
+			country_exists = TEX
+			OR = {
+				TEX = { has_war_with = CAL }
+				TEX = { has_war_with = USA }
+			}
+			OR = {
+				has_government = national_populist
+				has_government = authoritarian_democratist
+				has_government = paternal_autocratist
+			}
+			NOT = { has_war_with = TEX }
+		}
+		completion_reward = {
+			add_opinion_modifier = { target = TEX modifier = CAN_RECOGNIZE_OP }
+			TEX = { country_event = { days = 1 id = canada.216 } }
+		}
+	}
+	
+	focus = {
+		id = CAN_recognize_csa
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = CAN_scheme_2 }
+		mutually_exclusive = { focus = CAN_recognize_usa }
+		mutually_exclusive = { focus = CAN_recognize_aus }
+		x = 44 
+		y = 1 
+		cost = 4 
+		available = {
+			country_exists = CAL
+			OR = {
+				CAL = { has_war_with = USA }
+				CAL = { has_war_with = TEX }
+			}
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = totalist
+			}
+			NOT = { has_war_with = CSA }
+		}
+		completion_reward = {
+			add_opinion_modifier = { target = CSA modifier = CAN_RECOGNIZE_OP }
+			CSA = { country_event = { days = 1 id = canada.216 } }
 		}
 	}
 	

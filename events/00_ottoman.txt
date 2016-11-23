@@ -1,5 +1,5 @@
-﻿### MODDER: dedlift ###
-### Ottoman Events ###
+﻿### Ottoman Events ###
+### MODDER: dedlift ###
 
 add_namespace = ott
 
@@ -22,6 +22,10 @@ country_event = {
 	
 	option = {
 		name = ott.1.a
+		
+		remove_state_core = 656 # uncore auto-cored Kuwait, Al-Hajara, Jordan
+		remove_state_core = 675
+		remove_state_core = 455
 		
 		####### 
 		# THIS WAS NECESSARY BECAUSE OF A BUG LEAVE IT IN 
@@ -47,6 +51,7 @@ news_event = {
 	title = ott.2.t
 	desc = ott.2.d
 	picture = GFX_report_event_OTT_black_monday
+
 	fire_only_once = yes
 	
 	trigger = {
@@ -75,6 +80,7 @@ news_event = {
 	title = ott.3.t
 	desc = ott.3.d
 	picture = GFX_report_event_OTT_black_monday
+
 	fire_only_once = yes
 	
 	trigger = {
@@ -181,8 +187,8 @@ country_event = {
 	trigger = {
 		tag = OTT
 		date > 1940.4.1
-		OTT = { owns_state = 454 }
-		NOT = { OTT = { has_war = yes } }
+		owns_state = 454
+		has_war = no
 	}
 	
 	mean_time_to_happen = {
@@ -290,9 +296,10 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
+		tag = OTT
 		has_country_flag = ott_jews_settled
 		NOT = { has_idea = ott_jews }
-
+		owns_state = 454
 	}
 	
 	mean_time_to_happen = {
@@ -401,6 +408,7 @@ news_event = {
 			add_state_core = 812
 			add_state_core = 680
 			add_state_core = 676
+			add_state_core = 819
 			
 			hidden_effect = { 
 				load_oob = OTT_irq
@@ -626,6 +634,12 @@ country_event = {
 		}
 		if = {
 			limit = {
+				ROOT = { owns_state = 819 }
+			}
+			IRQ = { transfer_state = 819 }
+		}
+		if = {
+			limit = {
 				ROOT = { owns_state = 754 }
 				SAU = { exists = yes }
 			}
@@ -638,28 +652,54 @@ country_event = {
 			}
 			EGY = { transfer_state = 453 } #Egypt gets Sinai state
 		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 753 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 753 } #Egypt gets Suez Canal
+		}
 		SYR = { country_event = { id = ott.12 days = 3 } } #setup event
 		IRQ = { country_event = { id = ott.13 days = 3 } } #setup event
 		EGY = { country_event = { id = ott.14 days = 1 } } #our lands expand
 		SAU = { country_event = { id = ott.14 days = 1 } } #our lands expand
 		clr_country_flag = arab_revolt
 		remove_ideas = ott_arab_revolt
-			remove_state_core = 455
-			remove_state_core = 454
-			remove_state_core = 553
-			remove_state_core = 554
-			remove_state_core = 677
-			remove_state_core = 291
-			remove_state_core = 656
-			remove_state_core = 675
-			remove_state_core = 812
-			remove_state_core = 680
-			remove_state_core = 676
-			remove_state_core = 754
-			remove_state_core = 453
+		remove_state_core = 455
+		remove_state_core = 454
+		remove_state_core = 553
+		remove_state_core = 554
+		remove_state_core = 677
+		remove_state_core = 291
+		remove_state_core = 656
+		remove_state_core = 675
+		remove_state_core = 812
+		remove_state_core = 680
+		remove_state_core = 676
+		remove_state_core = 819
+		remove_state_core = 754
+		remove_state_core = 753
+		remove_state_core = 679
+		remove_state_core = 453				# mideast cores removed
+		remove_state_claim = 455
+		remove_state_claim = 454
+		remove_state_claim = 553
+		remove_state_claim = 554
+		remove_state_claim = 677
+		remove_state_claim = 291
+		remove_state_claim = 656
+		remove_state_claim = 675
+		remove_state_claim = 812
+		remove_state_claim = 680
+		remove_state_claim = 676
+		remove_state_claim = 819
+		remove_state_claim = 754
+		remove_state_claim = 753
+		remove_state_claim = 679
+		remove_state_claim = 453			# mideast claims removed
 		if = {
 			limit = { tag = OTT }
-			set_country_flag = ott_broken		#Ottomans broken, revolution soon
+			set_country_flag = ott_broken		#Ottomans broken, coup soon
 		}
 	}
 	
@@ -668,7 +708,7 @@ country_event = {
 		
 		ai_chance = { factor = 0 }
 		add_political_power = -600
-		add_national_unity = -0.05
+		add_national_unity = -0.01
 	}
 }
 
@@ -769,10 +809,7 @@ country_event = {
 	fire_only_once = yes
 		
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		controls_state = 676	# Mosul
 		KUR = { exists = no }
 		date > 1938.3.20		# Day of Nawruz 1938
@@ -798,10 +835,7 @@ news_event = {
 	fire_only_once = yes
 		
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		controls_state = 676	# Mosul
 		KUR = { exists = no }
 		date > 1938.4.4		
@@ -822,6 +856,12 @@ news_event = {
 					ROOT = { owns_state = 676 }
 				}
 				KUR = { transfer_state = 676 }	# Mosul
+			}
+			if = {
+				limit = {
+					ROOT = { owns_state = 819 }
+				}
+				KUR = { transfer_state = 819 }	# Kirkuk
 			}
 			if = {
 				limit = {
@@ -849,6 +889,7 @@ news_event = {
 			}
 
 			add_state_core = 676
+			add_state_core = 819
 			add_state_core = 350
 			add_state_core = 352
 			add_state_core = 680
@@ -912,6 +953,7 @@ country_event = {
 		ai_chance = { factor = 0 }		
 		add_political_power = -200
 		remove_state_core = 676
+		remove_state_core = 819
 		remove_state_core = 350
 		remove_state_core = 352
 		remove_state_core = 680
@@ -930,10 +972,7 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		has_global_flag = kurdish_revolt
 		has_country_flag = kurd_revolt
 		KUR = { exists = no }
@@ -965,7 +1004,7 @@ country_event = {
 	trigger = {
 		KUR = {
 			exists = yes
-			has_war_with = ROOT
+			has_war_with = OTT
 		}
 	}
 
@@ -990,7 +1029,7 @@ country_event = {
 		add_political_power = -100
 		if = {
 			limit = { tag = OTT }
-			set_country_flag = ott_broken		#Ottomans broken, revolution soon
+			set_country_flag = ott_broken		#Ottomans broken, coup soon
 		}
 	}
 
@@ -1232,13 +1271,7 @@ country_event = {
 					has_government = syndicalist
 				}
 			}
-			NOT = {	
-				is_in_faction_with = GER
-				is_in_faction_with = JAP
-				is_in_faction_with = FRA
-				is_in_faction_with = CAN
-				is_in_faction_with = USA
-			}
+			is_in_faction = no
 		}
 					
 		ai_chance = { factor = 80 }
@@ -1524,8 +1557,8 @@ country_event = {
 			exists = yes
 			NOT = { is_puppet_of = OTT }
 		}
-		 owns_state = 754
-		 controls_state = 754
+		owns_state = 754
+		controls_state = 754
 	}
 		
 	option = {			# let them join Hejaz
@@ -1571,7 +1604,7 @@ country_event = {
 		reverse_add_opinion_modifier = {target = TUN modifier = ott_hejaz3 } # -10
 		reverse_add_opinion_modifier = {target = YEM modifier = ott_hejaz3 } # -10
 		declare_war_on = { target = SAU type = annex_everything	}
-		EGY = { country_event = { id = ott.34 days = 1 } } # EGY intervention
+		EGY = { country_event = { id = ott.34 days = 3 } } # EGY intervention
 	}
 
 }
@@ -1662,7 +1695,6 @@ country_event = {		#EGY intervenes
 }
 
 
-
 ###############################################################################
 # EGY seizes Suez
 ###############################################################################
@@ -1688,7 +1720,7 @@ country_event = {
 				is_in_faction_with = GER 
 				has_war_with = GER
 			}
-			controls_state = 446 #cairo
+			controls_state = 453 # sinai
 		}
 	}
 	
@@ -1760,10 +1792,7 @@ news_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		has_global_flag = kurdish_revolt
 		has_country_flag = kurd_revolt
 		owns_state = 183 #Cyprus
@@ -1847,10 +1876,7 @@ country_event = { # Cypriot uprising crushed
 	fire_only_once = yes
 	
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		has_country_flag = cyprus_revolt
 		CYP = { exists = no }
 		controls_state = 183
@@ -1877,10 +1903,7 @@ country_event = { # Destroying the Cypriot forts
 	fire_only_once = yes
 	
 	trigger = {
-		OR = {
-			tag = OTT
-			tag = TUR
-		}
+		tag = OTT
 		has_country_flag = cyprus_revolt
 		CYP = { exists = no }
 		controls_state = 183
@@ -1911,7 +1934,7 @@ country_event = { # Cypriot uprising successful
 	trigger = {
 		CYP = {
 			exists = yes
-			has_war_with = ROOT
+			has_war_with = OTT
 		}
 	}
 
@@ -1958,16 +1981,11 @@ country_event = { # Grease help Cyprus uprising
 		CYP = {
 			exists = yes
 			is_puppet = no
-			OR = {
-				has_war_with = OTT
-				has_war_with = TUR
-			}
+			has_war_with = OTT
 		}
 		NOT = {
 			has_war_with = OTT
-			has_war_with = TUR
 			has_war_together_with = OTT 
-			has_war_together_with = TUR
 		}
 		controls_state = 47 #Atina
 		controls_state = 186 #Mora
@@ -2032,7 +2050,6 @@ country_event = { # Grease Cypriot uprising ends
 			has_opinion_modifier = cyp_cyprus
 			NOT = {
 				has_war_with = OTT
-				has_war_with = TUR
 			}
 		}
 	}
@@ -2321,4 +2338,2355 @@ country_event = { # German response
 ###############################################################################
 # Treaty of Jerusalem
 ###############################################################################
+
+### Treaty of Jerusalem
+
+country_event = {
+	id = ott.54
+	title = ott.54.t
+	desc = ott.54.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		tag = OTT
+		has_war_with = EGY
+		has_war_with = SAU
+		OR = {
+			EGY = { controls_state = 454 } # Jerusalem
+			SAU = { controls_state = 454 }
+		}
+		OR = {
+			EGY = { controls_state = 554 } # Damascus
+			SAU = { controls_state = 554 }
+		}
+		OR = {
+			EGY = { controls_state = 553 } # Lebanon
+			SAU = { controls_state = 553 }
+		}
+		NOT = { controls_state = 679 } # Hedjaz
+		NOT = { controls_state = 291 } # Baghdad
+		NOT = { controls_state = 266 } # Tehran
+		EGY = { controls_state = 446 } # Cairo
+		EGY = {
+			NOT = {
+				is_in_faction_with = GER
+				is_in_faction_with = CAN
+				is_in_faction_with = JAP
+				is_in_faction_with = RUS
+				is_puppet = yes
+			}
+		}
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = CAN
+			is_in_faction_with = JAP
+			is_in_faction_with = RUS
+			is_puppet = yes
+		}
+		NOT = { has_global_flag = ott_surrender }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {					# surrender
+		name = ott.54.a
+		
+		ai_chance = { factor = 80 }
+		add_political_power = -300
+		set_global_flag = ott_surrender
+		EGY = { country_event = { id = ott.55 days = 2 } } # EGY response
+	}
+
+	option = { # the war will continue until we march through Cairo
+		name = ott.54.b
+		
+		ai_chance = { factor = 20 }
+		add_political_power = -400
+	}
+
+}
+
+### Treaty of Jerusalem - EGY response
+
+country_event = {
+	id = ott.55
+	title = ott.55.t
+	desc = ott.55.d
+	
+	is_triggered_only = yes
+	
+	option = {					# accept the ottoman surrender
+		name = ott.55.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		if = {
+			limit = {
+				OTT = { has_war_with = PER }
+			}
+			set_global_flag = per_victory
+		}
+		if = {
+			limit = {
+				OTT = { has_war_with = SAU }
+			}
+			set_global_flag = sau_victory
+		}
+		if = {
+			limit = {
+				GRE = {
+					exists = yes
+					is_puppet = no
+					has_war_with = OTT
+					NOT = { is_in_faction_with = RUS }
+				}
+			}
+			set_global_flag = gre_ott_victory
+		}
+		OTT = { country_event = { id = ott.56 days = 1 } } # OTT response
+	}
+
+	option = {					# no treaty, we march to Istanbul
+		name = ott.55.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -40
+		add_named_threat = { threat = 3 name = ott_egy_continues } 
+		OTT = { country_event = { id = ott.57 days = 1 } } # OTT response
+		clr_global_flag = ott_surrender
+	}
+}
+
+### Treaty of Jerusalem - Final Ottoman surrender
+
+country_event = {
+	id = ott.56
+	title = ott.56.t
+	desc = ott.56.d
+	
+	is_triggered_only = yes
+	
+	option = {					# shamefur dispray
+		name = ott.56.a
+
+		add_political_power = -40
+		if = {
+			limit = { is_in_faction = yes }
+			random_country = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = OTT
+				}
+				remove_from_faction = OTT
+			}
+		}
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = EGY
+							is_puppet_of = OTT
+						}
+					}
+				}
+				white_peace = EGY		
+		}
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = SAU
+							is_puppet_of = OTT
+						}
+					}
+				}
+				white_peace = SAU		
+		}
+		if = {
+			limit = { has_war_with = PER }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = OTT
+							tag = TUR
+							AND = {
+								has_war_with = PER
+								is_puppet_of = OTT
+							}
+						}
+					}
+					white_peace = PER	
+			}
+		}
+		diplomatic_relation = { country = EGY relation = non_aggression_pact }
+		if = {
+			limit = { has_global_flag = per_victory }
+			diplomatic_relation = { country = PER relation = non_aggression_pact }
+		}
+		if = {
+			limit = { has_global_flag = sau_victory }
+			diplomatic_relation = { country = SAU relation = non_aggression_pact }
+		}
+		every_country = {	# TODO - check puppet release success
+				limit = { is_puppet_of = OTT }
+				OTT = { end_puppet = PREV }
+				every_enemy_country = { white_peace = PREV } # TODO - fix puppet peace
+		}
+		remove_state_core = 455
+		remove_state_core = 454
+		remove_state_core = 553
+		remove_state_core = 554
+		remove_state_core = 677
+		remove_state_core = 291
+		remove_state_core = 656
+		remove_state_core = 675
+		remove_state_core = 812
+		remove_state_core = 680
+		remove_state_core = 676
+		remove_state_core = 819
+		remove_state_core = 754
+		remove_state_core = 753
+		remove_state_core = 679
+		remove_state_core = 453				# mideast cores removed
+		remove_state_claim = 455
+		remove_state_claim = 454
+		remove_state_claim = 553
+		remove_state_claim = 554
+		remove_state_claim = 677
+		remove_state_claim = 291
+		remove_state_claim = 656
+		remove_state_claim = 675
+		remove_state_claim = 812
+		remove_state_claim = 680
+		remove_state_claim = 676
+		remove_state_claim = 819
+		remove_state_claim = 754
+		remove_state_claim = 753
+		remove_state_claim = 679
+		remove_state_claim = 453			# mideast claims removed
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 819 }	# Kirkuk
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 352 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 352 }	# Van
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 455 }
+			}
+			EGY = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 454 }
+			}
+			EGY = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 553 }
+			}
+			EGY = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 554 }
+			}
+			EGY = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 677 }
+			}
+			EGY = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 291 }
+			}
+			EGY = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 656 }
+			}
+			EGY = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 675 }
+			}
+			EGY = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 812 }
+			}
+			EGY = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 680 }
+			}
+			EGY = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 676 }
+			}
+			EGY = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+			}
+			EGY = { transfer_state = 819 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 754 }
+				SAU = { exists = yes }
+			}
+			SAU = { transfer_state = 754 } #Hashemites get Medina state
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 753 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 753 } #Egypt gets Suez Canal
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 453 }
+			}
+			EGY = { transfer_state = 453 }
+		}
+		every_enemy_country = {
+			limit = {
+				NOT = {
+					tag = RUS
+					num_of_factories > 40
+				}
+				NOT = { is_in_faction_with = RUS }
+			}
+			white_peace = OTT
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 229 }
+			}
+			release = AZB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 230 }
+			}
+			release = ARM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 231 }
+			}
+			release = GEO
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 234 }
+			}
+			release = DKB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 202 }
+			}
+			release = UKR
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 48 }
+			}
+			release = BUL
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 47 }
+			}
+			release = GRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 182 }
+			}
+			release = CRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 46 }
+			}
+			release = ROM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 107 }
+			}
+			release = SER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 266 }
+			}
+			release = PER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 44 }
+			}
+			release = ALB
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				731 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 731 add_state_core = 731 }
+			remove_state_core = 731
+			remove_state_claim = 731
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				769 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 769 add_state_core = 769 }
+			remove_state_core = 769
+			remove_state_claim = 769
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				184 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 184 add_state_core = 184 }
+			remove_state_core = 184
+			remove_state_claim = 184
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				341 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 341 add_state_claim = 341 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				773 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 773 add_state_claim = 773 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				187 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 187 add_state_core = 187 }
+			remove_state_core = 187
+			remove_state_claim = 187
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				164 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 164 add_state_core = 164 }
+			remove_state_core = 164
+			remove_state_claim = 164
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				183 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 183 add_state_core = 183 }
+			remove_state_core = 183
+			add_state_claim = 183
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 182 add_state_core = 182 }
+			remove_state_core = 182
+			remove_state_claim = 182
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = CRE }
+			}
+			# TODO - link relevant greek event - GRE = { country_event = { id = GRE_CRETE_EVENT days = 0 } }
+		}
+		clr_global_flag = per_victory
+		clr_global_flag = sau_victory
+		clr_global_flag = gre_ott_victory
+		if = {
+			limit = { tag = OTT }
+			set_country_flag = ott_broken		#Ottomans broken, coup soon
+		}
+		clr_global_flag = ott_surrender
+		EGY = { country_event = { id = ott.58 days = 1 } }
+	}
+	
+}
+
+### Treaty of Jerusalem - Egyptians refused to sign the treaty!
+
+country_event = {
+	id = ott.57
+	title = ott.57.t
+	desc = ott.57.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.57.a
+
+		add_political_power = -50
+	}
+
+}
+
+### Treaty of Jerusalem - Egyptian gains
+
+country_event = {
+	id = ott.58
+	title = ott.58.t
+	desc = ott.58.d
+	
+	is_triggered_only = yes
+	
+	option = {	# SAU gets everything
+		name = ott.58.a
+		trigger = { 554 = { is_core_of = SAU } 291 = { is_core_of = SAU } }
+
+		ai_chance = { factor = 99 }
+		add_political_power = 100
+		if = {
+			limit = {
+				EGY = { owns_state = 455 }
+			}
+			SAU = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 454 }
+			}
+			SAU = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 553 }
+			}
+			SAU = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 554 }
+			}
+			SAU = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 677 }
+			}
+			SAU = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 291 }
+			}
+			SAU = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 656 }
+			}
+			SAU = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 675 }
+			}
+			SAU = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 812 }
+			}
+			SAU = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 680 }
+			}
+			SAU = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 676 }
+			}
+			SAU = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 819 }
+			}
+			SAU = { transfer_state = 819 }
+		}
+		# TODO - egyptian IC bonus idea
+	}
+
+	option = {	# EGY gets Syria, SAU gets Iraq
+		name = ott.58.b
+		trigger = { 554 = { is_core_of = EGY } 291 = { is_core_of = SAU } }
+
+		ai_chance = { factor = 99 }
+		add_political_power = 100
+		if = {
+			limit = {
+				EGY = { owns_state = 291 }
+			}
+			SAU = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 656 }
+			}
+			SAU = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 675 }
+			}
+			SAU = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 676 }
+			}
+			SAU = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 819 }
+			}
+			SAU = { transfer_state = 819 }
+		}
+		# TODO - egyptian IC bonus idea
+	}
+
+	option = {	#EGY decides to keep everything
+		name = ott.58.c
+
+		ai_chance = { factor = 1 }
+		add_political_power = -150
+	}
+
+}
+
+
+###############################################################################
+# Treaty of Damascus
+###############################################################################
+
+### Treaty of Damascus
+
+country_event = {
+	id = ott.59
+	title = ott.59.t
+	desc = ott.59.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		tag = OTT
+		has_war_with = EGY
+		EGY = {	is_puppet = no }
+		EGY = { controls_state = 454 } # Jerusalem
+		NOT = { controls_state = 554 } # Damascus
+		NOT = { controls_state = 553 } # Lebanon
+		NOT = { controls_state = 344 } # Adana !!!
+		NOT = { controls_state = 679 } # Hedjaz
+		NOT = { controls_state = 291 } # Baghdad
+		NOT = { controls_state = 676 } # Mosul
+		NOT = { controls_state = 266 } # Tehran
+		EGY = { controls_state = 446 } # Cairo
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = CAN
+			is_in_faction_with = JAP
+			is_in_faction_with = RUS
+			is_puppet = yes
+		}
+		NOT = { has_global_flag = ott_surrender }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {					# surrender
+		name = ott.59.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = -400
+		set_global_flag = ott_surrender
+		EGY = { country_event = { id = ott.60 days = 2 } } # EGY response
+	}
+
+	option = { # the war will continue until we march through Cairo
+		name = ott.59.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -400
+	}
+
+}
+
+### Treaty of Damascus - EGY response
+
+country_event = {
+	id = ott.60
+	title = ott.60.t
+	desc = ott.60.d
+	
+	is_triggered_only = yes
+	
+	option = {					# accept the ottoman surrender
+		name = ott.60.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		add_state_core = 455
+		add_state_core = 454
+		add_state_core = 553
+		add_state_core = 554
+		add_state_core = 812
+		add_state_core = 680
+		add_state_core = 677	# greater syria
+		if = {
+			limit = {
+				OTT = { has_war_with = PER }
+			}
+			set_global_flag = per_victory
+		}
+		if = {
+			limit = {
+				OTT = { has_war_with = SAU }
+			}
+			set_global_flag = sau_victory
+		}
+		if = {
+			limit = {
+				GRE = {
+					exists = yes
+					is_puppet = no
+					has_war_with = OTT
+					NOT = { is_in_faction_with = RUS }
+				}
+			}
+			set_global_flag = gre_ott_victory
+		}
+		OTT = { country_event = { id = ott.61 days = 1 } } # OTT response
+	}
+
+	option = {					# no treaty, we march to Istanbul
+		name = ott.60.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+		add_state_core = 455
+		add_state_core = 454
+		add_state_core = 553
+		add_state_core = 554
+		add_state_core = 812
+		add_state_core = 680
+		add_state_core = 677	# greater syria
+		add_named_threat = { threat = 3 name = ott_egy_continues } 
+		OTT = { country_event = { id = ott.62 days = 1 } } # OTT response
+		clr_global_flag = ott_surrender
+	}
+}
+
+### Treaty of Damascus - Final Ottoman surrender
+
+country_event = {
+	id = ott.61
+	title = ott.61.t
+	desc = ott.61.d
+	
+	is_triggered_only = yes
+	
+	option = {					# shamefur dispray
+		name = ott.61.a
+
+		add_political_power = -40
+		if = {
+			limit = { is_in_faction = yes }
+			random_country = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = OTT
+				}
+				remove_from_faction = OTT
+			}
+		}
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = EGY
+							is_puppet_of = OTT
+						}
+					}
+				}
+				white_peace = EGY		
+		}
+		if = {
+			limit = { has_war_with = SAU }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = OTT
+							tag = TUR
+							AND = {
+								has_war_with = SAU
+								is_puppet_of = OTT
+							}
+						}
+					}
+					white_peace = SAU	
+			}
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 679 }
+			}
+			release = SAU
+		}
+		if = {
+			limit = { has_war_with = PER }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = OTT
+							tag = TUR
+							AND = {
+								has_war_with = PER
+								is_puppet_of = OTT
+							}
+						}
+					}
+					white_peace = PER	
+			}
+		}
+		diplomatic_relation = { country = EGY relation = non_aggression_pact }
+		if = {
+			limit = { has_global_flag = per_victory }
+			diplomatic_relation = { country = PER relation = non_aggression_pact }
+		}
+		if = {
+			limit = { has_global_flag = sau_victory }
+			diplomatic_relation = { country = SAU relation = non_aggression_pact }
+		}
+		every_country = {	# TODO - check puppet release success
+				limit = { is_puppet_of = OTT }
+				OTT = { end_puppet = PREV }
+				every_enemy_country = { white_peace = PREV } # TODO - fix puppet peace
+		}
+		remove_state_core = 455
+		remove_state_core = 454
+		remove_state_core = 553
+		remove_state_core = 554
+		remove_state_core = 677
+		remove_state_core = 291
+		remove_state_core = 656
+		remove_state_core = 675
+		remove_state_core = 812
+		remove_state_core = 680
+		remove_state_core = 676
+		remove_state_core = 819
+		remove_state_core = 754
+		remove_state_core = 753
+		remove_state_core = 679
+		remove_state_core = 453				# mideast cores removed
+		remove_state_claim = 455
+		remove_state_claim = 454
+		remove_state_claim = 553
+		remove_state_claim = 554
+		remove_state_claim = 677
+		remove_state_claim = 291
+		remove_state_claim = 656
+		remove_state_claim = 675
+		remove_state_claim = 812
+		remove_state_claim = 680
+		remove_state_claim = 676
+		remove_state_claim = 819
+		remove_state_claim = 754
+		remove_state_claim = 753
+		remove_state_claim = 679
+		remove_state_claim = 453			# mideast claims removed
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 819 }	# Kirkuk
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 352 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 352 }	# Van
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 455 }
+			}
+			EGY = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 454 }
+			}
+			EGY = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 553 }
+			}
+			EGY = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 554 }
+			}
+			EGY = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 677 }
+			}
+			EGY = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 812 }
+			}
+			EGY = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 680 }
+			}
+			EGY = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 291 }
+			}
+			SAU = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 656 }
+			}
+			SAU = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 675 }
+			}
+			SAU = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 676 }
+			}
+			SAU = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+			}
+			SAU = { transfer_state = 819 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 754 }
+			}
+			SAU = { transfer_state = 754 } #Hashemites get Medina state
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 753 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 753 } #Egypt gets Suez Canal
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 453 }
+			}
+			EGY = { transfer_state = 453 }
+		}
+		every_enemy_country = {
+			limit = {
+				NOT = {
+					tag = RUS
+					num_of_factories > 40
+				}
+				NOT = { is_in_faction_with = RUS }
+			}
+			white_peace = OTT
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 229 }
+			}
+			release = AZB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 230 }
+			}
+			release = ARM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 231 }
+			}
+			release = GEO
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 234 }
+			}
+			release = DKB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 202 }
+			}
+			release = UKR
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 48 }
+			}
+			release = BUL
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 47 }
+			}
+			release = GRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 182 }
+			}
+			release = CRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 46 }
+			}
+			release = ROM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 107 }
+			}
+			release = SER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 266 }
+			}
+			release = PER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 44 }
+			}
+			release = ALB
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				731 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 731 add_state_core = 731 }
+			remove_state_core = 731
+			remove_state_claim = 731
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				769 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 769 add_state_core = 769 }
+			remove_state_core = 769
+			remove_state_claim = 769
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				184 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 184 add_state_core = 184 }
+			remove_state_core = 184
+			remove_state_claim = 184
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				341 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 341 add_state_claim = 341 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				773 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 773 add_state_claim = 773 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				187 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 187 add_state_core = 187 }
+			remove_state_core = 187
+			remove_state_claim = 187
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				164 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 164 add_state_core = 164 }
+			remove_state_core = 164
+			remove_state_claim = 164
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				183 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 183 add_state_core = 183 }
+			remove_state_core = 183
+			add_state_claim = 183
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 182 add_state_core = 182 }
+			remove_state_core = 182
+			remove_state_claim = 182
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = CRE }
+			}
+			# TODO - link relevant greek event - GRE = { country_event = { id = GRE_CRETE_EVENT days = 0 } }
+		}
+		clr_global_flag = per_victory
+		clr_global_flag = sau_victory
+		clr_global_flag = gre_ott_victory
+		if = {
+			limit = { tag = OTT }
+			set_country_flag = ott_broken		#Ottomans broken, coup soon
+		}
+		clr_global_flag = ott_surrender
+		# TODO - egyptian IC bonus idea
+		SAU = { country_event = { id = ott.63 days = 1 } }
+	}
+	
+}
+
+### Treaty of Damascus - Egyptians refused to sign the treaty!
+
+country_event = {
+	id = ott.62
+	title = ott.62.t
+	desc = ott.62.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.62.a
+
+		add_political_power = -10
+	}
+
+}
+
+### Treaty of Damascus - Arabian gains
+
+country_event = {
+	id = ott.63
+	title = ott.63.t
+	desc = ott.63.d
+	
+	is_triggered_only = yes
+	
+	option = {	# SAU gets stuff
+		name = ott.63.a
+
+		add_political_power = 100
+		add_state_core = 291
+		add_state_core = 656
+		add_state_core = 675
+		add_state_core = 819
+		add_state_core = 676	# iraq, kuwait
+	}
+
+
+}
+
+
+###############################################################################
+# Treaty of Beirut
+###############################################################################
+
+### Treaty of Beirut
+
+country_event = {
+	id = ott.64
+	title = ott.64.t
+	desc = ott.64.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		tag = EGY
+		is_puppet = no
+		has_war_with = OTT
+		has_global_flag = egy_axis_attack
+		OTT = {	# ottomans have control of their lands
+			controls_state = 454 # Jerusalem
+			controls_state = 676 # Mosul
+			controls_state = 291 # Baghdad
+			controls_state = 453 # Sinai
+		}
+		OR = {	# ottomans either: control cairo / have knocked out PER & SAU
+			OTT = { controls_state = 446 }
+			AND = {
+				OR = {
+					PER = { NOT = { controls_state = 266 } }
+					PER = { controls_state = 266 is_puppet_of = OTT }
+					PER = { NOT = { has_war_with = OTT } }
+				}
+				OR = {
+					SAU = { NOT = { controls_state = 679 } }
+					SAU = { controls_state = 679 is_puppet_of = OTT }
+					SAU = { NOT = { has_war_with = OTT } }
+				}
+			}
+		}
+		OTT = {
+			NOT = {
+				is_in_faction_with = GER
+				is_in_faction_with = CAN
+				is_in_faction_with = JAP
+				is_in_faction_with = RUS
+				is_puppet = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {					# beg the ottomans for peace
+		name = ott.64.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = -100
+		OTT = { country_event = { id = ott.65 days = 2 } } # OTT response
+	}
+
+	option = { # the war will continue until we march through Istanbul
+		name = ott.64.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -200
+	}
+
+}
+
+### Treaty of Beirut - OTT response
+
+country_event = {
+	id = ott.65
+	title = ott.65.t
+	desc = ott.65.d
+	
+	is_triggered_only = yes
+	
+	option = {					# accept the egyptian surrender
+		name = ott.65.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = OTT
+						tag = TUR
+						AND = {
+							has_war_with = EGY
+							is_puppet_of = OTT
+						}
+					}
+				}
+				white_peace = EGY		
+		}
+		if = {
+			limit = { has_war_with = SAU }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = OTT
+							tag = TUR
+							AND = {
+								has_war_with = SAU
+								is_puppet_of = OTT
+							}
+						}
+					}
+					white_peace = SAU	
+			}
+		}
+		diplomatic_relation = { country = EGY relation = non_aggression_pact }
+		if = {
+			limit = { has_war_with = SAU }
+			diplomatic_relation = { country = SAU relation = non_aggression_pact }
+		}
+		if = {
+			limit = {
+				EGY = { owns_state = 753 }
+			}
+			OTT = { transfer_state = 753 add_state_claim = 753 }
+		}
+		EGY = { country_event = { id = ott.66 days = 1 } } # EGY response
+	}
+
+	option = {					# no treaty, we march to Cairo
+		name = ott.65.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+		add_named_threat = { threat = 3 name = ott_ott_continues } 
+		EGY = { country_event = { id = ott.67 days = 1 } } # EGY response
+	}
+}
+
+### Treaty of Beirut - Egypt status: rekt
+
+country_event = {
+	id = ott.66
+	title = ott.66.t
+	desc = ott.66.d
+	
+	is_triggered_only = yes
+	
+	option = {	# EGY gets rekt
+		name = ott.66.a
+
+		add_political_power = -200
+		dismantle_faction = yes
+		446 = { set_demilitarized_zone = yes } # demilitarized zone Cairo
+	}
+
+}
+
+### Treaty of Beirut - Ottomans refused to sign the treaty!
+
+country_event = {
+	id = ott.67
+	title = ott.67.t
+	desc = ott.67.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.67.a
+
+		add_political_power = -20
+	}
+
+}
+
+
+
+
+###############################################################################
+# Treaty of Damascus - Turkey version
+###############################################################################
+
+### Treaty of Damascus
+
+country_event = {
+	id = ott.68
+	title = ott.68.t
+	desc = ott.68.d
+	
+	fire_only_once = yes
+		
+	trigger = {
+		tag = TUR
+		has_war_with = EGY
+		EGY = {	is_puppet = no }
+		EGY = { controls_state = 454 } # Jerusalem
+		NOT = { controls_state = 554 } # Damascus
+		NOT = { controls_state = 553 } # Lebanon
+		NOT = { controls_state = 344 } # Adana !!!
+		NOT = { controls_state = 679 } # Hedjaz
+		NOT = { controls_state = 291 } # Baghdad
+		NOT = { controls_state = 676 } # Mosul
+		NOT = { controls_state = 266 } # Tehran
+		EGY = { controls_state = 446 } # Cairo
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = CAN
+			is_in_faction_with = JAP
+			is_in_faction_with = RUS
+			is_puppet = yes
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {					# surrender
+		name = ott.68.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = -400
+		EGY = { country_event = { id = ott.69 days = 2 } } # EGY response
+	}
+
+	option = { # the war will continue until we march through Cairo
+		name = ott.68.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -400
+	}
+
+}
+
+### Treaty of Damascus - EGY response
+
+country_event = {
+	id = ott.69
+	title = ott.69.t
+	desc = ott.69.d
+	
+	is_triggered_only = yes
+	
+	option = {					# accept the turkish surrender
+		name = ott.69.a
+		
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		add_state_core = 455
+		add_state_core = 454
+		add_state_core = 553
+		add_state_core = 554
+		add_state_core = 812
+		add_state_core = 680
+		add_state_core = 677	# greater syria
+		if = {
+			limit = {
+				TUR = { has_war_with = PER }
+			}
+			set_global_flag = per_victory
+		}
+		if = {
+			limit = {
+				TUR = { has_war_with = SAU }
+			}
+			set_global_flag = sau_victory
+		}
+		if = {
+			limit = {
+				GRE = {
+					exists = yes
+					is_puppet = no
+					has_war_with = TUR
+					NOT = { is_in_faction_with = RUS }
+				}
+			}
+			set_global_flag = gre_ott_victory
+		}
+		TUR = { country_event = { id = ott.70 days = 1 } } # TUR response
+	}
+
+	option = {					# no treaty, we march to Istanbul
+		name = ott.69.b
+		
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+		add_state_core = 455
+		add_state_core = 454
+		add_state_core = 553
+		add_state_core = 554
+		add_state_core = 812
+		add_state_core = 680
+		add_state_core = 677	# greater syria
+		add_named_threat = { threat = 3 name = ott_egy_continues } 
+		TUR = { country_event = { id = ott.62 days = 1 } } # TUR response
+	}
+}
+
+### Treaty of Damascus - Final Turkish surrender
+
+country_event = {
+	id = ott.70
+	title = ott.70.t
+	desc = ott.70.d
+	
+	is_triggered_only = yes
+	
+	option = {					# shamefur dispray
+		name = ott.70.a
+
+		add_political_power = -40
+		if = {
+			limit = { is_in_faction = yes }
+			random_country = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = TUR
+				}
+				remove_from_faction = TUR
+			}
+		}
+		every_country = {	# TODO - fix puppet peace
+				limit = {
+					OR = {
+						tag = TUR
+						AND = {
+							has_war_with = EGY
+							is_puppet_of = TUR
+						}
+					}
+				}
+				white_peace = EGY		
+		}
+		if = {
+			limit = { has_war_with = SAU }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = TUR
+							AND = {
+								has_war_with = SAU
+								is_puppet_of = TUR
+							}
+						}
+					}
+					white_peace = SAU	
+			}
+		}
+		if = {
+			limit = {
+				TUR = { owns_state = 679 }
+			}
+			release = SAU
+		}
+		if = {
+			limit = { has_war_with = PER }
+			every_country = {	# TODO - fix puppet peace
+					limit = {
+						OR = {
+							tag = TUR
+							AND = {
+								has_war_with = PER
+								is_puppet_of = TUR
+							}
+						}
+					}
+					white_peace = PER	
+			}
+		}
+		diplomatic_relation = { country = EGY relation = non_aggression_pact }
+		if = {
+			limit = { has_global_flag = per_victory }
+			diplomatic_relation = { country = PER relation = non_aggression_pact }
+		}
+		if = {
+			limit = { has_global_flag = sau_victory }
+			diplomatic_relation = { country = SAU relation = non_aggression_pact }
+		}
+		every_country = {	# TODO - check puppet release success
+				limit = { is_puppet_of = TUR }
+				TUR = { end_puppet = PREV }
+				every_enemy_country = { white_peace = PREV } # TODO - fix puppet peace
+		}
+		remove_state_core = 455
+		remove_state_core = 454
+		remove_state_core = 553
+		remove_state_core = 554
+		remove_state_core = 677
+		remove_state_core = 291
+		remove_state_core = 656
+		remove_state_core = 675
+		remove_state_core = 812
+		remove_state_core = 680
+		remove_state_core = 676
+		remove_state_core = 819
+		remove_state_core = 754
+		remove_state_core = 753
+		remove_state_core = 679
+		remove_state_core = 453				# mideast cores removed
+		remove_state_claim = 455
+		remove_state_claim = 454
+		remove_state_claim = 553
+		remove_state_claim = 554
+		remove_state_claim = 677
+		remove_state_claim = 291
+		remove_state_claim = 656
+		remove_state_claim = 675
+		remove_state_claim = 812
+		remove_state_claim = 680
+		remove_state_claim = 676
+		remove_state_claim = 819
+		remove_state_claim = 754
+		remove_state_claim = 753
+		remove_state_claim = 679
+		remove_state_claim = 453			# mideast claims removed
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 819 }	# Kirkuk
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 352 }
+				has_global_flag = per_victory
+			}
+			PER = { transfer_state = 352 }	# Van
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 455 }
+			}
+			EGY = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 454 }
+			}
+			EGY = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 553 }
+			}
+			EGY = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 554 }
+			}
+			EGY = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 677 }
+			}
+			EGY = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 812 }
+			}
+			EGY = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 680 }
+			}
+			EGY = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 291 }
+			}
+			SAU = { transfer_state = 291 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 656 }
+			}
+			SAU = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 675 }
+			}
+			SAU = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 676 }
+			}
+			SAU = { transfer_state = 676 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+			}
+			SAU = { transfer_state = 819 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 754 }
+			}
+			SAU = { transfer_state = 754 } #Hashemites get Medina state
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 753 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 753 } #Egypt gets Suez Canal
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 453 }
+			}
+			EGY = { transfer_state = 453 }
+		}
+		every_enemy_country = {
+			limit = {
+				NOT = {
+					tag = RUS
+					num_of_factories > 40
+				}
+				NOT = { is_in_faction_with = RUS }
+			}
+			white_peace = TUR
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 229 }
+			}
+			release = AZB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 230 }
+			}
+			release = ARM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 231 }
+			}
+			release = GEO
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 234 }
+			}
+			release = DKB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 202 }
+			}
+			release = UKR
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 48 }
+			}
+			release = BUL
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 47 }
+			}
+			release = GRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 182 }
+			}
+			release = CRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 46 }
+			}
+			release = ROM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 107 }
+			}
+			release = SER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 266 }
+			}
+			release = PER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 44 }
+			}
+			release = ALB
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				731 = { is_owned_by = TUR is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 731 add_state_core = 731 }
+			remove_state_core = 731
+			remove_state_claim = 731
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				769 = { is_owned_by = TUR is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 769 add_state_core = 769 }
+			remove_state_core = 769
+			remove_state_claim = 769
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				184 = { is_owned_by = TUR is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 184 add_state_core = 184 }
+			remove_state_core = 184
+			remove_state_claim = 184
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				341 = { is_owned_by = TUR is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 341 add_state_claim = 341 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				773 = { is_owned_by = TUR is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 773 add_state_claim = 773 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				187 = { is_owned_by = TUR }
+			}
+			GRE = { transfer_state = 187 add_state_core = 187 }
+			remove_state_core = 187
+			remove_state_claim = 187
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				164 = { is_owned_by = TUR }
+			}
+			GRE = { transfer_state = 164 add_state_core = 164 }
+			remove_state_core = 164
+			remove_state_claim = 164
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				183 = { is_owned_by = TUR }
+			}
+			GRE = { transfer_state = 183 add_state_core = 183 }
+			remove_state_core = 183
+			add_state_claim = 183
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = TUR }
+			}
+			GRE = { transfer_state = 182 add_state_core = 182 }
+			remove_state_core = 182
+			remove_state_claim = 182
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = CRE }
+			}
+			# TODO - link relevant greek event - GRE = { country_event = { id = GRE_CRETE_EVENT days = 0 } }
+		}
+		clr_global_flag = per_victory
+		clr_global_flag = sau_victory
+		clr_global_flag = gre_ott_victory
+		# TODO - egyptian IC bonus idea
+		SAU = { country_event = { id = ott.63 days = 1 } }
+	}
+	
+}
+
+
+###############################################################################
+# OTT seizes Suez
+###############################################################################
+
+### OTT seizes Suez
+
+country_event = {
+	id = ott.71
+	title = ott.71.t
+	desc = ott.71.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		# TODO - german capitulation
+		# TODO - german capitulation
+		has_global_flag = GER_capitulation
+		GER = { controls_state = 753} # the canal
+		OTT = {
+			NOT = {
+				is_puppet_of = GER
+				is_in_faction_with = GER 
+				has_war_with = GER
+			}
+			controls_state = 453 # sinai
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {					# take suez
+		name = ott.71.a
+		
+		ai_chance = { factor = 100 }
+		reverse_add_opinion_modifier = {target = GER modifier = egy_suez } #-100
+		GER = { country_event = { id = ott.72 days = 0 } } #german response
+	}
+
+	option = {					# rather not
+		name = ott.71.b
+		
+		ai_chance = { factor = 0 }
+		reverse_add_opinion_modifier = {target = GER modifier = egy_suez1 } #+50
+		add_political_power = -100
+	}
+
+}
+
+
+country_event = { # German response
+	id = ott.72
+	title = ott.72.t
+	desc = ott.72.d
+	
+	is_triggered_only = yes
+	
+	option = {					# there's nothing we can do
+		name = ott.72.a
+			
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				GER = { owns_state = 753 }
+			}
+			OTT = { transfer_state = 753 add_state_claim = 753 }
+		}
+		add_political_power = -20
+	}
+
+	option = {					# this means war
+		name = ott.72.b
+			
+		ai_chance = { factor = 0 }
+		declare_war_on = { target = OTT type = annex_everything }
+		add_political_power = -100
+	}
+
+}
+
+
+###############################################################################
+# Cores on Arab lands
+###############################################################################
+
+### Basra cores
+
+country_event = {
+	id = ott.73
+	title = ott.73.t
+	desc = ott.73.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		656 = { is_owned_by = OTT is_controlled_by = OTT }	# kuwait
+		675 = { is_owned_by = OTT is_controlled_by = OTT }	# al hajara
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 50
+	}
+	
+	option = {
+		name = ott.73.a
+		
+		add_political_power = -50
+		add_state_core = 656
+		add_state_core = 675	
+	}
+
+}
+
+
+### Southern Syria cores
+
+country_event = {
+	id = ott.74
+	title = ott.74.t
+	desc = ott.74.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		656 = { is_owned_by = OTT is_controlled_by = OTT }	# kuwait
+		675 = { is_owned_by = OTT is_controlled_by = OTT }	# al hajara
+		455 = { is_owned_by = OTT is_controlled_by = OTT }	# jordan
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
+	option = {
+		name = ott.74.a
+		
+		add_political_power = -50
+		add_state_core = 455
+	}
+
+}
+
+
+### Medina state cores
+
+country_event = {
+	id = ott.75
+	title = ott.75.t
+	desc = ott.75.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		656 = { is_owned_by = OTT is_controlled_by = OTT }	# kuwait
+		675 = { is_owned_by = OTT is_controlled_by = OTT }	# al hajara
+		455 = { is_owned_by = OTT is_controlled_by = OTT }	# jordan
+		754 = { is_owned_by = OTT is_controlled_by = OTT }	# medina
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 350
+	}
+	
+	option = {
+		name = ott.75.a
+		
+		add_political_power = -50
+		add_state_core = 754
+	}
+
+}
+
+
+### Arabian peninsula cores
+
+country_event = {
+	id = ott.76
+	title = ott.76.t
+	desc = ott.76.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		656 = { is_owned_by = OTT is_controlled_by = OTT }	# kuwait
+		675 = { is_owned_by = OTT is_controlled_by = OTT }	# al hajara
+		455 = { is_owned_by = OTT is_controlled_by = OTT }	# jordan
+		754 = { is_owned_by = OTT is_controlled_by = OTT }	# medina
+		679 = { is_owned_by = OTT is_controlled_by = OTT }	# hejaz
+		292 = { is_owned_by = OTT is_controlled_by = OTT }	# nejd
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 500
+	}
+	
+	option = {
+		name = ott.76.a
+		
+		add_political_power = -50
+		add_state_core = 679
+		add_state_core = 292
+	}
+
+}
+
+
+### Sinai cores
+
+country_event = {
+	id = ott.77
+	title = ott.77.t
+	desc = ott.77.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		453 = { is_owned_by = OTT is_controlled_by = OTT }	# sinai
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	option = {
+		name = ott.77.a
+		
+		add_political_power = -50
+		add_state_core = 453
+	}
+
+}
+
+
+
+### Suez cores
+
+country_event = {
+	id = ott.78
+	title = ott.78.t
+	desc = ott.78.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		date > 1945.1.1
+		773 = { is_owned_by = OTT is_controlled_by = OTT }	# istanbul
+		49 = { is_owned_by = OTT is_controlled_by = OTT }	# ankara
+		554 = { is_owned_by = OTT is_controlled_by = OTT }	# damascus
+		291 = { is_owned_by = OTT is_controlled_by = OTT }	# baghdad
+		454 = { is_owned_by = OTT is_controlled_by = OTT }	# jerusalem
+		453 = { is_owned_by = OTT is_controlled_by = OTT }	# sinai
+		753 = { is_owned_by = OTT is_controlled_by = OTT }	# suez canal
+		NOT = {
+			has_war_with = EGY 
+			has_war_with = SAU 
+			has_war_with = IRQ 
+			has_war_with = SYR
+		}
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		is_puppet = no
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
+	option = {
+		name = ott.78.a
+		
+		add_political_power = -50
+		add_state_core = 753
+	}
+
+}
+
+
+
+
+
+###############################################################################
+# Ottoman Domestic Policy
+###############################################################################
+
+### Arabian nationalism - reaction to Egyptian cores
+#suspend constitution
+#stand strong against the crisis
+
+
+### Sedantag - ottoman victory day against arabian axis
+
+
+### Domestic concerns - criticism in the aftermath of arabian revolts
+#dissolve the parliament, suspend constitution
+#hold special elections
+
+#### Protestors gather - demand parliament, constitution reinstated
+#oh shid :DDDDDD
+##### Mob violence erupts
+#shoot protestors
+#reinstate constitution
+###### Galata Massacre
+#oh fugg
+####### New reformers - pressure for new coalition government
+#approve new government
+#keep shooting people :DDDDD
+
+#### Special elections - choose the new government
+#conservative
+#liberal
+#socialist
+#national populist
 

@@ -5,6 +5,8 @@
 
 add_namespace = canada
 
+### A lot of Prince Edward events have been removed because all they did in DH was tweak sliders which no longer exist.
+
 # country_event = { # The Political Situation
 	# id = canada.1
 	# title = canada.1.t
@@ -469,7 +471,7 @@ country_event = { # Rideau Hall
 	}
 }
 
-country_event = { #Vote of Non-Confidence
+country_event = { #Vote of Non-Confidence - triggers an election 
 	id = canada.14
 	title = canada.14.t
 	desc = canada.14.d
@@ -776,6 +778,15 @@ country_event = { # 1936 Election Events
         	CAN_CH_Douglas_eco_ade
         	CAN_Maurice_Pope_int_sco
         }
+		
+		create_country_leader = {
+			name = "King Edward VIII"
+			desc = "EDWARD_DESC"
+			picture = "Portrait_CAN_King_Edward_viii.tga"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
 
         hidden_effect = { country_event = { id = canada.19 days = 1 }}
 	} 
@@ -1503,6 +1514,9 @@ country_event = { # Conscription Riots
 		remove_ideas = quebec_riots
 	}	
 }
+#########################
+### PSA Treaty Events ###
+#########################
 
 country_event = { #PSA response to treaty offer
 	id = canada.37 
@@ -1512,22 +1526,23 @@ country_event = { #PSA response to treaty offer
 	
 	is_triggered_only = yes
 	
-	option = { #accept
+	option = { #accept - guarantee, non-agression and mil-access treaties
 		name = canada.37.a 
 		
-		ai_chance = {
+		ai_chance = { 
 			factor = 95
-			modifier = {
-				factor = 0.5
-				OR = {
+			modifier = { #Less likely to accept if already has big friends
+				factor = 0.3
+				OR = { 
 					is_guaranteed_by = JAP
 					is_guaranteed_by = GER 
 					is_guaranteed_by = RUS
 				}
 			}
-			modifier = {
+			modifier = { #Won't accept if already in a sweet gang
 				factor = 0 
 				is_guaranteed_by = USA 
+				is_in_faction = yes
 			}
 		}
 		
@@ -1536,7 +1551,8 @@ country_event = { #PSA response to treaty offer
 		hidden_effect = { set_country_flag = PSA_ACCEPT_CAN_TREATY }
 		
 		CAN = { 
-			give_guarantee = CAL 
+			give_guarantee = CAL
+			diplomatic_relation = { country = CAL relation = non_aggression_pact }
 			add_opinion_modifier = { target = CAL modifier = CANADA_GUARANTEE_PSA }
 			country_event = { id = canada.38 days = 1 }
 		}
@@ -1546,7 +1562,15 @@ country_event = { #PSA response to treaty offer
 		name = canada.37.b 
 		
 		ai_chance = {
-			factor = 5 
+			factor = 5
+			modifier = { #Less likely to accept if already has big friends
+				factor = 15
+				OR = { 
+					is_guaranteed_by = JAP
+					is_guaranteed_by = GER 
+					is_guaranteed_by = RUS
+				}
+			}
 		}
 		
 		add_opinion_modifier = { target = CAN modifier = PSA_REJECT_CAN }
@@ -1556,7 +1580,7 @@ country_event = { #PSA response to treaty offer
 	}
 }
 
-country_event = {
+country_event = { 
 	id = canada.38 
 	title = canada.38.t 
 	desc = canada.38.d
@@ -1569,7 +1593,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { #PSA rejects treaty
 	id = canada.39 
 	title = canada.39.t 
 	desc = canada.39.d 
@@ -1577,32 +1601,101 @@ country_event = {
 	
 	is_triggered_only = yes 
 	
-	option = {
+	option = { #oh well
 		name = canada.39.a
 		
 		ai_chance = {
-			factor = 90
+			factor = 95
 		}
 	}
 	
-	option = {
+	option = { #declare war
 		name = canada.39.b 
 		
 		ai_chance = {
-			factor = 10 
+			factor = 5 
 			modifier = {
 				factor = 0
 				OR = { 
 					CAN = { has_war_with = USA }
 					CAN = { has_war_with = CSA }
+					CAN = { has_war_with = TEX }
 					CAN = { has_war_with = ENG }
 					CAN = { has_war_with = GER }
 				}
 			}
+			modifier = {
+				factor = 0
+				CAL = {
+					OR = {
+						is_guaranteed_by = JAP 
+						is_guaranteed_by = SOV
+						is_guaranteed_by = GER 
+						is_guaranteed_by = ENG
+						is_guaranteed_by = FRA
+						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 10
+				CAL = { has_defensive_war = yes }
+			}
 		}
 		
-		add_named_threat = { threat = 8 name = CAN_PSA_war_t }
+		add_named_threat = { threat = 10 name = CAN_PSA_war_t }
 		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #PSA gets alliance offer from CAN 
+	id = canada.207
+	title = canada.207.t 
+	desc = canada.207.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #accept
+		name = canada.207.a 
+			
+		CAN = { country_event = { id = canada.208 days = 1 }}
+		add_opinion_modifier = { target = CAN modifier = CAN_PSA_JOINS_ENTENTE }
+	}
+	
+	option = { #reject 
+		name = canada.207.b 
+		
+		add_opinion_modifier = { target = CAN modifier = PSA_REJECTS_ALLIANCE }
+	}
+}
+
+country_event = {
+	id = canada.208 
+	title = canada.208.t 
+	desc = canada.208.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.208.a
+		
+		add_to_faction = CAL 
+		add_opinion_modifier = { target = CAL modifier = PSA_JOINS_ENTENTE }
+	}
+}
+
+country_event = {
+	id = canada.209 
+	title = canada.209.t 
+	desc = canada.209.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		 name = canada.209.a
 	}
 }
 
@@ -1749,7 +1842,7 @@ country_event = { # 1941 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1941.5.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -1821,6 +1914,21 @@ country_event = { # 1941 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -1902,6 +2010,22 @@ country_event = { # 1941 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_conservatist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -1983,6 +2107,22 @@ country_event = { # 1941 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2042,7 +2182,7 @@ country_event = { # 1946 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1946.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2114,6 +2254,21 @@ country_event = { # 1946 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2195,6 +2350,22 @@ country_event = { # 1946 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2276,6 +2447,22 @@ country_event = { # 1946 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2311,7 +2498,7 @@ country_event = { # 1951 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1951.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2383,6 +2570,22 @@ country_event = { # 1951 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2464,6 +2667,21 @@ country_event = { # 1951 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2545,6 +2763,21 @@ country_event = { # 1951 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2580,7 +2813,7 @@ country_event = { # 1956 Dominion General Election
 		has_government = paternal_autocratist
 		is_puppet = no
 		date > 1956.3.10
-		NOT = { has_country_flag = CAN_parliament_abolished }
+		NOT = { has_country_flag = CAN_PARLIAMENT_ABOLISHED }
 	}
 
 	mean_time_to_happen = {
@@ -2652,6 +2885,21 @@ country_event = { # 1956 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2733,6 +2981,21 @@ country_event = { # 1956 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2814,6 +3077,21 @@ country_event = { # 1956 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -2921,6 +3199,21 @@ country_event = { # 1961 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -3002,6 +3295,21 @@ country_event = { # 1961 Dominion General Election
         }
 
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -3083,6 +3391,21 @@ country_event = { # 1961 Dominion General Election
         }
 
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
+		if = {
+			limit = {
+				NOT = { has_country_flag = CAN_MONARCHY_ABOLISHED }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_CAN_King_Edward_viii.tga"
+				expire = "1965.1.1"
+				ideology = social_liberalist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -3504,6 +3827,7 @@ country_event = { # Irish-Canadian Treaty
 		add_opinion_modifier = { target = CAN modifier = CAN_IRE_treaty_accept }
 		CAN = {
 			give_guarantee = IRE 
+			diplomatic_relation = { country = IRE relation = non_aggression_pact }
 			country_event = { id = canada.55 days = 1 }
 		}
 	}
@@ -3736,16 +4060,16 @@ country_event = { # Denmark Rejects Claim
 		name = canada.66.a
 
 		ai_chance = {
-			factor = 70
+			factor = 50
 			modifier = {
-				factor = 0.1
+				factor = 0.5
 				OR = {
 					DEN = { is_in_faction_with = GER }
 					DEN = { is_in_faction_with = ENG }
 				}
 			}
 			modifier = {
-				factor = 2 
+				factor = 3 
 				DEN = { has_war = yes }
 			}
 		}
@@ -3775,7 +4099,27 @@ country_event = { # Denmark Rejects Claim
 		name = canada.66.b
 
 		ai_chance = {
-			factor = 30
+			factor = 50
+			modifier = {
+				factor = 1.5
+				OR = {
+					DEN = { is_in_faction_with = GER }
+					DEN = { is_in_faction_with = ENG }
+				}
+			}
+			modifier = {
+				factor = 0.5
+				DEN = { has_war = yes }
+			}
+			modifier = {
+				factor = 0
+				DEN = {
+					OR = {
+						NOT = { controls_state = 99 }
+						NOT = { controls_state = 37 }
+					}
+				}
+			}
 		}
 		
 		add_opinion_modifier = { target = CAN modifier = DEN_CAN_REJ } # -50
@@ -3899,79 +4243,79 @@ country_event = { # Disturbances in the USA!
 		random_owned_state = { remove_building = { type = industrial_complex level = 1 }}
 	}
 }
-### These are USA response events and should be located there if used ###
-# country_event = { # Edward VIII sends a letter to Hoover
-	# id = canada.69
-	# title = canada.69.t
-	# desc = canada.69.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+
+ country_event = { # Edward VIII sends a letter to Hoover
+	 id = canada.69
+	 title = canada.69.t
+	 desc = canada.69.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.69.a
+	 option = {
+		 name = canada.69.a
 
-		# add_political_power = -20
-	# }
-# }
+		 add_political_power = -20
+	 }
+ }
 
-# country_event = { # Edward VIII sends a letter to Mac Arthur
-	# id = canada.70
-	# title = canada.70.t
-	# desc = canada.70.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+ country_event = { # Edward VIII sends a letter to Mac Arthur
+	 id = canada.70
+	 title = canada.70.t
+	 desc = canada.70.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.70.a
+	 option = {
+		 name = canada.70.a
 
-		# add_political_power = 20
-	# }
-# }
+		 add_political_power = 20
+	 }
+ }
 
-# country_event = { # Canada supports us!
-	# id = canada.71
-	# title = canada.71.t
-	# desc = canada.71.d
-	# picture = GFX_report_event_spain_civil_war_soldiers
+ country_event = { # Canada supports us!
+	 id = canada.71
+	 title = canada.71.t
+	 desc = canada.71.d
+	 picture = GFX_report_event_spain_civil_war_soldiers
 	
-	# fire_only_once = yes
+	 fire_only_once = yes
 	
-	# trigger = {
-		# tag = USA
-		# date > 1936.7.20
-	# }
+	 trigger = {
+		 tag = USA
+		 date > 1936.7.20
+	 }
 
-	# mean_time_to_happen = {
-		# days = 0
-	# }
+	 mean_time_to_happen = {
+		 days = 0
+	 }
 
-	# option = {
-		# name = canada.71.a
+	 option = {
+		 name = canada.71.a
 
-		# add_political_power = 20
-		# add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
-	# }
-# }
+		 add_political_power = 20
+		 add_opinion_modifier = { target = CAN modifier = CAN_SUPP_USA } # 40
+	 }
+ }
 
 country_event = { # The Union of Britain at War.
 	id = canada.72
@@ -5446,8 +5790,8 @@ country_event = {
 
 		create_country_leader = {
 			name = "Frank McDermott"
-			desc = "EDWARD_DESC"
-			picture = "Portrait_CAN_King_Edward_viii.tga"
+			desc = "MCDERMOTT_DESC"
+			picture = "misc.tga"
 			expire = "1965.1.1"
 			ideology = social_conservatist_subtype
 			traits = {}
@@ -5837,8 +6181,10 @@ country_event = {
 ### NOT POSSIBLE ###
 
 ####################
-### HoI4 Events ####
+### BILL C-7 CHAIN ####
 ####################
+
+#C7 focus takes 4 weeks to complete.  Drafting events should fire weeks 1, 2, and 3, w/vote event firing when the focus completes.
 
 country_event = { # Military Industry Reform 
 	id = canada.100 
@@ -5846,105 +6192,40 @@ country_event = { # Military Industry Reform
 	desc = canada.100.d 
 	picture = GFX_report_event_spain_civil_war_soldiers 
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAN
+		NOT = { has_completed_focus = CAN_C7 }
+		focus_progress = {
+			focus = CAN_C7
+			progress > 0.20
+		}
+	}
 	
 	option = { #CD Howe's Plan
 		name = canada.100.a 
 		
 		ai_chance = { factor = 30 }
-		
-		331 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-			}
-		}
-		332 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-			}
-		}
-		464 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 4
-			}
-		}
-		465 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 4
-			}
-		}
-		add_ideas = CAN_howes_conversion
+		set_country_flag = HOWES_PLAN #for C7 events, laws now don't go into effect until/unless the bill passes.  
+		country_event = { days = 7 id = canada.101 }
 	}
 	
-	option = { #Compromise 
-		name = canada.100.b 
+	# option = { #Compromise 
+		# name = canada.100.b 
 		
-		ai_chance = { factor = 40 }
+		# ai_chance = { factor = 40 }
 	
-		add_ideas = CAN_industrial_compromise
-	}
+		# add_ideas = CAN_industrial_compromise
+	# }
 	
 	option = { #Tory Plan and remove Howe 
 		name = canada.100.c 
 		
 		ai_chance = { factor = 30 }
 		
-		473 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = arms_factory
-						level = 4
-						instant_build = yes
-				}
-			}
-		}
-		466 = {
-			if = {
-				limit = {
-					is_owned_by = CAN
-				}
-				add_building_construction = {
-						type = arms_factory
-						level = 4
-						instant_build = yes
-				}
-			}
-		}
+		set_country_flag = TORY_PLAN
+		country_event = { days = 7 id = canada.101 }
 	}
 }
 
@@ -5956,13 +6237,14 @@ country_event = { # Conscription Debate
 	
 	is_triggered_only = yes
 	
-	option = { #Heavy Conscription -trigger protest events -trigger liberal party events
+	option = { #Heavy Conscription 
 		name = canada.101.a 
 		
 		ai_chance = { factor = 30 }
 		
-		add_ideas = extensive_conscription
+		set_country_flag = YES_CONSCRIPTION
 		add_national_unity  = -0.05
+		country_event = { days = 7 id = canada.102 }
 	}
 	
 	option = { #Compromise for limited conscription
@@ -5970,23 +6252,19 @@ country_event = { # Conscription Debate
 		
 		ai_chance = { factor = 40 }
 		
-		add_ideas = limited_conscription
+		set_country_flag = LIMITED_CONSCRIPTION
+		country_event = { days = 7 id = canada.102 }	
 	}
 	
-	option = { #No Conscription and focus on quality
+	option = { #No Conscription
 		name = canada.101.c 
 		
 		ai_chance = { factor = 30 }
 		
+		set_country_flag = NO_CONSCRIPTION
+		
 		add_national_unity = 0.05
-		add_tech_bonus = {		
-			name = army_reform_bonus
-			bonus = 0.5
-			uses = 3
-			category = land_doctrine
-			category = air_doctrine
-			category = naval_doctrine
-		}
+		country_event = { days = 7 id = canada.102 }
 	}
 }
 
@@ -6003,26 +6281,27 @@ country_event = { # Domestic Security Debate
 		
 		ai_chance = { factor = 30 }
 		
+		set_country_flag = NO_SECRET_POLICE
 		add_timed_idea = {
 			idea = CAN_country_united
-			days = 1095
+			days = 365
 		}
 	}
 	
-	option = { #Secret Police Compromise 
-		name = canada.102.b 
+	# option = { #Secret Police Compromise 
+		# name = canada.102.b 
 		
-		ai_chance = { factor = 40 }
+		# ai_chance = { factor = 40 }
 		
-		add_ideas = CAN_Progressive_Intelligence
-	}
+		# add_ideas = CAN_Progressive_Intelligence
+	# }
 	
 	option = { #Police Crackdown
 		name = canada.102.c 
 		
 		ai_chance = { factor = 30 }
 		
-		add_ideas = CAN_Mounties
+		set_country_flag = YES_SECRET_POLICE
 		add_national_unity = -0.05
 	}
 }
@@ -6035,16 +6314,125 @@ country_event = { # Vote on Bill C7
 	
 	is_triggered_only = yes
 	
-	option = { #Bill C7 passes with strong support
+	option = { #Bill C7 passes with strong support - all laws chosen in drafting events go into effect
 		name = canada.103.a 
 		
-		ai_chance = { factor = 60 }
+		ai_chance = { factor = 80 }
 		
 		remove_ideas = CAN_divided_nation
 		remove_ideas = CAN_conscription_debate
 		remove_ideas = CAN_bill_c_7_debate
 		set_country_flag = CAN_C7_pass
 		add_national_unity = 0.05
+		
+		# Arms Industry Reform laws go into effect
+		if = {
+			limit = { has_country_flag = HOWES_PLAN }
+			331 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 2
+				}
+			}
+			332 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 2
+				}
+			}
+			464 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 4
+				}
+			}
+			465 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 4
+				}
+			}
+			add_ideas = CAN_howes_conversion
+		}
+		if = {
+			limit = { has_country_flag = TORY_PLAN }
+			473 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes
+					}
+				}
+			}
+			466 = {
+				if = {
+					limit = {
+						is_owned_by = CAN
+					}
+					add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes
+					}
+				}
+			}
+		}
+		
+		# Conscription Law goes into effect
+		if = {
+			limit = { has_country_flag = YES_CONSCRIPTION }
+			add_ideas = extensive_conscription
+		}
+		if = {
+			limit = { has_country_flag = LIMITED_CONSCRIPTION }
+			add_ideas = limited_conscription
+		}
+		if = {
+			limit = { has_country_flag = NO_CONSCRIPTION}
+			add_ideas = can_professional_army
+		}
+		
+		# Secret Police law goes into effect
+		if = {
+			limit = { has_country_flag = YES_SECRET_POLICE }
+			add_ideas = CAN_Mounties
+		}
+		if = {
+			limit = { has_country_flag = NO_SECRET_POLICE }
+			#Currently nothing happens
+		}
 	}
 
 	# option = { #Bill C7 barely passes with strong opposition
@@ -6058,23 +6446,21 @@ country_event = { # Vote on Bill C7
 		# add_national_unity = -0.05
 	# }
 	
-	option = { #Bill C7 fails!
+	option = { #Bill C7 fails! - Triggers an election.  This is necessary to ultimatley unlock "Abolish Parliament" or "Abolish Monarchy" focuses.
 		name = canada.103.c
 		
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 20 }
 		
 		#remove_ideas = CAN_divided_nation
 		remove_ideas = CAN_conscription_debate
 		remove_ideas = CAN_bill_c_7_debate
-		remove_ideas = CAN_Mounties
-		remove_ideas = CAN_Progressive_Intelligence
 		set_country_flag = CAN_C7_fail
-		add_national_unity = -0.1
+		add_national_unity = -0.10
 		country_event = { days = 1 id = canada.13 }
 	}
 }
 
-country_event = { #Remove work camps 
+country_event = { #Remove work camps - no more cheap labour when there is employment
 	id = canada.201
 	title = canada.201.t 
 	desc = canada.201.d 
@@ -6134,7 +6520,7 @@ country_event = { #Entente Air Training Scheme -- gives canada allies an event t
 			set_global_flag = EATS_ACTIVE
 		}
 	}
-	option = {
+	option = { 
 		name = canada.202.b 
 		ai_chance = { factor = 10 }
 		add_political_power = 100
@@ -6149,7 +6535,7 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 	
 	is_triggered_only = yes 
 	
-	option = {
+	option = { #If ally joins they get a nat'l spirit like the DATP
 		name = canada.203.a 
 		ai_chance = { factor = 60 }
 		add_ideas = entente_training_plan_idea
@@ -6161,7 +6547,7 @@ country_event = { #Entente Air Training Scheme -- event for Entente Allies if Ca
 			modifier = CAN_accept_EATS
 		}
 	}
-	option = {
+	option = { #Telling canada to fuck off gives you some pp and hurts relations.
 		name = canada.203.b
 		ai_chance = { factor = 40 }
 		add_opinion_modifier = {
@@ -6182,30 +6568,22 @@ country_event = { #Ally joins the entente air training scheme
 	
 	option = {
 		name = canada.204.a 
-		air_experience = 20
+		air_experience = 20 #Canada gets small air XP boost for every ally that joins
 	}
 }
 
-country_event = { #Liberal Dissent
+country_event = { #Liberal Dissent - Fires if parliament is abolished
 	id = canada.205
 	title = canada.205.t 
 	desc = canada.205.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	trigger = {
-		has_completed_focus = CAN_abolish_parliament
-	}
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		days = 7
-	}
+	is_triggered_only = yes
 	
 	option = { #Crush them
 		name = canada.205.a
-		add_timed_idea = { idea = CAN_liberal_dissent days = 14 }
-		add_manpower = -2000
+		add_timed_idea = { idea = CAN_liberal_dissent days = 540 }
+		add_manpower = -5000
 	}
 	option = { #Wait them out
 		name = canada.205.b
@@ -6213,30 +6591,239 @@ country_event = { #Liberal Dissent
 	}
 }
 
-country_event = { #Loyalist Dissent
+country_event = { #Loyalist Dissent - Fires if the monarchy is abolished
 	id = canada.206
 	title = canada.206.t 
 	desc = canada.206.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	trigger = {
-		has_completed_focus = CAN_abolish_parliament
-	}
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		days = 7
-	}
+	is_triggered_only = yes
 	
 	option = { #Wait them out
 		name = canada.206.a
-		add_timed_idea = { idea = CAN_loyalist_dissent days = 180 }
+		add_timed_idea = { idea = CAN_loyalist_dissent days = 540 }
 	}
 	option = { #Send in the troops
 		name = canada.206.b
-		add_timed_idea = { idea = CAN_loyalist_dissent days = 14 }
-		add_manpower = -1000
+		add_timed_idea = { idea = CAN_loyalist_dissent days = 180 }
+		add_manpower = -5000
 	}
 	
+	## Events 207-209 located with PSA evenets 37-39, details diplomacy w/PSA, triggered by focus
+}
+########################################
+## CANADA DEMANDS/WAR WITH PSA EVENTS ##
+########################################	
+	
+country_event = { #Canada claims Oregon Territory (PSA Event)
+	id = canada.210
+	title = canada.210.t 
+	desc = canada.210.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.210.a 
+		
+		CAN = { add_named_threat = { threat = 2 name = CAN_claim_oregon_threat } }
+	}
+}
+
+country_event = { #Canada demands the Oregon Territory (PSA Event) 
+	id = canada.211
+	title = canada.211.t 
+	desc = canada.211.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #Cede all territory
+		name = canada.211.a
+		
+		ai_chance = { #PSA should be very unlikely to say yes unless they are being attacked.
+			factor = 5
+			modifier = {
+				factor = 4
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { 
+			country_event = { days = 0 id = canada.212 } 
+			add_named_threat = { threat = 4 name = CAN_annex_oregon }
+		}
+	}
+	
+	option = { #Compromise 
+		name = canada.211.b 
+		
+		ai_chance = { #Should be 4x more likely than full scession, but still fairly unlikely if PSA isn't under attack.
+			factor = 20
+			modifier = {
+				factor = 3
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { 
+			country_event = { days = 0 id = canada.213 } 
+			add_named_threat = { threat = 2 name = CAN_annex_washington }
+		}
+	}
+	
+	option = { #Refuse - Canada invades 
+		name = canada.211.c 
+		
+		ai_chance = { #PSA be strongly in favour of rejecting the demand unless under attack
+			factor = 70
+			modifier = { #If PSA has a guarantee or alliance, rejecting Canada's demand should be a certainty
+				factor = 2
+				CAL = {
+					OR = {
+						is_guaranteed_by = JAP 
+						is_guaranteed_by = SOV
+						is_guaranteed_by = GER 
+						is_guaranteed_by = USA 
+						is_guaranteed_by = ENG
+						is_guaranteed_by = FRA
+						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 0.3
+				CAL = {
+					has_defensive_war = yes 
+				}
+			}
+		}
+		
+		CAN = { country_event = { days = 0 id = canada.214 } }
+	}
+}
+
+country_event = { #Pacific States cede the Oregon Territory 
+	id = canada.212 
+	title = canada.212.t 
+	desc = canada.212.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.212.a 
+		
+		CAN = {
+			set_state_controller = 386
+			set_state_controller = 385 
+			set_state_controller = 387
+		}
+	}
+}
+
+country_event = { #Pacific States offer a compromise
+	id = canada.213 
+	title = canada.213.t 
+	desc = canada.213.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #Accept
+		name = canada.213.a 
+		
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5 
+				CAL = { has_defensive_war = yes }
+			}
+			modifier = {
+				factor = 1.5 
+				CAN = { 
+					OR = {
+						has_war_with = ENG 
+						has_war_with = GER 
+						has_war_with = CSA 
+						has_war_with = USA 
+						has_war_with = TEX
+					}
+				}
+			}
+		}
+		
+		CAN = {
+			set_state_controller = 386
+			set_province_controller = 1832
+			set_province_controller = 12124
+			set_province_controller = 4778
+			set_province_controller = 3781
+			remove_state_claim = 385
+			remove_state_claim = 387
+		}
+		CAL = { country_event = { days = 0 id = canada.215 } }
+	}
+	
+	option = { #Reject and declare war
+		name = canada.213.b 
+		
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				CAL = { has_defensive_war = yes }
+			}
+		}
+		add_named_threat = { threat = 4 name = CAN_PSA_war_t }
+		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #Pacific States refuses demands
+	id = canada.214 
+	title = canada.214.t 
+	desc = canada.214.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.214.a 
+		add_named_threat = { threat = 4 name = CAN_PSA_war_t }
+		declare_war_on = { target = CAL type = annex_everything }
+	}
+}
+
+country_event = { #Canada accepts compromise (PSA)
+	id = canada.215 
+	title = canada.215.t 
+	desc = canada.215.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.215.a
+	}
+}
+
+country_event = {
+	id = canada.216
+	title = canada.216.t 
+	desc = canada.216.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.216.a
+		add_political_power = 150 
+	}
+}
+
 }

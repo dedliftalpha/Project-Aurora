@@ -15,7 +15,7 @@ country_event = { # A Day in September
 	trigger = {
 		tag = USA
 		date > 1936.9.29
-		NOT = { has_global_flag = ACW_CAL }
+		NOT = { has_global_flag = EVNT_149 }
 	}
 
 	mean_time_to_happen = {
@@ -40,7 +40,7 @@ country_event = { # A Day in September
 			factor = 30
 			modifier = { # Not if Avoid Civil War
 				factor = 0
-				has_global_flag = ACW_CAL
+				has_global_flag = EVNT_149
 			}
 		}
 
@@ -553,14 +553,13 @@ country_event = { # Constitutional Ban on CSA and America First
 	is_triggered_only = yes
 
 	option = {
-		name = ustates.14.a
+		name = ustates.157.a
 
 		ai_chance = {
 			factor = 85
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -20
 		hidden_effect = { country_event = { id = ustates.25 days = 3 }}
 		hidden_effect = { set_country_flag = MACARTHUR_HOS }
 	}
@@ -584,8 +583,7 @@ country_event = { # Constitutional Ban on CSA and America First
 			factor = 5
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = { country_event = { id = ustates.15 days = 3 }}
 		hidden_effect = { set_country_flag = MACARTHUR_HOS }
 	}		
@@ -714,7 +712,9 @@ country_event = { # MacArthur tries to negotiate with Reed
 		}
 
 		hidden_effect = { set_global_flag = ACW_AUS }
-		hidden_effect = { set_global_flag = ACW_CAL }
+		hidden_effect = { country_event = { id = amcivwar.2 days = 4}}
+		hidden_effect = { set_global_flag = ACW_CAL
+		country_event = { id = amcivwar.4 days = 6 } }
 	}	
 
 	option = {
@@ -919,7 +919,6 @@ country_event = { # Election day violence
 		}
 
 		hidden_effect = {
-		clr_country_flag = BAN_ELEC
 		set_country_flag = STANDARD_ELEC
 		}
 		add_political_power = -60
@@ -971,18 +970,15 @@ country_event = { # The 1936 Election
 				has_government = social_conservatist
 			}
 		}
-		date > 1936.11.2
-		not = { 
-			has_global_flag = USA_1936_ELECTIONS
-			is_puppet = yes 
-		}
+		date > 1936.11.02
+		date < 1936.12.29
 	}
 
 	mean_time_to_happen = {
 		days = 1
 	}
 
-	option = { # John Nance Garner (Democratic - Social Liberalist)
+	option = { # John Nance Garner (Democrat - Social Liberalist)
 		name = ustates.27.a
 
 		ai_chance = {
@@ -1055,7 +1051,7 @@ country_event = { # The 1936 Election
             popularity = 0.4
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.15
         }
 
@@ -1093,8 +1089,17 @@ country_event = { # The 1936 Election
 		}
 
 		hidden_effect = {
-		retire_country_leader = yes
+		kill_country_leader = yes
 		}
+		
+		create_country_leader = {
+	name = "Charles Curtis"
+	desc = "POLITICS_CHARLES_CURTIS_DESC"
+	picture = "Portrait_USA_Charles_Curtis.tga"
+	expire = "1965.1.1"
+	ideology = market_liberalist_subtype
+	traits = {}
+}
 
 		add_political_power = 20
 
@@ -1158,7 +1163,7 @@ country_event = { # The 1936 Election
             popularity = 0.3
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.15
         }
 
@@ -1257,11 +1262,11 @@ country_event = { # The 1936 Election
             popularity = 0.3
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.3
         }
 
-		set_politics = { ruling_party = national_populist elections_allowed = no }
+		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -1356,7 +1361,7 @@ country_event = { # The 1936 Election
             popularity = 0.2
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.2
         }
 
@@ -1474,7 +1479,7 @@ country_event = { # Reed launches the New Years Day Strike
 		name = ustates.33.a
 
 		add_political_power = -40
-		add_timed_idea = { idea = new_year_strike days = 60 }
+		add_timed_idea = { idea = new_year_strike days = 180 }
 	}		
 }
 
@@ -1505,10 +1510,9 @@ country_event = { # Long Establishes the Minute Men
 	
 	trigger = {
 		tag = USA
-		has_country_flag = ELECTIONS_1936
 		NOT = {
 			has_government = authoritarian_democratist
-			has_government = national_populist
+			has_government = paternal_autocratist
 			has_global_flag = END_ACW
 		}
 		date > 1936.11.11	
@@ -1541,8 +1545,8 @@ country_event = { # Longs New America
 	option = {
 		name = ustates.36.a
 
-		add_national_unity = 0.02
-		hidden_effect = { country_event = { id = ustates.37 days = 21 }}
+		add_national_unity = 40
+		set_country_flag = ustates36fired
 	}		
 }
 
@@ -1552,8 +1556,12 @@ country_event = { # Establishing the minute men
 	desc = ustates.37.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
-
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_country_flag = ustates36fired has_government = paternal_autocratist date > 1937.02.11 }
+    
+	mean_time_to_happen = { days = 1 }
+	
 	option = {
 		name = ustates.37.a
 
@@ -1585,7 +1593,7 @@ country_event = { # longs '37 reforms
 		hidden_effect = {
 		set_country_flag =  LONG_AGG_REF
 		country_event = { id = ustates.39 days = 12 }
-		country_event = { id = ustates.40 days = 28 }
+		country_event = { id = ustates.40 days = 10 }
 		}
 	}	
 
@@ -1601,6 +1609,7 @@ country_event = { # longs '37 reforms
 		hidden_effect = {
 		set_country_flag =  LONG_MOD_REF
 		country_event = { id = ustates.39 days = 12 }
+		country_event = { id = ustates.40 days = 10 }
 		}
 	}
 
@@ -1616,6 +1625,7 @@ country_event = { # longs '37 reforms
 		set_country_flag =  LONG_LIM_REF
 		}
 		add_ideas = long_lim_ref
+		country_event = { id = ustates.39 days = 12 }
 	}			
 }
 
@@ -1691,7 +1701,7 @@ country_event = { # Tariffs Cause Dissent through out the country
 
 	trigger = {
 		tag = USA
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = LONG_TARIFF
 		date > 1937.4.27
 	}
@@ -1717,10 +1727,10 @@ country_event = { # Price riots
 
 	trigger = {
 		tag = USA
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = LONG_AGREF
 		has_country_flag = LONG_TARIFF
-		date > 1937.4.27
+		date > 1937.6.11
 	}
 
 	mean_time_to_happen = {
@@ -1730,7 +1740,7 @@ country_event = { # Price riots
 	option = {
 		name = ustates.42.a
 
-		add_political_power = -20
+		add_political_power = -40
 		hidden_effect = { set_country_flag = PRICE_RIOTS }
 	}		
 }
@@ -1747,9 +1757,9 @@ country_event = { # Coast to Coast Reforms
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
-		has_country_flag = LONG_AGG_REF
-		has_country_flag = LONG_MOD_REF
+		has_government = paternal_autocratist
+		OR = { has_country_flag = LONG_AGG_REF
+		has_country_flag = LONG_MOD_REF }
 		NOT = { has_country_flag = LONG_NO_CONSTITUTION }
 		date > 1937.4.14
 	}
@@ -1795,7 +1805,7 @@ country_event = { # Coast to Coast Reforms
 			factor = 8
 		}
 
-		add_political_power = -20
+		add_political_power = 20
 		hidden_effect = {
 		set_country_flag =  LONG_CTC_NONE
 		set_country_flag = ustates.43
@@ -1834,8 +1844,7 @@ country_event = { # Long responds to the Californians protests
 			factor = 77
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = LONG_NO_CONSTITUTION
 		set_global_flag = ACW_CAL
@@ -1884,7 +1893,7 @@ country_event = { # California's governor protests the Coast 2 Coast reform
 		name = ustates.46.a
 
 		add_political_power = -20
-		hidden_effect = { country_event = { id = ustates.46 days = 3 }}
+		hidden_effect = { country_event = { id = ustates.47 days = 3 }}
 	}		
 }
 
@@ -1903,8 +1912,7 @@ country_event = { # Long responds to the Californians protests
 			factor = 90
 		}
 
-		add_national_unity = -0.3
-		add_political_power = -300
+		add_political_power = -60
 		hidden_effect = {
 		set_global_flag = ACW_CAL
 		country_event = { id = amcivwar.4 days = 6}
@@ -1921,7 +1929,7 @@ country_event = { # Long responds to the Californians protests
 		add_political_power = 20
 		hidden_effect = {
 		set_country_flag = LONG_CTC_NONE
-		clr_country_flag = LONG_CTC_FULL
+		clr_country_flag = LONG_CTC_SOME
 		}
 	}		
 }
@@ -1936,10 +1944,10 @@ country_event = { # Long's Aircraft Tax
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
-		has_country_flag = LONG_AGG_REF
+		has_government = paternal_autocratist
+		OR = { has_country_flag = LONG_AGG_REF
 		has_country_flag = LONG_MOD_REF
-		has_country_flag = LONG_LIM_REF
+		has_country_flag = LONG_LIM_REF }
 		date > 1937.3.17
 	}
 
@@ -1980,7 +1988,7 @@ country_event = { # Reed launches General strike
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = PRICE_RIOTS
 		NOT = {
 			country_exists = CSA
@@ -2014,6 +2022,7 @@ country_event = { # Reed launches General strike
 		}
 
 		add_political_power = -100
+		remove_ideas = long_tariff
 		hidden_effect = {
 		clr_country_flag = LONG_TARIFF
 		}
@@ -2030,7 +2039,7 @@ country_event = { # Long and the trade union
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = LONG_AGG_REF
 		has_country_flag = LONG_MOD_REF
 		has_country_flag = LONG_LIM_REF
@@ -2051,7 +2060,6 @@ country_event = { # Long and the trade union
 		add_political_power = 20
 		hidden_effect = {
 		set_country_flag = LONG_CON_CSA
-		country_event = { id = ustates.51 days = 30 }
 		}
 	}	
 
@@ -2089,7 +2097,12 @@ country_event = { # Congress passes the bill
 	desc = ustates.51.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_government = paternal_autocratist 
+	has_country_flag = LONG_CON_CSA NOT = { country_exists = CAL } date > 1937.03.21 }
+	
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = ustates.51.a
@@ -2117,7 +2130,6 @@ country_event = { # Reed ignores the bill and rallies the CSA behind him
 		add_political_power = -40
 		hidden_effect = {
 		set_country_flag = LONG_MM_CSA
-		country_event = { id = ustates.53 days = 16 }
 		}
 	}	
 
@@ -2129,7 +2141,6 @@ country_event = { # Reed ignores the bill and rallies the CSA behind him
 		}
 
 		add_political_power = -100
-		hidden_effect = { country_event = { id = ustates.54 days = 20 }}
 	}
 }
 
@@ -2139,17 +2150,21 @@ country_event = { # Police clash with protestors and anarchist kill 2 AUS men
 	desc = ustates.53.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_government = paternal_autocratist 
+	has_country_flag = LONG_CON_CSA NOT = { country_exists = CSA has_country_flag = LONG_MM_CSA has_country_flag = LONG_NO_CONSTITUTION } date > 1937.04.07 }
+	
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = ustates.53.a
 
 		ai_chance = {
-			factor = 81
+			factor = 28
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = LONG_NO_CONSTITUTION
 		set_global_flag = ACW_CSA
@@ -2161,13 +2176,12 @@ country_event = { # Police clash with protestors and anarchist kill 2 AUS men
 		name = ustates.53.b
 
 		ai_chance = {
-			factor = 19
+			factor = 72
 		}
 
 		add_political_power = -20
 		hidden_effect = {
 		set_country_flag = LONG_MM_CSA
-		country_event = { id = ustates.54 days = 4 }
 		}
 	}
 }
@@ -2178,13 +2192,17 @@ country_event = { # Minute Men and the CSA clash across the North East
 	desc = ustates.54.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_government = paternal_autocratist 
+	has_country_flag = LONG_CON_CSA has_country_flag = LONG_MM_CSA NOT = { country_exists = CSA } date > 1937.04.11 }
+	
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = ustates.54.a
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = LONG_NO_CONSTITUTION
 		set_global_flag = ACW_CSA
@@ -2199,7 +2217,12 @@ country_event = { # The Minute Men clash with Anarchists
 	desc = ustates.55.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_government = paternal_autocratist 
+	has_country_flag = LONG_MM_CSA NOT = { country_exists = CSA has_country_flag = LONG_CON_CSA has_country_flag = LONG_NO_CONSTITUTION } date > 1937.04.07 }
+	
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = ustates.55.a
@@ -2226,10 +2249,10 @@ country_event = { # Coast to Coast Reforms with no constitution
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = LONG_AGG_REF
 		has_country_flag = LONG_NO_CONSTITUTION
-		has_country_flag = ustates.43
+		NOT = { has_country_flag = ustates.43 country_exists = CAL }
 		date > 1937.4.14
 	}
 
@@ -2243,7 +2266,7 @@ country_event = { # Coast to Coast Reforms with no constitution
 		add_political_power = -100
 		hidden_effect = {
 		set_country_flag = LONG_CTC_FULL
-		country_event = { id = ustates.57 days = 1 }
+		country_event = { id = ustates.57 days = 6 }
 		}
 	}	
 }
@@ -2294,7 +2317,7 @@ country_event = { # MacArthur Seizes Power
 
 	trigger = {
 		tag = USA 
-		has_government = national_populist
+		has_government = paternal_autocratist
 		has_country_flag = LONG_NO_CONSTITUTION
 		country_exists = CSA
 		country_exists = CAL
@@ -2310,7 +2333,7 @@ country_event = { # MacArthur Seizes Power
 		name = ustates.59.a
 
 		hidden_effect = {
-		set_country_flag = ACW_JUNTA
+		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_AUS
 		country_event = { id = amcivwar.2 days = 4}
 		}
@@ -2479,7 +2502,6 @@ country_event = { # Nationalising the resource industry
 
 		add_political_power = -60
 		hidden_effect = {
-		country_event = { id = ustates.79 days = 45 }
 		set_country_flag = REED_NAT_NO_OIL
 		}
 	}
@@ -2499,9 +2521,7 @@ country_event = { # California refuses to hand over oil industry
 		ai_chance = {
 			factor = 75
 		}
-
 		set_country_flag = EVNT_63
-		hidden_effect = { country_event = { id = ustates.64 days = 14 }}
 	}	
 
 	option = { 
@@ -2511,9 +2531,9 @@ country_event = { # California refuses to hand over oil industry
 			factor = 25
 		}
 
-		add_political_power = -60
+		add_political_power = -160
+		set_country_flag = EVNT_63
 		hidden_effect = {
-		country_event = { id = ustates.79 days = 45 }
 		clr_country_flag = REED_NAT_OIL
 		set_country_flag = REED_NAT_NO_OIL
 		}
@@ -2527,6 +2547,11 @@ country_event = { # The blockade is a failure
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes
+	
+	trigger = { tag = USA has_government = syndicalist has_country_flag = EVNT_63 has_country_flag = REED_NAT_OIL 
+	date > 1937.02.24 }
+	
+	mean_time_to_happen = {days = 1}
 
 	option = { 
 		name = ustates.64.a
@@ -2606,7 +2631,7 @@ country_event = { # America First goons attack CSA men
 		}
 
 		add_political_power = -100
-		hidden_effect = { country_event = { id = ustates.66 days = 20 }}
+		set_country_flag = ustates66
 	}	
 }
 
@@ -2617,6 +2642,11 @@ country_event = { # Southern Trade Unions
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes
+	
+	trigger = { tag = USA has_government = syndicalist has_country_flag = ustates66 NOT = { country_exists = TEX }
+	date > 1937.02.13 }
+	
+	mean_time_to_happen = {days = 1}
 
 	option = { 
 		name = ustates.67.a
@@ -2639,8 +2669,7 @@ country_event = { # Southern Trade Unions
 			factor = 20
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = REED_TU_FIN
 		country_event = { id = ustates.68 days = 7 }
@@ -2677,8 +2706,7 @@ country_event = { # Trade Union Financial support
 			factor = 34
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 	}
 }
 
@@ -2725,8 +2753,7 @@ country_event = { # Minute Men Clash with Mexicans
 			factor = 10
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = REED_MEX_MM
 		country_event = { id = ustates.78 days = 6 }
@@ -2764,8 +2791,7 @@ country_event = { # Army refuses to support Reed
 			factor = 15
 		}
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 		hidden_effect = {
 		set_country_flag = REED_MEX_MM
 		country_event = { id = ustates.78 days = 4 }
@@ -2803,9 +2829,9 @@ country_event = { # MacArthur moves to take control
 		name = ustates.73.a
 
 		hidden_effect = {
-		set_global_flag = ACW_junta
+		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_CSA
-		country_event = { id = amcivwar.1 days = 2}
+		country_event = { id = amcivwar.1 days = 2 }
 		}
 	}	
 }
@@ -2876,7 +2902,7 @@ country_event = { # Army refuses to support Reed
 		name = ustates.76.a
 
 		ai_chance = {
-			factor = 70
+			factor = 85
 		}
 
 		add_political_power = 20
@@ -2890,7 +2916,7 @@ country_event = { # Army refuses to support Reed
 		name = ustates.76.b
 
 		ai_chance = {
-			factor = 30
+			factor = 15
 		}
 
 		add_political_power = -100
@@ -2954,7 +2980,7 @@ country_event = { # Hughes shoots down propoganda blimp
 		name = ustates.79.a
 
 		ai_chance = {
-			factor = 70
+			factor = 75
 		}
 
 		add_political_power = 20
@@ -2968,7 +2994,7 @@ country_event = { # Hughes shoots down propoganda blimp
 		name = ustates.79.b
 
 		ai_chance = {
-			factor = 30
+			factor = 25
 		}
 
 		add_political_power = -100
@@ -2977,11 +3003,22 @@ country_event = { # Hughes shoots down propoganda blimp
 
 country_event = { # Long supports a coup against Reed
 	id = ustates.80
-	title = ustates.780.t
+	title = ustates.80.t
 	desc = ustates.80.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		has_government = syndicalist
+		NOT = { has_global_flag = ACW_AUS country_exists = TEX }
+		date > 1937.3.15	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
 
 	option = { 
 		name = ustates.80.a
@@ -2993,6 +3030,7 @@ country_event = { # Long supports a coup against Reed
 		add_political_power = -20
 		hidden_effect = {
 		set_global_flag = ACW_AUS
+		country_event = { id = amcivwar.2 days = 4}
 		set_country_flag = REED_DEPOSED
 		country_event = { id = ustates.73 days = 0 }
 		}
@@ -3121,7 +3159,7 @@ country_event = { # Workers Arrive
 
 		add_political_power = -20
 		hidden_effect = { country_event = { id = ustates.85 days = 7 }}
-		add_ideas = garner_protect_workers_med
+		add_timed_idea = { idea = garner_protect_workers_med days = 80 }
 	}	
 
 	option = { 
@@ -3132,12 +3170,12 @@ country_event = { # Workers Arrive
 		}
 
 		add_political_power = -100
-		add_ideas = garner_protect_workers_low
+		add_timed_idea = { idea = garner_protect_workers_low days = 80 }
 		hidden_effect = { country_event = { id = ustates.90 days = 7 }}
 	}
 
 	option = { 
-		name = ustates.84.b
+		name = ustates.84.c
 
 		ai_chance = {
 			factor = 45
@@ -3145,7 +3183,7 @@ country_event = { # Workers Arrive
 
 		add_political_power = -20
 		hidden_effect = { country_event = { id = ustates.95 days = 7 }}
-		add_ideas = garner_protect_workers_low 
+        add_timed_idea = { idea = garner_protect_workers_high days = 80 }		
 	}
 }
 
@@ -3234,7 +3272,7 @@ country_event = { # The America First and CSA brawl in Chicago
 		hidden_effect = {
 		set_global_flag = ACW_AUS
 		country_event = { id = amcivwar.2 days = 4 }
-		country_event = { id = ustates.89 days = 2 }
+		country_event = { id = ustates.89 days = 6 }
 		}
 	}	
 }
@@ -3346,6 +3384,7 @@ country_event = { # Federal Troops with CSA
 		set_global_flag = ACW_CSA
 		country_event = { id = amcivwar.1 days = 2 }
 		country_event = { id = ustates.94 days = 2 }
+		set_country_flag = ustates93
 		}
 	}	
 }
@@ -3356,8 +3395,10 @@ country_event = { # Long offers the President Assistance in dealing with Reed
 	desc = ustates.94.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
-
+	fire_only_once = yes
+	
+	trigger = { tag = USA has_country_flag = ustates93 has_war_with = CSA }
+	
 	option = { 
 		name = ustates.94.a
 
@@ -3504,7 +3545,7 @@ country_event = { # Long refuses to remove the minute men
 		}
 
 		add_political_power = -40
-		hidden_effect = { country_event = { id = ustates.101 days = 3 }}
+		hidden_effect = { country_event = { id = ustates.102 days = 3 }}
 	}	
 
 	option = { 
@@ -3517,7 +3558,7 @@ country_event = { # Long refuses to remove the minute men
 		add_political_power = -100
 		hidden_effect = {
 		clr_country_flag = GAR_MM_NO
-		country_event = { id = ustates.102 days = 3 }
+		country_event = { id = ustates.101 days = 3 }
 		}
 	}
 }
@@ -3628,7 +3669,7 @@ country_event = { # America First Votes down the reforms
 		}
 
 		add_political_power = 20
-		hidden_effect = { country_event = { id = ustates.106 days = 6 }}
+		hidden_effect = { country_event = { id = ustates.106 days = 4 }}
 	}	
 
 	option = { 
@@ -3641,7 +3682,8 @@ country_event = { # America First Votes down the reforms
 		add_political_power = -60
 		set_country_flag = GAR_BACK
 		clr_country_flag = GAR_REED_REF
-		add_ideas = garner_red_reforms_back_down
+		remove_ideas = garner_red_reforms
+		hidden_effect = { country_event = { id = ustates.110 days = 4 } }
 	}
 }
 
@@ -3827,7 +3869,7 @@ country_event = { # Long protests the continuing negotiations
 		name = ustates.113.a
 
 		add_political_power = -20
-		hidden_effect = { country_event = { id = ustates.114 days = 3 }}
+		hidden_effect = { country_event = { id = ustates.114 days = 5 }}
 	}	
 }
 
@@ -3844,7 +3886,7 @@ country_event = { # The White House Riot
 
 		add_political_power = -100
 		set_country_flag = AUS_WASH_OUT
-		hidden_effect = { country_event = { id = ustates.115 days = 5 }}
+		hidden_effect = { country_event = { id = ustates.115 days = 3 }}
 	}	
 }
 
@@ -3967,7 +4009,7 @@ country_event = { # The Government Collapses and MacArthur Takes Command of the 
 		country_event = { id = amcivwar.1 days = 2 }
 		set_global_flag = ACW_CAL
 		country_event = { id = amcivwar.4 days = 6 }
-		set_country_flag = ACW_JUNTA
+		set_global_flag = ACW_JUNTA
 		}
 	}	
 }
@@ -3982,24 +4024,13 @@ country_event = { # Curtis' Inaugural Address
 	desc = ustates.120.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = USA
-		has_government = market_liberalist
-		NOT = { has_global_flag = ACW_CAL }
-		date > 1937.1.20
-	}
-
-	mean_time_to_happen = {
-		days = 1   
-	}
+	is_triggered_only = yes
 
 	option = { 
 		name = ustates.120.a
 
 		hidden_effect = { country_event = { id = ustates.121 days = 8}}
-		add_national_unity = 0.02
+		add_political_power = 40
 	}	
 }
 
@@ -4018,7 +4049,7 @@ country_event = { # Curtis deals with Reed's strike
 			factor = 92
 		}
 
-		hidden_effect = { country_event = { id = ustates.122 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.122 days = 3 }}
 		add_political_power = 20
 	}	
 
@@ -4096,7 +4127,7 @@ country_event = { # Reed puts forward his demands
 			factor = 10
 		}
 
-		hidden_effect = { country_event = { id = ustates.125 days = 1 }}
+		hidden_effect = { country_event = { id = ustates.125 days = 4 }}
 		add_political_power = -100
 		add_ideas = curt_reed_yes
 		add_opinion_modifier = { target = FRA modifier = curt_red_yes_FRA_ENG }
@@ -4113,7 +4144,7 @@ country_event = { # Reed puts forward his demands
 			factor = 90
 		}
 
-		hidden_effect = { country_event = { id = ustates.127 days = 1 }}
+		hidden_effect = { country_event = { id = ustates.127 days = 4 }}
 		add_political_power = -20
 		add_ideas = curt_reed_some
 		add_opinion_modifier = { target = FRA modifier = curt_red_some_FRA_ENG }
@@ -4138,7 +4169,7 @@ country_event = { # Long denounces Curtis as a traitor to the American people
 		hidden_effect = {
 		set_global_flag = ACW_AUS
 		country_event = { id = amcivwar.2 days = 4 }
-		country_event = { id = ustates.125 days = 1 }
+		country_event = { id = ustates.126 days = 1 }
 		}
 	}	
 }
@@ -4176,7 +4207,7 @@ country_event = { # Long protests the reforms
 			factor = 25
 		}
 
-		hidden_effect = { country_event = { id = ustates.128 days = 1 }}
+		hidden_effect = { country_event = { id = ustates.128 days = 7 }}
 		add_political_power = -40		
 	}	
 
@@ -4188,7 +4219,8 @@ country_event = { # Long protests the reforms
 		}
 
 		add_political_power = -100
-		hidden_effect = { country_event = { id = ustates.147 days = 1 }}
+		hidden_effect = { country_event = { id = ustates.147 days = 1 }
+		 }
 		set_country_flag = EVNT_127
 	}	
 }
@@ -4205,7 +4237,7 @@ country_event = { # By adding Long to the Cabinet Reed is calling
 		name = ustates.128.a
 
 		ai_chance = {
-			factor = 55
+			factor = 75
 		}
 
 		set_global_flag = ACW_AUS
@@ -4217,7 +4249,7 @@ country_event = { # By adding Long to the Cabinet Reed is calling
 		name = ustates.128.b
 
 		ai_chance = {
-			factor = 45
+			factor = 25
 		}
 
 		add_political_power = -20
@@ -4242,7 +4274,6 @@ country_event = { # Long does not accept the assurances
 		 	has_country_flag = CURT_LONG_CAB
 		 	has_country_flag = EVNT_148 
 		 	has_country_flag = EVNT_149
-		 	has_global_flag = ACW_CAL 
 		}
 		date > 1937.2.17
 	}
@@ -4381,7 +4412,7 @@ country_event = { # The St Louis riots no troops
 	}	
 }
 
-country_event = { # The St Louis riots no troops
+country_event = { # The St Louis riots more troops
 	id = ustates.134
 	title = ustates.134.t
 	desc = ustates.134.d
@@ -4500,22 +4531,17 @@ country_event = { # Valentine's Day Explosion
 		tag = USA
 		NOT = { 
 			has_global_flag = END_ACW 
-			has_national_unity < 80
-			has_war = yes
+			has_political_power < -400
 		}
+		has_war = no
 		date > 1937.2.14
 		
-	}
-
-	mean_time_to_happen = {
-		days = 1   
 	}
 
 	option = { 
 		name = ustates.140.a
 
-		add_national_unity = -0.1
-		add_political_power = -100
+		add_political_power = -200
 	}	
 }
 
@@ -4532,6 +4558,7 @@ country_event = { # International Support for CSA
 		NOT = { 
 			has_global_flag = END_ACW 
 		}
+		has_political_power < -300
 		has_war = yes	
 	}
 
@@ -4542,11 +4569,12 @@ country_event = { # International Support for CSA
 	option = { 
 		name = ustates.141.a
 
-		add_national_unity = 0.05
+		add_political_power = 100
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = CSA }
 	}	
 }
 
-country_event = { # International Support for CSA
+country_event = { #The Atlanta Military Parade
 	id = ustates.142
 	title = ustates.142.t
 	desc = ustates.142.d
@@ -4556,21 +4584,18 @@ country_event = { # International Support for CSA
 	
 	trigger = {
 		tag = TEX
+		has_political_power < -300
 		NOT = { 
 			has_global_flag = END_ACW 
 		}
 		has_war = yes
-		has_national_unity < 75	
-	}
-
-	mean_time_to_happen = {
-		days = 1   
 	}
 
 	option = { 
 		name = ustates.142.a
 
-		add_national_unity = 0.05
+	add_political_power = 100
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = TEX }
 	}	
 }
 
@@ -4588,17 +4613,13 @@ country_event = { # The Hughes Airshow
 			has_global_flag = END_ACW 
 		}
 		has_war = yes
-		has_national_unity < 75	
-	}
-
-	mean_time_to_happen = {
-		days = 1   
+		has_political_power < -300
 	}
 
 	option = { 
 		name = ustates.143.a
 
-		add_national_unity = 0.05
+		add_political_power = 100
 	}	
 }
 
@@ -4624,12 +4645,12 @@ country_event = { # July 4th '37
 	option = { 
 		name = ustates.144.a
 
-		add_national_unity = 0.05
+		add_political_power = 100
 	}	
 }
 
 ###################################################################
-### Overtthrow Events
+### Overthrow Events
 ###################################################################
 
 country_event = { # MacArthur overthrows Reed while Reed is at war/ Washington Falls
@@ -4648,17 +4669,16 @@ country_event = { # MacArthur overthrows Reed while Reed is at war/ Washington F
 			country_exists = CAL
 		}
 		USA = { controls_state = 361 }
-		NOT = { has_global_flag = ACW_CAL }
 	}
 
 	mean_time_to_happen = {
-		days = 1   
+		days = 3  
 	}
 
 	option = { 
 		name = ustates.145.a
 
-		set_global_flag = ACW_junta
+		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_CSA
 		hidden_effect = { country_event = { id = amcivwar.1 days = 2 }}
 	}	
@@ -4674,23 +4694,22 @@ country_event = { # MacArthur overthrows Long while Reed is at war/ Washington F
 	
 	trigger = {
 		tag = USA
-		has_government = national_populist
+		has_government = paternal_autocratist
 		OR = {
 			country_exists = CSA
 			country_exists = CAL
 		}
 		USA = { controls_state = 361 }
-		NOT = { has_global_flag = ACW_CAL }
 	}
 
 	mean_time_to_happen = {
-		days = 1   
+		days = 3   
 	}
 
 	option = { 
 		name = ustates.146.a
 
-		set_global_flag = ACW_junta
+		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_AUS
 		hidden_effect = { country_event = { id = amcivwar.2 days = 4 }}
 	}	
@@ -4756,7 +4775,7 @@ country_event = { # Assassination attempt on Huey Long!
 			factor = 50
 		}
 
-		hidden_effect = { country_event = { id = ustates.149 days = 1 }}
+		hidden_effect = { country_event = { id = ustates.149 }}
 	}	
 }
 
@@ -4772,13 +4791,18 @@ country_event = { # Huey Long is dead!
 		name = ustates.149.a
 
 		add_political_power = -300
-
+        add_equipment_to_stockpile = { type = infantry_equipment amount = -2000 producer = USA }
 		set_country_flag = EVNT_149
-
+        if = { limit = { has_idea = Huey_Long_hog } remove_ideas = Huey_Long_hog
+		add_ideas = Fritz_Kuhn_hog }
+		if = { limit = { has_idea = Huey_Long_eco } remove_ideas = Huey_Long_eco
+		add_ideas = William_Leahy_eco }
+		if = { limit = { has_idea = Jack_Reed_eco } remove_ideas = Jack_Reed_eco
+		add_ideas = Walther_Reuther_eco }
 		hidden_effect = {
 
 			set_politics = {
-                ruling_party = national_populist
+                ruling_party = paternal_autocratist
             }
 
 			kill_country_leader = yes
@@ -4819,8 +4843,7 @@ country_event = { # Peace at last!
 	option = { 
 		name = ustates.150.a
 
-		add_national_unity = 0.2
-		add_political_power = 200
+		add_political_power = 600
 		set_global_flag = END_ACW
 		add_timed_idea = { idea = avoid_acw days = 150 }
 	}	
@@ -4840,11 +4863,8 @@ country_event = { # Jack Reed's Death
 			has_global_flag = reed_escapes_fra
 			has_global_flag = ACW_CSA
 		}
-		date > 1943.3.24
-	}
-
-	mean_time_to_happen = {
-		days = 1   
+		date > 1940.9.29
+		date < 1940.10.01
 	}
 
 	option = { 
@@ -4932,34 +4952,14 @@ country_event = { # Jack Reed's Death
                 set_politics = {ruling_party = national_populist}
             }
         }    
-
+        set_country_flag = reed_dead
+		if = { limit = { has_idea = Jack_Reed_hog } remove_ideas = Jack_Reed_hog
+		add_ideas = Joseph_P_Lash_hog }
+		if = { limit = { has_idea = Jack_Reed_for } remove_ideas = Jack_Reed_for
+		add_ideas = Max_Shachtman_for }
+		if = { limit = { has_idea = Jack_Reed_eco } remove_ideas = Jack_Reed_eco
+		add_ideas = Walther_Reuther_eco }
 		add_political_power = -40
-	}	
-}
-
-country_event = { # The Independence of the PHLllippines
-	id = ustates.152
-	title = ustates.152.t
-	desc = ustates.152.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = PHL
-		has_war = no
-		is_puppet_of = USA
-		date > 1943.3.24
-	}
-
-	mean_time_to_happen = {
-		days = 1   
-	}
-
-	option = { 
-		name = ustates.152.a
-
-		hidden_effect = { USA = { country_event = ustates.158 }}
 	}	
 }
 
@@ -4973,7 +4973,7 @@ country_event = { # The Combined Syndicates abandon Presidential politics.
 	
 	trigger = {
 		tag = USA
-		has_country_flag = EVNT_155
+		has_country_flag = ustates217
 		date > 1941.2.1
 	}
 
@@ -4999,7 +4999,8 @@ country_event = { # Lindbergh and his family leave for Canada.
 	trigger = {
 		tag = USA
 		CAN = { NOT = { has_war_with = ENG } }
-		has_global_flag = ACW_CAL
+		has_country_flag = EVNT_149
+		has_global_flag = END_ACW
 		date > 1937.4.1
 	}
 
@@ -5009,6 +5010,9 @@ country_event = { # Lindbergh and his family leave for Canada.
 
 	option = { 
 		name = ustates.154.a
+		set_country_flag = lindbergh_left
+		if = { limit = { has_idea = Charles_Lindbergh_hog } remove_ideas = Charles_Lindbergh_hog
+		add_ideas = Dennis_Lawrence_hog }
 	}	
 }
 
@@ -5023,7 +5027,7 @@ country_event = { # Economic Recovery
 	trigger = {
 		tag = USA
 		has_global_flag = END_ACW
-		has_global_flag = ACW_CAL
+		has_country_flag = EVNT_149
 		date > 1937.10.1
 	}
 
@@ -5034,7 +5038,7 @@ country_event = { # Economic Recovery
 	option = { 
 		name = ustates.155.a
 
-		add_national_unity = 0.05
+		add_political_power = 100
 		set_country_flag = EVNT_155
 		add_timed_idea = { idea = economic_recovery days = 365 }
 		hidden_effect = { country_event = { id = ustates.156 months = 12 }}
@@ -5052,7 +5056,7 @@ country_event = { # Further Economic Recovery
 	option = { 
 		name = ustates.156.a
 
-		add_national_unity = 0.05
+		add_political_power = 100
 		add_timed_idea = { idea = futher_economic_recovery days = 365 }
 	}	
 }
@@ -5063,11 +5067,19 @@ country_event = { # The Independence of the PHLllippines
 	desc = ustates.158.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	is_triggered_only = yes
+	trigger = {
+		tag = USA
+		has_war = no
+		PHL = { is_puppet_of = USA }
+		date > 1943.3.24
+	}
+
+	mean_time_to_happen = {
+		days = 150 
+	}
 
 	option = { 
 		name = ustates.158.a
-
 		end_puppet = PHL
 		PHL = { 
 			white_peace = CSA
@@ -5834,7 +5846,7 @@ country_event = { # Forging new USA - internal policy
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
-			picture = "Portrait_USA_Eisenhower.dds"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
 			ideology = paternal_autocratist_subtype
 			traits = {}
@@ -6166,7 +6178,7 @@ country_event = {
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
-			picture = "Portrait_USA_Eisenhower.dds"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
 			ideology = paternal_autocratist_subtype
 			traits = {}
@@ -6261,7 +6273,7 @@ country_event = { # Dissolution of the United States!
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
-			picture = "Portrait_USA_Eisenhower.dds"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
 			ideology = paternal_autocratist_subtype
 			traits = {}
@@ -6524,7 +6536,7 @@ country_event = {
 			factor = 75
 		}
 
-		add_popularity = { ideology = national_populist popularity = 0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
 		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
 	}	
 
@@ -6579,8 +6591,7 @@ country_event = {
 
 		add_political_power = -100
 
-		add_popularity = { ideology = national_populist popularity = 0.1 }
-		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
 	}	
 
 	option = { 
@@ -6592,8 +6603,7 @@ country_event = {
 
 		add_political_power = -80
 		hidden_effect = { CAN = { country_event = { id = ustates.186 days = 1 }}}
-		add_popularity = { ideology = national_populist popularity = 0.1 }
-		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
 		add_opinion_modifier = { target = CAN modifier = USA_EXILE_OPOSITION_CAN }
 	}
 
@@ -6980,7 +6990,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
         }
@@ -7059,7 +7069,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
         }
@@ -7244,7 +7254,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
 
@@ -7323,7 +7333,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
 
@@ -7503,7 +7513,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
 
@@ -7582,7 +7592,7 @@ country_event = {
             popularity = 0.05
         }
         add_popularity = {
-            ideology = national_populist
+            ideology = paternal_autocratist
             popularity = 0.05
         }
 
@@ -8798,6 +8808,8 @@ country_event = {
 		days = 0
 	}
 
+	immediate = { set_country_flag = ustates217 }
+	
 	option = { 
 		name = ustates.217.a
 

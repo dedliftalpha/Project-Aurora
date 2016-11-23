@@ -615,6 +615,7 @@ focus = {
 	    			bonus = 0.5
 	    			uses = 1
 	    			category = construction_tech
+				
 	    	}
         
 	    }
@@ -650,6 +651,7 @@ focus = {
 	    		uses = 1
 	    		category = construction_tech
 	    	}
+			add_national_unity = 0.05	
 	}
 }
 		
@@ -833,7 +835,7 @@ focus = {
 
 focus = {
 		id = ITA_Publish_new_encyclical
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_Papacy
 		x = 27
 		y = 0
 		cost = 10
@@ -844,6 +846,37 @@ focus = {
 			add_political_power = 120
 		}
 	}
+
+focus = {
+		id = ITA_Demilitarise_Venice
+		icon = GFX_goal_generic_major_war
+		prerequisite = { focus = ITA_Publish_new_encyclical }
+		x = 27
+		y = 2
+		cost = 10
+        
+		available_if_capitulated = no
+        
+		bypass = {
+			160 = { is_demilitarized_zone = no }
+		}
+		ai_will_do = {
+			factor = 1
+		}	
+		
+		completion_reward = {
+			add_political_power = 120
+			160 = { set_demilitarized_zone = no }
+			army_experience = 5
+			add_named_threat = { threat = 2 name = GER_rhineland }
+			AUS = { create_wargoal = {
+ 				type = take_state_focus
+ 				target = ITA
+ 				generator = { 160 } }
+			
+			}
+		}}
+	
 	
 focus = {
 		id = ITA_Eugenio_Pacelli
@@ -856,9 +889,20 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
+        ai_will_do = {
+			factor = 5
+		}	
 		completion_reward = {
-			add_political_power = 120
+		create_country_leader = {
+			name = "Pius XII"
+			desc = "POLITICS_PIUS_XII_DESC"
+			picture = "Portrait_Italy_PiusXII.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}	
 		}
 	}	
 	
@@ -873,9 +917,20 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
+        ai_will_do = {
+			factor = 4
+		}	
 		completion_reward = {
-			add_political_power = 120
+		create_country_leader = {
+			name = "Stephen XI"
+			desc = "POLITICS_STEPHEN_XI_DESC"
+			picture = "Portrait_Italy_Stephen.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}		
 		}
 	}	
 	
@@ -890,9 +945,20 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
+        ai_will_do = {
+			factor = 3
+		}	
 		completion_reward = {
-			add_political_power = 120
+		create_country_leader = {
+			name = "John XXIII"
+			desc = "POLITICS_JOHN_XXIII_DESC"
+			picture = "Portrait_Italy_John.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}	
 		}
 	}	
 	
@@ -907,9 +973,32 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
+        ai_will_do = {
+			factor = 4
+		}	
 		completion_reward = {
-			add_political_power = 120
+		create_country_leader = {
+			name = "Julius IV "
+			desc = "POLITICS_JULIUS_IV_DESC"
+			picture = "Portrait_Italy_Julius.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}
+        
+        create_country_leader = {
+			name = "Julius IV "
+			desc = "POLITICS_JULIUS_IV_DESC"
+			picture = "Portrait_Italy_Julius.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+				
+			}
+		}			
+			
 		}
 	}	
 
@@ -922,7 +1011,7 @@ focus = {
         prerequisite = { focus = ITA_Eugenio_Pacelli }
 		available_if_capitulated = no
 		completion_reward = {
-		
+		add_national_unity = 0.05
 		}
 		}	
 		
@@ -1073,7 +1162,7 @@ focus = {
 	}	
 focus = {
 		id = ITA_Adopt_New_Constitution
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_goal_government_icon
 		x = 26
 		y = 4
 		cost = 10
@@ -1124,7 +1213,7 @@ focus = {
 	
 focus = {
 		id = ITA_Reunion
-		icon = GFX_goal_generic_dangerous_deal
+		icon = GFX_goal_generic_improve_relations
 		x = 28
 		y = 3
 		cost = 10
@@ -1243,21 +1332,11 @@ focus = {
 	}		
 	
 focus = {
-		id = ITA_Condemn_Syndicalism
-		icon = GFX_goal_generic_major_war
-		x = 33
-		y = 2
-		cost = 10
-        prerequisite = { focus = ITA_Theodor_Innitzer }
-		available_if_capitulated = yes
-	}	
-	
-focus = {
 		id = ITA_Extended_Armament
 		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = ITA_Condemn_Syndicalism }
+		prerequisite = { focus = ITA_Theodor_Innitzer }
 		x = 32
-		y = 3
+		y = 2
 		cost = 10
 
 
@@ -1329,11 +1408,10 @@ focus = {
 focus = {
 		id = ITA_Centralise4
 		icon = GFX_goal_tripartite_pact
-		x = 33
-		y = 4
+		x = 32
+		y = 6
 		cost = 10
-        prerequisite = { focus = ITA_Anti-Syndicalist_Coalition 
-		                 focus = ITA_Extended_Armament}
+        prerequisite = { focus = ITA_Promote_Corporativism_II }
 		available_if_capitulated = yes
 		completion_reward = {
 		remove_ideas = Decentralised_State 
@@ -1344,24 +1422,39 @@ focus = {
 		id = ITA_Anti-Syndicalist_Coalition
 		icon = GFX_goal_generic_forceful_treaty
 		x = 34
-		y = 3
+		y = 2
 		cost = 10
-        prerequisite = { focus = ITA_Condemn_Syndicalism }
+        prerequisite = { focus = ITA_Theodor_Innitzer }
 		available_if_capitulated = no
 	}		
 focus = {
 		id = ITA_Promote_Corporativism_II
 		icon = GFX_goal_generic_trade
 		mutually_exclusive = { focus = ITA_Kingdom_of_God }
-		prerequisite = { focus = ITA_Centralise4 }
+		prerequisite = { focus = ITA_Arm_the_Population }
 		x = 32
 		y = 5
 		cost = 10
 		available_if_capitulated = no
 		completion_reward = {
 		add_national_unity = 0.15
-		}}			
+		}}
 		
+focus = {
+		id = ITA_Arm_the_Population
+		icon = GFX_goal_generic_military_sphere
+		mutually_exclusive = { focus = ITA_Promote_Corporativism_II }
+		x = 33
+		y = 3
+		cost = 10
+        prerequisite = { focus = ITA_Anti-Syndicalist_Coalition 
+		                 focus = ITA_Extended_Armament}
+		available_if_capitulated = no 
+		completion_reward = { 
+		add_ideas = Armed_Society
+		}
+	}	
+	
 focus = {
 		id = ITA_Kingdom_of_God
 		icon = GFX_goal_authoritarian
@@ -1369,10 +1462,11 @@ focus = {
 		x = 34
 		y = 5
 		cost = 10
-        prerequisite = { focus = ITA_Centralise4 }
+        prerequisite = { focus = ITA_Arm_the_Population }
 		available_if_capitulated = no 
 		completion_reward = {
 		add_ideas = Mad_Pope 
+		add_ideas = paternal_autocratist_influence
 		}
 	}	
 
@@ -1387,6 +1481,10 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Kingdom_of_God }
 		available_if_capitulated = no
+		
+		completion_reward {
+		
+		}
 	}		
 	
 focus = {
@@ -1456,9 +1554,12 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
 		available_if_capitulated = yes
-
 		
-	}	
+		completion_reward = {
+        set_rule = { can_create_factions = yes }
+		create_faction = "Holy League"
+		
+	}}	
 
 focus = {
 		id = ITA_Invite_Ireland
@@ -1467,8 +1568,17 @@ focus = {
 		y = 5
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }
-
+		available_if_capitulated = yes 		
+		completion_reward = {
+		if = {
+				limit = {
+					IRE = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				IRE = { country_event = ita.1 }
+}}}
 focus = {
 		id = ITA_Invite_Brasil
 		icon = GFX_goal_generic_improve_relations
@@ -1476,7 +1586,17 @@ focus = {
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }	
+		available_if_capitulated = yes 
+        completion_reward = {
+		if = {
+				limit = {
+					BRA = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				BRA = { country_event = ita.4 }
+}}}				
 		
 focus = {
 		id = ITA_Invite_Portugal
@@ -1485,7 +1605,17 @@ focus = {
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }	
+		available_if_capitulated = yes
+        completion_reward = {
+		if = {
+				limit = {
+					POR = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				POR = { country_event = ita.1 }
+}}}		
 
 focus = {
 		id = ITA_Invite_Spain
@@ -1493,10 +1623,21 @@ focus = {
 		x = 12
 		y = 5
 		cost = 10
+		available = {
+	    country_exists = CAR
+				}
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }		
-		
-
+		available_if_capitulated = yes 
+        completion_reward = {
+		if = {
+				limit = {
+					CAR = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				CAR = { country_event = ita.1 }
+}}}				
 		
 focus = {
 		id = ITA_Invite_Greece
@@ -1506,7 +1647,17 @@ focus = {
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }
+		available_if_capitulated = yes 
+		completion_reward = {
+		if = {
+				limit = {
+					GRE = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				GRE = { country_event = ita.4 }
+}}}		
 		
 focus = {
 		id = ITA_Invite_Russia
@@ -1515,7 +1666,17 @@ focus = {
 		y = 5
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }
+		available_if_capitulated = yes 
+        completion_reward = {
+		if = {
+				limit = {
+					RUS = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				RUS = { country_event = ita.5 }
+}}}		
 		
 focus = {
 		id = ITA_Invite_Bulgaria
@@ -1525,31 +1686,132 @@ focus = {
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_holy_league }
-		available_if_capitulated = yes }			
+		available_if_capitulated = yes 
+        completion_reward = {
+		if = {
+				limit = {
+					BUL = { 
+						is_puppet = no
+						NOT = { has_war_with = ITA }
+					}
+				}
+				BUL = { country_event = ita.4 }
+}}}				
 		
 focus = {
 		id = ITA_northern_frontier
-		icon = GFX_goal_generic_construct_military
-		x = 17
-		y = 4
-		cost = 10
-        prerequisite = { focus = ITA_isolationism }
-		available_if_capitulated = yes
-
-		
-	}		
-focus = {
-		id = ITA_western_frontier
 		icon = GFX_goal_generic_construct_military
 		x = 19
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_isolationism }
-		available_if_capitulated = yes
+		available_if_capitulated = no
+	    available = {
+				159 = { is_controlled_by = ITA }
+				160 = { is_controlled_by = ITA }
+				160 = { is_demilitarized_zone = no }
+				}
 
+				completion_reward = {
+
+				159 = {
+			add_building_construction = {
+				type = bunker
+				province = 11587
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11568
+				level = 2
+			}}
+			
+			160 = {
+			add_building_construction = {
+				type = bunker
+				province = 603
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 3604
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6656
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11584
+				level = 2
+			}
+			}
 		
-	}	
+		} } 
+		
+focus = {
+		id = ITA_western_frontier
+		icon = GFX_goal_generic_construct_military
+		x = 17
+		y = 4
+		cost = 10
+        prerequisite = { focus = ITA_isolationism }
+		available_if_capitulated = no
+	    available = {
+				735 = { is_controlled_by = ITA }
+				158 = { is_controlled_by = ITA }
+				762 = { is_controlled_by = ITA }
+				}
 
+				completion_reward = {
+
+		735 = {
+			add_building_construction = {
+				type = bunker
+				province = 11573
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6609
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 9745
+				level = 2
+			}
+			
+		}
+		158 = {
+			add_building_construction = {
+				type = bunker
+				province = 9738
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11721
+				level = 2
+			}
+			}
+		762 = {
+			add_building_construction = {
+				type = bunker
+				province = 3959
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 9909
+				level = 2
+			}
+			
+		}	
+		} } 
+		
 focus = {
 		id = ITA_nationalization
 		icon = GFX_goal_generic_forceful_treaty
@@ -1571,7 +1833,7 @@ focus = {
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
 		completion_reward = {
-		 
+		add_political_power = 120 
 		}
 }	
 	
@@ -1584,7 +1846,9 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-}		
+		completion_reward = {
+		add_named_threat = { threat = 3 name = ITA_irredentism }
+}	}	
 
 focus = {
 		id = ITA_Pact_with_Austria
@@ -1634,7 +1898,10 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Irredentism }
 		available_if_capitulated = yes
-}	
+		
+		completion_reward = { 
+	    add_state_core = 116 
+}	}
 
 focus = {
 		id = ITA_Buy_Tunisia
@@ -1654,7 +1921,15 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Irredentism }
 		available_if_capitulated = yes
-}			
+		
+		completion_reward = {
+		ITA = { create_wargoal = {
+ 				type = annex_everything
+ 				target = LYB
+ 				generator = { 160 } }
+			
+			}
+}}			
 
 focus = {
 		id = ITA_Incorporate_Maltese_Nation

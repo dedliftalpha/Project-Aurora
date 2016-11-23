@@ -679,22 +679,26 @@ focus = {
 
 focus = {
 		id = FRA_Defensive
-		icon = GFX_goal_generic_allies_build_infantry
+		icon = GFX_goal_generic_defence
 		prerequisite = { focus = FRA_grand_army_reform }
+		available = {
+		NOT = {
+		has_government = totalist
+        }}
 		mutually_exclusive = { focus = FRA_Aggressive
     	}
 		x = 6
 		y = 1
 		cost = 10
 		completion_reward = {
-			army_experience = 5
+			army_experience = 20
 			
 		}
 	}
 
 focus = {
 		id = FRA_Aggressive
-		icon = GFX_goal_generic_allies_build_infantry
+		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = FRA_grand_army_reform }
 		mutually_exclusive = { focus = FRA_Defensive
     	}
@@ -702,7 +706,7 @@ focus = {
 		y = 1
 		cost = 10
 		completion_reward = {
-			army_experience = 5
+			army_experience = 20
 			
 		}
 	}
@@ -1197,9 +1201,9 @@ focus = {
 		#	factor = 2
 		#}
 		select_effect = {
-                                                                                                                                                                                                                                                                                                                                                                                      	country_event = { id = comfrance.2 days = 1 }
+        country_event = { id = comfrance.2 days = 1 }
 		country_event = { id = comfrance.3 days = 2 } }
-                                                                                                                                                                                                                                                                                                                                                                                completion_reward = {
+        completion_reward = {
 		add_political_power = 120
 		} }  
 
@@ -1208,6 +1212,10 @@ focus = {
 		icon = GFX_goal_generic_national_unity
 		prerequisite = { focus = FRA_Host_the_Internationale }
 		mutually_exclusive = { focus = FRA_French_Revolution }
+		available = {
+		NOT = {
+		has_government = totalist
+        }}  
 
                                                  
 		x = 26
@@ -1217,10 +1225,9 @@ focus = {
 		#	factor = 1
 		#}
 		
-                                                                                                                                                                                                                                                                                                                                                                                completion_reward = {
+        completion_reward = {
 		add_political_power = 120
-		
-	} } 		
+		}} 		
 
 focus = {
 		id = FRA_Liberty
@@ -1235,7 +1242,7 @@ focus = {
 	
         completion_reward = {
 		add_ideas = Cosmopolitan_society
-		} } 
+		}} 
 		
 focus = {
 		id = FRA_Equality
@@ -1250,11 +1257,11 @@ focus = {
 	
         completion_reward = {
 	    add_ideas = One_Class
-		} } 
+		}} 
 
 focus = {
 		id = FRA_Fraternity
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = FRA_Restore_Civil_Liberties }
         x = 26
 		y = 2
@@ -1265,7 +1272,51 @@ focus = {
 	
         completion_reward = {
 	    add_ideas = French_Elan
-		} } 		
+		}} 
+
+
+focus = {
+		id = FRA_Liberty_equality_fraternity
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = FRA_Fraternity }
+		prerequisite = { focus = FRA_Equality }
+		prerequisite = { focus = FRA_Liberty }
+        x = 24
+		y = 3
+		cost = 10
+		#ai_will_do = {
+		#	factor = 1
+		#}
+	
+        completion_reward = {
+		set_country_flag = Redemocratisation_flag
+	    add_timed_idea = {
+				idea = Redemocratisation
+				days = 365
+		}}} 	
+
+focus = {
+		id = FRA_Recognize_the_Algiers_Government
+		icon = GFX_goal_generic_national_unity
+		available = {
+		        NOT = { has_war_with = NFA }
+				NOT = { has_idea = Redemocratisation }
+				has_country_flag = Redemocratisation_flag }
+		prerequisite = { focus = FRA_Fraternity }
+		prerequisite = { focus = FRA_Equality }
+		prerequisite = { focus = FRA_Liberty }
+		mutually_exclusive = { focus = FRA_Strike_against_the_Algiers_government }
+        x = 24
+		y = 4
+		cost = 10
+		#ai_will_do = {
+		#	factor = 1
+		#}
+	    
+        completion_reward = {
+		NFA = {
+				add_opinion_modifier = { target = FRA modifier = ita_diplomacy_focus }
+	    }}}  			
 	
 focus = {
 		id = FRA_French_Revolution
@@ -1284,8 +1335,8 @@ focus = {
 		
         completion_reward = {
 		add_political_power = 120
+		}} 	
 		
-	} } 																		
 focus = {
 		id = FRA_Diligent_people
 		icon = GFX_goal_generic_construction
@@ -1299,11 +1350,10 @@ focus = {
 		#ai_will_do = {
 		#	factor = 1
 		#}
-		
-                                                                                                                                                                                                                                                                                                                                                                                completion_reward = {
+		completion_reward = {
 		add_ideas = Moderately_diligent_society 
+		}}
 		
-	} }
 focus = {
 		id = FRA_Diligent_people_II
 		icon = GFX_goal_generic_construction
@@ -1321,7 +1371,7 @@ focus = {
         completion_reward = {
 		add_ideas = Greatly_diligent_society 
 		remove_ideas = Moderately_diligent_society
-	} }
+	    }}
 focus = {
 		id = FRA_Modest_people
 		icon = GFX_goal_generic_consumer_goods
@@ -1338,8 +1388,8 @@ focus = {
 		
                                                                                                                                                                                                                                                                                                                                                                                 completion_reward = {
 		add_ideas = Moderately_modest_society
+		}}
 		
-	} }	
 focus = {
 		id = FRA_Modest_people_II
 		icon = GFX_goal_generic_consumer_goods
@@ -1417,7 +1467,6 @@ focus = {
 		cost = 10
 		completion_reward = { add_ideas = SCDAI }}
 		
-
 focus = { 
 		id = FRA_Peaceful_revolution
 		icon = GFX_goal_generic_propaganda
@@ -1426,10 +1475,6 @@ focus = {
 		y = 1
 		cost = 10
 		completion_reward = { add_ideas = International_propaganda_network }}
-	
-                                                                                                                                                                                               
-  
-	
 	
 focus = {
 			id = FRA_European_revolution
@@ -1446,6 +1491,7 @@ focus = {
 			}
 			completion_reward = {
             add_ideas = Socialist_militarism
+			add_named_threat = { threat = 3 name = FRA_Revolutionarism }
 				
 			}
 		}
@@ -2038,6 +2084,7 @@ focus = {
 	id = FRA_Strike_against_the_Algiers_government
 	icon = GFX_goal_generic_major_war
 	prerequisite = { focus = FRA_European_revolution }
+	mutually_exclusive = { focus = FRA_Recognize_the_Algiers_Government }
 	available = {
 		is_puppet = no
 
@@ -2266,27 +2313,6 @@ focus = {
 	}
 	
 	focus = {
-		id = FRA_Ace_Glorification
-		icon = GFX_goal_generic_air_doctrine
-	 	prerequisite = { 
-	 		focus = FRA_air_doctrine_II 
-	 		}
-		x = 46
-		y = 3
-		cost = 10
-		completion_reward = {
-			air_experience = 50
-
-			add_tech_bonus = {
-				name = FRA_air_doctrine
-				bonus = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-	}
-
-	focus = {
 		id = FRA_heavy_bomber_focus_II
 		icon = GFX_goal_generic_occupy_start_war
 	 	prerequisite = { focus = FRA_air_focus_II }
@@ -2321,7 +2347,8 @@ focus = {
 			}
 		}
 	}
-	focus = {
+	
+focus = {
 		id = FRA_rocket_development
 		icon = GFX_focus_rocketry
 		prerequisite = { focus = FRA_heavy_bomber_focus_II 
@@ -2346,6 +2373,7 @@ focus = {
 			#2x50% research to Rockets and Jet Engine Research
 		}
 	}
+	
 focus = {
 		id = FRA_cas_focus_II
 		icon = GFX_goal_generic_CAS
@@ -2365,6 +2393,24 @@ focus = {
 		}
 	}
 
+focus = {
+		id = FRA_Women_in_Aviation
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = FRA_air_doctrine_II }
+        x = 46
+		y = 3
+		cost = 10
+		#ai_will_do = {
+		#	factor = 1
+		#}
+	
+        completion_reward = {
+	    air_experience = 25
+			set_rule = {
+				can_generate_female_aces = yes
+			}
+		}}
+		
 focus = {
 		id = FRA_navy_focus_II
 		icon = GFX_goal_generic_build_navy
@@ -2492,17 +2538,45 @@ focus = {
 			}
 		}
 	}
+	
+	focus = {
+		id = FRA_capital_ship_primacy
+		icon = GFX_goal_generic_navy_battleship
+	 	mutually_exclusive = { focus = FRA_carrier_primacy }
+	 	prerequisite = { focus = FRA_capital_ship_focus_II }
+		x = 55
+		y = 2
+		cost = 10
+		
+		completion_reward = {
+		add_ideas = Capital_Ship_Primacy
+		}
+	}
+	
+	focus = {
+		id = FRA_carrier_primacy
+		icon = GFX_goal_generic_navy_carrier
+	 	mutually_exclusive = { focus = FRA_capital_ship_primacy }
+	 	prerequisite = { focus = FRA_carrier_focus_II }
+		x = 57
+		y = 2
+		cost = 10
+		
+		completion_reward = {
+		add_ideas = Carrier_Primacy	
+		}
+	}
 
 	focus = {
 		id = FRA_naval_doctrine_II
 		icon = GFX_goal_generic_navy_doctrines_tactics
 	 	prerequisite = { 
+		    focus = FRA_submarines
+			focus = FRA_improved_screen_ships_II
 	 		focus = FRA_carrier_focus_II
 	 		focus = FRA_capital_ship_focus_II
-	 		focus = FRA_improved_screen_ships_II
-			focus = FRA_submarines
 	 	}
-		x = 54
+		x = 53
 		y = 2
 		cost = 10
 		completion_reward = {
@@ -2515,6 +2589,46 @@ focus = {
 			}
 		}
 	}
+	
+	focus = {
+		id = FRA_landing_craft
+		icon = GFX_goal_generic_amphibious_assault
+	 	prerequisite = { 
+		    focus = FRA_naval_doctrine_II
+	 	}
+		x = 52
+		y = 3
+		cost = 10
+		completion_reward = {
+		 add_tech_bonus = {
+				name = landing_bonus
+				bonus = 0.5
+				uses = 1
+				category = tp_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = FRA_naval_doctrine_III
+		icon = GFX_goal_generic_navy_doctrines_tactics
+	 	prerequisite = { 
+		    focus = FRA_naval_doctrine_II
+	 	}
+		x = 54
+		y = 3
+		cost = 10
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = FRA_naval_doctrine
+				bonus = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+		}
+	}
+	
 	focus = {
 								id = FRA_Phalanstere_internationale
 								icon = GFX_goal_generic_production

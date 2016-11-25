@@ -13,7 +13,75 @@ default_peace = {
 	# ROOT = Taker, FROM = Giver
 	annex = {
 		factor = 1000	
-
+        
+		modifier = { #finish everything
+			add = 200
+			is_owner_neighbor_of = FROM
+			has_annex_war_goal = FROM
+			NOT = { AND = { is_puppet = yes
+			FROM = {
+				any_owned_state = {
+					NOT = {
+						OR = { 
+							is_claimed_by = ROOT
+							is_core_of = ROOT
+						}
+					}
+				}
+			} } }
+		}
+		
+		modifier = { #finish everything
+			add = 100
+			is_owner_neighbor_of = FROM
+			AND = { NOT = {
+				has_annex_war_goal = FROM
+			}
+			NOT = { any_country = {
+			AND = { has_war_together_with = ROOT is_puppet = no
+			has_annex_war_goal = FROM 
+			is_owner_neighbor_of = FROM } 
+			} 
+			} 
+			}
+			NOT = { AND = { is_puppet = yes
+			FROM = {
+				any_owned_state = {
+					NOT = {
+						OR = { 
+							is_claimed_by = ROOT
+							is_core_of = ROOT
+						}
+					}
+				}
+			} } }
+		}
+		
+		modifier = { #finish everything
+			add = 50
+			NOT = { is_owner_neighbor_of = FROM }
+			NOT = {
+				has_annex_war_goal = FROM
+			}
+			NOT = { any_country = {
+			AND = { has_war_together_with = ROOT is_puppet = no
+			OR = { is_owner_neighbor_of = FROM
+			AND = { is_owner_neighbor_of = FROM has_annex_war_goal = FROM } } 
+			} }
+			} 
+			NOT = { AND = { is_puppet = yes
+			FROM = {
+				any_owned_state = {
+					NOT = {
+						OR = { 
+							is_claimed_by = ROOT
+							is_core_of = ROOT
+						}
+					}
+				}
+			} } }
+		}
+		
 		modifier = {
 			factor = 0
 			NOT = {
@@ -53,24 +121,42 @@ default_peace = {
 	# ROOT = Taker, FROM = State
 	take_states = {
 		factor = 600
-		modifier = { # prefer not to take from humans in our own faction
+                		modifier = { # prefer not to take from humans in our own faction
+
 			factor = 0.5
+
 			NOT = {
+
 				FROM = {
+
 					OR = {
+
 						is_claimed_by = ROOT
+
 						is_core_of = ROOT
+
 					}
+
 				}
+
 			}
+
 			FROM = {
-				controller = { 
-					is_ai = no 
-					has_capitulated = no 
-					is_puppet = no 
+
+				controller = {
+ 
+					is_ai = no
+ 
+					has_capitulated = no
+ 
+					is_puppet = no
+ 
 					is_in_faction_with = ROOT
+
 				}
+
 			}
+
 		}
 		modifier = { #Only majors can take non-neighboring coastal territories for now to prevent weird results with 1.1
 			factor = 0

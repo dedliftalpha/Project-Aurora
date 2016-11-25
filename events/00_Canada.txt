@@ -3825,6 +3825,7 @@ country_event = { # Irish-Canadian Treaty
 				
 		set_global_flag = CAN_IRE_treaty
 		add_opinion_modifier = { target = CAN modifier = CAN_IRE_treaty_accept }
+		give_military_access = CAN
 		CAN = {
 			give_guarantee = IRE 
 			diplomatic_relation = { country = IRE relation = non_aggression_pact }
@@ -6812,7 +6813,7 @@ country_event = { #Canada accepts compromise (PSA)
 	}
 }
 
-country_event = {
+country_event = { #AUS, CSA or USA get a PP boost of recognized by Canadian gov't.
 	id = canada.216
 	title = canada.216.t 
 	desc = canada.216.d 
@@ -6826,4 +6827,222 @@ country_event = {
 	}
 }
 
+###Pact with USA/AUS/CSA events 
+
+country_event = { #Canada-USA Pact (USA)
+	id = canada.217 
+	title = canaada.217.t 
+	desc = canada.217.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #accept 
+		name = canada.217.a 
+		
+		ai_chance = {
+			factor = 90
+		}
+		
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+		give_military_access = CAN
+		add_opinion_modifier = { target = USA modifier = CAN_PACT_ACW }
+		CAN = { 
+			set_rule = { can_send_volunteers = yes }
+			add_opinion_modifier = { target = USA modifier = CAN_PACT_ACW }
+			add_opinion_modifier = { target = CSA modifier = embargo }
+			add_opinion_modifier = { target = TEX modifier = embargo }
+			give_military_access = USA
+			country_event = { days = 1 id = canada.220 }
+		}
+	}
+	
+	option = { #reject 
+		name = canada.217.b 
+		
+		ai_chance = {
+			factor = 10
+		}
+		
+		add_opinion_modifier = { target = CAN modifier = CAN_PACT_REJECT }
+		CAN = {
+			country_event = { days = 1 id = canada.221 }
+		}
+	}
+}
+
+country_event = { #Canada-AUS Pact (AUS)
+	id = canada.218 
+	title = canaada.218.t 
+	desc = canada.218.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #accept 
+		name = canada.218.a 
+		
+		ai_chance = {
+			factor = 90
+		}
+		
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+		give_military_access = CAN
+		add_opinion_modifier = { target = TEX modifier = CAN_PACT_ACW }
+		CAN = { 
+			set_rule = { can_send_volunteers = yes }
+			add_opinion_modifier = { target = TEX modifier = CAN_PACT_ACW }
+			add_opinion_modifier = { target = CSA modifier = embargo }
+			add_opinion_modifier = { target = USA modifier = embargo }
+			give_military_access = TEX
+			country_event = { days = 1 id = canada.222 }
+		}
+	}
+	
+	option = { #reject 
+		name = canada.218.b 
+		
+		ai_chance = {
+			factor = 10
+		}
+		
+		add_opinion_modifier = { target = CAN modifier = CAN_PACT_REJECT }
+		CAN = {
+			country_event = { days = 1 id = canada.223 }
+		}
+	}
+}
+
+country_event = { #Canada-CSA Pact (CSA)
+	id = canada.219 
+	title = canaada.219.t 
+	desc = canada.219.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = { #accept 
+		name = canada.219.a 
+		
+		ai_chance = {
+			factor = 90
+		}
+		
+		diplomatic_relation = { country = CAN relation = non_aggression_pact }
+		give_military_access = CAN
+		add_opinion_modifier = { target = CSA modifier = CAN_PACT_ACW }
+		CAN = { 
+			set_rule = { can_send_volunteers = yes }
+			add_opinion_modifier = { target = CSA modifier = CAN_PACT_ACW }
+			add_opinion_modifier = { target = TEX modifier = embargo }
+			add_opinion_modifier = { target = USA modifier = embargo }
+			give_military_access = CSA
+			country_event = { days = 1 id = canada.224 }
+		}
+	}
+	
+	option = { #reject 
+		name = canada.219.b 
+		
+		ai_chance = {
+			factor = 10
+		}
+		
+		add_opinion_modifier = { target = CAN modifier = CAN_PACT_REJECT }
+		CAN = {
+			country_event = { days = 1 id = canada.225 }
+		}
+	}
+}
+	
+	##Pact accepted events, all even ids, currently no effects 
+country_event = {
+	id = canada.220 
+	title = canada.220.t 
+	desc = canada.220.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.220.a 
+		
+		set_global_flag = CAN_USA_PACT
+	}
+}
+
+country_event = {
+	id = canada.222 
+	title = canada.222.t 
+	desc = canada.222.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.222.a 
+		
+		set_global_flag = CAN_AUS_PACT
+	}
+}
+
+country_event = {
+	id = canada.224
+	title = canada.224.t 
+	desc = canada.224.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.224.a 
+		
+		set_global_flag = CAN_CSA_PACT
+	}
+}
+	
+	##Pact rejected events, all odd ids, canada loses PP 
+country_event = {
+	id = canada.221 
+	title = canada.221.t 
+	desc = canada.221.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.221.a 
+		
+		add_political_power = -75
+	}
+}
+
+country_event = {
+	id = canada.223 
+	title = canada.223.t 
+	desc = canada.223.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.223.a 
+		
+		add_political_power = -75
+	}
+}
+
+country_event = {
+	id = canada.225 
+	title = canada.225.t 
+	desc = canada.225.d 
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = canada.225.a 
+		
+		add_political_power = -75
+	}
 }

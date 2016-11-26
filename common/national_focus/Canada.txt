@@ -1953,7 +1953,7 @@ focus_tree = {
 	focus = { # National Defense Scheme No. 1
 		id = CAN_scheme_1
 		icon = GFX_goal_generic_position_armies
-		x = 33
+		x = 32
 		y = 0 
 		cost = 6
 		ai_will_do = {
@@ -1996,9 +1996,9 @@ focus_tree = {
 	focus = { # The St. Lawrence Line
 		id = CAN_st_lawrence_line
 		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = CAN_lakes_forts }
-		x = 30 
-		y = 2 
+		prerequisite = { focus = CAN_scheme_1 }
+		x = 32 
+		y = 1 
 		cost = 10
 		ai_will_do = {
 			factor = 0.5
@@ -2028,9 +2028,10 @@ focus_tree = {
 	focus = { # The Georgia Line
 		id = CAN_georgian_line
 		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = CAN_st_lawrence_line focus = CAN_maple_line }
+		prerequisite = { focus = CAN_st_lawrence_line }
+		prerequisite = { focus = CAN_lakes_forts }
 		x = 30 
-		y = 3 
+		y = 2 
 		cost = 12
 		ai_will_do = {
 			factor = 0.5
@@ -2074,43 +2075,43 @@ focus_tree = {
 		}
 	}
 	
-	focus = { # Occupy New England
-		id = CAN_occupy_new_england
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = CAN_scheme_1 }
-		x = 33 
-		y = 1 
-		cost = 1
-		available = {
-			is_puppet = no
-			OR = {
-				USA = { has_war_with = CSA }
-				USA = { has_war_with = TEX }
-			}
-			357 = { is_owned_by = USA }
-		}
-		bypass = {
-			OR = {
-				CAN = { controls_state = 357 }
-				AND = {
-					357 = { is_owned_by = NEE }
-					NEE = { is_puppet_of = CAN }
-				}
-			}
-		}
-		completion_reward = {
-			add_opinion_modifier = { target = USA modifier = occupied_new_england }
-			hidden_effect = { USA = { country_event = { id = amcivwar.11 days = 1 }}}
-			hidden_effect = { CSA = { country_event = { id = amcivwar.34 days = 1 }}}
-			hidden_effect = { TEX = { country_event = { id = amcivwar.35 days = 1 }}}
-			add_state_claim = 357
-			set_global_flag = amcivwar_10
-		}
-	}
+	# focus = { # Occupy New England
+		# id = CAN_occupy_new_england
+		# icon = GFX_goal_generic_occupy_states_ongoing_war
+		# prerequisite = { focus = CAN_scheme_1 }
+		# x = 33 
+		# y = 1 
+		# cost = 1
+		# available = {
+			# is_puppet = no
+			# OR = {
+				# USA = { has_war_with = CSA }
+				# USA = { has_war_with = TEX }
+			# }
+			# 357 = { is_owned_by = USA }
+		# }
+		# bypass = {
+			# OR = {
+				# CAN = { controls_state = 357 }
+				# AND = {
+					# 357 = { is_owned_by = NEE }
+					# NEE = { is_puppet_of = CAN }
+				# }
+			# }
+		# }
+		# completion_reward = {
+			# add_opinion_modifier = { target = USA modifier = occupied_new_england }
+			# hidden_effect = { USA = { country_event = { id = amcivwar.11 days = 1 }}}
+			# hidden_effect = { CSA = { country_event = { id = amcivwar.34 days = 1 }}}
+			# hidden_effect = { TEX = { country_event = { id = amcivwar.35 days = 1 }}}
+			# add_state_claim = 357
+			# set_global_flag = amcivwar_10
+		# }
+	# }
 	focus = { #The Maple Line 
 		id = CAN_maple_line
 		icon = GFX_goal_generic_construct_military
-		prerequisite = { focus = CAN_occupy_new_england }
+		prerequisite = { focus = CAN_lakes_forts focus = CAN_st_lawrence_line }
 		x = 32
 		y = 2
 		cost = 8
@@ -2144,62 +2145,62 @@ focus_tree = {
 			}
 		}
 	}
-	focus = { #Occupy Alaska
-		id = CAN_occupy_alaska
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = CAN_occupy_new_england }
-		x = 34 
-		y = 2 
-		cost = 1 
-		available = {
-			is_puppet = no
-			country_exists = CSA
-			country_exists = USA
-			OR = {
-				USA = { has_war_with = CSA }
-				USA = { has_war_with = TEX }
-			}
-			463 = { is_owned_by = USA }
-		}
-		bypass = { CAN = { controls_state = 463 }}
-		completion_reward = {
-			add_opinion_modifier = { target = USA modifier = occupied_alaska_CAN }
-			add_state_claim = 463
-			hidden_effect = { USA = { country_event = { id = amcivwar.13 days = 1 }}}
-			hidden_effect = { CSA = { country_event = { id = amcivwar.36 days = 1 }}}
-			hidden_effect = { TEX = { country_event = { id = amcivwar.37 days = 1 }}}
-			hidden_effect = { CAL = { country_event = { id = amcivwar.38 days = 1 }}}
-			set_global_flag = ACW_CAN_SEIZE_ALASKA
-		}
-	}
-	focus = { #Seize the Panama Canal
-		id = CAN_occupy_panama
-		icon = GFX_goal_generic_occupy_states_coastal
-		prerequisite = { focus = CAN_occupy_alaska }
-		x = 34
-		y = 3 
-		cost = 1 
-		available = {
-			is_puppet = no
-			USA = { controls_state = 685 }
-			OR = {
-				USA = { has_war_with = CSA }
-				USA = { has_war_with = TEX }
-			}
-			NOT = {
-				has_war_with = USA
-				has_war_together_with = USA
-				is_in_faction_with = USA
-			}
-		}
-		bypass = {
-			685 = { is_controlled_by = CAN }
-		}
-		completion_reward = {
-			country_event = { id = amcivwar.17 days = 1 }
-			CAN = { add_state_claim = 685 }
-		}
-	}
+	# focus = { #Occupy Alaska
+		# id = CAN_occupy_alaska
+		# icon = GFX_goal_generic_occupy_states_ongoing_war
+		# prerequisite = { focus = CAN_occupy_new_england }
+		# x = 34 
+		# y = 2 
+		# cost = 1 
+		# available = {
+			# is_puppet = no
+			# country_exists = CSA
+			# country_exists = USA
+			# OR = {
+				# USA = { has_war_with = CSA }
+				# USA = { has_war_with = TEX }
+			# }
+			# 463 = { is_owned_by = USA }
+		# }
+		# bypass = { CAN = { controls_state = 463 }}
+		# completion_reward = {
+			# add_opinion_modifier = { target = USA modifier = occupied_alaska_CAN }
+			# add_state_claim = 463
+			# hidden_effect = { USA = { country_event = { id = amcivwar.13 days = 1 }}}
+			# hidden_effect = { CSA = { country_event = { id = amcivwar.36 days = 1 }}}
+			# hidden_effect = { TEX = { country_event = { id = amcivwar.37 days = 1 }}}
+			# hidden_effect = { CAL = { country_event = { id = amcivwar.38 days = 1 }}}
+			# set_global_flag = ACW_CAN_SEIZE_ALASKA
+		# }
+	# }
+	# focus = { #Seize the Panama Canal
+		# id = CAN_occupy_panama
+		# icon = GFX_goal_generic_occupy_states_coastal
+		# prerequisite = { focus = CAN_occupy_alaska }
+		# x = 34
+		# y = 3 
+		# cost = 1 
+		# available = {
+			# is_puppet = no
+			# USA = { controls_state = 685 }
+			# OR = {
+				# USA = { has_war_with = CSA }
+				# USA = { has_war_with = TEX }
+			# }
+			# NOT = {
+				# has_war_with = USA
+				# has_war_together_with = USA
+				# is_in_faction_with = USA
+			# }
+		# }
+		# bypass = {
+			# 685 = { is_controlled_by = CAN }
+		# }
+		# completion_reward = {
+			# country_event = { id = amcivwar.17 days = 1 }
+			# CAN = { add_state_claim = 685 }
+		# }
+	# }
 	
 	focus = { #Treaty with the PSA
 		id = CAN_psa_friend

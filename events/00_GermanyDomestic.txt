@@ -304,16 +304,12 @@ country_event = {#The increasing activity of the suffragist movement
 	id = gerdom.12 
 	title = gerdom.12.t 
 	desc = gerdom.12.d 
-	fire_only_once = yes 
-	trigger = {
-	tag = GER
-	date > 1936.1.12
-					}
-	mean_time_to_happen = { days = 40 }
+	is_triggered_only = yes
+
 	option = { #full
 	name = gerdom.12.a 
 	ai_chance = { factor = 5 }
-	add_political_power = -120 
+	add_political_power = -160 
 	add_opinion_modifier = {target = ENG modifier = women_yes }
 	add_opinion_modifier = {target = FRA modifier = women_yes }
 	add_opinion_modifier = {target = USA modifier = women_yes }
@@ -333,7 +329,7 @@ country_event = {#The increasing activity of the suffragist movement
 	name = gerdom.12.c
 	ai_chance = { factor = 10 }
 	set_country_flag = GER_NO_RGT
-	add_political_power = -100 
+	add_political_power = -140 
 	add_opinion_modifier = {target = ENG modifier = women_no }
 	add_opinion_modifier = {target = FRA modifier = women_no }
 	add_opinion_modifier = {target = USA modifier = women_no }
@@ -348,25 +344,25 @@ country_event = {#The increasing activity of the suffragist movement
 		tag = GER 
 		is_puppet = no 
 		OR ={ has_country_flag = GER_PARW_RGT has_country_flag = GER_NO_RGT }
-		FRA = { exists = no }
+		FRA = { exists = no } controls_state = 64 controls_state = 51 controls_state = 52
 							}
 		option = { #full 
 		name = gerdom.13.a 
-		ai_chance = { factor = 45 }
-		if = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -30 }
-		if = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -100 }
+		ai_chance = { factor = 50 }
+		if = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -40 }
+		if = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -140 }
 					}
 		option = { #part 
 		name = gerdom.13.b 
-		ai_chance = { factor = 45 }
-		if = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -50 }
-		if = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -20 }
+		ai_chance = { factor = 50 }
+                trigger = { has_country_flag = GER_NO_RGT }
+		add_political_power = -60
 					}
 		option = { #none 
 		name = gerdom.13.c
-		ai_chance = { factor = 10 }
-		if = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -300 }
-		if = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -600 }
+		ai_chance = { factor = 0 }
+		if = { limit = { has_country_flag = GER_PARW_RGT } add_political_power = -200 }
+		if = { limit = { has_country_flag = GER_NO_RGT } add_political_power = -400 }
 					}
 										}
 ###GANGS###
@@ -382,8 +378,7 @@ country_event = { #Halbstarke terrorize the cities
 							}				
 	option = {
 	name = gerdom.14.a 
-	add_political_power = -50
-	add_national_unity = -0.05
+	add_political_power = -40
 					}
 					}
 	country_event = {
@@ -398,12 +393,13 @@ country_event = { #Halbstarke terrorize the cities
 	option = { #no
 	name = gerdom.15.a 
 	ai_chance = { factor = 25 }
-	add_political_power = 10 
+	add_political_power = -20 
 					}
 	option = { #yes
 	name = gerdom.15.b
 	ai_chance = { factor = 75 }
-	add_national_unity = 0.05
+	add_political_power = 20
+        add_equipment_to_stockpile = { type = infantry_equipment amount = -250 producer = GER }
 						}
 							}
 ####BOATS####
@@ -1130,8 +1126,7 @@ country_event = {#Von papen is back
 			option = {
 			name = gerdom.42.a 
 			set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-			add_national_unity = -0.05 
-			add_political_power = -40
+			add_political_power = -80
 							}
 			
 									}
@@ -1544,7 +1539,6 @@ country_event = {#The Free Workers Union of Germany
 		ai_chance = { factor = 75 }
 		set_country_flag = FAUD_ban
 		add_political_power = -100 
-		add_national_unity = 0.01
 		FRA = { country_event = { id = gerdom.53 days = 7 } }
 		custom_effect_tooltip = FAUD_ban1
 		hidden_effect = { country_event = { id = gerdom.54 days = 30 } }
@@ -1568,6 +1562,7 @@ country_event = {#The Free Workers Union of Germany
 									}
 			option = {#war 
 			name = gerdom.53.b 
+                        ai_chance = { factor = 1 }
 				declare_war_on = { target = GER type = annex_everything }
 									}
 		
@@ -1611,8 +1606,7 @@ country_event = {#General Strike in the Rhineland
 			option = {#supress 
 			name = gerdom.56.a 
 			ai_chance = { factor = 10 }
-			add_national_unity = -0.05 
-			add_political_power = -80
+			add_political_power = -100
 			country_event = { id = gerdom.60 days = 40 }
 			add_ideas = GER_kill_workers
 								}
@@ -2308,7 +2302,6 @@ country_event = {#Johann von Bernstorff dies
 			option = {
 			name = gerdom.78.a 
 			set_politics = { ruling_party = social_conservatist elections_allowed = no }
-			add_national_unity = 0.1 
 			add_political_power = 80
 							}
 			
@@ -2444,7 +2437,6 @@ country_event = {#Johann von Bernstorff dies
 				puppet = YEM
 								}
 								}
-	###reaction to the international congress events####
 	
 	
 	####

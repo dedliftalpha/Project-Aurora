@@ -592,6 +592,7 @@ focus = {
 			}
 		}
 	}
+	
 focus = {
 	    id = ITA_national_reconstruction_program
 	    icon = GFX_goal_generic_production
@@ -599,11 +600,10 @@ focus = {
                         focus = ITA_extra_tech_slot_II }
 	    x = 2
 	    y = 6
-	    cost = 10
+	    cost = 30
 	    ai_will_do = {
 	    	factor = 1
 	    }
-        
 	    		complete_tooltip = {
 	    	every_state = {
 	    		limit = { has_state_flag = ITA_national_reconstruction_program_2IC }
@@ -614,44 +614,15 @@ focus = {
 	    			name = construction_tech_bonus
 	    			bonus = 0.5
 	    			uses = 1
-	    			category = construction_tech
-				
+	    			category = construction_tech	
 	    	}
-        
 	    }
         
 	    completion_reward = {
-	    	random_owned_state = {
-        
-	    		add_extra_state_shared_building_slots = 2
-        
-	    		set_state_flag = ITA_Pontine_marches_2IC
-	    	}
-	    	random_owned_state = {
-        
-	    		add_extra_state_shared_building_slots = 2
-        
-	    		set_state_flag = ITA_Pontine_marches_2IC
-	    	}
-                     random_owned_state = {
-        
-	    		add_extra_state_shared_building_slots = 2
-        
-	    		set_state_flag = ITA_Pontine_marches_2IC
-	    	}
-	    	random_owned_state = {
-        
-	    		add_extra_state_shared_building_slots = 2
-        
-	    		set_state_flag = ITA_Pontine_marches_2IC
-	    	}
-	    	add_tech_bonus = {
-	    		name = construction_tech_bonus
-	    		bonus = 0.5
-	    		uses = 1
-	    		category = construction_tech
-	    	}
-			add_national_unity = 0.05	
+	    country_event = { id = ita.6 days = 70 }
+		country_event = { id = ita.7 days = 140 }
+		country_event = { id = ita.8 days = 205 }
+		country_event = { id = ita.9 days = 210 }
 	}
 }
 		
@@ -854,7 +825,7 @@ focus = {
 		x = 27
 		y = 2
 		cost = 10
-        
+        available = { date > 1937.1.1 }
 		available_if_capitulated = no
         
 		bypass = {
@@ -875,16 +846,25 @@ focus = {
  				generator = { 160 } }
 			
 			}
+			AHE = { create_wargoal = {
+ 				type = take_state_focus
+ 				target = ITA
+ 				generator = { 160 } }
+			
+			}
 		}}
 	
 	
 focus = {
 		id = ITA_Eugenio_Pacelli
 		icon = GFX_goal_generic_neutrality_focus
+		available = {  
+				     has_country_flag = ITA_Dead_Pius_XXI	
+				    }
 		mutually_exclusive = { focus = ITA_Elia_dalla_Costa 
 		                       focus = ITA_Achille_Lienart
 							   focus = ITA_Theodor_Innitzer}
-		x = 21
+		x = 21					   
 		y = 1
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
@@ -909,6 +889,9 @@ focus = {
 focus = {
 		id = ITA_Elia_dalla_Costa
 		icon = GFX_goal_generic_consumer_goods
+		available = {  
+				     has_country_flag = ITA_Dead_Pius_XXI	
+				    }
 		mutually_exclusive = { focus = ITA_Eugenio_Pacelli
 		                       focus = ITA_Achille_Lienart
 							   focus = ITA_Theodor_Innitzer}
@@ -937,6 +920,9 @@ focus = {
 focus = {
 		id = ITA_Achille_Lienart
 		icon = GFX_goal_generic_national_unity
+		available = {  
+				     has_country_flag = ITA_Dead_Pius_XXI	
+				    }
 		mutually_exclusive = { focus = ITA_Eugenio_Pacelli
 		                       focus = ITA_Elia_dalla_Costa
 							   focus = ITA_Theodor_Innitzer}
@@ -965,6 +951,9 @@ focus = {
 focus = {
 		id = ITA_Theodor_Innitzer
 		icon = GFX_goal_generic_political_pressure
+		available = {  
+				     has_country_flag = ITA_Dead_Pius_XXI	
+				    }
 		mutually_exclusive = { focus = ITA_Eugenio_Pacelli
 		                       focus = ITA_Elia_dalla_Costa
 							   focus = ITA_Achille_Lienart }
@@ -986,20 +975,7 @@ focus = {
 			traits = {
 				
 			}
-		}
-        
-        create_country_leader = {
-			name = "Julius IV "
-			desc = "POLITICS_JULIUS_IV_DESC"
-			picture = "Portrait_Italy_Julius.tga"
-			expire = "1965.1.1"
-			ideology = paternal_autocratist_subtype
-			traits = {
-				
-			}
-		}			
-			
-		}
+		}}
 	}	
 
 focus = {
@@ -1011,7 +987,7 @@ focus = {
         prerequisite = { focus = ITA_Eugenio_Pacelli }
 		available_if_capitulated = no
 		completion_reward = {
-		add_national_unity = 0.05
+		add_political_power = 100
 		}
 		}	
 		
@@ -1024,7 +1000,7 @@ focus = {
         prerequisite = { focus = ITA_Eugenio_Pacelli }
 		available_if_capitulated = no
 		completion_reward = {
-		add_political_power = 100
+		add_national_unity = 0.05
 		}}		
 		
 focus = {
@@ -1106,6 +1082,10 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Elia_dalla_Costa }
 		available_if_capitulated = yes
+		
+		completion_reward = {
+		country_event = { id = ita.12 }
+		}	
 	}	
 focus = {
 		id = ITA_Promote_Corporativism_III
@@ -1157,6 +1137,7 @@ focus = {
         prerequisite = { focus = ITA_Elia_dalla_Costa }
 		available_if_capitulated = yes
 		completion_reward = {
+		country_event = { id = ita.13 }
 		add_ideas = Rebellious_Nobility
 		}
 	}	
@@ -1207,33 +1188,47 @@ focus = {
 		x = 29
 		y = 2
 		cost = 10
-        prerequisite = { focus = ITA_Achille_Lienart }
+		prerequisite = { focus = ITA_Achille_Lienart }
+		bypass = { NOT = { country_exists = SRI }}
+		available = { NOT = { has_war_with = SRI }}
 		available_if_capitulated = yes
+		completion_reward = {
+			add_opinion_modifier = { target = SRI modifier = POL_seek_accommodation_with_germany }
+			SRI = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
+			#Relation Boost With South Italy
+			remove_ideas = Divided_Nation 
+			
+			}
 	}
 	
 focus = {
 		id = ITA_Reunion
 		icon = GFX_goal_generic_improve_relations
-		x = 28
+		x = 29
 		y = 3
 		cost = 10
         prerequisite = { focus = ITA_Reconciliation }
+		available = { NOT = { has_war_with = SRI }}
 		available_if_capitulated = yes
 		completion_reward = {
 		add_ideas = Rebellious_Nobility 
+		add_political_power = 100
+		annex_country = { target = SRI }
+		add_popularity = {
+			ideology = syndicalist
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = radical_socialist
+			popularity = 0.05
+		}
+		add_popularity = {
+			ideology = totalist
+			popularity = 0.05
+		}
 		}
 	}
 
-focus = {
-		id = ITA_Deal_with_the_devil
-		icon = GFX_goal_generic_dangerous_deal
-		x = 30
-		y = 3
-		cost = 10
-        prerequisite = { focus = ITA_Reconciliation }
-		available_if_capitulated = yes
-	}
-	
 focus = {
 		id = ITA_Industrialise_the_Peninsula
 		icon = GFX_goal_generic_construct_civ_factory
@@ -1329,7 +1324,10 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Reunion }
 		available_if_capitulated = yes
-	}		
+		
+		completion_reward = {
+		add_ideas = Social_Welfare_State
+	}	}	
 	
 focus = {
 		id = ITA_Extended_Armament
@@ -1405,11 +1403,26 @@ focus = {
 
 		}
 	}
+
+
+focus = {
+		id = ITA_Promote_Corporativism_II
+		icon = GFX_goal_generic_trade
+		prerequisite = { focus = ITA_Arm_the_Population 
+		                 focus = ITA_Extended_Armament }
+		x = 33
+		y = 3
+		cost = 10
+		available_if_capitulated = no
+		completion_reward = {
+		add_national_unity = 0.15
+		}}
+
 focus = {
 		id = ITA_Centralise4
 		icon = GFX_goal_tripartite_pact
-		x = 32
-		y = 6
+		x = 33
+		y = 4
 		cost = 10
         prerequisite = { focus = ITA_Promote_Corporativism_II }
 		available_if_capitulated = yes
@@ -1419,74 +1432,32 @@ focus = {
 	}	
 
 focus = {
-		id = ITA_Anti-Syndicalist_Coalition
-		icon = GFX_goal_generic_forceful_treaty
+		id = ITA_Papal_Authority
+		icon = GFX_goal_authoritarian
+		x = 33
+		y = 5
+		cost = 10
+        prerequisite = { focus = ITA_Centralise4 }
+		available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = Papal_Authority
+		}
+	}
+
+focus = {
+		id = ITA_Arm_the_Population
+		icon = GFX_goal_generic_military_sphere
 		x = 34
 		y = 2
 		cost = 10
         prerequisite = { focus = ITA_Theodor_Innitzer }
-		available_if_capitulated = no
-	}		
-focus = {
-		id = ITA_Promote_Corporativism_II
-		icon = GFX_goal_generic_trade
-		mutually_exclusive = { focus = ITA_Kingdom_of_God }
-		prerequisite = { focus = ITA_Arm_the_Population }
-		x = 32
-		y = 5
-		cost = 10
-		available_if_capitulated = no
-		completion_reward = {
-		add_national_unity = 0.15
-		}}
-		
-focus = {
-		id = ITA_Arm_the_Population
-		icon = GFX_goal_generic_military_sphere
-		mutually_exclusive = { focus = ITA_Promote_Corporativism_II }
-		x = 33
-		y = 3
-		cost = 10
-        prerequisite = { focus = ITA_Anti-Syndicalist_Coalition 
-		                 focus = ITA_Extended_Armament}
 		available_if_capitulated = no 
+		
 		completion_reward = { 
 		add_ideas = Armed_Society
 		}
-	}	
-	
-focus = {
-		id = ITA_Kingdom_of_God
-		icon = GFX_goal_authoritarian
-		mutually_exclusive = { focus = ITA_Promote_Corporativism_II }
-		x = 34
-		y = 5
-		cost = 10
-        prerequisite = { focus = ITA_Arm_the_Population }
-		available_if_capitulated = no 
-		completion_reward = {
-		add_ideas = Mad_Pope 
-		add_ideas = paternal_autocratist_influence
-		}
-	}	
+    }
 
-focus = {
-		id = ITA_Papal_Autocracy
-		icon = GFX_goal_authoritarian
-		available = {
-		has_government = paternal_autocratist
-        } 
-		x = 34
-		y = 6
-		cost = 10
-        prerequisite = { focus = ITA_Kingdom_of_God }
-		available_if_capitulated = no
-		
-		completion_reward {
-		
-		}
-	}		
-	
 focus = {
 		id = ITA_interventionism
 		icon = GFX_goal_generic_alliance
@@ -1496,9 +1467,11 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
 		
-	}		
+		completion_reward = {
+		add_named_threat = { threat = 1 name = ITA_irredentism }
+    	}
+		}
 	
 focus = {
 		id = ITA_isolationism
@@ -1509,39 +1482,72 @@ focus = {
 		cost = 10
         prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
-
 		
-	}		
+        completion_reward = {
+		add_political_power = -50 
+		}
+	}
+	
 focus = {
 		id = ITA_join_germany
 		icon = GFX_goal_anschluss
+		mutually_exclusive = { focus = ITA_join_austria }
+		mutually_exclusive = { focus = ITA_join_canada }
+		mutually_exclusive = { focus = ITA_holy_league }
 		x = 11
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
 		available_if_capitulated = yes
+		
+		completion_reward = {
+			add_opinion_modifier = { target = GER modifier = POL_seek_accommodation_with_germany }
+			GER = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
+			#Relation Boost With Germany
+		}
 
 		
-	}	
+	}
 focus = {
 		id = ITA_join_austria
 		icon = GFX_goal_anschluss
+		mutually_exclusive = { focus = ITA_join_germany }
+		mutually_exclusive = { focus = ITA_join_canada }
+		mutually_exclusive = { focus = ITA_holy_league }
 		x = 13
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
 		available_if_capitulated = yes
+		
+		completion_reward = {
+			add_opinion_modifier = { target = AUS modifier = POL_seek_accommodation_with_germany }
+			AUS = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
+			#Relation Boost With Austria
+			add_opinion_modifier = { target = AHE modifier = POL_seek_accommodation_with_germany }
+			AHE = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
+			#Relation Boost With United Austria
+		}
 
 		
 	}		
 focus = {
 		id = ITA_join_canada
 		icon = GFX_goal_anschluss
+		mutually_exclusive = { focus = ITA_join_germany }
+		mutually_exclusive = { focus = ITA_join_austria }
+		mutually_exclusive = { focus = ITA_holy_league }
 		x = 9
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
 		available_if_capitulated = yes
+		
+		completion_reward = {
+			add_opinion_modifier = { target = CAN modifier = POL_seek_accommodation_with_germany }
+			CAN = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
+			#Relation Boost With Canada
+		}
 
 		
 	}			
@@ -1549,6 +1555,9 @@ focus = {
 focus = {
 		id = ITA_holy_league
 		icon = GFX_goal_generic_alliance
+		mutually_exclusive = { focus = ITA_join_germany }
+		mutually_exclusive = { focus = ITA_join_austria }
+		mutually_exclusive = { focus = ITA_join_canada }
 		x = 15
 		y = 4
 		cost = 10
@@ -1821,6 +1830,9 @@ focus = {
         prerequisite = { focus = ITA_isolationism }
 		available_if_capitulated = yes
 		
+		completion_reward = {
+		add_ideas = Deterrence }
+		
 }		
 	
 focus = {
@@ -1844,7 +1856,7 @@ focus = {
 		x = 39
 		y = 3
 		cost = 10
-        prerequisite = { focus = ITA_Publish_new_encyclical }
+		prerequisite = { focus = ITA_Publish_new_encyclical }
 		available_if_capitulated = yes
 		completion_reward = {
 		add_named_threat = { threat = 3 name = ITA_irredentism }
@@ -1853,6 +1865,8 @@ focus = {
 focus = {
 		id = ITA_Pact_with_Austria
 		icon = GFX_goal_generic_military_deal
+		available = {
+		has_war_with = BHU }
 		x = 37
 		y = 4
 		cost = 10
@@ -1863,6 +1877,8 @@ focus = {
 focus = {
 		id = ITA_Pact_with_Nationalists
 		icon = GFX_goal_generic_military_deal
+		available = {
+		has_war_with = BHU }
 		x = 35
 		y = 4
 		cost = 10
@@ -1875,6 +1891,16 @@ focus = {
 		icon = GFX_goal_generic_major_alliance
 		x = 39
 		y = 4
+		available = {
+		has_war_with = BHU
+		NOT = { has_war_with = AUS }
+		NOT = { has_war_with = AHE }
+		AUS = { owns_state = 783 }
+		AUS = { owns_state = 759 }}
+		bypass = { 
+		          ITA = { owns_state = 783 }
+		          ITA = { owns_state = 759 }}
+		
 		cost = 10
         prerequisite = { focus = ITA_Irredentism }
 		available_if_capitulated = yes
@@ -1883,6 +1909,12 @@ focus = {
 focus = {
 		id = ITA_Switz_Referendum
 		icon = GFX_goal_generic_major_alliance
+		available = {
+		has_war_with = BHU
+		NOT = { has_war_with = SWI }			
+		SWI = { owns_state = 761 }}
+		bypass = { 
+		          ITA = { owns_state = 761 }}
 		x = 41
 		y = 4
 		cost = 10
@@ -1893,29 +1925,47 @@ focus = {
 focus = {
 		id = ITA_Buy_Malta
 		icon = GFX_goal_generic_major_alliance
+		available = {
+		has_war_with = BHU
+		NOT = { has_war_with = GER }
+		OR = {		
+		GER = { owns_state = 116 }
+		country_exists = MLT
+		}}
+		bypass = { 
+		            ITA = { owns_state = 116 }}
 		x = 42
 		y = 5
 		cost = 10
         prerequisite = { focus = ITA_Irredentism }
 		available_if_capitulated = yes
-		
-		completion_reward = { 
-	    add_state_core = 116 
-}	}
+}
 
 focus = {
 		id = ITA_Buy_Tunisia
 		icon = GFX_goal_generic_major_alliance
+		available = {
+		has_war_with = BHU
+		NFA = { owns_state = 458
+				owns_state = 665 }
+		NOT = {
+				has_war_with = NFA
+			}}
+		bypass = { 
+	    ITA = { owns_state = 458
+			    owns_state = 665 }}
 		x = 40
 		y = 5
 		cost = 10
         prerequisite = { focus = ITA_Irredentism }
 		available_if_capitulated = yes
-}	
+}
 
 focus = {
 		id = ITA_Strike_Tripolitania
 		icon = GFX_goal_generic_major_war
+		available = {
+		country_exists = LYB }		
 		x = 43
 		y = 4
 		cost = 10
@@ -1928,27 +1978,647 @@ focus = {
  				target = LYB
  				generator = { 160 } }
 			
-			}
-}}			
+			}}}			
 
 focus = {
 		id = ITA_Incorporate_Maltese_Nation
 		icon = GFX_goal_generic_propaganda
+		available = {
+		ITA = {
+				owns_state = 116
+			}}
 		x = 42
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_Buy_Malta }
 		available_if_capitulated = yes
-}		
+		
+		completion_reward = { 
+	    add_state_core = 116 
+		}
+}
 
 focus = {
 		id = ITA_Colonise_Tunisia
 		icon = GFX_goal_generic_political_pressure
+		available = {
+		ITA = {
+				owns_state = 458
+				owns_state = 665
+			}}
 		x = 40
 		y = 6
 		cost = 10
         prerequisite = { focus = ITA_Buy_Tunisia }
 		available_if_capitulated = yes
-}		
+		completion_reward = { 
+	    add_state_core = 458
+		add_state_core = 665
+		}
+}
 
+	focus = {
+		id = ITA_aviation_effort
+		icon = GFX_goal_generic_build_airforce
+		x = 45
+		y = 0
+		cost = 10
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}			
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}			
+		}
+
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_fighter_focus
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = ITA_aviation_effort }
+		mutually_exclusive = { focus = ITA_bomber_focus }
+		x = 44
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.5
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ITA_aviation_effort }
+		mutually_exclusive = { focus = ITA_fighter_focus }
+		x = 46
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 0.5
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_aviation_effort_2
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = ITA_bomber_focus focus = ITA_fighter_focus }
+		x = 45
+		y = 2
+		cost = 10
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_2_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_CAS_effort
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = ITA_aviation_effort_2 }
+		x = 44
+		y = 3
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = cas_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_rocket_effort
+		icon = GFX_focus_rocketry
+		prerequisite = { focus = ITA_aviation_effort_2 }
+		x = 45
+		y = 4
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = jet_rocket_bonus
+				ahead_reduction = 0.5
+				uses = 2
+				category = rocketry
+				category = jet_technology
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_NAV_effort
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = ITA_aviation_effort_2 }
+		prerequisite = { focus = ITA_flexible_navy }
+		x = 46
+		y = 3
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_naval_effort
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 49
+		y = 0
+		cost = 10
+
+		available = {
+			any_state = {
+				is_coastal = yes
+				is_controlled_by = ROOT
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
+	focus = {
+		id = ITA_flexible_navy
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = ITA_naval_effort }
+		mutually_exclusive = { focus = ITA_large_navy }
+		x = 48
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 0.5
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_large_navy
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = ITA_naval_effort }
+		mutually_exclusive = { focus = ITA_flexible_navy }
+		x = 50
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 0.5
+				uses = 2
+				category = fleet_in_being_tree
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_submarine_effort
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = ITA_flexible_navy focus = ITA_large_navy }
+		x = 48
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				technology = early_submarine
+				technology = basic_submarine
+				technology = improved_submarine
+				technology = advanced_submarine
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_cruiser_effort
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = ITA_large_navy focus = ITA_flexible_navy }
+		x = 50
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				technology = improved_light_cruiser
+				technology = advanced_light_cruiser
+				technology = improved_heavy_cruiser
+				technology = advanced_heavy_cruiser
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_destroyer_effort
+		icon = GFX_goal_generic_wolf_pack
+		prerequisite = { focus = ITA_submarine_effort }
+		x = 48
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				technology = early_destroyer
+				technology = basic_destroyer
+				technology = improved_destroyer
+				technology = advanced_destroyer
+			}
+		}
+	}
+
+	focus = {
+		id = ITA_capital_ships_effort
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = ITA_cruiser_effort }
+		x = 50
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				technology = basic_battlecruiser
+				technology = basic_battleship
+				technology = improved_battleship
+				technology = advanced_battleship
+				technology = heavy_battleship
+				technology = heavy_battleship2
+				technology = early_carrier
+				technology = basic_carrier
+				technology = improved_carrier
+				technology = advanced_carrier
+			}
+		}
+	}
 

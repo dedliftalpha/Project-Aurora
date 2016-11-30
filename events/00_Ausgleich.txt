@@ -689,7 +689,8 @@ country_event = {
 			
 			HUN = {
 				end_puppet = CRO
-			
+				country_event = { id = hungary.2 }
+				
 			}
 		}
 		
@@ -1653,4 +1654,819 @@ country_event = {
 		set_global_flag = reformed_dual_monarchy
 	}
 	
+}
+
+### Hungary wins
+country_event = {
+	id = ausgleich.62
+	title = ausgleich.62.t
+	desc = ausgleich.62.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		TAG = HUN
+		country_exists = HUN
+		NOT = { country_exists = AUS }
+		HUN = { has_war = no }
+		HUN = { owns_state = 43}
+	}
+	
+	option = {
+		name = ausgleich.62.a # End all this
+		
+		AUS = {
+			end_puppet = CRO
+			end_puppet = BOS
+			end_puppet = HUN
+			end_puppet = GAL
+			end_puppet = BOM
+		}
+		
+		HUN = {
+			puppet = CRO
+			add_timed_idea = { idea = AUS_war_reparations_to_hungary_HUN days = 400 } 
+		}
+		
+		AUS = {
+			transfer_state = 153
+			transfer_state = 39
+			transfer_state = 783
+			transfer_state = 759
+			transfer_state = 736
+			transfer_state = 795
+			transfer_state = 102
+			transfer_state = 152
+			transfer_state = 4
+			transfer_state = 775
+			
+			add_timed_idea = { idea = AUS_war_reparations_to_hungary days = 400 } 
+		}
+		
+		BOM = {
+			
+			transfer_state = 69
+			transfer_state = 786
+			transfer_state = 9
+			transfer_state = 75
+			transfer_state = 74
+			transfer_state = 72
+		
+		}
+		
+		if = {
+			limit = { HUN = { owns_state = 104 } }
+			BOS = { transfer_state = 104 }
+		}
+		
+		if = {
+			limit = { 
+				HUN = { 
+					owns_state = 109
+					owns_state = 103
+					owns_state = 163
+					owns_state = 793
+					owns_state = 794
+					}					
+			}
+			CRO = {
+				transfer_state = 109
+				transfer_state = 103
+				transfer_state = 163
+				transfer_state = 793
+				transfer_state = 794
+			}
+		}
+		
+		if = {
+			limit = { 
+				HUN = { 
+					owns_state = 88
+					owns_state = 89
+					owns_state = 80
+					owns_state = 91
+				}					
+			}
+			GAL = {
+				transfer_state = 88
+				transfer_state = 89
+				transfer_state = 80
+				transfer_state = 91
+			}
+		
+		}
+		
+		every_state = {
+			limit = {
+				NOT = { is_owned_and_controlled_by = AUS }
+				is_core_of = AUS
+			}
+			AUS = {
+				remove_state_core = PREV
+			}
+		}
+		
+	}
+}
+
+############
+#Opportunism
+############
+
+### Italy
+### Claim Venice and Trento?
+country_event = { 
+	id = ausgleich.70
+	title = ausgleich.70.t
+	desc = ausgleich.70.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		is_puppet = no
+		has_war = no
+		AUS = { has_war_with = HUN }
+		AUS = {
+			owns_state = 783
+			owns_state = 759
+			owns_state = 736
+			owns_state = 795
+		}
+		NOT = { has_country_flag = joseph_I_von_osterreich_hos } 
+		NOT = {
+			is_in_faction_with = AUS
+		}
+		date < 1937.12.29
+	}
+
+	immediate = {
+		160 = { set_demilitarized_zone = no }
+	}
+	
+	option = {
+		name = ausgleich.70.a
+
+		ai_chance = { factor = 90 }
+
+		add_state_core = 783
+		add_state_core = 759
+		add_state_core = 736
+		add_state_core = 795
+
+		declare_war_on = {
+			target = AUS
+			type = take_core_state
+			generator = { 783 759 736 795 }
+		}
+
+		add_opinion_modifier = { target = AUS modifier = ITA_att_AUS } # -100
+		add_opinion_modifier = { target = HUN modifier = ITA_att_AUS } # -100
+		add_opinion_modifier = { target = GER modifier = ITA_att_AUS_GER } # -20
+	}
+
+	option = {
+		name = ausgleich.70.b
+
+		ai_chance = { factor = 10 }
+
+		add_opinion_modifier = { target = AUS modifier = POL_no_att_GAL } # 20
+		add_opinion_modifier = { target = HUN modifier = POL_no_att_GAL } # 20
+
+		
+	}
+}
+### Peace with Austria ?
+country_event = { 
+	id = ausgleich.71
+	title = ausgleich.71.t
+	desc = ausgleich.71.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		AUS = { is_puppet = no }
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		has_war_with = AUS
+		controls_state = 783
+		controls_state = 759
+		controls_state = 736
+		controls_state = 795
+		is_puppet = no
+		NOT = {
+			is_in_faction_with = AUS
+			is_in_faction_with = GER
+		}
+	}
+	
+	option = {
+		name = ausgleich.71.a
+
+		ai_chance = { factor = 65 }
+
+		AUS = { country_event = {id = ausgleich.73 }}
+	}
+
+	option = {
+		name = ausgleich.71.b
+
+		ai_chance = { factor = 35 }
+
+		AUS = { country_event = {id = ausgleich.72 }}
+	}
+
+	option = {
+		name = ausgleich.71.c
+
+		ai_chance = { factor = 0 }
+
+		add_opinion_modifier = { target = SRI modifier = ITA_pushes_in_austria } # -50
+	}
+}
+### The Federation offers peace
+country_event = { 
+	id = ausgleich.72
+	title = ausgleich.72.t
+	desc = ausgleich.72.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.72.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AUS }
+
+		ITA = {
+			transfer_state = 759
+			transfer_state = 736
+			transfer_state = 795
+			remove_state_core = 783
+		}
+
+		AUS = {
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+	}
+
+	option = {
+		name = ausgleich.72.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+### The Federation offers peace
+country_event = { 
+	id = ausgleich.73
+	title = ausgleich.73.t
+	desc = ausgleich.73.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.73.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AUS }
+
+		ITA = {
+			transfer_state = 783
+			transfer_state = 759
+			transfer_state = 736
+			transfer_state = 795
+		}
+
+		AUS = {
+			remove_state_core = 783
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+	}
+
+	option = {
+		name = ausgleich.73.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+### Peace with Italy?
+country_event = { 
+	id = ausgleich.74
+	title = ausgleich.74.t
+	desc = ausgleich.74.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = AUS
+		NOT = {
+			has_government = totalist
+			has_government = radical_socialist
+			has_government = syndicalist
+		}
+		has_war_with = ITA
+		controls_state = 160
+		controls_state = 161
+		controls_state = 162
+		is_puppet = no
+		not = { is_in_faction_with = FRA }
+	}
+	
+	option = {
+		name = ausgleich.74.a
+
+		ai_chance = { factor = 20 }
+
+		add_state_core = 160
+		ITA = { country_event = {id = ausgleich.75 }}
+	}
+
+	option = {
+		name = ausgleich.74.b
+
+		ai_chance = { factor = 80 }
+
+		add_state_core = 160
+		ITA = { country_event = {id = ausgleich.76 }}
+	}
+
+	option = {
+		name = ausgleich.74.c
+
+		ai_chance = { factor = 0 }
+
+		add_opinion_modifier = { target = GER modifier = AUS_cont_war_ITA } # -20
+	}
+}
+### Austria offers peace
+country_event = {
+	id = ausgleich.75
+	title = ausgleich.75.t
+	desc = ausgleich.75.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.75.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AUS }
+
+		AUS = {
+			transfer_state = 160
+		}
+
+		ITA = {
+			remove_state_core = 160
+			remove_state_core = 783
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+
+		add_political_power = -100
+	}
+
+	option = {
+		name = ausgleich.75.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+### Austria offers peace
+country_event = { 
+	id = ausgleich.76
+	title = ausgleich.76.t
+	desc = ausgleich.76.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.76.a
+
+		ai_chance = { factor = 100 }
+
+		ITA = { white_peace = AUS }
+
+		AUS = {
+			transfer_state = 160
+		}
+
+		ITA = {
+			remove_state_core = 160
+			remove_state_core = 783
+			remove_state_core = 759
+			remove_state_core = 736
+			remove_state_core = 795
+		}
+
+		add_political_power = -200
+
+		AUS = { country_event = {id = ausgleich.77 }}
+	}
+
+	option = {
+		name = ausgleich.76.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -60
+	}
+}
+### Italy submits !
+country_event = { 
+	id = ausgleich.77
+	title = ausgleich.77.t
+	desc = ausgleich.77.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.77.a
+
+		puppet = ITA
+
+		add_opinion_modifier = { target = ITA modifier = friendly_gov } # 150
+
+		add_political_power = 100 
+
+		ITA = { country_event = {id = ausgleich.78 }}
+	}
+}
+### Submission to Austria
+country_event = { 
+	id = ausgleich.78
+	title = ausgleich.78.t
+	desc = ausgleich.78.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.78.a
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.1
+        }
+
+		
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Joseph I von Österreich-Toskana"
+			desc = "JOSEPH_I_DESC"
+			picture = "Portrait_ITA_Joseph_I_von_Osterreich.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		}
+
+		set_country_flag = joseph_I_von_osterreich_hos
+
+        add_ideas = {
+        	ITA_Stephen_X_hog_ade
+        }
+	}
+}
+### Greek opportunism
+# Kefalonia is cut off from supply!
+country_event = { 
+	id = ausgleich.80
+	title = ausgleich.80.t
+	desc = ausgleich.80.d
+	
+	fire_only_once = yes
+	
+	trigger = { #Austria has no access to Med. and doesn't control Croatia or Italy as a puppet
+		tag = AUS
+		controls_state = 758
+		NOT = {
+			controls_state = 105
+			controls_state = 793
+			controls_state = 163
+			controls_state = 103
+			controls_state = 736
+			controls_state = 795
+			controls_state = 759
+			country_exists = DNF
+			CRO = { is_puppet_of = AUS }
+			ITA = { is_puppet_of = AUS }
+		}
+	}
+	
+	option = {
+		name = ausgleich.80.a
+
+		GRE = { country_event = { id = ausgleich.81 }}
+	}
+}
+### Occupy Kefalonia?
+country_event = { 
+	id = ausgleich.81
+	title = ausgleich.81.t
+	desc = ausgleich.81.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.81.a
+
+		ai_chance = { factor = 90 }
+
+		AUS = { country_event = {id = ausgleich.82 }}
+		GRE = { add_state_core = 758 }
+	}
+
+	option = {
+		name = ausgleich.81.b
+
+		ai_chance = { factor = 10 }
+
+		add_opinion_modifier = { target = AUS modifier = do_not_claim_kefalonia } # 20
+	}
+}
+### Occupy Kefalonia
+country_event = { 
+	id = ausgleich.82
+	title = ausgleich.82.t
+	desc = ausgleich.82.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.82.a
+
+		GRE = { transfer_state = 758 }
+		AUS = { remove_state_core = 758 }
+		add_opinion_modifier = { target = GRE modifier = grece_claimed_kefalonika } # -35
+	}
+}
+
+### Montenegro
+# Montenegrians demand independence !
+country_event = { 
+	id = ausgleich.85
+	title = ausgleich.85.t
+	desc = ausgleich.85.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AUS
+		NOT = { country_exists = MTN }
+		OR = {
+			has_war_with = CRO
+			has_war_with = HUN
+			has_war_with = SER
+		}
+		owns_state = 105
+		controls_state = 105 
+	}
+	
+	option = {
+		name = ausgleich.85.a
+
+		ai_chance = { factor = 10 }
+
+		add_political_power = -60
+		release = MTN
+		end_puppet = MTN
+		MTN = { transfer_state = 105 }
+		MTN = { country_event = { id = ausgleich.86 }}
+	}
+
+	option = {
+		name = ausgleich.85.b
+
+		ai_chance = { factor = 90 }
+
+		add_political_power = -40
+		release = MTN
+		end_puppet = MTN
+		MTN = { transfer_state = 105 }
+		MTN = { country_event = { id = ausgleich.87 }}
+		declare_war_on = { target = MTN type = annex_everything	}
+	}
+}
+# Freedom at last
+country_event = { 
+	id = ausgleich.86
+	title = ausgleich.86.t
+	desc = ausgleich.86.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.86.a
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.3
+        }
+
+		set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Nj.K.V. Danilo I Petrovic-Njegos"
+			desc = "DANILO_I_DESC"
+			picture = "Danilo_I.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		}
+
+		
+
+        add_ideas = {
+        	MTN_Jovan_Plamenac_hog_ade
+        }
+
+        add_timed_idea = { idea = montenegrian_army days = 365 } # +10 Morale
+
+        load_oob = "MTN_ind"
+
+        set_global_flag = MTN_freedomfight
+	}
+}
+### Freedom at last
+country_event = { 
+	id = ausgleich.87
+	title = ausgleich.87.t
+	desc = ausgleich.87.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.87.a
+
+        add_popularity = {
+            ideology = authoritarian_democratist
+            popularity = 0.3
+        }
+
+		set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			remove_ideas_with_trait = head_of_government
+		}
+
+		create_country_leader = {
+			name = "Nj.K.V. Danilo I Petrovic-Njegos"
+			desc = "DANILO_I_DESC"
+			picture = "Danilo_I.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		}
+
+
+
+        add_ideas = {
+        	MTN_Jovan_Plamenac_hog_ade
+        }
+
+        load_oob = "MTN_ind"
+        add_manpower = 60000
+
+        set_global_flag = MTN_freedomfight
+	}
+}
+### Montenegro still exist 
+country_event = { 
+	id = ausgleich.90
+	title = ausgleich.90.t
+	desc = ausgleich.90.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = AUS
+		has_global_flag = MTN_freedomfight
+		MTN = { controls_state = 105 }
+		has_war_with = MTN
+		AUS = { is_puppet = no }
+		MTN = { is_puppet = no }
+		NOT = { MTN = { is_in_faction_with = SER }}
+	}
+	
+	option = {
+		name = ausgleich.90.a
+
+		ai_chance = { factor = 100 }
+
+		white_peace = AUS
+		AUS = { remove_state_core = 105 }
+		add_opinion_modifier = { target = MTN modifier = Austria_Recognises_our_Independence } # 30
+		add_political_power = -60
+		clr_global_flag = MTN_freedomfight
+	}
+
+	option = {
+		name = ausgleich.90.b
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -20
+		clr_global_flag = MTN_freedomfight
+	}
+}
+# Montenegrian revolution
+country_event = { 
+	id = ausgleich.91
+	title = ausgleich.91.t
+	desc = ausgleich.91.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = SER
+		has_global_flag = MTN_freedomfight
+		NOT = {
+			is_in_faction_with = AUS
+			is_puppet = yes
+		}
+	}
+	
+	option = {
+		name = ausgleich.91.a
+
+		ai_chance = { factor = 85 }
+
+		add_opinion_modifier = { target = MTN modifier = Serbia_Recognises_Us } # 50
+		add_opinion_modifier = { target = AUS modifier = Serbia_Recognises_MTN } # -30
+		add_manpower = -20000
+		add_political_power = 20
+		MTN = { country_event = { id = ausgleich.92 }}
+	}
+
+	option = {
+		name = ausgleich.91.b
+
+		ai_chance = { factor = 10 }
+
+		add_opinion_modifier = { target = AUS modifier = Serbia_Allies_MTN } # -150
+		add_opinion_modifier = { target = MTN modifier = Serbia_Allies_Us } # 100
+
+		add_to_war = { targeted_alliance = MTN enemy = AUS }
+
+		add_manpower = -30000
+		add_political_power = 100
+		MTN = { country_event = { id = ausgleich.92 }}
+	}
+
+	option = {
+		name = ausgleich.91.c
+
+		ai_chance = { factor = 5 }
+
+		add_opinion_modifier = { target = AUS modifier = Serbia_Ignores_MTN } # 15
+		add_opinion_modifier = { target = MTN modifier = Serbia_Ignores_Us } # -30
+		add_political_power = -60
+	}
+}
+# Serbian help arrives
+country_event = { 
+	id = ausgleich.92
+	title = ausgleich.92.t
+	desc = ausgleich.92.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ausgleich.92.a
+
+		add_timed_idea = { idea = serbian_volunteers days = 365 } # +3 Organisation
+
+		load_oob = "MTN_SER_Vol"
+	}
 }

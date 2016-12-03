@@ -337,26 +337,26 @@ focus_tree = {
 	}
 	
 	# #Extra Research Slot
-	# focus = {
-		# id = CAN_extra_tech
-		# icon = GFX_focus_research
-		# prerequisite = { focus = CAN_nrc }
-		# x = 6 
-		# y = 2
-		# cost = 4 
-		# ai_will_do = {
-			# factor = 2
-		# }
-		# completion_reward = {
-			# add_research_slot = 1
-		# }
-	# }
+	 focus = {
+		 id = CAN_extra_tech
+		 icon = GFX_focus_research
+		 prerequisite = { focus = CAN_nrc }
+		 x = 6 
+		 y = 2
+		 cost = 4 
+		 ai_will_do = {
+			 factor = 2
+		 }
+		 completion_reward = {
+			 add_research_slot = 1
+		 }
+	 }
 	
 	#Electronics Training Initiative
 	focus = {
 		id = CAN_eti
 		icon = GFX_goal_generic_radar
-		prerequisite = { focus = CAN_nrc }
+		prerequisite = { focus = CAN_cbc focus = CAN_nrc }
 		x = 4
 		y = 2 
 		cost = 4
@@ -379,8 +379,8 @@ focus_tree = {
 	focus = {
 		id = CAN_synthetics_research
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CAN_nrc }
-		prerequisite = { focus = CAN_production }
+		prerequisite = { focus = CAN_nrc focus = CAN_production }
+		#prerequisite = { focus = CAN_production }
 		x = 8 
 		y = 2 
 		cost = 4
@@ -402,6 +402,7 @@ focus_tree = {
 		id = CAN_rocketfuel
 		icon = GFX_focus_rocketry 
 		prerequisite = { focus = CAN_synthetics_research }
+		prerequisite = { focus = CAN_extra_tech }
 		x = 7
 		y = 3 
 		cost = 4
@@ -423,7 +424,7 @@ focus_tree = {
 		id = CAN_nightwatch
 		icon = GFX_goal_generic_radar
 		prerequisite = { focus = CAN_eti }
-		prerequisite = { focus = CAN_infra_3 }
+		#prerequisite = { focus = CAN_infra_3 }
 		x = 3
 		y = 3
 		cost = 6
@@ -431,8 +432,9 @@ focus_tree = {
 			factor = 2
 			modifier = {
 				factor = 0 
-				date < 01.01.1939
+				date < 01.01.1938
 			}
+			
 		}
 		available = {
 			has_tech = radio_detection
@@ -509,17 +511,24 @@ focus_tree = {
 	focus = {
 		id = CAN_chalk_river
 		icon = GFX_focus_wonderweapons
-		prerequisite = { focus = CAN_nrc }
+		prerequisite = { focus = CAN_extra_tech }
 		prerequisite = { focus = CAN_eti }
 		x = 5
 		y = 3 
 		cost = 4
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
-				factor = 0 
-				date < 1940.01.01			
+				factor = 2 
+				OR = {
+					has_war_with = ENG
+					has_war_with = GER 
+					has_war_with = CSA
+				}
 			}
+		}
+		available = {
+			date > 01.01.1939
 		}
 		completion_reward = {
 			add_tech_bonus = {
@@ -536,7 +545,7 @@ focus_tree = {
 		id = CAN_secret_weapons
 		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = CAN_chalk_river }
-		prerequisite = { focus = CAN_nightwatch focus = CAN_rocketfuel }
+		#prerequisite = { focus = CAN_nightwatch focus = CAN_rocketfuel }
 		x = 5
 		y = 4
 		cost = 6
@@ -546,7 +555,15 @@ focus_tree = {
 				factor = 0 
 				OR = {
 					NOT = { has_war = yes }
-					date < 1942.01.01
+					date < 1940.01.01
+				}
+			}
+			modifier = {
+				factor = 3 
+				OR = {
+					has_war_with = ENG
+					has_war_with = GER 
+					has_war_with = CSA
 				}
 			}
 		}
@@ -2036,8 +2053,8 @@ focus_tree = {
 	focus = { # The Georgia Line
 		id = CAN_georgian_line
 		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = CAN_st_lawrence_line }
-		prerequisite = { focus = CAN_lakes_forts }
+		prerequisite = { focus = CAN_st_lawrence_line focus = CAN_lakes_forts  }
+		#prerequisite = { focus = CAN_lakes_forts }
 		x = 30 
 		y = 2 
 		cost = 8
@@ -2215,7 +2232,7 @@ focus_tree = {
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = CAN_scheme_1 }
 		mutually_exclusive = { focus = CAN_claim_oregon }
-		x = 36
+		x = 34
 		y = 1 
 		cost = 2 
 		ai_will_do = {
@@ -2252,7 +2269,7 @@ focus_tree = {
 		id = CAN_psa_ally
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = CAN_psa_friend }
-		x = 36
+		x = 34
 		y = 2 
 		cost = 4
 		ai_will_do = {
@@ -2284,7 +2301,7 @@ focus_tree = {
 	focus = { #Defense Scheme No. 2
 		id = CAN_scheme_2
 		icon = GFX_goal_generic_political_pressure
-		x = 42 
+		x = 38
 		y = 0 
 		cost = 4 
 		ai_will_do = {
@@ -2305,7 +2322,7 @@ focus_tree = {
 		icon = GFX_goal_generic_more_territorial_claims
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_psa_friend }
-		x = 38 
+		x = 36 
 		y = 1
 		cost = 4
 		ai_will_do = {
@@ -2346,7 +2363,7 @@ focus_tree = {
 		id = CAN_demand_oregon
 		icon = GFX_goal_generic_demand_territory
 		prerequisite = { focus = CAN_claim_oregon }
-		x = 38 
+		x = 36
 		y = 2 
 		cost = 2
 		ai_will_do = {
@@ -2385,7 +2402,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_csa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 40 
+		x = 38
 		y = 1 
 		cost = 2 
 		ai_will_do = {
@@ -2418,7 +2435,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_csa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 42 
+		x = 40
 		y = 1 
 		cost = 2 
 		ai_will_do = {
@@ -2450,7 +2467,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_usa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 44 
+		x = 42
 		y = 1 
 		cost = 2 
 		ai_will_do = {
@@ -2480,7 +2497,7 @@ focus_tree = {
 		id = CAN_pact_with_usa
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = CAN_recognize_usa }
-		x = 40 
+		x = 38
 		y = 2 
 		cost = 4 
 		ai_will_do = {
@@ -2510,7 +2527,7 @@ focus_tree = {
 		id = CAN_pact_with_aus
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = CAN_recognize_aus }
-		x = 42
+		x = 40
 		y = 2 
 		cost = 4
 		ai_will_do = {
@@ -2539,7 +2556,7 @@ focus_tree = {
 		id = CAN_pact_with_csa
 		icon = GFX_goal_tripartite_pact
 		prerequisite = { focus = CAN_recognize_csa }
-		x = 44 
+		x = 42
 		y = 2 
 		cost = 4
 		ai_will_do = {
@@ -2568,7 +2585,7 @@ focus_tree = {
 		id = CAN_intervene_acw
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = CAN_pact_with_usa focus = CAN_pact_with_aus focus = CAN_pact_with_csa  }
-		x = 42 
+		x = 40 
 		y = 3 
 		cost = 6 
 		ai_will_do = {

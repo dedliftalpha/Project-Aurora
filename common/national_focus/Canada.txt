@@ -21,7 +21,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		x = 2
 		y = 0
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -49,7 +49,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_works }
 		x = 3 
 		y = 1 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -67,7 +67,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_works }
 		x = 1
 		y = 1 
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -118,7 +118,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_infra }
 		x = 0
 		y = 4 
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -195,7 +195,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_infra }
 		x = 1
 		y = 3 
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -259,7 +259,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_infra }
 		x = 2
 		y = 2 
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -326,7 +326,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_works focus = CAN_national_developmment }
 		x = 5 
 		y = 1 
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 2
 		}		
@@ -336,30 +336,30 @@ focus_tree = {
 		
 	}
 	
-	#Extra Research Slot
-	focus = {
-		id = CAN_extra_tech
-		icon = GFX_focus_research
-		prerequisite = { focus = CAN_nrc }
-		x = 6 
-		y = 2
-		cost = 10 
-		ai_will_do = {
-			factor = 2
-		}
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
+	# #Extra Research Slot
+	 focus = {
+		 id = CAN_extra_tech
+		 icon = GFX_focus_research
+		 prerequisite = { focus = CAN_nrc }
+		 x = 6 
+		 y = 2
+		 cost = 4 
+		 ai_will_do = {
+			 factor = 2
+		 }
+		 completion_reward = {
+			 add_research_slot = 1
+		 }
+	 }
 	
 	#Electronics Training Initiative
 	focus = {
 		id = CAN_eti
 		icon = GFX_goal_generic_radar
-		prerequisite = { focus = CAN_nrc }
+		prerequisite = { focus = CAN_cbc focus = CAN_nrc }
 		x = 4
 		y = 2 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -367,7 +367,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = research_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = electronics
 			}
 			custom_effect_tooltip = unlock_bell_tt
@@ -379,11 +379,11 @@ focus_tree = {
 	focus = {
 		id = CAN_synthetics_research
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CAN_nrc }
-		prerequisite = { focus = CAN_production }
+		prerequisite = { focus = CAN_nrc focus = CAN_production }
+		#prerequisite = { focus = CAN_production }
 		x = 8 
 		y = 2 
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -391,7 +391,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = synth_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = synth_resources
 			}
 		}
@@ -402,9 +402,10 @@ focus_tree = {
 		id = CAN_rocketfuel
 		icon = GFX_focus_rocketry 
 		prerequisite = { focus = CAN_synthetics_research }
+		prerequisite = { focus = CAN_extra_tech }
 		x = 7
 		y = 3 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -423,16 +424,17 @@ focus_tree = {
 		id = CAN_nightwatch
 		icon = GFX_goal_generic_radar
 		prerequisite = { focus = CAN_eti }
-		prerequisite = { focus = CAN_infra_3 }
+		#prerequisite = { focus = CAN_infra_3 }
 		x = 3
 		y = 3
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 2
 			modifier = {
 				factor = 0 
-				date < 01.01.1939
+				date < 01.01.1938
 			}
+			
 		}
 		available = {
 			has_tech = radio_detection
@@ -491,7 +493,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_nightwatch }
 		x = 3
 		y = 4 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -513,13 +515,20 @@ focus_tree = {
 		prerequisite = { focus = CAN_eti }
 		x = 5
 		y = 3 
-		cost = 10
+		cost = 4
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
-				factor = 0 
-				date < 1940.01.01			
+				factor = 2 
+				OR = {
+					has_war_with = ENG
+					has_war_with = GER 
+					has_war_with = CSA
+				}
 			}
+		}
+		available = {
+			date > 01.01.1939
 		}
 		completion_reward = {
 			add_tech_bonus = {
@@ -536,17 +545,25 @@ focus_tree = {
 		id = CAN_secret_weapons
 		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = CAN_chalk_river }
-		prerequisite = { focus = CAN_nightwatch focus = CAN_rocketfuel }
+		#prerequisite = { focus = CAN_nightwatch focus = CAN_rocketfuel }
 		x = 5
 		y = 4
-		cost = 10 
+		cost = 6
 		ai_will_do = {
 			factor = 2 
 			modifier = {
 				factor = 0 
 				OR = {
 					NOT = { has_war = yes }
-					date < 1942.01.01
+					date < 1940.01.01
+				}
+			}
+			modifier = {
+				factor = 3 
+				OR = {
+					has_war_with = ENG
+					has_war_with = GER 
+					has_war_with = CSA
 				}
 			}
 		}
@@ -661,7 +678,7 @@ focus_tree = {
 		icon = GFX_goal_generic_national_unity
 		x = 9 
 		y = 0
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 1
 		}
@@ -676,10 +693,10 @@ focus_tree = {
 					limit = {
 						is_owned_by = CAN
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 4
 					add_building_construction = {
 							type = industrial_complex
-							level = 2
+							level = 4
 							instant_build = yes
 					}
 				}
@@ -694,7 +711,7 @@ focus_tree = {
 		icon = GFX_goal_generic_production2
 		x = 8
 		y = 1
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -728,7 +745,7 @@ focus_tree = {
 		icon = GFX_goal_generic_consumer_goods
 		x = 9
 		y = 3 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 			
@@ -743,12 +760,12 @@ focus_tree = {
 						is_owned_by = CAN
 					}
 				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-						type = industrial_complex
-						level = 2
-						instant_build = yes
-				}
+				# add_extra_state_shared_building_slots = 2
+				# add_building_construction = {
+						# type = industrial_complex
+						# level = 2
+						# instant_build = yes
+				# }
 				add_resource = {
 					type = rubber
 					amount = 12
@@ -775,7 +792,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 10 
 		y = 1
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -798,17 +815,6 @@ focus_tree = {
 					limit = {
 						CAN = { has_idea = CAN_howes_conversion }
 					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-							type = arms_factory
-							level = 2
-							instant_build = yes
-					}
-				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 							type = arms_factory
@@ -816,16 +822,27 @@ focus_tree = {
 							instant_build = yes
 					}
 				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			468 = {
 				if = {
 					limit = {
 						is_owned_by = CAN
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 							type = industrial_complex
-							level = 2
+							level = 1
 							instant_build = yes
 					}
 				}
@@ -836,21 +853,21 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = arms_factory
-							level = 2
-							instant_build = yes
-					}
-				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
 							level = 1
 							instant_build = yes
 					}
 				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 				
 			}
 		}
@@ -862,7 +879,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 10
 		y = 2 
-		cost 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -888,28 +905,28 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = arms_factory
-							level = 2
-							instant_build = yes
-					}
-				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
 							level = 1
 							instant_build = yes
 					}
 				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			468 = {
 				if = {
 					limit = {
 						is_owned_by = CAN
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = industrial_complex
 							level = 2
@@ -923,28 +940,28 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = arms_factory
-							level = 2
-							instant_build = yes
-					}
-				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
 							level = 1
 							instant_build = yes
 					}
 				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			682 = {
 				if = {
 					limit = {
 						is_owned_by = CAN
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = industrial_complex
 							level = 2
@@ -958,21 +975,21 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 							type = arms_factory
-							level = 2
-							instant_build = yes
-					}
-				}
-				if = {
-					limit = {
-							CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
 							level = 1
 							instant_build = yes
 					}
 				}
+				# if = {
+					# limit = {
+							# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 		}
 	}
@@ -982,7 +999,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 9
 		y = 4 
-		cost 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1011,17 +1028,17 @@ focus_tree = {
 							instant_build = yes
 					}
 				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-					}
-				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			468 = {
 				if = {
@@ -1046,17 +1063,17 @@ focus_tree = {
 							instant_build = yes
 					}
 				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-					}
-				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			473 = {
 				if = {
@@ -1081,17 +1098,17 @@ focus_tree = {
 							instant_build = yes
 					}
 				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-					}
-				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 			464 = {
 				if = {
@@ -1116,17 +1133,17 @@ focus_tree = {
 							instant_build = yes
 					}
 				}
-				if = {
-					limit = {
-						CAN = { has_idea = CAN_industrial_compromise }
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-					}
-				}
+				# if = {
+					# limit = {
+						# CAN = { has_idea = CAN_industrial_compromise }
+					# }
+					# add_extra_state_shared_building_slots = 1
+					# add_building_construction = {
+							# type = arms_factory
+							# level = 1
+							# instant_build = yes
+					# }
+				# }
 			}
 		}
 	}
@@ -1141,7 +1158,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construction2
 		x = 14
 		y = 0
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 1
 		}
@@ -1150,10 +1167,10 @@ focus_tree = {
 			#has_country_flag = KING_GEORGE_V_DEATH
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				technology = excavation1
-			}
+			# add_tech_bonus = {
+				# bonus = 0.5
+				# technology = excavation1
+			# }
 			add_resource = {
 				type = steel
 				amount = 4
@@ -1179,7 +1196,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_resource}
 		x = 14
 		y = 1
-		cost = 10 
+		cost = 4
 		completion_reward = {
 			add_resource = {
 				type = tungsten 
@@ -1211,7 +1228,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_resource focus = CAN_national_developmment }
 		x = 12
 		y = 1
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1237,7 +1254,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mine }
 		x = 14 
 		y = 2 
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1272,7 +1289,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_steelmill }
 		x = 12
 		y = 2
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1302,7 +1319,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_resource }
 		x = 16 
 		y = 1 
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1338,7 +1355,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_oil }
 		x = 16 
 		y = 2 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1382,7 +1399,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mine2 }
 		x = 13
 		y = 3 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -1390,7 +1407,7 @@ focus_tree = {
 			add_tech_bonus = {
 			name = build_bonus 
 			bonus = 0.5 
-			uses = 2 
+			uses = 1
 			category = construction_tech
 			}
 		}
@@ -1403,7 +1420,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_digit2 }
 		x = 13 
 		y = 4
-		cost = 10 
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -1440,7 +1457,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mine2 }
 		x = 15
 		y = 3
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -1465,7 +1482,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mine3 focus = CAN_factory3 }
 		x = 11 
 		y = 5
-		cost = 10
+		cost = 6
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -1495,7 +1512,7 @@ focus_tree = {
 		icon = GFX_goal_generic_propaganda
 		x = 20
 		y = 0
-		cost = 4 
+		cost = 1
 		ai_will_do = {
 			factor = 20
 		}
@@ -1535,7 +1552,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
 		x = 18 
 		y = 2
-		cost = 6
+		cost = 2
 		ai_will_do = {
 			factor = 0.5
 		}
@@ -1568,7 +1585,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_constitutional_monarchy }
 		x = 22 
 		y = 2
-		cost = 6
+		cost = 2
 		ai_will_do = {
 			factor = 0.25
 		}
@@ -1603,7 +1620,7 @@ focus_tree = {
 		y = 2
 		cost = 4
 		ai_will_do = {
-			factor = 10
+			factor = 5
 		}
 		available = {
 			has_country_flag = CAN_king_ed
@@ -1714,9 +1731,9 @@ focus_tree = {
 		icon = GFX_goal_generic_political_pressure
 		x = 26 
 		y = 0 
-		cost = 10
+		cost = 4
 		ai_will_do = {
-			factor = 12
+			factor = 10
 		}
 		available = {
 			NOT = { has_idea = CAN_divided_nation }
@@ -1764,7 +1781,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_north_atlantic }
 		x = 24 
 		y = 1
-		cost = 4
+		cost = 2
 		ai_will_do = {
 			factor = 10
 		}
@@ -1781,6 +1798,8 @@ focus_tree = {
 				IRE = { is_in_faction_with = FRA }
 				IRE = { is_in_faction_with = GER }
 			}
+		}
+		bypass = {
 			OR = {
 				has_global_flag = IRE_ENT
 				is_in_faction_with = IRE 
@@ -1797,7 +1816,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_ireland_treaty }
 		x = 24
 		y = 2
-		cost = 6
+		cost = 4
 		ai_will_do = {
 			factor = 10
 		}
@@ -1815,10 +1834,6 @@ focus_tree = {
 				IRE = { is_in_faction_with = FRA }
 				IRE = { is_in_faction_with = GER }
 			}
-			OR = {
-				has_global_flag = IRE_ENT
-				is_in_faction_with = IRE 
-			}
 		}
 		completion_reward = {
 			IRE = { country_event = { id = canada.57 days = 1 } }
@@ -1832,7 +1847,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_north_atlantic }
 		x = 28 
 		y = 1
-		cost = 6
+		cost = 2
 		ai_will_do = {
 			factor = 0.25 
 			modifier = {
@@ -1864,9 +1879,21 @@ focus_tree = {
 		y = 3 
 		cost = 4
 		ai_will_do = {
-			factor = 10
+			factor = 0.5
 			modifier = {
-				factor = 0.2 
+				factor = 2
+				has_completed_focus = CAN_ireland_treaty				
+			}
+			modifier = {
+				factor = 2
+				has_completed_focus = CAN_claim_greenland				
+			}
+			factor = 10 
+			modifier = {
+				ENG = { has_war_with = GER }
+			}
+			modifier = {
+				factor = 0.25 
 				OR = {
 					has_war_with = GER 
 					has_war_with = USA
@@ -1949,9 +1976,13 @@ focus_tree = {
 		icon = GFX_goal_generic_position_armies
 		x = 32
 		y = 0 
-		cost = 6
+		cost = 4
 		ai_will_do = {
-			factor = 0.25
+			factor = 2 
+			modifier = {
+				factor = 5
+				CSA = { exists = yes }
+			}
 		}
 		bypass = { has_country_flag = SCHEME_1_BYPASS }
 		completion_reward = {
@@ -1965,9 +1996,9 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_1 }
 		x = 30 
 		y = 1 
-		cost = 10
+		cost = 4
 		ai_will_do = {
-			factor = 0.5
+			factor = 2
 			modifier = {
 				factor = 5
 				OR = { 
@@ -1993,9 +2024,9 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_1 }
 		x = 32 
 		y = 1 
-		cost = 10
+		cost = 4
 		ai_will_do = {
-			factor = 0.5
+			factor = 1
 			modifier = {
 				factor = 5
 				OR = { 
@@ -2022,13 +2053,13 @@ focus_tree = {
 	focus = { # The Georgia Line
 		id = CAN_georgian_line
 		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = CAN_st_lawrence_line }
-		prerequisite = { focus = CAN_lakes_forts }
+		prerequisite = { focus = CAN_st_lawrence_line focus = CAN_lakes_forts  }
+		#prerequisite = { focus = CAN_lakes_forts }
 		x = 30 
 		y = 2 
-		cost = 12
+		cost = 8
 		ai_will_do = {
-			factor = 0.5
+			factor = 1
 			modifier = {
 				factor = 5
 				OR = { 
@@ -2108,9 +2139,9 @@ focus_tree = {
 		prerequisite = { focus = CAN_lakes_forts focus = CAN_st_lawrence_line }
 		x = 32
 		y = 2
-		cost = 8
+		cost = 6
 		ai_will_do = {
-			factor = 0.5
+			factor = 2
 			modifier = {
 				factor = 5
 				OR = { 
@@ -2201,11 +2232,11 @@ focus_tree = {
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = CAN_scheme_1 }
 		mutually_exclusive = { focus = CAN_claim_oregon }
-		x = 36
+		x = 34
 		y = 1 
-		cost = 4 
+		cost = 2 
 		ai_will_do = {
-			factor = 2.5
+			factor = 5
 		}
 		available = {
 			country_exists = CAL
@@ -2238,9 +2269,9 @@ focus_tree = {
 		id = CAN_psa_ally
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = CAN_psa_friend }
-		x = 36
+		x = 34
 		y = 2 
-		cost = 6 
+		cost = 4
 		ai_will_do = {
 			factor = 2.5
 		}
@@ -2270,11 +2301,11 @@ focus_tree = {
 	focus = { #Defense Scheme No. 2
 		id = CAN_scheme_2
 		icon = GFX_goal_generic_political_pressure
-		x = 42 
+		x = 38
 		y = 0 
-		cost = 6 
+		cost = 4 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = { 
 			CAN = { is_puppet = no } 
@@ -2291,9 +2322,9 @@ focus_tree = {
 		icon = GFX_goal_generic_more_territorial_claims
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_psa_friend }
-		x = 38 
+		x = 36 
 		y = 1
-		cost = 8
+		cost = 4
 		ai_will_do = {
 			factor = 0.25
 		}
@@ -2332,9 +2363,9 @@ focus_tree = {
 		id = CAN_demand_oregon
 		icon = GFX_goal_generic_demand_territory
 		prerequisite = { focus = CAN_claim_oregon }
-		x = 38 
+		x = 36
 		y = 2 
-		cost = 4
+		cost = 2
 		ai_will_do = {
 			factor = 0.25
 		}
@@ -2371,11 +2402,11 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_csa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 40 
+		x = 38
 		y = 1 
-		cost = 4 
+		cost = 2 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2404,11 +2435,11 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_csa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 42 
+		x = 40
 		y = 1 
-		cost = 4 
+		cost = 2 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2436,11 +2467,11 @@ focus_tree = {
 		prerequisite = { focus = CAN_scheme_2 }
 		mutually_exclusive = { focus = CAN_recognize_usa }
 		mutually_exclusive = { focus = CAN_recognize_aus }
-		x = 44 
+		x = 42
 		y = 1 
-		cost = 4 
+		cost = 2 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2466,11 +2497,11 @@ focus_tree = {
 		id = CAN_pact_with_usa
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = CAN_recognize_usa }
-		x = 40 
+		x = 38
 		y = 2 
-		cost = 6 
+		cost = 4 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2496,11 +2527,11 @@ focus_tree = {
 		id = CAN_pact_with_aus
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = CAN_recognize_aus }
-		x = 42
+		x = 40
 		y = 2 
-		cost = 6 
+		cost = 4
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2525,11 +2556,11 @@ focus_tree = {
 		id = CAN_pact_with_csa
 		icon = GFX_goal_tripartite_pact
 		prerequisite = { focus = CAN_recognize_csa }
-		x = 44 
+		x = 42
 		y = 2 
-		cost = 6 
+		cost = 4
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			is_puppet = no
@@ -2554,11 +2585,11 @@ focus_tree = {
 		id = CAN_intervene_acw
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = CAN_pact_with_usa focus = CAN_pact_with_aus focus = CAN_pact_with_csa  }
-		x = 42 
+		x = 40 
 		y = 3 
-		cost = 10 
+		cost = 6 
 		ai_will_do = {
-			factor = 0.25
+			factor = 0.5
 		}
 		available = {
 			OR = {
@@ -2635,7 +2666,7 @@ focus_tree = {
 		icon = GFX_goal_generic_position_armies
 		x = 6
 		y = 8
-		cost = 10 
+		cost = 8 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2664,7 +2695,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_grand_battle_doctrine focus = CAN_mobile_doctrine }
 		x = 6
 		y = 10
-		cost = 10 
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2705,7 +2736,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_support_tech }
 		x = 6 
 		y = 12
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2741,7 +2772,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_winter_soldiers }
 		x = 6 
 		y = 14 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2776,7 +2807,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_heavy_tank2 focus = CAN_med_tank }
 		x = 6
 		y = 16 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2798,7 +2829,7 @@ focus_tree = {
 				add_tech_bonus = {
 					name = doctrine_bonus
 					bonus = 0.5
-					uses = 3
+					uses = 1
 					category = cat_mobile_warfare
 				}
 			}
@@ -2807,7 +2838,7 @@ focus_tree = {
 				add_tech_bonus = {
 					name = doctrine_bonus
 					bonus = 0.5
-					uses = 3
+					uses = 1
 					category = cat_grand_battle_plan
 				}
 			}
@@ -2821,7 +2852,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_mobile_doctrine }
 		x = 5
 		y = 9
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2842,7 +2873,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = land_doc_bonus
 				bonus = 0.5
-				uses = 2
+				uses = 1
 				category = cat_grand_battle_plan
 			}
 		}
@@ -2854,7 +2885,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_infantry_equipment }
 		x = 4
 		y = 12
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2874,7 +2905,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = artillery_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = artillery 
 			}
 		}
@@ -2887,7 +2918,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_heavy_tank }
 		x = 5
 		y = 13 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2920,7 +2951,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_grand_battle_doctrine }
 		x = 4
 		y = 10
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2940,7 +2971,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = guns_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = infantry_weapons 
 			}
 		}
@@ -2952,7 +2983,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_artillery_effort }
 		x = 4
 		y = 14
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -2976,7 +3007,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = guns_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = infantry_weapons 
 			}
 		}
@@ -2988,7 +3019,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_grand_battle_doctrine }
 		x = 5
 		y = 11
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3018,7 +3049,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_infantry_equipment2 }
 		x = 5 
 		y = 15 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3055,7 +3086,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_grand_battle_doctrine }
 		x = 7
 		y = 9
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3076,7 +3107,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = land_doc_bonus
 				bonus = 0.5
-				uses = 2
+				uses = 1
 				category = cat_mobile_warfare
 			}
 		}
@@ -3088,7 +3119,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mobile_doctrine }
 		x = 7
 		y = 11
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3122,7 +3153,7 @@ focus_tree = {
 		available = { has_tech = radio }
 		x = 7 
 		y = 13 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3179,7 +3210,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = tank_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = cat_light_armor
 				category = cat_medium_armor
 			}
@@ -3193,7 +3224,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_mobile_doctrine }
 		x = 8
 		y = 10
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3226,7 +3257,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_motorize }
 		x = 8
 		y = 12
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3247,7 +3278,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = spg_bonus
 				bonus = 0.5
-				uses = 2 
+				uses = 1
 				category = cat_light_spg #created new categories, already implemented and working
 				category = cat_medium_spg
 			}
@@ -3260,7 +3291,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_spg }
 		x = 8
 		y = 14 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3299,7 +3330,7 @@ focus_tree = {
 		icon = GFX_goal_generic_build_navy
 		x = 13 
 		y = 8
-		cost = 10 
+		cost = 8 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3343,7 +3374,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_navy_cv }
 		x = 12
 		y = 9
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3369,7 +3400,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = naval_doctrine_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = cat_fleet_in_being
 			}
 		}
@@ -3382,7 +3413,7 @@ focus_tree = {
 		mutually_exclusive = { focus = CAN_navy_bb }
 		x = 14
 		y = 9
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3408,7 +3439,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = naval_doctrine_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = cat_base_strike
 			}
 		}
@@ -3420,7 +3451,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_cv focus = CAN_navy_bb }
 		x = 13 
 		y = 10 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3440,7 +3471,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = navy_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = dd_tech
 				category = cl_tech
 			}
@@ -3454,7 +3485,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_escort }
 		x = 12
 		y = 11
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3488,7 +3519,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_escort }
 		x = 14 
 		y = 11
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3508,7 +3539,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = navy_air_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = naval_air
 			}
 		}
@@ -3520,7 +3551,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_cruiser }
 		x = 12 
 		y = 12
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3554,7 +3585,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_aviation }
 		x = 14 
 		y = 12
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3587,7 +3618,7 @@ focus_tree = {
 		prerequisite =  { focus = CAN_navy_asw }
 		x = 12
 		y = 13
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3614,12 +3645,12 @@ focus_tree = {
 				uses = 1
 				category = bb_tech
 			}
-			add_tech_bonus = {
-				name = navy_bonus
-				bonus = 0.5 
-				uses = 1
-				category = shbb_tech
-			}
+			# add_tech_bonus = {
+				# name = navy_bonus
+				# bonus = 0.5 
+				# uses = 1
+				# category = shbb_tech
+			# }
 		}
 	}
 	
@@ -3629,7 +3660,7 @@ focus_tree = {
 		prerequisite =  { focus = CAN_navy_submarine }
 		x = 14
 		y = 13
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3656,12 +3687,12 @@ focus_tree = {
 				uses = 1
 				category = cv_tech
 			}
-			add_tech_bonus = {
-				name = navy_aviation_bonus
-				bonus = 0.5 
-				uses = 1
-				category = naval_air
-			}
+			# add_tech_bonus = {
+				# name = navy_aviation_bonus
+				# bonus = 0.5 
+				# uses = 1
+				# category = naval_air
+			# }
 		}
 	}
 	
@@ -3672,7 +3703,7 @@ focus_tree = {
 		available = { has_completed_focus = CAN_navy_school }
 		x = 13
 		y = 14 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3698,7 +3729,7 @@ focus_tree = {
 				add_tech_bonus = {
 					name = naval_doctrine_bonus
 					bonus = 0.5 
-					uses = 3 
+					uses = 1
 					category = cat_fleet_in_being
 				}
 				add_tech_bonus = {
@@ -3716,7 +3747,7 @@ focus_tree = {
 				add_tech_bonus = {
 					name = naval_doctrine_bonus
 					bonus = 0.5 
-					uses = 3 
+					uses = 1
 					category = cat_base_strike
 				}
 				add_tech_bonus = {
@@ -3737,7 +3768,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_focus }
 		x = 10 
 		y = 9
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3767,7 +3798,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_bb focus = CAN_navy_cv }
 		x = 10
 		y = 10 
-		cost = 10 
+		cost = 6
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3800,7 +3831,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_marines }
 		x = 10
 		y = 11 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3824,13 +3855,13 @@ focus_tree = {
 			army_experience = 10 
 			navy_experience = 10
 			add_ideas = CAN_amphib_drills
-			add_tech_bonus = {
-				name = marines_bonus
-				bonus = 0.5 
-				uses = 2 
-				category = marine_tech
-				category = tp_tech
-			}
+			# add_tech_bonus = {
+				# name = marines_bonus
+				# bonus = 0.5 
+				# uses = 2 
+				# category = marine_tech
+				# category = tp_tech
+			# }
 		}
 		
 	}
@@ -3841,7 +3872,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_navy_focus }
 		x = 16
 		y = 9 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3859,10 +3890,10 @@ focus_tree = {
 		}
 		completion_reward = {
 			468 = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = dockyard
-					level = 4 
+					level = 3
 					instant_build = yes
 				}
 			}
@@ -3876,7 +3907,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_dockyards }
 		x = 16
 		y = 10 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3894,34 +3925,34 @@ focus_tree = {
 		}
 		completion_reward = {
 			464 = {
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = dockyard
-					level = 2 
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = naval_base
-					level = 2 
-					instant_build = yes
-				}
-			}
-			465 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
 					level = 2 
 					instant_build = yes
 				}
-			}
-			331 = {
-				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = naval_base
-					level = 1 
+					level = 1
 					instant_build = yes
 				}
 			}
+			465 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			# 331 = {
+				# add_extra_state_shared_building_slots = 1
+				# add_building_construction = {
+					# type = naval_base
+					# level = 1 
+					# instant_build = yes
+				# }
+			# }
 			custom_effect_tooltip = unlock_davie_tt
 		}
 	}
@@ -3932,7 +3963,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_dockyards2 }
 		x = 16
 		y = 11 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -3950,10 +3981,10 @@ focus_tree = {
 		}
 		completion_reward = {
 			473 = {
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 3 
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -3966,7 +3997,7 @@ focus_tree = {
 				}
 				add_building_construction = {
 					type = naval_base
-					level = 2 
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -3981,7 +4012,7 @@ focus_tree = {
 		available = { has_war = yes }
 		x = 16 
 		y = 12
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4003,38 +4034,38 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = CAN_victory_ships_idea
-			464 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2 
-					instant_build = yes
-				}
-			}
-			468 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-			465 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-					instant_build = yes
-				}
-			}
-			740 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1 
-					instant_build = yes
-				}
-			}
+			# 464 = {
+				# add_extra_state_shared_building_slots = 2
+				# add_building_construction = {
+					# type = dockyard
+					# level = 1
+					# instant_build = yes
+				# }
+			# }
+			# 468 = {
+				# add_extra_state_shared_building_slots = 2
+				# add_building_construction = {
+					# type = dockyard
+					# level = 1
+					# instant_build = yes
+				# }
+			# }
+			# 465 = {
+				# add_extra_state_shared_building_slots = 1
+				# add_building_construction = {
+					# type = dockyard
+					# level = 1
+					# instant_build = yes
+				# }
+			# }
+			# 740 = {
+				# add_extra_state_shared_building_slots = 1
+				# add_building_construction = {
+					# type = dockyard
+					# level = 1 
+					# instant_build = yes
+				# }
+			# }
 		}
 	}
 	
@@ -4047,7 +4078,7 @@ focus_tree = {
 		icon = GFX_goal_generic_build_airforce
 		x = 1 
 		y = 8
-		cost = 10 
+		cost = 8
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4073,7 +4104,7 @@ focus_tree = {
 		mutually_exclusive =  { focus = CAN_rcaf_strat_focus }
 		x = 0 
 		y = 9
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4094,7 +4125,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = tac_air_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = cat_operational_integrity
 			}
 		}
@@ -4107,7 +4138,7 @@ focus_tree = {
 		mutually_exclusive =  { focus = CAN_rcaf_tac_focus }
 		x = 2 
 		y = 9
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4128,7 +4159,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = strat_air_bonus
 				bonus = 0.5 
-				uses = 2 
+				uses = 1
 				category = cat_strategic_destruction
 			}
 		}
@@ -4140,7 +4171,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_tac_focus focus = CAN_rcaf_strat_focus }
 		x = 1 
 		y = 10 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4179,7 +4210,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_fighter }
 		x = 1 
 		y = 11 
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4217,7 +4248,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_bomber }
 		x = 1 
 		y = 12 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4230,10 +4261,10 @@ focus_tree = {
 			add_ideas = CAN_air_training_plan_idea
 			country_event = { days = 1 id = canada.202 }
 			469 = {
-				add_extra_state_shared_building_slots = 2 
+				#add_extra_state_shared_building_slots = 2 
 				add_building_construction = {
 					type = air_base
-					level = 2 
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -4267,7 +4298,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_tac_focus }
 		x = 0 
 		y = 13 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4279,7 +4310,7 @@ focus_tree = {
 			add_tech_bonus = {
 					name = nav_bomber_bonus
 					bonus = 0.5 
-					uses = 2
+					uses = 1
 					category = naval_bomber
 				}
 			740 = {
@@ -4290,14 +4321,14 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			331 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = air_base
-					level = 1 
-					instant_build = yes
-				}
-			}
+			# 331 = {
+				# add_extra_state_shared_building_slots = 1
+				# add_building_construction = {
+					# type = air_base
+					# level = 1 
+					# instant_build = yes
+				# }
+			# }
 			custom_effect_tooltip = unlock_fairey_tt
 		}
 	}
@@ -4309,7 +4340,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_strat_focus }
 		x = 2 
 		y = 13 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4325,7 +4356,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = strat_bomber_bonus
 				bonus = 0.5 
-				uses = 2
+				uses = 1
 				category = cat_strategic_bomber
 			}
 			custom_effect_tooltip = unlock_avro_tt
@@ -4338,7 +4369,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_strat_bomber focus = CAN_coastal_air_defence }
 		x = 1 
 		y = 14 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {
@@ -4380,7 +4411,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_rcaf_fighter_2 }
 		x = 1 
 		y = 15 
-		cost = 10 
+		cost = 4 
 		ai_will_do = {
 			factor = 1 
 			modifier = {

@@ -3336,30 +3336,34 @@ country_event = {
 				}
 			}
 			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = ENG_officer_corps_academy
-						has_completed_focus = ENG_central_command
+                limit = {
+                    AND = { 
+						NOT = {
+							has_completed_focus = ENG_officer_corps_academy
+							has_completed_focus = ENG_central_command
+						}
+						has_country_flag = lawrence_back 
 					}
-				}
-				if = { 
-					limit = {
-						has_country_flag = lawrence_back
-					}
-					random_list = {
-						30 = { country_event = { id = uob.211 days = 2 } } # Yay...?
-						70 = { country_event = { id = uob.212 days = 2 } } # Nay
-					}
-				}
-				if = {
-					limit = {
+                }
+                random_list = {
+                    30 = { country_event = { id = uob.211 days = 2 } } # Yay...?
+                    70 = { country_event = { id = uob.212 days = 2 } } # Nay
+                }
+            }
+            if = {
+                limit = {
+                    AND = { 
+						NOT = { 
+							has_completed_focus = ENG_officer_corps_academy
+							has_completed_focus = ENG_central_command 
+						}  
 						NOT = {
 							has_country_flag = lawrence_back
-						}
+                        }
 					}
-					country_event = { id = uob.211 days = 2 }
-				}
-			}
+                }
+                country_event = { id = uob.211 days = 2 }
+            }
 		}
 	}
 }
@@ -3875,6 +3879,9 @@ country_event = {
 		}
 		has_completed_focus = ENG_dissolve_the_militias
 		has_completed_focus = ENG_central_command
+		NOT = {
+			has_government = totalist
+		}
 	}
 
 	mean_time_to_happen = { days = 1000 }
@@ -4726,7 +4733,6 @@ country_event = {
 	option = { # Bring in the army!
 		name = uob.203.c
 		hidden_effect = {
-			set_country_flag = opportunity_for_lawrence
 			random_list = {
 				40 = { country_event = { id = uob.XX days = 2 } } # Yay
 				30 = { country_event = { id = uob.XX days = 2 } } # Yay...?

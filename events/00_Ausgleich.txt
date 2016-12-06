@@ -3364,6 +3364,27 @@ country_event = {
 	
 	fire_only_once = yes
 	
+	trigger = { 
+		tag = AUS
+		has_war = no
+		any_state = {
+			AND = { 
+				is_owned_by = ROM
+				is_core_of = AUS
+			}
+		}
+		AUS = { is_puppet = no }
+		has_global_flag = greater_austrian_empire
+		ROM = { is_puppet = no }
+		NOT = {
+			ROM = {
+				is_in_faction_with = GER
+				is_in_faction_with = BUL
+				is_in_faction_with = AUS
+			}
+		}
+	}
+	
 	option = {
 		name = ausgleich.106.a
 		ai_chance = { factor = 80 }
@@ -3667,3 +3688,160 @@ country_event = {
 		add_political_power = 100
 	}
 }
+
+### Serbia claims Bosnia
+### Claim Bosnia?
+country_event = { 
+	id = ausgleich.114
+	title = ausgleich.114.t
+	desc = ausgleich.114.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = SER
+		AUS = { is_puppet = no }
+		AUS = { has_war_with = HUN }
+		country_exists = BOS
+		BOS = { owns_state = 104 }
+		has_war = no
+		NOT = { BOS = { is_puppet_of = SER }}
+		
+	}
+	
+	option = {
+		name = ausgleich.114.a
+		ai_chance = { factor = 90 }
+
+		add_state_core = 104
+
+		load_oob = "SER_war_BOS"
+
+		declare_war_on = {
+			target = BOS
+			type = take_core_state
+			generator = { 104 } 
+		}
+
+		add_opinion_modifier = { target = AUS modifier = SER_war_BOS } # -100
+		add_opinion_modifier = { target = HUN modifier = SER_war_BOS } # -100
+		add_opinion_modifier = { target = GER modifier = SER_war_BOS_GER } # -20
+		
+		if = {
+			limit = {
+				BOS = { has_war_together_with = AUS }
+			}
+			AUS = { country_event = ausgleich.115 }
+			set_country_flag = AUS_BOS_help
+		}
+		
+		if = {
+			limit = {
+				BOS = { has_war_together_with = HUN }
+			}
+			HUN = { country_event = ausgleich.115 }
+			set_country_flag = HUN_BOS_help
+		}
+	}
+
+	option = {
+		name = ausgleich.114.b
+		ai_chance = { factor = 10 }	
+		
+	}
+}
+
+### Bosnia under attack
+country_event = { 
+	id = ausgleich.115
+	title = ausgleich.115.t
+	desc = ausgleich.115.d
+	
+	is_triggered_only = yes
+	
+	option = { # help
+		name = ausgleich.115.a
+		ai_chance = { factor = 60 }
+
+		add_to_war = { targeted_alliance = BOS enemy = SER }
+	}
+	
+	option = {
+		name = ausgleich.115.a
+		ai_chance = { factor = 40 }
+
+		
+	}
+}
+
+### offer peace
+country_event = { 
+	id = ausgleich.116
+	title = ausgleich.116.t
+	desc = ausgleich.116.d
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = SER
+		AUS = { is_puppet = no }
+		AUS = { has_war_with = HUN }
+		controls_state = 104 
+		
+	}
+	
+	option = { # offer peace
+		name = ausgleich.116.a
+		ai_chance = { factor = 100 }
+
+		if = {
+			limit = {
+				has_country_flag = AUS_BOS_help
+				has_war_with = AUS
+			}
+			
+			AUS = { country_event = ausgleich.117 }
+		}
+		
+		if = {
+			limit = {
+				has_country_flag = HUN_BOS_help
+				has_war_with = HUN
+			}
+			
+			HUN = { country_event = ausgleich.117 }
+		}
+	}
+	
+	option = {
+		name = ausgleich.116.a
+		ai_chance = { factor = 0 }
+
+		
+	}
+}
+
+### Serbia offers white peace
+country_event = { 
+	id = ausgleich.117
+	title = ausgleich.117.t
+	desc = ausgleich.117.d
+	
+	is_triggered_only = yes
+	
+	option = { # accept
+		name = ausgleich.117.a
+		ai_chance = { factor = 60 }
+		SER = { transfer_state = 104 }
+		white_peace = SER
+	}
+	
+	option = {
+		name = ausgleich.117.a
+		ai_chance = { factor = 40 }
+
+		
+	}
+}
+
+

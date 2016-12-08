@@ -296,11 +296,11 @@ country_event = { #Syndicalist Revolution!
 		set_country_flag = hol_50
 		}
 		every_country = {
-				limit = { NOT = { OR = { tag = HOL tag = GER tag = AST tag = CAF has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
+				limit = { NOT = { OR = { tag = HOL has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
 				news_event = {id = hol.13 }
 	    }
 		every_country = {
-				limit = { NOT = { OR = { tag = HOL tag = GER tag = AST tag = CAF }} OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist }}
+				limit = { NOT = { OR = { tag = HOL }} OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist }}
 				news_event = {id = hol.14 }
 	    }
         HOL = { country_event = { days = 1 id = hol.15 } }
@@ -343,11 +343,11 @@ country_event = { #Syndicalist Revolution!
 		set_country_flag = hol_no_50
 		}
 		every_country = {
-				limit = { NOT = { OR = { tag = HOL tag = GER tag = AST tag = CAF has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
+				limit = { NOT = { OR = { tag = HOL has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
 				news_event = {id = hol.13 }
 	    }
 		every_country = {
-				limit = { NOT = { OR = { tag = HOL tag = GER tag = AST tag = CAF }} OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist }}
+				limit = { NOT = { OR = { tag = HOL }} OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist }}
 				news_event = {id = hol.14 }
 	    }
         HOL = { country_event = { days = 1 id = hol.15 } }		
@@ -387,7 +387,7 @@ news_event = { #Syndicalist Revolution! (Syndie Flavor)
 
 	option = {
 		name = hol.14.a
-	}				
+	}
 }
 
 country_event = { #Fate of the Royal Family
@@ -400,14 +400,173 @@ country_event = { #Fate of the Royal Family
 	option = {
 		name = hol.15.a 
 		ai_chance = { factor = 50 }
-        release = INS
+		add_political_power = -20
+		release = INS
+        FRA = { add_to_faction = HOL }
+		hidden_effect = {
+		if = { limit = { NOT = { OR = { has_war_with = CAF is_in_faction_with = CAF  } } }
+		CAF = { country_event { days = 1 id = hol.16 } }
+		}
+	    }
 	}
     option = {
 		name = hol.15.b
- 		ai_chance = { factor = 50 }	
-		#trigger AST
-		#trigger GER
-		#trigger CAF
+ 		ai_chance = { factor = 50 }
+        FRA = { add_to_faction = HOL }
+		hidden_effect = {
+		if = { limit = { NOT = { OR = { has_war_with = CAF is_in_faction_with = CAF } } }
+		CAF = { country_event { days = 1 id = hol.16 } }
+		}
+		if = { limit = { NOT = { OR = { has_war_with = CAF is_in_faction_with = CAF } } }
+		GER = { country_event = { days = 1 id = hol.17 } }
+		}		
+		if = { limit = { NOT = { OR = { has_war_with = CAF is_in_faction_with = CAF } } }
+		AST = { country_event = { days = 1 id = hol.18 } }
+		}
+		}
+    }
+    option = {
+		name = hol.15.c
+ 		ai_chance = { factor = 0 }
+        release = INS	
+        FRA = { add_to_faction = HOL }
+		hidden_effect = {
+		if = { limit = { NOT = { OR = { has_war_with = CAF is_in_faction_with = CAF } } }
+		CAF = { country_event { days = 1 id = hol.16 } }
+		}	
+        INS = {change_tag_from = HOL }
+    }	
+    }
+}
+country_event = { #Carribean reaction
+	id = hol.16
+	title = hol.16.t
+	desc = hol.16.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.16.a 
+ 		ai_chance = { factor = 100 }
+		CAF = { set_state_owner = 695 }
+		CAF = { set_state_owner = 309 }		
+		add_state_claim = 695
+		CAF = { set_state_owner = 309 }		
+		HOL = { country_event = { days = 3 id = hol.19 } }
+	}
+    option = {
+		name = hol.16.b
+ 		ai_chance = { factor = 0 }
+        add_political_power = -50
+    }
+}
+
+country_event = { #German reaction
+	id = hol.17
+	title = hol.17.t
+	desc = hol.17.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.17.a 
+ 		ai_chance = { factor = 100 }
+		GER = { set_state_owner = 669 } 
+		GER = { set_state_owner = 334 } 		
+		add_state_claim = 669
+		add_state_claim = 334	
+		HOL = { country_event = { days = 4 id = hol.20 } }
+	}
+    option = {
+		name = hol.17.b
+ 		ai_chance = { factor = 0 }
+        add_political_power = -50
+    }
+}
+
+country_event = { #Australasian reaction
+	id = hol.18
+	title = hol.18.t
+	desc = hol.18.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.18.a 
+ 		ai_chance = { factor = 100 }
+		AST = { set_state_owner = 667 }
+		AST = { set_state_owner = 738 }		
+		add_state_claim = 667
+		add_state_claim = 738		
+		HOL = { country_event = { days = 6 id = hol.21 } }
+	}
+    option = {
+		name = hol.18.b
+ 		ai_chance = { factor = 0 }
+        add_political_power = -50
+    }
+}
+
+country_event = { #HOL reaction to CAF
+	id = hol.19
+	title = hol.19.t
+	desc = hol.19.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.19.a 
+ 		ai_chance = { factor = 100 }
+		add_political_power = -10
+	}
+    option = {
+		name = hol.19.b
+ 		ai_chance = { factor = 0 }
+        declare_war_on = { target = CAF type = annex_everything }
+    }
+}
+
+country_event = { #HOL reaction to GER
+	id = hol.20
+	title = hol.20.t
+	desc = hol.20.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.20.a 
+ 		ai_chance = { factor = 100 }
+		add_political_power = -20
+	}
+    option = {
+		name = hol.20.b
+ 		ai_chance = { factor = 0 }
+        declare_war_on = { target = GER type = annex_everything }
+    }
+}
+
+country_event = { #HOL reaction to AST
+	id = hol.21
+	title = hol.21.t
+	desc = hol.21.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.21.a 
+ 		ai_chance = { factor = 100 }
+		add_political_power = -10
+	}
+    option = {
+		name = hol.21.b
+ 		ai_chance = { factor = 0 }
+        declare_war_on = { target = AST type = annex_everything }
     }
 }
 

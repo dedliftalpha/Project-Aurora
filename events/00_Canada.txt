@@ -4049,9 +4049,32 @@ country_event = { # Denmark Rejects Claim
 	
 	 is_triggered_only = yes
 
-	 option = {
+	 option = { #Oh well
 		 name = canada.65.a
 		 
+		 ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.5
+				DEN = { has_war = yes }
+			}
+		 }
+		 
+		 add_political_power = -60
+	 }
+	 
+	 option = { #Go to war
+		name = canada.65.b 
+		
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				DEN = { has_war = yes }
+			}
+		 }
+		declare_war_on = { target = DEN type = annex_everything	}
+		add_named_threat = { threat = 4 name = CAN_attack_DEN }
 	 }
  }
 
@@ -4138,24 +4161,8 @@ country_event = { # Denmark Rejects Claim
 		add_opinion_modifier = { target = CAN modifier = DEN_CAN_REJ } # -50
 		
 		hidden_effect = { CAN = { country_event = { id = canada.65 days = 1 }}}
-
-		if = {
-			limit = {
-				DEN = { controls_state = 100 }
-			}
-
-			CAN = { transfer_state = 100 }
-		}
-
-		if = {
-			limit = {
-				DEN = { controls_state = 101 }
-			}
-
-			CAN = { transfer_state = 101 }
-		}
 	}
- }
+}
 
 #########################################
 ### Disturbing development in the USA ###

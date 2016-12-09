@@ -4015,5 +4015,189 @@ add_namespace = japfor
 	set_global_flag = ungern_dead
 									}
 									}
+									
+	country_event = {#Mad Baron escaped !
+	id = japfor.132 
+	title = japfor.132.t 
+	desc = japfor.132.d 
+	is_triggered_only = yes 
 	
+	option = {
+	name = japfor.132.a 
+	add_political_power = -40 
+	set_global_flag = STB_FLIGHT
+				}
+											}
+	
+	country_event = {#A new alliance ?
+	id = japfor.133 
+	title = japfor.133.t 
+	desc = japfor.133.d 
+	fire_only_once = yes 
+	
+	trigger = {
+	tag = JAP 
+	has_war = no
+	has_global_flag = JAP_RUS_PACT
+	RUS = {
+	is_puppet = no 
+	exists = yes 
+	is_in_faction = no 
+	NOT = {
+	has_country_flag = RUS_BOL
+	has_war_with = JAP 
+	
+							}
+	
+								}
+	SOV = { exists = no }
+	SIB = { exists = no }
+	
+									}
+									
+	mean_time_to_happen = { days = 2 }
+	
+	option = {#invite Russia 
+	name = japfor.133.a 
+	ai_chance = { factor = 60 }
+	RUS = { country_event = { id = japfor.134 days = 2 } }
+	add_political_power = -20 
+							}
+							
+	option = {#Don't
+	name = japfor.133.b 
+	ai_chance = { factor = 40 }
+	add_opinion_modifier = { target = RUS modifier = didnt_invite_rus }
+	add_political_power = 40
+	
+							}
+										}
+										
+										
+	country_event = {#Alliance with Japan ?
+	id = japfor.134 
+	title = japfor.134.t 
+	desc = japfor.134.d 
+	is_triggered_only = yes 
+	
+	option = {#agree
+	name = japfor.134.a 
+	ai_chance = { factor = 5 }
+	add_opinion_modifier = { target = RUS modifier = RUS_JAP_ally_1 }
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_2 }
+	JAP = { country_event = { id = japfor.135 } }
+							}
+	option = {#negotiate
+	trigger = {
+	OR = {
+	AND = {
+	TRM = { 
+	exists = yes
+	is_puppet_of = JAP
+						}
+	
+					}
+	AND = {
+	TRM = { exists = no }
+	JAP = {
+	controls_state = 408 
+	controls_state = 409
+					}
+					}
+					}
+	JAP = { controls_state = 655 }
+								}
 								
+	name = japfor.134.b 
+	ai_chance = { factor = 55 }
+	JAP = { country_event = { id = japfor.136 days = 1 } }
+	add_state_core = 408 
+	add_state_core = 409 
+	add_state_core = 655 
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_3 }
+						}
+	option = {#refuse 
+	name = japfor.134.c 
+	ai_chance = { factor = 40 }
+	add_opinion_modifier = { target = JAP modifier = RUS_JAP_ally_4 }
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_5 }
+	JAP = { country_event = { id = japfor.137 days = 1 } }
+	
+							}
+						}
+	
+	country_event = {#Russia joins Co-Prosperity Sphere
+	id = japfor.135 
+	title = japfor.135.t 
+	desc = japfor.135.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.135.a 
+	add_to_faction = RUS 
+	add_political_power = 60 
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_2 }
+	add_opinion_modifier = { target = RUS modifier = RUS_JAP_ally_1	}
+	RUS = { country_event = { id = rusfor.1252 } }
+						}
+								}
+								
+	country_event = {#Russian demands
+	id = japfor.136
+	title = japfor.136.t 
+	desc = japfor.136.d 
+	is_triggered_only = yes 
+	
+	option = {#accept
+	add_to_faction = RUS
+	add_political_power = 60 
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_2 }
+	add_opinion_modifier = { target = RUS modifier = RUS_JAP_ally_1	}
+	remove_state_core = 655 
+	RUS = { transfer_state = 655 }
+	RUS = { country_event = { id = japfor.138 days = 1 } }
+	RUS = { country_event = { id = rusfor.1252 } }
+							}
+	option = {#refuse
+	name = japfor.136.b 
+	ai_chance = { factor = 50 }
+	add_opinion_modifier = { target = GER modifier = RUS_JAP_ally_5	} 
+	add_opinion_modifier = { target = RUS modifier = RUS_JAP_ally_2	}
+	RUS = { country_event = { id = japfor.137 days = 1 } }
+						}
+		}
+		
+	country_event = {#Offer refused
+	id = japfor.137 
+	title = japfor.137.t 
+	desc = japfor.137.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.137.a 
+	add_political_power = -20 
+								}
+								}
+								
+	country_event = {#Transamur is Russian!
+	id = japfor.138
+	title = japfor.138.t 
+	desc = japfor.138.d 
+	is_triggered_only = yes 
+	
+	option = {#annex 
+	name = japfor.138.a 
+	ai_chance = { factor = 85 }
+	annex_country = { target = TRM transfer_troops = yes }
+	transfer_state = 408 
+	transfer_state = 409 
+	add_political_power = -40 
+	clr_country_flag = SIB_PANIC
+										}
+	option = {#puppet 
+	name = japfor.138.b 
+	trigger = { TRM = { exists = yes } }
+	ai_chance = { factor = 15 }
+	puppet = TRM 
+								}
+										}

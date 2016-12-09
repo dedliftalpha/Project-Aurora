@@ -4201,3 +4201,149 @@ add_namespace = japfor
 	puppet = TRM 
 								}
 										}
+										
+	country_event = {## Peace offer No.1
+	id = japfor.139 
+	title = japfor.139.t 
+	desc = japfor.139.d 
+	
+	fire_only_once = yes 
+	
+	trigger = {
+	tag = RUS 
+	has_war_with = JAP
+	any_country = {
+	OR = {
+	tag = JAP
+	is_puppet_of = JAP 
+	is_in_faction_with = JAP 
+	
+						}
+	controls_state = 562 
+							}
+	any_country = {
+	OR = {
+	tag = JAP
+	is_puppet_of = JAP 
+	is_in_faction_with = JAP 
+	
+						}
+	controls_state = 574  
+							
+								}
+	NOT = {
+	RUS = { is_in_faction_with = GER }
+	RUS = { controls_state = 566 }
+	
+					}
+								}
+	mean_time_to_happen = { days = 7 }
+	
+	option = {#offer 
+	name = japfor.139.a 
+	ai_chance = { factor = 50 }
+	add_political_power = -60 
+	JAP = { country_event = { id = japfor.140 days = 2 } }
+								}
+	option = {#continue 
+	name = japfor.139.b 
+	ai_chance = { factor = 50 }
+	add_political_power = -80 
+								}						
+								}
+								
+	country_event = {#Russia's peace offer
+	id = japfor.140 
+	title = japfor.140.t 
+	desc = japfor.140.d 
+	is_triggered_only = yes 
+	
+	option = {#accept
+	name = japfor.140.a 
+	ai_chance = { factor = 60 }
+	RUS = { country_event = { id = japfor.142 } }
+	every_country = {
+	limit = {
+	OR = {
+	tag = RUS 
+	is_puppet_of = RUS 
+	is_in_faction_with = RUS
+			}
+					}
+	white_peace = JAP 
+						}
+	add_named_threat = { threat = -5 name = jap_rus_peace_1 }
+	add_political_power = 200 
+	
+								}
+								
+	option = {#refuse 
+	name = japfor.140.b 
+	ai_chance = { factor = 40 }
+	RUS = { country_event = { id = japfor.141 days = 1 } }
+	add_named_threat = { threat = 5 name = jap_rus_peace_1_no }
+							}
+											}
+											
+	country_event = {#Japan refuses peace offer
+	id = japfor.141 
+	title = japfor.141.t 
+	desc = japfor.141.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.141.a 
+	add_political_power = -100 
+				}
+								}
+								
+	country_event = {#Japan accepts peace offer
+	id = japfor.142 
+	title = japfor.142.t 
+	desc = japfor.142.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.141.a 
+	JAP = { 
+	transfer_state = 657
+	transfer_state = 560 
+	transfer_state = 561 
+	transfer_state = 574 
+	transfer_state = 644 
+	transfer_state = 562 
+	transfer_state = 637 
+							}
+	end_puppet = MON 
+	end_puppet = TAN 
+	if = { limit = { OR = { TRM = { is_in_faction_with = JAP } TRM = { is_puppet_of = JAP } } } JAP = { country_event = { id = japfor.143 days = 3 } }  }
+					}
+							}
+							
+	country_event = {#Victory
+	id = japfor.143
+	title = japfor.143.t 
+	desc = japfor.143.d 
+	is_triggered_only = yes 
+	
+	option = {#give to transamur 
+	name = japfor.143.a 
+	ai_chance = { factor = 90 }
+	TRM = { 
+	transfer_state = 657
+	transfer_state = 560 
+	transfer_state = 561 
+	transfer_state = 574 
+	transfer_state = 644 
+	transfer_state = 562 
+	transfer_state = 637 
+							}
+	
+							}
+	
+	option = {#keep it 
+	name = japfor.143.b 
+	ai_chance = { factor = 10 }
+	add_political_power = -60 
+								}
+								}

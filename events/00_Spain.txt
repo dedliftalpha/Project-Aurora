@@ -19,7 +19,7 @@ country_event = { #Black Monday
 		tag = SPR
 		date > 1936.03.02
 		has_global_flag = black_monday
-		}
+	}
 	mean_time_to_happen = { days = 15 }
 	option = {
 		name = sprd.1.a
@@ -39,7 +39,7 @@ country_event = { #Alfonso Carlos de Borbon dies
 	trigger = {
 		tag = SPR
 		date > 1936.01.10
-		}
+	}
 	mean_time_to_happen = { days = 90 }
 	option = {
 		name = sprd.2.a
@@ -56,7 +56,7 @@ country_event = { #Xavier gives a speech
 	trigger = {
 		tag = SPR
 		has_country_flag = alfonso_carlos_dead
-		}
+	}
 	mean_time_to_happen = { days = 2 }
 	option = {
 		name = sprd.3.a
@@ -74,7 +74,7 @@ country_event = { #Mediterranean economic block - Portugal
 		tag = POR
 		date > 1936.04.17
 		has_global_flag = xaviers_plan
-		}
+	}
 	mean_time_to_happen = { days = 90 }
 	option = {
 		name = sprd.4.a
@@ -96,7 +96,7 @@ country_event = { #Mediterranean economic block - Italy
 		tag = ITA
 		date > 1936.04.17
 		has_global_flag = xaviers_plan
-		}
+	}
 	mean_time_to_happen = { days = 90 }
 	option = {
 		name = sprd.5.a
@@ -108,6 +108,177 @@ country_event = { #Mediterranean economic block - Italy
 		add_political_power = -40
 	}
 }
+
+country_event = { #Mediterranean economic block - Portugal agrees
+	id = sprd.6
+	title = sprd.6.t
+	desc = sprd.6.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_global_flag = mediterranean_economic_block_por
+	}
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprd.6.a
+		remove_ideas = spr_black_monday
+		#add_opinion_modifier  = { target = POR modifier = SPR_position_plus }
+	}
+}
+
+country_event = { #Mediterranean economic block - Italy agrees
+	id = sprd.7
+	title = sprd.7.t
+	desc = sprd.7.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_global_flag = mediterranean_economic_block_ita
+	}
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprd.7.a
+		remove_ideas = spr_black_monday
+		#add_opinion_modifier  = { target = ITA modifier = SPR_position_plus }
+	}
+}
+
+country_event = { #Xavier gives another speech
+	id = sprd.8
+	title = sprd.8.t
+	desc = sprd.8.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_global_flag = mediterranean_economic_block_por
+		has_global_flag = mediterranean_economic_block_ita
+	}
+	mean_time_to_happen = { days = 10 }
+	option = {
+		name = sprd.8.a
+		add_political_power = -200
+		set_country_flag = spr_carlists
+		set_country_flag = xavier_banned
+	}
+	option = {
+		name = sprd.8.b
+		add_political_power = -200
+		set_country_flag = spr_carlists
+		set_country_flag = xavier_arrested
+		set_country_flag = ????
+	}
+	option = {
+		name = sprd.8.c
+		add_political_power = -20
+		set_country_flag = xavier_praised
+	}
+	option = {
+		name = sprd.8.d
+		add_political_power = -40
+		set_country_flag = xavier_ignored
+	}
+}
+
+country_event = { #bombing
+	id = sprd.9
+	title = sprd.9.t
+	desc = sprd.9.d
+	fire_only_once = no
+	trigger = {
+		tag = SPR
+		OR = {
+		has_global_flag = xavier_banned
+		has_global_flag = xavier_arrested
+		has_global_flag = xavier_ignored
+		}
+	}		
+	mean_time_to_happen = { days = 200 }
+	option = {
+		name = sprd.9.a
+		add_political_power = -40
+		#remove_unit_leader = ?
+	}
+}
+
+country_event = { #demonstrations
+	id = sprd.10
+	title = sprd.10.t
+	desc = sprd.10.d
+	fire_only_once = no
+	trigger = {
+		tag = SPR
+		OR = {
+		has_global_flag = xavier_banned
+		has_global_flag = xavier_ignored
+		}
+	}		
+	mean_time_to_happen = { days = 200 }
+	option = {
+		name = sprd.10.a
+		add_political_power = -60
+	}
+}
+
+###general assassinations
+
+country_event = { #miguel ponte manso de zuniga
+	id = sprd.11
+	title = sprd.11.t
+	desc = sprd.11.d
+	fire_only_once = no
+	trigger = {
+		tag = SPR
+		has_idea = SPR_Miguel_Ponte_Manso_de_Zuiga_int_ade
+		OR = {
+		has_global_flag = xavier_banned
+		has_global_flag = xavier_arrested
+		has_global_flag = cntfai_banned
+		has_global_flag = cntfai_arrested
+		}
+	}		
+	mean_time_to_happen = { days = 200 }
+	option = {
+		name = sprd.11.a
+		add_political_power = -160
+		remove_ideas = SPR_Miguel_Ponte_Manso_de_Zuiga_int_ade
+		set_country_flag = Miguel_Ponte_Manso_de_Zuiga_assassinated
+		add_ideas = SPR_Jose_Ungria_Jimenez_int_ade
+	}
+	option = {
+		name = sprd.11.b
+		add_political_power = -60
+		remove_ideas = SPR_Miguel_Ponte_Manso_de_Zuiga_int_ade
+		set_country_flag = Miguel_Ponte_Manso_de_Zuiga_assassinated
+	}
+}
+
+country_event = { #jose ungria jimenez
+	id = sprd.12
+	title = sprd.12.t
+	desc = sprd.12.d
+	fire_only_once = no
+	trigger = {
+		tag = SPR
+		has_idea = SPR_Jose_Ungria_Jimenez_int_ade
+		OR = {
+		has_global_flag = xavier_banned
+		has_global_flag = xavier_arrested
+		has_global_flag = cntfai_banned
+		has_global_flag = cntfai_arrested
+		}
+	}		
+	mean_time_to_happen = { days = 200 }
+	option = {
+		name = sprd.12.a
+		add_political_power = -60
+		remove_ideas = SPR_Jose_Ungria_Jimenez_int_ade
+		set_country_flag = Jose_Ungria_Jimenez_assassinated
+	}
+}
+
+#cnt-fai
+
+#wip
 
 ########################################
 #### Kingdom of Spain, Foreign Policy

@@ -1,0 +1,273 @@
+focus_tree = {
+	id = lithuanian_focus
+	
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = LIT
+		}
+	}
+	
+	default = no
+
+	focus = {
+		id = LIT_black_monday_hit
+		icon = GFX_goal_generic_demand_territory
+		available = { has_idea = LIT_black_monday }
+		x = 3
+		y = 0
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+		}
+	}
+	
+	focus = {
+		id = LIT_conservative_reform
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = LIT_black_monday_hit }
+		mutually_exclusive = { focus = LIT_liberal_reform }
+		available = { has_idea = LIT_black_monday has_country_flag = LIT_conservative_choice }
+		x = 1
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {		
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_liberal_reform
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = LIT_black_monday_hit }
+		mutually_exclusive = { focus = LIT_conservative_reform }
+		available = { has_idea = LIT_black_monday has_country_flag = LIT_liberal_choice }
+		x = 5
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	
+	focus = {
+		id = LIT_industrial_expansion_1
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = LIT_conservative_reform }
+		available = { has_country_flag = LIT_conservative_choice }
+		x = 1
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			11 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			11 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_industrial_expansion_2
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = LIT_industrial_expansion_1 }
+		available = { has_country_flag = LIT_conservative_choice }
+		x = 1
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			189 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			189 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_industrial_expansion_3
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = LIT_industrial_expansion_2 }
+		available = { has_country_flag = LIT_conservative_choice }
+		x = 1
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			11 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			189 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_economic_controls
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = LIT_liberal_reform }
+		available = { has_country_flag = LIT_liberal_choice }
+		x = 5
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_national_unity = 0.1
+			add_political_power = 100
+		}
+	}
+	
+	focus = {
+		id = LIT_infrastructure_projects
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = LIT_economic_controls }
+		available = { has_country_flag = LIT_liberal_choice }
+		x = 5
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			11 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			189 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_economic_relief
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = LIT_infrastructure_projects }
+		available = { has_country_flag = LIT_liberal_choice }
+		x = 5
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			11 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_resource = { type = steel amount = 5 state = 189 }
+		}
+	}
+	
+	focus = {
+		id = LIT_economic_recovery
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = LIT_economic_relief focus = LIT_industrial_expansion_3 }
+		available = { 
+			OR = {
+			has_country_flag = LIT_liberal_choice
+			has_country_flag = LIT_conservative_choice
+			}
+		}
+		x = 3
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			remove_ideas = LIT_black_monday
+			clr_country_flag = LIT_liberal_choice
+			clr_country_flag = LIT_conservative_choice
+		}
+	}
+}

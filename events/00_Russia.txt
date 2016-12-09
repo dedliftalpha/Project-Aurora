@@ -3489,7 +3489,10 @@ country_event = { #War RUS
 		name = russia.1933.a
         declare_war_on = { target = SOV type = annex_everything }
 		add_political_power = 200
-		add_ideas = rus_cw
+		if = { limit = { has_idea = desaster } add_ideas = rus_cw }
+		if = { limit = { has_idea = very_low_stability } add_ideas = rus_cw_very_low }
+        if = { limit = { has_idea = low_stability } add_ideas = rus_cw_low }
+		if = { limit = { OR = { has_idea = normal_stability has_idea = good_stability has_idea = very_good_stability } } add_ideas = rus_cw_average }
 		set_country_flag = RUS_CIVIL_WAR
 		set_country_flag = RUS_KAR_PANIC
 		set_country_flag = RUS_VOL_PANIC
@@ -3512,7 +3515,10 @@ country_event = { #War RUS2
 	option = {
 		name = russia.1933.a
 		add_political_power = 200
-		add_ideas = rus_cw
+		if = { limit = { has_idea = desaster } add_ideas = rus_cw }
+		if = { limit = { has_idea = very_low_stability } add_ideas = rus_cw_very_low }
+        if = { limit = { has_idea = low_stability } add_ideas = rus_cw_low }
+		if = { limit = { OR = { has_idea = normal_stability has_idea = good_stability has_idea = very_good_stability } } add_ideas = rus_cw_average }
 		set_country_flag = RUS_CIVIL_WAR
 		set_country_flag = RUS_KAR_PANIC
 		set_country_flag = RUS_VOL_PANIC
@@ -3939,6 +3945,9 @@ country_event = { #End of the soviets
 		clr_country_flag = RUS_SIB_PANIC
 		clr_country_flag = RUS_VOL_PANIC
 		remove_ideas = rus_cw
+		remove_ideas = rus_cw_very_low
+		remove_ideas = rus_cw_low
+		remove_ideas = rus_cw_average
 		every_state = { limit = { is_core_of = SOV } remove_core_of = SOV }
 		every_state = { limit = { is_claimed_by = SOV NOT = { is_core_of = SOV } } remove_claim_by = SOV }
 	}

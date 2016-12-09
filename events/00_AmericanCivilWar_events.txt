@@ -41,7 +41,7 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 			add_state_core = 261
 			add_state_core = 360
 			add_state_core = 359
-
+            add_ideas = amcivwar_idea
 			hidden_effect = {
 				country_event = { id = amcivwar.341 days = 0 }
 			}
@@ -82,7 +82,7 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 			add_state_core = 261
 			add_state_core = 360
 			add_state_core = 359
-
+            add_ideas = amcivwar_idea
 			change_tag_from = USA
 
 			hidden_effect = { 
@@ -131,7 +131,7 @@ country_event = { # Long launches major protests in the South
 			add_state_core = 367
 			add_state_core = 370
 			add_state_core = 364
-
+            add_ideas = amcivwar_idea
 			hidden_effect = { USA = { country_event = { id = amcivwar.3 days = 1 }
 			if = { limit = { has_government = syndicalist } country_event = { id = amcivwar.3000 days = 1 } } } }
 
@@ -170,11 +170,11 @@ country_event = { # Long launches major protests in the South
 			add_state_core = 367
 			add_state_core = 370
 			add_state_core = 364
-			
+	        add_ideas = amcivwar_idea		
 			change_tag_from = USA }
 
 			hidden_effect = { USA = { country_event = { id = amcivwar.3 days = 1 }
-			if = { limit = { has_government = syndicalist } country_event = { id = amcivwar.3000 days = 1 } } } }
+			if = { limit = { has_country_flag = reed_elected } country_event = { id = amcivwar.3000 days = 1 } } } }
 
 			hidden_effect = { 
 				TEX = { 
@@ -302,9 +302,9 @@ country_event = { # California leaves the Union
 			hidden_effect = { country_event = { id = amcivwar.341 days = 0 } }
 		}
 		hidden_effect = { if = { limit = { 379 = { is_owned_by = USA }
-		OR = { has_government = syndicalist has_government = paternal_autocratist } } country_event = { id = amcivwar.5 days = 2 } }
+		OR = { has_country_flag = long_elected has_country_flag = reed_elected } } country_event = { id = amcivwar.5 days = 2 } }
 		if = { limit = { 387 = { is_owned_by = USA }
-		OR = { has_government = syndicalist has_government = paternal_autocratist } } country_event = { id = amcivwar.6 days = 2 } } }
+		OR = { has_country_flag = long_elected has_country_flag = reed_elected } } country_event = { id = amcivwar.6 days = 2 } } }
 	}
 
 	option = {
@@ -548,6 +548,7 @@ country_event = { # Minnesota joins the CSA
 	option = {
 		name = amcivwar.9000.a
         add_state_core = 391
+        set_global_flag = minnesota_fall_csa
 	}
 }
 
@@ -2293,6 +2294,10 @@ country_event = { # The Second American Civil War
 		name = amcivwar.57.a
 
 		set_global_flag = AMERICAN_CIVIL_WAR
+		if = { limit = { has_idea = desaster } add_ideas = usa_cw }
+		if = { limit = { has_idea = very_low_stability } add_ideas = usa_cw_very_low }
+        if = { limit = { has_idea = low_stability } add_ideas = usa_cw_low }
+		if = { limit = { OR = { has_idea = normal_stability has_idea = good_stability has_idea = very_good_stability } } add_ideas = usa_cw_average }
 		add_equipment_to_stockpile = { type = infantry_equipment amount = 3000 producer = USA }
 	}					
 }
@@ -7682,7 +7687,7 @@ country_event = { # America in Chaos
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 15
 	}
 	
 	option = { 
@@ -7696,7 +7701,7 @@ country_event = { # America in Chaos
 		add_opinion_modifier = { target = USA modifier = LIB_goes }
 		add_opinion_modifier = { target = USA modifier = LIB_go_NFA } 
 		add_opinion_modifier = { target = USA modifier = LIB_no_GER }
-		hidden_effect = { NFA = { country_event = { id = amcivwar.187 days = 1 }}}
+		NFA = { country_event = { id = amcivwar.187 days = 1 }}
 		white_peace = CSA
 		white_peace = TEX
 		white_peace = CAN
@@ -7716,7 +7721,7 @@ country_event = { # America in Chaos
 		add_opinion_modifier = { target = USA modifier = LIB_goes }
 		add_opinion_modifier = { target = USA modifier = LIB_no_NFA } 
 		add_opinion_modifier = { target = USA modifier = LIB_go_GER }
-		hidden_effect = { GER = { country_event = { id = amcivwar.191 days = 1 }}}
+		GER = { country_event = { id = amcivwar.191 days = 1 }}
 		white_peace = CSA
 		white_peace = TEX
 		white_peace = CAN
@@ -7754,7 +7759,7 @@ country_event = { # America in Chaos
 
 		add_opinion_modifier = { target = USA modifier = LIB_stand }
 		load_oob = LIB_IND
-		add_political_power = -50 
+		add_political_power = -100 
 	}	
 }
 
@@ -7773,7 +7778,7 @@ country_event = { # Liberia asks for protection
 			factor = 70
 		}
 
-		hidden_effect = { LBR = { country_event = { id = amcivwar.188 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.188 } }
 		puppet = LBR
 		add_opinion_modifier =  { target = LBR modifier = LIB_ENT_FRA }
 		add_opinion_modifier =  { target = GER modifier = LIB_ENT }
@@ -7787,12 +7792,12 @@ country_event = { # Liberia asks for protection
 			factor = 5
 		}
 
-		hidden_effect = { LBR = { country_event = { id = amcivwar.189 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.189 } }
 		add_opinion_modifier =  { target = USA modifier = LIB_WAR }
 		add_opinion_modifier =  { target = LBR modifier = LIB_WAR_FRA }
 		add_state_claim = 298
 		declare_war_on = { target = LBR type = annex_everything }
-		add_political_power = -50
+		add_political_power = -100
 	}
 
 	option = { 
@@ -7802,7 +7807,7 @@ country_event = { # Liberia asks for protection
 			factor = 25
 		}
 
-		hidden_effect = { LBR = { country_event = { id = amcivwar.190 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.190 } }
 		add_opinion_modifier =  { target = NFA modifier = FRA_NO_LIB }
 		set_global_flag = lib_no_ent
 	}			
@@ -7834,7 +7839,7 @@ country_event = { # Liberia under attack
 	option = { 
 		name = amcivwar.189.a
 
-		add_political_power = -50
+		add_political_power = -100
 		load_oob = LIB_IND
 	}			
 }
@@ -7853,8 +7858,8 @@ country_event = { # The French refuse our request
 		ai_chance = {
 			factor = 50
 		}
-
-		hidden_effect = { MAF = { country_event = { id = amcivwar.189 days = 1 }}}
+        if = { limit = { NOT = { has_war_with = MAF } }
+		MAF = { country_event = { id = amcivwar.197 } } }
 		add_opinion_modifier =  { target = NFA modifier = FRA_NO_LIB }
 	}
 
@@ -7864,8 +7869,9 @@ country_event = { # The French refuse our request
 		ai_chance = {
 			factor = 50
 		}
+		trigger = { NOT = { has_global_flag = lib_no_mittel } }
 
-		hidden_effect = { GER = { country_event = { id = amcivwar.191 days = 1 }}}
+		GER = { country_event = { id = amcivwar.191 } }
 		add_opinion_modifier =  { target = NFA modifier = FRA_NO_LIB }
 	}				
 }
@@ -7885,7 +7891,7 @@ country_event = { # Liberia asks for protection
 			factor = 50
 		}
 
-		hidden_effect = { LBR = { country_event = { id = amcivwar.192 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.192 } }
 		puppet = LBR
 		add_opinion_modifier =  { target = LBR modifier = LIB_GER }
 		add_opinion_modifier =  { target = LBR modifier = LIB_GER_ENE }
@@ -7899,8 +7905,8 @@ country_event = { # Liberia asks for protection
 		ai_chance = {
 			factor = 40
 		}
-
-		hidden_effect = { LBR = { country_event = { id = amcivwar.193 days = 1 }}}
+        trigger = { MAF = { is_puppet_of = GER } }
+		MAF = { country_event = { id = amcivwar.193 } }
 		add_opinion_modifier =  { target = LBR modifier = LIB_GER_MAF }
 		add_opinion_modifier =  { target = NFA modifier = LIB_GER_ENE }
 		add_opinion_modifier =  { target = USA modifier = LIB_GER_ENE }
@@ -7911,10 +7917,10 @@ country_event = { # Liberia asks for protection
 		name = amcivwar.191.c
 
 		ai_chance = {
-			factor = 9
+			factor = 10
 		}
-
-		hidden_effect = { LBR = { country_event = { id = amcivwar.195 days = 1 }}}
+        set_global_flag = lib_no_mittel
+		LBR = { country_event = { id = amcivwar.195 } }
 		add_opinion_modifier =  { target = LBR modifier = GER_NO_LIB }
 	}
 
@@ -7922,13 +7928,13 @@ country_event = { # Liberia asks for protection
 		name = amcivwar.191.e
 
 		ai_chance = {
-			factor = 1
+			factor = 0
 		}
 
-		hidden_effect = { LBR = { country_event = { id = amcivwar.189 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.189 } }
 		add_opinion_modifier =  { target = LBR modifier = GER_LIB_WAR}
 		add_opinion_modifier =  { target = USA modifier = GER_LIB_USA_WAR}
-		add_political_power = -50
+		add_political_power = -100
 		declare_war_on = { target = LBR type = annex_everything }
 
 	}						
@@ -7961,7 +7967,7 @@ country_event = { # We are granted Liberia as a puppet.
 		name = amcivwar.193.a
 
 		puppet = LBR
-		hidden_effect = { LBR = { country_event = { id = amcivwar.194 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.194 } }
 	}			
 }
 
@@ -7996,15 +8002,15 @@ country_event = { # The Germans refuse our request
 		}
 
 		if = {
-			limit = { NOT = { has_global_flag = lib_no_ent }}
+			limit = { NOT = { has_global_flag = lib_no_ent has_war_with = NFA is_puppet_of = NFA }}
 
-			hidden_effect = { NFA = { country_event = { id = amcivwar.196 days = 1 }}}
+			 NFA = { country_event = { id = amcivwar.196 } }
 		}
 
 		if = {
 			limit = { NOT = { has_war_with = MAF }}
 
-			hidden_effect = { MAF = { country_event = { id = amcivwar.197 days = 1 }}}
+			MAF = { country_event = { id = amcivwar.197 } }
 		}	 
 	}
 
@@ -8014,12 +8020,9 @@ country_event = { # The Germans refuse our request
 		ai_chance = {
 		factor = 50
 		}
+        trigger = { NOT = { has_global_flag = lib_no_ent } }
 
-		if = {
-			limit = { NOT = { has_global_flag = lib_no_ent }}
-
-			hidden_effect = { NFA = { country_event = { id = amcivwar.187 days = 1 }}}
-		}	
+		NFA = { country_event = { id = amcivwar.187 } }
 		add_opinion_modifier =  { target = NFA modifier = FRA_LIB_POSTGER }	
 	}		
 }
@@ -8049,8 +8052,8 @@ country_event = { # Liberia stands alone
 
 		declare_war_on = { target = LBR type = annex_everything }
 		add_state_claim = 298
-		add_political_power = -50
-		hidden_effect = { LBR = { country_event = { id = amcivwar.198 days = 1 }}}
+		add_political_power = -100
+		LBR = { country_event = { id = amcivwar.198 } }
 		add_opinion_modifier =  { target = USA modifier = LIB_WAR }
 		add_opinion_modifier =  { target = GER modifier = LIB_WAR }
 		add_opinion_modifier =  { target = MAF modifier = LIB_WAR }
@@ -8070,7 +8073,7 @@ country_event = { # Liberia stands alone
 		name = amcivwar.197.a
 
 		ai_chance = {
-			factor = 99
+			factor = 100
 		}	 
 	}
 
@@ -8078,13 +8081,13 @@ country_event = { # Liberia stands alone
 		name = amcivwar.197.c
 
 		ai_chance = {
-		factor = 1
+		factor = 0
 		}
 
 		declare_war_on = { target = LBR type = annex_everything }
 		add_state_claim = 298
 		add_political_power = -300
-		hidden_effect = { LBR = { country_event = { id = amcivwar.199 days = 1 }}}
+		LBR = { country_event = { id = amcivwar.199 } }
 		add_opinion_modifier =  { target = USA modifier = LIB_WAR }
 		add_opinion_modifier =  { target = GER modifier = LIB_WAR }
 		add_opinion_modifier =  { target = MAF modifier = LIB_WAR }
@@ -8141,19 +8144,19 @@ country_event = { # America in Chaos
 	trigger = {
 		tag = PHL
 		USA = { has_war_with = CSA }
-		country_exists = CSA
 		is_puppet_of = USA
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 25
 	}
 	
 	option = { 
 		name = amcivwar.200.a
-
+        clr_country_flag = puppet_of_usa
 		USA = { end_puppet = PHL }
-		add_political_power = -50
+		add_political_power = -100
+		set_global_flag = PHL_FREEDOM
 		white_peace = CSA
 		white_peace = TEX
 		white_peace = CAN
@@ -8174,11 +8177,11 @@ country_event = { # PHLlippines Seizing equipment
 	trigger = {
 		tag = PHL
 		has_global_flag = PHL_FREEDOM
-		not = { has_war_with = USA }
+		NOT = { has_war_with = USA }
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 17
 	}
 	
 	option = { 
@@ -8220,14 +8223,14 @@ country_event = { # Americans in the PHLlippines
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 7
 	}
 	
 	option = { 
 		name = amcivwar.202.a
 
 		ai_chance = {
-			factor = 66
+			factor = 99
 		}
 
 		add_manpower = 5000
@@ -8238,10 +8241,10 @@ country_event = { # Americans in the PHLlippines
 		name = amcivwar.202.a
 
 		ai_chance = {
-			factor = 34
+			factor = 1
 		}
 
-		add_political_power = 60
+		add_political_power = -60
 	}
 }
 
@@ -8255,12 +8258,11 @@ country_event = { # PHLlippine Commonwealth
 
 	trigger = {
 		tag = PHL
-		is_puppet_of = USA
-		has_war_with = CSA
+		has_global_flag = PHL_FREEDOM
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 15
 	}
 	
 	option = { 
@@ -8292,7 +8294,7 @@ country_event = { # Reconstruction
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 5
 	}
 	
 	option = { 
@@ -8302,7 +8304,7 @@ country_event = { # Reconstruction
 			factor = 34
 		}
 
-		add_political_power = -300
+		add_political_power = -240
 		add_timed_idea = { idea = full_reintegration days = 365 }
 	}
 
@@ -8313,7 +8315,7 @@ country_event = { # Reconstruction
 			factor = 33
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 		add_timed_idea = { idea = prov_gov_loy_citz days = 365 }
 	}
 
@@ -8346,6 +8348,7 @@ country_event = { # Our place in the sun
 		has_global_flag = CAN_SEIZES_PANAMA
 		CAN = {
 			owns_state = 685
+			controls_state = 685
 		}
 		NOT = {
 			is_puppet = yes
@@ -8355,19 +8358,19 @@ country_event = { # Our place in the sun
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 15
 	}
 	
 	option = { 
 		name = amcivwar.205.a
 
 		ai_chance = {
-			factor = 34
+			factor = 90
 		}
 
 		add_political_power = 20
 		add_opinion_modifier =  { target = CAN modifier = USA_DEM_PAN }
-		hidden_effect = { CAN = { country_event = { id = amcivwar.206 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.206 } }
 	}
 
 	option = { 
@@ -8377,7 +8380,7 @@ country_event = { # Our place in the sun
 			factor = 10
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
@@ -8398,7 +8401,7 @@ country_event = { # Canada's reply
 
 		add_political_power = -20
 		add_opinion_modifier = { target = USA modifier = CAN_RET_PAN }
-		hidden_effect = { USA = { country_event = { id = amcivwar.207 days = 1 }}}
+		USA = { country_event = { id = amcivwar.207 } }
 		USA = { transfer_state = 685}
 	}
 
@@ -8411,7 +8414,7 @@ country_event = { # Canada's reply
 
 		add_political_power = 20
 		add_opinion_modifier =  { target = USA modifier = CAN_NO_PAN }
-		hidden_effect = { USA = { country_event = { id = amcivwar.208 days = 1 }}}
+		USA = { country_event = { id = amcivwar.208 } }
 	}
 }
 
@@ -8426,7 +8429,8 @@ country_event = { # Canada accepts!
 	option = { 
 		name = amcivwar.207.a
 
-		add_political_power = -20
+		add_political_power = 20
+		add_state_core = 685
 		add_opinion_modifier = { target = CAN modifier = CAN_RET_PAN }
 	}
 }
@@ -8443,9 +8447,9 @@ country_event = { # Canada refuses!
 		name = amcivwar.208.a
 
 		ai_chance = {
-			factor = 80
+			factor = 97
 		}
-
+        add_state_core = 685
 		add_opinion_modifier = { target = CAN modifier = USA_CAN_NO_PAN }
 	}
 
@@ -8453,10 +8457,10 @@ country_event = { # Canada refuses!
 		name = amcivwar.208.b
 
 		ai_chance = {
-			factor = 20
+			factor = 3
 		}
-
-		declare_war_on = { target = CAN type = puppet_wargoal_focus }
+        add_state_core = 685
+		declare_war_on = { target = CAN type = annex_everything }
 	}
 }
 
@@ -8478,6 +8482,7 @@ country_event = { # US capital moves
 		tag = USA
 		has_war = yes
 		controls_state = 382
+		owns_state = 382
 		NOT = {
 			controls_state = 361
 		}
@@ -8525,9 +8530,17 @@ country_event = { # End of the Civil War/ USA wins democracy
 	option = { 
 		name = amcivwar.210.a
 
-		add_political_power = 1000
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
-
+        remove_ideas = usa_cw
+		remove_ideas = usa_cw_very_low
+		remove_ideas = usa_cw_low
+		remove_ideas = usa_cw_average
 		if = {
 			limit = { controls_state = 361 }
 
@@ -8563,9 +8576,17 @@ country_event = { # End of the Civil War/ USA wins MacArthur
 	option = { 
 		name = amcivwar.211.a
 
-		add_political_power = 1000
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
-		
+		remove_ideas = usa_cw
+		remove_ideas = usa_cw_very_low
+		remove_ideas = usa_cw_low
+		remove_ideas = usa_cw_average
 		if = {
 			limit = { controls_state = 361 }
 
@@ -8600,8 +8621,13 @@ country_event = { # End of the Civil War AUS wins
 	
 	option = { 
 		name = amcivwar.212.a
-
-		add_political_power = 1000
+        remove_ideas = amcivwar_idea
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
 		#should remove militias	
 	}
@@ -8632,8 +8658,13 @@ country_event = { # End of the Civil War CSA wins
 	
 	option = { 
 		name = amcivwar.213.a
-
-		add_political_power = 1000
+        remove_ideas = amcivwar_idea
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
 		#should remove militias	
 	}
@@ -8665,7 +8696,12 @@ country_event = { # End of the civil war PSA wins by beating the USA
 	option = { 
 		name = amcivwar.214.a
 
-		add_political_power = 1000
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
 		#should remove militias	
 	}
@@ -8696,7 +8732,12 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	option = { 
 		name = amcivwar.215.a
 
-		add_political_power = 1000
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
 		#should remove militias	
 	}
@@ -8728,7 +8769,12 @@ country_event = { # End of the Civil War New England wins?
 	option = { 
 		name = amcivwar.216.a
 
-		add_political_power = 1000
+		if = { limit = { has_political_power < -900 } add_political_power = 1000 }
+		if = { limit = { has_political_power < -700 } add_political_power = 800 }
+		if = { limit = { has_political_power < -500 } add_political_power = 600 }
+		if = { limit = { has_political_power < -300 } add_political_power = 400 }
+		if = { limit = { has_political_power < -100 } add_political_power = 200 }
+		if = { limit = { has_political_power < 0 } add_political_power = 100 }
 		set_global_flag = END_ACW
 		#should remove militias	
 	}
@@ -8747,13 +8793,14 @@ country_event = { # USA wins AUS integration / California
 		has_global_flag = ACW_AUS
 		has_global_flag = END_ACW
 		owns_state = 365
+		controls_state = 365
 		NOT = {
 			country_exists = TEX
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
@@ -8818,7 +8865,7 @@ country_event = { # USA wins AUS integration / California
 			remove_state_claim = 796
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
@@ -8835,13 +8882,14 @@ country_event = { # USA wins CSA integration /no california
 		has_global_flag = ACW_CSA
 		has_global_flag = END_ACW
 		owns_state = 395
+		controls_state = 395
 		NOT = {
 			country_exists = CSA
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
@@ -8906,7 +8954,7 @@ country_event = { # USA wins CSA integration /no california
 			remove_state_claim = 365
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
@@ -8925,13 +8973,16 @@ country_event = { # CAL reintegrated into USA
 		owns_state = 378
 		owns_state = 797
 		owns_state = 798
+		controls_state = 378
+		controls_state = 797
+		controls_state = 798
 		NOT = {
 			country_exists = CAL
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
@@ -8947,7 +8998,7 @@ country_event = { # CAL reintegrated into USA
 			remove_state_core = 387
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
@@ -8967,103 +9018,99 @@ country_event = { # AUS wins USA gives it up
 		tag = TEX
 		has_global_flag = END_ACW
 		owns_state = 361
+		controls_state = 361
 		NOT = {
 			country_exists = USA
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
 		name = amcivwar.220.a
 
-		CAL = {
-			remove_state_claim = 650
-			remove_state_claim = 638
-			remove_state_claim = 632
-			remove_state_claim = 642	
+		TEX = {
+			remove_state_claim = 818 #Islands + Alaska
+			remove_state_claim = 685
+			remove_state_claim = 686
+			remove_state_claim = 463	
+			remove_state_claim = 629
 			remove_state_claim = 726
+			remove_state_claim = 642
 			remove_state_claim = 727
 			remove_state_claim = 630
 			remove_state_claim = 631
-			remove_state_claim = 629
-			remove_state_claim = 463
-			remove_state_claim = 685
-			remove_state_claim = 686
-			remove_state_claim = 379
-			remove_state_claim = 387
+			remove_state_claim = 632
+			remove_state_claim = 638
+			remove_state_claim = 650
+			
+			remove_state_claim = 377
+			remove_state_claim = 380
 			remove_state_claim = 388
 			remove_state_claim = 381
-			remove_state_claim = 380
-			remove_state_claim = 377
 			remove_state_claim = 382
 			remove_state_claim = 376
-			remove_state_claim = 389
-			remove_state_claim = 390
-			remove_state_claim = 384
-			remove_state_claim = 383
-			remove_state_claim = 374
 			remove_state_claim = 375
-			remove_state_claim = 391
+			remove_state_claim = 374
+			remove_state_claim = 383
+			remove_state_claim = 384
+			remove_state_claim = 390
+			remove_state_claim = 389
 			remove_state_claim = 392
 			remove_state_claim = 373
 			remove_state_claim = 369
 			remove_state_claim = 361
-			remove_state_claim = 360
-			remove_state_claim = 359
-			remove_state_claim = 358
-			remove_state_claim = 357
 			remove_state_claim = 796
-			add_state_core = 650
-			add_state_core = 638
-			add_state_core = 632
-			add_state_core = 642	
+			remove_state_claim = 357
+			
+			add_state_core = 818 #Islands + Alaska
+			add_state_core = 685
+			add_state_core = 686
+			add_state_core = 463	
+			add_state_core = 629
 			add_state_core = 726
+			add_state_core = 642
 			add_state_core = 727
 			add_state_core = 630
 			add_state_core = 631
-			add_state_core = 629
-			add_state_core = 463
-			add_state_core = 685
-			add_state_core = 686
-			add_state_core = 379
-			add_state_core = 387
+			add_state_core = 632
+			add_state_core = 638
+			add_state_core = 650
+			
+			add_state_core = 377
+			add_state_core = 380
 			add_state_core = 388
 			add_state_core = 381
-			add_state_core = 380
-			add_state_core = 377
 			add_state_core = 382
 			add_state_core = 376
-			add_state_core = 389
-			add_state_core = 390
-			add_state_core = 384
-			add_state_core = 383
-			add_state_core = 374
 			add_state_core = 375
-			add_state_core = 391
+			add_state_core = 374
+			add_state_core = 383
+			add_state_core = 384
+			add_state_core = 390
+			add_state_core = 389
 			add_state_core = 392
 			add_state_core = 373
 			add_state_core = 369
 			add_state_core = 361
-			add_state_core = 360
-			add_state_core = 359
-			add_state_core = 358
-			add_state_core = 357
 			add_state_core = 796
+			add_state_core = 357
 
-			hidden_effect = { country_event = { id = amcivwar.233 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.234 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.235 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.236 days = 1 }}
+			#country_event = { id = amcivwar.226 } always have them
+			if = { limit = { NOT = { has_global_flag = vrg_ten_join_aus } } country_event = { id = amcivwar.227 } }
+			if = { limit = { NOT = { has_global_flag = nevada_joins_psa has_country_flag = amcivwar221_flag } } country_event = { id = amcivwar.228 } }
+			if = { limit = { NOT = { has_global_flag = idaho_joins_psa has_country_flag = amcivwar221_flag } } country_event = { id = amcivwar.229 } }
+			if = { limit = { NOT = { has_country_flag = amcivwar222_flag } } country_event = { id = amcivwar.230 } }
+			if = { limit = { NOT = { has_global_flag = minnesota_fall_csa has_country_flag = amcivwar222_flag } } country_event = { id = amcivwar.230 } }
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
-country_event = { # AUS wins USA integration / no California
+country_event = { # AUS wins California integration
 	id = amcivwar.221
 	title = amcivwar.221.t
 	desc = amcivwar.221.d
@@ -9078,13 +9125,16 @@ country_event = { # AUS wins USA integration / no California
 		owns_state = 378
 		owns_state = 797
 		owns_state = 798
+		controls_state = 378
+		controls_state = 797
+		controls_state = 798
 		NOT = {
 			country_exists = CAL
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 45
 	}
 	
 	option = { 
@@ -9096,14 +9146,18 @@ country_event = { # AUS wins USA integration / no California
 			remove_state_claim = 378
 			remove_state_claim = 797
 			remove_state_claim = 798
+			remove_state_claim = 379
+			remove_state_claim = 387
 			add_state_core = 386
 			add_state_core = 385
 			add_state_core = 378
 			add_state_core = 797
 			add_state_core = 798
+			add_state_core = 379
+			add_state_core = 387
 		}
-
-		add_political_power = -50	
+        set_country_flag = amcivwar221_flag
+		add_political_power = -100	
 	}
 }
 
@@ -9120,13 +9174,14 @@ country_event = { # AUS wins CSA integration
 		has_global_flag = END_ACW
 		has_global_flag = ACW_CSA
 		owns_state = 395
+		controls_state = 395
 		NOT = {
 			country_exists = CSA
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
@@ -9138,14 +9193,22 @@ country_event = { # AUS wins CSA integration
 			remove_state_claim = 395
 			remove_state_claim = 394
 			remove_state_claim = 393
+			remove_state_claim = 391
+			remove_state_claim = 360
+			remove_state_claim = 359
+			remove_state_claim = 358
 			add_state_core = 261
 			add_state_core = 396
 			add_state_core = 395
 			add_state_core = 394
 			add_state_core = 393
+			add_state_core = 391
+			add_state_core = 360
+			add_state_core = 359
+			add_state_core = 358
 		}
-
-		add_political_power = -50	
+        set_country_flag = amcivwar222_flag
+		add_political_power = -100	
 	}
 }
 
@@ -9164,105 +9227,99 @@ country_event = { # AUS wins USA gives it up
 		tag = CSA
 		has_global_flag = END_ACW
 		owns_state = 361
+		controls_state = 361
 		NOT = {
 			country_exists = USA
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
 		name = amcivwar.223.a
 
 		CSA = {
-			remove_state_claim = 650
-			remove_state_claim = 638
-			remove_state_claim = 632
-			remove_state_claim = 642	
+			remove_state_claim = 818 #Islands + Alaska
+			remove_state_claim = 685
+			remove_state_claim = 686
+			remove_state_claim = 463	
+			remove_state_claim = 629
 			remove_state_claim = 726
+			remove_state_claim = 642
 			remove_state_claim = 727
 			remove_state_claim = 630
 			remove_state_claim = 631
-			remove_state_claim = 629
-			remove_state_claim = 463
-			remove_state_claim = 685
-			remove_state_claim = 686
-			remove_state_claim = 379
-			remove_state_claim = 387
+			remove_state_claim = 632
+			remove_state_claim = 638
+			remove_state_claim = 650
+			
+			remove_state_claim = 377
+			remove_state_claim = 380
 			remove_state_claim = 388
 			remove_state_claim = 381
-			remove_state_claim = 380
-			remove_state_claim = 377
 			remove_state_claim = 382
 			remove_state_claim = 376
-			remove_state_claim = 389
-			remove_state_claim = 390
-			remove_state_claim = 384
-			remove_state_claim = 383
-			remove_state_claim = 374
 			remove_state_claim = 375
-			remove_state_claim = 391
+			remove_state_claim = 374
+			remove_state_claim = 383
+			remove_state_claim = 384
+			remove_state_claim = 390
+			remove_state_claim = 389
 			remove_state_claim = 392
 			remove_state_claim = 373
 			remove_state_claim = 369
 			remove_state_claim = 361
-			remove_state_claim = 360
-			remove_state_claim = 359
-			remove_state_claim = 358
-			remove_state_claim = 357
 			remove_state_claim = 796
-			add_state_core = 650
-			add_state_core = 638
-			add_state_core = 632
-			add_state_core = 642	
+			remove_state_claim = 357
+			
+			add_state_core = 818 #Islands + Alaska
+			add_state_core = 685
+			add_state_core = 686
+			add_state_core = 463	
+			add_state_core = 629
 			add_state_core = 726
+			add_state_core = 642
 			add_state_core = 727
 			add_state_core = 630
 			add_state_core = 631
-			add_state_core = 629
-			add_state_core = 463
-			add_state_core = 685
-			add_state_core = 686
-			add_state_core = 379
-			add_state_core = 387
+			add_state_core = 632
+			add_state_core = 638
+			add_state_core = 650
+			
+			add_state_core = 377
+			add_state_core = 380
 			add_state_core = 388
 			add_state_core = 381
-			add_state_core = 380
-			add_state_core = 377
 			add_state_core = 382
 			add_state_core = 376
-			add_state_core = 389
-			add_state_core = 390
-			add_state_core = 384
-			add_state_core = 383
-			add_state_core = 374
 			add_state_core = 375
-			add_state_core = 391
+			add_state_core = 374
+			add_state_core = 383
+			add_state_core = 384
+			add_state_core = 390
+			add_state_core = 389
 			add_state_core = 392
 			add_state_core = 373
 			add_state_core = 369
 			add_state_core = 361
-			add_state_core = 360
-			add_state_core = 359
-			add_state_core = 358
-			add_state_core = 357
 			add_state_core = 796
+			add_state_core = 357
 
-			hidden_effect = { country_event = { id = amcivwar.226 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.227 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.228 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.229 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.230 days = 1 }}
-			hidden_effect = { country_event = { id = amcivwar.231 days = 1 }}
+			#country_event = { id = amcivwar.232 } always in them
+			if = { limit = { NOT = { has_global_flag = minnesota_fall_csa } } country_event = { id = amcivwar.233 } }
+			if = { limit = { NOT = { has_country_flag = amcivwar224_flag } } country_event = { id = amcivwar.234 } }
+			if = { limit = { NOT = { has_global_flag = vrg_ten_join_aus has_country_flag = amcivwar224_flag } } country_event = { id = amcivwar.235 } }
+			if = { limit = { NOT = { has_global_flag = nevada_joins_psa has_country_flag = amcivwar225_flag } } country_event = { id = amcivwar.236 } }
+			if = { limit = { NOT = { has_global_flag = idaho_joins_psa has_country_flag = amcivwar225_flag } } country_event = { id = amcivwar.23600 } }
 		}
 
-		add_political_power = -50	
+		add_political_power = -100	
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # The People of the America First are Integrated into the CSA
 	id = amcivwar.224
 	title = amcivwar.224.t
 	desc = amcivwar.224.d
@@ -9273,14 +9330,16 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	trigger = {
 		tag = CSA
 		has_global_flag = END_ACW
-		owns_state = 361
+		has_global_flag = ACW_AUS
+		owns_state = 365
+		controls_state = 365
 		NOT = {
-			country_exists = USA
+			country_exists = TEX
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
@@ -9295,6 +9354,8 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 			remove_state_claim = 364
 			remove_state_claim = 363
 			remove_state_claim = 368
+			remove_state_claim = 372
+			remove_state_claim = 362
 			add_state_core = 371
 			add_state_core = 370
 			add_state_core = 367
@@ -9303,13 +9364,15 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 			add_state_core = 364
 			add_state_core = 363
 			add_state_core = 368
+			add_state_core = 372
+			add_state_core = 362
 		}
-
-		add_political_power = -50	
+        set_country_flag = amcivwar224_flag
+		add_political_power = -100	
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # CSA wins California integrated into the CSA
 	id = amcivwar.225
 	title = amcivwar.225.t
 	desc = amcivwar.225.d
@@ -9320,37 +9383,49 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 	trigger = {
 		tag = CSA
 		has_global_flag = END_ACW
-		owns_state = 361
+		has_global_flag = ACW_CAL
+		owns_state = 378
+		owns_state = 797
+		owns_state = 798
+		controls_state = 378
+		controls_state = 797
+		controls_state = 798
 		NOT = {
-			country_exists = USA
+			country_exists = CAL
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 50
 	}
 	
 	option = { 
 		name = amcivwar.225.a
 
 		CSA = {
-			remove_state_claim = 261
-			remove_state_claim = 396
-			remove_state_claim = 395
-			remove_state_claim = 394
-			remove_state_claim = 393
-			add_state_core = 261
-			add_state_core = 396
-			add_state_core = 395
-			add_state_core = 394
-			add_state_core = 393
+			remove_state_claim = 386
+			remove_state_claim = 385
+			remove_state_claim = 378
+			remove_state_claim = 797
+			remove_state_claim = 798
+			remove_state_claim = 379
+			remove_state_claim = 387
+			add_state_core = 386
+			add_state_core = 385
+			add_state_core = 378
+			add_state_core = 797
+			add_state_core = 798
+			add_state_core = 379
+			add_state_core = 387
 		}
-
-		add_political_power = -50	
+        set_country_flag = amcivwar225_flag
+		add_political_power = -100	
 	}
 }
 
-country_event = { # Arkansas is integrated
+#### TEX events
+
+country_event = { # North Carolina, Florida and Arkansas Have Joined the American Union State
 	id = amcivwar.226
 	title = amcivwar.226.t
 	desc = amcivwar.226.d
@@ -9364,9 +9439,13 @@ country_event = { # Arkansas is integrated
 		TEX = {
 			remove_state_claim = 372
 			add_state_core = 372
+			remove_state_claim = 363
+			add_state_core = 363
+			remove_state_claim = 366
+			add_state_core = 366
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
@@ -9386,7 +9465,7 @@ country_event = { # Virginia is integrated
 			add_state_core = 362
 		}
 
-		add_political_power = -50	
+		add_political_power = -20
 	}
 }
 
@@ -9406,7 +9485,7 @@ country_event = { # Nevada is integrated
 			add_state_core = 379
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
@@ -9426,7 +9505,7 @@ country_event = { # Idaho is integrated
 			add_state_core = 387
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
@@ -9450,7 +9529,7 @@ country_event = { # New York is integrated
 			add_state_core = 360
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
@@ -9470,52 +9549,35 @@ country_event = { # Minnesota is integrated
 			add_state_core = 391
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
-country_event = { # End of the Civil War PSA wins while allied with the USA
+country_event = { # New York, New Jersey and Pennsylvania are integrated
 	id = amcivwar.232
 	title = amcivwar.232.t
 	desc = amcivwar.232.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = CSA
-		has_global_flag = END_ACW
-		owns_state = 361
-		NOT = {
-			country_exists = USA
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 	
 	option = { 
 		name = amcivwar.232.a
 
 		CSA = {
-			remove_state_claim = 261
-			remove_state_claim = 396
-			remove_state_claim = 395
-			remove_state_claim = 394
-			remove_state_claim = 393
-			add_state_core = 261
-			add_state_core = 396
-			add_state_core = 395
-			add_state_core = 394
-			add_state_core = 393
+			remove_state_claim = 358
+			remove_state_claim = 359
+			remove_state_claim = 360
+			add_state_core = 358
+			add_state_core = 359
+			add_state_core = 360
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
-country_event = { # Arkansas is integrated
+country_event = { # Minnesota is integrated
 	id = amcivwar.233
 	title = amcivwar.233.t
 	desc = amcivwar.233.d
@@ -9527,15 +9589,15 @@ country_event = { # Arkansas is integrated
 		name = amcivwar.233.a
 
 		CSA = {
-			remove_state_claim = 372
-			add_state_core = 372
+			remove_state_claim = 391
+			add_state_core = 391
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
-country_event = { # Virginia is integrated
+country_event = { # North Carolina, Florida and Arkansas are integrated
 	id = amcivwar.234
 	title = amcivwar.234.t
 	desc = amcivwar.234.d
@@ -9547,15 +9609,19 @@ country_event = { # Virginia is integrated
 		name = amcivwar.234.a
 
 		CSA = {
-			remove_state_claim = 362
-			add_state_core = 362
+			remove_state_claim = 363
+			add_state_core = 363
+			remove_state_claim = 366
+			add_state_core = 366
+			remove_state_claim = 372
+			add_state_core = 372
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
-country_event = { # Nevada is integrated
+country_event = { # Virginia and Tennessee are integrated
 	id = amcivwar.235
 	title = amcivwar.235.t
 	desc = amcivwar.235.d
@@ -9567,15 +9633,17 @@ country_event = { # Nevada is integrated
 		name = amcivwar.235.a
 
 		CSA = {
-			remove_state_claim = 379
-			add_state_core = 379
+			remove_state_claim = 362
+			add_state_core = 362
+			remove_state_claim = 368
+			add_state_core = 368
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
-country_event = { # Idaho is integrated
+country_event = { # Nevada is integrated
 	id = amcivwar.236
 	title = amcivwar.236.t
 	desc = amcivwar.236.d
@@ -9587,11 +9655,31 @@ country_event = { # Idaho is integrated
 		name = amcivwar.236.a
 
 		CSA = {
+			remove_state_claim = 379
+			add_state_core = 379
+		}
+
+		add_political_power = -20	
+	}
+}
+
+country_event = { # Idaho is integrated
+	id = amcivwar.23600
+	title = amcivwar.23600.t
+	desc = amcivwar.23600.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = amcivwar.23600.a
+
+		CSA = {
 			remove_state_claim = 387
 			add_state_core = 387
 		}
 
-		add_political_power = -50	
+		add_political_power = -20	
 	}
 }
 
@@ -9618,14 +9706,18 @@ country_event = { # We win. Now what?
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 2
 	}
 	
-	option = { 
+	option = {
 		name = amcivwar.237.a
 
 		remove_state_claim = 463
 		add_state_core = 463
+		remove_state_claim = 387
+		add_state_core = 387
+		remove_state_claim = 379
+		add_state_core = 379
 
 		set_country_flag = amcivwar.237
 	}
@@ -9643,10 +9735,11 @@ country_event = { # The Fate of the Union
 		tag = CAL
 		has_country_flag = amcivwar.237
 		owns_state = 361
+		controls_state = 361
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 7
 	}
 	
 	option = { 
@@ -9655,10 +9748,9 @@ country_event = { # The Fate of the Union
 		ai_chance = {
 			factor = 78
 		}
-
+        trigger = { NOT = { country_exists = USA } }
 		add_political_power = 100
-		hidden_effect = { country_event = { id = amcivwar.238 days = 1 }}
-		puppet = USA
+		country_event = { id = amcivwar.239 }
 
 		USA = {
 			remove_state_core = 378
@@ -9672,70 +9764,23 @@ country_event = { # The Fate of the Union
 			remove_state_core = 650
 			remove_state_core = 638
 			remove_state_core = 632
-			remove_state_core = 342
-			remove_state_core = 726
-			remove_state_core = 727
-			remove_state_core = 630
 			remove_state_core = 631
+			remove_state_core = 630
 			remove_state_core = 629
+			remove_state_core = 727
+			remove_state_core = 642
+			remove_state_core = 726 }
 
-			transfer_state = 388
-			transfer_state = 381
-			transfer_state = 380 
-			transfer_state = 377
-			transfer_state = 382
-			transfer_state = 376
-			transfer_state = 389
-			transfer_state = 390
-			transfer_state = 384
-			transfer_state = 383
-			transfer_state = 374
-			transfer_state = 375
-			transfer_state = 391
-			transfer_state = 392
-			transfer_state = 373
-			transfer_state = 372
-			transfer_state = 371
-			transfer_state = 394
-			transfer_state = 395
-			transfer_state = 393
-			transfer_state = 396
-			transfer_state = 261
-			transfer_state = 360
-			transfer_state = 358
-			transfer_state = 359
-			transfer_state = 361
-			transfer_state = 362
-			transfer_state = 369
-			transfer_state = 363
-			transfer_state = 364
-			transfer_state = 365
-			transfer_state = 366
-			transfer_state = 367
-			transfer_state = 370
-			transfer_state = 368
-			transfer_state = 369
-
-			if = {
-				limit = { CAL = { owns_state = 357 owns_state = 796 }}
-				USA = { transfer_state = 357 transfer_state = 796}
-			}	
-		}
+			release = USA
 	}		
 
 	option = { 
 		name = amcivwar.238.b
 
 		ai_chance = {
-			factor = 21
+			factor = 22
 		}
-
-		add_national_unity = -0.2
-		add_political_power = -400
-
-		release = USA
-		release_puppet = USA
-		change_tag_from = USA
+        trigger = { NOT = { country_exists = USA } }
 
 		CAL = {
 			remove_state_core = 378
@@ -9758,23 +9803,67 @@ country_event = { # The Fate of the Union
 		}
 
 		USA = {
-			transfer_state = 378
-			transfer_state = 797
-			transfer_state = 798
-			transfer_state = 385
-			transfer_state = 386
-			transfer_state = 387
-			transfer_state = 379
-			transfer_state = 463
-			transfer_state = 650
-			transfer_state = 638
-			transfer_state = 632
-			transfer_state = 342
-			transfer_state = 726
-			transfer_state = 727
-			transfer_state = 630
-			transfer_state = 631
-			transfer_state = 629
+			annex_country = { target = CAL transfer_troops = yes }
+			change_tag_from = CAL
+			add_political_power = -400
+			add_state_core = 818 #Islands + Alaska
+			add_state_core = 685
+			add_state_core = 686
+			add_state_core = 463	
+			add_state_core = 629
+			add_state_core = 726
+			add_state_core = 642
+			add_state_core = 727
+			add_state_core = 630
+			add_state_core = 631
+			add_state_core = 632
+			add_state_core = 638
+			add_state_core = 650
+			
+			add_state_core = 377
+			add_state_core = 380
+			add_state_core = 388
+			add_state_core = 381
+			add_state_core = 382
+			add_state_core = 376
+			add_state_core = 375
+			add_state_core = 374
+			add_state_core = 383
+			add_state_core = 384
+			add_state_core = 390
+			add_state_core = 389
+			add_state_core = 392
+			add_state_core = 373
+			add_state_core = 369
+			add_state_core = 361
+			add_state_core = 796
+			add_state_core = 357
+			add_state_core = 371
+			add_state_core = 370
+			add_state_core = 367
+			add_state_core = 366	
+			add_state_core = 365
+			add_state_core = 364
+			add_state_core = 363
+			add_state_core = 368
+			add_state_core = 372
+			add_state_core = 362
+			add_state_core = 386
+			add_state_core = 385
+			add_state_core = 378
+			add_state_core = 797
+			add_state_core = 798
+			add_state_core = 379
+			add_state_core = 387
+			add_state_core = 261
+			add_state_core = 396
+			add_state_core = 395
+			add_state_core = 394
+			add_state_core = 393
+			add_state_core = 391
+			add_state_core = 360
+			add_state_core = 359
+			add_state_core = 358
 		}
 	}
 
@@ -9782,10 +9871,10 @@ country_event = { # The Fate of the Union
 		name = amcivwar.238.c
 
 		ai_chance = {
-			factor = 1
+			factor = 0
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}
 }
 
@@ -9799,9 +9888,10 @@ country_event = { # A good ally
 	
 	option = { 
 		name = amcivwar.239.a
-
-		create_faction = "American Alliance"
-		CAL = { add_to_faction = USA }
+        puppet = USA
+		if = { limit = { is_in_faction = no } create_faction = "American Alliance" add_to_faction = USA }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = yes } } add_to_faction = USA }
+		if = { limit = { AND = { is_in_faction = yes is_faction_leader = no } } every_other_country = { limit = { is_faction_leader = yes is_in_faction_with = CAL } add_to_faction = USA } }
 	}		
 }
 
@@ -9819,7 +9909,7 @@ country_event = { # CAL-Alaska
 		tag = CAL
 		has_global_flag = END_ACW
 		has_global_flag = ACW_CAN_SEIZE_ALASKA
-		CAN = { owns_state = 463 }
+		CAN = { owns_state = 463 controls_state = 463 }
 		NOT = {
 			country_exists = TEX
 			country_exists = CSA
@@ -9830,7 +9920,7 @@ country_event = { # CAL-Alaska
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 2
 	}
 	
 	option = { 
@@ -9840,7 +9930,7 @@ country_event = { # CAL-Alaska
 			factor = 80
 		}
 
-		hidden_effect = { CAN = { country_event = { id = amcivwar.241 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.241 } }
 	}		
 
 	option = { 
@@ -9850,10 +9940,10 @@ country_event = { # CAL-Alaska
 			factor = 20
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 		remove_state_core = 650
 		remove_state_core = 463
-		hidden_effect = { CAN = { country_event = { id = amcivwar.242 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.242 } }
 		set_global_flag = NO_ALASKA
 	}
 }
@@ -9873,7 +9963,7 @@ country_event = { # California wins and demands Alaska
 			factor = 35
 		}
 
-		hidden_effect = { CAL = { country_event = { id = amcivwar.243 days = 1 }}}
+		CAL = { country_event = { id = amcivwar.243 days = 3 } }
 		add_state_core = 650
 		add_state_core = 463
 		add_opinion_modifier = { target = CAL modifier = CAN_NO_RET_ALASKA }
@@ -9886,7 +9976,7 @@ country_event = { # California wins and demands Alaska
 			factor = 65
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 		CAL = {
 			transfer_state = 650
 			transfer_state = 463
@@ -9894,7 +9984,7 @@ country_event = { # California wins and demands Alaska
 	}
 }
 
-country_event = { # California wins and demands Alaska
+country_event = { # Canada Gains Control of Alaska.
 	id = amcivwar.242
 	title = amcivwar.242.t
 	desc = amcivwar.242.d
@@ -9925,7 +10015,7 @@ country_event = { # Canada refuses to hand over Alaska
 			factor = 12
 		}
 
-		declare_war_on = { target = CAN type = puppet_wargoal_focus }
+		declare_war_on = { target = CAN type = annex_everything }
 	}		
 
 	option = { 
@@ -9958,12 +10048,10 @@ country_event = { # AUSAlaska
 		tag = TEX
 		has_global_flag = END_ACW
 		has_global_flag = ACW_CAN_SEIZE_ALASKA
-		CAN = { owns_state = 463 }
+		CAN = { owns_state = 463 controls_state = 463 }
 		NOT = {
 			has_war_with = CAL
 			has_war_with = CAN
-			country_exists = USA
-			country_exists = CSA
 		}
 	}
 
@@ -9978,7 +10066,9 @@ country_event = { # AUSAlaska
 			factor = 90
 		}
 
-		hidden_effect = { CAN = { country_event = { id = amcivwar.245 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.245 } }
+		add_state_core = 463
+		add_state_core = 650
 	}		
 
 	option = { 
@@ -9988,10 +10078,10 @@ country_event = { # AUSAlaska
 			factor = 10
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 		remove_state_core = 650
 		remove_state_core = 463
-		hidden_effect = { CAN = { country_event = { id = amcivwar.246 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.246 } }
 		set_global_flag = AUS_NO_ALASKA
 	}
 }
@@ -10011,7 +10101,7 @@ country_event = { # AUS wins and demands Alaska
 			factor = 10
 		}
 
-		hidden_effect = { TEX = { country_event = { id = amcivwar.247 days = 1 }}}
+		TEX = { country_event = { id = amcivwar.247 days = 3 }}
 		add_state_core = 650
 		add_state_core = 463
 		add_opinion_modifier = { target = TEX modifier = CAN_NO_RET_ALASKA }
@@ -10024,7 +10114,7 @@ country_event = { # AUS wins and demands Alaska
 			factor = 90
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 		TEX = {
 			transfer_state = 650
 			transfer_state = 463
@@ -10032,7 +10122,7 @@ country_event = { # AUS wins and demands Alaska
 	}
 }
 
-country_event = { # California wins and demands Alaska
+country_event = { # Canada Gains Control of Alaska.
 	id = amcivwar.246
 	title = amcivwar.246.t
 	desc = amcivwar.246.d
@@ -10062,8 +10152,8 @@ country_event = { # Canada refuses to hand over Alaska
 		ai_chance = {
 			factor = 50
 		}
-
-		declare_war_on = { target = CAN type = puppet_wargoal_focus }
+        trigger = { is_puppet = no has_war = no NOT = { country_exists = CSA country_exists = USA } }
+		declare_war_on = { target = CAN type = annex_everything }
 	}		
 
 	option = { 
@@ -10095,12 +10185,10 @@ country_event = { # Canada holds Alaska at the end of the war
 		tag = USA
 		has_global_flag = END_ACW
 		has_global_flag = ACW_CAN_SEIZE_ALASKA
-		CAN = { owns_state = 463 }
+		CAN = { owns_state = 463 controls_state = 463 }
 		NOT = {
 			has_government = authoritarian_democratist
 			has_war_with = CAN
-			country_exists = USA
-			country_exists = CSA
 			has_global_flag = NO_ALASKA
 		}
 	}
@@ -10112,12 +10200,12 @@ country_event = { # Canada holds Alaska at the end of the war
 	option = { 
 		name = amcivwar.248.a
 
-		hidden_effect = { CAN = { country_event = { id = amcivwar.249 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.249 } }
 		add_opinion_modifier = { target = CAN modifier = CAN_RET_ALASKA }
 	}		
 }
 
-country_event = { # Canada refuses to hand over Alaska
+country_event = { # Alaska Returned
 	id = amcivwar.249
 	title = amcivwar.249.t
 	desc = amcivwar.249.d
@@ -10208,7 +10296,7 @@ country_event = { # MacArthur and Alaska/
 			factor = 55
 		}
 
-		hidden_effect = { CAN = { country_event = { id = amcivwar.252 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.252 } }
 	}
 
 	option = { 
@@ -10218,9 +10306,11 @@ country_event = { # MacArthur and Alaska/
 			factor = 45
 		}
 
-		hidden_effect = { CAN = { country_event = { id = amcivwar.253 days = 1 }}}
+		CAN = { country_event = { id = amcivwar.253 } }
 		add_opinion_modifier = { target = CAN modifier = MACARTHUR_NO_ALASKA }
 		set_global_flag = NO_ALASKA
+		remove_state_core = 650
+		remove_state_core = 463
 	}			
 }
 
@@ -10253,7 +10343,7 @@ country_event = { # MacArthur Requests Alaska back
 		}
 
 		add_opinion_modifier = { target = USA modifier = CAN_NO_RET_ALASKA }
-		add_political_power = -50
+		add_political_power = -60
 	}	
 }
 
@@ -10271,7 +10361,7 @@ country_event = { # MacArthur gives Canada Alaska
 		ai_chance = {
 			factor = 99
 		}
-
+        add_political_power = 20
 		CAN = {
 			add_state_core = 650
 			add_state_core = 463
@@ -10311,145 +10401,154 @@ country_event = { # Alliance between Canada/ USA wars end
 			controls_state = 358
 			controls_state = 357
 			controls_state = 363
+			controls_state = 379
+			controls_state = 383
+			controls_state = 372
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 5
 	}
 	
 	option = { 
 		name = amcivwar.254.a
 
 		ai_chance = {
-			factor = 55
+			factor = 100
 		}
-
-		USA = {
-			transfer_state = 386
-			transfer_state = 385
-			transfer_state = 378
-			transfer_state = 797
-			transfer_state = 798
-			transfer_state = 379
-			transfer_state = 387
-			transfer_state = 380
-			transfer_state = 377
-			transfer_state = 388
-			transfer_state = 381
-			transfer_state = 376
-			transfer_state = 382
-			transfer_state = 389
-			transfer_state = 390
-			transfer_state = 384
-			transfer_state = 383
-			transfer_state = 374
-			transfer_state = 375
-			transfer_state = 391
-			transfer_state = 392
-			transfer_state = 373
-			transfer_state = 372
-			transfer_state = 371
-			transfer_state = 370
-			transfer_state = 367
-			transfer_state = 366
-			transfer_state = 365
-			transfer_state = 364
-			transfer_state = 363
-			transfer_state = 368
-			transfer_state = 369
-			transfer_state = 362
-			transfer_state = 395
-			transfer_state = 394
-			transfer_state = 393
-			transfer_state = 396
-			transfer_state = 261
-			transfer_state = 360
-			transfer_state = 361
-			transfer_state = 359
-			transfer_state = 358
-		}
+        trigger = { OR = { is_in_faction_with = USA USA = { is_puppet_of = CAN } } }
+		if = { limit = { controls_state = 395 } USA = { transfer_state = 395 } }
+		if = { limit = { controls_state = 362 } USA = { transfer_state = 362 } }
+		if = { limit = { controls_state = 369 } USA = { transfer_state = 369 } }
+		if = { limit = { controls_state = 368 } USA = { transfer_state = 368 } }
+		if = { limit = { controls_state = 363 } USA = { transfer_state = 363 } }
+		if = { limit = { controls_state = 364 } USA = { transfer_state = 364 } }
+		if = { limit = { controls_state = 365 } USA = { transfer_state = 365 } }
+		if = { limit = { controls_state = 366 } USA = { transfer_state = 366 } }
+		if = { limit = { controls_state = 367 } USA = { transfer_state = 367 } }
+		if = { limit = { controls_state = 370 } USA = { transfer_state = 370 } }
+		if = { limit = { controls_state = 371 } USA = { transfer_state = 371 } }
+		if = { limit = { controls_state = 372 } USA = { transfer_state = 372 } }
+		if = { limit = { controls_state = 373 } USA = { transfer_state = 373 } }
+		if = { limit = { controls_state = 392 } USA = { transfer_state = 392 } }
+		if = { limit = { controls_state = 391 } USA = { transfer_state = 391 } }
+		if = { limit = { controls_state = 375 } USA = { transfer_state = 375 } }
+		if = { limit = { controls_state = 374 } USA = { transfer_state = 374 } }
+		if = { limit = { controls_state = 383 } USA = { transfer_state = 383 } }
+		if = { limit = { controls_state = 384 } USA = { transfer_state = 384 } }
+		if = { limit = { controls_state = 390 } USA = { transfer_state = 390 } }
+		if = { limit = { controls_state = 389 } USA = { transfer_state = 389 } }
+		if = { limit = { controls_state = 382 } USA = { transfer_state = 382 } }
+		if = { limit = { controls_state = 376 } USA = { transfer_state = 376 } }
+		if = { limit = { controls_state = 381 } USA = { transfer_state = 381 } }
+		if = { limit = { controls_state = 388 } USA = { transfer_state = 388 } }
+		if = { limit = { controls_state = 377 } USA = { transfer_state = 377 } }
+		if = { limit = { controls_state = 380 } USA = { transfer_state = 380 } }
+		if = { limit = { controls_state = 387 } USA = { transfer_state = 387 } }
+		if = { limit = { controls_state = 379 } USA = { transfer_state = 379 } }
+		if = { limit = { controls_state = 798 } USA = { transfer_state = 798 } }
+		if = { limit = { controls_state = 797 } USA = { transfer_state = 797 } }
+		if = { limit = { controls_state = 378 } USA = { transfer_state = 378 } }
+		if = { limit = { controls_state = 385 } USA = { transfer_state = 385 } }
+		if = { limit = { controls_state = 386 } USA = { transfer_state = 386 } }
+		if = { limit = { controls_state = 394 } USA = { transfer_state = 394 } }
+		if = { limit = { controls_state = 393 } USA = { transfer_state = 393 } }
+		if = { limit = { controls_state = 396 } USA = { transfer_state = 396 } }
+		if = { limit = { controls_state = 261 } USA = { transfer_state = 261 } }
+		if = { limit = { controls_state = 360 } USA = { transfer_state = 360 } }
+		if = { limit = { controls_state = 361 } USA = { transfer_state = 361 } }
+		if = { limit = { controls_state = 359 } USA = { transfer_state = 359 } }
+		if = { limit = { controls_state = 358 } USA = { transfer_state = 358 } }
 	}
 
 	option = { 
 		name = amcivwar.254.b
 
 		ai_chance = {
-			factor = 45
+			factor = 100
 		}
-
-		hidden_effect = { USA = { country_event = { id = amcivwar.256 days = 1 }}}
+        trigger = { NOT = { has_war_with = USA is_in_faction_with = USA USA = { is_puppet_of = CAN } } country_exists = USA USA = { is_puppet = no } }
+		USA = { country_event = { id = amcivwar.256 } }
 	}
 
 	option = { 
 		name = amcivwar.254.c
 
 		ai_chance = {
-			factor = 45
+			factor = 100
 		}
-
-		add_political_power = -50
-	}				
-}
-
-country_event = { # Alliance between Canada/ USA wars end
-	id = amcivwar.255
-	title = amcivwar.255.t
-	desc = amcivwar.255.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-
-	trigger = {
-		tag = CAN
-		has_global_flag = END_ACW
-		NOT = {
-			is_puppet = yes
-			has_war_with = CSA
-			has_war_with = CAL 
-			has_war_with = NEE 
-			has_war_with = TEX 
-			has_war_with = USA 
-			country_exists = USA
-		}
-		OR = {
-			controls_state = 386
-			controls_state = 387
-			controls_state = 388
-			controls_state = 389
-			controls_state = 391
-			controls_state = 394
-			controls_state = 395
-			controls_state = 393
-			controls_state = 358
-			controls_state = 357
-			controls_state = 363
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
-	
-	option = { 
-		name = amcivwar.255.a
-
-		ai_chance = {
-			factor = 55
-		}
-
+        trigger = { NOT = { country_exists = USA } }
+		USA = { add_state_core = 818 #Islands + Alaska
+			add_state_core = 685
+			add_state_core = 686
+			add_state_core = 463	
+			add_state_core = 629
+			add_state_core = 726
+			add_state_core = 642
+			add_state_core = 727
+			add_state_core = 630
+			add_state_core = 631
+			add_state_core = 632
+			add_state_core = 638
+			add_state_core = 650
+			
+			add_state_core = 377
+			add_state_core = 380
+			add_state_core = 388
+			add_state_core = 381
+			add_state_core = 382
+			add_state_core = 376
+			add_state_core = 375
+			add_state_core = 374
+			add_state_core = 383
+			add_state_core = 384
+			add_state_core = 390
+			add_state_core = 389
+			add_state_core = 392
+			add_state_core = 373
+			add_state_core = 369
+			add_state_core = 361
+			add_state_core = 796
+			add_state_core = 357
+			add_state_core = 371
+			add_state_core = 370
+			add_state_core = 367
+			add_state_core = 366	
+			add_state_core = 365
+			add_state_core = 364
+			add_state_core = 363
+			add_state_core = 368
+			add_state_core = 372
+			add_state_core = 362
+			add_state_core = 386
+			add_state_core = 385
+			add_state_core = 378
+			add_state_core = 797
+			add_state_core = 798
+			add_state_core = 379
+			add_state_core = 387
+			add_state_core = 261
+			add_state_core = 396
+			add_state_core = 395
+			add_state_core = 394
+			add_state_core = 393
+			add_state_core = 391
+			add_state_core = 360
+			add_state_core = 359
+			add_state_core = 358 }
 		release = USA
+		puppet = USA
 	}
 
-	option = { 
-		name = amcivwar.255.b
+option = { 
+		name = amcivwar.254.e
 
 		ai_chance = {
-			factor = 45
+			factor = 0
 		}
-
-		add_political_power = -50
-	}				
+        add_political_power = -40
+	}	
 }
 
 country_event = { # The Canadians demands alliance
@@ -10464,11 +10563,11 @@ country_event = { # The Canadians demands alliance
 		name = amcivwar.256.a
 
 		ai_chance = {
-			factor = 55
+			factor = 100
 		}
 
-		add_political_power = -50
-		hidden_effect = { CAN = { country_event = { id = amcivwar.257 days = 1 }}}
+		add_political_power = -40
+		CAN = { country_event = { id = amcivwar.257 } }
 		add_opinion_modifier = { target = CAN modifier = USA_CAN_alliance }
 	}
 
@@ -10476,14 +10575,14 @@ country_event = { # The Canadians demands alliance
 		name = amcivwar.256.b
 
 		ai_chance = {
-			factor = 45
+			factor = 0
 		}
 
-		add_political_power = -50
+		add_political_power = -100
 	}				
 }
 
-country_event = { # Alliance Between PSA and USA, return of territory
+country_event = { # The USA accepts our offer
 	id = amcivwar.257
 	title = amcivwar.257.t
 	desc = amcivwar.257.d
@@ -10496,50 +10595,48 @@ country_event = { # Alliance Between PSA and USA, return of territory
 
 		add_to_faction = USA
 		add_political_power = 100
-		USA = {
-			transfer_state = 386
-			transfer_state = 385
-			transfer_state = 378
-			transfer_state = 797
-			transfer_state = 798
-			transfer_state = 379
-			transfer_state = 387
-			transfer_state = 380
-			transfer_state = 377
-			transfer_state = 388
-			transfer_state = 381
-			transfer_state = 376
-			transfer_state = 382
-			transfer_state = 389
-			transfer_state = 390
-			transfer_state = 384
-			transfer_state = 383
-			transfer_state = 374
-			transfer_state = 375
-			transfer_state = 391
-			transfer_state = 392
-			transfer_state = 373
-			transfer_state = 372
-			transfer_state = 371
-			transfer_state = 370
-			transfer_state = 367
-			transfer_state = 366
-			transfer_state = 365
-			transfer_state = 364
-			transfer_state = 363
-			transfer_state = 368
-			transfer_state = 369
-			transfer_state = 362
-			transfer_state = 395
-			transfer_state = 394
-			transfer_state = 393
-			transfer_state = 396
-			transfer_state = 261
-			transfer_state = 360
-			transfer_state = 361
-			transfer_state = 359
-			transfer_state = 358
-		}
+		if = { limit = { controls_state = 395 } USA = { transfer_state = 395 } }
+		if = { limit = { controls_state = 362 } USA = { transfer_state = 362 } }
+		if = { limit = { controls_state = 369 } USA = { transfer_state = 369 } }
+		if = { limit = { controls_state = 368 } USA = { transfer_state = 368 } }
+		if = { limit = { controls_state = 363 } USA = { transfer_state = 363 } }
+		if = { limit = { controls_state = 364 } USA = { transfer_state = 364 } }
+		if = { limit = { controls_state = 365 } USA = { transfer_state = 365 } }
+		if = { limit = { controls_state = 366 } USA = { transfer_state = 366 } }
+		if = { limit = { controls_state = 367 } USA = { transfer_state = 367 } }
+		if = { limit = { controls_state = 370 } USA = { transfer_state = 370 } }
+		if = { limit = { controls_state = 371 } USA = { transfer_state = 371 } }
+		if = { limit = { controls_state = 372 } USA = { transfer_state = 372 } }
+		if = { limit = { controls_state = 373 } USA = { transfer_state = 373 } }
+		if = { limit = { controls_state = 392 } USA = { transfer_state = 392 } }
+		if = { limit = { controls_state = 391 } USA = { transfer_state = 391 } }
+		if = { limit = { controls_state = 375 } USA = { transfer_state = 375 } }
+		if = { limit = { controls_state = 374 } USA = { transfer_state = 374 } }
+		if = { limit = { controls_state = 383 } USA = { transfer_state = 383 } }
+		if = { limit = { controls_state = 384 } USA = { transfer_state = 384 } }
+		if = { limit = { controls_state = 390 } USA = { transfer_state = 390 } }
+		if = { limit = { controls_state = 389 } USA = { transfer_state = 389 } }
+		if = { limit = { controls_state = 382 } USA = { transfer_state = 382 } }
+		if = { limit = { controls_state = 376 } USA = { transfer_state = 376 } }
+		if = { limit = { controls_state = 381 } USA = { transfer_state = 381 } }
+		if = { limit = { controls_state = 388 } USA = { transfer_state = 388 } }
+		if = { limit = { controls_state = 377 } USA = { transfer_state = 377 } }
+		if = { limit = { controls_state = 380 } USA = { transfer_state = 380 } }
+		if = { limit = { controls_state = 387 } USA = { transfer_state = 387 } }
+		if = { limit = { controls_state = 379 } USA = { transfer_state = 379 } }
+		if = { limit = { controls_state = 798 } USA = { transfer_state = 798 } }
+		if = { limit = { controls_state = 797 } USA = { transfer_state = 797 } }
+		if = { limit = { controls_state = 378 } USA = { transfer_state = 378 } }
+		if = { limit = { controls_state = 385 } USA = { transfer_state = 385 } }
+		if = { limit = { controls_state = 386 } USA = { transfer_state = 386 } }
+		if = { limit = { controls_state = 394 } USA = { transfer_state = 394 } }
+		if = { limit = { controls_state = 393 } USA = { transfer_state = 393 } }
+		if = { limit = { controls_state = 396 } USA = { transfer_state = 396 } }
+		if = { limit = { controls_state = 261 } USA = { transfer_state = 261 } }
+		if = { limit = { controls_state = 360 } USA = { transfer_state = 360 } }
+		if = { limit = { controls_state = 361 } USA = { transfer_state = 361 } }
+		if = { limit = { controls_state = 359 } USA = { transfer_state = 359 } }
+		if = { limit = { controls_state = 358 } USA = { transfer_state = 358 } }
 		add_opinion_modifier = { target = USA modifier = USA_CAN_alliance }
 	}				
 }

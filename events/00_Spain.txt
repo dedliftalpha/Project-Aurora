@@ -66,7 +66,7 @@ country_event = { #Xavier gives a speech
 	}
 }
 
-country_event = { #Mediterranean economic block - Portugal
+country_event = { #Mediterranean economic block - PORTUGAL
 	id = sprd.4
 	title = sprd.4.t
 	desc = sprd.4.d
@@ -88,7 +88,7 @@ country_event = { #Mediterranean economic block - Portugal
 	}
 }
 
-country_event = { #Mediterranean economic block - Italy
+country_event = { #Mediterranean economic block - ITALY
 	id = sprd.5
 	title = sprd.5.t
 	desc = sprd.5.d
@@ -234,7 +234,7 @@ country_event = { #miguel ponte manso de zuniga
 			has_country_flag = xavier_banned
 			has_country_flag = xavier_arrested
 			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrested
+			has_country_flag = cntfai_arrest_order
 		}
 	}		
 	mean_time_to_happen = { days = 200 }
@@ -266,7 +266,7 @@ country_event = { #jose ungria jimenez
 			has_country_flag = xavier_banned
 			has_country_flag = xavier_arrested
 			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrested
+			has_country_flag = cntfai_arrest_order
 		}
 	}		
 	mean_time_to_happen = { days = 200 }
@@ -300,7 +300,7 @@ country_event = { #the cnt-fai
 	option = {
 		name = sprd.13.b
 		add_political_power = -140
-		set_country_flag = cntfai_arrested
+		set_country_flag = cntfai_arrest_order
 		set_country_flag = SPA_CNT
 		#freedom, democratic, left = -1
 	}
@@ -328,7 +328,7 @@ country_event = { #protests
 		tag = SPR
 		OR {
 			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrested
+			has_country_flag = cntfai_arrest_order
 		}
 	}		
 	mean_time_to_happen = { days = 30 }
@@ -345,9 +345,7 @@ country_event = { #national protests
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
-		OR {
-			has_country_flag = cntfai_banned
-		}
+		has_country_flag = cntfai_banned
 	}		
 	mean_time_to_happen = { days = 30 }
 	option = {
@@ -362,9 +360,150 @@ country_event = { #national protests
 	}
 }
 
+country_event = { #arresting CNT-FAI
+	id = sprd.16
+	title = sprd.16.t
+	desc = sprd.16.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = cntfai_arrest_order
+	}		
+	mean_time_to_happen = { days = 30 }
+	option = {
+		name = sprd.16.a
+		add_political_power = -60
+		#minister
+		#freedom = -1
+		set_country_flag = cntfai_fled
+	}
+	option = {
+		name = sprd.16.b
+		add_political_power = -60
+		set_country_flag = cntfai_fled
+	}
+}
+
+country_event = { #disbanding CNT-FAI
+	id = sprd.17
+	title = sprd.17.t
+	desc = sprd.17.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = cntfai_banned
+	}		
+	mean_time_to_happen = { days = 30 }
+	option = {
+		name = sprd.17.a
+		add_political_power = 60
+		set_global_flag = cntfai_fled
+	}
+}
+
+#CNT-FAI events for foreign support
+
+	country_event = { #CNT-FAI in FRANCE
+		id = sprd.18
+		title = sprd.18.t
+		desc = sprd.18.d
+		fire_only_once = yes
+		trigger = {
+			tag = FRA
+			has_global_flag = cntfai_fled
+		}		
+		mean_time_to_happen = { days = 15 }
+		option = {
+			name = sprd.18.a
+			add_political_power = 60
+			add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+			#command = { type = manpowerpool value = -2 }
+			#command = { type = resource which = supplies value = -500 }
+			#command = { type = money value = -10 }
+			set_global_flag = cntfai_support_from_frace
+		}
+		option = {
+			name = sprd.18.b
+			add_political_power = -20
+			add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+		}
+		option = {
+			name = sprd.18.c
+			add_political_power = -100
+			add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+		}
+	}
+	
+	#19 - Italy
+	
+	#20 - England
+
+#CNT-FAI organising the workers
+
+country_event = { #organising the workers
+	id = sprd.21
+	title = sprd.21.t
+	desc = sprd.21.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = cntfai_allowed
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprd.21.a
+		add_political_power = 20
+		set_country_flag = cntfai_organising_workers
+	}
+}
+
+country_event = { #mining
+	id = sprd.22
+	title = sprd.22.t
+	desc = sprd.22.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = cntfai_allowed
+		has_country_flag = cntfai_organising_workers
+		
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprd.22.a
+		add_political_power = 60
+		#command = { type = peacetime_ic_mod value = 2 }
+		set_country_flag = cntfai_south
+	}
+}
+
+country_event = { #mining
+	id = sprd.22
+	title = sprd.22.t
+	desc = sprd.22.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = cntfai_allowed
+		has_country_flag = cntfai_organising_workers
+		has_country_flag = cntfai_south
+		
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprd.22.a
+		#command = { type = add_prov_resource which = 469 value = 1 where = rare_materials }
+		#command = { type = add_prov_resource which = 471 value = 1 where = rare_materials }
+		#command = { type = add_prov_resource which = 463 value = 1 where = rare_materials }
+		#command = { type = construct which = infrastructure where = 469 value = 10 }
+		#command = { type = construct which = infrastructure where = 471 value = 10 }
+		#command = { type = construct which = infrastructure where = 463 value = 10 }
+	}
+}
+
+#elections
 
 
-#wip
 
 ########################################
 #### Kingdom of Spain, Foreign Policy

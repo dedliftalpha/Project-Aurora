@@ -1,10 +1,11 @@
-﻿###########################
-# Lithuania Events
+###########################
+# Lithuania Events. Coded by Augenis
 ###########################
 
 add_namespace = lithuania
 
-#Start of game description of Lithuania
+###Start of game description of Lithuania
+
 country_event = { 
 	id = lithuania.1
 	title = lithuania.1.t
@@ -61,29 +62,6 @@ country_event = {
 		
 	option = {
 		name = lithuania.3.a
-	}
-
-}
-
-#Sapoka writes history of Lithuania
-country_event = { 
-	id = lithuania.4
-	title = lithuania.4.t
-	desc = lithuania.4.d
-	picture = GFX_sapoka
-
-	fire_only_once = yes
-	
-	trigger ={ 
-	tag = LIT
-	date > 1936.1.1
-	}
-		
-	mean_time_to_happen = {days = 180}
-		
-	option = {
-		name = lithuania.4.a
-		add_political_power = 40
 	}
 
 }
@@ -149,3 +127,117 @@ country_event = {
 	}
 }
 
+#Black Monday defeated
+country_event = {
+	id = lithuania.7
+	title = lithuania.7.t
+	desc = lithuania.7.d
+	picture = GFX_Post_Black_Monday_News
+	
+	trigger = {
+		tag = LIT
+		has_completed_focus = LIT_economic_recovery
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = lithuania.7.a		
+	}
+}
+
+###Internal events
+
+#Sapoka writes history of Lithuania
+country_event = { 
+	id = lithuania.4
+	title = lithuania.4.t
+	desc = lithuania.4.d
+	picture = GFX_sapoka
+
+	fire_only_once = yes
+	
+	trigger ={ 
+		tag = LIT
+		date > 1936.1.1
+	}
+		
+	mean_time_to_happen = {days = 180}
+		
+	option = {
+		name = lithuania.4.a
+		add_political_power = 40
+	}
+
+}
+
+#Trecias frontas
+country_event = { 
+	id = lithuania.8
+	title = lithuania.8.t
+	desc = lithuania.8.d
+	picture = LIT_syndicalism
+
+	fire_only_once = yes
+	
+	trigger ={ 
+		tag = LIT
+		OR = {
+			has_country_flag = LIT_liberal_choice
+			has_government = social_democratist
+		}
+	}
+		
+	mean_time_to_happen = {days = 180}
+		
+	option = {
+		name = lithuania.8.a
+		add_political_power = -100
+		add_popularity = { ideology = totalist popularity = 0.05 }	
+		hidden_effect = {
+			set_country_flag = LIT_syndies
+		}
+	}
+		option = {
+		name = lithuania.8.b
+		add_political_power = -60
+		set_country_flag = totalist_banned
+		add_national_unity = -0.05
+	}
+}
+
+#Nationalist rally
+country_event = { 
+	id = lithuania.9
+	title = lithuania.9.t
+	desc = lithuania.9.d
+	picture = LIT_nationalism
+	
+	fire_only_once = no
+	
+	trigger ={ 
+		tag = LIT
+		date > 1936.1.1
+		NOT = { has_government = national_populist }
+	}
+		
+	mean_time_to_happen = {days = 60
+	modifier = {
+				factor = 0.5
+				date > 1937.01.01}
+	modifier = {
+				factor = 0.5
+				date > 1938.01.01}
+	modifier = {
+				factor = 0.5
+				date > 1939.01.01}
+	}
+		
+	option = {
+		name = lithuania.9.a
+		add_political_power = -40
+	}
+
+}

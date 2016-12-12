@@ -1,6 +1,6 @@
-﻿###########################
+﻿###################################
 # Netherlands - By MonarchistKaiser
-###########################
+###################################
 
 add_namespace = hol
 
@@ -98,6 +98,7 @@ country_event = { #Worsening Living Standard
 	    ai_chance = { factor = 55 }
 		hidden_effect = {
 		set_country_flag = hol_revolt
+        add_ideas = HOL_crisis
 		}
     }
 }
@@ -201,6 +202,7 @@ country_event = { #Zwolle Massacre
 		hidden_effect {
 		clr_country_flag = hol_revolt
 		set_country_flag = hol_labor
+		remove_ideas = HOL_crisis
 		}
     }
 }
@@ -294,6 +296,8 @@ country_event = { #Syndicalist Revolution!
 		clr_country_flag = hol_revolution
 		clr_country_flag = hol_revolt 
 		set_country_flag = hol_50
+        remove_ideas = HOL_crisis
+		add_ideas = HOL_syndie		
 		}
 		every_country = {
 				limit = { NOT = { OR = { tag = HOL has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
@@ -312,7 +316,8 @@ country_event = { #Syndicalist Revolution!
 		hidden_effect = {
 		clr_country_flag = hol_revolution
 		clr_country_flag = hol_revolt
-		set_country_flag = hol_50	
+		set_country_flag = hol_50
+        remove_ideas = HOL_crisis		
         }
     }	
 }
@@ -334,13 +339,15 @@ country_event = { #Syndicalist Revolution!
 
 	option = {
 		name = hol.12.a 
-		ai_chance = { factor = 90 } 
+		ai_chance = { factor = 50 }
 		set_politics = { ruling_party = totalist elections_allowed = no }		
 		add_popularity = { ideology = totalist popularity = 0.2 }
 		hidden_effect = { 
 		clr_country_flag = hol_revolution
 		clr_country_flag = hol_revolt 
 		set_country_flag = hol_no_50
+		remove_ideas = HOL_crisis
+		add_ideas = HOL_syndie
 		}
 		every_country = {
 				limit = { NOT = { OR = { tag = HOL has_government = radical_socialist has_government = syndicalist has_government = totalist }}}
@@ -354,12 +361,13 @@ country_event = { #Syndicalist Revolution!
 	}
     option = {
 		name = hol.12.b
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 50 }
 		add_political_power = -50
 		hidden_effect = {
 		clr_country_flag = hol_revolution
 		clr_country_flag = hol_revolt	
-		set_country_flag = hol_no_50		
+		set_country_flag = hol_no_50
+		remove_ideas = HOL_crisis
         }
     }	
 }
@@ -570,5 +578,200 @@ country_event = { #HOL reaction to AST
     }
 }
 
+country_event = { #HOL joins Entente
+	id = hol.22
+	title = hol.22.t
+	desc = hol.22.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.22.a 
+ 		ai_chance = { factor = 90 }
+        CAN = { add_to_faction = HOL }
+	}
+    option = {
+		name = hol.22.b
+ 		ai_chance = { factor = 10 }
+		add_political_power = -20
+		HOL = { country_event = { days = 1 id = hol.29 } }	
+    }
+}
 
+country_event = { #HOL joins Mittleuropa
+	id = hol.23
+	title = hol.23.t
+	desc = hol.23.d
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = hol.23.a 
+ 		ai_chance = { factor = 90 }
+        GER = { add_to_faction = HOL }
+	}
+    option = {
+		name = hol.23.b
+ 		ai_chance = { factor = 10 }
+		add_political_power = -20
+		HOL = { country_event = { days = 1 id = hol.31 } }	
+    }
+}
 
+country_event = { #Indonesia Birth
+	id = hol.24
+	title = hol.24.t
+	desc = hol.24.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+	tag = INS
+    date > 1937.01.20
+	HOL = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist }}
+	}
+	
+	option = {
+		name = hol.24.a 
+        add_manpower = 10000
+        add_political_power	= 100
+        set_research_slots = 3	
+        set_country_flag = INS_exists		
+	}
+}
+
+country_event = { #Gov in-exile Alliances
+	id = hol.25
+	title = hol.25.t
+	desc = hol.25.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+	tag = INS
+    date > 1937.01.20
+	has_country_flag = INS_exists
+	is_in_faction = no
+	HOL = { OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist }}
+	NOT = { has_war_with = GER has_war_with = JAP has_war_with = CAN }
+	}
+	
+	option = {
+		name = hol.25.a 
+ 		ai_chance = { factor = 25 }		
+        hidden_effect = { CAN = { country_event = { days = 7 id = hol.26 } } }	
+	}
+	option = {
+		name = hol.25.b
+ 		ai_chance = { factor = 30 }		
+        hidden_effect = { JAP = { country_event = { days = 7 id = hol.27 } } }	
+	}	
+	option = {
+		name = hol.25.c
+ 		ai_chance = { factor = 25 }				
+        hidden_effect = { GER = { country_event = { days = 7 id = hol.28 } } }	
+	}	
+	option = {
+		name = hol.25.e
+ 		ai_chance = { factor = 20 }		
+		add_political_power = -50
+	}
+}
+
+country_event = { #Entente request
+	id = hol.26
+	title = hol.26.t
+	desc = hol.26.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.26.a 
+ 		ai_chance = { factor = 90 }
+        CAN = { add_to_faction = INS }
+	}
+    option = {
+		name = hol.26.b
+ 		ai_chance = { factor = 10 }
+		add_political_power = -20
+		INS = { country_event = { days = 1 id = hol.29 } }		
+    }
+}
+
+country_event = { #Co-Prosperity JAP request
+	id = hol.27
+	title = hol.27.t
+	desc = hol.27.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.27.a 
+ 		ai_chance = { factor = 95 }
+        JAP = { add_to_faction = INS }
+	}
+    option = {
+		name = hol.27.b
+ 		ai_chance = { factor = 5 }
+		add_political_power = -20
+		INS = { country_event = { days = 1 id = hol.30 } }	
+    }
+}
+
+country_event = { #Mittleuropa request
+	id = hol.28
+	title = hol.28.t
+	desc = hol.28.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.28.a 
+ 		ai_chance = { factor = 90 }
+        GER = { add_to_faction = INS }
+	}
+    option = {
+		name = hol.28.b
+ 		ai_chance = { factor = 10 }
+		add_political_power = -20
+		INS = { country_event = { days = 1 id = hol.31 } }		
+    }
+}
+
+country_event = { #Entente request refused
+	id = hol.29
+	title = hol.29.t
+	desc = hol.29.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.29.a 
+	}
+}
+
+country_event = { #JAP request refused
+	id = hol.30
+	title = hol.30.t
+	desc = hol.30.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.30.a 
+	}
+}
+
+country_event = { #GER request refused
+	id = hol.31
+	title = hol.31.t
+	desc = hol.31.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hol.31.a 
+	}
+}

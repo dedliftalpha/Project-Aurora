@@ -767,9 +767,18 @@ add_namespace = japfor
 						}
 		controls_state = 327
 		}
-		release = PHL 
+		every_state = {
+    limit = {
+        is_controlled_by = JAP
+	
+        is_core_of = PHL
+
+    }
+	PHL = { transfer_state = PREV }
+    
+}
 		GER = {
-		annex_country = { target = PHI transfer_troops = no }
+		annex_country = { target = PHL transfer_troops = no }
 							}
 							}
 							}
@@ -877,7 +886,18 @@ add_namespace = japfor
 		ai_chance = { factor = 20 }
 		     every_state = { limit = { is_owned_by = QIE } NCH = { add_state_claim = PREV } }
 		annex_country = { target = QIE transfer_troops = no }
-		release = NCH
+	 every_state = {
+    limit = {
+		OR = { 
+        is_controlled_by = JAP
+		is_controlled_by = QIE
+							}
+        is_core_of = NCH
+
+    }
+	NCH = { transfer_state = PREV }
+    
+}
 		puppet = NCH
 								}
 		option = {#occupy
@@ -1121,9 +1141,13 @@ add_namespace = japfor
 	option = {#surrendr 
 	name = japfor.36.a 
 	ai_chance = { factor = 90 }
-	every_owned_state = {
-	limit = { is_claimed_by = JAP }
-	JAP = { transfer_state = PREV}
+	every_state = {
+	limit = { 
+	is_owned_by = GER
+	is_claimed_by = JAP 
+	
+	}
+	JAP = { transfer_state = PREV }
 									}
 	add_political_power = 20
 									}
@@ -1141,9 +1165,13 @@ add_namespace = japfor
 	option = {#surrendr 
 	name = japfor.36.a 
 	ai_chance = { factor = 10 }
-	every_owned_state = {
-	limit = { is_claimed_by = JAP }
-	JAP = { transfer_state = PREV}
+	every_state = {
+	limit = { 
+	is_owned_by = GER
+	is_claimed_by = JAP 
+	
+	}
+	JAP = { transfer_state = PREV }
 									}
 	add_political_power = 20
 									}
@@ -1307,9 +1335,13 @@ add_namespace = japfor
 	ai_chance = { factor = 95 }
 	white_peace = JAP 
 	add_named_threat = { threat = -5 name = JAP_treaty_signed_qin }
-	every_owned_state = {
-	limit = { is_claimed_by = JAP }
-	JAP = { transfer_state = PREV}
+	every_state = {
+	limit = { 
+	is_owned_by = GER
+	is_claimed_by = JAP 
+	
+	}
+	JAP = { transfer_state = PREV }
 									}
 	if = { limit = { SIA = { is_in_faction_with = JAP } } SIA = { transfer_state = 336 } }
 	
@@ -1415,9 +1447,13 @@ add_namespace = japfor
 	is_triggered_only = yes 
 	option = {
 	name = japfor.43.a 
-	every_owned_state = {
-	limit = { is_claimed_by = JAP }
-	JAP = { transfer_state = PREV}
+	every_state = {
+	limit = { 
+	is_owned_by = GER
+	is_claimed_by = JAP 
+	
+	}
+	JAP = { transfer_state = PREV }
 									}
 	if = { limit = { SIA = { is_in_faction_with = JAP } } transfer_state = 336 }
 												}
@@ -4657,3 +4693,836 @@ add_namespace = japfor
 			
 									}
 									
+	country_event = {#Outbreak of Trans-Siberian war
+	id = japfor.149 
+	title = japfor.149.t 
+	desc = japfor.149.d 
+	fire_only_once = yes 	
+	trigger = {
+	tag = JAP 
+	is_puppet = no 
+	has_war = no 
+	has_completed_focus = JAP_SUN_RISE
+	RUS = { 
+	has_war_with = MON 
+	NOT = {
+	is_puppet_of = JAP 
+	is_in_faction_with = JAP 
+							}
+						}
+						}
+	mean_time_to_happen = { factor = 10 }
+	
+	option = {#war 
+	name = japfor.149.a 
+	ai_chance = { factor = 75 }
+	declare_war_on = { target = RUS type = annex_everything }
+	
+										}
+										
+	option = {#noh
+	name = japfor.149.b 
+	ai_chance = { factor = 25 }
+										}
+										}
+									
+									
+									
+#### Defeat events	####
+
+										
+	country_event = {#Defeat of Fengtien
+	id = japfor.151 
+	title = japfor.151.t 
+	desc = japfor.151.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = RUS 
+	has_war_with = FNG 
+	RUS = {
+	controls_state = 328
+				}
+							}
+	
+	option = {#puppet 
+	name = japfor.151.a 
+	ai_chance = { factor = 80 }
+	white_peace = FNG 
+	every_country = {
+	limit = {
+	OR = {
+	is_in_faction_with = RUS 
+	is_puppet_of = RUS
+			}
+					}
+	white_peace = FNG 				
+					}
+	puppet = FNG 
+	add_political_power = 100 
+	#ministers 
+	#country_event = independent fengitian
+		
+											}
+											
+	option = {#annex 
+	name = japfor.151.b 
+	ai_chance = { factor = 20 }
+	annex_country = { target = FNG transfer_troops = no }
+	add_political_power = -100 
+	
+															}
+											}
+											
+	country_event = {## Transamur surrenders
+	id = japfor.152 
+	title = japfor.152.t 
+	desc = japfor.152.d 
+	fire_only_once = yes 
+	
+	trigger = {
+	tag = RUS 
+	controls_state = 408 
+	controls_state = 409 
+	has_war_with = JAP 
+					}
+					
+	mean_time_to_happen = { days = 5 }
+	
+	option = {#puppet
+	name = japfor.152.a 
+	ai_chance = { factor = 5 }
+	white_peace = TRM 
+	every_country = {
+	limit = {
+	OR = {
+	is_in_faction_with = RUS 
+	is_puppet_of = RUS 
+				}
+					}
+	white_peace = TRM 
+	
+								}
+	puppet = TRM 
+				
+				}
+				
+	option = {#annex 
+	name = japfor.152.b 
+	ai_chance = { factor = 95 }
+	annex_country = { target = TRM transfer_troops = no }
+	add_state_core = 408 
+	add_state_core = 409 
+	
+								}
+									}
+									
+	country_event = {#fading sun
+		id = japfor.153
+	title = japfor.153.t
+	desc = japfor.153.d
+		fire_only_once = yes
+	trigger = {
+	tag = JAP
+	has_war_with = RUS
+	OR = { RUS = { controls_state = 409 } TRM = { is_puppet_of = RUS } }
+		RUS = { OR = { AND = { controls_state = 527 controls_state = 525 } KOR = { is_puppet_of = RUS } } controls_state = 716 controls_state = 610 }	
+					}
+		mean_time_to_happen = { days = 10 }
+			option = {
+			name = japfor.153.a
+			ai_chance = { factor = 90 }
+			add_political_power = -500
+			RUS = { country_event = { id = japfor.154 days = 6 } }
+						}
+						
+			option = {
+			name = japfor.153.b
+			ai_chance = { factor = 10 }
+			add_political_power = 100
+						}
+				
+		}
+		
+		country_event = {
+		id = japfor.154
+	title = japfor.154.t
+	desc = japfor.154.d
+		is_triggered_only = yes
+			option = {
+			name = japfor.154.a
+			ai_chance = { factor = 70 }
+			add_political_power = 100
+				RUS = { annex_country = { target = FNG transfer_troops = no } }
+			RUS = { 
+			transfer_state = 655 
+			transfer_state = 537 
+			transfer_state = 555 
+			transfer_state = 745 
+			transfer_state = 612   
+			transfer_state = 612 
+			transfer_state = 610
+			transfer_state = 409 
+			transfer_state = 408 
+			add_state_core = 409
+			add_state_core = 408
+			add_state_core = 655	
+			add_state_core = 537
+			add_state_core = 555
+			add_state_core = 745
+			add_state_core = 612
+			add_state_core = 610
+								}
+			white_peace = JAP
+			every_country = {
+			limit = {
+			OR = {
+			is_puppet_of = RUS 
+			is_in_faction_with = RUS 
+							}
+						}
+			white_peace = JAP
+							}
+			JAP = { set_country_flag = JAP_ISO }
+			set_global_flag = JAP_ISO
+						
+						
+			JAP = { country_event = { id = japfor.155 } }
+			}
+						
+			option = {
+			name = japfor.154.b
+			ai_chance = { factor = 30 }
+				
+		}
+		
+	}
+	
+	country_event = 	{#Second Treaty of Port Arthur
+	id = japfor.155 
+	title = japfor.155.t 
+	desc = japfor.155.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.155.a 
+	every_state = {
+	limit = { 
+	is_core_of = QIE 
+	is_controlled_by = JAP 
+						}
+	RUS = { transfer_state = PREV }
+									}
+	every_country = {
+	limit = {
+	is_puppet_of = JAP
+						}
+	JAP = { end_puppet = PREV }
+								}
+	every_state = {
+	limit = {
+	is_core_of = JAP 
+	NOT = { is_controlled_by = JAP }
+							}
+	
+								}
+	remove_state_core = PREV
+	if = { limit = { has_war_with = GER } set_global_flag = JAP_Defeated_CSX }
+	country_event = { id = japfor.156 days = 7 }
+	if = { limit = { KOR = { exists = no } RUS = { controls_state = 525 } } country_event = { id = japfor.157 days = 15 } } 
+						
+						
+						}
+									}
+	
+	
+	country_event = {#Japan down to the coun
+	id = japfor.156 
+	title = japfor.156.t 
+	desc = japfor.156.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.156.a 
+	dismantle_faction = yes
+	every_state = {
+	limit = {
+	is_claimed_by = JAP 
+	NOT = { is_controlled_by = JAP	}
+				}
+	
+					}
+	remove_state_claim = PREV
+	add_named_threat = { threat = -5 name = sakoku }
+							}
+											}
+											
+	country_event = {#Fate of Korea
+	id = japfor.157 
+	title = japfor.157.t 
+	desc = japfor.157.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#puppet
+	name = japfor.157.a 
+	ai_chance = { factor = 97 }
+	KOR = {
+	transfer_state = 527 
+	transfer_state = 525
+								}
+	puppet = KOR
+	add_political_power = 100
+									}
+									
+	option = {#full 
+	name = japfor.157.b 
+	ai_chance = { factor = 2 }
+		KOR = {
+	transfer_state = 527 
+	transfer_state = 525
+								}
+	add_to_faction = KOR
+	add_political_power = 200 
+								}
+								
+	option = {#occupy
+	name = japfor.157.c 
+	ai_chance = { factor = 1 }
+	add_political_power = -100 
+									}
+								
+										}
+										
+										
+	country_event = {#Port Arthur
+	id = japfor.158
+	title = japfor.158.t 
+	desc = japfor.158.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = RUS 
+	NOT = {
+	has_war_with = FNG 
+	has_war_with = JAP 
+	745 = { is_core_of = RUS }
+						}
+	FNG = { exists = yes }
+	controls_state = 745 
+	
+								}
+								
+	mean_time_to_happen = { days = 14 } 
+	
+	option = {#keep 
+	name = japfor.158.a 
+	ai_chance = { factor = 95 }
+	add_state_claim = 745 
+	add_political_power = 60
+									}
+									
+	option = {#FNG
+	trigger = { FNG = { OR = { is_puppet_of = RUS is_in_faction_with = RUS } } }
+	name = japfor.158.b 
+	ai_chance = { factor = 5 }
+	FNG = { 
+	transfer_state = 745
+	country_event = {  id = japfor.159 }		
+		}
+							}
+							
+	option = {#CHI
+	trigger = { CHI = { OR = { is_puppet_of = RUS is_in_faction_with = RUS } } }
+	name = japfor.158.c
+	ai_chance = { factor = 5 }
+	CHI = { 
+	transfer_state = 745
+		}
+							}
+							
+	option = {#QIE
+	trigger = { QIE = { OR = { is_puppet_of = RUS is_in_faction_with = RUS } } }
+	name = japfor.158.e
+	ai_chance = { factor = 5 }
+	QIE = { 
+	transfer_state = 745
+		}
+							}
+							
+	option = {#NCH
+	trigger = { NCH = { OR = { is_puppet_of = RUS is_in_faction_with = RUS } } }
+	name = japfor.158.f
+	ai_chance = { factor = 5 }
+	NCH = { 
+	transfer_state = 745
+		}
+							}
+								}
+								
+	country_event = {#Port Arthur is now ours
+	id = japfor.159 
+	title = japfor.159.t 
+	desc = japfor.159.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.159.a 
+	add_state_core = 745
+								}
+										}
+										
+										
+	country_event = {#fall of mukden
+	id = japfor.160 
+	title = japfor.160.t 
+	desc = japfor.160.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = MON 
+	has_war_with = FNG 
+	MON = {
+	controls_state = 328
+				}
+							}
+							
+	option = {#surrender 
+	name = japfor.160.a 
+	ai_chance = { factor = 95 }
+	MON = { country_event = { id = japfor.161 } }
+	add_political_power = -100 
+								}
+								
+	option = {#fight on
+	name = japfor.160.b 
+	ai_chance = { factor = 5 }
+	add_political_power = -60
+								}
+								}
+	country_event = {#Defeat of Fengtien
+	id = japfor.161
+	title = japfor.161.t 
+	desc = japfor.161.d 
+	is_triggered_only = yes 
+	
+	
+	option = {#puppet 
+	name = japfor.161.a 
+	ai_chance = { factor = 90 }
+	white_peace = FNG 
+	every_country = {
+	limit = {
+	OR = {
+	is_in_faction_with = MON 
+	is_puppet_of = MON
+			}
+					}
+	white_peace = FNG 				
+					}
+	puppet = FNG 
+	MON = { transfer_state = 714 }
+	add_political_power = 100 
+	#ministers 
+	#country_event = independent fengitian
+		
+											}
+											
+	option = {#annex 
+	name = japfor.161.b 
+	ai_chance = { factor = 10 }
+	annex_country = { target = FNG transfer_troops = no }
+	add_political_power = -100 
+	
+															}
+											}
+											
+	country_event = {# Fengtien surrenders - Transamur
+	id = japfor.162 
+	title = japfor.162.t 
+	desc = japfor.162.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = TRM 
+	has_war_with = MON 
+	OR = {
+	FNG = { is_puppet_of = MON }
+	MON = { owns_state = 328 }
+						}
+					}
+					
+	mean_time_to_happen = { days = 3 }
+	
+	option = {#peace 
+	name = japfor.162.a 
+	ai_chance = { factor = 50 }
+	JAP = {
+	remove_from_faction = TRM
+	end_puppet = TRM 
+					}
+	add_political_power = 100 
+	MON = { country_event = { id = japfor.163 days = 1 } }
+	
+									}
+									
+	option = {#alliance  
+	name = japfor.162.b 
+	ai_chance = { factor = 30 }
+	JAP = {
+	remove_from_faction = TRM
+	end_puppet = TRM 
+					}
+	MON = { country_event = { id = japfor.165 days = 1 } }
+	
+									}
+	
+	option = {#puppet  
+	name = japfor.162.c 
+	ai_chance = { factor = 5 }
+	JAP = {
+	remove_from_faction = TRM
+	end_puppet = TRM 
+					}
+	MON = { country_event = { id = japfor.167 days = 1 } }
+	add_political_power = 100 
+	
+									}
+									
+	option = {#fight on  
+	name = japfor.162.e 
+	ai_chance = { factor = 15 }
+	add_political_power = -100 
+	
+									}
+											}
+											
+	country_event = {#Transamur offers peace
+	id = japfor.163 
+	title = japfor.163.t 
+	desc = japfor.163.d 
+	is_triggered_only = yes 
+	
+	option = {#yes 
+	name = japfor.163.a 
+	ai_chance = { factor = 10 }
+	add_political_power = 100 
+	TRM = { country_event = { id = japfor.164 days = 1 } }
+						}
+						
+	option = {#no 
+	name = japfor.163.b 
+	ai_chance = { factor = 90 }
+	
+									}
+								}
+							
+	country_event = {## End of Russo-Transamurian acts of war
+	id = japfor.164 
+	title = japfor.164.t 
+	desc = japfor.164.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.164.a 
+	white_peace = MON 
+	every_country = {
+	limit = {
+	OR = {
+	is_puppet_of = MON 
+	is_in_faction_with = MON
+		}
+				}
+	white_peace = TRM 
+					}
+							}
+									}
+									
+	country_event = {#Transamur offers alliance
+	id = japfor.165
+	title = japfor.165.t 
+	desc = japfor.165.d 
+	is_triggered_only = yes 
+	
+	option = {#accept
+	name = japfor.165.a 
+	ai_chance = { factor = 30 }
+	MON = { country_event = { id = japfor.166 } }
+	TRM = { country_event = { id = japfor.164 } }
+	
+										}
+	option = {#refuse 
+	name = japfor.165.b 
+	ai_chance = { factor = 70 }
+									}
+										}
+										
+	country_event = {#Alliance signed 
+	id = japfor.166 
+	title = japfor.166.t 
+	desc = japfor.166.d 
+	
+	is_triggered_only = yes  
+	
+	option = {
+	name = japfor.166.a 
+	add_to_faction = TRM 
+								}
+									}
+									
+	country_event = {#Transamur offers to become our protectorate
+	id = japfor.167 
+	title = japfor.167.t 
+	desc = japfor.167.d 
+	is_triggered_only = yes 
+	
+	option = {#accept 
+	name = japfor.167.a 
+	ai_chance = { factor = 80 }
+	TRM = { country_event = { id = japfor.168 } }
+	MON = { country_event = { id = japfor.164 } }
+										}
+										
+	option = {#refuse 
+	name = japfor.167.b 
+	ai_chance = { factor = 20 }
+	
+								}
+										}
+										
+	country_event = {#Primorsk becomes protectorate
+	id = japfor.168 
+	title = japfor.168.t 
+	desc = japfor.168.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.168.a 
+	puppet = TRM 
+						}
+										}
+										
+	country_event = {#fading sun
+		id = japfor.169
+	title = japfor.169.t
+	desc = japfor.169.d
+		fire_only_once = yes
+	trigger = {
+	tag = JAP
+	has_war_with = MON
+	OR = { MON = { controls_state = 409 } TRM = { is_puppet_of = MON } }
+		MON = { OR = { AND = { controls_state = 527 controls_state = 525 } KOR = { is_puppet_of = MON } } controls_state = 716 controls_state = 610 }	
+					}
+		mean_time_to_happen = { days = 10 }
+			option = {
+			name = japfor.153.a
+			ai_chance = { factor = 90 }
+			add_political_power = -500
+			MON = { country_event = { id = japfor.170 days = 6 } }
+						}
+						
+			option = {
+			name = japfor.153.b
+			ai_chance = { factor = 10 }
+			add_political_power = 100
+						}
+				
+		}
+		
+		country_event = {
+		id = japfor.170
+	title = japfor.170.t
+	desc = japfor.170.d
+		is_triggered_only = yes
+			option = {
+			name = japfor.154.a
+			ai_chance = { factor = 70 }
+			add_political_power = 100
+				RUS = { annex_country = { target = FNG transfer_troops = no } }
+			RUS = { 
+			transfer_state = 655 
+			transfer_state = 537 
+			transfer_state = 555 
+			transfer_state = 745 
+			transfer_state = 612   
+			transfer_state = 612 
+			transfer_state = 610
+			transfer_state = 409 
+			transfer_state = 408 
+			add_state_core = 409
+			add_state_core = 408
+			add_state_core = 655	
+			add_state_core = 537
+			add_state_core = 555
+			add_state_core = 745
+			add_state_core = 612
+			add_state_core = 610
+								}
+			white_peace = JAP
+			every_country = {
+			limit = {
+			OR = {
+			is_puppet_of = MON 
+			is_in_faction_with = MON 
+							}
+						}
+			white_peace = JAP
+							}
+			JAP = { set_country_flag = JAP_ISO }
+			set_global_flag = JAP_ISO
+						
+						
+			JAP = { country_event = { id = japfor.171 } }
+						}
+			option = {
+			name = japfor.154.b
+			ai_chance = { factor = 30 }
+				
+		}
+		
+	}
+	
+	country_event = 	{#peace with the mongols
+	id = japfor.171 
+	title = japfor.171.t 
+	desc = japfor.171.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.155.a 
+	every_state = {
+	limit = { 
+	is_core_of = QIE 
+	is_controlled_by = JAP 
+						}
+	MON = { transfer_state = PREV }
+									}
+	
+	every_country = {
+	limit = {
+	is_puppet_of = JAP
+						}
+	JAP = { end_puppet = PREV }
+								}
+	every_state = {
+	limit = {
+	is_core_of = JAP 
+	NOT = { is_controlled_by = JAP }
+							}
+	
+								}
+	remove_state_core = PREV
+	if = { limit = { has_war_with = GER } set_global_flag = JAP_Defeated_CSX }
+	country_event = { id = japfor.172 days = 7 }
+	if = { limit = { KOR = { exists = no } MON = { controls_state = 525 } } country_event = { id = japfor.173 days = 15 } } 
+						
+						
+						}
+									}
+	
+	
+	country_event = {#Japan down to the coun
+	id = japfor.172 
+	title = japfor.156.t 
+	desc = japfor.156.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.156.a 
+	dismantle_faction = yes
+	every_state = {
+	limit = {
+	is_claimed_by = JAP 
+	NOT = { is_controlled_by = JAP	}
+				}
+	
+					}
+	remove_state_claim = PREV
+	add_named_threat = { threat = -5 name = sakoku }
+							}
+											}
+											
+	country_event = {#Fate of Korea
+	id = japfor.173 
+	title = japfor.157.t 
+	desc = japfor.157.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#puppet
+	name = japfor.157.a 
+	ai_chance = { factor = 97 }
+	KOR = {
+	transfer_state = 527 
+	transfer_state = 525
+								}
+	puppet = KOR
+	add_political_power = 100
+									}
+									
+	option = {#full 
+	name = japfor.157.b 
+	ai_chance = { factor = 2 }
+		KOR = {
+	transfer_state = 527 
+	transfer_state = 525
+								}
+	add_to_faction = KOR
+	add_political_power = 200 
+								}
+								
+	option = {#occupy
+	name = japfor.157.c 
+	ai_chance = { factor = 1 }
+	add_political_power = -100 
+									}
+								
+										}
+										
+										
+	country_event = {#Port Arthur
+	id = japfor.174
+	title = japfor.158.t 
+	desc = japfor.158.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = MON 
+	NOT = {
+	has_war_with = FNG 
+	has_war_with = JAP 
+	745 = { is_core_of = MON }
+						}
+	FNG = { exists = yes }
+	controls_state = 745 
+	
+								}
+								
+	mean_time_to_happen = { days = 14 } 
+	
+	option = {#keep 
+	name = japfor.158.a 
+	ai_chance = { factor = 95 }
+	add_state_claim = 745 
+	add_political_power = 60
+									}
+									
+	option = {#FNG
+	trigger = { FNG = { OR = { is_puppet_of = MON is_in_faction_with = MON } } }
+	name = japfor.158.b 
+	ai_chance = { factor = 5 }
+	FNG = { 
+	transfer_state = 745
+	country_event = { id = japfor.175 }		
+		}
+							}
+							
+								}
+								
+	country_event = {#Port Arthur is now ours
+	id = japfor.175 
+	title = japfor.159.t 
+	desc = japfor.159.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = japfor.159.a 
+	add_state_core = 745
+								}
+										}

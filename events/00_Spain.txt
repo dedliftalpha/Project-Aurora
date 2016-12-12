@@ -3,6 +3,7 @@
 ### Nijato ###
 
 ### MODDER: ~mw~ ###
+#Events affecting other countries are under 'Foreign Policy'
 
 ########################################
 #### Kingdom of Spain, Domestic Policy
@@ -10,10 +11,25 @@
 
 add_namespace = sprd
 
-country_event = { #Black Monday
+country_event = { #Intro event
 	id = sprd.1
 	title = sprd.1.t
 	desc = sprd.1.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		date > 1936.01.03
+	}
+	mean_time_to_happen = { days = 1 }
+	option = {
+		name = sprd.1.a
+	}
+}
+
+country_event = { #Black Monday
+	id = sprd.2
+	title = sprd.2.t
+	desc = sprd.2.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -22,19 +38,35 @@ country_event = { #Black Monday
 	}
 	mean_time_to_happen = { days = 15 }
 	option = {
-		name = sprd.1.a
+		name = sprd.2.a
 		add_ideas = spr_black_monday
 		add_political_power = -200
 	}
 }
 
+country_event = { #social breakdown
+	id = sprd.3
+	title = sprd.3.t
+	desc = sprd.3.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_political_power < -700
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprd.3.a
+		set_country_flag = spr_cntfai
+		set_country_flag = spr_carlists
+	}
+}
 
 # carlist chain
 
 country_event = { #Alfonso Carlos de Borbon dies
-	id = sprd.2
-	title = sprd.2.t
-	desc = sprd.2.d
+	id = sprd.4
+	title = sprd.4.t
+	desc = sprd.4.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -42,16 +74,16 @@ country_event = { #Alfonso Carlos de Borbon dies
 	}
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.2.a
+		name = sprd.4.a
 		add_political_power = -20
 		set_country_flag = alfonso_carlos_dead
 	}
 }
 
 country_event = { #Xavier gives a speech
-	id = sprd.3
-	title = sprd.3.t
-	desc = sprd.3.d
+	id = sprd.5
+	title = sprd.5.t
+	desc = sprd.5.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -60,53 +92,9 @@ country_event = { #Xavier gives a speech
 	}
 	mean_time_to_happen = { days = 2 }
 	option = {
-		name = sprd.3.a
+		name = sprd.5.a
 		add_political_power = -40
 		set_global_flag = xaviers_plan
-	}
-}
-
-country_event = { #Mediterranean economic block - PORTUGAL
-	id = sprd.4
-	title = sprd.4.t
-	desc = sprd.4.d
-	fire_only_once = yes
-	trigger = {
-		tag = POR
-		date > 1936.04.17
-		has_global_flag = xaviers_plan
-	}
-	mean_time_to_happen = { days = 90 }
-	option = {
-		name = sprd.4.a
-		add_political_power = 60
-		set_global_flag = mediterranean_economic_block_por
-	}
-	option = {
-		name = sprd.4.b
-		add_political_power = -40
-	}
-}
-
-country_event = { #Mediterranean economic block - ITALY
-	id = sprd.5
-	title = sprd.5.t
-	desc = sprd.5.d
-	fire_only_once = yes
-	trigger = {
-		tag = ITA
-		date > 1936.04.17
-		has_global_flag = xaviers_plan
-	}
-	mean_time_to_happen = { days = 90 }
-	option = {
-		name = sprd.5.a
-		add_political_power = 60
-		set_global_flag = mediterranean_economic_block_ita
-	}
-	option = {
-		name = sprd.5.b
-		add_political_power = -40
 	}
 }
 
@@ -153,6 +141,7 @@ country_event = { #Xavier gives another speech
 		tag = SPR
 		has_global_flag = mediterranean_economic_block_por
 		has_global_flag = mediterranean_economic_block_ita
+		has_country_flag = carlists
 	}
 	mean_time_to_happen = { days = 10 }
 	option = {
@@ -299,6 +288,7 @@ country_event = { #the cnt-fai
 	trigger = {
 		tag = SPR
 		date > 1936.02.11
+		has_country_flag = cnt-fai
 		has_idea = SPR_black_monday
 	}		
 	mean_time_to_happen = { days = 90 }
@@ -413,107 +403,12 @@ country_event = { #disbanding CNT-FAI
 	}
 }
 
-#CNT-FAI events for foreign support
-
-	country_event = { #CNT-FAI in FRANCE
-		id = sprd.18
-		title = sprd.18.t
-		desc = sprd.18.d
-		fire_only_once = yes
-		trigger = {
-			tag = FRA
-			has_global_flag = cntfai_fled
-		}		
-		mean_time_to_happen = { days = 15 }
-		option = {
-			name = sprd.18.a
-			add_political_power = 60
-			add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
-			add_manpower = -20000
-			add_equipment_to_stockpile = { type = supplies amount = -500 }
-			add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
-			set_global_flag = cntfai_support_from_frace
-		}
-		option = {
-			name = sprd.18.b
-			add_political_power = -20
-			add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
-		}
-		option = {
-			name = sprd.18.c
-			add_political_power = -100
-			add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
-		}
-	}
-	
-		country_event = { #CNT-FAI in ITALY
-		id = sprd.19
-		title = sprd.19.t
-		desc = sprd.19.d
-		fire_only_once = yes
-		trigger = {
-			tag = SRI
-			has_global_flag = cntfai_fled
-		}		
-		mean_time_to_happen = { days = 15 }
-		option = {
-			name = sprd.19.a
-			add_political_power = 60
-			add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
-			add_manpower = -20000
-			add_equipment_to_stockpile = { type = supplies amount = -500 }
-			add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
-			set_global_flag = cntfai_support_from_italy
-		}
-		option = {
-			name = sprd.19.b
-			add_political_power = -20
-			add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
-		}
-		option = {
-			name = sprd.19.c
-			add_political_power = -100
-			add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
-		}
-	}
-	
-		country_event = { #CNT-FAI in ENGLAND
-		id = sprd.20
-		title = sprd.20.t
-		desc = sprd.20.d
-		fire_only_once = yes
-		trigger = {
-			tag = FRA
-			has_global_flag = cntfai_fled
-		}		
-		mean_time_to_happen = { days = 15 }
-		option = {
-			name = sprd.20.a
-			add_political_power = 60
-			add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
-			add_manpower = -20000
-			add_equipment_to_stockpile = { type = supplies amount = -500 }
-			add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
-			set_global_flag = cntfai_support_from_england
-		}
-		option = {
-			name = sprd.20.b
-			add_political_power = -20
-			add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
-		}
-		option = {
-			name = sprd.20.c
-			add_political_power = -100
-			add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
-		}
-	}
-
 #CNT-FAI organising the workers
 
 country_event = { #organising the workers
-	id = sprd.21
-	title = sprd.21.t
-	desc = sprd.21.d
+	id = sprd.18
+	title = sprd.18.t
+	desc = sprd.18.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -521,16 +416,16 @@ country_event = { #organising the workers
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.21.a
+		name = sprd.18.a
 		add_political_power = 20
 		set_country_flag = cntfai_organising_workers
 	}
 }
 
 country_event = { #plan south commenced
-	id = sprd.22
-	title = sprd.22.t
-	desc = sprd.22.d
+	id = sprd.19
+	title = sprd.19.t
+	desc = sprd.19.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -539,7 +434,7 @@ country_event = { #plan south commenced
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.22.a
+		name = sprd.19.a
 		add_political_power = 60
 		#command = { type = peacetime_ic_mod value = 2 }
 		set_country_flag = cntfai_plan_south
@@ -547,9 +442,9 @@ country_event = { #plan south commenced
 }
 
 country_event = { #plan south completed
-	id = sprd.23
-	title = sprd.23.t
-	desc = sprd.23.d
+	id = sprd.20
+	title = sprd.20.t
+	desc = sprd.20.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -559,7 +454,7 @@ country_event = { #plan south completed
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.23.a
+		name = sprd.20.a
 		173 = {	
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
@@ -594,24 +489,6 @@ country_event = { #plan south completed
 }
 
 #elections
-
-
-country_event = { #social breakdown
-	id = sprd.24
-	title = sprd.24.t
-	desc = sprd.24.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_political_power < -700
-	}		
-	mean_time_to_happen = { days = 90 }
-	option = {
-		name = sprd.24.a
-		set_country_flag = spr_cntfai
-		set_country_flag = spr_carlists
-	}
-}
 
 country_event = { #alfonso has a stroke
 	id = sprd.25
@@ -799,7 +676,170 @@ country_event = { #elections cancelled
 
 add_namespace = sprf
 
-#wip
+#Mediterranean economic block
+
+country_event = { #Mediterranean economic block - PORTUGAL
+	id = sprf.1
+	title = sprf.1.t
+	desc = sprf.1.d
+	fire_only_once = yes
+	trigger = {
+		tag = POR
+		date > 1936.04.17
+		has_global_flag = xaviers_plan
+	}
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprf.1.a
+		add_political_power = 60
+		set_global_flag = mediterranean_economic_block_por
+	}
+	option = {
+		name = sprf.1.b
+		add_political_power = -40
+	}
+}
+
+country_event = { #Mediterranean economic block - ITALY
+	id = sprf.2
+	title = sprf.2.t
+	desc = sprf.2.d
+	fire_only_once = yes
+	trigger = {
+		tag = ITA
+		date > 1936.04.17
+		has_global_flag = xaviers_plan
+	}
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprf.2.a
+		add_political_power = 60
+		set_global_flag = mediterranean_economic_block_ita
+	}
+	option = {
+		name = sprf.2.b
+		add_political_power = -40
+	}
+}
+
+
+country_event = { #Carlists in ITALY
+	id = sprf.3
+	title = sprf.3.t
+	desc = sprf.3.d
+	trigger = {
+		tag = ITA
+		has_country_flag = spr_elections
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprf.3.a
+		add_political_power = -100
+	}
+	option = {
+		name = sprf.3.b
+		add_political_power = -100
+	}
+	option = {
+		name = sprf.3.c
+		add_political_power = -100
+	}
+}
+
+country_event = { #CNT-FAI in FRANCE
+	id = sprf.4
+	title = sprf.4.t
+	desc = sprf.4.d
+	fire_only_once = yes
+	trigger = {
+		tag = FRA
+		has_global_flag = cntfai_fled
+	}		
+	mean_time_to_happen = { days = 15 }
+	option = {
+		name = sprf.4.a
+		add_political_power = 60
+		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		add_manpower = -20000
+		add_equipment_to_stockpile = { type = supplies amount = -500 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
+		set_global_flag = cntfai_support_from_frace
+	}
+	option = {
+		name = sprf.4.b
+		add_political_power = -20
+		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+	}
+	option = {
+		name = sprf.4.c
+		add_political_power = -100
+		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+	}
+}
+
+	country_event = { #CNT-FAI in ITALY
+	id = sprf.5
+	title = sprf.5.t
+	desc = sprf.5.d
+	fire_only_once = yes
+	trigger = {
+		tag = SRI
+		has_global_flag = cntfai_fled
+	}		
+	mean_time_to_happen = { days = 15 }
+	option = {
+		name = sprf.5.a
+		add_political_power = 60
+		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		add_manpower = -20000
+		add_equipment_to_stockpile = { type = supplies amount = -500 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
+		set_global_flag = cntfai_support_from_italy
+	}
+	option = {
+		name = sprf.5.b
+		add_political_power = -20
+		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+	}
+	option = {
+		name = sprf.5.c
+		add_political_power = -100
+		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+	}
+}
+
+	country_event = { #CNT-FAI in ENGLAND
+	id = sprf.6
+	title = sprf.6.t
+	desc = sprf.6.d
+	fire_only_once = yes
+	trigger = {
+		tag = FRA
+		has_global_flag = cntfai_fled
+	}		
+	mean_time_to_happen = { days = 15 }
+	option = {
+		name = sprf.6.a
+		add_political_power = 60
+		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		add_manpower = -20000
+		add_equipment_to_stockpile = { type = supplies amount = -500 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
+		set_global_flag = cntfai_support_from_england
+	}
+	option = {
+		name = sprf.6.b
+		add_political_power = -20
+		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+	}
+	option = {
+		name = sprf.6.c
+		add_political_power = -100
+		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+	}
+}
+
+
 
 ########################################
 #### Spanish Civil War
@@ -807,13 +847,20 @@ add_namespace = sprf
 
 add_namespace = sprc
 
-#country_event = { #Carlists banned - ITALY
-#	id = sprc.1
-#	title = sprc.1.t
-#	desc = sprc.1.d
-#	
-#}
-
+country_event = { #Carlists banned - ITALY
+	id = sprc.2
+	title = sprc.2.t
+	desc = sprc.2.d
+	trigger = {
+		tag = ITA
+		has_country_flag = spr_elections
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprc.2.a
+		add_political_power = -100
+	}
+}
 
 #country_event = {
 #	id = sprc.1
@@ -1113,277 +1160,6 @@ add_namespace = sprc
 #		}		
 #	}
 #}
-
-
-
-
-country_event = {
-	id = sprc.2
-	title = sprc.2.t
-	desc = sprc.2.d
-	picture = GFX_report_event_soviet_finnish_pact
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.2.a
-		
-		if = {
-			limit= {
-				SPR = { has_completed_focus = army_effort}
-			}
-		
-			unlock_national_focus = army_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = equipment_effort}
-			}
-		
-			unlock_national_focus = equipment_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = motorization_effort}
-			}
-		
-			unlock_national_focus = motorization_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = doctrine_effort}
-			}
-		
-			unlock_national_focus = doctrine_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = equipment_effort_2}
-			}
-		
-			unlock_national_focus = equipment_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = mechanization_effort}
-			}
-		
-			unlock_national_focus = mechanization_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = doctrine_effort_2}
-			}
-		
-			unlock_national_focus = doctrine_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = equipment_effort_3}
-			}
-		
-			unlock_national_focus = equipment_effort_3
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = special_forces}
-			}
-		
-			unlock_national_focus = special_forces
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = aviation_effort}
-			}
-		
-			unlock_national_focus = aviation_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = fighter_focus}
-			}
-		
-			unlock_national_focus = fighter_focus
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = bomber_focus}
-			}
-		
-			unlock_national_focus = bomber_focus
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = aviation_effort_2}
-			}
-		
-			unlock_national_focus = aviation_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = CAS_effort}
-			}
-		
-			unlock_national_focus = CAS_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = rocket_effort}
-			}
-		
-			unlock_national_focus = rocket_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = NAV_effort}
-			}
-		
-			unlock_national_focus = NAV_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = naval_effort}
-			}
-		
-			unlock_national_focus = naval_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = flexible_navy}
-			}
-		
-			unlock_national_focus = flexible_navy
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = large_navy}
-			}
-		
-			unlock_national_focus = large_navy
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = submarine_effort}
-			}
-		
-			unlock_national_focus = submarine_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = cruiser_effort}
-			}
-		
-			unlock_national_focus = cruiser_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = destroyer_effort}
-			}
-		
-			unlock_national_focus = destroyer_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = capital_ships_effort}
-			}
-		
-			unlock_national_focus = capital_ships_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = industrial_effort}
-			}
-		
-			unlock_national_focus = industrial_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = construction_effort}
-			}
-		
-			unlock_national_focus = construction_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = production_effort}
-			}
-		
-			unlock_national_focus = production_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = construction_effort_2}
-			}
-		
-			unlock_national_focus = construction_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = production_effort_2}
-			}
-		
-			unlock_national_focus = production_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = infrastructure_effort}
-			}
-		
-			unlock_national_focus = infrastructure_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = production_effort_3}
-			}
-		
-			unlock_national_focus = production_effort_3
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = infrastructure_effort_2}
-			}
-		
-			unlock_national_focus = infrastructure_effort_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = construction_effort_3}
-			}
-		
-			unlock_national_focus = construction_effort_3
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = nuclear_effort}
-			}
-		
-			unlock_national_focus = nuclear_effort
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = extra_tech_slot}
-			}
-		
-			unlock_national_focus = extra_tech_slot
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = extra_tech_slot_2}
-			}
-		
-			unlock_national_focus = extra_tech_slot_2
-		}
-		if = {
-			limit= {
-				SPR = { has_completed_focus = secret_weapons}
-			}
-		
-			unlock_national_focus = secret_weapons
-		}		
-		
-	}
-
-}
 
 country_event = {
 	id = sprc.50

@@ -158,7 +158,7 @@ country_event = { #Javier gives another speech
 		add_political_power = -200
 		set_country_flag = spr_carlists
 		set_country_flag = javier_arrested
-		set_country_flag = ????
+		set_country_flag = carlists
 	}
 	option = {
 		name = sprd.8.c
@@ -247,12 +247,14 @@ country_event = { #miguel ponte manso de zuniga
 		remove_ideas = SPR_Miguel_Ponte_Manso_de_Zuiga_int_ade
 		set_country_flag = Miguel_Ponte_Manso_de_Zuiga_assassinated
 		add_ideas = SPR_Jose_Ungria_Jimenez_int_ade
+		ai_chance = { 85 }
 	}
 	option = {
 		name = sprd.11.b
 		add_political_power = -60
 		remove_ideas = SPR_Miguel_Ponte_Manso_de_Zuiga_int_ade
 		set_country_flag = Miguel_Ponte_Manso_de_Zuiga_assassinated
+		ai_chance = { 15 }
 	}
 }
 
@@ -381,11 +383,13 @@ country_event = { #arresting CNT-FAI
 		add_ideas = SPR_Tomas__Conde_de_Redezno_int_pau
 		#freedom = -1
 		set_country_flag = cntfai_fled
+		ai_chance = { 85 }
 	}
 	option = {
 		name = sprd.16.b
 		add_political_power = -60
 		set_country_flag = cntfai_fled
+		ai_chance = { 15 }
 	}
 }
 
@@ -494,9 +498,9 @@ country_event = { #plan south completed
 #elections
 
 country_event = { #alfonso has a stroke
-	id = sprd.25
-	title = sprd.25.t
-	desc = sprd.25.d
+	id = sprd.21
+	title = sprd.21.t
+	desc = sprd.21.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -508,16 +512,16 @@ country_event = { #alfonso has a stroke
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.25.a
+		name = sprd.21.a
 		add_political_power = -100
 		set_country_flag = alfonso_coma
 	}
 }
 
 country_event = { #alfonso in a coma
-	id = sprd.26
-	title = sprd.26.t
-	desc = sprd.26.d
+	id = sprd.22
+	title = sprd.22.t
+	desc = sprd.22.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -525,15 +529,15 @@ country_event = { #alfonso in a coma
 	}
 	mean_time_to_happen = { days = 2 }
 	option = {
-		name = sprd.26.a
+		name = sprd.22.a
 		set_country_flag = spr_elections
 	}
 	option = {
-		name = sprd.26.b
+		name = sprd.22.b
 		set_country_flag = spr_rigged_elections
 	}
 	option = {
-		name = sprd.26.c
+		name = sprd.22.c
 		add_political_power = -100
 		set_country_flag = cnt-fai
 		set_country_flag = carlists
@@ -541,9 +545,9 @@ country_event = { #alfonso in a coma
 }
 
 country_event = { #general elections
-	id = sprd.27
-	title = sprd.27.t
-	desc = sprd.27.d
+	id = sprd.23
+	title = sprd.23.t
+	desc = sprd.23.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -552,12 +556,13 @@ country_event = { #general elections
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.27.a
+		name = sprd.23.a
 		add_political_power = 100
 		#support for party?
+		ai_chance = { 60 }
 	}
 	option = {
-		name = sprd.27.b
+		name = sprd.23.b
 		add_political_power = 100
 		CNT = {
 			transfer_state = 41
@@ -601,9 +606,10 @@ country_event = { #general elections
 			#load_oob = "CNT-FAI"
 			change_tag_from = SPR
 		}
+		ai_chance = { 20 }
 	}
 	option = {
-		name = sprd.27.c
+		name = sprd.23.c
 		add_political_power = 100
 		CAR = {
 			transfer_state = 41
@@ -647,13 +653,14 @@ country_event = { #general elections
 			#load_oob = "CAR"
 			change_tag_from = SPR
 		}
+		ai_chance = { 20 }
 	}
 }
 
 country_event = { #elections cancelled
-	id = sprd.28
-	title = sprd.28.t
-	desc = sprd.28.d
+	id = sprd.25
+	title = sprd.25.t
+	desc = sprd.25.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -662,12 +669,59 @@ country_event = { #elections cancelled
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
-		name = sprd.28.a
+		name = sprd.25.a
 		add_political_power = -100
 	}
 }
 
-#29, 30 don't know how to do revolts
+country_event = { #election riots
+	id = sprd.26
+	title = sprd.26.t
+	desc = sprd.26.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		OR = {
+			has_country_flag = spr_rigged_elections
+			has_war = yes
+		}
+	}		
+	mean_time_to_happen = { days = 90 }
+	option = {
+		name = sprd.26.a
+		add_political_power = -200
+		#riots
+		set_country_flag = cnt-fai
+		set_country_flag = carlists
+	}
+	option = {
+		name = sprd.26.a
+		add_political_power = -100
+		#riots
+		set_country_flag = election_riots
+	}
+}
+
+country_event = { #election day disaster
+	id = sprd.27
+	title = sprd.27.t
+	desc = sprd.27.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		has_country_flag = election_riots
+		has_war = yes
+	}		
+	mean_time_to_happen = { days = 1 }
+	option = {
+		name = sprd.27.a
+		add_political_power = -200
+		add_manpower = -10000
+		set_country_flag = cnt-fai
+		set_country_flag = carlists
+		set_country_flag = election_day_disaster
+	}
+}
 
 #post-war
 
@@ -698,12 +752,12 @@ country_event = { #Mediterranean economic block - PORTUGAL
 		add_ideas = por_spanish_economic_cooperation
 		add_opinion_modifier  = { target = SPR modifier = mediterranean_economic_block }
 		set_global_flag = mediterranean_economic_block_por
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 75 }
 	}
 	option = {
 		name = sprf.1.b
 		add_political_power = -40
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 25 }
 	}
 }
 
@@ -724,12 +778,12 @@ country_event = { #Mediterranean economic block - ITALY
 		add_ideas = ita_spanish_economic_cooperation
 		add_opinion_modifier  = { target = SPR modifier = mediterranean_economic_block }
 		set_global_flag = mediterranean_economic_block_ita
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 85 }
 	}
 	option = {
 		name = sprf.2.b
 		add_political_power = -40
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 15 }
 	}
 }
 
@@ -745,11 +799,14 @@ country_event = { #Carlists in ITALY
 	mean_time_to_happen = { days = 90 }
 	option = {
 		name = sprf.3.a
-		add_political_power = -100
+		#command = { type = relation which = GER value = -50 }
+		#command = { type = relation which = SPA value = -150 }
+		#command = { type = relation which = AUS value = -50 }
+		#carlists, shit
 	}
 	option = {
 		name = sprf.3.b
-		add_political_power = -100
+		#command = { type = relation which = SPA value = -100 }
 	}
 	option = {
 		name = sprf.3.c
@@ -858,20 +915,144 @@ country_event = { #CNT-FAI in FRANCE
 
 add_namespace = sprc
 
-country_event = { #Carlists banned - ITALY
-	id = sprc.2
-	title = sprc.2.t
-	desc = sprc.2.d
+country_event = { #Carlist uprising
+	id = sprc.1
+	title = sprc.1.t
+	desc = sprc.1.d
+	fire_only_once = yes
 	trigger = {
-		tag = ITA
-		has_country_flag = spr_elections
+		tag = SPR
+		date > 1937.05.5 
+		has_country_flag = carlists
 	}		
-	mean_time_to_happen = { days = 90 }
+	mean_time_to_happen = { days = 10 }
 	option = {
 		name = sprc.2.a
 		add_political_power = -100
+		set_country_flag = carlists_risen
+		CAR = {
+ 			transfer_state = 176
+ 			transfer_state = 172
+ 			transfer_state = 174
+ 			transfer_state = 171
+ 			
+ 			add_state_core = 171
+ 			add_state_core = 172
+ 			add_state_core = 174
+ 			add_state_core = 176
+ 			
+ 			add_state_core = 166
+ 			add_state_core = 165
+ 			add_state_core = 167
+ 			add_state_core = 170
+ 			
+ 			add_state_core = 41
+ 			add_state_core = 175
+ 			add_state_core = 168
+ 			add_state_core = 173
+ 			
+ 			add_state_core = 699
+ 			add_state_core = 178
+ 			add_state_core = 290
+ 			add_state_core = 297
+ 			
+ 			add_state_core = 169
+ 			add_state_core = 177
+ 			add_state_core = 118
+ 			
+ 			load_oob = "SPA_Civil_War_CAR"
+ 			
+ 			declare_war_on = {
+ 				target = SPR
+ 				type = annex_everything
+ 			}
+		}
 	}
 }
+
+country_event = { #Carlist uprising
+	id = sprc.2
+	title = sprc.2.t
+	desc = sprc.2.d
+	fire_only_once = yes
+	trigger = {
+		tag = CAR
+		date < 1937.05.5 
+		has_country_flag = carlists_risen
+	}		
+	mean_time_to_happen = { days = 10 }
+	option = {
+		name = sprc.2.a
+	}
+}
+
+country_event = { #Carlist uprising
+	id = sprc.3
+	title = sprc.3.t
+	desc = sprc.3.d
+	fire_only_once = yes
+	trigger = {
+		tag = SPR
+		date < 1937.05.5 
+		has_country_flag = cnt-fai
+		has_country_flag = carlists_risen
+	}		
+	mean_time_to_happen = { days = 2 }
+	option = {
+		name = sprc.2.a
+		add_political_power = -100
+ 		CNT = {
+ 			transfer_state = 165
+ 			transfer_state = 167
+ 			transfer_state = 166
+ 			transfer_state = 168
+ 			
+ 			add_state_core = 171
+ 			add_state_core = 172
+ 			add_state_core = 174
+ 			add_state_core = 176
+ 			
+ 			add_state_core = 166
+ 			add_state_core = 165
+ 			add_state_core = 167
+ 			add_state_core = 170
+ 			
+ 			add_state_core = 41
+ 			add_state_core = 175
+ 			add_state_core = 168
+ 			add_state_core = 173
+ 			
+ 			add_state_core = 699
+ 			add_state_core = 178
+ 			add_state_core = 290
+ 			add_state_core = 297
+ 			
+ 			add_state_core = 169
+ 			add_state_core = 177
+ 			add_state_core = 118
+ 		
+ 			load_oob = "SPA_Civil_War_CNT"
+ 			
+ 			declare_war_on = {
+ 				target = SPR
+ 				type = annex_everything
+ 			 
+ 			}
+ 			declare_war_on = {
+ 				target = CAR
+ 				type = annex_everything
+ 			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
 
 #country_event = {
 #	id = sprc.1
@@ -893,11 +1074,11 @@ country_event = { #Carlists banned - ITALY
 #	option = { 
 #		name = sprc.1.a #Stay with the Kingdom
 #		
-#		CAR = {
-#			transfer_state = 176
-#			transfer_state = 172
-#			transfer_state = 174
-#			transfer_state = 171
+#		CNT = {
+#			transfer_state = 165
+#			transfer_state = 167
+#			transfer_state = 166
+#			transfer_state = 168
 #			
 #			add_state_core = 171
 #			add_state_core = 172
@@ -922,13 +1103,16 @@ country_event = { #Carlists banned - ITALY
 #			add_state_core = 169
 #			add_state_core = 177
 #			add_state_core = 118
-#			
-#			load_oob = "SPA_Civil_War_CAR"
-#
 #		
+#			load_oob = "SPA_Civil_War_CNT"
 #			
 #			declare_war_on = {
 #				target = SPR
+#				type = annex_everything
+#			 
+#			}
+#			declare_war_on = {
+#				target = CAR
 #				type = annex_everything
 #			}
 #			

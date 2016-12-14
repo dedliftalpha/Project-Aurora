@@ -178,30 +178,15 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		AND = {
-			OR = { 
-				has_government = social_democratist
-				has_government = social_liberalist
-				has_government = market_liberalist
-				has_government = social_conservatist
-				has_government = authoritarian_democratist
+		date > 1936.7.3
+		date < 1936.7.15
 			}
-		}
-		AND = {
-			OR = {
-				AND = { date > 1936.7.3 date < 1936.7.4}
-			}
-		}			
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
 
 	option = {
 		name= ustates.3.a
 
 		add_political_power = 20
+		hidden_effect = { country_event = { id = ustates.3 days = 365 } }
 	}
 
 }
@@ -220,7 +205,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 5
 	}
 
 	option = {
@@ -258,14 +243,10 @@ country_event = {
 		date > 1936.2.11
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
-		name= ustates.4.a
+		name= ustates.5.a
 
-		add_political_power = 20
+		add_political_power = -20
 	}
 }
 
@@ -281,10 +262,6 @@ country_event = {
 	trigger = {
 		tag = USA
 		date > 1936.6.14
-	}
-
-	mean_time_to_happen = {
-		days = 1
 	}
 
 	option = {
@@ -309,10 +286,6 @@ country_event = {
 		date > 1936.9.1
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
 		name= ustates.7.a
 		
@@ -331,14 +304,12 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		tag = USA
+		OR = { tag = USA tag = CAL }
 		date > 1937.4.19
+		owns_state = 797
+		controls_state = 797
 	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
-
+	
 	option = {
 		name= ustates.8.a
 
@@ -360,11 +331,7 @@ country_event = {
 		tag = USA
 		date > 1936.6.27
 	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
-
+	
 	option = {
 		name= ustates.9.a
 
@@ -385,10 +352,6 @@ country_event = {
 	trigger = {
 		tag = USA
 		date > 1936.2.11
-	}
-
-	mean_time_to_happen = {
-		days = 1
 	}
 
 	option = {
@@ -414,14 +377,31 @@ country_event = {
 		date > 1936.2.8
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
 		name= ustates.11.a
 
 		add_political_power = -20
+	}
+
+}
+
+country_event = {
+	id = ustates.1100
+	title = ustates.1100.t
+	desc = ustates.1100.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		date > 1936.6.29
+	}
+
+	option = {
+		name= ustates.1100.a
+
+		add_political_power = 20
 	}
 
 }
@@ -437,10 +417,6 @@ country_event = {
 	trigger = {
 		tag = USA
 		date > 1936.3.17
-	}
-
-	mean_time_to_happen = {
-		days = 1
 	}
 
 	option = {
@@ -474,37 +450,26 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		tag = USA
+		OR = { tag = USA tag = CSA tag = TEX tag = CAL }
 		date > 1937.4.1
+		has_global_flag = END_ACW
+		has_war = no
+		owns_state = 379
+		controls_state = 379
+		379 = { is_core_of = ROOT }
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 20
 	}
 
 	option = {
 		name= ustates.13.a
 
-		ai_chance = {
-			factor = 95
-		}	
-
 		add_political_power = 20	
 
-		USA = { add_manpower = -20000 }
+		add_manpower = -10000
 		hidden_effect = { country_event = { id = ustates.14 days = 170 }}
-
-		remove_building = { type = industrial_complex level = 1 state = 379 } 
-	}
-
-	option = {
-		name= ustates.13.b
-
-		ai_chance = {
-			factor = 5
-		}
-
-		add_political_power = -100
 	}
 
 }
@@ -521,22 +486,64 @@ country_event = {
 		name= ustates.14.a
 
 		ai_chance = {
-			factor = 95
+			factor = 0
 		}
 		
 		379 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
-		add_national_unity = 0.02	
+		379 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes } }
+		add_political_power = 40
 	}
 
 	option = {
 		name= ustates.14.b
 
 		ai_chance = {
-			factor = 5
+			factor = 100
 		}
+		trigger = { tag = USA has_government = authoritarian_democratist }
 
 		379 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
-		add_national_unity = 0.02
+		379 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes } }
+		add_political_power = 40
+	}
+	
+	option = {
+		name= ustates.14.c
+
+		ai_chance = {
+			factor = 100
+		}
+		trigger = { tag = CAL }
+
+		379 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		379 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes } }
+		add_political_power = 40
+	}
+	
+	option = {
+		name= ustates.14.e
+
+		ai_chance = {
+			factor = 100
+		}
+		trigger = { tag = CSA }
+
+		379 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		379 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes } }
+		add_political_power = 40
+	}
+	
+	option = {
+		name= ustates.14.f
+
+		ai_chance = {
+			factor = 100
+		}
+		trigger = { tag = TEX }
+
+		379 = { add_building_construction = { type = industrial_complex level = 1 instant_build = yes } }
+		379 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes } }
+		add_political_power = 40
 	}
 }
 

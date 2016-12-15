@@ -80,8 +80,7 @@ country_event = {
 		add_political_power = 200
 		hidden_effect = {
 			GBR = {
-				country_event = { id = uk.2 days = 1 }
-				news_event = { id = uk.4 days = 1 }
+				country_event = { id = uk.2 days = 1 } # Politics
 			}
 			if = {
 				limit = {
@@ -98,7 +97,6 @@ country_event = {
 					news_event = { id = uk.5 days = 3 }
 				}
 			}
-			news_event = { id = uk.3 days = 3 }
 		}
 	}
 	
@@ -129,8 +127,29 @@ country_event = {
 		add_political_power = 200
 		hidden_effect = {
 			GBR = {
-				country_event = { id = uk.2 days = 1 }
-				news_event = { id = uk.4 days = 1 }
+				country_event = { id = uk.2 days = 1 } # Politics
+			}
+		}
+	}
+}
+
+# Politics
+
+country_event = {
+	id = uk.2
+	title = uk.2.t
+	desc = uk.2.d
+	picture = UK_country_parliament
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uk.2.a
+		
+		hidden_effect = {
+			GBR = {
+				country_event = { id = uk.3 days = 2 }
+				country_event = { id = uk.4 days = 2 }
 			}
 			if = {
 				limit = {
@@ -147,48 +166,44 @@ country_event = {
 					news_event = { id = uk.5 days = 3 }
 				}
 			}
-			news_event = { id = uk.3 days = 3 }
+			news_event = { id = uk.6 days = 2 }
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "King Edward VIII"
+				desc = "EDWARD_DESC"
+				picture = "Portrait_GBR_Edward_VIII.tga"
+				expire = "1965.1.1"
+				ideology = market_liberalist_subtype
+				traits = {}
+			}
+		
+			### Todo
+			# Ministers:
+			# HoG: Harold Nicolson
+			# Foreign: Halfor Mackinder
+			# Armament: Lionel Robbins
+			# Security: John Reith
+			# Intelligence: Hugh Trevor-Roper
+			# Chief of Staff: Prince Henry
+			# Chief of Army: Prince Henry
+			# Chief of Navy: Lord Mountbatten
+			# Chief of Air: Prince George
+			### Air doctrines ####
 		}
 	}
 }
 
-# New political establishment & Technology transfer
+# Economy & Technology
 
 country_event = {
-	id = uk.2
-	title = uk.2.t
-	desc = uk.2.d
+	id = uk.3
+	title = uk.3.t
+	desc = uk.3.d
 	picture = UK_country_parliament
 	
-	is_triggered_only = yes
-	
 	option = {
-		name = uk.2.a
-		
+		name = uk.3.a 
 		hidden_effect = {
-		retire_country_leader = yes
-		create_country_leader = {
-			name = "King Edward VIII"
-			desc = "EDWARD_DESC"
-			picture = "Portrait_GBR_Edward_VIII.tga"
-			expire = "1965.1.1"
-			ideology = market_liberalist_subtype
-			traits = {}
-		}
-		
-		### Todo
-		# Ministers:
-		# HoG: Harold Nicolson
-		# Foreign: Halfor Mackinder
-		# Armament: Lionel Robbins
-		# Security: John Reith
-		# Intelligence: Hugh Trevor-Roper
-		# Chief of Staff: Prince Henry
-		# Chief of Army: Prince Henry
-		# Chief of Navy: Lord Mountbatten
-		# Chief of Air: Prince George
-		### Air doctrines ####
-		
 			if = {
 				limit = { CAN = {has_tech = air_superiority} }
 				 set_technology = { air_superiority  = 1 } 
@@ -2179,41 +2194,6 @@ country_event = {
 	}
 }
 
-# News event: The Second Glorious Revolution
-
-news_event = {
-	id = uk.3
-	title = uk.3.t
-	desc = uk.3.d
-	picture = UK_news_parliament
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = uk.3.a
-		trigger = {
-			OR = {
-				has_government = totalist
-				has_government = radical_socialist
-				has_government = syndicalist
-			}
-		}
-	}
-	
-	option = {
-		name = uk.3.b
-		trigger = {
-			NOT = {
-				OR = {
-					has_government = totalist
-					has_government = radical_socialist
-					has_government = syndicalist
-				}
-			}
-		}
-	}
-}	
-
 # Loyal army elements
 
 news_event = {
@@ -2245,3 +2225,38 @@ news_event = {
 		load_oob = UK_disloyal
 	}
 }
+
+# News event: The Second Glorious Revolution
+
+news_event = {
+	id = uk.6
+	title = uk.6.t
+	desc = uk.6.d
+	picture = UK_news_parliament
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uk.6.a
+		trigger = {
+			OR = {
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = syndicalist
+			}
+		}
+	}
+	
+	option = {
+		name = uk.6.b
+		trigger = {
+			NOT = {
+				OR = {
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = syndicalist
+				}
+			}
+		}
+	}
+}	

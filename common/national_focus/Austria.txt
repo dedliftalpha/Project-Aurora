@@ -1268,7 +1268,7 @@ focus_tree = {
 		id = AUS_reformed_dual
 		#mutually_exclusive = { focus = AUS_homeland }
 		icon = GFX_goal_AUS_reformed_dual
-		x = 34
+		x = 36
 		y = 0
 		Cost = 10
 		
@@ -1279,12 +1279,348 @@ focus_tree = {
 		completion_reward = {
 			country_event = AHE.1
 			add_political_power = 100
-			
-			
-
 		}
 	
 	}
+	
+	### Reform slavs into yugoslavia ###
+	focus = {
+		id = AUS_reform_slavs
+		icon = GFX_goal_slav_kingdom
+		x = 34
+		y = 1
+		cost = 10
+		prerequisite = { focus = AUS_reformed_dual }
+		mutually_exclusive = { focus = AUS_reform_czechs }
+		
+		completion_reward = {
+			country_event = AHE.2
+			
+		}
+	
+	}
+	
+	#### austrian king
+	focus = {
+		id = AUS_austrian_king
+		icon = GFX_goal_monarchism_black
+		x = 32
+		y = 2
+		cost = 10
+		
+		prerequisite = { focus = AUS_reform_slavs }
+		mutually_exclusive = { focus = AUS_slav_king }
+		
+		completion_reward = {
+			country_event = AHE.3 # Crownation of Austrian King
+			
+		}
+	
+	}
+	
+	### Unify Yugoslavia Serbia
+	focus = {
+		id = AUS_unify_yug_serb_aus_king
+		icon = GFX_goal_AUS_unify_yugoslavia_war
+		x = 32
+		y = 3
+		cost = 10
+		
+		prerequisite = { focus = AUS_austrian_king }
+		
+		completion_reward = {
+			
+			
+			YUG = {
+				add_state_core = 107
+				add_state_core = 108
+				add_state_core = 767
+				add_state_core = 106
+			
+			}
+			
+		}
+	
+	}
+	
+	### Unify Yugoslavia Albania
+	focus = {
+		id = AUS_unify_yug_albania_aus_king
+		icon = GFX_goal_AUS_unify_yugoslavia_war
+		x = 32
+		y = 4
+		cost = 10
+		
+		prerequisite = { focus = AUS_unify_yug_serb_aus_king }
+		
+		completion_reward = {
+				
+				YUG = { 
+					add_state_core = 44
+					add_state_core = 765
+					add_state_core = 766
+				
+				}
+		}
+	
+	}
+	
+	
+	
+	### slav king
+	focus = {
+		id = AUS_slav_king
+		icon = GFX_goal_AUS_slav_king
+		x = 34
+		y = 2
+		cost = 10
+		
+		prerequisite = { focus = AUS_reform_slavs }
+		mutually_exclusive = { focus = AUS_austrian_king }
+		
+		completion_reward = {
+			country_event = AHE.4 # Crownation of Serbian King
+			
+		}
+	
+	}
+	
+	### Unify Yugoslavia Serbia
+	focus = {
+		id = AUS_unify_yug_serb
+		icon = GFX_goal_AUS_unify_yugoslavia
+		x = 34
+		y = 3
+		cost = 10
+		
+		prerequisite = { focus = AUS_slav_king }
+		
+		completion_reward = {
+			SER = { country_event = AHE.5 }
+			
+			YUG = {
+				add_state_core = 107
+				add_state_core = 108
+				add_state_core = 767
+				add_state_core = 106
+			
+			}
+			
+		}
+	
+	}
+	
+	### Unify Yugoslavia Albania
+	focus = {
+		id = AUS_unify_yug_albania
+		icon = GFX_goal_AUS_unify_yugoslavia
+		x = 34
+		y = 4
+		cost = 10
+		
+		prerequisite = { focus = AUS_unify_yug_serb }
+		
+		completion_reward = {
+		
+
+				
+				YUG = { 
+					add_state_core = 44
+					add_state_core = 765
+					add_state_core = 766
+				
+				}
+				
+
+			
+			if = { 
+				limit = {
+					country_exists = ALB
+					ALB = { is_puppet = NO }
+				}
+				ALB = { country_event = AHE.10 }
+			
+			}
+			
+			if = {
+				limit = {
+					country_exists = ALB
+					ALB = { is_puppet_of = OTT }
+				}
+				ALB = { country_event = AHE.15 }
+			
+			}
+			
+			
+			
+			
+		}
+	
+	}
+	
+	### Yugoslavia nification done 
+	focus = {
+		id = AUS_unify_yug_done
+		icon = GFX_goal_generic_national_unity
+		x = 33
+		y = 5
+		cost = 10
+		
+		available = {
+			YUG = {
+				owns_state = 44
+				owns_state = 107
+				
+			}
+		
+		}
+		
+		prerequisite = { focus = AUS_unify_yug_albania focus = AUS_unify_yug_albania_aus_king  }
+
+		
+		
+		completion_reward = {
+			
+			YUG = { add_ideas = YUG_unified }
+			
+		}
+	
+	}
+	
+	### Build up Yugoslavia
+	focus = {
+		id = AUS_yugoslavia_eco
+		icon = GFX_goal_generic_construction
+		x = 36
+		y = 2
+		cost = 10
+		
+		prerequisite = { focus = AUS_reform_slavs }
+		
+		
+		complete_tooltip = {
+			YUG = {
+				random_owned_controlled_state = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+			}
+		}
+		
+		completion_reward = {
+			YUG = {
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 1
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 1
+											include_locked = yes
+										}
+										is_in_home_area = yes
+									}
+								}
+							}
+						}
+					}
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+			
+			}
+		}
+	
+	}
+	
+	### Reinface yugsolavia army
+	focus = {
+		id = AUS_yugoslavia_army
+		icon = GFX_goal_AUS_yugoslavia_army
+		x = 36
+		y = 3
+		cost = 10
+		
+		prerequisite = { focus = AUS_yugoslavia_eco }
+		
+		
+		completion_reward = {
+			YUG = {
+				load_oob = "AUS_YUG_1"
+				army_experience = 20				
+				add_tech_bonus = {
+					name = land_doc_bonus
+					bonus = 0.25
+					uses = 4
+					category = land_doctrine
+				}
+			}
+		}
+	
+	}
+	
+	### integrate in kuk marine
+	focus = {
+		id = AUS_yugoslavia_marine
+		icon = GFX_goal_AUS_yugoslavia_navy
+		x = 36
+		y = 4
+		cost = 10
+		
+		prerequisite = { focus = AUS_yugoslavia_army }
+		
+		
+		completion_reward = {
+			YUG = {
+				navy_experience = 20				
+				add_tech_bonus = {
+					name = naval_doc_bonus
+					bonus = 0.25
+					uses = 4
+					category = naval_doctrine
+				}
+			}
+		}
+	
+	}
+	
+	
+	### -------- ###
+	
+	### Reform czechs into Czecheslovakia ###
+	focus = {
+		id = AUS_reform_czechs
+		icon = GFX_goal_czech_king
+		x = 40
+		y = 1
+		cost = 10
+		prerequisite = { focus = AUS_reformed_dual }
+		mutually_exclusive = { focus = AUS_reform_slavs }
+		
+		completion_reward = {
+			#country_event = AHE.2
+			
+		}
+	
+	}
+	
+	
 	
 	### ------------------------------------------------------------------------------------------------------------------------------------------------------ ###
 	
@@ -1297,7 +1633,7 @@ focus_tree = {
 		id = AUS_federate
 		#mutually_exclusive = { focus = AUS_homeland }
 		icon = GFX_goal_AUS_federation
-		x = 40
+		x = 44
 		y = 0
 		Cost = 10
 		

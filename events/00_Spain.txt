@@ -150,15 +150,14 @@ country_event = { #Javier gives another speech
 	option = {
 		name = sprd.8.a
 		add_political_power = -200
-		set_country_flag = spr_carlists
+		set_country_flag = carlists
 		set_country_flag = javier_banned
 	}
 	option = {
 		name = sprd.8.b
 		add_political_power = -200
-		set_country_flag = spr_carlists
-		set_country_flag = javier_arrested
 		set_country_flag = carlists
+		set_country_flag = javier_arrested
 	}
 	option = {
 		name = sprd.8.c
@@ -301,27 +300,35 @@ country_event = { #the cnt-fai
 		name = sprd.13.a
 		add_political_power = -100
 		set_country_flag = cntfai_banned
-		#freedom = -1
+		add_popularity = { ideology = social_liberalist popularity = -0.03 }
 	}
 	option = {
 		name = sprd.13.b
 		add_political_power = -140
 		set_country_flag = cntfai_arrest_order
 		set_country_flag = SPA_CNT
-		#freedom, democratic, left = -1
+		add_popularity = { ideology = social_conservatist popularity = -0.03 }
+		add_popularity = { ideology = social_liberalist popularity = -0.03 }
+		add_popularity = { ideology = radical_socialist popularity = -0.03 }
+		add_popularity = { ideology = syndicalist popularity = -0.03 }
 	}
 	option = {
 		name = sprd.13.c
 		add_political_power = -200
 		set_country_flag = cntfai_banned
 		set_country_flag = SPA_CNT
-		#freedom = -2, democratic, left = -1
+		add_popularity = { ideology = social_conservatist popularity = -0.05 }
+		add_popularity = { ideology = social_liberalist popularity = -0.05 }
+		add_popularity = { ideology = radical_socialist popularity = -0.03 }
+		add_popularity = { ideology = syndicalist popularity = -0.03 }
 	}
 	option = {
 		name = sprd.13.e
 		add_political_power = -100
 		set_country_flag = cntfai_allowed
-		#freedom, democratic, left = 1
+		add_popularity = { ideology = social_conservatist popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+		add_popularity = { ideology = syndicalist popularity = 0.03 }
 	}
 }
 
@@ -553,17 +560,20 @@ country_event = { #general elections
 		tag = SPR
 		has_country_flag = spr_elections
 		has_war = no
+		NOT = {
+			has_country_flag = cnt-fai
+			has_country_flag = carlists
+		}
 	}		
 	mean_time_to_happen = { days = 90 }
 	option = {
 		name = sprd.23.a
 		add_political_power = 100
-		#support for party?
+		add_popularity = { ideology = social_conservatist popularity = 0.2 }
 		ai_chance = { factor = 60 }
 	}
 	option = {
 		name = sprd.23.b
-		add_political_power = 100
 		CNT = {
 			transfer_state = 41
 			transfer_state = 118
@@ -603,6 +613,7 @@ country_event = { #general elections
 			add_state_core = 177
 			add_state_core = 178
 			
+			add_political_power = 100
 			country_event = { id = sprc.3000 }
 			#load_oob = "CNT-FAI"
 			set_country_flag = election_success
@@ -612,7 +623,6 @@ country_event = { #general elections
 	}
 	option = {
 		name = sprd.23.c
-		add_political_power = 100
 		CAR = {
 			transfer_state = 41
 			transfer_state = 118
@@ -652,6 +662,7 @@ country_event = { #general elections
 			add_state_core = 177
 			add_state_core = 178
 			
+			add_political_power = 100
 			country_event = { id = sprc.3000 }
 			#load_oob = "CAR"
 			set_country_flag = election_success

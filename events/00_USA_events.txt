@@ -171,7 +171,29 @@ country_event = { # MacArthur clamps down on problem groups
 country_event = { 
 	id = ustates.3
 	title = ustates.3.t
-	desc = ustates.3.d
+	desc = { 
+		text = ustates.3.d_normal
+		trigger = {
+			NOT = { OR = { AND = { date > 1938.7.3
+			OR = { has_government = authoritarian_democratist has_government = paternal_autocratist has_government = national_populist } }
+			AND = { date > 1937.7.3
+		date < 1937.7.15 has_war = yes } } }
+		}
+	}
+	desc = { 
+		text = ustates.3.d_mcarthur
+		trigger = {
+			date > 1938.7.3
+			OR = { has_government = authoritarian_democratist has_government = paternal_autocratist has_government = national_populist }
+		}
+	}
+	desc = { 
+		text = ustates.3.d_cw
+		trigger = {
+			date > 1937.7.3
+		date < 1937.7.15 has_war = yes
+		}
+	}
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
@@ -184,7 +206,31 @@ country_event = {
 
 	option = {
 		name= ustates.3.a
-
+        trigger = { NOT = { OR = { AND = { date > 1938.7.3
+			OR = { has_government = authoritarian_democratist has_government = paternal_autocratist has_government = national_populist } }
+			AND = { date > 1937.7.3
+		date < 1937.7.15 has_war = yes } } } }
+		
+        add_political_power = 20
+		hidden_effect = { country_event = { id = ustates.3 days = 365 } }
+	}
+	
+	option = {
+		name= ustates.3.b
+        trigger = { date > 1937.7.3
+		date < 1937.7.15 has_war = yes }
+		
+		add_political_power = 100
+		hidden_effect = { country_event = { id = ustates.3 days = 365 } }
+	}
+	
+	option = {
+		name= ustates.3.c
+        trigger = {
+			date > 1938.7.3
+			OR = { has_government = authoritarian_democratist has_government = paternal_autocratist has_government = national_populist }
+		}
+		
 		add_political_power = 20
 		hidden_effect = { country_event = { id = ustates.3 days = 365 } }
 	}
@@ -4633,31 +4679,20 @@ country_event = { # The Hughes Airshow
 	}	
 }
 
-country_event = { # July 4th '37
-	id = ustates.144
-	title = ustates.144.t
-	desc = ustates.144.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = USA
-		has_war = yes
-		date > 1937.7.3
-		NOT = { date < 1937.7.5}
-	}
-
-	mean_time_to_happen = {
-		days = 1   
-	}
-
-	option = { 
-		name = ustates.144.a
-
-		add_political_power = 100
-	}	
-}
+#country_event = { # July 4th '37    handled by the generic 4th of july event
+#	id = ustates.144
+#	title = ustates.144.t
+#	desc = ustates.144.d
+#	picture = GFX_report_event_spain_civil_war_soldiers
+#	
+#	is_triggered_only = yes
+#
+#	option = { 
+#		name = ustates.144.a
+#
+#		add_political_power = 100
+#	}	
+#}
 
 ###################################################################
 ### Overthrow Events
@@ -4809,8 +4844,6 @@ country_event = { # Huey Long is dead!
 		add_ideas = USA_Fritz_Kuhn_hog_pau }
 		if = { limit = { has_idea = USA_Huey_Long_eco_pau } remove_ideas = USA_Huey_Long_eco_pau
 		add_ideas = USA_William_Leahy_eco_pau }
-		if = { limit = { has_idea = USA_Jack_Reed_eco_syn } remove_ideas = USA_Jack_Reed_eco_syn
-		add_ideas = USA_William_Leahy_eco_pau }
 		hidden_effect = {
 
 			set_politics = {
@@ -4876,7 +4909,7 @@ country_event = { # Jack Reed's Death
 			has_global_flag = ACW_CSA
 		}
 		date > 1940.9.29
-		date < 1940.10.01
+		date < 1940.10.29
 	}
 
 	option = { 
@@ -4990,7 +5023,7 @@ country_event = { # The Combined Syndicates abandon Presidential politics.
 	}
 
 	mean_time_to_happen = {
-		days = 1   
+		days = 10 
 	}
 
 	option = { 
@@ -5017,7 +5050,7 @@ country_event = { # Lindbergh and his family leave for Canada.
 	}
 
 	mean_time_to_happen = {
-		days = 1   
+		days = 10
 	}
 
 	option = { 
@@ -5044,7 +5077,7 @@ country_event = { # Economic Recovery
 	}
 
 	mean_time_to_happen = {
-		days = 1   
+		days = 5  
 	}
 
 	option = { 
@@ -5583,7 +5616,7 @@ country_event = { # Reed and the CSA escape to France
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 5
 	}
 
 	option = {
@@ -5600,7 +5633,7 @@ country_event = { # Father Charles Coughlin's CBS Radio Broadcasts
 	desc = ustates.172.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	is_triggered_only = yes #Triggered by 906500; db/events/kaiserreich/Papacy/Papacy
+	is_triggered_only = yes #Triggered by an italian event
 
 	option = { 
 		name = ustates.172.a
@@ -5638,10 +5671,6 @@ country_event = { # The 100th anniversary of The Battle of The Alamo
 		date > 1936.3.6
 	}
 
-	mean_time_to_happen = {
-		days = 0
-	}
-
 	option = { 
 		name = ustates.173.a
 
@@ -5662,7 +5691,7 @@ country_event = { # New England rejoins the Union
 		name = ustates.174.a
 
 		annex_country = { target = NEE transfer_troops = no }
-		add_political_power = 50
+		add_political_power = 100
 	}	
 }
 
@@ -5682,7 +5711,7 @@ country_event = { # Form of government
 		tag = USA
 		has_global_flag = ACW_CSA
 		has_global_flag = ACW_AUS
-		has_government = paternal_autocratist
+		has_government = authoritarian_democratist
 		NOT = {
 			country_exists = TEX
 			country_exists = CSA
@@ -5691,7 +5720,7 @@ country_event = { # Form of government
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 15
 	}
 
 
@@ -5702,9 +5731,19 @@ country_event = { # Form of government
 			factor = 50
 		}
 
-		add_popularity = { ideology = social_conservatist popularity = 0.25 }
+		add_popularity = { ideology = social_conservatist popularity = 0.4 }
+		add_popularity = { ideology = authoritarian_democratist popularity = -0.3 }
 		set_politics = { ruling_party = social_conservatist elections_allowed = no }
 		add_political_power = -100
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = social_conservatist_subtype
+			traits = {}
+		}
+	    
 	}	
 
 	option = { 
@@ -5715,9 +5754,7 @@ country_event = { # Form of government
 		}
 
 		add_political_power = -200
-		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
-		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
-		country_event = { id = ustates.175 days = 1 }
+		country_event = { id = ustates.176 days = 15 }
 	}
 }
 
@@ -5736,10 +5773,9 @@ country_event = { # Forging new USA - internal policy
 			factor = 50
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = USA_MIN_JUNTA
-		add_popularity = { ideology = social_democratist popularity = 0.25 }
-		set_politics = { ruling_party = social_democratist elections_allowed = no }
+		add_popularity = { ideology = social_conservatist popularity = 0.1 }
 	}	
 
 	option = { 
@@ -5751,18 +5787,6 @@ country_event = { # Forging new USA - internal policy
 
 		add_political_power = 200
 		set_country_flag = USA_MAX_JUNTA
-		add_popularity = { ideology = social_conservatist popularity = 0.25 }
-		set_politics = { ruling_party = social_conservatist elections_allowed = no }
-
-		create_country_leader = {
-			name = "Douglas MacArthur"
-			desc = "MACARTHUR_DESC"
-			picture = "Portrait_USA_Douglas_MacArthur.dds"
-			expire = "1965.1.1"
-			ideology = social_conservatist_subtype
-			traits = {}
-		}
-
 		set_country_flag = USA_MACARTHUR
 	}
 
@@ -5773,15 +5797,24 @@ country_event = { # Forging new USA - internal policy
 			factor = 20
 		}
 
-		add_political_power = 200
-		set_country_flag = USA_MAX_JUNTA
-		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
-		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+		add_political_power = -100
+		set_country_flag = USA_TOTALITARIAN
 		set_country_flag = USA_MACARTHUR
+		add_popularity = { ideology = paternal_autocratist popularity = 0.4 }
+		add_popularity = { ideology = authoritarian_democratist popularity = -0.3 }
+		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
 	}
 }
 
-country_event = { # Forging new USA - internal policy
+country_event = { #1940 presidential elections
 	id = ustates.177
 	title = ustates.177.t
 	desc = ustates.177.d
@@ -5791,13 +5824,14 @@ country_event = { # Forging new USA - internal policy
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		has_government = authoritarian_democratist
 		has_country_flag = USA_MIN_JUNTA
 		date > 1940.1.1
+		date < 1940.12.30
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 15
 	}
 
 	option = { 
@@ -5807,7 +5841,7 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = OPPOSITION_WINS
 		add_popularity = { ideology = social_liberalist popularity = 0.25 }
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
@@ -5818,7 +5852,7 @@ country_event = { # Forging new USA - internal policy
 			USA_Henry_A_Wallace_hog_sli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}	
 
 	option = { 
@@ -5828,20 +5862,26 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = OPPOSITION_WINS
-		add_popularity = { ideology = social_conservatist popularity = -0.25 }
+		create_country_leader = {
+			name = "Frank Knox"
+			desc = "KNOX_DESC"
+			picture = "" #needed
+			expire = "1965.1.1"
+			ideology = market_liberalist_subtype
+			traits = {}
+		}
 		add_popularity = { ideology = market_liberalist popularity = 0.25}
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
-		hidden_effect = { retire_country_leader = yes }
-
+		
 		hidden_effect = { remove_ideas_with_trait = head_of_government }
 
 		add_ideas = {
 			USA_Thomas_E_Dewey_hog_mli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}
 
 	option = { 
@@ -5854,23 +5894,23 @@ country_event = { # Forging new USA - internal policy
 		add_political_power = -100
 		hidden_effect = { retire_country_leader = yes }
 
-		clr_country_flag = USA_MACARTHUR
 		set_country_flag = Eisenhower_HoS
 
-		add_popularity = { ideology = paternal_autocratist popularity = 0.25 }
+		add_popularity = { ideology = authoritarian_democratist popularity = 0.2 }
 
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
 			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
-			ideology = paternal_autocratist_subtype
+			ideology = authoritarian_democratist_subtype
 			traits = {}
 		}
+		clr_country_flag = USA_MACARTHUR
 	}
 }
 
-country_event = { # Forging new USA - internal policy
+country_event = { # 1944 presidential elections
 	id = ustates.178
 	title = ustates.178.t
 	desc = ustates.178.d
@@ -5880,13 +5920,14 @@ country_event = { # Forging new USA - internal policy
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		has_government = authoritarian_democratist
 		has_country_flag = USA_MIN_JUNTA
 		date > 1944.1.1
+		date < 1944.12.30
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 15
 	}
 
 	option = { 
@@ -5896,11 +5937,10 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = -100
 		set_country_flag = OPPOSITION_WINS
 
-		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
-		add_popularity = { ideology = social_liberalist popularity = 0.5 }
+		add_popularity = { ideology = social_liberalist popularity = 0.25 }
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
 
 		hidden_effect = { retire_country_leader = yes }
@@ -5920,7 +5960,7 @@ country_event = { # Forging new USA - internal policy
 			USA_Harry_S_Truman_hog_sli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}	
 
 	option = { 
@@ -5930,10 +5970,9 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = OPPOSITION_WINS
-		add_popularity = { ideology = social_conservatist popularity = -0.5 }
-		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		add_popularity = { ideology = market_liberalist popularity = 0.25}
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
 
 		hidden_effect = { retire_country_leader = yes }
@@ -5953,7 +5992,7 @@ country_event = { # Forging new USA - internal policy
 			USA_John_Bricker_hog_mli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}
 
 	option = { 
@@ -5964,10 +6003,24 @@ country_event = { # Forging new USA - internal policy
 		}
 
 		add_political_power = -100
+        set_country_flag = Eisenhower_HoS
+		if = { limit = { NOT = { has_country_flag = Eisenhower_HoS } }
+        hidden_effect = { retire_country_leader = yes }
+		add_popularity = { ideology = authoritarian_democratist popularity = 0.2 }
+
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		} }
+		clr_country_flag = USA_MACARTHUR
 	}
 }
 
-country_event = { # Forging new USA - internal policy
+country_event = { #1948 presidential elections
 	id = ustates.179
 	title = ustates.179.t
 	desc = ustates.179.d
@@ -5977,13 +6030,14 @@ country_event = { # Forging new USA - internal policy
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		has_government = authoritarian_democratist
 		has_country_flag = USA_MIN_JUNTA
 		date > 1948.1.1
+		date > 1948.12.30
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 15
 	}
 
 	option = { 
@@ -5993,11 +6047,10 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = OPPOSITION_WINS
 
-		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
-		add_popularity = { ideology = social_liberalist popularity = 0.5 }
+		add_popularity = { ideology = social_liberalist popularity = 0.25 }
 		set_politics = { ruling_party = social_liberalist elections_allowed = no }
 
 		hidden_effect = { retire_country_leader = yes }
@@ -6014,10 +6067,10 @@ country_event = { # Forging new USA - internal policy
 		hidden_effect = { remove_ideas_with_trait = head_of_government }
 
 		add_ideas = {
-			USA_John_Bricker_hog_mli
+			USA_Harry_S_Truman_hog_sli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}	
 
 	option = { 
@@ -6027,10 +6080,9 @@ country_event = { # Forging new USA - internal policy
 			factor = 15
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 		set_country_flag = OPPOSITION_WINS
-		add_popularity = { ideology = social_conservatist popularity = -0.5 }
-		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		add_popularity = { ideology = market_liberalist popularity = 0.25}
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
 
 		hidden_effect = { retire_country_leader = yes }
@@ -6050,7 +6102,7 @@ country_event = { # Forging new USA - internal policy
 			USA_John_Bricker_hog_mli
 		}
 
-		hidden_effect = { country_event = { id = ustates.180 days = 0 }}
+		hidden_effect = { country_event = { id = ustates.180 days = 15 }}
 	}
 
 	option = { 
@@ -6061,6 +6113,20 @@ country_event = { # Forging new USA - internal policy
 		}
 
 		add_political_power = -100
+		set_country_flag = Eisenhower_HoS
+		if = { limit = { NOT = { has_country_flag = Eisenhower_HoS } }
+        hidden_effect = { retire_country_leader = yes }
+		add_popularity = { ideology = authoritarian_democratist popularity = 0.2 }
+
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {}
+		} }
+		clr_country_flag = USA_MACARTHUR
 	}
 }
 
@@ -6080,22 +6146,21 @@ country_event = {
 		name = ustates.180.a
 
 		ai_chance = {
-			factor = 15
+			factor = 30
 		}
 
 		clr_country_flag = USA_MIN_JUNTA
 		clr_country_flag = USA_MAX_JUNTA
 		clr_country_flag = OPPOSITION_WINS
 
-		add_political_power = 300
-		set_national_unity = 90
+		add_political_power = 400
 	}	
 
 	option = { 
 		name = ustates.180.b
 
 		ai_chance = {
-			factor = 15
+			factor = 70
 		}
 
 		add_political_power = -200
@@ -6105,14 +6170,11 @@ country_event = {
 		set_country_flag = USA_TOTALITARIAN
 		set_country_flag = USA_MACARTHUR
 
-		set_country_flag = OPPOSITION_WINS
-		add_popularity = { ideology = market_liberalist popularity = -0.5 }
-		add_popularity = { ideology = social_liberalist popularity = -0.5 }
-		add_popularity = { ideology = paternal_autocratist popularity = 0.5}
+		add_popularity = { ideology = paternal_autocratist popularity = 0.4 }
+		add_popularity = { ideology = authoritarian_democratist popularity = -0.3 }
+		add_popularity = { ideology = market_liberalist popularity = -0.15 }
+		add_popularity = { ideology = social_liberalist popularity = -0.15 }
 		set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
-
-		hidden_effect = { retire_country_leader = yes }
-
 		create_country_leader = {
 			name = "Douglas MacArthur"
 			desc = "MACARTHUR_DESC"
@@ -6146,10 +6208,11 @@ country_event = {
 		tag = USA
 		has_government = paternal_autocratist
 		has_country_flag = USA_TOTALITARIAN
+		date > 1938.1.1
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
@@ -6173,13 +6236,14 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		has_country_flag = USA_MACARTHUR
-		has_country_flag = evnt_906512 # Buscar, fer i posar flag bona.
+		has_country_flag = USA_TOTALITARIAN
+		date > 1939.1.1
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 350
 	}
 
 	option = { 
@@ -6190,13 +6254,21 @@ country_event = {
 		}
 
 		hidden_effect = { kill_country_leader = yes }
-
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
 			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
 			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
 			traits = {}
 		}
 
@@ -6210,7 +6282,12 @@ country_event = {
 
 		add_political_power = -200
 
-		set_country_flag = ustates_182 
+		set_country_flag = ustates_182
+		set_country_flag = mcarthur_dead
+		if = { limit = { has_idea = USA_Douglas_MacArthur_int_sco } remove_ideas = USA_Douglas_MacArthur_int_sco
+		add_ideas = USA_Charles_E_Hughes_int_sco }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_mhc_mli } remove_ideas = USA_Douglas_MacArthur_mhc_mli }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_carm_mli } remove_ideas = USA_Douglas_MacArthur_carm_mli }
 	}	
 
 	option = { 
@@ -6221,9 +6298,14 @@ country_event = {
 		}
 
 		add_political_power = -300
-
-		hidden_effect = { country_event = { id = ustates.183 days = 4 }}
-		set_country_flag = ustates_182 
+        hidden_effect = { kill_country_leader = yes }
+		country_event = { id = ustates.183 }
+		set_country_flag = ustates_182
+		set_country_flag = mcarthur_dead
+		if = { limit = { has_idea = USA_Douglas_MacArthur_int_sco } remove_ideas = USA_Douglas_MacArthur_int_sco
+		add_ideas = USA_Charles_E_Hughes_int_sco }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_mhc_mli } remove_ideas = USA_Douglas_MacArthur_mhc_mli }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_carm_mli } remove_ideas = USA_Douglas_MacArthur_carm_mli }
 	}
 
 	option = { 
@@ -6233,16 +6315,14 @@ country_event = {
 			factor = 40
 		}
 
-		add_political_power = 50
+		add_political_power = 100
 
 		clr_country_flag = USA_TOTALITARIAN
 		hidden_effect = { kill_country_leader = yes }
 
-		add_popularity = { ideology = paternal_autocratist popularity = -0.5 }
-		add_popularity = { ideology = market_liberalist popularity = 0.5}
+		add_popularity = { ideology = paternal_autocratist popularity = -0.3 }
+		add_popularity = { ideology = market_liberalist popularity = 0.4}
 		set_politics = { ruling_party = market_liberalist elections_allowed = no }
-
-		hidden_effect = { retire_country_leader = yes }
 
 		create_country_leader = {
 			name = "Thomas Dewey"
@@ -6267,7 +6347,12 @@ country_event = {
 			USA_J_Edgar_Hoover_int_sli
 		}
 
-		set_country_flag = ustates_182 
+		set_country_flag = ustates_182
+		set_country_flag = mcarthur_dead
+		if = { limit = { has_idea = USA_Douglas_MacArthur_int_sco } remove_ideas = USA_Douglas_MacArthur_int_sco
+		add_ideas = USA_Charles_E_Hughes_int_sco }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_mhc_mli } remove_ideas = USA_Douglas_MacArthur_mhc_mli }
+		if = { limit = { has_idea = USA_Douglas_MacArthur_carm_mli } remove_ideas = USA_Douglas_MacArthur_carm_mli }
 	}
 }
 
@@ -6283,15 +6368,21 @@ country_event = { # Dissolution of the United States!
 		name = ustates.183.a
 
 		set_country_flag = Eisenhower_HoS
-
-		hidden_effect = { kill_country_leader = yes }
-
+        set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 		create_country_leader = {
 			name = "Dwight David Eisenhower"
 			desc = "EISENHOWER_DESC"
 			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
 			expire = "1965.1.1"
 			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
+		create_country_leader = {
+			name = "Dwight David Eisenhower"
+			desc = "EISENHOWER_DESC"
+			picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
 			traits = {}
 		}
 
@@ -6303,11 +6394,12 @@ country_event = { # Dissolution of the United States!
 
 		add_political_power = -300
 		add_manpower = -500000
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -5000 producer = USA }
 
 		release_puppet = CAN
 		# release_puppet = QUE Quebec
 		release_puppet = CUB
-		# release_puppet = GUY Guyana
+		release_puppet = CAF
 		release_puppet = MEX
 		release_puppet = PRI
 		release_puppet = PAN
@@ -6316,102 +6408,91 @@ country_event = { # Dissolution of the United States!
 		release_puppet = BRA
 		release_puppet = ARG
 		release_puppet = GUA
-		# release_puppet = SAL Salvador
+		release_puppet = ELS
 		release_puppet = BOL
 		release_puppet = PRU
 		release_puppet = ECU
 		release_puppet = HON
 		release_puppet = NIC
 		release_puppet = CHL
-		# release_puppet = U01 Uruguay
+		release_puppet = URG
 		release_puppet = PAR
 		# release_puppet = U27 Peru-Bolibian Confederation
+		#end guarantees too
 
 		set_capital = 382
 
-		if = {
-			limit = { controls_state = 357 NOT = { country_exists = NEE }}
-
-			release = NEE
-			set_global_flag = NEE_LIB
-
-			NEE = {
-				transfer_state = 357
-				transfer_state = 796
-				add_state_core = 357
-				add_state_core = 796
-			}
-
+            NEE = { add_state_core = 357
+			add_state_core = 796 }
+			
 			remove_state_core = 357
 			remove_state_core = 796
-		}
+			
+			if = {
+			limit = { controls_state = 357 NOT = { country_exists = NEE }}
+			release = NEE
+			set_global_flag = NEE_LIB
+			else = { NEE = { transfer_state = 357
+			transfer_state = 796 } }
+			}
+
 
 		if = {
 			limit = { controls_state = 686 NOT = { country_exists = PRI }}
 
-			release = PRI
-
-			PRI = {
-				transfer_state = 686
-				add_state_core = 686
-			}
+			release = PRI }
 
 			remove_state_core = 686
-		}
-
-		if = {
-			limit = { controls_state = 629 NOT = { country_exists = HAW }}
-
-			release = PRI
-
-			HAW = {
-				transfer_state = 629
-				transfer_state = 630
-				add_state_core = 629
-				add_state_core = 630
-			}
+			
+		HAW = { add_state_core = 629
+			add_state_core = 630
+			add_state_core = 631
+			add_state_core = 727
+			add_state_core = 726
+			add_state_core = 642 }
 
 			remove_state_core = 629
 			remove_state_core = 630
-		}
+			remove_state_core = 631
+			remove_state_core = 727
+			remove_state_core = 726
+			remove_state_core = 642
 
 		if = {
-			limit = { controls_state = 632 country_exists = JAP }
+			limit = { controls_state = 629 NOT = { country_exists = HAW }}
+			release = HAW
+			else = { HAW = { transfer_state = 629
+			transfer_state = 630
+			transfer_state = 631
+			transfer_state = 727
+			transfer_state = 726
+			transfer_state = 642 } } }
+
+		remove_state_core = 632
+		remove_state_core = 638
+		if = {
+			limit = { controls_state = 638 country_exists = JAP }
 
 			JAP = {
 				transfer_state = 632
+				transfer_state = 638
 				add_state_core = 632
+				add_state_core = 638
 			}
-
-			remove_state_core = 632
 		}
 
 		if = {
-			limit = { controls_state = 638 country_exists = GER }
+			limit = { controls_state = 638 country_exists = GER NOT = { country_exists = JAP } }
 
-			JAP = {
+			GER = {
+				transfer_state = 632
 				transfer_state = 638
+				add_state_core = 632
 				add_state_core = 638
 			}
-
-			remove_state_core = 638
 		}
 
-		release = CAL
-		set_global_flag = CAL_LIB
-
 		CAL = {
-			transfer_state = 650
-			transfer_state = 463
-			transfer_state = 386
-			transfer_state = 378
-                        transfer_state = 829
-			transfer_state = 387
-			transfer_state = 379
-			transfer_state = 385
-			transfer_state = 797
-			transfer_state = 798
-
 			add_state_core = 650
 			add_state_core = 463
 			add_state_core = 386
@@ -6434,24 +6515,24 @@ country_event = { # Dissolution of the United States!
 		remove_state_core = 385
 		remove_state_core = 797
 		remove_state_core = 798
-
-		release = FSA
-		set_global_flag = FSA_LIB
+		if = { limit = { NOT = { country_exists = CAL } }
+		set_global_flag = CAL_LIB
+		release = CAL
+		else = { CAL = {
+			transfer_state = 650
+			transfer_state = 463
+			transfer_state = 386
+			transfer_state = 378
+			transfer_state = 829
+			transfer_state = 387
+			transfer_state = 379
+			transfer_state = 385
+			transfer_state = 797
+			transfer_state = 798
+		} } }
 
 		FSA = {
-			transfer_state = 375
-			transfer_state = 374
-			transfer_state = 372
-			transfer_state = 371
-			transfer_state = 370
-			transfer_state = 368
-			transfer_state = 367
-			transfer_state = 366
-			transfer_state = 365
-			transfer_state = 364
-			transfer_state = 363
-			transfer_state = 362
-
+		
 			add_state_core = 375
 			add_state_core = 374
 			add_state_core = 372
@@ -6464,6 +6545,7 @@ country_event = { # Dissolution of the United States!
 			add_state_core = 364
 			add_state_core = 363
 			add_state_core = 362
+			add_state_core = 361
 		}
 
 		remove_state_core = 375
@@ -6478,21 +6560,28 @@ country_event = { # Dissolution of the United States!
 		remove_state_core = 364
 		remove_state_core = 363
 		remove_state_core = 362
-
-		release = CGL
-		set_global_flag = CGL_LIB
+        remove_state_core = 361
+		if = { limit = { NOT = { country_exists = FSA } }
+		release = FSA
+		set_global_flag = FSA_LIB
+		else = { FSA = {
+		
+			transfer_state = 375
+			transfer_state = 374
+			transfer_state = 372
+			transfer_state = 371
+			transfer_state = 370
+			transfer_state = 368
+			transfer_state = 367
+			transfer_state = 366
+			transfer_state = 365
+			transfer_state = 364
+			transfer_state = 363
+			transfer_state = 362
+			transfer_state = 361
+		} } }
 
 		CGL = {
-			transfer_state = 394
-			transfer_state = 393
-			transfer_state = 395
-			transfer_state = 396
-			transfer_state = 369
-			transfer_state = 261
-			transfer_state = 360
-			transfer_state = 359
-			transfer_state = 358
-
 			add_state_core = 394
 			add_state_core = 393
 			add_state_core = 395
@@ -6513,11 +6602,48 @@ country_event = { # Dissolution of the United States!
 		remove_state_core = 360
 		remove_state_core = 359
 		remove_state_core = 358
+		if = { limit = { NOT = { country_exists = CGL } }
+		release = CGL
+		set_global_flag = CGL_LIB
+		else = { CGL = {
+			transfer_state = 394
+			transfer_state = 393
+			transfer_state = 395
+			transfer_state = 396
+			transfer_state = 369
+			transfer_state = 261
+			transfer_state = 360
+			transfer_state = 359
+			transfer_state = 358
+		} } }
+		
+		remove_state_core = 818
+		if = {
+			limit = { controls_state = 818 country_exists = CUB }
 
-		hidden_effect = { FSA = { country_event = { id = ustates.322 days = 1 }}}
-		hidden_effect = { NEE = { country_event = { id = ustates.323 days = 1 }}}
-		hidden_effect = { CAL = { country_event = { id = ustates.324 days = 1 }}}
-		hidden_effect = { CGL = { country_event = { id = ustates.325 days = 1 }}}
+			CUB = {
+				transfer_state = 818
+				add_state_core = 818
+			}
+
+			remove_state_core = 818
+		}
+		
+		remove_state_core = 685
+		if = {
+			limit = { controls_state = 685 country_exists = NIC }
+
+			NIC = {
+				transfer_state = 685
+				add_state_core = 685
+			}
+
+		}
+
+		if = { limit = { has_global_flag = FSA_LIB } FSA = { country_event = { id = ustates.322 } } }
+		if = { limit = { has_global_flag = NEE_LIB } NEE = { country_event = { id = ustates.323 } } }
+		if = { limit = { has_global_flag = CAL_LIB } CAL = { country_event = { id = ustates.324 } } }
+		if = { limit = { has_global_flag = CGL_LIB } CGL = { country_event = { id = ustates.325 } } }
 	}	
 }
 
@@ -6535,7 +6661,7 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		OR = {
 			has_country_flag = USA_MAX_JUNTA
 			has_country_flag = USA_MIN_JUNTA
@@ -6545,7 +6671,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
@@ -6555,8 +6681,8 @@ country_event = {
 			factor = 75
 		}
 
-		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
-		add_popularity = { ideology = paternal_autocratist popularity = -0.1 }
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.1 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.1 } }
 	}	
 
 	option = { 
@@ -6584,7 +6710,7 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		NOT = {
 			country_exists = CSA
 			country_exists = TEX
@@ -6598,7 +6724,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
@@ -6610,7 +6736,8 @@ country_event = {
 
 		add_political_power = -100
 
-		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.1 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.1 } }
 	}	
 
 	option = { 
@@ -6619,10 +6746,12 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
+		trigger = { NOT = { has_war_with = CAN } }
 
 		add_political_power = -80
-		hidden_effect = { CAN = { country_event = { id = ustates.186 days = 1 }}}
-		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
+		CAN = { country_event = { id = ustates.186 } }
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.05 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.05 } }
 		add_opinion_modifier = { target = CAN modifier = USA_EXILE_OPOSITION_CAN }
 	}
 
@@ -6649,7 +6778,7 @@ country_event = {
 		name = ustates.186.a
 
 		add_manpower = 40000
-		add_political_power = -40
+		add_political_power = -20
 		add_opinion_modifier = { target = USA modifier = USA_EXILE_OPOSITION_CAN }
 	}	
 }
@@ -6668,17 +6797,17 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		OR = {
 			has_country_flag = USA_MAX_JUNTA
 			has_country_flag = USA_MIN_JUNTA
 			has_country_flag = USA_TOTALITARIAN
 		}
-		date > 1938.1.1	
+		date > 1938.6.1	
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
@@ -6688,9 +6817,8 @@ country_event = {
 			factor = 60
 		}
 
-		add_political_power = -100
+		add_political_power = -20
 		add_ideas = macarthur_education_reforms_mil
-		add_ideas = limited_conscription
 	}	
 
 	option = { 
@@ -6700,15 +6828,14 @@ country_event = {
 			factor = 40
 		}
 
-		add_political_power = -40
-		add_ideas = macarthur_education_reforms_pat
+		add_political_power = 80
 	}
 
 	option = { 
 		name = ustates.187.c
 
 		ai_chance = {
-			factor = 1
+			factor = 0
 		}
 
 		add_political_power = -20
@@ -6729,7 +6856,7 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		OR = {
 			has_country_flag = USA_MAX_JUNTA
 			has_country_flag = USA_MIN_JUNTA
@@ -6739,7 +6866,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
@@ -6748,8 +6875,9 @@ country_event = {
 		ai_chance = {
 			factor = 60
 		}
-
-		add_ideas = limited_exports
+        add_political_power = -40
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.1 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.1 } }
 	}	
 
 	option = { 
@@ -6758,8 +6886,9 @@ country_event = {
 		ai_chance = {
 			factor = 40
 		}
-
-		add_ideas = free_trade
+		
+		add_political_power = 60
+		add_popularity = { ideology = market_liberalist	popularity = 0.1 }
 	}
 }
 
@@ -6773,7 +6902,7 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		OR = {
 			has_country_flag = USA_MAX_JUNTA
 			has_country_flag = USA_MIN_JUNTA
@@ -6783,17 +6912,19 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
 		name = ustates.189.a
 
 		ai_chance = {
-			factor = 60
+			factor = 70
 		}
 		
-		add_popularity = { ideology = syndicalist popularity = -0.05 }
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.05 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.05 } }
+		add_popularity = { ideology = syndicalist popularity = -0.1 }
 		add_political_power = -60
 	}	
 
@@ -6801,7 +6932,7 @@ country_event = {
 		name = ustates.189.b
 
 		ai_chance = {
-			factor = 40
+			factor = 30
 		}
 
 		add_political_power = 60
@@ -6818,27 +6949,28 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		OR = {
 			has_country_flag = USA_MAX_JUNTA
 			has_country_flag = USA_MIN_JUNTA
 			has_country_flag = USA_TOTALITARIAN
 		}
-		date > 1938.1.1	
+		date > 1939.1.1	
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 30
 	}
 
 	option = { 
 		name = ustates.190.a
 
 		ai_chance = {
-			factor = 60
+			factor = 99
 		}
 		
-		add_popularity = { ideology = paternal_autocratist popularity = 0.1 }
+		if = { limit = { has_government = paternal_autocratist } add_popularity = { ideology = paternal_autocratist popularity = 0.1 } }
+		if = { limit = { has_government = authoritarian_democratist } add_popularity = { ideology = authoritarian_democratist popularity = 0.1 } }
 		add_political_power = -100
 	}	
 
@@ -6863,13 +6995,14 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		has_country_flag = USA_MAX_JUNTA
-		date > 1940.1.1	
+		date > 1940.3.1
+		date < 1940.12.30
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
@@ -6879,65 +7012,24 @@ country_event = {
 			factor = 30
 		}
 		
-		clr_country_flag = USA_MIN_JUNTA
+		clr_country_flag = USA_MAX_JUNTA
 		set_country_flag = USA_TOTALITARIAN
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
+            ideology = paternal_autocratist
+            popularity = 0.25
         }
 		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
+            popularity = -0.2
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.6
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
         set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 	}	
 
@@ -6949,73 +7041,10 @@ country_event = {
 		}
 
 		add_political_power = 40
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.5
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = syndicalist
             popularity = 0.05
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
-        }
-        }
-
-        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-        hidden_effect = { country_event = { id = ustates.192 days = 1460 }}
 	}
 
 	option = { 
@@ -7029,68 +7058,13 @@ country_event = {
 		clr_country_flag = USA_MIN_JUNTA
 		clr_country_flag = USA_MAX_JUNTA
 
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.2
-        }
         add_popularity = {
             ideology = market_liberalist
             popularity = 0.2
         }
         add_popularity = {
             ideology = social_liberalist
-            popularity = 0.5
-        }
-        add_popularity = {
-            ideology = syndicalist
-            popularity = 0.05
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
-        }
+            popularity = 0.25
         }
 
         set_politics = { ruling_party = social_liberalist elections_allowed = no }
@@ -7117,12 +7091,19 @@ country_event = {
 	desc = ustates.192.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA
+	OR = { has_government = authoritarian_democratist has_government = paternal_autocratist }
+	has_country_flag = USA_MAX_JUNTA 
+	date > 1944.1.1 date < 1944.12.30 }
+	
+	mean_time_to_happen = { days = 30 }
 
 	option = { 
 		name = ustates.192.a
-		
-		hidden_effect = { country_event = { id = ustates.193 days = 0 }}
+		add_political_power = -60
+		hidden_effect = { country_event = { id = ustates.193 days = 90 }}
 	}	
 }
 
@@ -7145,61 +7126,22 @@ country_event = {
 		clr_country_flag = USA_MAX_JUNTA
 		set_country_flag = USA_TOTALITARIAN
 
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
+        add_popularity = {
+            ideology = paternal_autocratist
+            popularity = 0.25
         }
 		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
+            popularity = -0.2
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.6
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
 
         set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 	}	
@@ -7213,72 +7155,10 @@ country_event = {
 
 		add_political_power = -20
 
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
         add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.5
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = syndicalist
             popularity = 0.05
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
-        }
-
-        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-        hidden_effect = { country_event = { id = ustates.194 days = 1460 }}
 	}
 
 	option = { 
@@ -7292,68 +7172,13 @@ country_event = {
 		clr_country_flag = USA_MIN_JUNTA
 		clr_country_flag = USA_MAX_JUNTA
 
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.2
-        }
-        add_popularity = {
             ideology = market_liberalist
             popularity = 0.2
         }
         add_popularity = {
             ideology = social_liberalist
-            popularity = 0.5
-        }
-        add_popularity = {
-            ideology = syndicalist
-            popularity = 0.05
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
+            popularity = 0.25
         }
 
         set_politics = { ruling_party = social_liberalist elections_allowed = no }
@@ -7391,7 +7216,11 @@ country_event = {
 	desc = ustates.194.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = { tag = USA
+	OR = { has_government = authoritarian_democratist has_government = paternal_autocratist }
+	has_country_flag = USA_MAX_JUNTA }
 
 	option = { 
 		name = ustates.194.a
@@ -7404,61 +7233,22 @@ country_event = {
 		clr_country_flag = USA_MAX_JUNTA
 		set_country_flag = USA_TOTALITARIAN
 
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
+            ideology = paternal_autocratist
+            popularity = 0.25
         }
 		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
+            popularity = -0.2
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.6
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
+		create_country_leader = {
+			name = "Douglas MacArthur"
+			desc = "MACARTHUR_DESC"
+			picture = "Portrait_USA_Douglas_MacArthur.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {}
+		}
 
         set_politics = { ruling_party = paternal_autocratist elections_allowed = no }
 	}	
@@ -7472,72 +7262,10 @@ country_event = {
 
 		add_political_power = -20
 
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.5
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = syndicalist
             popularity = 0.05
         }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
-        }
-
-        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-        hidden_effect = { country_event = { id = ustates.194 days = 1460 }}
 	}
 
 	option = { 
@@ -7551,68 +7279,13 @@ country_event = {
 		clr_country_flag = USA_MIN_JUNTA
 		clr_country_flag = USA_MAX_JUNTA
 
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.5
+            popularity = 0.25
         }
         add_popularity = {
             ideology = social_liberalist
             popularity = 0.2
-        }
-        add_popularity = {
-            ideology = syndicalist
-            popularity = 0.05
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = 0.05
         }
 
         set_politics = { ruling_party = market_liberalist elections_allowed = no }
@@ -7658,7 +7331,7 @@ country_event = {
 
 	trigger = {
 		tag = USA
-		has_government = paternal_autocratist
+		OR = { has_government = paternal_autocratist has_government = authoritarian_democratist }
 		has_country_flag = USA_MIN_JUNTA
 		has_country_flag = Eisenhower_HoS
 		NOT = { has_country_flag = ustates_182 }
@@ -7666,7 +7339,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 90
 	}
 
 	option = { 

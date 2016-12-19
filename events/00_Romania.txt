@@ -397,6 +397,8 @@ country_event = {
 		RRM = { add_opinion_modifier = { target = SER modifier = ROM_supported_the_other_side_in_civil_war } }
 
 		hidden_effect = { ROM = { country_event = { id = romania.11 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.10.b # Support the Monarchists
@@ -411,6 +413,8 @@ country_event = {
 		ROM = { add_opinion_modifier = { target = SER modifier = ROM_supported_the_other_side_in_civil_war } }
 
 		hidden_effect = { RRM = { country_event = { id = romania.12 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.10.c # Stay out of it
@@ -435,6 +439,8 @@ country_event = {
 			hidden_effect = { country_event = { id = romania.13 hours = 6 } } # Serbia supports us
 			}
 			hidden_effect = { RRM = { country_event = { id = romania.14 hours = 6 } } } # Serbia supports the enemy
+
+			set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.10.f # Intervene directly for the Monarchists
@@ -452,6 +458,8 @@ country_event = {
 			hidden_effect = { country_event = { id = romania.13 hours = 6 } } # Serbia supports us
 		}
 		hidden_effect = { ROM = { country_event = { id = romania.14 hours = 6 } } } # Serbia supports the enemy
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 }
 
@@ -611,6 +619,8 @@ country_event = {
 		RRM = { add_opinion_modifier = { target = AUS modifier = ROM_supported_the_other_side_in_civil_war } }
 
 		hidden_effect = { ROM = { country_event = { id = romania.17 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.16.b # Support the Monarchists
@@ -625,6 +635,8 @@ country_event = {
 		ROM = { add_opinion_modifier = { target = AUS modifier = ROM_supported_the_other_side_in_civil_war } }
 
 		hidden_effect = { RRM = { country_event = { id = romania.18 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.16.c # Stay out of it
@@ -711,6 +723,10 @@ country_event = {
 
 		RRM = { add_opinion_modifier = { target = UKR modifier = ROM_supported_us_in_civil_war } }
 		ROM = { add_opinion_modifier = { target = UKR modifier = ROM_supported_the_other_side_in_civil_war } }
+
+		hidden_effect = { RRM = { country_event = { id = romania.20 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
 	}
 	option = {
 		name = romania.19.b # We're not interested
@@ -735,5 +751,372 @@ country_event = {
 	  custom_effect_tooltip = romania.20.tt
 
 		hidden_effect = {	load_oob = RRM_UKR_help	}
+	}
+}
+
+# Russian intervention in Civil War
+country_event = {
+	id = romania.21
+	title = romania.21.t
+	desc = romania.21.d
+
+	trigger = {
+		tag = RUS
+		has_war = no
+		is_puppet = no
+
+		has_global_flag = romanian_civil_war
+
+		ROM = {
+			has_war_with = RRM
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 8
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.21.a # Support the Iron Guard
+
+		trigger = {
+			has_government = national_populist
+		}
+
+		ai_chance = { factor = 10 }
+
+		add_manpower = -1500
+		hidden_effect = { ROM = { add_manpower = 1500 } }
+		send_equipment = { target = ROM type = infantry_equipment amount = 1500 }
+
+		ROM = { add_opinion_modifier = { target = RUS modifier = ROM_supported_us_in_civil_war } }
+		RRM = { add_opinion_modifier = { target = RUS modifier = ROM_supported_the_other_side_in_civil_war } }
+
+		hidden_effect = { ROM = { country_event = { id = romania.22 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
+	}
+
+	option = {
+		name = romania.21.b # Support the Monarchists
+
+		trigger = {
+			NOT = {
+				has_government = national_populist
+			}
+		}
+
+		ai_chance = { factor = 70 }
+
+		add_manpower = -1500
+		hidden_effect = { RRM = { add_manpower = 1500 } }
+		send_equipment = { target = RRM type = infantry_equipment amount = 1500 }
+
+		RRM = { add_opinion_modifier = { target = RUS modifier = ROM_supported_us_in_civil_war } }
+		ROM = { add_opinion_modifier = { target = RUS modifier = ROM_supported_the_other_side_in_civil_war } }
+
+		hidden_effect = { RRM = { country_event = { id = romania.23 hours = 6 } } }
+
+		set_country_flag = intervened_in_romanian_civil_war
+	}
+
+	option = {
+		name = romania.21.c # No interest
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -40
+	}
+}
+
+# ROM: Russia sends us support
+country_event = {
+	id = romania.22
+	title = romania.22.t
+	desc = romania.22.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.22.a # Great
+
+	  custom_effect_tooltip = romania.22.tt
+
+		hidden_effect = {	load_oob = ROM_RUS_help	}
+	}
+}
+
+# RRM: Russia sends us support
+country_event = {
+	id = romania.23
+	title = romania.23.t
+	desc = romania.23.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.23.a # Great
+
+	  custom_effect_tooltip = romania.23.tt
+
+		hidden_effect = {	load_oob = RRM_RUS_help	}
+	}
+}
+
+# The end of the Civil War: lessons learned
+country_event = {
+	id = romania.24
+	title = romania.24.t
+	desc = romania.24.d
+
+	trigger = {
+		OR = {
+			tag = SER
+			tag = AUS
+			tag = UKR
+			tag = RUS
+		}
+
+		has_global_flag = romanian_civil_war
+
+		OR = {
+				NOT = { country_exists = RRM }
+				NOT = { country_exists = ROM }
+		}
+
+		has_country_flag = intervened_in_romanian_civil_war
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = romania.24.a # Great!
+
+		army_experience = 10
+		navy_experience = 10
+		air_experience = 10
+
+		add_manpower = 500
+
+		add_political_power = 20
+
+		clr_country_flag = intervened_in_romanian_civil_war
+	}
+}
+
+# RRM: Corneliu Codreanu's dictatorship is defeated!
+country_event = {
+	id = romania.25
+	title = romania.25.t
+	desc = romania.25.d
+
+	trigger = {
+		tag = RRM
+
+		has_global_flag = romanian_civil_war
+
+		NOT = {
+			country_exists = ROM
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.25.a # Long live Romania
+
+		custom_effect_tooltip = romania.25.tt
+
+		hidden_effect = { load_oob = RRM_victory }
+	}
+}
+
+# The Iron Guard escapes to Serbia
+country_event = {
+	id = romania.26
+	title = romania.26.t
+	desc = romania.26.d
+
+	trigger = {
+		tag = RRM
+
+		has_global_flag = romanian_civil_war
+
+		NOT = {
+			country_exists = ROM
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 4
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.26.a # They better not return
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -20
+	}
+
+	option = {
+		name = romania.26.b # Demand their extradiction
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = 20
+
+		SER = { country_event = { id = romania.27 days = 2 } }
+	}
+}
+
+# Serbia: Romania demands extradition of Codreanu
+country_event = {
+	id = romania.27
+	title = romania.27.t
+	desc = romania.27.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.27.a # Extradite them!
+
+		ai_chance = { factor = 50 }
+
+		add_political_power = -20
+
+		RRM = { add_opinion_modifier = { target = SER modifier = ROM_extradited_iron_guard } }
+
+		RRM = { country_event = { id = romania.28 days = 3 } }
+	}
+
+	option = {
+		name = romania.27.b # They will stay here!
+
+		ai_chance = { factor = 50 }
+
+		add_political_power = 20
+
+		RRM = { add_opinion_modifier = { target = SER modifier = ROM_kept_iron_guard } }
+	}
+}
+
+# Serbia extradites the Iron Guard
+country_event = {
+	id = romania.28
+	title = romania.28.t
+	desc = romania.28.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.28.a # Hang them high
+
+		ai_chance = { factor = 70 }
+
+		add_political_power = 40
+	}
+
+	option = {
+		name = romania.28.b # Imprison them
+
+		ai_chance = { factor = 30 }
+
+		add_political_power = -80
+	}
+}
+
+# ROM: Royalist coup crushed!
+country_event = {
+	id = romania.29
+	title = romania.29.t
+	desc = romania.29.d
+
+	trigger = {
+		tag = ROM
+
+		has_global_flag = romanian_civil_war
+
+		NOT = {
+			country_exists = RRM
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.29.a # Long live the Iron Guard
+
+		custom_effect_tooltip = romania.29.tt
+
+		hidden_effect = { load_oob = ROM_victory }
+	}
+}
+
+# Iron Guard Terror
+country_event = {
+	id = romania.30
+	title = romania.30.t
+	desc = romania.30.d
+
+	trigger = {
+		tag = ROM
+
+		has_global_flag = romanian_civil_war
+
+		has_war_with = RRM
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.30.a # War is war
+
+		add_political_power = -20
+	}
+}
+
+# Monarchist Terror
+country_event = {
+	id = romania.31
+	title = romania.31.t
+	desc = romania.31.d
+
+	trigger = {
+		tag = RRM
+
+		has_global_flag = romanian_civil_war
+
+		has_war_with = ROM
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.31.a # War is war
+
+		add_political_power = -20
 	}
 }

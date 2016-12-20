@@ -1172,11 +1172,6 @@ country_event = { # A Common Enemy.
 
 		hidden_effect = { LEC = { country_event = { id = legcities.21 days = 1 }}}
 
-		add_ai_strategy = {
-            type = alliance
-            id = "LEC"
-            value = 200
-        }
 	}
 
 	option = {
@@ -2672,5 +2667,36 @@ country_event = { # Profits from Legation cities no longer available
 
 			add_opinion_modifier = { target = YUN modifier = INVESTMENTS_COMPENSATED } # -15
 		}
+	}
+}
+
+country_event = { # No legation cities profits if they don't exist.
+	id = legcities.41
+	title = legcities.41.t
+	desc = legcities.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	trigger = {
+		any_country = {
+			has_idea = PROFF_LEG_CITIES
+		}
+		NOT = {
+			has_country_flag = no_investments
+			country_exists = LEC
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	immediate = {
+		set_country_flag = no_investments
+	}
+
+	option = {
+		name = legcities.41.a
+
+		remove_ideas = PROFF_LEG_CITIES
 	}
 }

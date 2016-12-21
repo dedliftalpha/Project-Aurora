@@ -3865,3 +3865,166 @@ country_event = {#The Annexation of Flanders-Wallonia
 											}
 											
 												}
+												
+	country_event = {#The Fate of Russia
+	id = annex.48 
+	title = annex.48.t 
+	desc = annex.48.d 
+			trigger = {
+			NOT = { tag = RUS tag = SOV }
+			SOV = { exists = no }
+			NOT = { has_war_with = RUS }
+			controls_state = 219  
+								}
+									
+	mean_time_to_happen = { days = 15 }
+	
+		option = {#liberate SOV 
+			trigger = {
+				OR = { 
+				has_government = radical_socialist 
+				has_government = syndicalist 
+				has_government = totalist
+							}
+			
+								}
+		name = annex.48.a 
+		ai_chance = { factor = 99 }
+			every_state = {
+				limit = {
+				is_controlled_by = THIS 
+				is_core_of = RUS
+									}
+			SOV = { transfer_state = PREV }
+									}
+		SOV = { add_state_core = PREV }
+		puppet = SOV
+		add_political_power = 100 
+											}
+		
+			option = {#liberate Russia
+				trigger = {
+						NOT = {
+						has_government = radical_socialist 
+						has_government = syndicalist 
+						has_government = totalist 
+								}
+						}	
+			name = annex.48.b
+			ai_chance = { factor = 99 }
+			
+				every_state = {
+				
+					limit = {
+					is_controlled_by = THIS 
+					is_core_of = RUS
+							}
+							
+				RUS = { transfer_state = PREV }
+				
+									}
+			
+			puppet = RUS
+			
+			add_political_power = 100 
+			
+				if = {
+				
+					limit = {
+					tag = GER 
+							}
+				country_event = { id = annex.49 }
+					}
+			
+					}
+			option = {
+			name = annex.48.c 
+			ai_chance = { factor = 1 }
+			add_political_power = -160  
+			
+				
+					}
+					}
+					
+	country_event = {#The Future of Russia
+	id = annex.49 
+	title = annex.49.t 
+	desc = annex.49.d 
+	is_triggered_only = yes 
+	
+	option = {#A german 
+			name = annex.49.a 
+			ai_chance = { factor = 80 }
+			add_political_power = 20 
+			RUS = { country_event = { id = annex.50 } }
+		
+				}
+				
+	option = {#a Russian 
+			name = annex.49.b 
+			ai_chance = { factor = 20 }
+			add_political_power = -20 
+			RUS = { country_event = { id = annex.51 } }
+		
+				}
+				
+					}
+	
+country_event = {#A Hohenzollern Tsar
+	id = annex.50 
+	title = annex.50.t 
+	desc = annex.50.d 
+	is_triggered_only = yes 
+	
+	option = {
+		name = annex.50.a 
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+			}
+		create_country_leader = {
+			name = "Ivan V Hohenzollern"
+			desc = "POLITICS_MIKHAIL_FRUNZE_DESC"
+			picture = "portait_soviet_mikhail_frunze.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		
+			}
+		set_cosmetic_tag = RTS
+		add_political_power = -100 
+		set_country_flag = rus_tsar 
+		clr_country_flag = RUS_SEN
+		clr_country_flag =  DMI_PRES 
+		clr_country_flag = RUS_DEM_REP
+	}
+}
+
+country_event = {#Our new Prime Minister
+	id = annex.51 
+	title = annex.51.t 
+	desc = annex.51.d 
+	is_triggered_only = yes 
+	
+	option = {
+		name = annex.51.a 
+				
+		create_country_leader = {
+			name = "Pavel Bermondt-Avalov"
+			desc = "POLITICS_MIKHAIL_FRUNZE_DESC"
+			picture = "portait_soviet_mikhail_frunze.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		
+			}
+		add_political_power = -20  
+		clr_country_flag = RUS_SEN
+		clr_country_flag =  DMI_PRES 
+		clr_country_flag = RUS_DEM_REP
+		
+	}
+}
+	

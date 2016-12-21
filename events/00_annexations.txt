@@ -3202,10 +3202,666 @@ country_event = {#The Annexation of Flanders-Wallonia
 		}
 		
 								}
-		option = {
-		name = annex.1.a 
-		add_political_power = 60 
-		annex_country = { target = BEL }
+		option = { #release belgium
+		ai_chance = { factor = 50 }
+		name = annex.31.a 
+		BEL = {
+		transfer_state = 6 
+		transfer_state = 34 
+		transfer_state = 741 
+		transfer_state = 778 
+		#ministers needed
+										}
+		puppet = BEL 
+		add_political_power = 20 
+		
 		
 					}
+					
+		option = {#divide 
+		trigger = {
+		FLN = { exists = no }
+		WLL = { exists = no }
+							}
+		name = annex.31.b 
+		ai_chance = { factor = 50 }
+		FLN = {
+		transfer_state = 6
+							}
+		WLL = {
+		transfer_state = 34 
+		transfer_state = 741 
+		transfer_state = 778  
+						}
+		puppet = FLN 
+		puppet = WLL 
+		add_political_power = -20 
 								}
+								
+		option = {#annex wll 
+		trigger = {
+		FLN = { exists = no }
+		WLL = { exists = no }
+							}
+		name = annex.31.c 
+		ai_chance = { factor = 50 }
+		FLN = {
+		transfer_state = 6
+							}
+		puppet = FLN 
+							
+		add_state_claim = 34 
+		add_state_claim = 741 
+		add_state_claim = 778 
+		add_political_power = -60 
+										}
+										
+		option = {#HOL annex 
+		trigger = {
+		is_in_faction_with = HOL 
+							}
+		name = annex.31.e 
+		ai_chance = { factor = 50 }
+		HOL = {
+		transfer_state = 6
+							}
+							
+		add_state_claim = 34 
+		add_state_claim = 741 
+		add_state_claim = 778 
+		add_political_power = -60 
+		HOL = { country_event = { id = annex.32 } }
+										}
+										
+		option = {#HOL liberate 
+		trigger = {
+		is_in_faction_with = HOL 
+							}
+		name = annex.31.f 
+		ai_chance = { factor = 50 }
+		HOL = {
+		transfer_state = 6
+							}
+							
+		WLL = {
+		transfer_state = 34 
+		transfer_state = 741 
+		transfer_state = 778  
+						}
+						
+		puppet = WLL 
+		add_political_power = 20 
+		HOL = { country_event = { id = annex.32 } }
+										}
+										
+		option = {#occupy it all 
+		name = annex.31.g 
+		ai_chance = { factor = 50 }
+		add_state_claim = 34 
+		add_state_claim = 741 
+		add_state_claim = 778 
+		add_state_claim = 6 
+		add_political_power = -60 
+								}
+								}
+								
+								
+	country_event = {#Status of Flanders
+	id = annex.32 
+	title = annex.32.t 
+	desc = annex.32.d 
+	is_triggered_only = yes 
+	
+	option = {#annex 
+	ai_chance = { factor = 50 }
+	add_state_core = 6 
+	add_political_power = -100 
+	
+											}
+	
+	option = {#liberate
+	name = annex.32.b 
+	ai_chance = { factor = 50 }
+	FLN = {
+	transfer_state = 6 
+						}
+	HOL = { puppet = FLN }
+	add_political_power = 100 
+									}
+											}
+											
+	country_event = {#The destiny of Luxembourg
+	id = annex.33 
+	title = annex.33.t 
+	desc = annex.33.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = FRA 
+	LUX = { exists = no }
+	controls_state = 8 
+	OR = { 
+		controls_state = 51
+		any_country = { is_in_faction_with = FRA
+
+		controls_state = 51
+	
+							}
+		}
+						}
+						
+	mean_time_to_happen = { days = 60 }
+	
+	option = {#liberate 
+	name = annex.33.a 
+	ai_chance = { factor = 50 }
+	LUX = {
+	transfer_state = 8
+		}
+	puppet = LUX
+	#needs LUX ministers
+	add_political_power = 20 
+						}
+						
+	option = {#annex 
+	name = 33.b 
+	ai_chance = { factor = 50 }
+	set_country_flag = INT_LUX 
+	add_political_power = -40 
+	add_state_claim = 8
+	
+						}
+													}
+													
+	country_event = {#Integration of Romandy
+	id = annex.34 
+	title = annex.34.t 
+	desc = annex.34.d 
+	fire_only_once = yes 
+	
+	trigger = {
+	tag = FRA 
+	controls_state = 760
+	NOT = { has_war_with = SWI }
+					}
+					
+	mean_time_to_happen = { days = 360 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 760 
+	add_political_power = -60 
+							}
+							}
+							
+	country_event = {#Integration of Wallonia
+	id = annex.35 
+	title = annex.35.t 
+	desc = annex.35.d 
+	fire_only_once = yes 
+	
+	trigger = {
+	tag = FRA 
+	controls_state = 34 
+	BEL = { exists = no }
+	WLL = { exists = no }
+	
+					}
+					
+	mean_time_to_happen = { days = 360 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 34 
+	add_state_core = 741 
+	add_political_power = -100 
+							}
+							}
+							
+	country_event = {#Integration of Luxembourg
+	id = annex.36 
+	title = annex.36.t 
+	desc = annex.36.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = FRA 
+	has_country_flag = INT_LUX 
+	controls_state = 8 
+	LUX = { exists = no }
+	
+					}
+	mean_time_to_happen = { days = 360 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 8 
+	add_political_power = -60 
+							}
+	
+										}
+										
+										
+	country_event = {#Integration of Alsace-Lorraine
+	id = annex.37 
+	title = annex.37.t 
+	desc = annex.37.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = FRA 
+	controls_state = 779 
+	controls_state = 28
+	
+					}
+	mean_time_to_happen = { days = 60 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 779 
+	add_state_core = 28
+	add_political_power = -60 
+							}
+	
+										}
+										
+	country_event = {#Integration of Bosna
+	id = annex.38 
+	title = annex.38.t 
+	desc = annex.38.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = SER
+	controls_state = 104 
+	BOS = { exists = no }
+	NOT = {  104 = { is_core_of = SER } } 
+	
+					}
+	mean_time_to_happen = { days = 60 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 104 
+	add_political_power = -60 
+							}
+	
+										}
+										
+	country_event = {#Integration of Backa-Baranje
+	id = annex.39 
+	title = annex.39.t 
+	desc = annex.39.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = SER
+	controls_state = 45 
+	NOT = { 45 = { is_core_of = SER } }
+	
+					}
+	mean_time_to_happen = { days = 60 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 45 
+	add_state_core = 794 
+	add_political_power = -60 
+							}
+	
+										}
+										
+	country_event = {#Integration of Dalmatia
+	id = annex.40 
+	title = annex.40.t 
+	desc = annex.40.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = SER
+	controls_state = 103 
+	controls_state = 793 
+	NOT = { 103 = { is_core_of = SER } }
+	
+					}
+	mean_time_to_happen = { days = 60 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 103 
+	add_state_core = 793
+	add_state_core = 163 
+	add_political_power = -60 
+							}
+	
+										}
+										
+	country_event = {#Integration of Montenegro
+	id = annex.41 
+	title = annex.41.t 
+	desc = annex.40.d 
+	fire_only_once = yes 
+	trigger = {
+	tag = SER
+	controls_state = 105 
+	NOT = { 105 = { is_core_of = SER 	} }
+	
+					}
+	mean_time_to_happen = { days = 60 }
+	
+	option = {
+	name = annex.34.a 
+	add_state_core = 105 
+	add_political_power = -60 
+							}
+	
+										}
+										
+	country_event = {#The Annexation of Southern Italy and Reunification of Italy
+	id = annex.42 
+	title = annex.42.t 
+	desc = annex.42.d 
+	
+	fire_only_once = yes 
+	trigger = {
+	tag = ITA 
+	controls_state = 117 
+	SRI = { exists = no }
+	
+							}
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+	name = annex.42.a 
+	add_political_power = 200 
+							}
+														}
+														
+	country_event = {#Fate of the Southern Italy
+	id = annex.43 
+	title = annex.43.t 
+	desc = annex.43.d 
+	trigger = {
+	NOT = {
+	tag = ITA 
+	tag = SRI
+	has_country_flag = ITAOCC_CONQ
+	has_war_with = ITA 
+				}
+	controls_state = 117 
+	
+						}
+						
+	mean_time_to_happen = { days = 15 }
+									
+									
+	option = {#liberate socialist italy 
+	trigger = {
+	OR = { has_government = syndicalist has_government = totalist has_government = radical_socialist }
+						}
+	name = annex.43.a 
+	ai_chance = { factor = 25 }
+	add_political_power = 80 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	SRI = { transfer_state = PREV }
+	
+				}
+	puppet = SRI	
+							}
+							
+	option = {#liberate republican italy 
+	trigger = {
+	NOT = { has_government = syndicalist has_government = totalist has_government = radical_socialist }
+						}
+	name = annex.43.b 
+	ai_chance = { factor = 25 }
+	add_political_power = 80 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	SRI = { transfer_state = PREV }
+	
+				}
+	puppet = SRI
+	SRI = { set_cosmetic_tag = ITR }
+							}
+							
+	option = {#liberate Italian Federation
+	trigger = {
+	NOT = { has_government = syndicalist has_government = totalist has_government = radical_socialist }
+	ITA = { exists = no }
+						}
+	name = annex.43.c 
+	ai_chance = { factor = 25 }
+	add_political_power = 80 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	ITA = { transfer_state = PREV }
+	
+				}
+	puppet = ITA
+							}
+							
+	option = {#liberate two sicilies
+	trigger = {
+	NOT = { has_government = syndicalist has_government = totalist has_government = radical_socialist }
+						}
+	name = annex.43.e 
+	ai_chance = { factor = 25 }
+	add_political_power = 80 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	SRI = { transfer_state = PREV }
+	
+				}
+	puppet = SRI
+	SRI = { set_cosmetic_tag = TSC }
+							}
+							
+	option = {#offer to ITA 
+	trigger = {
+	ITA = { 
+	
+	exists = yes 
+	controls_state = 2 
+	controls_state = 159 
+	controls_state = 158 
+				}
+	NOT = { 
+	has_country_flag = ITA_refuse
+	is_in_faction_with = ITA 
+	has_war_with = ITA 
+	has_government = syndicalist 
+	has_government = totalist 
+	has_government = radical_socialist
+
+				}
+						}
+	name = annex.43.e 
+	ai_chance = { factor = 25 }
+	add_political_power = 80 
+	if = {  
+	limit = { NOT = { tag = AUS tag = AHE } }
+	ITA = { country_event = { id = annex.44 days = 2 } }
+	}
+	if = { limit = { OR = { tag = AHE tag = AUS } } ITA = { country_event = { id = annex.? days = 2 } } }
+							}
+							
+	option = {#return to ITA 
+	trigger = {
+	is_in_faction_with = ITA 
+	ITA = { exists = yes }
+								}
+	name = annex.43.f
+	ai_chance = { factor = 80 }
+	add_political_power = 40 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	ITA = { transfer_state = PREV }
+				}
+							}
+							
+	option = {#occupy 
+	name = annex.43.g 
+	ai_chance = { factor = 0 }
+	set_country_flag = ITAOCC_CONQ 
+	add_political_power = -100 
+							}
+							}
+							
+	country_event = {#An alliance in exchange for our land
+	id = annex.44 
+	title = annex.44.t 
+	desc = annex.44.d 
+	is_triggered_only = yes 
+	
+	option = {#agree 
+	name = annex.44.a 
+	ai_chance = { factor = 100 }
+	FROM = { country_event = { id = annex.45 days = 2 } }
+	
+								}
+								
+	option = {#never 
+	name = annex.44.b 
+	ai_chance = { factor = 0 }
+	add_political_power = -200 
+	FROM = { set_country_flag = ITA_refuse }
+						}
+											}
+											
+	country_event = {#Honour the deal
+	id = annex.45 
+	title = annex.45.t 
+	desc = annex.45.d 
+	is_triggered_only = yes 
+	
+	option = {
+	name = annex.45.a 
+	if = { limit = { OR = { tag = AUS tag = AHE } } 
+	SRI = {
+	remove_state_core = 783 
+	remove_state_core = 39 
+	remove_state_core = 759 
+	remove_state_core = 795
+	remove_state_core = 736 
+					}
+					}
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+				}
+	ITA = { transfer_state = PREV }
+						}
+	add_to_faction = ITA 
+									}
+										}
+	country_event = {#An alliance with aus and  in exchange for our land
+	id = annex.46 
+	title = annex.46.t 
+	desc = annex.46.d 
+	is_triggered_only = yes 
+	
+	option = {#agree 
+	name = annex.44.a 
+	ai_chance = { factor = 90 }
+	FROM = { country_event = { id = annex.45 days = 2 } }
+	
+								}
+								
+	option = {#never 
+	name = annex.44.b 
+	ai_chance = { factor = 10 }
+	add_political_power = -200 
+	FROM = { set_country_flag = ITA_refuse }
+						}
+											}
+											
+	country_event = {#integration of SRI 
+	id = annex.47
+	title = annex.47.t 
+	desc = annex.47.d 
+	trigger = { 
+	has_country_flag = ITAOCC_CONQ
+	any_state = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+	NOT = { is_core_of = THIS }
+								}
+								
+	SRI = { exists = no }
+	ITA = { exists = no }
+									}
+	
+	mean_time_to_happen = { days = 365 }
+
+	option = { 
+	name = annex.4.a 
+	every_state = {
+	limit = {
+	is_core_of = SRI 
+	is_controlled_by = THIS 
+								}
+	add_core_of = PREV 
+										}
+										
+	 
+	add_political_power = -20 
+											}
+											
+												}

@@ -20,7 +20,11 @@ focus_tree = {
 	focus = {
 		id = UK_milgov
 		icon = GFX_goal_authoritarian
-		mutually_exclusive = { focus = UK_civgov }
+		bypass = {
+			hidden_trigger = {
+				has_global_flag = UK_lawrence
+			}
+		}
 		available = {
 			custom_trigger_tooltip = { tooltip = UK_provgov_tp }
 			hidden_trigger = {
@@ -41,14 +45,28 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			custom_effect_tooltip = UK_milgov_tp
+			hidden_effect = {
+				add_ideas = GBR_Lord_Mountbatten_hog_sco
+				add_ideas = GBR_Adrian_Carton_de_Wiart_for_sco
+				add_ideas = GBR_John_Siddeley_eco_sco
+				add_ideas = GBR_Desmond_Morton_int_sco
+				add_ideas = GBR_Edmund_Ironside_mhc_sco
+				add_ideas = GBR_Edmund_Ironside_carm_sco
+				add_ideas = GBR_Roger_Keyes_cnav_sco
+				add_ideas = GBR_Hugh_Trenchard_cair_sco
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_civgov
 		icon = GFX_goal_support_democracy
-		mutually_exclusive = { focus = UK_milgov }
+		bypass = {
+			hidden_trigger = {
+				has_global_flag = UK_restoration
+			}
+		}
 		available = {
 			custom_trigger_tooltip = { tooltip = UK_provgov_tp }
 			hidden_trigger = {
@@ -69,7 +87,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			custom_effect_tooltip = UK_civgov_tp
+			hidden_effect = {
+				add_ideas = GBR_Harold_Nicolson_hog_mli
+				add_ideas = GBR_Halford_Mackinder_for_mli
+				add_ideas = GBR_Lionel_Robbins_eco_mli
+				add_ideas = GBR_John_Reith_int_mli
+				add_ideas = GBR_Prince_Henry_mhc_sco
+				add_ideas = GBR_Prince_Henry_carm_sco
+				add_ideas = GBR_Lord_Mountbatten_cnav_sco
+				add_ideas = GBR_Prince_George_cair_sco
+			}
 		}
 	}
 	
@@ -573,8 +601,79 @@ focus_tree = {
 		id = UK_royal_academy_4
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_royal_academy_3 }
+		prerequisite = { focus = UK_sponsored_research }
 		x = 14
 		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = UK_jet_research
+		icon = GFX_goal_generic_construction
+		prerequisite = { focus = UK_royal_academy_4 }
+		x = 14
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = UK_nuke_research
+		icon = GFX_goal_generic_construction
+		prerequisite = { focus = UK_royal_academy_4 }
+		x = 16
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	# Merchant Marine
+	
+	focus = {
+		id = UK_merchant_marine
+		icon = GFX_goal_generic_construction
+		prerequisite = { focus = UK_reintegrate_emigres }
+		x = 16
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = UK_merchant_marine2
+		icon = GFX_goal_generic_construction
+		prerequisite = { focus = UK_merchant_marine }
+		x = 16
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -589,29 +688,12 @@ focus_tree = {
 	# Navy
 	
 	focus = {
-		id = UK_navy_sealord
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_reintegrate_emigres }
-		x = 18
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = {
 		id = UK_navy_keyes
 		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_sealord }
+		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_navy_generic }
-		x = 17
-		y = 2
+		x = 19
+		y = 1
 		cost = 10
 		
 		ai_will_do = {
@@ -627,8 +709,8 @@ focus_tree = {
 		id = UK_navy_raiding
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_keyes }
-		x = 16
-		y = 3
+		x = 18
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -644,8 +726,8 @@ focus_tree = {
 		id = UK_navy_intervention
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_raiding }
-		x = 16
-		y = 4
+		x = 18
+		y = 3
 		cost = 10
 		
 		ai_will_do = {
@@ -662,8 +744,8 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_keyes focus = UK_navy_generic }
 		mutually_exclusive = { focus = UK_navy_battleship_focus }
-		x = 18
-		y = 3
+		x = 20
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -680,8 +762,8 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_keyes }
 		prerequisite = { focus = UK_navy_carrier_focus }
-		x = 17
-		y = 5
+		x = 19
+		y = 4
 		cost = 10
 		
 		ai_will_do = {
@@ -696,8 +778,7 @@ focus_tree = {
 	focus = {
 		id = UK_navy_carrier_groups
 		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_carrier_focus }
-		prerequisite = { focus = UK_navy_generic }
+		prerequisite = { focus = UK_navy_floating_airfields }
 		x = 19
 		y = 5
 		cost = 10
@@ -714,10 +795,10 @@ focus_tree = {
 	focus = {
 		id = UK_navy_generic
 		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_sealord }
+		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_navy_keyes }
-		x = 19
-		y = 2
+		x = 21
+		y = 1
 		cost = 10
 		
 		ai_will_do = {
@@ -734,8 +815,8 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_generic }
 		mutually_exclusive = { focus = UK_navy_carrier_focus }
-		x = 20
-		y = 3
+		x = 22
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -751,8 +832,8 @@ focus_tree = {
 		id = UK_navy_grand_navy
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_navy_battleship_focus }
-		x = 20
-		y = 4
+		x = 22
+		y = 3
 		cost = 10
 		
 		ai_will_do = {
@@ -770,7 +851,7 @@ focus_tree = {
 		id = UK_army_staff
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_reintegrate_emigres }
-		x = 22
+		x = 24
 		y = 1
 		cost = 10
 		
@@ -789,26 +870,7 @@ focus_tree = {
 		id = UK_air_force_staff
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_reintegrate_emigres }
-		x = 26
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
-	
-	# Marine & Canada
-	
-	focus = {
-		id = UK_merchant_marine
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_reintegrate_emigres }
-		x = 27
+		x = 28
 		y = 1
 		cost = 10
 		
@@ -828,7 +890,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_canada_no_subsidies }
-		x = 29
+		x = 32
 		y = 1
 		cost = 10
 		
@@ -846,7 +908,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_canada_subsidies }
-		x = 31
+		x = 34
 		y = 1
 		cost = 10
 		
@@ -863,8 +925,7 @@ focus_tree = {
 		id = UK_nafta
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_canada_subsidies focus = UK_canada_no_subsidies }
-		prerequisite = { focus = UK_merchant_marine }
-		x = 30
+		x = 33
 		y = 2
 		cost = 10
 		

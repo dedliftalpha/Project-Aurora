@@ -56,7 +56,7 @@ country_event = {
 		GBR = {
 			annex_country = { target = ENG transfer_troops = no }
 			change_tag_from = CAN 
-			set_country_flag = restoration
+			set_global_flag = UK_restoration
 		}
 		CAN = {
 			add_to_faction = GBR
@@ -90,7 +90,7 @@ country_event = {
 		ai_chance = { factor = 100 }
 		GBR = {
 			annex_country = { target = ENG transfer_troops = no }
-			set_country_flag = restoration
+			set_global_flag = UK_restoration
 		}
 		add_to_faction = GBR
 		if = {
@@ -133,35 +133,8 @@ country_event = {
 		add_ideas = UK_politics_syn_idea
 		hidden_effect = {
 			GBR = {
-				country_event = { id = uk.3 days = 2 }
-				country_event = { id = uk.4 days = 2 }
-			}
-			if = {
-				limit = {
-					FRA = {
-						exists = yes
-						OR = { 
-							has_government = totalist
-							has_government = syndicalist
-							has_government = radical_socialist
-						}
-					}
-				}
-				FRA = {
-					news_event = { id = uk.5 days = 3 }
-				}
-			}
-			if = {
-				limit = {
-					has_country_flag = lawrence
-				}
-				complete_national_focus = UK_milgov
-			}
-			if = {
-				limit = {
-					has_country_flag = restoration
-				}
-				complete_national_focus = UK_civgov
+				country_event = { id = uk.3 days = 1 }
+				country_event = { id = uk.4 days = 1 }
 			}
 			news_event = { id = uk.6 days = 2 }
 			retire_country_leader = yes
@@ -173,19 +146,51 @@ country_event = {
 				ideology = market_liberalist_subtype
 				traits = {}
 			}
-		
-			### Todo
-			# Ministers:
-			# HoG: Harold Nicolson
-			# Foreign: Halfor Mackinder
-			# Armament: Lionel Robbins
-			# Security: John Reith
-			# Intelligence: Hugh Trevor-Roper
-			# Chief of Staff: Prince Henry
-			# Chief of Army: Prince Henry
-			# Chief of Navy: Lord Mountbatten
-			# Chief of Air: Prince George
-			### Air doctrines ####
+		}
+		if = {
+			limit = {
+				has_global_flag = UK_lawrence
+			}
+			hidden_effect = {
+				add_ideas = GBR_Lord_Mountbatten_hog_sco
+				add_ideas = GBR_Adrian_Carton_de_Wiart_for_sco
+				add_ideas = GBR_John_Siddeley_eco_sco
+				add_ideas = GBR_Desmond_Morton_int_sco
+				add_ideas = GBR_Edmund_Ironside_mhc_sco
+				add_ideas = GBR_Edmund_Ironside_carm_sco
+				add_ideas = GBR_Roger_Keyes_cnav_sco
+				add_ideas = GBR_Hugh_Trenchard_cair_sco
+			}
+		}
+		if = {
+			limit = {
+				has_global_flag = UK_restoration
+			}
+			hidden_effect = {
+				add_ideas = GBR_Harold_Nicolson_hog_mli
+				add_ideas = GBR_Halford_Mackinder_for_mli
+				add_ideas = GBR_Lionel_Robbins_eco_mli
+				add_ideas = GBR_John_Reith_int_mli
+				add_ideas = GBR_Prince_Henry_mhc_sco
+				add_ideas = GBR_Prince_Henry_carm_sco
+				add_ideas = GBR_Lord_Mountbatten_cnav_sco
+				add_ideas = GBR_Prince_George_cair_sco
+			}
+		}
+		if = {
+			limit = {
+				FRA = {
+					exists = yes
+					OR = { 
+						has_government = totalist
+						has_government = syndicalist
+						has_government = radical_socialist
+					}
+				}
+			}
+			FRA = {
+				news_event = { id = uk.5 days = 3 }
+			}
 		}
 	}
 }

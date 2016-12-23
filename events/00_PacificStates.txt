@@ -29,7 +29,7 @@ country_event = { # To Lead the PSA
 			factor = 20
 		}
 
-		add_political_power = -30
+		add_political_power = -60
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -44,8 +44,17 @@ country_event = { # To Lead the PSA
 			CAL_Donald_Douglas_eco_sco
 			CAL_Edwin_T_Layton_int_sde
 		}
+		
+		set_politics = { ruling_party = social_conservatist elections_allowed = no }
 
-		# HoS Henry Arnold
+		create_country_leader = {
+				name = "Henry Arnold"
+				desc = "HENRY_ARNOLD_DESC"
+				picture = "Portrait_CAL_Henry_Arnold.tga"
+				expire = "1965.1.1"
+				ideology = social_conservatist_subtype
+				traits = {}
+			}
 
 		set_country_flag = CAL_MIL_GOV
 		add_opinion_modifier = { target = GER modifier = CAL_GER } #-30
@@ -91,8 +100,6 @@ country_event = { # To Lead the PSA
 			CAL_Norman_Chandler_int_sde
 		}
 
-		# HoS Frank Merriam
-
 		set_country_flag = CAL_CIV_GOV
 		add_opinion_modifier = { target = GER modifier = CAL_GER } #-30
 		add_opinion_modifier = { target = JAP modifier = CAL_JAP } # 150
@@ -128,7 +135,6 @@ country_event = { # The Capital
 		has_war = no
 		OR = {
 			owns_state = 386
-			owns_state = 385
 			owns_state = 378
 			owns_state = 797
 			owns_state = 798
@@ -136,7 +142,7 @@ country_event = { # The Capital
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 12
 	}
 
 	option = {
@@ -145,6 +151,7 @@ country_event = { # The Capital
 		ai_chance = {
 			factor = 33
 		}
+		trigger = { controls_state = 378 }
 
 		set_capital = 378
 	}
@@ -155,6 +162,7 @@ country_event = { # The Capital
 		ai_chance = {
 			factor = 33
 		}
+		trigger = { controls_state = 798 }
 
 		set_capital = 798
 	}
@@ -165,6 +173,7 @@ country_event = { # The Capital
 		ai_chance = {
 			factor = 17
 		}
+		trigger = { controls_state = 386 }
 
 		set_capital = 386
 	}
@@ -175,6 +184,7 @@ country_event = { # The Capital
 		ai_chance = {
 			factor = 17
 		}
+		trigger = { controls_state = 797 }
 
 		set_capital = 797
 	}
@@ -190,12 +200,12 @@ country_event = { # The name of Washington State
 	
 	trigger = {
 		tag = CAL
-		owns_state = 386
+		controls_state = 386
 		NOT = { is_puppet = yes }
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 15
 	}
 
 	option = {
@@ -205,7 +215,7 @@ country_event = { # The name of Washington State
 			factor = 80
 		}
 
-		add_timed_idea = { idea = rename_columbia days = 60 }
+		add_timed_idea = { idea = rename_columbia days = 30 }
 		add_opinion_modifier = { target = USA modifier = CAL_RENAME } # -20
 	}
 
@@ -216,7 +226,7 @@ country_event = { # The name of Washington State
 			factor = 20
 		}
 
-		add_timed_idea = { idea = no_rename_columbia days = 60 }
+		add_timed_idea = { idea = no_rename_columbia days = 30 }
 		add_opinion_modifier = { target = USA modifier = CAL_NO_RENAME } # 20
 	}
 }
@@ -231,13 +241,13 @@ country_event = { # The Hughes Airshow
 	
 	trigger = {
 		tag = CAL
-		surrender_progress < 0.85
 		NOT = { has_global_flag = ENC_ACW }
 		has_war = yes
+		has_political_power < -300
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 5
 	}
 
 	option = {
@@ -283,6 +293,7 @@ country_event = { # Reed escapes to France
 	
 	trigger = {
 		tag = CAL
+		country_exists = FRA
 		has_global_flag = ENC_ACW
 		has_global_flag = ACW_CSA
 		NOT = { country_exists = CSA }
@@ -295,7 +306,7 @@ country_event = { # Reed escapes to France
 	option = {
 		name = pacificstates.6.a
 
-		add_political_power = 20
+		add_political_power = -20
 		add_opinion_modifier = { target = FRA modifier = REED_ESCAPES } # -25
 	}
 }
@@ -313,12 +324,12 @@ country_event = { # The Countries Prosperity ( All USA )
 	trigger = {
 		tag = CAL
 		has_global_flag = ENC_ACW
-		owns_state = 361
+		controls_state = 361
 		NOT = { has_country_flag = pacificstates_8 }
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 27
 	}
 
 	option = {
@@ -353,7 +364,7 @@ country_event = { # The Countries Prosperity ( All USA )
 			factor = 15
 		}
 
-		add_political_power = -30
+		add_political_power = -60
 		add_timed_idea = { idea = cal_industry_east days = 730 }
 		set_country_flag = pacificstates_7
 	}
@@ -383,11 +394,11 @@ country_event = { # The Countries Prosperity ( Only PSA )
 		tag = CAL
 		has_global_flag = ENC_ACW
 		NOT = { has_country_flag = pacificstates_7 }
-		NOT = { owns_state = 361 }
+		NOT = { controls_state = 361 }
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 27
 	}
 
 	option = {
@@ -398,12 +409,6 @@ country_event = { # The Countries Prosperity ( Only PSA )
 		}
 
 		set_country_flag = pacificstates_8
-		386 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
-		385 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
-		378 = { add_building_construction = { type = arms_factory level = 2 instant_build = yes } }
-		386 = { add_extra_state_shared_building_slots = 2 }
-		385 = { add_extra_state_shared_building_slots = 2 }
-		378 = { add_extra_state_shared_building_slots = 2 }
 		add_ideas = cal_research
 	}
 
@@ -416,12 +421,10 @@ country_event = { # The Countries Prosperity ( Only PSA )
 
 		
 		set_country_flag = pacificstates_8
-		386 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
-		385 = { add_building_construction = { type = dockyard level = 2 instant_build = yes } }
-		378 = { add_building_construction = { type = dockyard level = 2 instant_build = yes } }
-		386 = { add_extra_state_shared_building_slots = 2 }
-		385 = { add_extra_state_shared_building_slots = 2 }
-		378 = { add_extra_state_shared_building_slots = 2 }
+		add_ideas = cal_shipbuild
+		random_owned_state = { 
+		limit = { is_coastal = yes }
+		add_extra_state_shared_building_slots = 2 add_building_construction = { type = dockyard level = 2 instant_build = yes } }
 	}
 
 	option = {
@@ -431,8 +434,8 @@ country_event = { # The Countries Prosperity ( Only PSA )
 			factor = 20
 		}
 
-		add_resource = { type = oil amount = 14 state = 386 }
-		add_resource = { type = steel amount = 12 state = 386 }
+		add_resource = { type = oil amount = 21 state = 386 }
+		add_resource = { type = steel amount = 17 state = 386 }
 		add_resource = { type = rubber amount = 5 state = 385 }
 		add_resource = { type = aluminium amount = 7 state = 378 }
 		set_country_flag = pacificstates_8
@@ -445,13 +448,9 @@ country_event = { # The Countries Prosperity ( Only PSA )
 			factor = 30
 		}
 
-		add_timed_idea = { idea = cal_balanced_approach_2 days = 730 }
+		add_ideas = cal_balanced_approach_2
 		add_resource = { type = oil amount = 7 state = 386 }
 		add_resource = { type = steel amount = 6 state = 386 }
-		386 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
-		378 = { add_building_construction = { type = dockyard level = 2 instant_build = yes } }
-		386 = { add_extra_state_shared_building_slots = 2 }
-		378 = { add_extra_state_shared_building_slots = 2 }
 		set_country_flag = pacificstates_8
 	}
 }
@@ -471,11 +470,13 @@ country_event = { # Postwar PSA elections
 			has_government = social_liberalist
 			has_government = market_liberalist
 			has_government = social_conservatist
-		}	
+		}
+        NOT = { has_country_flag = CAL_MIL_GOV	}
+		date > 1938.1.1
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 27
 	}
 
 	option = {
@@ -484,70 +485,13 @@ country_event = { # Postwar PSA elections
 		ai_chance = {
 			factor = 33
 		}
-
-		# HoS Culbert Levy Olson
-
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.4
-        }
+		
         add_popularity = {
             ideology = social_democratist
             popularity = 0.2
         }
 
-        set_politics = { ruling_party = social_liberalist elections_allowed = no }
+        set_politics = { ruling_party = social_democratist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -562,19 +506,6 @@ country_event = { # Postwar PSA elections
 		}
 		
 		hidden_effect = { country_event = { id = pacificstates.9 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Culbert Levy Olson"
-				desc = "OLSON_DESC"
-				picture = "Portrait_CAL_Levy_olson.tga"
-				expire = "1965.1.1"
-				ideology = social_liberalist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -583,70 +514,13 @@ country_event = { # Postwar PSA elections
 		ai_chance = {
 			factor = 33
 		}
-
-		# HoS Frank Merriam
-
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
+		
         add_popularity = {
             ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
             popularity = 0.2
         }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.4
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.1
-        }
 
-        set_politics = { ruling_party = market_liberalist elections_allowed = no }
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -655,25 +529,12 @@ country_event = { # Postwar PSA elections
         }
 
 		add_ideas = {
-			CAL_Clarence_D_Martin_hog_mli
+			CAL_William_Myron_Keck_hog_sco
 			CAL_William_H_Standley_for_sco
 			CAL_Henry_J_Kaiser_eco_sli
 		}
 		
 		hidden_effect = { country_event = { id = pacificstates.9 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Frank Merriam"
-				desc = "MERRIMAM_DESC"
-				picture = "Portrait_CAL_Frank_Merrimam.tga"
-				expire = "1965.1.1"
-				ideology = market_liberalist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -683,69 +544,12 @@ country_event = { # Postwar PSA elections
 			factor = 34
 		}
 
-		# HoS Hiram Johnson
-
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.1
-        }
         add_popularity = {
             ideology = market_liberalist
             popularity = 0.2
         }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.4
-        }
 
-        set_politics = { ruling_party = social_democratist elections_allowed = no }
+        set_politics = { ruling_party = market_liberalist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -760,19 +564,6 @@ country_event = { # Postwar PSA elections
 		}
 
 		hidden_effect = { country_event = { id = pacificstates.9 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Hiram Johnson"
-				desc = "JOHNSON_DESC"
-				picture = "Portrait_CAL_Hiram_Johnson.tga"
-				expire = "1965.1.1"
-				ideology = social_democratist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -782,69 +573,25 @@ country_event = { # Postwar PSA elections
 			factor = 1
 		}
 
-		# HoS Henry Arnold
-
-		hidden_effect = {
-		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
         add_popularity = {
             ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
             popularity = 0.4
         }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.1
-        }
 
-        set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
+		
+		hidden_effect = { 
+			retire_country_leader = yes
+
+			create_country_leader = {
+				name = "Henry Arnold"
+				desc = "ARNOLD_DESC"
+				picture = "Portrait_CAL_Henry_Arnold.tga"
+				expire = "1965.1.1"
+				ideology = social_conservatist_subtype
+				traits = {}
+			}
+		}
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -857,19 +604,6 @@ country_event = { # Postwar PSA elections
 			CAL_Edwin_T_Layton_for_sde
 			CAL_Donald_Douglas_eco_sco
 		}	
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Henry Arnold"
-				desc = "ARNOLD_DESC"
-				picture = "Portrait_CAL_Henry_Arnold.tga"
-				expire = "1965.1.1"
-				ideology = authoritarian_democratist_subtype
-				traits = {}
-			}
-		}
 	}
 }
 
@@ -888,69 +622,12 @@ country_event = { # The Pacific States of America Election
 			factor = 33
 		}
 
-		# HoS Culbert Levy Olson
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = 0.1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.4
-        }
-        add_popularity = {
             ideology = social_democratist
             popularity = 0.2
         }
 
-        set_politics = { ruling_party = social_liberalist elections_allowed = no }
+        set_politics = { ruling_party = social_democratist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -965,19 +642,6 @@ country_event = { # The Pacific States of America Election
 		}
 
 		hidden_effect = { country_event = { id = pacificstates.10 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Culbert Levy Olson"
-				desc = "OLSON_DESC"
-				picture = "Portrait_CAL_Levy_olson.tga"
-				expire = "1965.1.1"
-				ideology = social_liberalist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -987,69 +651,12 @@ country_event = { # The Pacific States of America Election
 			factor = 33
 		}
 
-		# HoS Frank Merriam
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
             ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = authoritarian_democratist
             popularity = 0.2
         }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.4
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.1
-        }
 
-        set_politics = { ruling_party = market_liberalist elections_allowed = no }
+        set_politics = { ruling_party = social_conservatist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -1058,25 +665,12 @@ country_event = { # The Pacific States of America Election
         }
 
 		add_ideas = {
-			CAL_Clarence_D_Martin_hog_mli
+			CAL_William_Myron_Keck_hog_sco
 			CAL_William_H_Standley_for_sco
 			CAL_Henry_J_Kaiser_eco_sli
 		}
 
 		hidden_effect = { country_event = { id = pacificstates.10 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Frank Merriam"
-				desc = "MERRIMAM_DESC"
-				picture = "Portrait_CAL_Frank_Merrimam.tga"
-				expire = "1965.1.1"
-				ideology = market_liberalist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -1086,69 +680,12 @@ country_event = { # The Pacific States of America Election
 			factor = 34
 		}
 
-		# HoS Hiram Johnson
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = 0.1
-        }
-        add_popularity = {
             ideology = market_liberalist
             popularity = 0.2
         }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.4
-        }
 
-        set_politics = { ruling_party = social_democratist elections_allowed = no }
+        set_politics = { ruling_party = market_liberalist elections_allowed = no }
 
 		hidden_effect = {
 		remove_ideas_with_trait = head_of_government
@@ -1163,19 +700,6 @@ country_event = { # The Pacific States of America Election
 		}
 
 		hidden_effect = { country_event = { id = pacificstates.10 days = 1480 }}
-
-		hidden_effect = { 
-			retire_country_leader = yes
-
-			create_country_leader = {
-				name = "Hiram Johnson"
-				desc = "JOHNSON_DESC"
-				picture = "Portrait_CAL_Hiram_Johnson.tga"
-				expire = "1965.1.1"
-				ideology = social_democratist_subtype
-				traits = {}
-			}
-		}
 	}
 
 	option = {
@@ -1185,82 +709,13 @@ country_event = { # The Pacific States of America Election
 			factor = 2
 		}
 
-		# HoS Henry Arnold
-
-		hidden_effect = {
 		add_popularity = {
-            ideology = totalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = radical_socialist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = syndicalist
-            popularity = -1
-        }
-		add_popularity = {
-            ideology = social_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = social_conservatist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = authoritarian_democratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = paternal_autocratist
-            popularity = -1
-        }
-        add_popularity = {
-            ideology = national_populist
-            popularity = -1
-        }
-        }
-
-        add_popularity = {
             ideology = social_conservatist
             popularity = 0.4
         }
-        add_popularity = {
-            ideology = market_liberalist
-            popularity = 0.3
-        }
-        add_popularity = {
-            ideology = social_liberalist
-            popularity = 0.2
-        }
-        add_popularity = {
-            ideology = social_democratist
-            popularity = 0.1
-        }
 
         set_politics = { ruling_party = social_conservatist elections_allowed = no }
-
-		hidden_effect = {
-		remove_ideas_with_trait = head_of_government
-        remove_ideas_with_trait = foreign_minister
-        remove_ideas_with_trait = economy_minister
-        }
-
-		add_ideas = {
-			CAL_Henry_Arnold_hog_sco
-			CAL_Edwin_T_Layton_for_sde
-			CAL_Donald_Douglas_eco_sco
-		}
-
+		
 		hidden_effect = { 
 			retire_country_leader = yes
 
@@ -1272,6 +727,18 @@ country_event = { # The Pacific States of America Election
 				ideology = social_conservatist_subtype
 				traits = {}
 			}
+		}
+
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+        remove_ideas_with_trait = foreign_minister
+        remove_ideas_with_trait = economy_minister
+        }
+
+		add_ideas = {
+			CAL_Henry_Arnold_hog_sco
+			CAL_Edwin_T_Layton_for_sde
+			CAL_Donald_Douglas_eco_sco
 		}
 	}
 }

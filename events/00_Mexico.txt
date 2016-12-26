@@ -1088,8 +1088,8 @@ country_event = { #####Restore the Monarchy
 	remove_ideas_with_trait = intel_minister
 	add_ideas = MEX_Alfonso_Junco_int_npo
 	add_popularity ={ ideology = national_populist popularity = 0.15 }
-	
 	}
+	
 	}
 	
 	
@@ -1139,7 +1139,7 @@ country_event = { #####Restore the Monarchy
 	option = {
 	name = mexico.39.a
 	ai_chance = { factor = 100}
-	     add_political_power = -40
+	     add_political_power = -20
      		 }
 		} 
 		
@@ -1158,7 +1158,7 @@ country_event = { #####Restore the Monarchy
 				 }}
 				 
 	 mean_time_to_happen ={
-     days =	200}
+     days =	175}
 	 
 	option = {
 	name = mexico.40.a
@@ -1340,7 +1340,142 @@ country_event = {
 		   }
 		
 		
+		
+	################CRISTERO WAR##################
+		
+     country_event = {
+	id = mexico.45
+	title = mexico.45.t
+	desc = mexico.45.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.45.a
+	ai_chance = { factor = 100}
+          set_country_flag = Cristero
+		  add_political_power = -100
+		  hidden_effect = { country_event = { days = 70 id = mexico.46  } } 
+			} 
+		   }
+		   
+    country_event = {
+	id = mexico.46
+	title = mexico.46.t
+	desc = mexico.46.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.46.a
+	ai_chance = { factor = 60}
+		  add_political_power = -100
+		  random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			 hidden_effect = { country_event = { days = 100 id = mexico.47 } } 
+		}
+			option = {
+	name = mexico.46.b
+	ai_chance = { factor = 40}
+		  add_political_power = 20
+		  clr_country_flag = Cristero
+		}
+		   
+	} 
+	
+  country_event = {
+	id = mexico.47
+	title = mexico.47.t
+	desc = mexico.47.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.47.a
+	ai_chance = { factor = 100}
+		  add_political_power = -100
+		  add_manpower = -20000
+		  hidden_effect = { ITA = { country_event = { id = mexico.48 days = 10 }} }
+		}   
+	}
 
+  country_event = {
+	id = mexico.48
+	title = mexico.48.t
+	desc = mexico.48.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.48.a
+	ai_chance = { factor = 70}
+		  add_political_power = 20
+		  add_manpower = -5000
+		  hidden_effect = { MEX = { country_event = { id = mexico.49 days = 10 }} }
+		}
+	option = {
+	name = mexico.48.b
+	ai_chance = { factor = 30}
+		  add_political_power = -20
+		  hidden_effect = { MEX = { country_event = { id = mexico.50 days = 14 }}
+		   }
+		}   		
+	} 	
 
+	country_event = {
+	id = mexico.49
+	title = mexico.49.t
+	desc = mexico.49.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.49.a
+	ai_chance = { factor = 100}
+		  add_political_power = -100
+		  add_manpower = -5000
+		  hidden_effect = { MEX = { country_event = { id = mexico.50 days = 28 }} }
+		}
+   		
+	} 
+	
+	country_event = {
+	id = mexico.50
+	title = mexico.50.t
+	desc = mexico.50.d
+    is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+	name = mexico.50.a
+	ai_chance = { factor = 100}
+		  add_political_power = 100
+		  clr_country_flag = Cristero
+          add_ideas = MEX_State_Athiesm		  
+ 		}
+   		
+	} 	
 	
 	

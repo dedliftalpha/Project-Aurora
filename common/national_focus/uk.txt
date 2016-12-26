@@ -134,7 +134,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_noelection
-		icon = GFX_goal_authoritarian
+		icon = GFX_goal_monarchism_black
 		prerequisite = { focus = UK_milgov }
 		mutually_exclusive = { focus = UK_election }
 		x = 1
@@ -210,6 +210,17 @@ focus_tree = {
 		id = UK_aristocracy
 		icon = GFX_goal_generic_cavalry
 		prerequisite = { focus = UK_noelection }
+		available = {
+			custom_trigger_tooltip = { tooltip = UK_polsyn_tp }
+			hidden_trigger = {
+				NOT = {
+					OR = {
+						has_completed_focus = UK_root_syn
+						has_completed_focus = UK_overcome_syn
+					}
+				}
+			}
+		}
 		x = 0
 		y = 3
 		cost = 10
@@ -298,8 +309,36 @@ focus_tree = {
 	# Academy of Arts
 	
 	focus = {
+		id = UK_art_academy
+		icon = GFX_goal_government_icon
+		available = {
+			NOT = {
+				custom_trigger_tooltip = { tooltip = UK_provgov_tp }
+			}
+			hidden_trigger = {
+				OR = {
+					has_completed_focus = UK_noelection
+					has_completed_focus = UK_election
+				}
+			}
+		}
+		prerequisite = { }
+		x = 6
+		y = 0
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
 		id = UK_art_overcome
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_art_avantgarde
+		prerequisite = { focus = UK_art_academy }
 		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_art_propaganda }
 		x = 5
@@ -311,13 +350,15 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = UK_art_overcome_idea
+			add_national_unity = 0.05
+			add_political_power = -50
 		}
 	}
 	
 	focus = {
 		id = UK_art_propaganda
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_art_propaganda
+		prerequisite = { focus = UK_art_academy }
 		prerequisite = { focus = UK_reintegrate_emigres }
 		mutually_exclusive = { focus = UK_art_overcome }
 		x = 7
@@ -329,7 +370,8 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = UK_art_propaganda_idea
+			add_political_power = 50
+			add_national_unity = -0.05
 		}
 	}
 	
@@ -352,7 +394,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_art_3
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = UK_art_2 }
 		prerequisite = { focus = UK_art_overcome }
 		x = 5
@@ -364,13 +406,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_national_unity = -0.05
+			add_ideas = UK_citizen_idea
 		}
 	}
 	
 	focus = {
 		id = UK_art_4
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_propaganda
 		prerequisite = { focus = UK_art_propaganda }
 		prerequisite = { focus = UK_art_2 }
 		x = 7
@@ -382,7 +424,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_national_unity = 0.05
+			add_ideas = UK_agitprop_idea
 		}
 	}
 	
@@ -390,7 +432,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_reintegrate_emigres
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_goal_tripartite_pact
 		available = {
 			NOT = {
 				custom_trigger_tooltip = { tooltip = UK_provgov_tp }
@@ -545,9 +587,38 @@ focus_tree = {
 	# Royal Academy
 	
 	focus = {
+		id = UK_royal_academy
+		icon = GFX_goal_government_icon
+		available = {
+			NOT = {
+				custom_trigger_tooltip = { tooltip = UK_provgov_tp }
+			}
+			hidden_trigger = {
+				OR = {
+					has_completed_focus = UK_noelection
+					has_completed_focus = UK_election
+				}
+			}
+		}
+		prerequisite = { }
+		x = 14
+		y = 0
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
 		id = UK_royal_academy_2
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = UK_reintegrate_emigres }
+		prerequisite = { focus = UK_royal_academy }
 		x = 14
 		y = 1
 		cost = 10

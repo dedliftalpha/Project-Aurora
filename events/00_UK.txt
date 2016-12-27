@@ -133,8 +133,8 @@ country_event = {
 		add_ideas = UK_politics_syn_idea
 		hidden_effect = {
 			GBR = {
-				country_event = { id = uk.3 days = 1 }
-				country_event = { id = uk.4 days = 1 }
+				country_event = { id = uk.3 }
+				country_event = { id = uk.4 }
 			}
 			news_event = { id = uk.6 days = 2 }
 			retire_country_leader = yes
@@ -147,19 +147,22 @@ country_event = {
 				traits = {}
 			}
 		}
+		add_political_power = -100
 		if = {
 			limit = {
 				has_global_flag = UK_lawrence
 			}
 			hidden_effect = {
-				add_ideas = GBR_Lord_Mountbatten_hog_sco
-				add_ideas = GBR_Adrian_Carton_de_Wiart_for_sco
-				add_ideas = GBR_John_Siddeley_eco_sco
-				add_ideas = GBR_Desmond_Morton_int_sco
-				add_ideas = GBR_Edmund_Ironside_mhc_sco
-				add_ideas = GBR_Edmund_Ironside_carm_sco
-				add_ideas = GBR_Roger_Keyes_cnav_sco
-				add_ideas = GBR_Hugh_Trenchard_cair_sco
+				GBR = {
+					add_ideas = GBR_Lord_Mountbatten_hog_sco
+					add_ideas = GBR_Adrian_Carton_de_Wiart_for_sco
+					add_ideas = GBR_John_Siddeley_eco_sco
+					add_ideas = GBR_Desmond_Morton_int_sco
+					add_ideas = GBR_Edmund_Ironside_mhc_sco
+					add_ideas = GBR_Edmund_Ironside_carm_sco
+					add_ideas = GBR_Roger_Keyes_cnav_sco
+					add_ideas = GBR_Hugh_Trenchard_cair_sco
+				}
 			}
 		}
 		if = {
@@ -167,14 +170,16 @@ country_event = {
 				has_global_flag = UK_restoration
 			}
 			hidden_effect = {
-				add_ideas = GBR_Harold_Nicolson_hog_mli
-				add_ideas = GBR_Halford_Mackinder_for_mli
-				add_ideas = GBR_Lionel_Robbins_eco_mli
-				add_ideas = GBR_John_Reith_int_mli
-				add_ideas = GBR_Prince_Henry_mhc_sco
-				add_ideas = GBR_Prince_Henry_carm_sco
-				add_ideas = GBR_Lord_Mountbatten_cnav_sco
-				add_ideas = GBR_Prince_George_cair_sco
+				GBR = {
+					add_ideas = GBR_Harold_Nicolson_hog_mli
+					add_ideas = GBR_Halford_Mackinder_for_mli
+					add_ideas = GBR_Lionel_Robbins_eco_mli
+					add_ideas = GBR_John_Reith_int_mli
+					add_ideas = GBR_Prince_Henry_mhc_sco
+					add_ideas = GBR_Prince_Henry_carm_sco
+					add_ideas = GBR_Lord_Mountbatten_cnav_sco
+					add_ideas = GBR_Prince_George_cair_sco
+				}
 			}
 		}
 		if = {
@@ -208,6 +213,7 @@ country_event = {
 	option = {
 		name = uk.3.a 
 		add_ideas = UK_economy_syn_idea
+		add_political_power = -100
 		hidden_effect = {
 			if = {
 				limit = { CAN = {has_tech = air_superiority} }
@@ -2213,6 +2219,12 @@ news_event = {
 		name = uk.4.a
 		load_oob = UK_loyal
 		add_ideas = UK_military_syn_idea
+		add_political_power = -100
+		hidden_effect = {
+			CAN = {
+				send_equipment = { target = GBR type = infantry_equipment amount = 200 }
+			}
+		}
 	}
 }	
 
@@ -2266,3 +2278,233 @@ news_event = {
 		}
 	}
 }	
+
+# The First General Election
+
+country_event = {
+	id = uk.7
+	title = uk.7.t
+	desc = uk.7.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uk.7.a
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = UK_election_sco_tp
+		hidden_effect = {
+			add_ideas = GBR_Lord_Beaverbrook_hog_sco
+			add_ideas = GBR_Mark_Sykes_for_sco
+			add_ideas = GBR_Montagu_Norman_eco_sco
+			add_ideas = GBR_Duke_of_Devonshire_int_sco
+			country_event = { id = uk.8 days = 1460 }
+		}
+	}
+	
+	option = {
+		name = uk.7.b
+		ai_chance = { factor = 10 }
+		custom_effect_tooltip = UK_election_ade_tp
+		hidden_effect = {
+			add_ideas = GBR_Henry_Page_Croft_hog_ade
+			add_ideas = GBR_Richard_Cooper_for_ade
+			add_ideas = GBR_Murray_Sueter_eco_ade
+			add_ideas = GBR_Archibald_Ramsay_int_ade
+			country_event = { id = uk.8 days = 1460 }
+		}
+		add_political_power = -50
+	}
+	
+	option = {
+		name = uk.7.c
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = UK_election_mli_tp
+		hidden_effect = {
+			add_ideas = GBR_Herbert_Samuel_hog_mli
+			add_ideas = GBR_Walter_Runciman_for_mli
+			add_ideas = GBR_Isaac_Foot_eco_mli
+			add_ideas = GBR_Ivor_Brown_int_mli
+			country_event = { id = uk.8 days = 1460 }
+		}
+	}
+	
+	option = {
+		name = uk.7.d
+		ai_chance = { factor = 45 }
+		trigger = {
+			NOT = {
+				has_completed_focus = ban_prog
+			}
+		}
+		custom_effect_tooltip = UK_election_sli_tp
+		hidden_effect = {
+			add_ideas = GBR_Richard_Acland_hog_sli
+			add_ideas = GBR_J_B_Priestley_for_sli
+			add_ideas = GBR_R_H_Tawney_eco_sli
+			add_ideas = GBR_H_G_Wells_int_sli
+			country_event = { id = uk.8 days = 1460 }
+		}
+		add_political_power = 50
+	}
+}
+
+# The General Election
+
+country_event = {
+	id = uk.8
+	title = uk.8.t
+	desc = uk.8.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uk.8.a
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = UK_election_sco_tp
+		hidden_effect = {
+			add_ideas = GBR_Lord_Beaverbrook_hog_sco
+			add_ideas = GBR_Mark_Sykes_for_sco
+			add_ideas = GBR_Montagu_Norman_eco_sco
+			add_ideas = GBR_Duke_of_Devonshire_int_sco
+			country_event = { id = uk.8 days = 1460 }
+		}
+	}
+	
+	option = {
+		name = uk.8.b
+		ai_chance = { factor = 10 }
+		custom_effect_tooltip = UK_election_ade_tp
+		hidden_effect = {
+			add_ideas = GBR_Henry_Page_Croft_hog_ade
+			add_ideas = GBR_Richard_Cooper_for_ade
+			add_ideas = GBR_Murray_Sueter_eco_ade
+			add_ideas = GBR_Archibald_Ramsay_int_ade
+			country_event = { id = uk.8 days = 1460 }
+		}
+		add_political_power = -50
+	}
+	
+	option = {
+		name = uk.8.c
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = UK_election_mli_tp
+		hidden_effect = {
+			add_ideas = GBR_Herbert_Samuel_hog_mli
+			add_ideas = GBR_Walter_Runciman_for_mli
+			add_ideas = GBR_Isaac_Foot_eco_mli
+			add_ideas = GBR_Ivor_Brown_int_mli
+			country_event = { id = uk.8 days = 1460 }
+		}
+	}
+	
+	option = {
+		name = uk.8.d
+		ai_chance = { factor = 45 }
+		trigger = {
+			NOT = {
+				has_completed_focus = ban_prog
+			}
+		}
+		custom_effect_tooltip = UK_election_sli_tp
+		hidden_effect = {
+			add_ideas = GBR_Richard_Acland_hog_sli
+			add_ideas = GBR_J_B_Priestley_for_sli
+			add_ideas = GBR_R_H_Tawney_eco_sli
+			add_ideas = GBR_H_G_Wells_int_sli
+			country_event = { id = uk.8 days = 1460 }
+		}
+		add_political_power = 50
+	}
+}
+
+# Liberty Day 1
+
+news_event = {
+	id = uk.9
+	title = uk.9.t
+	desc = uk.9.d
+	picture = GFX_news_event_006
+	
+	trigger = {
+		has_completed_focus = UK_liberty_day
+		OR = {
+			AND = {
+				date > 1936.1.10
+				date < 1936.2.1
+			}
+			AND = {
+				date > 1937.1.10
+				date < 1937.2.1
+			}
+			AND = {
+				date > 1938.1.10
+				date < 1938.2.1
+			}
+			AND = {
+				date > 1939.1.10
+				date < 1939.2.1
+			}
+			AND = {
+				date > 1940.1.10
+				date < 1940.2.1
+			}
+			AND = {
+				date > 1941.1.10
+				date < 1941.2.1
+			}
+			AND = {
+				date > 1942.1.10
+				date < 1942.2.1
+			}
+			AND = {
+				date > 1943.1.10
+				date < 1943.2.1
+			}
+			AND = {
+				date > 1944.1.10
+				date < 1944.2.1
+			}
+			AND = {
+				date > 1945.1.10
+				date < 1945.2.1
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uk.9.a
+		add_political_power = 10
+		hidden_effect = {
+			GBR = {
+				news_event = { id = uk.10 days = 365 }
+			}
+		}
+	}
+}
+
+# Liberty Day 2-100
+
+news_event = {
+	id = uk.10
+	title = uk.10.t
+	desc = uk.10.d
+	picture = GFX_news_event_006
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uk.10.a
+		add_political_power = 10
+		hidden_effect = {
+			GBR = {
+				news_event = { id = uk.10 days = 365 }
+			}
+		}
+	}
+}

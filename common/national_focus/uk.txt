@@ -539,7 +539,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_loans_3
-		icon = GFX_goal_generic_construct_naval_dockyard
+		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = UK_loans_2 }
 		x = 10
 		y = 4
@@ -550,26 +550,26 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			132 = {
+			120 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = dockyard
+					type = arms_factory
 					level = 1
 					instant_build = yes	
 				}
 			}
-			136 = {
+			130 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = dockyard
+					type = arms_factory
 					level = 1
 					instant_build = yes	
 				}
 			}
-			126 = {
+			123 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = dockyard
+					type = arms_factory
 					level = 1
 					instant_build = yes	
 				}
@@ -577,7 +577,7 @@ focus_tree = {
 			122 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = dockyard
+					type = arms_factory
 					level = 1
 					instant_build = yes	
 				}
@@ -848,7 +848,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_merchant_marine
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_positive_trade_relations
 		prerequisite = { focus = UK_reintegrate_emigres }
 		x = 16
 		y = 1
@@ -859,13 +859,18 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = UK_emigres_tp
+			custom_effect_tooltip = UK_merchant_marine_tp
+			hidden_effect = {
+				CAN = {
+					send_equipment = { target = GBR type = convoy_1 amount = 200 }
+				}
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_dockyards1
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = UK_merchant_marine }
 		prerequisite = { focus = UK_navy_keyes focus = UK_navy_generic }
 		x = 16
@@ -877,13 +882,28 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			132 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
+			136 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_dockyards2
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = UK_dockyards1 }
 		x = 16
 		y = 3
@@ -894,7 +914,22 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			126 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
+			122 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes	
+				}
+			}
 		}
 	}
 	
@@ -902,7 +937,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_navy
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_build_navy
 		prerequisite = { }
 		available = {
 			NOT = {
@@ -930,9 +965,12 @@ focus_tree = {
 	
 	focus = {
 		id = UK_navy_keyes
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_occupy_states_coastal
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_navy }
+		available = {
+			has_idea = GBR_Roger_Keyes_cnav_sco
+		}
 		mutually_exclusive = { focus = UK_navy_generic }
 		x = 21
 		y = 1
@@ -943,83 +981,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
-		}
-	}
-	
-	focus = {
-		id = UK_navy_raiding
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_keyes }
-		x = 22
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = {
-		id = UK_navy_carrier_focus
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_keyes focus = UK_navy_generic }
-		mutually_exclusive = { focus = UK_navy_battleship_focus }
-		x = 20
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = {
-		id = UK_navy_floating_airfields
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_keyes }
-		prerequisite = { focus = UK_navy_carrier_focus }
-		x = 21
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = {
-		id = UK_navy_carrier_groups
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_navy_floating_airfields }
-		x = 21
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_base_strike
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_navy_generic
-		icon = GFX_goal_generic_construction
+		icon = GFX_focus_generic_coastal_fort
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_navy }
 		mutually_exclusive = { focus = UK_navy_keyes }
@@ -1032,13 +1004,103 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_fleet_in_being
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_navy_raiding
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = UK_navy_keyes }
+		x = 22
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tp_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_navy_carrier_focus
+		icon = GFX_goal_generic_navy_carrier
+		prerequisite = { focus = UK_navy_keyes focus = UK_navy_generic }
+		mutually_exclusive = { focus = UK_navy_battleship_focus }
+		x = 20
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cv_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_navy_floating_airfields
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = UK_navy_keyes }
+		prerequisite = { focus = UK_navy_carrier_focus }
+		x = 21
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_navy_carrier_groups
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = UK_navy_floating_airfields }
+		x = 21
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = cat_base_strike
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_navy_battleship_focus
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_navy_battleship
 		prerequisite = { focus = UK_navy_generic }
 		mutually_exclusive = { focus = UK_navy_carrier_focus }
 		x = 18
@@ -1050,13 +1112,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_navy_grand_navy
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_wolf_pack
 		prerequisite = { focus = UK_navy_generic }
 		prerequisite = { focus = UK_navy_carrier_focus focus = UK_navy_battleship_focus }
 		x = 19
@@ -1068,13 +1134,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			navy_experience = 100
 		}
 	}
 	
 	focus = {
 		id = UK_navy_grand_navy2
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_navy_cruiser
 		prerequisite = { focus = UK_navy_grand_navy }
 		x = 19
 		y = 4
@@ -1085,13 +1151,22 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = ca_tech
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_navy_grand_navy3
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = UK_navy_grand_navy2 }
 		x = 19
 		y = 5
@@ -1102,7 +1177,11 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = cat_fleet_in_being
+			}
 		}
 	}
 	
@@ -1118,7 +1197,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_army
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_build_tank
 		prerequisite = { }
 		available = {
 			NOT = {
@@ -1148,9 +1227,12 @@ focus_tree = {
 	
 	focus = {
 		id = UK_army_ironside
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_army }
+		available = {
+			has_idea = GBR_Edmund_Ironside_carm_sco
+		}
 		mutually_exclusive = { focus = UK_army_auch focus = UK_army_generic }
 		x = 29
 		y = 1
@@ -1161,67 +1243,22 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-		
-		}
-	}
-	
-	focus = {
-		id = UK_army_tanks
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_mot_inf }
-		x = 29
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-		
-		}
-	}
-	
-	focus = {
-		id = UK_army_mot_inf
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_air_coop focus = UK_army_comms }
-		mutually_exclusive = { focus = UK_army_artillery }
-		x = 28
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-		
-		}
-	}
-	
-	focus = {
-		id = UK_army_air_coop
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_ironside }
-		x = 29
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-		
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_mobile_warfare
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_army_auch
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_defence
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_army }
+		available = {
+			has_idea = GBR_Claude_Auchinleck_carm_sco
+		}
 		mutually_exclusive = { focus = UK_army_ironside focus = UK_army_generic }
 		x = 27
 		y = 1
@@ -1232,48 +1269,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-		
-		}
-	}
-	
-	focus = {
-		id = UK_army_comms
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_auch }
-		x = 27
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-		
-		}
-	}
-	
-	focus = {
-		id = UK_army_artillery
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_auch focus = UK_army_generic }
-		mutually_exclusive = { focus = UK_army_mot_inf }
-		x = 26
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-		
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_superior_firepower
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_army_generic
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_army }
 		mutually_exclusive = { focus = UK_army_ironside focus = UK_army_auch }
@@ -1286,13 +1292,124 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_grand_battle_plan
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_army_tanks
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = UK_army_mot_inf }
+		x = 29
+		y = 4
+		cost = 10
 		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = armor
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_army_mot_inf
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = UK_army_air_coop focus = UK_army_comms }
+		mutually_exclusive = { focus = UK_army_artillery }
+		x = 28
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_army_air_coop
+		icon = GFX_focus_generic_air_defense
+		prerequisite = { focus = UK_army_ironside }
+		x = 29
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_anti_air
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_army_comms
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = UK_army_auch }
+		x = 27
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = electronics
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_army_artillery
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = UK_army_auch focus = UK_army_generic }
+		mutually_exclusive = { focus = UK_army_mot_inf }
+		x = 26
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_army_div_structure
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = UK_army_infantry }
 		x = 25
 		y = 4
@@ -1303,13 +1420,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-		
+			army_experience = 100
 		}
 	}
 	
 	focus = {
 		id = UK_army_infantry
-		icon = GFX_goal_generic_construction
+		icon = GFX_focus_generic_commonwealth_build_infantry
 		prerequisite = { focus = UK_army_generic }
 		x = 25
 		y = 2
@@ -1320,7 +1437,11 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-		
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 2
+				category = infantry_tech
+			}
 		}
 	}
 	
@@ -1328,8 +1449,8 @@ focus_tree = {
 	
 	focus = {
 		id = UK_army_pow_no
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_tanks focus = UK_army_mot_inf }
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = UK_army_tanks focus = UK_army_mot_inf focus = UK_army_artillery }
 		mutually_exclusive = { focus = UK_army_pow_free }
 		x = 28
 		y = 5
@@ -1340,14 +1461,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			remove_ideas = UK_military_syn_idea
+			swap_ideas = {
+				remove_idea = UK_military_syn_idea
+				add_idea = UK_free_pow_no_idea
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_army_pow_free
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_army_div_structure focus = UK_army_artillery }
+		icon = GFX_goal_conscription
+		prerequisite = { focus = UK_army_div_structure focus = UK_army_artillery focus = UK_army_mot_inf }
 		mutually_exclusive = { focus = UK_army_pow_no }
 		x = 26
 		y = 5
@@ -1358,7 +1482,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-		
+			swap_ideas = {
+				remove_idea = UK_military_syn_idea
+				add_idea = UK_free_pow_yes_idea
+			}
 		}
 	}
 	
@@ -1366,7 +1493,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_SBS
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_special_forces
 		prerequisite = { focus = UK_army_ironside focus = UK_army_auch focus = UK_army_generic }
 		prerequisite = { focus = UK_navy_raiding }
 		x = 23
@@ -1378,7 +1505,11 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}
 		}
 	}
 	
@@ -1386,7 +1517,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_air
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_build_airforce
 		prerequisite = { }
 		available = {
 			NOT = {
@@ -1414,7 +1545,7 @@ focus_tree = {
 	
 	focus = {
 		id = UK_air_generic
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_air_doctrine
 		prerequisite = { focus = UK_reintegrate_emigres }
 		prerequisite = { focus = UK_air }
 		mutually_exclusive = { focus = UK_air_trenchard }
@@ -1427,13 +1558,43 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_battlefield_support
+			}
+		}
+	}
+	
+	focus = {
+		id = UK_air_trenchard
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = UK_reintegrate_emigres }
+		prerequisite = { focus = UK_air }
+		available = {
+			has_idea = GBR_Hugh_Trenchard_cair_sco
+		}
+		mutually_exclusive = { focus = UK_air_generic }
+		x = 35
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_destruction
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_air_army_coop
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_occupy_start_war
 		prerequisite = { focus = UK_air_generic }
 		x = 32
 		y = 2
@@ -1444,13 +1605,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cas_bomber
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_CAS
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_CAS
 		prerequisite = { focus = UK_air_army_coop }
 		prerequisite = { focus = UK_army_air_coop }
 		x = 31
@@ -1462,14 +1627,14 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_ideas = UK_CAS_idea
 		}
 	}
 	
 	focus = {
 		id = UK_air_support
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_air_generic }
+		icon = GFX_focus_generic_paratrooper
+		prerequisite = { focus = UK_air_army_coop }
 		x = 33
 		y = 4
 		cost = 10
@@ -1479,13 +1644,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = para_tech
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_air_support2
-		icon = GFX_goal_generic_construction
+		icon = GFX_focus_generic_cryptologic_bomb
 		prerequisite = { focus = UK_air_support }
 		x = 33
 		y = 5
@@ -1496,13 +1665,16 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = UK_CAS_idea
+				add_idea = UK_disruption_idea
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_air_fighter
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_air_fighter
 		prerequisite = { focus = UK_air_generic focus = UK_air_trenchard }
 		x = 34
 		y = 2
@@ -1513,13 +1685,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 2
+				category = fighter_techs
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_air_bomber
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_air_bomber
 		prerequisite = { focus = UK_air_trenchard }
 		x = 36
 		y = 2
@@ -1530,32 +1706,22 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = UK_emigres_tp
-		}
-	}
-	
-	focus = {
-		id = UK_air_trenchard
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_reintegrate_emigres }
-		prerequisite = { focus = UK_air }
-		mutually_exclusive = { focus = UK_air_generic }
-		x = 35
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = tactical_bomber
+			}
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = cat_strategic_bomber
+			}
 		}
 	}
 	
 	focus = {
 		id = UK_air_new_doctrine
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_air_doctrine
 		prerequisite = { focus = UK_air_fighter }
 		prerequisite = { focus = UK_air_bomber }
 		x = 35
@@ -1567,13 +1733,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			air_experience = 100
 		}
 	}
 	
 	focus = {
 		id = UK_air_strat_bomb
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_air_production
 		prerequisite = { focus = UK_air_new_doctrine }
 		x = 35
 		y = 4
@@ -1584,13 +1750,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_ideas = UK_maintenance_idea
 		}
 	}
 	
 	focus = {
 		id = UK_air_strat_bomb2
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = UK_air_strat_bomb }
 		x = 35
 		y = 5
@@ -1601,60 +1767,64 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = cat_strategic_destruction
+			}
 		}
 	}
 	
 	# Canada
 	
-	focus = {
-		id = UK_canada_subsidies
-		icon = GFX_goal_generic_construction
-		mutually_exclusive = { focus = UK_canada_no_subsidies }
-		x = 39
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
+	#focus = {
+	#	id = UK_canada_subsidies
+	#	icon = GFX_goal_generic_construction
+	#	mutually_exclusive = { focus = UK_canada_no_subsidies }
+	#	x = 39
+	#	y = 1
+	#	cost = 10
+	#	
+	#	ai_will_do = {
+	#		factor = 10
+	#	}
+	#	
+	#	completion_reward = {
+	#		
+	#	}
+	#}
 	
-	focus = {
-		id = UK_canada_no_subsidies
-		icon = GFX_goal_generic_construction
-		mutually_exclusive = { focus = UK_canada_subsidies }
-		x = 41
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
+	#focus = {
+	#	id = UK_canada_no_subsidies
+	#	icon = GFX_goal_generic_construction
+	#	mutually_exclusive = { focus = UK_canada_subsidies }
+	#	x = 41
+	#	y = 1
+	#	cost = 10
+	#	
+	#	ai_will_do = {
+	#		factor = 10
+	#	}
+	#	
+	#	completion_reward = {
+	#		
+	#	}
+	#}
 	
-	focus = {
-		id = UK_nafta
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = UK_canada_subsidies focus = UK_canada_no_subsidies }
-		x = 40
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			
-		}
-	}
+	#focus = {
+	#	id = UK_nafta
+	#	icon = GFX_goal_generic_construction
+	#	prerequisite = { focus = UK_canada_subsidies focus = UK_canada_no_subsidies }
+	#	x = 40
+	#	y = 2
+	#	cost = 10
+	#	
+	#	ai_will_do = {
+	#		factor = 10
+	#	}
+	#	
+	#	completion_reward = {
+	#		
+	#	}
+	#}
 }

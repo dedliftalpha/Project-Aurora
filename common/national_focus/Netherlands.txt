@@ -15,8 +15,67 @@ focus_tree = {
 ### Political Focuses ###
 
 focus = {
+		id = HOL_east_indies_aut
+		icon = GFX_goal_generic_more_territorial_claims
+        available = {
+        date > 1938.1.1
+		controls_state = 672
+		controls_state = 335
+		controls_state = 334
+		NOT = { 
+		has_government = radical_socialist 
+		has_government = syndicalist 
+		has_government = totalist
+		} }
+		x = 3
+		y = 0
+		cost = 4
+		
+		completion_reward = {
+		  HOL = { country_event = { days = 1 id = hol.32 } }
+	    }
+	}
+	
+focus = {
+		id = HOL_east_indies_aut_2
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = HOL_east_indies_aut }
+		mutually_exclusive = { focus = HOL_east_indies_aut_3 }
+        available = { always = no }
+		bypass = {
+			has_country_flag = HOL_aut
+		}
+		x = 5
+		y = 1
+		cost = 10
+		
+		completion_reward = {
+		custom_effect_tooltip = unlock_HOL_aut
+	    }
+	}
+
+focus = {
+		id = HOL_east_indies_aut_3
+		icon = GFX_goal_generic_more_territorial_claims
+		prerequisite = { focus = HOL_east_indies_aut }
+		mutually_exclusive = { focus = HOL_east_indies_aut_2 }
+		available = { always = no }
+		bypass = {
+			has_country_flag = HOL_aut2
+		}
+		x = 1
+		y = 1
+		cost = 10
+		
+		completion_reward = {
+		custom_effect_tooltip = unlock_HOL_aut
+	    }
+	}	
+
+focus = {
 		id = HOL_decide
 		icon = GFX_goal_generic_major_alliance
+		prerequisite = { focus = HOL_east_indies_aut }
         available = {
 		date > 1939.1.1 
 		NOT = { 
@@ -25,7 +84,7 @@ focus = {
 		has_government = totalist
 		} }
 		x = 3
-		y = 0
+		y = 2
 		cost = 10	
 		
 		completion_reward = {
@@ -38,7 +97,7 @@ focus = {
 		icon = GFX_goal_generic_neutrality_focus		
 		prerequisite = { focus = HOL_decide }
 		x = 1
-		y = 1
+		y = 3
 		cost = 1	
 		available = { NOT = { has_country_flag = hol_ger has_country_flag = hol_ent } }
 		
@@ -57,7 +116,7 @@ focus = {
 		icon = GFX_goal_generic_alliance	
 		prerequisite = { focus = HOL_decide }
 		x = 3
-		y = 1
+		y = 3
 		cost = 1
 		available = { NOT = { has_country_flag = hol_ger has_country_flag = hol_neu } }
 
@@ -72,7 +131,7 @@ focus = {
 		icon = GFX_goal_generic_alliance	
 		prerequisite = { focus = HOL_decide }
 		x = 5
-		y = 1
+		y = 3
 		cost = 1		
 		available = { NOT = { has_country_flag = hol_neu has_country_flag = hol_ent } }
 	
@@ -89,7 +148,7 @@ focus = {
 		icon = GFX_goal_totalism
 		prerequisite = { }
 		x = 3
-		y = 2
+		y = 4
 		cost = 4	
 		available = {
 			OR = {
@@ -113,7 +172,7 @@ focus = {
 		icon = GFX_goal_totalism
 		prerequisite = { focus = HOL_syn1 }
 		x = 3
-		y = 3
+		y = 5
 		cost = 5	
 		available = {
 		OR = {
@@ -134,7 +193,7 @@ focus = {
 		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = HOL_syn2 }
 		x = 3
-		y = 4
+		y = 6
 		cost = 20
 		available = {
 			OR = { 36 = { is_controlled_by = HOL } 35 = { is_controlled_by = HOL } }
@@ -190,13 +249,13 @@ focus = {
 	}
 	
 ### Industry Focuses ###	
-
+	
     focus = {
 		id = HOL_industrial_plan_1
 		icon = GFX_goal_generic_construct_civilian	
 		available = {
 		}
-		x = 7
+		x = 9
 		y = 0
 		cost = 10
 		ai_will_do = {
@@ -215,8 +274,11 @@ focus = {
 	
 	focus = {
 		id = HOL_industrial_plan_2
-		icon = GFX_goal_generic_construct_infrastructure
+		icon = GFX_goal_generic_construct_mil_factory
 		available = {
+		controls_state = 7
+		controls_state = 35
+		controls_state = 36
 		}
 		prerequisite = { focus = HOL_industrial_plan_1 }
 		x = 7
@@ -228,6 +290,7 @@ focus = {
 
 		completion_reward = {
 			7 = {
+			    add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
 					level = 2
@@ -235,6 +298,7 @@ focus = {
 				}
 			}
 			35 = {
+			    add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
 					level = 2
@@ -242,6 +306,7 @@ focus = {
 				}
 			}
 			36 = {
+			    add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
 					level = 2
@@ -253,8 +318,16 @@ focus = {
 
 	focus = {
 		id = HOL_industrial_plan_3
-		icon = GFX_goal_generic_construct_mil_factory
-		available = { controls_state = 335
+		icon = GFX_goal_generic_construct_infrastructure
+		available = { 
+		OR = {
+		controls_state = 672
+		controls_state = 335
+		controls_state = 334
+		} 
+		controls_state = 7
+		controls_state = 35
+		controls_state = 36
 		}
 		prerequisite = { focus = HOL_industrial_plan_2 }
 		x = 7
@@ -265,6 +338,27 @@ focus = {
 		}
 
 		completion_reward = {
+			7 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			35 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			36 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}			
 			672 = {
 				add_building_construction = {
 					type = infrastructure
@@ -287,7 +381,7 @@ focus = {
 				}
 			}
 		}
-	}
+	}	
 	
 	focus = {
 		id = HOL_air_base
@@ -298,8 +392,9 @@ focus = {
 		controls_state = 35
 		controls_state = 36
 		} }
+		prerequisite = { focus = HOL_industrial_plan_1 }
 		x = 9
-		y = 0
+		y = 2
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -349,10 +444,14 @@ focus = {
 	focus = {
 		id = HOL_maritime_colonial
 		icon = GFX_goal_generic_navy_cruiser
-		available = { controls_state = 672
-		}
-		prerequisite = { focus = HOL_air_base }
-		x = 9
+		available = { 
+		OR = {		
+		controls_state = 672
+		controls_state = 335
+		controls_state = 334
+		} }
+		prerequisite = { focus = HOL_industrial_plan_1 }
+		x = 11
 		y = 1
 		cost = 10
 		ai_will_do = {
@@ -369,7 +468,7 @@ focus = {
 						}
 						region = 158
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = dockyard
 						level = 1
@@ -397,7 +496,58 @@ focus = {
 					limit = {
 						is_coastal = yes
 						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+						region = 159
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
 							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+						region = 158
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+		random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+						region = 167
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+		random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = arms_factory
 							size > 0
 							include_locked = yes
 						}
@@ -405,7 +555,7 @@ focus = {
 					}
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
-						type = industrial_complex
+						type = arms_factory
 						level = 1
 						instant_build = yes
 					}
@@ -418,10 +568,14 @@ focus = {
 		id = HOL_colonial_resources
 		icon = GFX_goal_generic_production
 		available = {
+		OR = {
 				controls_state = 335
+				controls_state = 672
+				controls_state = 334
+		}
 		}
 		prerequisite = { focus = HOL_maritime_colonial }
-		x = 9
+		x = 11
 		y = 2
 		cost = 10
 		ai_will_do = {
@@ -452,7 +606,9 @@ focus = {
 		available = {
 		}
 		prerequisite = {
+			focus = HOL_industrial_plan_3
 			focus = HOL_colonial_resources
+			focus = HOL_air_base
 		}
 		x = 9
 		y = 3
@@ -601,7 +757,7 @@ focus = {
 	focus = {
 		id = HOL_sea_forts
 		icon = GFX_goal_generic_construct_military
-		prerequisite = { focus = HOL_naval_doctrine }
+		prerequisite = { focus = HOL_naval_doctrine focus = HOL_land_doctrine }
 		x = 16
 		y = 3
 		cost = 10
@@ -695,6 +851,24 @@ focus = {
 				bonus = 0.5
 				uses = 1
 				category = ca_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = HOL_submarine_focus
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = HOL_heavy_cruiser_focus focus = HOL_light_cruiser_focus }
+		x = 13
+		y = 5
+		cost = 10
+		available = { }
+		completion_reward = {
+		add_tech_bonus = {
+				name = submarine_bonus
+				bonus = 0.5
+				uses = 1
+				category = ss_tech
 			}
 		}
 	}

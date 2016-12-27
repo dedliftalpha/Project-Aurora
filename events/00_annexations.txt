@@ -194,10 +194,10 @@ country_event = {#The Annexation of Flanders-Wallonia
 	NOT = { is_core_of = THIS }
 	
 	}
-	RRM = { transfer_state = PREV   }
-	add_core_of = RRM 
+	ROM = { transfer_state = PREV   }
+	add_core_of = ROM 
 							}
-	puppet = RRM 
+	puppet = ROM 
 	add_political_power = 100 
 	
 							}
@@ -4250,6 +4250,7 @@ country_event = {#Fate of America
 			add_state_core = 797
 			add_state_core = 798
 		}
+		if = { limit = { OR = { tag = RUS tag = SOV } } CAL = { remove_state_core = 463 } }
 		USA = {
 			remove_state_core = 650
 			remove_state_core = 463
@@ -4412,4 +4413,1161 @@ country_event = {#Fate of America
 				add_state_core = 463 		
 			}
 		}
+}
+
+
+country_event = {#Fate of Burma 
+	id = annex.53 
+	title = annex.53.t 
+	desc = annex.53.d 
+	trigger = {
+		NOT = {
+			tag = BUR 
+			tag = BHC 
+			tag = PRF
+			tag = DEH 
+		}
+		
+		controls_state = 288 
+		BUR = { exists = no }
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#liberate 
+		name = annex.53 
+		ai_chance = { factor = 99 }
+		every_state = {
+			limit = {
+				is_controlled_by = THIS 
+				is_core_of = BUR
+			}
+			
+			BUR = { transfer_state = PREV }
+		}
+		
+		puppet = BUR 
+		add_political_power = 60 
+	}
+	
+	option = {#occupy 
+	name = annex.53.b 
+	ai_chance = { factor = 1 }
+	set_country_flag = BUL_CONQ
+	add_political_power = -60 
+	}
+	
+}
+
+country_event = {#Sudeten
+	id = annex.54 
+	title = annex.54.t 
+	desc = annex.54.d 
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		tag = GER 
+		controls_state = 69 
+		controls_state = 786 
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#core it 
+		name = annex.54.a 
+		ai_chance = { factor = 80 }
+		BOM = { 
+			remove_state_core = 69 
+			remove_state_core = 786
+		}
+		
+		add_state_core = 69 
+		add_state_core = 786 
+		
+		add_political_power = -100 
+	
+	}
+	
+	option = {#don't 
+		name = annex.54.b 
+		ai_chance = { factor = 20 }
+	}
+}
+
+country_event = {#The destiny of Italy
+	id = annex.55 
+	title = annex.55.t 
+	desc = annex.55.d 
+	trigger = {
+		tag = GER 
+		controls_state = 2 
+		ITA = { exists = no }
+		SRI = { exists = no }
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#liberate Italy 
+		name = annex.55.a 
+		ai_chance = { factor = 95 }
+		add_political_power = 60 
+		
+		every_state = {
+			limit = {
+				is_core_of = ITA 
+
+				is_controlled_by = GER
+			}
+			
+			ITA = { transfer_state = PREV }
+		}
+		
+		puppet = ITA 
+		
+		ITA = { country_event = { id = annex.56 } }
+	
+	}
+	
+	
+	option = {#occupy
+		name = annex.55.b 
+		ai_chance = { factor = 5 }
+		add_political_power = -60 
+	}
+}
+
+country_event = {#The rebirth of the Italian Federation GER 
+	id = annex.56 
+	title = annex.56.t 
+	desc = annex.56.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = annex.56.a 
+		
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+			}
+			
+		create_country_leader = {
+			name = "Julius IV "
+			desc = "POLITICS_JULIUS_IV_DESC"
+			picture = "Portrait_Italy_Julius.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}
+		
+		remove_ideas_with_trait = head_of_government 
+		add_ideas = ITA_Julius_IV_hog_npo
+		remove_ideas_with_trait = foreign_minister 
+		add_ideas = ITA_Pedro_Cardinal_Segura_y_Saenz_for_npo 
+		remove_ideas_with_trait = intel_minister 
+		add_ideas = ITA_Elias_I_di_Borbone_Parma_int_npo 
+		
+		set_cosmetic_tag = ITA 
+		
+	}
+}
+
+country_event = {#The destiny of Italy AUS AHE 
+	id = annex.57 
+	title = annex.57.t 
+	desc = annex.57.d 
+	
+	trigger = {
+	
+		OR = {
+			tag = AUS 
+			tag = AHE 
+		}
+		
+		controls_state = 2 
+		
+		SRI = { exists = no }
+		ITA = { exists = no }
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {
+		name = annex.57.a 
+		ai_chance = { factor = 95 }
+		
+		add_political_power = 60 
+		
+		every_state = {
+			limit = {
+				is_core_of = ITA 
+
+				is_controlled_by = THIS 
+			}
+			
+			ITA = { transfer_state = PREV }
+		}
+		
+		puppet = ITA 
+		
+		ITA = { country_event = { id = annex.58 } }
+		
+	}
+	
+	option = {#occupy
+		name = annex.55.b 
+		ai_chance = { factor = 5 }
+		add_political_power = -60 
+	}
+}
+
+country_event = {#The rebirth of the Italian Federation AUS 
+	id = annex.58 
+	title = annex.58.t 
+	desc = annex.58.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = annex.56.a 
+		
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+			}
+			
+		create_country_leader = {
+			name = "Josef I von Osterreich-Toskana "
+			desc = "POLITICS_JULIUS_IV_DESC"
+			picture = "Portrait_Italy_Julius.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+				
+			}
+		}
+		
+		remove_ideas_with_trait = head_of_government 
+		add_ideas = ITA_Stephen_X_hog_ade
+		remove_ideas_with_trait = foreign_minister 
+		add_ideas = ITA_Josef_von_sterreich_Toskana_for_ade 
+		remove_ideas_with_trait = high_command 
+		add_ideas = ITA_Josef_von_sterreich_Toskana_mhc_ade 
+		
+		set_cosmetic_tag = ITA_kingdom
+		
+	}
+}
+
+country_event = {#Fate of Portugal leftist 
+	id = annex.59 
+	title = annex.59.t 
+	desc = annex.59.d 
+	
+	trigger = {
+		OR = {
+			has_government = radical_socialist 
+			has_government = syndicalist 
+			has_government = totalist 
+		}
+		
+	
+		POR = { exists = no }
+		
+		NOT = {
+			tag = CNT 
+			tag = POR 
+			has_country_flag = POR_CONQ
+		}
+		
+		controls_state = 112 
+
+
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#give to CNT
+		trigger = {
+			NOT = {
+			
+				CNT = { exists = yes }
+				has_war_with = CNT 
+				
+			}
+		}
+		name = annex.59.a 
+		ai_chance = { factor = 50 }
+		
+		every_state = {
+			limit = {
+				is_core_of = POR 
+				is_controlled_by = THIS 
+			}
+			
+			CNT = { transfer_state = PREV }
+		}
+		
+	}
+	
+	option = {#puppet portugal 
+		name = annex.59.b 
+		ai_chance = { factor = 50 }
+		
+		every_state = {
+			limit = {
+				is_core_of = POR 
+				is_controlled_by = THIS 
+			}
+			
+			POR = { transfer_state = PREV }
+		}
+		
+		puppet = POR 
+		
+	}
+	
+	option = {#occupy 
+		name = annex.59.c 
+		ai_chance = { factor = 0 }
+		set_country_flag = POR_CONQ 
+		add_political_power = -60 
+	}
+}
+
+country_event = {#Fate of Morroco leftist 
+	id = annex.60 
+	title = annex.60.t 
+	desc = annex.60.d 
+	
+	trigger = {
+	
+		OR = {
+			has_government = radical_socialist 
+			has_government = syndicalist 
+			has_government = totalist 
+		}
+		
+		NOT = {
+		tag = MOR 
+		has_war_with = MOR 
+		has_country_flag = MOR_CONQ
+		}
+		
+		MOR = { exists = no }
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#puppet 
+		name = annex.60.a 
+		ai_chance = { factor = 100 }
+		
+		every_state = {
+			limit = {
+				is_core_of = MOR 
+				is_controlled_by = THIS 
+			}
+			
+			MOR = { transfer_state = PREV }
+		}
+		
+		puppet = MOR 
+	}
+	
+	option = {#occupy 
+		name = annex.60.b 
+		ai_chance = { factor = 0 }
+		add_political_power = -60 
+		set_country_flag = MOR_CONQ
+	}
+}
+
+country_event = {#Fate of the Baltic Region
+	id = annex.61 
+	title = annex.61.t 
+	desc = annex.61.d 
+	
+	trigger = {
+		NOT = {
+			tag = BAT 
+			tag = EST 
+			tag = LIT 
+			tag = LAT 
+			has_war_with = POL 
+			has_war_with = LIT 
+			has_war_with = PLC 
+				
+			any_country = {
+				has_war_with = THIS 
+				OR = {
+					controls_state = 195 
+					controls_state = 5
+				}
+			}
+			
+			has_country_flag = BAT_CONQ
+		}
+		
+		controls_state = 13 
+		controls_state = 12 
+		
+		BAT = { exists = no }
+		EST = { exists = no }
+		LAT = { exists = no }
+		
+		
+		}
+	
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#integrate RUS
+		trigger = {
+			OR = {
+				tag = RUS 
+				tag = SOV 
+			}
+			
+			OR = {
+				
+				has_completed_focus = RUS_expansionism 
+				has_completed_focus = SOV_EXP_REV 
+				has_country_flag = rus_tsar 
+				has_government = authoritarian_democratist 
+				has_government = paternal_autocratist 
+				has_government = national_populist
+			}
+			
+		}
+		
+		name = annex.61.a 
+		ai_chance = { factor = 100 }
+		add_state_claim = 13 
+		add_state_claim = 191
+		add_state_claim = 12 
+		add_state_claim = 190 
+		add_political_power = 60 
+		set_country_flag = BAT_CONQ
+		}
+		
+		
+		option = {#restore BAT and LIT 
+			trigger = {
+				tag = GER 
+				NOT = {
+					12 = { is_core_of = GER }
+					12 = { is_claimed_by = GER }
+					11 = { is_core_of = GER }
+					11 = { is_claimed_by = GER }
+				}
+				
+				controls_state = 11 
+				
+				LIT = { exists = no }
+			
+			}
+			
+			name = annex.61.b 
+			ai_chance = { factor = 20 }
+			add_political_power = 60 
+			
+			every_state = {
+				limit = {
+					is_core_of = BAT 
+					is_controlled_by = GER
+				}
+				
+				BAT = { transfer_state = PREV }
+
+			}
+			
+			puppet = BAT
+			
+			every_state = {
+				limit = {
+					is_core_of = LIT 
+					is_controlled_by = GER
+				}
+				
+				LIT = { transfer_state = PREV }
+
+			}
+			
+			puppet = LIT
+		}
+		
+		option = {#liberate LIT 
+			trigger = {
+			
+				controls_state = 11 
+				
+				LIT = { exists = no }
+				
+					NOT = {
+					
+					11 = { is_core_of = GER }
+					11 = { is_claimed_by = GER }
+					
+					}
+			}
+			
+			name = annex.61.c
+			ai_chance = { factor = 80 }
+			
+			every_state = {
+				limit = {
+					is_controlled_by = THIS 
+					is_core_of = LIT 
+				}
+				
+				LIT = { transfer_state = PREV }
+			}
+			
+			puppet = LIT 
+			
+			add_state_claim = 13 
+			add_state_claim = 191
+			add_state_claim = 12 
+			add_state_claim = 190 
+			
+			add_political_power = 20 
+			
+			set_country_flag = BAT_CONQ 
+			
+			
+			
+		}
+		
+		option = {#Liberate Baltic Confederation!
+		name = annex.61.e 
+		ai_chance = { factor = 50 }
+			BAT = { 
+			
+				add_state_core = 189 
+				add_state_core = 11 
+			}
+			
+			every_state = {
+				limit = {
+					is_core_of = BAT 
+					is_controlled_by = THIS 
+				}
+				
+				BAT = { transfer_state = PREV }
+			}
+			
+			puppet = BAT 
+			
+			BAT = { set_cosmetic_tag = BAT_confederate }
+		}
+		
+		option = {#Liberate Estonia, Lithuania, Latvia 
+			trigger = {
+				controls_state = 11 
+				NOT = {
+					tag = GER 
+				}
+				
+				LIT = { exists = no }
+			}
+			
+			name = annex.61.g 
+			ai_chance = { factor = 30 }
+			
+			EST = {
+				add_state_core = 13 
+				add_state_core = 191 
+			}
+			
+			LAT = {
+				add_state_core = 12 
+				add_state_core = 190 
+			}
+			
+			
+			every_state = {
+				limit = {
+					is_core_of = EST 
+					is_controlled_by = GER
+				}
+				
+				EST = { transfer_state = PREV }
+
+			}
+			
+			puppet = EST
+			
+			
+			every_state = {
+				limit = {
+					is_core_of = LAT 
+					is_controlled_by = GER
+				}
+				
+				LAT = { transfer_state = PREV }
+
+			}
+			
+			puppet = LAT
+			
+			add_political_power = 60
+			}
+			
+			option = {#Lative and estonia 
+			trigger = {
+				OR = {
+					NOT = {
+						controls_state = 11 
+					}
+					LIT = { exists = yes }
+				}
+				NOT = {
+					tag = GER 
+				}
+				
+			}
+			
+			name = annex.61.f 
+			ai_chance = { factor = 50 }
+			
+			EST = {
+				add_state_core = 13 
+				add_state_core = 191 
+			}
+			
+			LAT = {
+				add_state_core = 12 
+				add_state_core = 190 
+			}
+			
+			every_state = {
+				limit = {
+					is_core_of = LIT 
+					is_controlled_by = GER
+				}
+				
+				LIT = { transfer_state = PREV }
+
+			}
+			
+			puppet = LIT
+			
+			every_state = {
+				limit = {
+					is_core_of = EST 
+					is_controlled_by = GER
+				}
+				
+				EST = { transfer_state = PREV }
+
+			}
+			
+			puppet = EST
+			
+			
+			every_state = {
+				limit = {
+					is_core_of = LAT 
+					is_controlled_by = GER
+				}
+				
+				LAT = { transfer_state = PREV }
+
+			}
+			
+			puppet = LAT
+			
+			add_political_power = 60
+			}
+			
+			
+			
+		option = {#occupation 
+			name = annex.61.h 
+			ai_chance = { factor = 1 }
+			
+			set_country_flag = BAT_CONQ 
+			
+			add_political_power = -60 
+		
+		}
+
+	}
+
+country_event = {#Fate of South Slavic Nations
+	id = annex.62 
+	title = annex.62.t 
+	desc = annex.62.d 
+	
+	trigger = {
+		NOT = {
+			tag = AHE 
+			tag = CRO 
+			tag = BOS 
+			tag = SER 
+			tag = SLV 
+			tag = MTN 
+			tag = YUG 
+			has_war_with = AUS 
+			has_war_with = ITA 
+			has_war_with = ROM 
+			has_war_with = SRI 
+			has_war_with = YUG 
+			has_war_with = AHE 
+			has_war_with = SER 
+			has_war_with = ALB 
+			109 = { is_core_of = THIS }
+		}
+		
+		YUG = { exists = no }
+		CRO = { exists = no	}
+		BOS = { exists = no }
+		SER = { exists = no }
+		
+		controls_state = 109 
+		controls_state = 107 
+		controls_state = 104 
+	}
+	
+	mean_time_to_happen = { days = 5 }
+	
+	option = {#make YUG 
+		trigger = {
+			NOT = {
+				tag = AUS 
+				tag = AHE
+			}
+		}
+		
+		name = annex.62.a 
+		ai_chance = { factor = 40 }
+		
+		YUG = {
+			add_state_core = 102 
+			add_state_core = 109 
+			add_state_core = 103 
+			add_state_core = 163 
+			add_state_core = 793 
+			add_state_core = 104 
+			add_state_core = 794 
+			add_state_core = 107 
+			add_state_core = 108 
+			add_state_core = 767 
+			add_state_core = 765 
+			add_state_core = 105 
+			add_state_core = 106 
+			add_state_core = 736 
+			add_state_core = 795 
+			add_state_core = 45 
+			
+		}
+		
+		every_state = {
+				limit = {
+					is_core_of = YUG 
+					is_controlled_by = THIS
+				}
+				
+				YUG = { transfer_state = PREV }
+
+			}
+			
+			puppet = YUG 
+			
+			add_political_power = 60 
+		
+	}
+	
+	option = {#Divide to minors 
+		name = annex.62.b 
+		ai_chance = { factor = 30 }
+		
+		if =  {
+			limit = {
+				controls_state = 102 
+			}
+			
+			SLV = { 
+				add_state_core = 102 
+				transfer_state = 102 
+			}
+			
+			puppet = SLV 
+		}
+		
+		every_state = {
+				limit = {
+					is_core_of = SER 
+					is_controlled_by = GER
+				}
+				
+				SER = { transfer_state = PREV }
+
+			}
+			
+			puppet = SER
+			
+			every_state = {
+				limit = {
+					is_core_of = CRO 
+					is_controlled_by = GER
+				}
+				
+				CRO = { transfer_state = PREV }
+
+			}
+			
+			puppet = CRO
+			
+			every_state = {
+				limit = {
+					is_core_of = BOS 
+					is_controlled_by = GER
+				}
+				
+				BOS = { transfer_state = PREV }
+
+			}
+			
+			puppet = BOS
+			
+			if =  {
+			limit = {
+				controls_state = 105 
+			}
+			
+			MTN = { 
+				add_state_core = 105 
+				transfer_state = 105 
+			}
+			
+			puppet = MTN 
+		}
+		
+		add_political_power = 60
+			
+	}
+	
+	option = {#divide to majors 
+		name = annex.62.c 
+		ai_chance = { factor = 30 }
+		
+		CRO = { 
+			add_state_core = 104 
+			add_state_core = 102 
+		}
+		
+		every_state = {
+				limit = {
+					is_core_of = CRO 
+					is_controlled_by = GER
+				}
+				
+				CRO = { transfer_state = PREV }
+
+			}
+			
+		puppet = CRO
+			
+		SER = {
+			add_state_core = 105 
+			add_state_core = 106 
+		}
+
+		every_state = {
+				limit = {
+					is_core_of = SER 
+					is_controlled_by = GER
+				}
+				
+				SER = { transfer_state = PREV }
+
+			}
+			
+		puppet = SER
+			
+		add_political_power = 60 	
+	
+	}
+	
+	option = {#occupy 
+		name = annex.62.e 
+		ai_chance = { factor = 1 }
+		
+		add_political_power = -60 
+	
+	}
+}
+
+country_event = {#Integration of New England 
+	id = annex.63 
+	title = annex.63.t 
+	desc = annex.63.d 
+	
+	trigger = {
+		OR = {
+			tag = USA 
+			tag = CSA 
+			tag = AUS  
+		}
+		
+		controls_state = 357 
+		
+		NOT = {
+			357 = { is_core_of = THIS }
+		}
+	}
+	
+	mean_time_to_happen = { days = 70 }
+	
+	option = {
+		name = annex.63.a 
+		
+		add_state_core = 357 
+		add_state_core = 796 
+		add_political_power = -60 
+	}
+
+}
+
+country_event = {#The Fate of Centroamerica
+	id = annex.64
+	title = annex.64.t 
+	desc = annex.64.d 
+	
+	trigger = {
+		NOT = {
+			tag = GUA
+			313 = { is_core_of = THIS }
+			314 = { is_core_of = THIS }
+			has_country_flag = CENTROA_CONQ
+		}
+		
+		controls_state = 313 
+		controls_state = 314 
+		GUA = { exists = no }
+		ELS = { exists = no }
+		
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#occupy 
+		name = annex.64.a 
+		ai_chance = { factor = 1 }
+		
+		set_country_flag = CENTROA_CONQ 
+		add_political_power = 20 
+	}
+	
+	option = {#DIVIDE 
+		trigger = {
+			NOT = {
+				has_government = totalist 
+				has_government = syndicalist 
+				has_government = radical_socialist
+			}
+		}
+		
+		name = annex.64.b 
+		ai_chance = { factor = 99 }
+		
+		GUA = {
+			remove_state_core = 314 
+			remove_state_core = 312 
+			remove_state_core = 317 
+			remove_state_core = 316 
+			remove_state_core = 304 
+		}
+		
+		every_state = {
+				limit = {
+					is_core_of = GUA 
+					is_controlled_by = GER
+				}
+				
+				GUA = { transfer_state = PREV }
+
+			}
+			
+		puppet = GUA
+		
+		
+		ELS = {
+			add_state_core = 314
+		}
+		
+		every_state = {
+				limit = {
+					is_core_of = ELS 
+					is_controlled_by = GER
+				}
+				
+				ELS = { transfer_state = PREV }
+
+			}
+			
+		puppet = ELS
+		
+		add_political_power = 100 
+	}
+	
+	option = {#restore centromerica 
+		name = annex.64.c 
+		ai_chance = { factor = 99 }
+		
+		every_state = {
+				limit = {
+					is_core_of = GUA 
+					is_controlled_by = GER
+				}
+				
+				GUA = { transfer_state = PREV }
+
+			}
+			
+		puppet = GUA
+	
+		add_political_power = 100 
+	}
+}
+
+country_event = {#The Fate of United Provinces
+	id = annex.65 
+	title = annex.65.t 
+	desc = annex.65.d 
+	
+	trigger = {
+		NOT = {
+			tag = NIC 
+			tag = GUA 
+			has_country_flag = UNP_CONQ
+		}
+		
+		NIC = { exists = no }
+		COS = { exists = no }
+		
+		controls_state = 317 
+	}
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = {#occupation 
+		name = annex.65.a 
+		ai_chance = { factor = 1 }
+		set_country_flag = UNP_CONQ 
+		add_political_power = -100 
+	}
+	
+	option = {#divide them 
+		name = annex.65.b 
+		ai_chance = { factor = 50 }
+		
+		NIC = {
+			remove_state_core = 314 
+			remove_state_core = 312 
+			remove_state_core = 316 
+			remove_state_core = 304 
+			remove_state_core = 313 
+			remove_state_core = 311 
+		}	
+		
+		NIC = {
+			transfer_state = 317 
+		}
+		
+		puppet = NIC 
+		
+		if = {
+			limit = {
+				controls_state = 316 
+			}
+			
+			COS = {
+				add_state_core = 316 
+				transfer_state = 316
+			}
+			
+			puppet = COS 
+		}
+		
+		if = {
+			limit = {
+				controls_state = 304 
+			}
+			
+			PAN = {
+				add_state_core = 304 
+				transfer_state = 304
+			}
+			
+			puppet = PAN 
+		}
+		
+		if = {
+			limit = {
+				controls_state = 312 
+			}
+			
+			HON = {
+				add_state_core = 312 
+				transfer_state = 312
+			}
+			
+			puppet = HON 
+		}
+		
+		if = {
+			limit = {
+				controls_state = 314 
+			}
+			
+			ELS = {
+				add_state_core = 314 
+				transfer_state = 314
+			}
+			
+			puppet = ELS 
+		}
+		
+		if = {
+			limit = {
+				controls_state = 313 
+			}
+			
+			GUA = {
+				add_state_core = 313 
+				transfer_state = 313
+			}
+			
+			puppet = GUA 
+		}
+		
+		add_political_power = 100 
+	}
+	
+	option = {#puppet the union 
+		name = annex.65.c 
+		ai_chance = { factor = 50 }
+		
+		
+		every_state = {
+				limit = {
+					is_core_of = NIC 
+					is_controlled_by = GER
+				}
+				
+				NIC = { transfer_state = PREV }
+
+			}
+			
+		puppet = NIC
+	
+		add_political_power = 100 
+	
+	}
 }

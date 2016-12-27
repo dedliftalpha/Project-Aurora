@@ -8,7 +8,7 @@ country_event = { # Syndicalist uprising in Manilla - 37990001
 	id = phil.1
 	title = phil.1.t
 	desc = phil.1.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+	picture = GFX_report_event_PHL_manila_uprising
 
 	fire_only_once = yes
 
@@ -29,6 +29,7 @@ country_event = { # Syndicalist uprising in Manilla - 37990001
 		name = phil.1.a # Rebel seize capital
 		ai_chance = { factor = 30 }
 		hidden_effect = {
+			news_event = { hours = 6 id = phil.83 }
 			PHL = { country_event = { id = phil.2 days = 1 } }
 		}
 	}
@@ -36,6 +37,7 @@ country_event = { # Syndicalist uprising in Manilla - 37990001
 		name = phil.1.b # Military resist uprising
 		ai_chance = { factor = 70 }
 		hidden_effect = {
+			news_event = { hours = 6 id = phil.83 }
 			PHL = { country_event = { id = phil.5 days = 1 } }
 		}
 	}
@@ -69,7 +71,7 @@ country_event = { # II Himagsikang Pilipino - 37990003
 	id = phil.3
 	title = phil.3.t
 	desc = phil.3.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+	picture = GFX_report_event_PHL_manila_uprising2
 
 	is_triggered_only = yes
 
@@ -92,7 +94,7 @@ country_event = { # The Revolution is Defeated - 37990004
 	id = phil.4
 	title = phil.4.t
 	desc = phil.4.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+	picture = GFX_report_event_PHL_manila_uprising2
 
 	is_triggered_only = yes
 
@@ -121,7 +123,7 @@ country_event = { # Democracy prevails - 37990005
 	id = phil.5
 	title = phil.5.t
 	desc = phil.5.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+	picture = GFX_report_event_PHL_manila_uprising2
 
 	is_triggered_only = yes
 
@@ -985,13 +987,79 @@ country_event = { # Economical expansion - American aid - 79
 }
 ############################# GGG Event 80 - 82 Insert Here #############################
 
+###################### International News & Miscellaneous Events (83++) ###################
+news_event = { #Syndicalist Uprising in Manilla (International News)
+	id = phil.83
+	title = phil.83.t
+	desc = phil.83.d
+	picture = GFX_news_event_PHL_manila_uprising
+	
+	major = yes
+	is_triggered_only = yes 
+	
+	option = {
+		name = phil.83.a
+		trigger = { NOT = { TAG = PHL } }
+	}
+}
+country_event = { #Enact Warflag (Normal flag upside down) - hidden
+	id = phil.84
+	hidden = yes
+	picture = GFX_country_event_PHL_manila_uprising
+	
+	trigger = {
+		tag = PHL
+		country_exists = PHL
+		PHL = { has_war = yes }
+		NOT = { has_global_flag = PHL_SOCIALIST }
+	}
+	mean_time_to_happen = { days = 2 }
+	immediate = { set_cosmetic_tag = PHW }
+	option = { name = phil.84.a }
+}
+country_event = { #Return to Normal Flag - hidden
+	id = phil.85
+	hidden = yes
+	picture = GFX_country_event_PHL_manila_uprising
+	
+	trigger = {
+		tag = PHL
+		country_exists = PHL
+		PHL = { NOT = { has_war = yes }}
+		NOT = { has_global_flag = PHL_SOCIALIST }
+	}
+	mean_time_to_happen = { days = 2 }
+	immediate = { set_cosmetic_tag = PHL }
+	option = { name = phil.84.a }
+}
 
+
+country_event = { #Test War - hidden
+	id = phil.100
+	title = phil.100.t
+	desc = phil.100.d
+	picture = GFX_country_event_PHL_manila_uprising
+	is_triggered_only = yes 
+
+	immediate = { declare_war_on = { target = SIA type = annex_everything } }
+	option = { name = phil.84.a }
+}
+country_event = { #Test whitepeace War - hidden
+	id = phil.101
+	title = phil.100.t
+	desc = phil.100.d
+	picture = GFX_country_event_PHL_manila_uprising
+	is_triggered_only = yes 
+
+	immediate = { SIA = { white_peace = PHL } }
+	option = { name = phil.84.a }
+}
 ### Events needed to be done ###
 # A request from the Philippines  GER -
 # New units raised with German aid - 37990011
 # New factories built with German aid - 37990012
 # Economical expansion - German aid - 37990013
-#
+# 
 #
 #
 #  37990082

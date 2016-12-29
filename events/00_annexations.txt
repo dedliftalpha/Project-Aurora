@@ -3995,7 +3995,6 @@ country_event = {#A Hohenzollern Tsar
 			}
 		
 			}
-		set_cosmetic_tag = RTS
 		add_political_power = -100 
 		set_country_flag = rus_tsar 
 		clr_country_flag = RUS_SEN
@@ -4439,7 +4438,7 @@ country_event = {#Fate of Burma
 	mean_time_to_happen = { days = 15 }
 	
 	option = {#liberate 
-		name = annex.53 
+		name = annex.53.a
 		ai_chance = { factor = 99 }
 		every_state = {
 			limit = {
@@ -6478,3 +6477,863 @@ country_event = {#The fate of Georgia
 	
 
 }
+
+country_event = {#Releasing Spain (if not POR)	
+	id = annex.73 
+	title = annex.73.t 
+	desc = annex.73.d 
+	
+	trigger = {
+		
+		NOT = {
+			tag = SPR
+			tag = CNT 
+			tag = CAR 
+			tag = POR 
+			tag = BAS
+			tag = CAT 
+			tag = GLC 
+			tag = ADU 
+			
+			has_country_flag = SPADE_TAK
+		
+			has_war_with = FRA 
+			has_war_with = CAR 
+			has_war_with = SPR 
+			has_war_with = CNT 
+			
+		}
+		
+		OR = {
+			controls_state = 171 
+			controls_state = 174 
+			controls_state = 172 
+			controls_state = 176 
+			controls_state = 166 
+			controls_state = 165 
+			controls_state = 170 
+			controls_state = 41 
+			controls_state = 175 
+			controls_state = 167 
+			controls_state = 168 
+			controls_state = 173 
+			controls_state = 169 
+			controls_state = 118 
+			controls_state = 177 
+		}
+	}
+	
+	mean_time_to_happen = { days = 100 }
+	
+	option = {#Give to Carlists 
+		
+		trigger = {
+			OR = {
+				is_in_faction_with = CAR 
+				is_in_faction_with = ITA 	
+				tag = ITA 
+			}
+			
+			
+		}
+		
+		
+		name = annex.73.a 
+		ai_chance = { factor = 95 }
+		
+		add_political_power = 100 
+		add_named_threat = { threat = -5 name = returned_lands }
+		
+		if = {
+		
+			limit = {
+				CAR = { exists = yes }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				CAR = { transfer_state = PREV }
+				CAR = { add_state_core = PREV }
+			}
+			
+			
+		}
+		
+		if = {
+		
+			limit = {
+				CAR = { exists = no }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				CAR = { transfer_state = PREV }
+				CAR = { add_state_core = PREV }
+			}
+			
+			
+			puppet = CAR
+		}
+		
+		set_country_flag = SPADE_TAK
+	
+	}
+	
+	
+	option = {#Carlists GER 
+		
+		trigger = {
+			tag = GER 
+			CAR = { exists = no }
+		}
+		
+		name = annex.73.b 
+		ai_chance = { factor = 30 }
+
+			
+		every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				CAR = { transfer_state = PREV }
+				CAR = { add_state_core = PREV }
+			}
+			
+			
+			puppet = CAR
+			
+			GER = { transfer_state = 118 }
+			
+			add_state_claim = 118 
+			
+			set_country_flag = SPADE_TAK
+			
+	}
+	
+	option = {#restore Kingdom
+		
+		trigger = {
+			OR = {
+				is_in_faction_with = GER 
+				is_in_faction_with = CAN 	
+				is_in_faction_with = SPR 
+				
+				AND = {
+				
+					NOT = {
+					
+						has_government = totalist 
+						has_government = syndicalist 
+						has_government = radical_socialist 
+						
+					}
+					
+					SPR = { exists = no }
+				}
+			}
+			
+			
+		}
+		
+		
+		name = annex.73.c
+		ai_chance = { factor = 95 }
+		
+		add_political_power = 100 
+		add_named_threat = { threat = -5 name = returned_lands }
+		
+		if = {
+		
+			limit = {
+				SPR = { exists = yes }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				SPR = { transfer_state = PREV }
+			}
+		}
+		
+		if = {
+		
+			limit = {
+				SPR = { exists = no }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				SPR = { transfer_state = PREV }
+			}
+			
+			puppet = SPR
+		}
+		
+		set_country_flag = SPADE_TAK
+		
+		if = {
+			limit = {
+				tag = GER 
+			}
+			
+			country_event = { id = annex.74 }
+		}
+	}
+	
+	option = {#Give to CNT 
+		
+		trigger = {
+			OR = {
+				is_in_faction_with = FRA 
+				is_in_faction_with = CNT 	
+				
+				AND = {
+				
+					OR = {
+					
+						has_government = totalist 
+						has_government = syndicalist 
+						has_government = radical_socialist 
+						
+					}
+					
+					CNT = { exists = no }
+				}
+			}
+			
+			
+		}
+		
+		
+		name = annex.73.e 
+		ai_chance = { factor = 95 }
+		
+		add_political_power = 100 
+		add_named_threat = { threat = -5 name = returned_lands }
+		
+		if = {
+		
+			limit = {
+				CNT = { exists = yes }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				CNT = { transfer_state = PREV }
+				CNT = { add_state_core = PREV }
+			}
+			
+			
+		}
+		
+		if = {
+		
+			limit = {
+				CNT = { exists = no }	
+			}
+		
+			every_state = {
+				limit = {
+				
+					is_controlled_by = ROOT 
+					is_core_of = SPR
+						
+					}
+					
+				CNT = { transfer_state = PREV }
+				CNT = { add_state_core = PREV }
+			}
+			
+			
+			puppet = CNT
+		}
+		
+		set_country_flag = SPADE_TAK
+	
+	}
+	
+	option = {#give to REPUBLIC   
+		
+		trigger = {
+		
+			NOT = {
+			
+				is_in_faction_with = CAR
+				is_in_faction_with = SPR 	
+				
+				has_government = totalist 
+				has_government = syndicalist 
+				has_government = radical_socialist 
+								
+			}
+			
+				SPR = { exists = no }
+		}
+		
+		
+		name = annex.73.f
+		ai_chance = { factor = 95 }
+		
+		add_political_power = 100 
+		add_named_threat = { threat = -10 name = returned_lands }
+		
+		
+		
+		every_state = {
+			limit = {
+				
+				is_controlled_by = ROOT 
+				is_core_of = SPR
+						
+				}
+					
+			SPR = { transfer_state = PREV }
+		}
+			
+		puppet = SPR
+		
+		SPR = { set_cosmetic_tag = SPR_republic }
+		
+		set_country_flag = SPADE_TAK
+		
+		
+	}
+	
+	option = {#occupy
+		
+		name = annex.73.g 
+		ai_chance = { factor = 5 }
+		
+		add_political_power = -100  
+	
+	
+	}
+	
+	option = {#Balkanize spain 
+		
+		trigger = {
+		
+			SPR = { exists = no }
+			CAR = { exists = no }
+			CNT = { exists = no }
+			BAS = { exists = no }
+			ADU = { exists = no }
+			CAT = { exists = no }
+			GLC = { exists = no }
+			
+			NOT = { 
+				
+				has_government = totalist 
+				has_government = syndicalist
+				has_government = radical_socialist
+			
+			}
+			
+			controls_state = 41 
+			controls_state = 172 
+			controls_state = 168 
+			controls_state = 171 
+			controls_state = 165 
+			controls_state = 169 
+		
+		}
+		
+		name = annex.73.h 
+		ai_chance = { factor = 95 }
+		
+		GLC = {
+			
+			add_state_core = 171 
+			add_state_core = 174 
+		
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = GLC 
+				is_controlled_by = ROOT 
+			}
+			
+			GLC = { transfer_state = PREV }
+		}
+		
+		puppet = GLC 
+		
+		BAS = {
+			
+			add_state_core = 172  
+		
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = BAS 
+				is_controlled_by = ROOT 
+			}
+			
+			BAS = { transfer_state = PREV }
+		}
+		
+		puppet = BAS
+		
+		CAT = {
+			
+			add_state_core = 165 
+			add_state_core = 166 
+			add_state_core = 167 
+			add_state_core = 168 
+			add_state_core = 177
+		
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = CAT 
+				is_controlled_by = ROOT 
+			}
+			
+			CAT = { transfer_state = PREV }
+		}
+		
+		puppet = CAT
+		
+		ADU = {
+			
+			add_state_core = 169  
+			add_state_core = 173  
+			add_state_core = 290  
+			
+		
+		}
+		
+		
+		every_state = {
+			limit = {
+				is_core_of = SPR 
+				is_controlled_by = ROOT 
+			}
+			
+			SPR = { transfer_state = PREV }
+		}
+		
+		puppet = SPR
+		
+		transfer_state = 118 
+		add_political_power = -100 
+		set_country_flag = SPADE_TAK
+	
+	}
+}
+
+
+country_event = {#Pick spanish HOS 
+	
+	id = annex.74 
+	title = annex.74.t 
+	desc = annex.74.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#Frederick
+			
+		name = annex.74.a 
+		ai_chance = { factor = 60 }
+
+			
+		SPR = {
+			create_country_leader = {
+			name = "Frederick I of Hohenzollern-Sigmaringen"
+			desc = "POLITICS_Fryderyk_Krystian_Saski_DESC"
+			picture = "Friedrich_Christian_von_Wettin.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		add_political_power = -100 
+		}
+		
+	}
+	
+	option = {#Jaime I
+			
+		name = annex.74.b 
+		ai_chance = { factor = 25 }
+
+			
+		SPR = {
+			create_country_leader = {
+			name = "Jaime I of Bourbon "
+			desc = "POLITICS_Fryderyk_Krystian_Saski_DESC"
+			picture = "Friedrich_Christian_von_Wettin.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		set_country_flag = spa_jaime
+		}
+		
+	}
+
+	
+	option = {#Javier of Bourbon-Parma
+			
+		name = annex.74.c
+		ai_chance = { factor = 5 }
+
+			
+		SPR = {
+			create_country_leader = {
+			name = "Javier of Bourbon-Parma"
+			desc = "POLITICS_Fryderyk_Krystian_Saski_DESC"
+			picture = "Friedrich_Christian_von_Wettin.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democratist
+			elections_allowed = no
+		}
+		}
+		
+	}
+	
+	option = {#nah 
+	
+	name = annex.74.e 
+	ai_chance = { factor = 10 }
+	
+	
+	}
+ }
+ 
+ country_event = {#fate of Germay 
+ 
+	id = annex.75 
+	title = annex.75.t 
+	desc = annex.75.d 
+	
+	trigger = {
+		
+		NOT = {
+			tag = GER 
+			tag = GRU 
+			tag = RUS 
+			tag = SOV 
+			tag = FRA 
+			tag = PSS 
+			tag = RHI 
+			tag = BAV 
+			tag = NFG 
+		}
+		
+		OR = {
+			has_global_flag = GER_Capitulation 
+			has_global_flag = GER_CON_Capitulation 
+			GER = { exists = no }
+		}
+		
+		OR = {
+			has_war_with = GER 
+			GER = { exists = no }
+		}
+		
+		NOT = {
+			has_country_flag = GER_AUSCONQ 
+			is_in_faction_with = GER 
+		}
+		
+		controls_state = 64 
+	
+	}
+	
+	mean_time_to_happen = { days = 15 }
+
+ 
+	
+	option = {#Divide 
+		trigger = {
+			
+			PSS = { exists = no }
+			BAV = { exists = no }
+			RHI = { exists = no }
+			NFG = { exists = no }
+			
+			controls_state = 51  
+			controls_state = 52
+			controls_state = 58 
+		
+		}
+		
+		name = annex.75.a 
+		ai_chance = { factor = 10 }
+		
+		every_state = {
+			limit = {
+				is_core_of = PSS 
+				is_controlled_by = ROOT 
+			}
+			
+			PSS = { transfer_state = PREV }
+		}
+		
+		puppet = PSS
+		
+		every_state = {
+			limit = {
+				is_core_of = BAV 
+				is_controlled_by = ROOT 
+			}
+			
+			BAV = { transfer_state = PREV }
+		}
+		
+		puppet = BAV
+		
+		every_state = {
+			limit = {
+				is_core_of = RHI 
+				is_controlled_by = ROOT 
+			}
+			
+			RHI = { transfer_state = PREV }
+		}
+		
+		puppet = RHI
+	
+	
+	
+	every_state = {
+			limit = {
+				is_core_of = NFG 
+				is_controlled_by = ROOT 
+			}
+			
+			NFG = { transfer_state = PREV }
+		}
+		
+		puppet = NFG
+	
+	}
+	
+	option = {#AUS occupy BAV 
+		
+		trigger = {
+			
+			OR = {
+				tag = AUS 
+				tag = AHE 
+			}
+			
+			PSS = { exists = no }
+			RHI = { exists = no }
+			NFG = { exists = no }
+			BAV = { exists = no }
+			
+			controls_state = 51  
+			controls_state = 52
+			controls_state = 58 
+		}
+		
+		
+		name = annex.75.b 
+		ai_chance = { factor = 30 }
+		
+		every_state = {
+			limit = {
+				is_core_of = PSS 
+				is_controlled_by = ROOT 
+			}
+			
+			PSS = { transfer_state = PREV }
+		}
+		
+		puppet = PSS
+		
+		every_state = {
+			limit = {
+				is_core_of = BAV 
+				is_controlled_by = ROOT 
+			}
+			
+			BAV = { transfer_state = PREV }
+		}
+		
+		puppet = BAV
+		
+		every_state = {
+			limit = {
+				is_core_of = RHI 
+				is_controlled_by = ROOT 
+			}
+			
+			RHI = { transfer_state = PREV }
+		}
+		
+		puppet = RHI
+	
+	
+	
+	every_state = {
+			limit = {
+				is_core_of = NFG 
+				is_controlled_by = ROOT 
+			}
+			
+			NFG = { transfer_state = PREV }
+		}
+		
+		puppet = NFG
+		
+		transfer_state = 52 
+		transfer_state = 53 
+		
+		BAV = { set_cosmetic_tag = SFG }
+		
+		set_country_flag = BDW_PUP
+	}
+	
+	option = {#german union 
+		
+		trigger = {
+		
+			GRU = { exists = no }
+		
+		}
+		
+		name = annex.75.c 
+		ai_chance = { factor = 60 }
+		
+		every_state = {
+			limit = {
+				
+				is_core_of = GRU 
+				is_controlled_by = ROOT 
+			
+			}
+		
+		GRU = { transfer_state = PREV }
+		
+		}
+		
+		puppet = GRU 
+	
+	}
+	
+	option = {#german union 
+		
+		trigger = {
+		
+			GER = { exists = no }
+		
+		}
+		
+		name = annex.75.e 
+		ai_chance = { factor = 60 }
+		
+		every_state = {
+			limit = {
+				
+				is_core_of = GER 
+				is_controlled_by = ROOT 
+			
+			}
+		
+		GER = { transfer_state = PREV }
+		
+		}
+		
+		puppet = GRU 
+	
+	}
+	
+	option = {#Austro-German Empire
+		
+		trigger = {
+			OR = {
+			
+				tag = AUS  
+				tag = AHE 
+			
+			}
+			
+			NOT = {
+				GER = { is_puppet_of = ROOT }
+				GRU = { is_puppet_of = ROOT }
+			}
+		}
+		
+		name = annex.75.f 
+		ai_chance = { factor = 60 }
+		
+		every_state = {
+			limit = {
+				is_core_of = GER 
+				is_controlled_by = ROOT 
+			}
+			
+			add_state_claim = PREV 
+		}
+		
+		set_cosmetic_tag = AUS_GER
+		
+		add_political_power = -100 
+
+					}
+					
+	#Needs option for deal with germaby - maybe tomorrow
+	
+	
+	option = {
+		name = annex.75.g 
+		ai_chance = { factor = 0 }
+		
+		add_political_power = -300 
+		
+		set_country_flag = GER_AUSCONQ
+	}
+ }

@@ -5,7 +5,30 @@ add_namespace = mexico
 
 
 #######POWER STRUGGLE###########
-#Zapata Assasination
+
+##########CALLES EMBRACES TOTALISM
+
+country_event = { 
+	id = mexico.51
+	title = mexico.51.t
+	desc = mexico.51.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MEX
+		date > 1936.1.29
+	}
+
+	mean_time_to_happen = { 
+	      days = 1
+	}
+	
+		option = {
+		name = mexico.51.a
+		add_political_power = -10
+}
+}
 country_event = { 
 	id = mexico.1
 	title = mexico.1.t
@@ -245,7 +268,7 @@ country_event = {
 	ai_chance = { factor = 10 }
    }
    	option = {###Arrest Calles
-	trigger = { NOT={ has_country_flag = Right} }
+	trigger = { NOT= { has_country_flag = Junta } }
 	name = mexico.7.b
 	ai_chance = { factor = 90 }
 	set_country_flag =  CALLES_ARRESTED
@@ -273,7 +296,7 @@ country_event = {
 	option = { ####Pancho Vila
 	name = mexico.8.a
 	ai_chance = { factor = 70 }
-	 trigger = { NOT={ has_country_flag = Right} }
+	 trigger = { NOT={ has_country_flag = Junta} }
 	 create_country_leader = {
 	name = "Pancho Villa"
 	desc = "POLITICS_PANCHO_Villa_DESC"
@@ -1061,6 +1084,7 @@ country_event = { #####Restore the Monarchy
 	create_country_leader = {	
 	name = "Don Fernando"
 	desc = "POLITICS_DON_FERNANDO"
+	picture = "Portrait_Mexico_Don_Fernando.tga"
 	expire = "1965.1.1"
 	ideology = paternal_autocratist_subtype
 	traits = {}
@@ -1339,6 +1363,102 @@ country_event = {
 			} 
 		   }
 		
+	country_event = {
+	id = mexico.52
+	title = mexico.52.t
+	desc = mexico.52.d
+    trigger = {
+	tag = MEX
+	378 = {is_owned_by = MEX}
+	}
+	mean_time_to_happen = { 
+	      days = 90
+	}
+	fire_only_once = yes
+	option = {
+	name = mexico.52.a
+	ai_chance = { factor = 40}
+     add_political_power = 60
+	 add_national_unity = 0.05
+			}
+    option = {
+	name = mexico.52.b
+	ai_chance = { factor = 30}
+     add_political_power = -20
+	 add_ideas = MEX_Propoganda 
+			} 			
+	 option = {
+	trigger = { NOT = { has_country_flag = Junta } }
+	name = mexico.52.c
+	ai_chance = { factor = 25}
+	add_political_power = -60
+     			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			}
+	 option = {
+	name = mexico.52.d
+	ai_chance = { factor = 5}
+	add_political_power = -100
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			} 			 			
+		   }	   
 		
 		
 	################CRISTERO WAR##################

@@ -521,7 +521,7 @@ country_event = { # A naval base in the Philippines? - 37990014
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
-	
+
 	trigger = {
 		tag = GER
 		country_exists = PHL
@@ -596,7 +596,7 @@ country_event = { # German base inaugurated - 37990017
 
 	immediate = {
 		623 = { # Luzon
-			if = { 
+			if = {
 				limit = { is_controlled_by = PHL }
 				add_building_construction = {
 					type = naval_base
@@ -636,7 +636,7 @@ country_event = { # German base inaugurated - 37990017
 		GER = { give_military_access = PHL }
 		add_opinion_modifier = { target = JAP modifier = PHL_naval_base } # -50
 	}
-	
+
 	option = {
 		name = phil.17.a # Great!
 		ai_chance = { factor = 100 }
@@ -655,12 +655,12 @@ country_event = { # New base in the Philippines - 37990018
 		name = phil.18.a # Great!
 		ai_chance = { factor = 100 }
 		add_opinion_modifier = { target = JAP modifier = PHL_naval_base } # -50
-		hidden_effect = { 
+		hidden_effect = {
 			if = {
-				limit = { 
+				limit = {
 					is_in_faction_with = BUR
 					NOT = { is_in_faction_with = PHL }
-				} 
+				}
 				GER = { country_event = { id = phil.19 } }
 			}
 		}
@@ -720,10 +720,120 @@ country_event = { # The Philippines join the Mitteleuropa Bloc - 37990021
 		add_opinion_modifier = { target = PHL modifier = PHL_forever_friendship } # 300
 	}
 }
+country_event = { # The Sabah Dispute - 37990022
+	id = phil.22
+	title = phil.22.t
+	desc = phil.22.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
+	fire_only_once = yes
 
+	trigger = {
+		tag = PHL
+		FRA = { NOT = { has_war_with = PHL } }
+		JAP = { NOT = { has_war_with = PHL } }
+		PHL = { is_in_faction_with = GER }
+		OR = {
+			828 = { is_controlled_by = GER } # Sabah
+			828 = { is_controlled_by = MLY }
+			828 = { is_controlled_by = SAR }
+		}
+	}
 
-############################# GGG Event 22-25 Insert Here #############################
+	mean_time_to_happen = { days = 300 }
+
+	option = {
+		name = phil.22.a # Dial Germany
+		ai_chance = { factor = 60 }
+		PHL = { add_state_claim = 828 }
+		hidden_effect = { GER = { country_event = { id = phil.23 } } }
+	}
+	option = {
+		name = phil.22.b # Present Our Claims
+		ai_chance = { factor = 30 }
+		PHL = { add_state_claim = 828 }
+		PHL = { add_political_power = -20 } # 1 dissent
+	}
+	option = {
+		name = phil.22.c # F@ck Sabah, we're not interested
+		ai_chance = { factor = 10 }
+		PHL = { add_political_power = -100 } # 5 dissent
+		add_opinion_modifier = { target = GER modifier = PHL_Sabah_GER  } # 10
+	}
+}
+country_event = { # Philippine claims to Sabah - 37990023
+	id = phil.23
+	title = phil.23.t
+	desc = phil.23.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = phil.23.a # Cede Sabah to them
+		ai_chance = { factor = 20 }
+		GER = { add_political_power = -20 } # 1 dissent
+		add_opinion_modifier = { target = PHL modifier = PHL_filipino_Sabah } # 50
+		PHL = {
+			remove_state_claim = 828 # Sabah
+			add_state_core = 828
+			transfer_state = 828
+		}
+	}
+	option = {
+		name = phil.23.b # They must pay for it
+		ai_chance = { factor = 40 }
+		hidden_effect = { PHL = { country_event = { id = phil.24 } } }
+		GER = { add_political_power = -20 } # 1 dissent
+	}
+	option = {
+		name = phil.23.c # Sabah is our clay!
+		ai_chance = { factor = 40 }
+		add_opinion_modifier = { target = PHL modifier = PHL_Sabah_GER_ignore  } # -10
+	}
+}
+country_event = { # German Proposal - 37990024
+	id = phil.264
+	title = phil.24.t
+	desc = phil.24.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = phil.46.a # Accept their demands
+		ai_chance = { factor = 75 }
+		hidden_effect = { GER = { country_event = { id = phil.25 } } }
+		PHL = { add_political_power = 20 } # -1 dissent
+		PHL = { add_timed_idea = { idea = PHL_Sabah_purchase days = 30 } }
+		GER = { add_timed_idea = { idea = PHL_Sabah_income days = 30 } }
+	}
+	option = {
+		name = phil.24.b # Too expensive
+		ai_chance = { factor = 25 }
+		PHL = { add_political_power = -20 } # 1 dissent
+	}
+}
+country_event = { # The Transfer of Sabah - 37990025
+	id = phil.25
+	title = phil.25.t
+	desc = phil.25.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	immediate = {
+		PHL = {
+			remove_state_claim = 828 # Sabah
+			add_state_core = 828
+			transfer_state = 828
+		}
+		add_opinion_modifier = { target = PHL modifier = PHL_filipino_Sabah  } # 50
+	}
+	option = {
+		name = phil.23.a # OK
+	}
+}
 country_event = { # A request from the Philippines JAP - 37990026
 	id = phil.26
 	title = phil.26.t
@@ -866,7 +976,7 @@ country_event = { # A naval base in the Philippines? - 37990032
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
-	
+
 	trigger = {
 		tag = JAP
 		country_exists = PHL
@@ -940,11 +1050,11 @@ country_event = { # Japanese base inaugurated - 37990035
 
 	immediate = {
 		626 = { # Palawan
-			if = { 
+			if = {
 				limit = { is_controlled_by = PHL }
 				add_building_construction = {
 					type = naval_base
-					province = 4429 
+					province = 4429
 					level = 3
 					instant_build = yes
 				}
@@ -980,7 +1090,7 @@ country_event = { # Japanese base inaugurated - 37990035
 		JAP = { give_military_access = PHL }
 		add_opinion_modifier = { target = GER modifier = PHL_naval_base } # -50
 	}
-	
+
 	option = {
 		name = phil.35.a # Great!
 		ai_chance = { factor = 100 }
@@ -999,15 +1109,15 @@ country_event = { # New base in the Philippines - 37990036
 		name = phil.36.a # Great!
 		ai_chance = { factor = 100 }
 		add_opinion_modifier = { target = GER modifier = PHL_naval_base } # -50
-		hidden_effect = { 
+		hidden_effect = {
 			if = {
-				limit = { 
+				limit = {
 					OR = {
 						JAP = { is_in_faction_with = SIA }
 						GER = { is_in_faction_with = BUR }
 					}
 					NOT = { is_in_faction_with = PHL }
-				} 
+				}
 				JAP = { country_event = { id = phil.37 } }
 			}
 		}
@@ -1067,11 +1177,197 @@ country_event = { # The Philippines join the Co-Prosperity Sphere - 37990039
 		add_opinion_modifier = { target = PHL modifier = PHL_forever_friendship } # 300
 	}
 }
+country_event = { # The Sabah Dispute - 37990040
+	id = phil.40
+	title = phil.40.t
+	desc = phil.40.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
+	fire_only_once = yes
 
+	trigger = {
+		tag = PHL
+		GER = { NOT = { has_war_with = PHL } }
+		OR = {
+			PHL = { is_in_faction_with = JAP }
+			PHL = { is_in_faction_with = FRA }
+			PHL = { is_in_faction_with = BHC }
+			PHL = { is_in_faction_with = CAN }
+			PHL = { is_in_faction_with = USA }
+		}
+		OR = {
+			828 = { is_controlled_by = GER } # Sabah
+			828 = { is_controlled_by = MLY }
+			828 = { is_controlled_by = SAR }
+		}
+	}
 
+	mean_time_to_happen = { days = 300 }
 
-############################# GGG Event 40-45 Insert Here #############################
+	option = {
+		name = phil.40.a # Present Our Claims
+		ai_chance = { factor = 75 }
+		PHL = { add_state_claim = 828 }
+		PHL = { add_political_power = 20 } # -1 dissent
+		add_opinion_modifier = { target = GER modifier = PHL_Sabah_menace  } # -20
+		hidden_effect = { GER = { country_event = { id = phil.41 } } }
+	}
+	option = {
+		name = phil.40.b # F@ck Sabah, we're not interested
+		ai_chance = { factor = 25 }
+		PHL = { add_political_power = -100 } # 5 dissent
+		add_opinion_modifier = { target = GER modifier = PHL_Sabah_GER  } # 10
+	}
+}
+country_event = { # Philippinean claims to Sabah - 37990041
+	id = phil.41
+	title = phil.41.t
+	desc = phil.41.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = phil.41.a # Wait, What?!?!
+		GER = { add_political_power = -20 } # 1 dissent
+		# command = { type = province_revoltrisk which = 1626 value = 15 }
+		828 = { damage_building = { type = infrastructure damage = 0.6 } }
+		add_national_unity = -0.02
+	}
+}
+country_event = { # Claiming Sabah - 37990042
+	id = phil.42
+	title = phil.42.t
+	desc = phil.42.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = PHL
+		PHL = { is_in_faction_with = JAP }
+		828 = { is_controlled_by = JAP } # Sabah
+	}
+
+	mean_time_to_happen = { days = 300 }
+
+	option = {
+		name = phil.42.a # Present Our Claims
+		ai_chance = { factor = 99 }
+		PHL = { add_state_claim = 828 }
+		PHL = { add_political_power = 20 } # -1 dissent
+		hidden_effect = { JAP = { country_event = { id = phil.43 } } }
+	}
+	option = {
+		name = phil.42.b # F@ck Sabah, we're not interested
+		ai_chance = { factor = 1 }
+		PHL = { add_political_power = -100 } # 5 dissent
+	}
+}
+country_event = { # The Phillipines claim Sabah - 37990043
+	id = phil.43
+	title = phil.43.t
+	desc = phil.43.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = phil.43.a # Transfer Sabah to Them
+		ai_chance = { factor = 99 }
+		JAP = { add_political_power = -20 } # 1 dissent
+		add_opinion_modifier = { target = PHL modifier = PHL_filipino_Sabah } # 50
+		PHL = {
+			remove_state_claim = 828 # Sabah
+			add_state_core = 828
+			transfer_state = 828
+		}
+	}
+	option = {
+		name = phil.43.b # Nope
+		ai_chance = { factor = 1 }
+		JAP = { add_political_power = 20 } # -1 dissent
+		# command = { type = province_revoltrisk which = 1626 value = 15 }
+		828 = { damage_building = { type = infrastructure damage = 0.6 } }
+		add_national_unity = -0.02
+		add_opinion_modifier = { target = PHL modifier = PHL_JAP_Sabah_nope } # -50
+	}
+}
+country_event = { # Seizing the moment - 37990044
+	id = phil.44
+	title = phil.44.t
+	desc = phil.44.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = PHL
+		GER = { 
+			NOT = { 
+				has_war_with = PHL 
+				is_in_faction_with = PHL
+				controls_state = 64 # Berlin
+			}
+		}
+		OR = {
+			828 = { is_controlled_by = GER } # Sabah
+			828 = { is_controlled_by = MLY }
+			828 = { is_controlled_by = SAR }
+		}
+	}
+
+	mean_time_to_happen = { days = 7 }
+
+	option = {
+		name = phil.44.a # Seize Sabah!
+		ai_chance = { factor = 90 }
+		PHL = { add_state_claim = 828 }
+		PHL = { add_political_power = 20 } # -1 dissent
+		hidden_effect = { GER = { country_event = { id = phil.45 } } }
+	}
+	option = {
+		name = phil.44.b # Too Dangerous
+		ai_chance = { factor = 10 }
+		PHL = { add_political_power = -100 } # 5 dissent
+		add_opinion_modifier = { target = GER modifier = PHL_Sabah_GER  } # 10
+	}
+}
+country_event = { # The Phillipines attack North Borneo - 37990045
+	id = phil.45
+	title = phil.45.t
+	desc = phil.45.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	immediate = { PHL = { transfer_state = 828 } } # Sabah
+
+	option = {
+		name = phil.45.a # Evacuate!
+		ai_chance = { factor = 99 }
+		PHL = { add_political_power = -20 } # 1 dissent
+		PHL = {
+			remove_state_claim = 828 # Sabah
+			add_state_core = 828
+		}
+	}
+	option = { 
+		name = phil.45.b # This will not go unpunished! War!
+		ai_chance = { factor = 1 }
+		# command = { type = province_revoltrisk which = 1626 value = 15 }
+		828 = { damage_building = { type = infrastructure damage = 0.6 } }
+		add_national_unity = -0.02
+		PHL = { add_political_power = -20 } # 1 dissent
+		GER = {
+			declare_war_on = {
+				target = PHL
+				type = take_state
+				generator = { 828 } # Sabah
+			}
+		}
+	}
+}
 country_event = { # A request from the Philippines AST - 37990046
 	id = phil.46
 	title = phil.46.t
@@ -1214,16 +1510,16 @@ country_event = { # A naval base in the Philippines? - 37990052
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
-	
+
 	trigger = {
 		tag = AST
 		country_exists = PHL
 		has_global_flag = PHL_ENTENTE
-		AST = { NOT = { 
-			has_war_with = PHL 
-			has_war_with = JAP 
-			has_war_with = GER 
-			} 
+		AST = { NOT = {
+			has_war_with = PHL
+			has_war_with = JAP
+			has_war_with = GER
+			}
 		}
 	}
 
@@ -1307,7 +1603,7 @@ country_event = { # Entente base inaugurated - 37990056
 
 	immediate = {
 		623 = { # Luzon
-			if = { 
+			if = {
 				limit = { is_controlled_by = PHL }
 				add_building_construction = {
 					type = naval_base
@@ -1348,7 +1644,7 @@ country_event = { # Entente base inaugurated - 37990056
 		AST = { give_military_access = PHL }
 		add_opinion_modifier = { target = JAP modifier = PHL_naval_base } # -50
 	}
-	
+
 	option = {
 		name = phil.56.a # Great!
 		ai_chance = { factor = 100 }
@@ -1381,12 +1677,12 @@ country_event = { # New base in the Philippines - 37990058
 		name = phil.58.a # Great!
 		ai_chance = { factor = 100 }
 		add_opinion_modifier = { target = JAP modifier = PHL_naval_base } # -50
-		hidden_effect = { 
+		hidden_effect = {
 			if = {
-				limit = { 
+				limit = {
 					GER = { is_in_faction_with = BUR }
 					NOT = { is_in_faction_with = PHL }
-				} 
+				}
 				CAN = { country_event = { id = phil.59 } }
 			}
 		}
@@ -1603,7 +1899,7 @@ country_event = { # Syndicalism in East Asia - 37990069
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
-	
+
 	trigger = {
 		tag = FRA
 		country_exists = PHL
@@ -1620,7 +1916,7 @@ country_event = { # Syndicalism in East Asia - 37990069
 
 	option = {
 		name = phil.69.a # Internationale
-		trigger = { BHC = { is_in_faction_with = FRA } } 
+		trigger = { BHC = { is_in_faction_with = FRA } }
 		ai_chance = { factor = 90 }
 		hidden_effect = { FRA = { country_event = { id = phil.72 } } }
 	}
@@ -1678,9 +1974,9 @@ country_event = { # An alliance in syndicalist Asia?? - 37990701
 		PHL = { add_political_power = -20 } # 1 dissent
 		hidden_effect = { BHC = { country_event = { id = phil.71 } } }
 		add_opinion_modifier = { target = BHC modifier = PHL_syndie_friendship } # 200
-		BHC = { 
+		BHC = {
 			create_faction = "syndicalist_asia"
-			add_to_faction = PHL 
+			add_to_faction = PHL
 		}
 	}
 }
@@ -1877,7 +2173,7 @@ country_event = { # Re-establishing old ties - 37990080
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
-	
+
 	trigger = {
 		tag = USA
 		country_exists = PHL
@@ -1921,9 +2217,9 @@ country_event = { # A proposal from the Americans - 37990081
 		PHL = { add_political_power = -100 } # 5 dissent
 		hidden_effect = { USA = { country_event = { id = phil.82 } } }
 
-		USA = { 
+		USA = {
 			create_faction = "american_commonwealth"
-			add_to_faction = PHL 
+			add_to_faction = PHL
 		}
 	}
 }
@@ -1946,10 +2242,10 @@ news_event = { #Syndicalist Uprising in Manilla (International News)
 	title = phil.83.t
 	desc = phil.83.d
 	picture = GFX_news_event_PHL_manila_uprising
-	
+
 	major = yes
-	is_triggered_only = yes 
-	
+	is_triggered_only = yes
+
 	option = {
 		name = phil.83.a
 		trigger = { NOT = { TAG = PHL } }
@@ -1959,7 +2255,7 @@ country_event = { #Enact Warflag (Normal flag upside down) - hidden
 	id = phil.84
 	hidden = yes
 	picture = GFX_country_event_PHL_manila_uprising
-	
+
 	trigger = {
 		tag = PHL
 		country_exists = PHL
@@ -1974,7 +2270,7 @@ country_event = { #Return to Normal Flag - hidden
 	id = phil.85
 	hidden = yes
 	picture = GFX_country_event_PHL_manila_uprising
-	
+
 	trigger = {
 		tag = PHL
 		country_exists = PHL
@@ -1985,3 +2281,6 @@ country_event = { #Return to Normal Flag - hidden
 	immediate = { set_cosmetic_tag = PHL }
 	option = { name = phil.84.a }
 }
+########################################################################################################
+
+

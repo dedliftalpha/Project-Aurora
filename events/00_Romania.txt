@@ -6,21 +6,39 @@
 
 add_namespace = romania
 
+country_event = {
+	id = romania.0
+	title = romania.0.t
+	desc = romania.0.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = ROM
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = romania.0.a
+	}
+}
+
 ### Nicolae Iorga founds the Bucharest Circle
 country_event = {
 	id = romania.1
 	title = romania.1.t
 	desc = romania.1.d
 
-	fire_only_once = yes
-
 	trigger = {
 		tag = ROM
 		OR = {
 			has_government = national_populist
 			has_government = paternal_autocratist
-			has_government = authoritarian_democratist
 		}
+		NOT = { country_exists = RRM }
 	}
 
 	mean_time_to_happen = {
@@ -35,7 +53,7 @@ country_event = {
 		ai_chance = { factor = 70 }
 
 		hidden_effect = {
-			country_event = { id = romania.2 days = 14 }
+			country_event = { id = romania.2 days = 100 }
 		}
 	}
 	option = {
@@ -90,7 +108,7 @@ country_event = {
 				days = 90
 		}
 
-		set_country_flag = bucharest_circle
+		set_country_flag = bucharest_circle # Civil war almost inevitable
 	}
 	option = {
 		name = romania.3.b # Leave them be
@@ -99,7 +117,8 @@ country_event = {
 
 		ai_chance = { factor = 25 }
 
-		set_country_flag = bucharest_circle
+		set_country_flag = bucharest_circle # Civil war almost inevitable
+		set_country_flag = did_not_purge_the_circle # Civil war comes sooner
 	}
 }
 
@@ -171,6 +190,8 @@ news_event = {
 
 	is_triggered_only = yes
 
+	major = yes
+
 	option = {
 		name = romania.6.a # Its our land
 
@@ -216,6 +237,9 @@ country_event = {
 	trigger = {
 		tag = ROM
 
+		has_idea = ROM_royalist_threat
+		date > 1937.1.1
+
 		NOT = {
 			 country_exists = RRM
 		}
@@ -223,20 +247,29 @@ country_event = {
 		# If Bucharest Circle was not immediately purged, or if the country is unstable
 		OR = {
 			has_country_flag = bucharest_circle
-			has_political_power < -100
+			has_political_power < -200
+			has_idea = low_stability
+			has_idea = very_low_stability
+			has_idea = desaster
 		}
 
+		# Only if the Iron Guard hasn't been ousted
 		OR = {
 			has_government = national_populist
 			has_government = paternal_autocratist
-			has_government = authoritarian_democratist
 		}
 	}
 
 	fire_only_once = yes
 
 	mean_time_to_happen = {
-		days = 70
+		days = 100
+
+		modifier = {
+			factor = 0.8
+
+			has_country_flag = did_not_purge_the_circle
+		}
 	}
 
 	immediate = {
@@ -246,16 +279,37 @@ country_event = {
 	option = {
 		name = romania.7.a # The traitors!
 
+		remove_ideas = ROM_royalist_threat
+
 		add_political_power = -200
 
 		RRM = {
-			transfer_state = 78
-			transfer_state = 79
+			transfer_state = 78 # Bessarabia
+			transfer_state = 79 # Moldova
+
+			if = {
+				limit = { 789 = { is_owned_by = ROM } }
+				transfer_state = 789 # East Transylvania
+			}
 
 			hidden_effect = {
 				set_capital = 79
 
 				load_oob = RRM
+
+				# Add chiefs if ROM has them (to keep it balanced)
+				if = {
+					limit = { ROM = { has_idea_with_trait = army_chief } }
+					add_ideas = RRM_Constantin_Sanatescu_carm_ade
+				}
+				if = {
+					limit = { ROM = { has_idea_with_trait = navy_chief } }
+					add_ideas = RRM_Nicolae_Caranfil_cnav_sco
+				}
+				if = {
+					limit = { ROM = { has_idea_with_trait = air_chief } }
+					add_ideas = RRM_Gheorghe_Jienescu_cair_ade
+				}
 			}
 		}
 
@@ -320,16 +374,12 @@ news_event {
 	option = {
 		name = romania.9.a # We will defeat the rebels!
 
-		trigger = {
-			tag = ROM
-		}
+		trigger = {	tag = ROM }
 	}
 	option = {
 		name = romania.9.b # For the King!
 
-		trigger = {
-			tag = RRM
-		}
+		trigger = { tag = RRM	}
 	}
 	option = {
 		name = romania.9.c # Worrying
@@ -663,7 +713,7 @@ country_event = {
 		hidden_effect = {
 			load_oob = ROM_AUS_help
 
-			add_equipment_to_stockpile = { type = fighter_equipment_1 amount = 25 producer = AUS }
+			add_equipment_to_stockpile = { type = fighter_equipment_0 amount = 25 producer = AUS }
 		}
 	}
 }
@@ -684,7 +734,7 @@ country_event = {
 		hidden_effect = {
 			load_oob = RRM_AUS_help
 
-			add_equipment_to_stockpile = { type = fighter_equipment_1 amount = 25 producer = AUS }
+			add_equipment_to_stockpile = { type = fighter_equipment_0 amount = 25 producer = AUS }
 		}
 	}
 }
@@ -936,6 +986,36 @@ country_event = {
 		custom_effect_tooltip = romania.25.tt
 
 		hidden_effect = { load_oob = RRM_victory }
+
+		# Set correct names and portraits of communist leaders
+		hidden_effect = {
+			create_country_leader = {
+				name = "Gheorghe Gheorghiu-Dej"
+				desc = "POLITICS_GHEORGHE_GHEORGHIU_DEJ_DESC"
+				picture = "gfx/leaders/ROM/Portrait_Romania_Gheorghe_Gheorghiu_Dej.tga"
+				expire = "1965.1.1"
+				ideology = totalist_subtype
+				traits = { }
+			}
+
+			create_country_leader = {
+				name = "Teohari Georgescu"
+				desc = "POLITICS_TEOHARI_GEORGESCU_DESC"
+				picture = "gfx/leaders/ROM/Portrait_Romania_Teohari_Georgescu.tga"
+				expire = "1965.1.1"
+				ideology = radical_socialist_subtype
+				traits = { }
+			}
+
+			create_country_leader = {
+				name = "Lucretiu Patrascanu"
+				desc = "POLITICS_LUCRETIU_PATRASCANU_DESC"
+				picture = "gfx/leaders/ROM/Portrait_Romania_Lucretiu_Patrascanu.tga"
+				expire = "1965.1.1"
+				ideology = syndicalist_subtype
+				traits = { }
+			}
+		}
 	}
 }
 
@@ -956,7 +1036,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 4
+		days = 7
 	}
 
 	fire_only_once = yes
@@ -1008,6 +1088,8 @@ country_event = {
 		add_political_power = 20
 
 		RRM = { add_opinion_modifier = { target = SER modifier = ROM_kept_iron_guard } }
+
+		RRM = { country_event = { id = romania.29 days = 3 } }
 	}
 }
 
@@ -1025,6 +1107,8 @@ country_event = {
 		ai_chance = { factor = 70 }
 
 		add_political_power = 40
+
+		set_country_flag = executed_iron_guard_leaders
 	}
 
 	option = {
@@ -1033,14 +1117,59 @@ country_event = {
 		ai_chance = { factor = 30 }
 
 		add_political_power = -80
+
+		# Though imprisoned, they may return in the future, so set Iron Guard leaders as party leaders
+		hidden_effect = {
+			create_country_leader = {
+				name = "Corneliu Zelea Codreanu"
+				desc = "POLITICS_CORNELIU_ZELEA_CODREANU_DESC"
+				picture = "gfx/leaders/ROM/Portrait_Romania_Corneliu_Zelea_Codreanu.tga"
+				expire = "1965.1.1"
+				ideology = national_populist_subtype
+				traits = { }
+			}
+
+			# Cuza is not available for RRM, so use Sima with TPT
+			set_party_name = {
+				ideology = paternal_autocratist
+				name = ROM_totul_pentru_tara
+				long_name = ROM_totul_pentru_tara_long
+			}
+
+			create_country_leader = {
+				name = "Horia Sima"
+				desc = "POLITICS_HORIA_SIMA_DESC"
+				picture = "gfx/leaders/ROM/Portrait_Romania_Horia_Sima.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocratist_subtype
+				traits = { }
+			}
+		}
+	}
+}
+
+# Serbia doesn't extradite the Iron Guard
+country_event = {
+	id = romania.29
+	title = romania.29.t
+	desc = romania.29.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.29.a # They better not return!
+
+		effect_tooltip = {
+			RRM = { add_opinion_modifier = { target = SER modifier = ROM_kept_iron_guard } }
+		}
 	}
 }
 
 # ROM: Royalist coup crushed!
 country_event = {
-	id = romania.29
-	title = romania.29.t
-	desc = romania.29.d
+	id = romania.30
+	title = romania.30.t
+	desc = romania.30.d
 
 	trigger = {
 		tag = ROM
@@ -1059,9 +1188,9 @@ country_event = {
 	fire_only_once = yes
 
 	option = {
-		name = romania.29.a # Long live the Iron Guard
+		name = romania.30.a # Long live the Iron Guard
 
-		custom_effect_tooltip = romania.29.tt
+		custom_effect_tooltip = romania.30.tt
 
 		hidden_effect = { load_oob = ROM_victory }
 	}
@@ -1069,9 +1198,9 @@ country_event = {
 
 # Iron Guard Terror
 country_event = {
-	id = romania.30
-	title = romania.30.t
-	desc = romania.30.d
+	id = romania.31
+	title = romania.31.t
+	desc = romania.31.d
 
 	trigger = {
 		tag = ROM
@@ -1088,7 +1217,7 @@ country_event = {
 	fire_only_once = yes
 
 	option = {
-		name = romania.30.a # War is war
+		name = romania.31.a # War is war
 
 		add_political_power = -20
 	}
@@ -1096,9 +1225,9 @@ country_event = {
 
 # Monarchist Terror
 country_event = {
-	id = romania.31
-	title = romania.31.t
-	desc = romania.31.d
+	id = romania.32
+	title = romania.32.t
+	desc = romania.32.d
 
 	trigger = {
 		tag = RRM
@@ -1115,8 +1244,567 @@ country_event = {
 	fire_only_once = yes
 
 	option = {
-		name = romania.31.a # War is war
+		name = romania.32.a # War is war
 
 		add_political_power = -20
+	}
+}
+
+# Hungary/Austria: Romania claims Transylvania
+country_event = {
+	id = romania.33
+	title = romania.33.t
+	desc = romania.33.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.33.a # Transylvania is Hungarian/Austrian!
+
+		effect_tooltip = {
+			add_opinion_modifier = { target = ROM modifier = ROM_claimed_transylvania }
+		}
+	}
+}
+
+# Germany: Romania is nationalizing the oil industry, what shall we do?
+country_event = {
+	id = romania.34
+	title = romania.34.t
+	desc = romania.34.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = GER
+
+		ROM = {
+			focus_progress = {
+				focus = ROM_nationalize_oil_fields
+				progress > 0.25
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.34.a # Bribe ministers
+
+		ai_chance = { factor = 40 }
+
+		add_political_power = -50
+
+		hidden_effect = { ROM = { country_event = { id = romania.35 days = 5} } }
+	}
+	option = {
+		name = romania.34.b # Arrange an accident
+
+		ai_chance = { factor = 40 }
+
+		add_political_power = -30
+
+		hidden_effect = {
+			ROM = { country_event = { id = romania.38 days = 5 } }
+			country_event = { id = romania.39 days = 6 } # Assassination failed
+		}
+	}
+	option = {
+		name = romania.34.c # Do nothing
+
+		ai_chance = { factor = 10 }
+	}
+}
+
+# Ministerial concerns
+country_event = {
+	id = romania.35
+	title = romania.35.t
+	desc = romania.35.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.35.a # Cowards
+
+		add_political_power = -20
+
+		hidden_effect = { country_event = { id = romania.36 days = 10 } }
+	}
+}
+
+# Bribery scandal
+country_event = {
+	id = romania.36
+	title = romania.36.t
+	desc = romania.36.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.36.a # Nothing but lies
+
+		ai_chance = { factor = 10 }
+
+		add_political_power = -20
+	}
+	option = {
+		name = romania.36.b # A.C. Cuza is a traitor!
+
+		ai_chance = { factor = 90 }
+
+		add_political_power = -40
+
+		hidden_effect = { country_event = { id = romania.37 days = 10 } }
+	}
+}
+
+# The execution of Prime Minister A.C. Cuza
+country_event = {
+	id = romania.37
+	title = romania.37.t
+	desc = romania.37.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.37.a # There is only one fate for enemies of the people
+
+		add_political_power = -20
+
+		remove_ideas_with_trait = head_of_government
+		add_ideas = ROM_Horia_Sima_hog_npo
+
+		set_country_flag = cuza_executed
+
+		# Set Sima as leader of the paternal autocratists
+		hidden_effect = {
+			set_party_name = {
+				ideology = paternal_autocratist
+				name = ROM_totul_pentru_tara
+				long_name = ROM_totul_pentru_tara_long
+			}
+
+			create_country_leader = {
+				name = "Horia Sima"
+				desc = "POLITICS_HORIA_SIMA_DESC"
+				picture = "Portrait_Romania_Horia_Sima.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocratist_subtype
+				traits = { }
+			}
+		}
+	}
+}
+
+# Assassination attempt
+country_event = {
+	id = romania.38
+	title = romania.38.t
+	desc = romania.38.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.38.a # A lone madman
+
+		ai_chance = { factor = 1 }
+
+		add_political_power = 20
+	}
+	option = {
+		name = romania.38.b # A monarchist
+
+		ai_chance = { factor = 20 }
+
+		add_political_power = -60
+
+		hidden_effect = { country_event = { id = romania.41 days = 5 } }
+	}
+	option = {
+		name = romania.38.c # A foreign agent
+
+		ai_chance = { factor = 80 }
+
+		add_political_power = -40
+
+		add_opinion_modifier = { target = HUN modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = BUL modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = GER modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = AUS modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = UKR modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = FRA modifier = ROM_suspected_assassination }
+		add_opinion_modifier = { target = RUS modifier = ROM_suspected_assassination }
+
+		hidden_effect = { country_event = { id = romania.42 days = 5 } }
+	}
+}
+
+# Germany: Assassination failed
+country_event = {
+	id = romania.39
+	title = romania.39.t
+	desc = romania.39.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.39.a # It was worth a try
+	}
+}
+
+# Cuza protests against violence
+country_event = {
+	id = romania.40
+	title = romania.40.t
+	desc = romania.40.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.40.a # Stop this traitor!
+
+		hidden_effect = { country_event = { id = romania.37 days = 2 } }
+	}
+}
+
+# Violence against Monarchists
+country_event = {
+	id = romania.41
+	title = romania.41.t
+	desc = romania.41.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.41.a # A.C. Cuza oders police to end violence
+
+		add_political_power = -20
+
+		add_manpower = -100
+
+		hidden_effect = { country_event = { id = romania.37 days = 2 } } # Cuza is executed
+	}
+	option = {
+		name = romania.41.b # Nothing is worse than traitors
+
+		add_political_power = -60
+
+		add_manpower = -500
+
+		hidden_effect = { country_event = { id = romania.40 days = 2 } } # Cuza protests
+	}
+}
+
+# Violence against foreigners
+country_event = {
+	id = romania.42
+	title = romania.42.t
+	desc = romania.42.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.42.a # A.C. Cuza oders police to end violence
+
+		add_political_power = -20
+
+		add_manpower = -100
+
+		hidden_effect = { country_event = { id = romania.37 days = 2 } } # Cuza is executed
+	}
+	option = {
+		name = romania.42.b # Foreigners are a plague
+
+		add_political_power = -60
+
+		add_manpower = -500
+
+		hidden_effect = { country_event = { id = romania.40 days = 2 } } # Cuza protests
+	}
+}
+
+# Germany: Romania nationalizes the oil fields
+country_event = {
+	id = romania.43
+	title = romania.43.t
+	desc = romania.43.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.43.a # We will be watching you
+
+		add_political_power = -10
+
+		add_opinion_modifier = { target = ROM modifier = ROM_nationalized_oil_fields }
+	}
+}
+
+# Germany: Romania stops oil shipments
+country_event = {
+	id = romania.44
+	title = romania.44.t
+	desc = romania.44.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.44.a # Verdammt
+
+		add_political_power = -40ro
+
+		effect_tooltip = {
+			add_opinion_modifier = { target = ROM modifier = ROM_nationalized_oil_fields }
+			add_opinion_modifier = { target = ROM modifier = ROM_stopped_oil_shipments_trade }
+		}
+	}
+}
+
+# Bulgaria: Romania demands a plebiscite in Dobrudzha
+country_event = {
+	id = romania.45
+	title = romania.45.t
+	desc = romania.45.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.45.a # No way
+
+		ai_chance = { factor = 90 }
+
+		add_political_power = 50
+
+		hidden_effect = { ROM = { country_event = { id = romania.46 days = 2 } } }
+	}
+	option = {
+		name = romania.45.b # Allow it, but rig the results
+
+		ai_chance = { factor = 10 }
+
+		hidden_effect = { ROM = { country_event = { id = romania.47 days = 2 } } }
+	}
+	option = {
+		name = romania.45.c # Allow it
+
+		ai_chance = { factor = 1 }
+
+		random_list = {
+			50 = {
+				hidden_effect = { ROM = { country_event = { id = romania.48 days = 7 } } } # People choose Romania
+				custom_effect_tooltip = romania.45.tt1
+			}
+			50 = {
+				hidden_effect = { ROM = { country_event = { id = romania.49 days = 7 } } } # People choose Bulgaria
+				custom_effect_tooltip = romania.45.tt2
+			}
+		}
+	}
+}
+
+# Bulgaria refused the plebiscite
+country_event = {
+	id = romania.46
+	title = romania.46.t
+	desc = romania.46.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.46.a # Send the army
+
+		ai_chance = { factor = 85 }
+
+		add_political_power = 100
+
+		declare_war_on = {
+			target = BUL
+			type = take_core_state
+			generator = { 77 }
+		}
+	}
+	option = {
+		name = romania.46.b # We can't do anything
+
+		ai_chance = { factor = 15 }
+
+		add_political_power = -200
+	}
+}
+
+# Bulgaria rigs the results of the plebiscite
+country_event = {
+	id = romania.47
+	title = romania.47.t
+	desc = romania.47.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.47.a # Never mind
+
+		ai_chance = { factor = 10 }
+
+		hidden_effect = {
+			random_list = {
+				10 = { country_event = { id = romania.48 days = 7 }	} # Go with Romania
+				90 = { country_event = { id = romania.49 days = 7 }	} # Stay with Bulgaria
+			}
+		}
+	}
+	option = {
+		name = romania.47.b # How dare they, send the army
+
+		ai_chance = { factor = 90 }
+
+		add_political_power = 100
+
+		declare_war_on = {
+			target = BUL
+			type = take_core_state
+			generator = { 77 }
+		}
+	}
+}
+
+# People choose unification with Romania
+country_event = {
+	id = romania.48
+	title = romania.48.t
+	desc = romania.48.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.48.a # Great
+
+		add_political_power = 100
+
+		BUL = { country_event = { id = romania.50 days = 1 } } # Bulgaria chooses: hand over or not
+	}
+}
+
+# People choose to remain in Bulgaria
+country_event = {
+	id = romania.49
+	title = romania.49.t
+	desc = romania.49.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.49.a # Awful
+
+		add_political_power = -40
+
+		hidden_effect = { BUL = { country_event = { id = romania.53 days = 1 } } } # Bulgaria: Dobrudzha stays
+	}
+}
+
+# Bulgaria: The result of the plebiscite: People choose Romania
+country_event = {
+	id = romania.50
+	title = romania.50.t
+	desc = romania.50.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.50.a # Democracy has minuses
+
+		ai_chance = { factor = 1 }
+
+		add_political_power = -20
+
+		ROM = { transfer_state = 77 }
+
+		ROM = { country_event = { id = romania.51 hours = 2 } } # Dobrudzha joins Romania.
+	}
+	option = {
+		name = romania.50.b # Refuse to transfer
+
+		ai_chance = { factor = 99 }
+
+		add_political_power = 20
+
+		ROM = { country_event = { id = romania.52 days = 1 } } # Bulgaria ignores the results
+	}
+}
+
+# Dobrudzha joins Romania
+country_event = {
+	id = romania.51
+	title = romania.51.t
+	desc = romania.51.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.51.a # Great.
+
+		effect_tooltip = {
+			transfer_state = 77
+		}
+	}
+}
+
+# Bulgaria refuses to cede Dobrudzha
+country_event = {
+	id = romania.52
+	title = romania.52.t
+	desc = romania.52.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.52.a # There's nothing we can do
+
+		ai_chance = { factor = 15 }
+
+		add_political_power = -60
+	}
+	option = {
+		name = romania.52.b # How dare they
+
+		ai_chance = { factor = 85 }
+
+		add_political_power = 100
+
+		declare_war_on = {
+			target = BUL
+			type = take_core_state
+			generator = { 77 }
+		}
+	}
+}
+
+# Dobrudzha stays in Bulgaria
+country_event = {
+	id = romania.53
+	title = romania.53.t
+	desc = romania.53.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.53.a # Great.
+	}
+}
+
+# Romania claims Transnistria
+country_event = {
+	id = romania.54
+	title = romania.54.t
+	desc = romania.54.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.54.a # Outrageous.
 	}
 }

@@ -1808,3 +1808,278 @@ country_event = {
 		name = romania.54.a # Outrageous.
 	}
 }
+
+# Ukraine: Romanian invasion of Transnistria repelled, offer peace?
+country_event = {
+	id = romania.55
+	title = romania.55.t
+	desc = romania.55.d
+
+	trigger = {
+		tag = UKR
+
+		has_war_with = ROM
+
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = FRA
+			is_in_faction_with = RUS
+		}
+
+		ROM = {
+			NOT = {
+				is_in_faction_with = GER
+				is_in_faction_with = RUS
+			}
+		}
+
+		surrender_progress < 0.2
+
+		OR = {
+			AND = {
+				controls_state = 78 # Bessarabia
+				controls_state = 79 # Moldova
+			}
+			ROM = { surrender_progress > 0.5 }
+		}
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.55.a # Offer peace
+
+		ai_chance = { factor = 100 }
+
+		add_state_core = 78
+
+		ROM = { country_event = { id = romania.56 hours = 6 } }
+	}
+
+	option = {
+		name = romania.55.b # We fight on
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100
+
+		add_state_core = 78
+	}
+}
+
+# Ukraine offers peace
+country_event = {
+	id = romania.56
+	title = romania.56.t
+	desc = romania.56.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.56.a # Accept
+
+		ai_chance = { factor = 100 }
+
+		UKR = {
+			white_peace = { tag = ROM tooltip = romania.56.tt message = romania.56.ms}
+
+			hidden_effect = { transfer_state = 78 }
+
+			country_event = { id = romania.57 hours = 2 }
+		}
+	}
+
+	option = {
+		name = romania.56.b # Refuse
+
+		ai_chance = { factor = 0 }
+
+		UKR = { country_event = { id = romania.58 hours = 6 } }
+	}
+}
+
+# Ukraine: Romania accepted our peace offer!
+country_event = {
+	id = romania.57
+	title = romania.57.t
+	desc = romania.57.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.57.a # Great
+
+		effect_tooltip = {
+			transfer_state = 78
+		}
+	}
+}
+
+# Ukraine: Romania refused our peace offer!
+country_event = {
+	id = romania.58
+	title = romania.58.t
+	desc = romania.58.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.58.a # We march to Bucharest
+	}
+}
+
+# Romanian-Ukrainian war: Romania wins
+country_event = {
+	id = romania.59
+	title = romania.59.t
+	desc = romania.59.d
+
+	trigger = {
+		tag = ROM
+
+		has_war_with = UKR
+
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = RUS
+		}
+
+		UKR = {
+			NOT = {
+				is_in_faction_with = GER
+				is_in_faction_with = FRA
+				is_in_faction_with = RUS
+			}
+		}
+
+		surrender_progress < 0.2
+
+		OR = {
+			AND = {
+				controls_state = 192 # Odessa
+				controls_state = 791 # Mogilev-Podolsky
+			}
+			UKR = { surrender_progress > 0.5 }
+		}
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = romania.59.a # Demilitarize Transnistria
+
+		ai_chance = { factor = 5 }
+
+		add_political_power = -100
+
+		UKR = { country_event = { id = romania.60 hours = 6 } }
+	}
+
+	option = {
+		name = romania.59.b # Claim Transnistria
+
+		ai_chance = { factor = 95 }
+
+		UKR = { country_event = { id = romania.61 hours = 6 } }
+	}
+
+	option = {
+		name = romania.59.c # We fight on
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100
+	}
+}
+
+# Ukraine: Romania offers peace, demilitarize Transnistria
+country_event = {
+	id = romania.60
+	title = romania.60.t
+	desc = romania.60.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.60.a # We have no choice
+
+		ai_chance = { factor = 100 }
+
+		ROM = {
+			white_peace = { tag = UKR tooltip = romania.60.tt message = romania.60.ms}
+
+			country_event = { id = romania.62 hours = 2 }
+		}
+
+		192 = { set_demilitarized_zone = yes } # Odessa
+		791 = { set_demilitarized_zone = yes } # Mogilev-Podolsky
+	}
+
+	option = {
+		name = romania.60.b # Refuse
+
+		add_political_power = -200
+
+		ROM = { country_event = { id = romania.63 hours = 6 } }
+	}
+}
+
+# Ukraine: Romania offers peace, cede Transnistria
+country_event = {
+	id = romania.61
+	title = romania.61.t
+	desc = romania.61.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.61.a # Accept
+
+		ai_chance = { factor = 90 }
+
+		ROM = {
+			white_peace = { tag = UKR tooltip = romania.61.tt message = romania.61.ms}
+
+			hidden_effect = {
+				transfer_state = 192
+				transfer_state = 791
+			}
+
+			country_event = { id = romania.62 hours = 2 }
+		}
+	}
+
+	option = {
+		name = romania.61.b # Refuse
+
+		ai_chance = { factor = 10 }
+
+		ROM = { country_event = { id = romania.63 hours = 6 } }
+	}
+}
+
+# Romania: Ukraine accepted our peace offer
+country_event = {
+	id = romania.62
+	title = romania.62.t
+	desc = romania.62.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.62.a # Great
+	}
+}
+
+# Romania: Ukraine refused our peace offer
+country_event = {
+	id = romania.63
+	title = romania.63.t
+	desc = romania.63.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = romania.63.a # Great
+	}
+}

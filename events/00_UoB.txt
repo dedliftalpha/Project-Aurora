@@ -6187,3 +6187,98 @@ news_event = {
 		load_oob = FRA_refugees
 	}
 }
+
+# Norway gets positive idea
+
+country_event = {
+	id = uob.334
+	title = uob.334.t
+	desc = uob.334.d
+	picture = GFX_report_event_election_vote	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.334.a
+		add_ideas = ENG_political_pressure_idea
+	}
+}
+
+# Norway gets negative idea
+
+country_event = {
+	id = uob.335
+	title = uob.335.t
+	desc = uob.335.d
+	picture = GFX_report_event_election_vote	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.335.a
+		add_ideas = ENG_political_support_idea
+	}
+}
+
+# Norway changes from negative to positive idea
+
+country_event = {
+	id = uob.336
+	title = uob.336.t
+	desc = uob.336.d
+	picture = GFX_report_event_election_vote	
+	
+	trigger = {
+		tag = NOR
+		has_idea = ENG_political_pressure_idea
+		OR = {
+			has_government = totalist
+			has_government = syndicalist
+			has_government = radical_socialist
+		}
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.336.a
+		swap_ideas = {
+			remove_idea = ENG_political_pressure_idea
+			add_idea = ENG_political_support_idea
+		}
+	}
+}
+
+# Norway gets invited to International
+
+country_event = {
+	id = uob.337
+	title = uob.337.t
+	desc = uob.337.d
+	picture = GFX_report_event_election_vote	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.337.a
+		ai_chance = { factor = 100 }
+		FRA = {
+			add_to_faction = NOR
+		}
+		NOR = {
+			add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			}
+		}
+	}
+	
+	option = {
+		name = uob.337.b
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+}

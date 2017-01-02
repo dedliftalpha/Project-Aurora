@@ -23,7 +23,7 @@ focus_tree = {
 			81 = { is_demilitarized_zone = no }
 		}
 
-		ai_will_do = { factor = 15 }
+		ai_will_do = { factor = 20 }
 
 		completion_reward = {
 			81 = { set_demilitarized_zone = no }
@@ -292,7 +292,7 @@ focus_tree = {
 		prerequisite = { focus = ROM_remilitarize_oltenia }
 
 		ai_will_do = {
-			factor = 9
+			factor = 10
 
 			modifier = {
 				factor = 2
@@ -395,7 +395,15 @@ focus_tree = {
 
 		cost = 10
 
-		ai_will_do = { factor = 10 }
+		ai_will_do = {
+			factor = 10
+
+			modifier = {
+				factor = 1.1
+
+				is_in_faction_with = SER
+			}
+		}
 
 		prerequisite = { focus = ROM_nationalize_oil_fields	}
 
@@ -554,20 +562,17 @@ focus_tree = {
 		bypass = {
 			192 = { is_owned_by = ROOT } # Odessa
 			791 = { is_owned_by = ROOT } # Mogilev-Podolsky
-			199 = { is_owned_by = ROOT } # Khmelnytskyi
 		}
 
 		completion_reward = {
 			add_state_claim = 192
 			add_state_claim = 791
-			add_state_claim = 199
 
 			every_country = {
 				limit = {
 					OR = {
 						owns_state = 192
 						owns_state = 791
-						owns_state = 199
 					}
 				}
 				country_event = { id = romania.54 days = 1 } # Romania claims Transnistria
@@ -600,7 +605,6 @@ focus_tree = {
 
 				192 = { is_owned_by = ROOT } # Odessa
 				791 = { is_owned_by = ROOT } # Mogilev-Podolsky
-				199 = { is_owned_by = ROOT } # Khmelnytskyi
 			}
 		}
 
@@ -636,10 +640,6 @@ focus_tree = {
 			if = {
 				limit = { 791 = { is_owned_by = ROOT } }
 				add_state_core = 791
-			}
-			if = {
-				limit = { 199 = { is_owned_by = ROOT } }
-				add_state_core = 199
 			}
 
 			# Bucovina
@@ -1251,12 +1251,16 @@ focus_tree = {
 					}
 				}
 			}
+
 			add_tech_bonus = {
 				name =  air_doc_bonus
 				bonus = 0.5
-				uses = 2
+				uses = 1
 				category = air_doctrine
 			}
+
+			custom_effect_tooltip = ROM_unlocks_company
+			show_ideas_tooltip = fabrica_avioane_set
 		}
 	}
 
@@ -1273,7 +1277,15 @@ focus_tree = {
 		prerequisite = { focus = ROM_technical_development_society }
 
 		completion_reward = {
-			add_ideas = ROM_invested_in_iar # bonus to fighter production
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+
+			custom_effect_tooltip = ROM_unlocks_company
+			show_ideas_tooltip = industria_aeronautica_romana
 		}
 	}
 
@@ -1296,12 +1308,8 @@ focus_tree = {
 				name = fighter_bonus
 				bonus = 0.5
 				uses = 2
-				technology = fighter1
-				technology = fighter2
-				technology = fighter3
-				technology = heavy_fighter1
-				technology = heavy_fighter2
-				technology = heavy_fighter3
+				category = light_fighter
+				category = cat_heavy_fighter
 			}
 		}
 	}
@@ -1390,9 +1398,33 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ROM_keep_individual_air_factories
+		icon = GFX_goal_generic_production2
+		x = 15
+		y = 3
+
+		cost = 10
+
+		ai_will_do = { factor = 4 }
+
+		available_if_capitulated = yes
+
+		prerequisite = { focus = ROM_air_tactics }
+		prerequisite = { focus = ROM_fighter_designs }
+
+		mutually_exclusive = { focus = ROM_national_aeronautical_industry	}
+
+		completion_reward = {
+			air_experience = 25
+
+			add_ideas = ROM_invested_in_iar
+		}
+	}
+
+	focus = {
 		id = ROM_national_aeronautical_industry
 		icon = GFX_goal_generic_major_alliance
-		x = 16
+		x = 17
 		y = 3
 
 		cost = 10
@@ -1404,12 +1436,15 @@ focus_tree = {
 		prerequisite = { focus = ROM_air_tactics }
 		prerequisite = { focus = ROM_fighter_designs }
 
+		mutually_exclusive = { focus = ROM_keep_individual_air_factories }
+
 		completion_reward = {
 			air_experience = 25
 
 			add_ideas = ROM_the_nai
 		}
 	}
+
 	focus = {
 		id = ROM_rocket_effort
 		icon = GFX_focus_rocketry
@@ -1422,12 +1457,16 @@ focus_tree = {
 
 		available_if_capitulated = yes
 
-		prerequisite = { focus = ROM_national_aeronautical_industry	}
+		prerequisite = {
+			focus = ROM_national_aeronautical_industry
+			focus = ROM_keep_individual_air_factories
+		}
 
 		completion_reward = {
 			add_tech_bonus = {
 				name = jet_rocket_bonus
 				ahead_reduction = 0.5
+				bonus = 0.5
 				uses = 2
 				category = rocketry
 				category = jet_technology
@@ -1445,8 +1484,10 @@ focus_tree = {
 
 		ai_will_do = { factor = 1 }
 
-		prerequisite = { focus = ROM_national_aeronautical_industry }
-
+		prerequisite = {
+			focus = ROM_national_aeronautical_industry
+			focus = ROM_keep_individual_air_factories
+		}
 
 		completion_reward = {
 			add_tech_bonus = {
@@ -1470,7 +1511,10 @@ focus_tree = {
 
 		available_if_capitulated = yes
 
-		prerequisite = { focus = ROM_national_aeronautical_industry	}
+		prerequisite = {
+			focus = ROM_national_aeronautical_industry
+			focus = ROM_keep_individual_air_factories
+		}
 		prerequisite = {
 			focus = ROM_submarine_effort
 			focus = ROM_marines_effort
@@ -1579,6 +1623,9 @@ focus_tree = {
 					}
 				}
 			}
+
+			custom_effect_tooltip = ROM_unlocks_company
+			show_ideas_tooltip = santierul_naval_constanta
 		}
 	}
 
@@ -1628,9 +1675,7 @@ focus_tree = {
 				bonus = 0.5
 				ahead_reduction = 1
 				uses = 1
-				technology = basic_destroyer
-				technology = improved_destroyer
-				technology = advanced_destroyer
+				category = dd_tech
 			}
 		}
 	}
@@ -1655,8 +1700,7 @@ focus_tree = {
 				bonus = 0.5
 				ahead_reduction = 1
 				uses = 1
-				technology = improved_submarine
-				technology = advanced_submarine
+				category = ss_tech
 			}
 		}
 	}
@@ -1711,9 +1755,7 @@ focus_tree = {
 				bonus = 0.5
 				ahead_reduction = 1
 				uses = 1
-				technology = basic_heavy_cruiser
-				technology = improved_heavy_cruiser
-				technology = advanced_heavy_cruiser
+				category = ca_tech
 			}
 		}
 	}
@@ -1738,9 +1780,7 @@ focus_tree = {
 				bonus = 0.5
 				ahead_reduction = 1
 				uses = 1
-				technology = basic_light_cruiser
-				technology = improved_light_cruiser
-				technology = advanced_light_cruiser
+				category = cl_tech
 			}
 		}
 	}

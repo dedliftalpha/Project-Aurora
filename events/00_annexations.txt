@@ -5499,8 +5499,8 @@ country_event = {#The Fate of United Provinces
 			puppet = COS 
 		}
 		
-		PAN = { transfer_state = 304 }
-		puppet = PAN 
+		PNM = { transfer_state = 304 }
+		puppet = PNM 
 		
 		if = {
 			limit = {
@@ -7325,7 +7325,7 @@ country_event = {#Pick spanish HOS
 
 					}
 					
-	#Needs option for deal with germaby - maybe tomorrow
+	
 	
 	
 	option = {
@@ -7336,4 +7336,581 @@ country_event = {#Pick spanish HOS
 		
 		set_country_flag = GER_AUSCONQ
 	}
+	
+	option = {#offer germany 
+		
+		trigger = {
+			
+			NOT = { 
+			
+			has_country_flag = ger_refused
+			
+			}
+			
+			OR = {
+			
+			tag = AUS 
+			tag = AHE 
+			
+			}
+			
+			GER = { 
+			
+				exists = yes 
+				
+				is_puppet = no
+			}
+			
+			NOT = { has_war_with = GER }
+			
+		}
+		
+		name = annex.75.h 
+		ai_chance = { factor = 60 }
+		
+		GER = { country_event = { id = annex.76 days = 1 } }
+	
+	}
+	
  }
+ 
+ country_event = {#The treaty of Vienna ?" 
+	
+	id = annex.76 
+	title = annex.76.t 
+	desc = annex.76.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#accept 
+			
+		name = annex.76.a 
+		ai_chance = { factor = 100 }
+		
+		every_country = {
+		
+			limit = {
+			
+				is_puppet_of = GER
+			
+			}
+		
+		}
+		
+		GER = { end_puppet = PREV }
+		
+		remove_from_faction = ROOT 
+		dismantle_faction = yes 
+		white_peace = AUS 
+		
+		if = {
+			
+			limit = {
+			
+				has_war_with = FRA 
+				FRA = { NOT = { has_war_with = AUS } }
+				FRA = { NOT = { has_war_with = AHE } }
+			
+			}
+			
+			FRA = { country_event = { id = annex.? days = 1 } }
+		
+		}
+		
+		if = {
+			
+			limit = {
+			
+				has_war_with = CAN 
+				CAN = { NOT = { has_war_with = AUS } }
+				CAN = { NOT = { has_war_with = AHE } }
+			
+			}
+			
+			CAN = { country_event = { id = annex.? days = 3 } }
+		
+		}
+		
+			if = {
+			
+			limit = {
+			
+				OR = {
+					
+					AND = {
+					
+						has_war_with = JAP 
+						
+						JAP = {
+						
+							OR = {
+								has_war_with = AUS 
+								has_war_with = AHE 
+							}
+							
+						}
+						
+					}
+					
+					OR = {
+					
+						AHE = { has_war_with = JAP }
+						AUS = { has_war_with = JAP }
+						
+					}
+					
+				}
+			
+			}
+			
+			JAP = { country_event = { id = annex.? days = 3 } }
+		
+		}
+		
+		FROM = { country_event = { id = annex.77 days = 1 } }
+		
+		
+		
+	
+	}
+	
+	option = {#refuse 
+		
+		name = annex.76.b 
+		ai_chance = { factor = 0 }
+		
+		FROM = { set_country_flag = ger_refused }
+		
+		FROM = { country_event = { id = annex.75 days = 1 } }
+		
+		add_political_power = -200 
+	
+	}
+ 
+ }
+ 
+ 
+ country_event = {#The treaty of Vienna
+	
+	id = annex.77 
+	title = annex.77.t 
+	desc = annex.77.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+		
+		add_political_power = 300 
+		
+		puppet = GER 
+		
+		every_state = {
+		
+			limit = {
+			
+				is_controlled_by = ROOT 
+				is_core_of = GER 
+			
+			}
+			
+			GER = { transfer_state = PREV }
+		
+		}
+		
+		country_event = { id = annex.79 days = 10 }
+		GER = { country_event = { id = annex.78 } }				
+	
+	}
+	
+ }
+ 
+ country_event = {#The Darkest Hour of German Empire
+	
+	id = annex.78 
+	title = annex.78.t 
+	desc = annex.78.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.78.a 
+		
+		set_capital = 64 
+		add_political_power = -60 
+		
+	}
+ 
+ }
+ 
+ 
+ country_event = {#Choosing the new German Head of State
+ 
+	id = annex.79 
+	title = annex.79.t 
+	desc = annex.79.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#Felix I
+		
+		name = annex.79.a 
+		ai_chance = { factor = 90 }
+		
+		GER = {
+			create_country_leader = {
+			name = "Felix I of Habsburg"
+			desc = "POLITICS_Fryderyk_Krystian_Saski_DESC"
+			picture = "Friedrich_Christian_von_Wettin.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		
+		 add_opinion_modifier = { target = AUS modifier = refused_prince	} 
+		
+	
+		}
+		
+		add_political_power = 20
+ 
+ 
+	}
+ 
+	option = {#let them 
+		
+		name = annex.79.b 
+		ai_chance = { factor = 10 }
+		
+		add_political_power = -20 
+	
+	}
+ 
+}
+
+country_event = {#The fate of Central Asia
+	
+	id = annex.80 
+	title = annex.80.t 
+	desc = annex.80.d 
+	
+	trigger = {
+	
+		NOT = { 
+
+			tag = TRK 
+			tag = ALO 
+			tag = SOV 
+			tag = RUS 
+			has_war_with = RUS 
+			has_war_with = SOV 
+			has_war_with = SIB
+			has_country_flag = CA_CONQ
+		
+		}
+		
+		OR = {
+		
+			controls_state = 405 
+			controls_state = 586 
+			
+		}
+	
+	}
+	
+	mean_time_to_happen = { days = 10 }
+	
+	option = {#CAF 
+		
+		trigger = {
+		
+			ALO = { exists = no }
+		
+		}
+	
+		name = annex.80.a 
+		ai_chance = { factor = 20 }
+		
+		add_political_power = 100 
+		
+		every_state = {
+		
+			limit = {
+				is_controlled_by = ROOT 
+				OR = {
+				
+					is_core_of = ALO 
+					is_core_of = TRK
+					
+				}
+				
+			}
+				
+			ALO = { transfer_state = PREV }
+			
+			}
+		
+		
+		puppet = ALO 
+		
+		ALO = { set_cosmetic_tag = KAZ_caf }
+		
+		ALO = {
+		
+			add_state_core = 585 
+			add_state_core = 584 
+			add_state_core = 405 
+			add_state_core = 732 
+		
+		}
+	
+	}
+	
+	option = {#Divide major 
+		
+		trigger = {
+		
+			controls_state = 586 
+			controls_state = 405 
+			
+			ALO = { exists = no }
+			TRK = { exists = no }
+			
+		}
+		
+		name = annex.80.b 
+		ai_chance = { factor = 40 }
+		
+		add_political_power = 100 
+		
+		every_state = {
+		
+			limit = {
+			
+				is_controlled_by = ROOT 
+				is_core_of = ALO 
+			
+			}
+			
+			ALO = { transfer_state = PREV }
+		
+		}
+		
+		puppet = ALO 
+		
+		
+		every_state = {
+		
+			limit = {
+			
+				is_controlled_by = ROOT 
+				is_core_of = TRK 
+			
+			}
+			
+			TRK = { transfer_state = PREV }
+		
+		}
+		
+		puppet = TRK
+		
+	}
+	
+	option = {#divide minors
+
+		name = annex.80.c 
+		ai_chance = { factor = 35 }
+		
+		add_political_power = 100 
+		
+		KYR = {
+		
+			add_state_core = 586 
+		
+		}
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = KYR 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			KYR = { transfer_state = PREV }
+		
+		}
+		
+		puppet = KYR 
+		
+		TAJ = {
+		
+			add_state_core = 732  
+		
+		}
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = TAJ 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			TAJ = { transfer_state = PREV }
+		
+		}
+		
+		puppet = TAJ 
+		
+		UZB = {
+		
+			add_state_core = 585 
+			add_state_core = 405 
+		
+		}
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = UZB 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			UZB = { transfer_state = PREV }
+		
+		}
+		
+		puppet = UZB
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = ALO 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			ALO = { transfer_state = PREV }
+		
+		}
+		
+		puppet = ALO
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = TRK 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			TRK = { transfer_state = PREV }
+		
+		}
+		
+		puppet = TRK
+	
+	}
+	
+	option = {#give to rus 
+		
+		trigger = {
+		
+			OR = {
+			
+				is_in_faction_with = RUS 
+				is_in_faction_with = SOV 
+			
+			}
+		
+		}
+		
+		name = annex.80.e 
+		ai_chance = { factor = 20 }
+		
+		add_political_power = -20 
+		
+		if = {
+		
+			limit = {
+			
+				is_in_faction_with = SOV 
+			
+			}
+			
+			every_state = {
+			
+				limit = {
+				
+					OR = {
+					
+						is_core_of = ALO 
+						is_core_of = TRK 
+					
+					}
+					
+					is_controlled_by = ROOT 
+				
+				}
+				
+				SOV = { transfer_state = PREV }
+			
+			}
+		
+		}
+		
+		if = {
+		
+			limit = {
+			
+				is_in_faction_with = RUS 
+			
+			}
+			
+			every_state = {
+			
+				limit = {
+				
+					OR = {
+					
+						is_core_of = ALO 
+						is_core_of = TRK 
+					
+					}
+					
+					is_controlled_by = ROOT 
+				
+				}
+				
+				RUS = { transfer_state = PREV }
+			
+			}
+		
+		}
+	
+	}
+	
+	option = {#occupy 
+	
+		name = annex.80.f 
+		ai_chance = { factor = 5 }
+		
+		set_country_flag = CA_CONQ
+		
+		add_political_power = -100 
+		
+	}
+
+}

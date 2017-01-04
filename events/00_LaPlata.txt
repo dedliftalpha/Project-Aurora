@@ -682,6 +682,165 @@ country_event = { #Earthquake!
 
 }
 }
+    
+country_event = {
+
+	id = arg.15
+	title = arg.15.t
+	desc = arg.15.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_war_with = ARG }
+	}
+	
+	option = {
+		name = arg.15.a
+		ai_chance = {
+			factor = 20
+		}
+		ARG = { country_event = { id = arg.16 days = 1 } }
+		effect_tooltip = {
+			ARG = {
+				transfer_state = 507
+			}
+		}
+	}
+	
+	option = {
+		name = arg.15.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 3
+				strength_ratio = {
+					tag = ARG
+					ratio > 0.7
+				}
+			}
+			modifier = {
+				factor = 0.1
+				any_other_country = {
+					is_major = yes
+					is_in_faction_with = CHL
+				}
+			}
+		}
+		ARG = { country_event = { id = arg.17 days = 1 } 
+			if = {
+				limit = {
+					is_in_faction_with = CHL
+					is_faction_leader = yes
+				}
+				remove_from_faction = CHL
+			}
+			if = {
+				limit = { 
+					is_in_faction_with = CHL
+					is_faction_leader = no
+				}
+				random_other_country = {
+					limit = { 
+						is_in_faction_with = ARG
+						is_faction_leader = yes
+					}
+					remove_from_faction = ARG
+				}
+			}			
+		}		
+		effect_tooltip = {
+			ARG = {
+				declare_war_on = {
+					target = CHL
+					type = take_state
+					generator = { 507 }
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = arg.16
+	title = arg.16.t
+	desc = arg.16.d
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+	
+	option = {
+		name = arg.16.a
+		transfer_state = 507
+	}
+}
+
+country_event = {
+	id = arg.17
+	title = arg.17.t
+	desc = arg.17.d
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = arg.17.a
+		declare_war_on = {
+			target = CHL
+			type = take_state
+			generator = { 507 }
+		}
+	}
+}
+
+country_event = {
+	id = arg.18
+	title = arg.18.t
+	desc = arg.18.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	
+	option = {
+		name = arg.18.a 
+		ai_chance = { factor = 70 }
+	    ARG = { if = { limit = { ARG = { is_in_faction = no } } ARG = { create_faction = ARG_PRU_ANTISOC add_to_faction = PRU } } 
+		}  }
+		#ARG = { 
+		#create_faction = ARG_PRU_ANTISOC 
+		#add_to_faction = PRU 
+		##} 
+		#}
+
+	option = {
+	   name = arg.18.b
+	   ai_chance = { factor = 15 }
+	   add_political_power = -40
+	} }
+	
+	
+
+	country_event = {
+	id = arg.19
+	title = arg.19.t
+	desc = arg.19.d
+
+	is_triggered_only = yes
+	
+	option = {
+		name = arg.19.a 
+		 release_puppet = URG
+		 release_puppet = PAR
+		 }
+	option = {
+	   name = arg.19.b
+	   add_political_power = -300
+	   add_ideas = ARG_merciless_union
+	} }
+	
+	
+
 
 
 

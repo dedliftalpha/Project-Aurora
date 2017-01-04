@@ -1022,7 +1022,7 @@ country_event = { #Carlist uprising
 	mean_time_to_happen = { days = 3 }
 	option = {
 		name = sprc.2.a
- 		load_oob = "SPA_Civil_War_CAR"
+ 		load_oob = "SCW_CAR"
  		declare_war_on = {
  			target = SPR
  			type = annex_everything
@@ -1121,7 +1121,7 @@ country_event = { #CNT-FAI uprising
 	mean_time_to_happen = { days = 2 }
 	option = {
 		name = sprc.4.a
- 		load_oob = "SPA_Civil_War_CNT"
+ 		load_oob = "SCW_CNT"
  		declare_war_on = {
  			target = SPR
  			type = annex_everything
@@ -1144,13 +1144,19 @@ country_event = { #trigger event for source country
 	fire_only_once = yes
 	trigger = {
 		tag = RUS
-		has_global_flag = cntfai_risen
+		OR = {
+			has_global_flag = cntfai_risen
+			has_global_flag = carlists_risen
+		}
 		has_war = no
 	}		
 	mean_time_to_happen = { days = 5 }
 	option = {
 		name = sprc.101.a
  		set_global_flag = RUS_SPR_intervention
+		SPR = { country_event = { id = sprc.102 } }
+		add_manpower = -1000
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
 	}
 	option = {
 		name = sprc.101.b
@@ -1163,14 +1169,10 @@ country_event = { #help arrives
 	title = sprc.102.t
 	desc = sprc.102.d
 	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_global_flag = RUS_SPR_intervention
-	}		
-	mean_time_to_happen = { days = 1 }
+	is_triggered_only = yes
 	option = {
 		name = sprc.102.a
- 		#volunteers
+ 		load_oob = SCW_RussianVolunteers_SPR
 	}
 }
 
@@ -1180,28 +1182,255 @@ country_event = { #lessons of war
 	desc = sprc.103.d
 	fire_only_once = yes
 	trigger = {
-		tag = SPR
+		tag = RUS
 		has_global_flag = RUS_SPR_intervention
+		SPR = { has_war = no }
 	}		
 	mean_time_to_happen = { days = 5 }
 	option = {
 		name = sprc.103.a
- 		#volunteers
+ 		add_political_power = 20
 	}
 }
 
 ### German Volunteers
 
+country_event = { #trigger event for source country
+	id = sprc.104
+	title = sprc.104.t
+	desc = sprc.104.d
+	fire_only_once = yes
+	trigger = {
+		tag = GER
+		OR = {
+			has_global_flag = cntfai_risen
+			has_global_flag = carlists_risen
+		}
+		has_war = no
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.104.a
+ 		set_global_flag = GER_SPR_intervention
+		SPR = { country_event = { id = sprc.105 } }
+		add_manpower = -1000
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
+	}
+	option = {
+		name = sprc.104.b
+ 		#nantoka
+	}
+}
+
+country_event = { #help arrives
+	id = sprc.105
+	title = sprc.105.t
+	desc = sprc.105.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = sprc.105.a
+ 		load_oob = SCW_GermanVolunteers_SPR
+	}
+}
+
+country_event = { #lessons of war
+	id = sprc.106
+	title = sprc.106.t
+	desc = sprc.106.d
+	fire_only_once = yes
+	trigger = {
+		tag = GER
+		has_global_flag = GER_SPR_intervention
+		SPR = { has_war = no }
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.106.a
+ 		add_political_power = 20
+	}
+}
+
 ### Austrian Volunteers
 
+country_event = { #trigger event for source country
+	id = sprc.107
+	title = sprc.107.t
+	desc = sprc.107.d
+	fire_only_once = yes
+	trigger = {
+		tag = AUS
+		OR = {
+			has_global_flag = cntfai_risen
+			has_global_flag = carlists_risen
+		}
+		has_war = no
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.107.a
+ 		set_global_flag = AUS_SPR_intervention
+		SPR = { country_event = { id = sprc.108 } }
+		add_manpower = -1000
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
+	}
+	option = {
+		name = sprc.107.b
+ 		#nantoka
+	}
+}
+
+country_event = { #help arrives
+	id = sprc.108
+	title = sprc.108.t
+	desc = sprc.108.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = sprc.108.a
+ 		load_oob = SCW_AustrianVolunteers_SPR
+	}
+}
+
+country_event = { #lessons of war
+	id = sprc.109
+	title = sprc.109.t
+	desc = sprc.109.d
+	fire_only_once = yes
+	trigger = {
+		tag = AUS
+		has_global_flag = AUS_SPR_intervention
+		SPR = { has_war = no }
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.109.a
+ 		add_political_power = 20
+	}
+}
+
+### Italian Volunteers
+
+country_event = { #trigger event for source country
+	id = sprc.110
+	title = sprc.110.t
+	desc = sprc.110.d
+	fire_only_once = yes
+	trigger = {
+		tag = ITA
+		OR = {
+			has_global_flag = cntfai_risen
+			has_global_flag = carlists_risen
+		}
+		has_war = no
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.110.a
+ 		set_global_flag = ITA_SPR_intervention
+		SPR = { country_event = { id = sprc.111 } }
+		add_manpower = -1000
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
+	}
+	option = {
+		name = sprc.110.b
+ 		#nantoka
+	}
+}
+
+country_event = { #help arrives
+	id = sprc.111
+	title = sprc.111.t
+	desc = sprc.111.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = sprc.111.a
+ 		load_oob = SCW_ItalianFedVolunteers_SPR
+	}
+}
+
+country_event = { #lessons of war
+	id = sprc.112
+	title = sprc.112.t
+	desc = sprc.112.d
+	fire_only_once = yes
+	trigger = {
+		tag = ITA
+		has_global_flag = ITA_SPR_intervention
+		SPR = { has_war = no }
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.112.a
+ 		add_political_power = 20
+	}
+}
+
 ### NFA Volunteers
+
+country_event = { #trigger event for source country
+	id = sprc.113
+	title = sprc.113.t
+	desc = sprc.113.d
+	fire_only_once = yes
+	trigger = {
+		tag = NFA
+		OR = {
+			has_global_flag = cntfai_risen
+			has_global_flag = carlists_risen
+		}
+		has_war = no
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.113.a
+ 		set_global_flag = NFA_SPR_intervention
+		SPR = { country_event = { id = sprc.114 } }
+		add_manpower = -1000
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
+	}
+	option = {
+		name = sprc.113.b
+ 		#nantoka
+	}
+}
+
+country_event = { #help arrives
+	id = sprc.114
+	title = sprc.114.t
+	desc = sprc.114.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = sprc.114.a
+ 		load_oob = SCW_NFAVolunteers_SPR
+	}
+}
+
+country_event = { #lessons of war
+	id = sprc.115
+	title = sprc.115.t
+	desc = sprc.115.d
+	fire_only_once = yes
+	trigger = {
+		tag = RUS
+		has_global_flag = RUS_SPR_intervention
+		SPR = { has_war = no }
+	}		
+	mean_time_to_happen = { days = 5 }
+	option = {
+		name = sprc.115.a
+ 		add_political_power = 20
+	}
+}
 
 ### A Regent to our King
 
 country_event = {
-	id = sprc.112
-	title = sprc.112.t
-	desc = sprc.112.d
+	id = sprc.116
+	title = sprc.116.t
+	desc = sprc.116.d
 	fire_only_once = yes
 	trigger = {
 		tag = SPR
@@ -1209,18 +1438,17 @@ country_event = {
 	}		
 	mean_time_to_happen = { days = 5 }
 	option = {
-		name = sprc.112.a
+		name = sprc.116.a
  		#volunteers
 	}
 }
 
-#113
-#114
+#117
 
 ### MAF takes province
 
-#115
-#116
+#118
+#119
 
 ### Victory
 
@@ -1405,89 +1633,7 @@ country_event = {
 
 
 
-
-
-
-country_event = {
-	id = sprc.50
-	title = sprc.50.t
-	desc = sprc.50.d
-	picture = GFX_report_event_soviet_finnish_pact
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		165 = {
-			is_owned_by = CNT
-			is_controlled_by = SPR
-		}
-	
-	}
-	
-	immediate = {
-		CNT = {white_peace = SPR}
-	}
-	
-	option = {
-		name = sprc.50.a
-
-	}
-
-}
-
-country_event = {
-	id = sprc.51
-	title = sprc.51.t
-	desc = sprc.51.d
-	picture = GFX_report_event_soviet_finnish_pact
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		OR = {
-			TAG = CNT
-			TAG = SPR
-		}
-	}
-	
-	immediate = {
-		white_peace = CAR
-		annex_country = { target = CAR transfer_troops = no }
-	}
-	
-	option = {
-		name = sprc.51.a
-
-	}
-
-}
-
-country_event = {
-	id = sprc.52
-	title = sprc.52.t
-	desc = sprc.52.d
-	picture = GFX_report_event_soviet_finnish_pact
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		OR = {
-			TAG = CNT
-			TAG = SPR
-		}
-	}
-	
-	immediate = {
-		white_peace = SPR
-		annex_country = { target = SPR transfer_troops = no }
-	}
-	
-	option = {
-		name = sprc.52.a
-
-	}
-
-}
+### TECH COPY ###
 
 country_event = { #Carlists and CNT-FAI copy technologies
 	id = sprc.3000

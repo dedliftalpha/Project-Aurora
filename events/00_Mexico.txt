@@ -1674,11 +1674,10 @@ country_event = {
 	desc = mexico.53.d
 	fire_only_once = yes
      trigger = {
-		tag = MEX
+		tag = CSA
 		date > 1940.1.1
 	
-		tag = CSA
-		has_war = no
+		CSA = {has_war = no}
 		OR = { 
 				 MEX = { controls_state = 375 }
 				 MEX = { controls_state = 376 }
@@ -2120,5 +2119,598 @@ CSA = { transfer_state = 832 }
 
 	}
 	
+	####################USA wants their stuff back############################
 
+		country_event = { #####USA sends Envoys
+	id = mexico.71
+	title = mexico.71.t
+	desc = mexico.71.d
+	fire_only_once = yes
+     trigger = {
+	 OR = {
+		tag = USA
+		}
+		date > 1940.1.1
+	
+		CSA = {has_war = no}
+		OR = { 
+				 MEX = { controls_state = 375 }
+				 MEX = { controls_state = 376 }
+				 MEX = { controls_state = 377 }
+				 }
+	}
+	
+	mean_time_to_happen = { 
+	      days = 91
+	}
+	
+	option = {
+	name = mexico.71.a
+	ai_chance = { factor = 95}
+    MEX = { country_event = { id = mexico.72 days = 2}}
+	add_political_power = 100
+ 		}
+		option = {
+	name = mexico.71.b
+	ai_chance = { factor = 5}
+	add_political_power = -300
+	MEX = {
+         every_owned_state = {
+             remove_claim_by = TEX
+			 remove_claim_by = USA
+         }
+    }
+ 		}	
+	}
+	
+			country_event = { ##### America sent us an ultimatum
+	id = mexico.72
+	title = mexico.72.t
+	desc = mexico.72.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Surrender 
+	name = mexico.72.a
+	ai_chance = { factor = 10}
+    USA = { transfer_state = 377 }
+    USA = { transfer_state = 834 }
+    USA = { transfer_state = 832 }
+    USA = { transfer_state = 833 }		
+	if = {
+   limit = {
+      798 = {
+        is_owned_by = US
+      }
+  } 
+	USA = { transfer_state = 798 }
+    USA = { transfer_state = 829 }
+	USA = { transfer_state = 797 }
+	USA = { transfer_state = 378 }
+}
+   add_political_power = -300
+    MEX = { country_event = { id = mexico.73 days = 2}}
+}
+	
+		option = { #### Let them come
+	name = mexico.72.b
+	ai_chance = { factor = 30}
+	add_political_power = 100
+	 MEX = { country_event = { id = mexico.74 days = 2}}
+}
+
+		option = { #### Negotiate
+	name = mexico.72.c
+	ai_chance = { factor = 60}
+	add_political_power = 100
+	 USA = { country_event = { id = mexico.75 days = 2}}
+}
+	}
+	
+				country_event = { ##### Mexico accepts demands
+	id = mexico.73
+	title = mexico.73.t
+	desc = mexico.73.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Great!
+	name = mexico.73.a
+	ai_chance = { factor = 100}
+    add_political_power = 200
+}
+	}
+	
+	country_event = { ##### Mexico refuses demands
+	id = mexico.74
+	title = mexico.74.t
+	desc = mexico.74.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Attack
+	name = mexico.74.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	declare_war_on = { target = MEX type = annex_everything }
+}
+
+	option = { #### Back down
+	name = mexico.74.b
+	ai_chance = { factor = 10}
+    add_political_power = -500
+}
+	}
+	
+						country_event = { ##### Mexico wants to negotiate
+	id = mexico.75
+	title = mexico.75.t
+	desc = mexico.75.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Listen
+	name = mexico.75.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	 MEX = { country_event = { id = mexico.77 days = 2}}
+	 add_political_power = -200
+}
+
+	option = { #### Nope
+	name = mexico.75.b
+	ai_chance = { factor = 10}
+    add_political_power = -500
+	 MEX = { country_event = { id = mexico.76 days = 2}}
+}
+	}
+	
+		country_event = { ##### USA doesn't want to listen
+	id = mexico.76
+	title = mexico.76.t
+	desc = mexico.76.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give up
+	name = mexico.76.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	 USA = { country_event = { id = mexico.73 days = 2}}
+	 add_political_power = -500
+}
+
+	option = { #### Come at us
+	name = mexico.76.b
+	ai_chance = { factor = 10}
+    add_political_power = -200
+	 USA = { country_event = { id = mexico.74 days = 2}}
+}
+	}
+	
+		country_event = { #####Mexico's offer
+	id = mexico.77
+	title = mexico.77.t
+	desc = mexico.77.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Tuscon
+	name = mexico.77.a
+	ai_chance = { factor = 40}
+	USA = { country_event = { id = mexico.78 days = 2}}
+    }
+		option = { ####Tuscon and Trans-Peco
+	name = mexico.77.b
+	ai_chance = { factor = 30}
+	USA = { country_event = { id = mexico.79 days = 2}}
+    }
+	
+			option = { ####Tuscon and West Texas
+	name = mexico.77.c
+	ai_chance = { factor = 30}
+	USA = { country_event = { id = mexico.80 days = 2}}
+    }
+   		
+	}
+	
+	
+	country_event = { #####Tuscon event
+	id = mexico.78
+	title = mexico.78.t
+	desc = mexico.78.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon
+	name = mexico.78.a
+	ai_chance = { factor = 10}
+	add_political_power = -100
+    USA = { transfer_state = 378 }
+    USA = { transfer_state = 797 }
+    USA = { transfer_state = 798 }
+    USA = { transfer_state = 829 }
+    USA = { transfer_state = 833 }
+    USA = { transfer_state = 832 }
+	MEX = { country_event = { id = mexico.81 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.78.b
+	ai_chance = { factor = 90}
+	add_political_power = 100
+	MEX = { country_event = { id = mexico.76 days = 2}}
+    }
+
+	}
+	
+		country_event = { #####Tuscon and Far-West Texas event
+	id = mexico.79
+	title = mexico.79.t
+	desc = mexico.79.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon and Far-West Texas
+	name = mexico.79.a
+	ai_chance = { factor = 5}
+	add_political_power = -200
+    USA = { transfer_state = 378 }
+    USA = { transfer_state = 797 }
+    USA = { transfer_state = 798 }
+    USA = { transfer_state = 829 }
+    USA = { transfer_state = 833 }
+	MEX = { country_event = { id = mexico.81 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.79.b
+	ai_chance = { factor = 95}
+	MEX = { country_event = { id = mexico.76 days = 2}}
+    }
+
+	}
+	
+	country_event = { #####Tuscon and South Texas event
+	id = mexico.80
+	title = mexico.80.t
+	desc = mexico.80.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon and South Texas
+	name = mexico.80.a
+	ai_chance = { factor = 5}
+	add_political_power = -300
+    USA = { transfer_state = 378 }
+    USA = { transfer_state = 797 }
+    USA = { transfer_state = 798 }
+    USA = { transfer_state = 829 }
+	MEX = { country_event = { id = mexico.81 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.80.b
+	ai_chance = { factor = 95}
+	MEX = { country_event = { id = mexico.76 days = 2}}
+    }
+	}
+	
+		country_event = { #####USA negotiations are succsesful
+	id = mexico.81
+	title = mexico.81.t
+	desc = mexico.81.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Yay
+	name = mexico.81.a
+	ai_chance = { factor = 100}
+	add_political_power = -300
+}
+
+
+     ######################AUS wants its stuff back############################
+		country_event = { #####TEX sends Envoys
+	id = mexico.82
+	title = mexico.82.t
+	desc = mexico.82.d
+	fire_only_once = yes
+     trigger = {
+	 OR = {
+		tag = TEX
+		}
+		date > 1940.1.1
+	
+		CSA = {has_war = no}
+		OR = { 
+				 MEX = { controls_state = 386 }
+				 MEX = { controls_state = 387 }
+				 MEX = { controls_state = 388 }
+				 }
+	}
+	
+	mean_time_to_happen = { 
+	      days = 91
+	}
+	
+	option = {
+	name = mexico.82.a
+	ai_chance = { factor = 95}
+    MEX = { country_event = { id = mexico.83 days = 2}}
+	add_political_power = 100
+ 		}
+		option = {
+	name = mexico.82.b
+	ai_chance = { factor = 5}
+	add_political_power = -300
+	MEX = {
+         every_owned_state = {
+             remove_claim_by = TEX
+			 remove_claim_by = TEX
+         }
+    }
+ 		}	
+	}
+	
+			country_event = { ##### America sent us an ultimatum
+	id = mexico.83
+	title = mexico.83.t
+	desc = mexico.83.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Surrender 
+	name = mexico.83.a
+	ai_chance = { factor = 10}
+    TEX = { transfer_state = 388 }
+    TEX = { transfer_state = 834 }
+    TEX = { transfer_state = 832 }
+    TEX = { transfer_state = 833 }		
+	if = {
+   limit = {
+      908 = {
+        is_owned_by = US
+      }
+  } 
+	TEX = { transfer_state = 908 }
+    TEX = { transfer_state = 829 }
+	TEX = { transfer_state = 907 }
+	TEX = { transfer_state = 389 }
+}
+   add_political_power = -300
+    MEX = { country_event = { id = mexico.84 days = 2}}
+}
+	
+		option = { #### Let them come
+	name = mexico.83.b
+	ai_chance = { factor = 30}
+	add_political_power = 100
+	 MEX = { country_event = { id = mexico.85 days = 2}}
+}
+
+		option = { #### Negotiate
+	name = mexico.83.c
+	ai_chance = { factor = 60}
+	add_political_power = 100
+	 TEX = { country_event = { id = mexico.86 days = 2}}
+}
+	}
+	
+				country_event = { ##### Mexico accepts demands
+	id = mexico.84
+	title = mexico.84.t
+	desc = mexico.84.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Great!
+	name = mexico.84.a
+	ai_chance = { factor = 100}
+    add_political_power = 200
+}
+	}
+	
+					country_event = { ##### Mexico refuses demands
+	id = mexico.85
+	title = mexico.85.t
+	desc = mexico.85.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Attack
+	name = mexico.85.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	declare_war_on = { target = MEX type = annex_everything }
+}
+
+	option = { #### Back down
+	name = mexico.85.b
+	ai_chance = { factor = 10}
+    add_political_power = -500
+}
+	}
+	
+	country_event = { ##### Mexico wants to negotiate
+	id = mexico.86
+	title = mexico.86.t
+	desc = mexico.86.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Listen
+	name = mexico.86.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	 MEX = { country_event = { id = mexico.88 days = 2}}
+	 add_political_power = -200
+}
+
+	option = { #### Nope
+	name = mexico.86.b
+	ai_chance = { factor = 10}
+    add_political_power = -500
+	 MEX = { country_event = { id = mexico.87 days = 2}}
+}
+	}
+	
+	country_event = { ##### TEX doesn't want to listen
+	id = mexico.87
+	title = mexico.87.t
+	desc = mexico.87.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give up
+	name = mexico.87.a
+	ai_chance = { factor = 90}
+    add_political_power = 100
+	 TEX = { country_event = { id = mexico.84 days = 2}}
+	 add_political_power = -500
+}
+
+	option = { #### Come at us
+	name = mexico.87.b
+	ai_chance = { factor = 10}
+    add_political_power = -200
+	 TEX = { country_event = { id = mexico.85 days = 2}}
+}
+	}
+	
+		country_event = { #####Mexico's offer
+	id = mexico.88
+	title = mexico.88.t
+	desc = mexico.88.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Tuscon
+	name = mexico.88.a
+	ai_chance = { factor = 40}
+	TEX = { country_event = { id = mexico.89 days = 2}}
+    }
+		option = { ####Tuscon and Trans-Peco
+	name = mexico.88.b
+	ai_chance = { factor = 30}
+	TEX = { country_event = { id = mexico.90 days = 2}}
+    }
+	
+			option = { ####Tuscon and West Texas
+	name = mexico.88.c
+	ai_chance = { factor = 30}
+	TEX = { country_event = { id = mexico.91 days = 2}}
+    }
+   		
+	}
+	
+	
+	country_event = { #####Tuscon event
+	id = mexico.89
+	title = mexico.89.t
+	desc = mexico.89.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon
+	name = mexico.89.a
+	ai_chance = { factor = 10}
+	add_political_power = -100
+    TEX = { transfer_state = 389 }
+    TEX = { transfer_state = 907 }
+    TEX = { transfer_state = 908 }
+    TEX = { transfer_state = 829 }
+    TEX = { transfer_state = 833 }
+    TEX = { transfer_state = 832 }
+	MEX = { country_event = { id = mexico.92 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.89.b
+	ai_chance = { factor = 90}
+	add_political_power = 100
+	MEX = { country_event = { id = mexico.87 days = 2}}
+    }
+
+	}
+	
+		country_event = { #####Tuscon and Far-West Texas event
+	id = mexico.90
+	title = mexico.90.t
+	desc = mexico.90.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon and Far-West Texas
+	name = mexico.90.a
+	ai_chance = { factor = 5}
+	add_political_power = -200
+    TEX = { transfer_state = 389 }
+    TEX = { transfer_state = 907 }
+    TEX = { transfer_state = 908 }
+    TEX = { transfer_state = 829 }
+    TEX = { transfer_state = 833 }
+	MEX = { country_event = { id = mexico.92 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.90.b
+	ai_chance = { factor = 95}
+	MEX = { country_event = { id = mexico.87 days = 2}}
+    }
+
+	}
+	
+	country_event = { #####Tuscon and South Texas event
+	id = mexico.91
+	title = mexico.91.t
+	desc = mexico.91.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Give them Tuscon and South Texas
+	name = mexico.91.a
+	ai_chance = { factor = 5}
+	add_political_power = -300
+    TEX = { transfer_state = 389 }
+    TEX = { transfer_state = 907 }
+    TEX = { transfer_state = 908 }
+    TEX = { transfer_state = 829 }
+	MEX = { country_event = { id = mexico.92 days = 2}}
+    }
+		option = { ####Nope
+	name = mexico.91.b
+	ai_chance = { factor = 95}
+	MEX = { country_event = { id = mexico.87 days = 2}}
+    }
+	}
+	
+		country_event = { #####TEX negotiations are succsesful
+	id = mexico.92
+	title = mexico.92.t
+	desc = mexico.92.d
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	
+	option = { #### Yay
+	name = mexico.92.a
+	ai_chance = { factor = 100}
+	add_political_power = -300
+}
+	
 	

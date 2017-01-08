@@ -34,27 +34,51 @@ country_event = {#The Annexation of Flanders-Wallonia
 	mean_time_to_happen = { days = 15 }
 	
 	option = {#liberate 
-	name = annex.2.a 
-	ai_chance = { factor = 99 }
-	every_state = {
-	limit = {
-	is_core_of = SWI 
-	is_controlled_by = ROOT 
-	NOT = { is_core_of = ROOT }
-	
-	}
-	SWI = { transfer_state = PREV }
-							}
+		name = annex.2.a 
+		ai_chance = { factor = 99 }
+		
+		if = {
+			
+				limit = {
+				
+					tag = FRA
+				
+				}
+				
+				SWI = { remove_state_core = 760 }
+			
+			}
+			
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = SWI 
+				is_controlled_by = ROOT 
+				
+				NOT = { is_core_of = ROOT }
+				
+			}
+		
+		SWI = { transfer_state = PREV }
+		
+		}
+							
 	puppet = SWI 
+	
+	SWI = { add_state_core = 760 }
+	
 	add_political_power = 100 
 	
 							}
 							
 	option = {#occupy
-	name = annex.2.b 
-	ai_chance = { factor = 1 }
-	set_country_flag = SWITZ_CONQ
-	add_political_power = -20 
+		name = annex.2.b 
+		ai_chance = { factor = 1 }
+		
+		
+		set_country_flag = SWITZ_CONQ
+		add_political_power = -20 
 					}
 						}
 						
@@ -3884,7 +3908,14 @@ country_event = {#The Annexation of Flanders-Wallonia
 	title = annex.48.t 
 	desc = annex.48.d 
 			trigger = {
-			NOT = { tag = RUS tag = SOV }
+			NOT = {
+			
+					tag = RUS 
+					tag = SOV
+					
+					has_country_flag = RUS_CONQ
+					
+					}
 			SOV = { exists = no }
 			NOT = { has_war_with = RUS }
 			controls_state = 219  
@@ -3952,9 +3983,13 @@ country_event = {#The Annexation of Flanders-Wallonia
 			
 					}
 			option = {
-			name = annex.48.c 
-			ai_chance = { factor = 1 }
-			add_political_power = -160  
+				
+				name = annex.48.c 
+				ai_chance = { factor = 1 }
+				
+				add_political_power = -160  
+				
+				set_country_flag = RUS_CONQ
 			
 				
 					}
@@ -8947,3 +8982,647 @@ country_event = {#The new leader of england+scotland
 
 }
 
+country_event = {#The fate of Yunnan
+
+	id = annex.88 
+	title = annex.88.t 
+	desc = annex.88.d 
+	
+	trigger = {
+	
+		
+		YUN = { exists = no }
+		NPA = { exists = no }
+		
+		NOT = {
+		
+			has_war_with = QIE
+			has_war_with = CHI 
+			has_war_with = SQI
+			has_war_with = TIB 
+			has_war_with = AOG
+			has_war_with = INC 
+			has_war_with = VIE 
+			has_war_with = BUR 
+			has_war_with = JAP 
+			
+			has_country_flag = YUN_COL
+			
+			tag = QIE
+			tag = CHI 
+			tag = SQI
+			tag = TIB 
+			tag = AOG
+			tag = NPA 
+		}
+		
+		OR = {
+		
+			controls_state = 325 
+			controls_state = 603 
+			controls_state = 601 
+			controls_state = 605 
+			controls_state = 788 
+		
+		}
+	
+	}
+	
+	mean_time_to_happen = { days = 50 }
+	
+	option = {#AOG 
+	
+		trigger = {
+		
+			AOG = {
+				
+				OR = {
+				
+					is_in_faction_with = ROOT 
+					
+					
+					is_puppet_of = ROOT 
+				
+				}
+			
+			}
+		
+		}
+		
+		name = annex.88.a 
+		ai_chance = { factor = 80 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = YUN 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			AOG = { transfer_state = PREV }
+		
+		}
+	
+	}
+	
+	option = {#CHI 
+	
+		trigger = {
+		
+			CHI = {
+				
+				OR = {
+				
+					is_in_faction_with = ROOT 
+					
+					
+					is_puppet_of = ROOT 
+				
+				}
+			
+			}
+		
+		}
+		
+		name = annex.88.b
+		ai_chance = { factor = 80 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = YUN 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			CHI = { transfer_state = PREV }
+		
+		}
+	
+	}
+	
+	option = {#QIE 
+	
+		trigger = {
+		
+			QIE = {
+				
+				OR = {
+				
+					is_in_faction_with = ROOT 
+					
+					
+					is_puppet_of = ROOT 
+					
+					has_opinion = { target = ROOT value > 99 }
+				
+				}
+			
+			}
+		
+		}
+		
+		name = annex.88.c
+		ai_chance = { factor = 80 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = YUN 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			QIE = { transfer_state = PREV }
+		
+		}
+	
+	}
+	
+	option = {#Colony 
+	
+		name = annex.88.e 
+		ai_chance = { factor = 10 }
+		
+		set_country_flag = YUN_COL
+		
+		add_political_power = -100 
+	
+	}
+	
+	option = {#YUN 
+	
+		name = annex.88.f 
+		ai_chance = { factor = 10 }
+		
+		add_political_power = 100 
+		
+			every_state = {
+		
+			limit = {
+			
+				is_core_of = YUN 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			YUN = { transfer_state = PREV }
+		
+		}
+		
+		puppet = YUN 
+	
+	}
+
+}
+
+
+country_event = {#Partition of Switzerland
+
+	id = annex.89 
+	title = annex.89.t 
+	desc = annex.89.d 
+	
+	
+	
+	trigger = {
+	
+		tag = GER 
+		
+		SWI = { exists = no }
+		
+		controls_state = 760 
+		controls_state = 3 
+		controls_state = 151 
+		controls_state = 761 
+		
+		NOT = {
+		
+			has_war_with = FRA 
+			has_war_with = FRP 
+			has_war_with = NFA 
+			has_war_with = ITA 
+			has_war_with = SRI 
+			has_war_with = AUS 
+			has_war_with = AHE 
+			
+			has_country_flag = SWI_CONQ
+		
+		}
+	
+	}
+	
+	mean_time_to_happen = { days = 30 }
+	
+	option = {#annex all 
+	
+		name = annex.89.a 
+		ai_chance = { factor = 5 }
+		
+		add_state_claim = 760 
+		add_state_claim = 3 
+		add_state_claim = 151 
+		add_state_claim = 761 
+		
+		country_event = { id = annex.90 days = 360 }
+		
+	}
+	
+	option = {#annex german 
+	
+		name = annex.89.b 
+		ai_chance = { factor = 35 }
+		
+		add_state_claim = 3 
+		add_state_claim = 761 
+		
+		SWI = {
+		
+			remove_state_core = 3 
+			remove_state_core = 151 
+		
+		}
+		
+		every_state = {
+        
+            limit = {
+            
+                is_core_of = SWI 
+                is_controlled_by = ROOT 
+                
+                
+            }
+        
+        SWI = { transfer_state = PREV }
+        
+        }
+		
+		puppet = SWI 
+		
+		SWI = {
+		
+			add_state_core = 3 
+			add_state_core = 151 
+		
+		}
+		
+		country_event = { id = annex.90 days = 360 }
+		country_event = { id = annex.91 }
+	
+	}
+	
+	option = {#propose partition 
+	
+		trigger = {
+		
+			AND = {
+					OR = {
+					
+						AND  = {
+						
+							NFA = { 
+							
+								exists = yes
+								
+								controls_state = 17
+
+							}
+							
+							NOT = { has_war_with = NFA }
+						
+						}
+						
+						AND  = {
+						
+							FRP = { 
+							
+								exists = yes
+								
+								controls_state = 17
+
+							}
+							
+							NOT = { has_war_with = FRP }
+						
+						}
+					
+					}
+					
+					AND  = {
+						
+							ITA = { 
+							
+								exists = yes
+								
+								OR = {
+								
+								controls_state = 735
+								controls_state = 158 
+								controls_state = 159 
+									
+								}
+								
+							}
+							
+							NOT = { has_war_with = ITA }
+						
+						}
+				
+				}
+		
+		}
+		
+		name = annex.89.e
+		ai_chance = { factor = 40 }
+		
+		
+		add_state_claim = 3 
+		add_state_claim = 761
+		
+		country_event = { id = annex.90 days = 360 } 
+		
+		if = { 
+		
+			limit = { FRP = { exists = yes controls_state = 17 } } FRP = { country_event = { id = annex.96 days = 1 } } 
+		
+		}
+		
+		if = { 
+		
+			limit = { NFA = { exists = yes controls_state = 17 } } NFA = { country_event = { id = annex.96 days = 1 } } 
+		
+		}
+		
+		ITA = { country_event = { id = annex.92 days = 1 } }
+		
+	}
+	
+	option = {#unified swi 
+	
+		name = annex.89.c 
+		ai_chance = { factor = 20 }
+		
+		every_state = {
+        
+            limit = {
+            
+                is_core_of = SWI 
+                is_controlled_by = ROOT 
+                
+                
+            }
+        
+        SWI = { transfer_state = PREV }
+        
+        }
+		
+		puppet = SWI 
+	
+	}
+
+}
+
+country_event = {#German Switzerland under our control
+
+	id = annex.90 
+	title = annex.90.t 
+	desc = annex.90.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#great 
+	
+		name = annex.90.a 
+		
+		add_state_core = 3 
+		add_state_core = 151 
+	
+	}
+
+}
+
+country_event = {#Independence of Switzerland
+
+	id = annex.91
+	title = annex.91.t 
+	desc = annex.91.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#ally
+	
+		name = annex.91.a 
+		ai_chance = { factor = 60 }
+		
+		end_puppet = SWI 
+		
+		add_to_faction = SWI 
+		
+		add_political_power = 20 
+	
+	}
+	
+	option = {#puppet 
+	
+		name = annex.91.b 
+		ai_chance = { factor = 40 }
+		
+		puppet = SWI 
+		
+		add_political_power = -20 
+	
+	}
+
+}
+
+country_event = {#Partition of Switzerland ITA 
+
+	id = annex.92 
+	title = annex.92.t 
+	desc = annex.92.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#accept 
+	
+		name = annex.92.a 
+		ai_chance = { factor = 99 }
+		
+		add_political_power = 20 
+		
+		add_state_claim = 761 
+		
+		country_event = { id = annex.94 days = 360 }
+		
+		GER = { country_event = { id = annex.93 days = 1 } }
+	
+	}
+	
+	option = {#decline 
+	
+		name = annex.92.b 
+		ai_chance = { factor = 1 }
+		
+		add_political_power = -20 
+		
+		GER = { country_event = { id = annex.95 days = 1	} }
+	
+	}
+
+}
+
+country_event = {#Italy accepts
+
+	id = annex.93 
+	title = annex.93.t 
+	desc = annex.93.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.93.a 
+		
+		add_political_power = 20 
+		
+		ITA = { transfer_state = 761 }
+	
+	}
+
+}
+
+country_event = {#Italian Switzerland under our control
+
+	id = annex.94 
+	title = annex.94.t 
+	desc = annex.94.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.94.a 
+		
+		add_state_core = 761 
+		
+		add_political_power = 40 
+	
+	}
+
+}
+
+country_event = {#Italy refuses 
+
+	id = annex.95 
+	title = annex.95.t 
+	desc = annex.95.d 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	
+		name = annex.95.a 
+		
+		add_political_power = -20 
+	
+	}
+
+}
+
+country_event = {#Partition of Switzerland france 
+
+	id = annex.96 
+	title = annex.92.t 
+	desc = annex.96.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#accept 
+	
+		name = annex.92.a 
+		ai_chance = { factor = 99 }
+		
+		add_political_power = 20 
+		
+		add_state_claim = 760 
+		
+		country_event = { id = annex.98 days = 360 }
+		
+		GER = { country_event = { id = annex.97 days = 1 } }
+	
+	}
+	
+	option = {#decline 
+	
+		name = annex.92.b 
+		ai_chance = { factor = 1 }
+		
+		add_political_power = -20 
+		
+		GER = { country_event = { id = annex.9? days = 1	} }
+	
+	}
+
+}
+
+country_event = {#France accepts
+
+	id = annex.97 
+	title = annex.97.t 
+	desc = annex.97.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.93.a 
+		
+		add_political_power = 20 
+		
+		FROM = { transfer_state = 760 }
+	
+	}
+
+}
+
+country_event = {#French Switzerland under our control
+
+	id = annex.98 
+	title = annex.98.t 
+	desc = annex.98.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.94.a 
+		
+		add_state_core = 760 
+		
+		add_political_power = 40 
+	
+	}
+
+}
+
+country_event = {#france refuses 
+
+	id = annex.99 
+	title = annex.99.t 
+	desc = annex.99.d 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	
+		name = annex.95.a 
+		
+		add_political_power = -20 
+	
+	}
+
+}

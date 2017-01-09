@@ -3,9 +3,26 @@
 ###########################
 
 add_namespace = burma
-# 182008 - The Proclamation of the Burmese Republic # BUR-PRK alliance
-# 182009 - The Proclamation of the Burmese Republic # Burma is annexed by PRK
 
+country_event = { # Introduction
+	id = burma.0
+	title = burma.0.t
+	desc = burma.0.d
+	picture = GFX_report_event_BUR_army
+	
+	trigger = {
+		tag = BUR
+        		date > 1936.01.01
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = burma.0.a
+	}
+}	
 ##########################
 # Burmese Riots 1936
 ##########################
@@ -218,21 +235,98 @@ country_event = { # 182007 - The Proclamation of the Burmese Republic #
 	is_triggered_only = yes
 
 	option = {
-		name = burma.7.a # Joining International
+		name = burma.6.a # Joining International
 		ai_chance = { factor = 64 }
 		BUR = { add_political_power = 100 } # -5 dissent
-		# BUR = { country_event = { id = burma.7 days = 4 } }
+		BUR = { country_event = { id = burma.7 days = 4 } }
 	}
 	option = {
-		name = burma.7.b # Joining Bharitya Commune
+		name = burma.6.b # Joining Bharitya Commune
 		ai_chance = { factor = 35 }
 		BUR = { add_political_power = -100 } # 5 dissent
-		# BUR = { country_event = { id = burma.8 days = 4 } }
+		BUR = { country_event = { id = burma.8 days = 4 } }
 	}
 	option = {
-		name = burma.7.c # Isolation
+		name = burma.6.c # Isolation
 		ai_chance = { factor = 1 }
 		BUR = { add_political_power = 300 } # -15 dissent
-		# command = { type = set_domestic which = interventionism value = -9 }
+	}
+}
+country_event = { # 182008 - The Proclamation of the Burmese Republic # BUR-PRK alliance
+	id = burma.7
+	title = burma.7.t
+	desc = burma.7.d
+	picture = GFX_report_event_BUR_coup
+
+	is_triggered_only = yes
+
+	option = {
+		name = burma.7.a # Accept the Proposal
+		ai_chance = { factor = 99 }
+		BUR = { add_political_power = 20 } # -1 dissent
+		add_opinion_modifier = { target = BHC modifier = PHL_syndie_friendship } # 200
+		if = { 
+			limit = { BHC = { is_in_faction = no } }
+			BHC = {
+				create_faction = "syndicalist_asia"
+				add_to_faction = BUR
+			}
+		}
+		if = { 
+			limit = { BHC = { is_in_faction = yes } }
+			BHC = { add_to_faction = BUR }
+		}
+	}
+	option = {
+		name = burma.7.b # Nope
+		ai_chance = { factor = 1 }
+		BUR = { add_political_power = -100 } # 5 dissent
+	}
+}
+country_event = { # 182009 - The Proclamation of the Burmese Republic # Burma is annexed by PRK
+	id = burma.8
+	title = burma.8.t
+	desc = burma.8.d
+	picture = GFX_report_event_BUR_coup
+
+	is_triggered_only = yes
+
+	option = {
+		name = burma.8.a # Annex
+		ai_chance = { factor = 89 }
+		BUR = { add_political_power = -160 } # 8 dissent
+		BHC = {
+			add_state_core = 288 # Yangon
+			add_state_core = 640 # Mandalay
+			transfer_state = 288
+			transfer_state = 640
+		}
+		if = { 
+			limit = { BUR = { is_ai = no } }
+			BHC = { change_tag_from = BUR }
+		}
+	}
+	option = {
+		name = burma.8.b # Puppet
+		ai_chance = { factor = 10 }
+		add_opinion_modifier = { target = BHC modifier = PHL_syndie_friendship } # 200
+		BUR = { add_political_power = 20 } # -1 dissent
+		if = { 
+			limit = { BHC = { is_in_faction = no } }
+			BHC = {
+				create_faction = "syndicalist_asia"
+				add_to_faction = BUR
+			}
+		}
+		if = { 
+			limit = { BHC = { is_in_faction = yes } }
+			BHC = { add_to_faction = BUR }
+		}
+		BHC = { puppet = BUR }
+	}
+	option = {
+		name = burma.8.c # Nope
+		ai_chance = { factor = 1 }
+		BUR = { add_political_power = -100 } # 5 dissent
 	}
 }

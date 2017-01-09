@@ -9626,3 +9626,106 @@ country_event = {#france refuses
 	}
 
 }
+
+country_event = {#Fate of the Hashemite Arabia
+
+	id = annex.100 
+	title = annex.100.t 
+	desc = annex.100.d 
+	
+	trigger = {
+	
+		tag = OTT 
+		
+		SAU = { exists = no }
+		LEB = { exists = no }
+		SYR = { exists = no }
+		IRQ = { exists = no }
+		ISR = { exists = no }
+		PAL = { exists = no }
+		
+		NOT = {
+		
+			has_war_with = PER 
+			has_war_with = OMA 
+			has_war_with = YEM	
+			
+			has_country_flag = ARA_CONQ 
+		
+		}
+		
+		controls_state = 679 
+	
+	}
+	
+	mean_time_to_happen = { days = 25 }
+	
+	option = {#integrate
+	
+		name = annex.100.a 
+		ai_chance = { factor = 5 }
+		
+		set_country_flag = ARA_CONQ 
+		
+		add_political_power = -100
+	
+	}
+	
+	option = {#Saudies 
+	
+		name = annex.100.b 
+		ai_chance = { factor = 95 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = SAU 
+				is_controlled_by = ROOT 
+			
+			}
+		
+			SAU = { transfer_state = PREV }
+		
+		}
+		
+		puppet = SAU 
+		
+		SAU = { country_event = { id = annex.101 } }
+	
+	}
+
+}
+
+country_event = {#Independent Saudi Arabia
+
+	id = annex.101 
+	title = annex.101.t 
+	desc = annex.101.d 
+	
+	is_triggered_only = yes 
+	
+	option = {
+	
+		name = annex.101.a 
+		
+		SAU = {
+			create_country_leader = {
+			name = "Abdul Aziz al Saudi"
+			desc = "POLITICS_Fryderyk_Krystian_Saski_DESC"
+			picture = "Friedrich_Christian_von_Wettin.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocratist_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = paternal_autocratist
+			elections_allowed = no
+		}
+		
+		set_cosmetic_tag = SAU_ARA	
+	
+	}
+
+}

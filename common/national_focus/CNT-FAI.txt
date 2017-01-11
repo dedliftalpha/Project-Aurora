@@ -23,7 +23,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			custom_effect_tooltip = CNT_election_success
+			custom_effect_tooltip = CNT_election_success_tooltip
 			add_political_power = 180
 			country_event = { id = cntd.1 }
 			set_country_flag = CNT_by_election
@@ -42,7 +42,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			custom_effect_tooltip = CNT_aftermath_of_civil_war
+			custom_effect_tooltip = CNT_aftermath_of_civil_war_tooltip
 			add_political_power = 200
 			country_event = { id = cntd.2 }
 			set_country_flag = CNT_by_war
@@ -113,6 +113,7 @@ focus = {
 		}
 		completion_reward = {
 			add_political_power = 200
+			add_national_unity = 0.20
 		}
 }
 
@@ -290,28 +291,36 @@ focus = {
 }
 
 focus = {
-		id = CNT_militia_1
+		id = CNT_militia
 		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = CNT_industrial }
 		prerequisite = { focus = CNT_military }
 		x = 8
 		y = 3
 		cost = 10
+		completion_reward = {
+			add_ideas = CNT_militia
+		}
 }
 	
 focus = {
-		id = CNT_militia_2
-		prerequisite = { focus = CNT_militia_1 }
+		id = CNT_radio
+		prerequisite = { focus = CNT_militia }
 		icon = GFX_goal_generic_radar
 		x = 8
 		y = 4
 		cost = 10
+		completion_reward = {
+			custom_effect_tooltip =  CNT_radio_tooltip
+			add_ideas = CNT_radio
+			add_research_slot = 1
+		}
 }
 	
 focus = {
-		id = CNT_militia_3
+		id = CNT_propaganda
 		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = CNT_militia_2 }
+		prerequisite = { focus = CNT_radio }
 		x = 8
 		y = 5
 		cost = 10
@@ -320,10 +329,13 @@ focus = {
 focus = {
 		id = CNT_schools
 		icon = GFX_focus_research
-		prerequisite = { focus = CNT_militia_3 }
+		prerequisite = { focus = CNT_propaganda }
 		x = 8
 		y = 6
 		cost = 10
+		completion_reward = {
+			add_research_slot = 1
+		}
 }
 
 ### Military Reforms
@@ -474,11 +486,7 @@ focus = {
 		y = 6
 		cost = 10
 		completion_reward = {
-			add_tech_bonus = {
-				name = doctrine_bonus
-				bonus = 0.5
-				uses = 3
-			}
+			add_ideas = CNT_army_innovations
 		}
 }
 

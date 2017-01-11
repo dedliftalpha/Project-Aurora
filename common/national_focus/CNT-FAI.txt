@@ -324,6 +324,9 @@ focus = {
 		x = 8
 		y = 5
 		cost = 10
+		completion_reward = {
+			add_ideas = CNT_propaganda
+		}
 }
 	
 focus = {
@@ -359,6 +362,7 @@ focus = {
 		id = CNT_standing_army
 		icon = GFX_goal_generic_build_tank
 		prerequisite = { focus = CNT_military }
+		mutually_exclusive = { focus = CNT_mobile_army }
 		x = 10
 		y = 3
 		cost = 10
@@ -378,7 +382,10 @@ focus = {
 focus = {
 		id = CNT_infantry_weapons
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = CNT_standing_army }
+		prerequisite = {
+			focus = CNT_standing_army
+			focus = CNT_mobile_army
+		}
 		x = 10
 		y = 4
 		cost = 10
@@ -419,6 +426,7 @@ focus = {
 		id = CNT_mobile_army
 		icon = GFX_goal_generic_production2
 		prerequisite = { focus = CNT_military }
+		mutually_exclusive = { focus = CNT_standing_army }
 		x = 12
 		y = 3
 		cost = 10
@@ -438,7 +446,10 @@ focus = {
 focus = {
 		id = CNT_motorisation
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CNT_mobile_army }
+		prerequisite = {
+			focus = CNT_standing_army
+			focus = CNT_mobile_army
+		}
 		x = 12
 		y = 4
 		cost = 10
@@ -550,6 +561,14 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_political_power = 200
+			declare_war_on = {
+				target = POR
+				type = annex_everything
+			}
+			POR = {
+				start_civil_war = {
+				ideology = radical_socialist
+				size = 0.5
+			}
 		}
 }

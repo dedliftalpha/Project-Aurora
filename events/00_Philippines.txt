@@ -4,6 +4,25 @@
 
 add_namespace = phil
 
+country_event = { # Introduction
+	id = phil.0
+	title = phil.0.t
+	desc = phil.0.d
+	# picture = GFX_
+	
+	trigger = {
+		tag = PHL
+        		date > 1936.01.01
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = phil.0.a
+	}
+}
 country_event = { # Syndicalist uprising in Manilla - 37990001
 	id = phil.1
 	title = phil.1.t
@@ -1962,7 +1981,7 @@ country_event = { # Syndicalism in East Asia - 37990069
 country_event = { # An alliance with the Philippines? - 37990070
 	id = phil.70
 	title = phil.70.t
-	desc = phil.70d
+	desc = phil.70.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	is_triggered_only = yes
@@ -2001,9 +2020,16 @@ country_event = { # An alliance in syndicalist Asia?? - 37990701
 		PHL = { add_political_power = -20 } # 1 dissent
 		hidden_effect = { BHC = { country_event = { id = phil.71 } } }
 		add_opinion_modifier = { target = BHC modifier = PHL_syndie_friendship } # 200
-		BHC = {
-			create_faction = "syndicalist_asia"
-			add_to_faction = PHL
+		if = { 
+			limit = { BHC = { is_in_faction = no } }
+			BHC = {
+				create_faction = "syndicalist_asia"
+				add_to_faction = PHL
+			}
+		}
+		if = { 
+			limit = { BHC = { is_in_faction = yes } }
+			BHC = { add_to_faction = PHL }
 		}
 	}
 }

@@ -10,6 +10,8 @@ focus_tree = {
 	}
 
 	default = no
+	
+	continuous_focus_position = { x = 50 y = 1000 }
 
 focus = {
 		id = ITA_Industrialisation
@@ -822,7 +824,7 @@ focus = {
 		id = ITA_Demilitarise_Venice
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = ITA_Publish_new_encyclical }
-		x = 27
+		x = 16
 		y = 2
 		cost = 10
 		
@@ -1507,7 +1509,7 @@ focus = {
 		icon = GFX_goal_anschluss
 		mutually_exclusive = { focus = ITA_join_austria }
 		mutually_exclusive = { focus = ITA_join_canada }
-		x = 11
+		x = 13
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
@@ -1526,7 +1528,7 @@ focus = {
 		icon = GFX_goal_anschluss
 		mutually_exclusive = { focus = ITA_join_germany }
 		mutually_exclusive = { focus = ITA_join_canada }
-		x = 13
+		x = 15
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
@@ -1548,7 +1550,7 @@ focus = {
 		icon = GFX_goal_anschluss
 		mutually_exclusive = { focus = ITA_join_germany }
 		mutually_exclusive = { focus = ITA_join_austria }
-		x = 9
+		x = 11
 		y = 4
 		cost = 10
         prerequisite = { focus = ITA_interventionism }
@@ -1692,6 +1694,32 @@ focus = {
 		add_ideas = Deterrence }
 		
 }		
+
+focus = {
+		id = ITA_Initiate_Risoregimento
+		icon = GFX_goal_generic_alliance
+		available = { 
+		country_exists = SRI
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.01
+				SRI = { is_in_faction_with = FRA }
+			}			
+			
+		}
+		x = 38
+		y = 2
+		cost = 10
+		prerequisite = { focus = ITA_Publish_new_encyclical }
+		available_if_capitulated = yes
+		completion_reward = { 
+		ITA = { create_wargoal = {
+ 				type = annex_everything
+ 				target = SRI }
+		add_named_threat = { threat = 3 name = ITA_irredentism }
+}}}	
 	
 focus = {
 		id = ITA_Anti-Militarism
@@ -1749,8 +1777,7 @@ focus = {
 		completion_reward = {
 		ITA = { create_wargoal = {
  				type = annex_everything
- 				target = LYB
- 				generator = { 160 } }
+ 				target = LYB }
 			
 			}}}			
 
@@ -2066,8 +2093,8 @@ focus = {
 		id = ITA_NAV_effort
 		icon = GFX_goal_generic_air_naval_bomber
 		prerequisite = { focus = ITA_aviation_effort_2 }
-		prerequisite = { focus = ITA_flexible_navy }
-		prerequisite = { focus = ITA_large_navy }
+		prerequisite = { focus = ITA_flexible_navy 
+                    	 focus = ITA_large_navy }
 		x = 48
 		y = 3
 		cost = 10
@@ -2298,7 +2325,7 @@ focus = {
 				name = ss_bonus
 				bonus = 0.5
 				ahead_reduction = 1
-				uses = 1
+				uses = 2
 				technology = early_submarine
 				technology = basic_submarine
 				technology = improved_submarine

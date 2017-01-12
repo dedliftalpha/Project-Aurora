@@ -9720,13 +9720,260 @@ country_event = {#Independent Saudi Arabia
 			ideology = paternal_autocratist_subtype
 			traits = {
 			}
-		}
+		}	
 		set_politics = {
 			ruling_party = paternal_autocratist
 			elections_allowed = no
 		}
 		
 		set_cosmetic_tag = SAU_ARA	
+	
+	}
+
+}
+
+country_event = {#Fate of France - CAR 
+
+	id = annex.102 
+	title = annex.102.t 
+	desc = annex.102.d 
+	
+	trigger = {
+	
+		tag = CAR 
+		
+		FRA = { exists = no }
+		
+		NOT = {
+		
+			has_war_with = POR 
+			has_war_with = BRT
+			has_war_with = NRM
+			has_war_with = OCC
+			has_war_with = GER 
+			
+			is_in_faction_with = NFA 
+			
+			is_puppet_of = NFA 
+			
+			has_country_flag = FRA_CONQ
+		
+		}
+		
+		OR = {
+		
+			controls_state = 21 
+			controls_state = 31 
+			controls_state = 16 
+		
+		}
+	
+	}
+	
+	mean_time_to_happen = { days = 25 }
+	
+	option = {#deal with NFA 
+	
+		trigger = {
+		
+			NFA = { exists = yes }
+			
+			NFA = {	is_puppet = no }
+			
+			NOT = {
+			
+				has_war_with = NFA 
+				
+				has_country_flag = offered_nfa
+			
+			}
+			
+			NFA = {
+			
+				NOT = {
+				
+					has_war_with = RUS 
+				
+				}
+			
+			}
+		
+		}
+		
+		name = annex.102.a 
+		ai_chance = { factor = 80 }
+
+		add_political_power = 100 
+		
+		NFA = { country_event = { id = annex.103 days = 1 } }
+		
+		set_country_flag = offered_nfa
+		
+	}
+	
+	option = {#FRP 
+	
+		trigger = {
+		
+			NFP = { exists = no }
+		
+		}
+		
+		name = annex.102.b 
+		ai_chance = { factor = 20 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = FRP 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			FRP = { transfer_state = PREV }
+		
+		}
+		
+		puppet = FRP 
+		
+		add_political_power = 100 
+		
+		country_event = { id = annex.106 days = 15 }
+	
+	}
+	
+	option = {#Occitana 
+	
+		trigger = {
+		
+			OCC = { exists = no }
+		
+		}
+		
+		name = annex.102.c 
+		ai_chance = { factor = 20 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = OCC 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			OCC = { transfer_state = PREV }
+		
+		}
+		
+		puppet = OCC 
+		
+		add_political_power = 100 
+		
+		country_event = { id = annex.105 days = 15 }
+	
+	}
+	
+	option = {#occupation
+	
+		name = annex.102.e 
+		ai_chance = { factor = 1 }
+		
+		reverse_add_opinion_modifier = { target = NFA modifier = occupied_france }
+		
+		set_country_flag = FRA_CONQ 
+		
+		add_political_power = -200 
+	
+	}
+
+}
+
+country_event = {#Carlists offer France!
+
+	id = annex.103
+	title = annex.103.t 
+	desc = annex.103.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#accept 
+	
+		name = annex.103.a 
+		ai_chance = { factor = 85 }
+		
+		remove_from_faction = ROOT 
+		
+		reverse_add_opinion_modifier = { target = CAN modifier = abandoned_entante }
+		
+		FROM = { country_event = { id = annex.104 days = 1 } }
+	
+	}
+	
+	option = {#refuse 
+	
+		name = annex.103.b 
+		ai_chance = { factor = 15 }
+		
+		add_political_power = -60 
+		
+	
+	}
+
+}
+
+
+country_event = {#National France accepts our offer!
+
+	id = annex.104 
+	title = annex.104.t 
+	desc = annex.104.d 
+	
+	is_triggered_only = yes 
+	
+	option = {#
+	
+		name = annex.104.a 
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = FRP 
+				is_controlled_by = ROOT 
+			
+			}
+			
+			NFA = { transfer_state = PREV }
+		
+		}
+		
+		add_to_faction = NFA 
+		
+		add_political_power = 100 
+	
+	}
+
+}
+
+country_event = {#Choosing the new Head of State of Occitania
+
+	id = annex.105 
+	title = annex.105.t 
+	desc = annex.105.d 
+	
+	is_triggered_only = yes 
+	
+	
+	option = {#Bourbon-Parma
+	
+		name = annex.105.a 
+		ai_chance = { factor = 90 }
+		
+		reverse_add_opinion_modifier = { target = OCC modifier = forced_king }
+		
+		add_political_power = 20 
 	
 	}
 

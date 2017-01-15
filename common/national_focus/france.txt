@@ -836,7 +836,7 @@ focus = {
 
 			completion_reward = {
 
-						17 = {
+		17 = {
 			add_building_construction = {
 				type = bunker
 				province = 698
@@ -1766,7 +1766,7 @@ focus = {
 		id = FRA_mission_bhartiya
 		icon = GFX_goal_generic_allies_build_infantry
         prerequisite = { focus = FRA_Host_the_Internationale }
-		available = { has_country_flag = FRA_mission_bharitya_flag }
+		available = { has_country_flag = FRA_mission_bharitya_flag country_exists = BHC BHC = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
 		x = 32
 		y = 1
 		cost = 4
@@ -1815,7 +1815,7 @@ focus = {
 		id = FRA_help_cnt
 		icon = GFX_goal_generic_improve_relations
         prerequisite = { focus = FRA_Host_the_Internationale }
-		available = { always = no has_country_flag = FRA_support_cnt } #No civil war, no need
+		available = { CNT = { OR = { has_war_with = SPR has_war_with = CAR } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } has_country_flag = FRA_support_cnt }
 		x = 40
 		y = 1
 		cost = 1
@@ -1823,7 +1823,10 @@ focus = {
 			factor = 100
 		}
         completion_reward = {
-		
+		set_global_flag = FRA_CNT_intervention
+		CNT = { country_event = { id = comfrance.124 } }
+		add_manpower = -10000
+		send_equipment = { target = CNT type = infantry_equipment amount = 1000 }
 		}
 }
 
@@ -1832,12 +1835,13 @@ focus = {
 		icon = GFX_goal_syndicalism
         prerequisite = { focus = FRA_Host_the_Internationale }
 		available = { always = no }
+		bypass = { has_global_flag = inauguration_second_congress }
 		x = 36
 		y = 2
 		cost = 10
         
         completion_reward = {
-		custom_effect_tooltip = FRA_wip
+		custom_effect_tooltip = FRA_will_get_bypassed_tooltip
 		}
 }
 
@@ -1845,7 +1849,8 @@ focus = {
 		id = FRA_help_south_america
 		icon = GFX_goal_generic_national_unity
         prerequisite = { focus = FRA_second_inter_congress }
-		available = { OR = { has_country_flag = FRA_help_bolivia has_country_flag = FRA_help_brazil } }
+		available = { OR = { AND = { country_exists = BOL BOL = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } has_country_flag = FRA_help_bolivia } 
+		AND = { country_exists = BRA BRA = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } has_country_flag = FRA_help_brazil } } }
 		x = 32
 		y = 3
 		cost = 4
@@ -1853,7 +1858,8 @@ focus = {
 			factor = 100
 		}
         completion_reward = {
-		custom_effect_tooltip = FRA_wip
+		if = { limit = { has_country_flag = FRA_help_brazil } BRA = { country_event = { id = comfrance.125 } } }
+		if = { limit = { has_country_flag = FRA_help_bolivia } BOL = { country_event = { id = comfrance.126 } } }
 		}
 }
 
@@ -1861,7 +1867,7 @@ focus = {
 		id = FRA_help_csa
 		icon = GFX_goal_generic_occupy_states_coastal
         prerequisite = { focus = FRA_second_inter_congress }
-		available = { has_country_flag = FRA_help_csa_flag }
+		available = { has_country_flag = FRA_help_csa_flag country_exists = CSA CSA = { AND = { OR = { has_war_with = USA has_war_with = TEX } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } }
 		x = 34
 		y = 3
 		cost = 2
@@ -1869,27 +1875,48 @@ focus = {
 			factor = 100
 		}
         completion_reward = {
-		custom_effect_tooltip = FRA_wip
+		CSA = { load_oob = CSA_NORM_ILLINOIS
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_controlled_by = ROOT
+					}				
+				
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = FRA } }
 		}
 }
 
 focus = {
 		id = FRA_scientific_cooperation
-		icon = GFX_goal_generic_scientific_exchange
+		icon = GFX_goal_tfv_generic_tech_sharing
         prerequisite = { focus = FRA_second_inter_congress }
-		available = { has_country_flag = FRA_scientific_coop_flag }
+		available = { has_country_flag = FRA_scientific_coop_flag country_exists = ENG ENG = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+		bypass = { has_completed_focus = FRA_Phalanstere_internationale NOT = { has_country_flag = FRA_scientific_coop_flag } }
 		x = 38
 		y = 3
 		cost = 10
         ai_will_do = {
-			factor = 10
+			factor = 100
 		}
         completion_reward = {
-		custom_effect_tooltip = FRA_wip
+		add_to_tech_sharing_group = phalanstere_research
+		set_global_flag = scientific_phalanstere
+		ENG = { country_event = { id = comfrance.127 } }
 		}
 }
 
-### lead to Phalanstere
+### leads to Phalanstere
 
 focus = {
 		id = FRA_third_inter_congress
@@ -2378,540 +2405,611 @@ focus = {
 focus = {
 id = FRA_Phalanstere_internationale
 icon = GFX_goal_generic_production
+
 prerequisite = { focus = FRA_second_inter_congress }
+
+available = { NOT = { has_war_with = ENG has_war_with = GER }
+ENG = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+}
+
 x = 40
 y = 3
 cost = 10
+
 ai_will_do = {
 			factor = 100
 		}
+		
 completion_reward = {
-add_tech_bonus = {
-name = construction_tech_bonus
-bonus = 0.5
-uses = 1
-category = construction_tech
+	add_tech_bonus = {
+		name = construction_tech_bonus
+		bonus = 0.5
+		uses = 1
+		category = construction_tech
+	}
+	ENG = { country_event = { id = comfrance.128 } }
+} 
+}
 
-} } }
+
 focus = {
 id = FRA_Develop_Georgia
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = GEO
+GEO = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 40
 y = 4
-cost = 5
+cost = 8
+
 ai_will_do = {
 			factor = 10
 		}
 
-bypass = {
-GEO = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-GEO = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
-
 completion_reward = {
-GEO = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	GEO = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = steel amount = 13 state = 231 }
 }
 
-
-}
-}
 }
 
 focus = {
 id = FRA_Develop_Bhartiyan_Commune
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = BHC
+BHC = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 42
 y = 4
 cost = 8
+
 ai_will_do = {
 			factor = 10
 		}
-bypass = {
-BHC = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-BHC = {
-add_opinion_modifier = { target = ENG modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
 
 completion_reward = {
-BHC = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	BHC = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = oil amount = 6 state = 432 }
+	add_resource = { type = steel amount = 11 state = 431 }
+	add_resource = { type = aluminium amount = 17 state = 426 }
 }
 
-
-}
-}
 }
 
 focus = {
 id = FRA_Develop_Spain
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = CNT
+CNT = { NOT = { has_war_with = FRA has_war_with = ENG has_war_with = CAR has_war_with = SPR } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 39
 y = 5
 cost = 10
+
 ai_will_do = {
 			factor = 100
 		}
-bypass = {
-CNT = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-CNT = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
 
 completion_reward = {
-CNT = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	CNT = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+			type = industrial_complex
+			level = 1
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = tungsten amount = 9 state = 170 }
 }
 
+}
 
-}
-}
-}
 focus = {
 id = FRA_Develop_South_America
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = BRA
+any_country = { OR = { tag = BRA tag = ARG tag = BOL tag = VEN tag = CHL tag = PRU tag = ECU tag = COL } NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 44
 y = 4
-cost = 8
+cost = 10
+
 ai_will_do = {
 			factor = 10
 		}
-bypass = {
-BRA = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-BRA = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
 
 completion_reward = {
-BRA = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	if = { limit = { BRA = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+	BRA = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+			type = industrial_complex
+			level = 1
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = steel amount = 13 state = 496 }
+	add_resource = { type = rubber amount = 19 state = 495 }
+	}
+	if = { limit = { BOL = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+	BOL = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = steel amount = 6 state = 302 }
+	}
+	every_country = {
+	limit = { OR = { tag = ARG tag = VEN tag = CHL tag = PRU tag = ECU tag = COL } NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
 }
 
+}
 
-}
-}
-}
 focus = {
 id = FRA_Develop_Central_america
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = MEX
+OR = { MEX = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+GUA = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+PNM = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 43
 y = 5
-cost = 8
+cost = 10
+
 ai_will_do = {
 			factor = 10
 		}
-bypass = {
-MEX = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-MEX = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
 
 completion_reward = {
-MEX = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
+if = { limit = { MEX = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+	MEX = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+			type = industrial_complex
+			level = 1
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = oil amount = 8 state = 479 }
 }
+if = { limit = { GUA = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+	GUA = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = chromium amount = 3 state = 313 }
 }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
+if = { limit = { PNM = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } }
+	PNM = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = oil amount = 4 state = 304 }
 }
-set_state_flag = ENG_uk_india_focus_2IC
 }
 
+}
 
-}
-}
-}
 focus = {
 id = FRA_Develop_Ukraine
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = UKR
+UKR = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 41
 y = 5
-cost = 6
+cost = 8
+
 ai_will_do = {
 			factor = 100
 		}
-bypass = {
-UKR = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-UKR = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
-}
 
 completion_reward = {
-UKR = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	UKR = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = steel amount = 21 state = 226 }
 }
 
+}
 
-}
-}
-}
 focus = {
 id = FRA_Develop_Italy
 prerequisite = { focus = FRA_Phalanstere_internationale }
+prerequisite = { focus = FRA_scientific_cooperation }
+
 available = {
-is_in_faction_with = SRI
+SRI = { NOT = { has_war_with = FRA has_war_with = ENG } OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 }
+
 icon = GFX_goal_generic_construct_civ_factory
 x = 38
 y = 4
 cost = 10
+
 ai_will_do = {
 			factor = 100
-		}
-bypass = {
-SRI = {
-custom_trigger_tooltip = {
-tooltip = construction_effort_tt
-all_owned_state = {
-free_building_slots = {
-building = industrial_complex
-size < 1
-include_locked = yes
-}
-}
-}
-}
-}
-
-complete_tooltip = {
-SRI = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_2IC }
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-}
-every_state = { limit = { has_state_flag = ENG_uk_india_focus_1IC }
-add_extra_state_shared_building_slots = 1
-add_building_construction = {
-type = industrial_complex
-level = 1
-instant_build = yes
-}
-}
-}
 }
 
 completion_reward = {
-SRI = {
-add_opinion_modifier = { target = FRA modifier = aided_industry }
-random_owned_state = {
-limit = {
-free_building_slots = {
-building = industrial_complex
-size > 1
-include_locked = yes
-}
-}
-add_extra_state_shared_building_slots = 2
-add_building_construction = {
-type = industrial_complex
-level = 2
-instant_build = yes
-}
-set_state_flag = ENG_uk_india_focus_2IC
+	SRI = {
+		add_opinion_modifier = { target = FRA modifier = FRA_aided_phalanstere }
+		add_opinion_modifier = { target = ENG modifier = FRA_aided_phalanstere }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		}
+		if = { limit = { has_global_flag = PHALANSTERE_ENG }
+		random_owned_state = {
+			limit = {
+				free_building_slots = {
+				building = industrial_complex
+				size > 1
+				include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+		} }
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		if = { limit = { has_global_flag = scientific_phalanstere } add_to_tech_sharing_group = phalanstere_research }
+	    THIS = { country_event = { id = comfrance.129 } }
+	}
+	add_resource = { type = aluminium amount = 14 state = 837 }
 }
 
+} #End of the focus
 
-}
-}
-}
-}
+} #End of the focus tree

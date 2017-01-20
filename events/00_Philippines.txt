@@ -57,7 +57,7 @@ country_event = { # Syndicalist uprising in Manilla - 37990001
 		ai_chance = { factor = 70 }
 		hidden_effect = {
 			news_event = { hours = 6 id = phil.83 }
-			PHL = { country_event = { id = phil.5 days = 1 } }
+			PHL = { news_event = { id = phil.5 days = 1 } }
 		}
 	}
 }
@@ -74,7 +74,7 @@ country_event = { # A counter-coup? - 37990002
 		ai_chance = { factor = 20 }
 		PHL = { add_political_power = -100 } # 5 dissent
 		hidden_effect = {
-			PHL = { country_event = { id = phil.3 days = 1 } }
+			PHL = { news_event = { id = phil.3 days = 1 } }
 		}
 	}
 	option = {
@@ -86,16 +86,16 @@ country_event = { # A counter-coup? - 37990002
 		}
 	}
 }
-country_event = { # II Himagsikang Pilipino - 37990003
+news_event = { # II Himagsikang Pilipino - 37990003
 	id = phil.3
 	title = phil.3.t
 	desc = phil.3.d
-	picture = GFX_report_event_PHL_manila_uprising2
+	picture = GFX_news_event_PHL_manila_uprising2
 
 	is_triggered_only = yes
+	major = yes
 
-	option = {
-		name = phil.3.a # Viva Rebolusyon!
+	immediate = { hidden_effect = {
 		set_global_flag = PHL_SOCIALIST
 		PHL = {
 			set_politics = {
@@ -140,6 +140,35 @@ country_event = { # II Himagsikang Pilipino - 37990003
 				PHL_Luis_Taruc_int_syn
 			}
 		}
+	}}
+
+	option = {
+		name = phil.3.a # Viva Rebolusyon!
+		trigger = { TAG = PHL }
+	}
+	option = {
+		name = phil.3.b # That's Worrying!
+		trigger = { 
+			NOT = { TAG = PHL }
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+	option = {
+		name = phil.3.c # Viva Rebolusyon!
+		trigger = { 
+			NOT = { TAG = PHL } 
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
 	}
 }
 country_event = { # The Revolution is Defeated - 37990004
@@ -155,6 +184,7 @@ country_event = { # The Revolution is Defeated - 37990004
 		ai_chance = { factor = 50 }
 		PHL = { add_political_power = 100 } # -5 dissent
 		set_global_flag = PHL_DEMOCRACY
+		hidden_effect = { PHL = { news_event = { id = phil.86 days = 1 } }}
 		PHL = {
         			add_popularity = {
             				ideology = social_democrat
@@ -179,6 +209,7 @@ country_event = { # The Revolution is Defeated - 37990004
 		ai_chance = { factor = 50 }
 		PHL = { add_political_power = -100 } # 5 dissent
 		set_global_flag = PHL_DICTATOR
+		hidden_effect = { PHL = { news_event = { id = phil.87 days = 1 } }}
 		PHL = {
 			set_politics = {
 				ruling_party = authoritarian_democrat
@@ -222,17 +253,16 @@ country_event = { # The Revolution is Defeated - 37990004
 		}	
 	}
 }
-country_event = { # Democracy prevails - 37990005
+news_event = { # Democracy prevails - 37990005
 	id = phil.5
 	title = phil.5.t
 	desc = phil.5.d
-	picture = GFX_report_event_PHL_manila_uprising2
+	picture = GFX_news_event_PHI_independence
 
 	is_triggered_only = yes
+	major = yes
 
-	option = {
-		name = phil.5.a # Great!
-		ai_chance = { factor = 100 }
+	immediate = { hidden_effect = {
 		set_global_flag = PHL_DEMOCRACY
 		PHL = {
         			add_popularity = {
@@ -251,6 +281,35 @@ country_event = { # Democracy prevails - 37990005
             				ideology = social_conservative
             				popularity = 0.04
         			}
+		}
+	} }
+
+	option = {
+		name = phil.5.a # Great!
+		trigger = { TAG = PHL }
+	}
+	option = {
+		name = phil.5.b # Another Victory of the Free World!
+		trigger = { 
+			NOT = { TAG = PHL }
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+	option = {
+		name = phil.5.c # Such a pity....
+		trigger = { 
+			NOT = { TAG = PHL } 
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
 		}
 	}
 }
@@ -2334,6 +2393,96 @@ country_event = { #Return to Normal Flag - hidden
 	immediate = { set_cosmetic_tag = PHL }
 	option = { name = phil.84.a }
 }
-########################################################################################################
+news_event = { #Syndicalist Uprising in Manilla (International News)
+	id = phil.83
+	title = phil.83.t
+	desc = phil.83.d
+	picture = GFX_news_event_PHL_manila_uprising
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = phil.83.a
+		trigger = { NOT = { TAG = PHL } }
+	}
+}
+news_event = { # Democracy prevails (Coup) - xxxxxxxxxx International News
+	id = phil.86
+	title = phil.4.t
+	desc = phil.5.d
+	picture = GFX_news_event_PHI_independence
+
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = phil.5.a # Great!
+		trigger = { TAG = PHL }
+	}
+	option = {
+		name = phil.5.b # Another Victory of the Free World!
+		trigger = { 
+			NOT = { TAG = PHL }
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+	option = {
+		name = phil.5.c # Such a pity....
+		trigger = { 
+			NOT = { TAG = PHL } 
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+}
+news_event = { # Military Takeover (Coup) - xxxxxxxxxx International News
+	id = phil.87
+	title = phil.4.t
+	desc = phil.87.d
+	picture = GFX_news_event_PHL_manila_uprising2
+
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = phil.87.a # Great!
+		trigger = { TAG = PHL }
+	}
+	option = {
+		name = phil.87.b # Another Victory of the Free World!
+		trigger = { 
+			NOT = { TAG = PHL }
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+	option = {
+		name = phil.87.c # Such a pity....
+		trigger = { 
+			NOT = { TAG = PHL } 
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+}
+####################################################################################
 
 

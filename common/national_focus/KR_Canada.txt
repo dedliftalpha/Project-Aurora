@@ -1186,11 +1186,13 @@ focus_tree = {
 		icon = GFX_goal_generic_position_armies
 		x = 7
 		y = 1
-		cost = 4
+		cost = 5
 		ai_will_do = {
 			factor = 20
 		}
+		available = { has_completed_focus = CAN_army_command }
 		prerequisite = { focus = CAN_kings_speech }
+		prerequisite = { focus = CAN_works }
 		completion_reward = {
 			country_event = { id =  canada.103 days = 1 }
 		}
@@ -1246,16 +1248,11 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = CAN_king_ed
-			NOT = { 
-				OR = {
-					has_government = totalist
-					has_government = radical_socialist
-					has_government = syndicalist
-					has_government = authoritarian_democrat
-					has_government = paternal_autocrat
-					has_government = social_conservative
-				}
-			}
+			OR = { has_country_flag = CAN_C7_pass
+			AND = { has_country_flag = CAN_C7_fail
+			OR = { has_country_flag = CAN_CONSERVATIVE
+			has_country_flag = CAN_PRIVY
+			} } }
 		}
 		completion_reward = {
 			#add_political_power = 150
@@ -1263,10 +1260,6 @@ focus_tree = {
 			set_country_flag = CAN_constitutional_monarchy
 			hidden_effect = { 
 				set_cosmetic_tag = CANCM
-				add_popularity = {
-					ideology = market_liberal
-					popularity = 0.20
-				}
 			}
 		}
 	}
@@ -1285,34 +1278,33 @@ focus_tree = {
 		available = {
 			has_country_flag = CAN_king_ed
 			has_country_flag = CAN_C7_fail
-			OR = {
-					has_government = paternal_autocrat
-					has_government = social_conservative
-			}
+			has_country_flag = CAN_ABSOLUTIST
 		}
 		completion_reward = {
-			hidden_effect = { remove_ideas_with_trait = head_of_government }
-			add_ideas = CAN_King_Edward_VIII_hog_pau
+			hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+        	remove_ideas_with_trait = foreign_minister
+        	remove_ideas_with_trait = economy_minister
+        	remove_ideas_with_trait = security_minister
+			}
+
+			add_ideas = {
+				CAN_King_Edward_VIII_hog_pau
+				CAN_Adrien_Arcand_for_pau
+				CAN_H_Harmsworth_Viscount_Rothermere_eco_pau
+				CAN_John_Hargrave_sec_pau
+			}
 			add_political_power = 150
 			set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
 			hidden_effect = { 
 				set_country_flag = CAN_PARLIAMENT_ABOLISHED
 				set_cosmetic_tag = CANK
-				retire_country_leader = yes
-				create_country_leader = {
-					name = "King Edward VIII"
-					desc = "EDWARD_DESC"
-					picture = "Portrait_Canada_King_Edward_VIII.tga"
-					expire = "1965.1.1"
-					ideology = paternal_autocrat_subtype
-					traits = {}
-				}
 				add_popularity = {
 					ideology = paternal_autocrat
 					popularity = 0.25
 				}
 			}
-			country_event = { days = 1 id = canada.205 }
+			country_event = { id = canada.205 }
 			custom_effect_tooltip = abolish_parliament_tt
 		}
 	}
@@ -1323,28 +1315,20 @@ focus_tree = {
 		prerequisite = { focus = CAN_abolish_parliament }
 		x = 6 
 		y = 3
-		cost = 6
+		cost = 10
 		ai_will_do = {
 			factor = 4
 		}
 		available = { 
 			has_country_flag = CAN_king_ed
-			not = { has_country_flag = ongoing_election }
-			has_country_flag = CAN_king_ed
 			has_country_flag = CAN_C7_fail
-			OR = {
-					has_government = paternal_autocrat
-					has_government = social_conservative
-			}
+			has_country_flag = CAN_ABSOLUTIST
 		}
 		completion_reward = {
 			#add_political_power = 150
 			custom_effect_tooltip = purge_opposition_tt
 			remove_ideas = CAN_divided_nation
 			hidden_effect = {
-				set_country_flag = social_liberal_banned
-				set_country_flag = market_liberal_banned
-				set_country_flag = social_democrat_banned
 				add_popularity = {
 					ideology = social_conservative
 					popularity = 0.10
@@ -1371,7 +1355,7 @@ focus_tree = {
 		prerequisite = { focus = CAN_constitutional_monarchy }
 		x = 8
 		y = 3
-		cost = 6
+		cost = 10
 		ai_will_do = {
 			factor = 4
 		}
@@ -1383,7 +1367,7 @@ focus_tree = {
 					limit = { has_government = market_liberal }
 					add_popularity = {
 					ideology = market_liberal
-					popularity = 0.30
+					popularity = 0.20
 					}
 					add_popularity = {
 					ideology = social_conservative
@@ -1398,14 +1382,10 @@ focus_tree = {
 					}
 					add_popularity = {
 					ideology = social_conservative
-					popularity = 0.30
+					popularity = 0.20
 					}
 				}
 				
-				add_popularity = {
-					ideology = social_conservative
-					popularity = -0.10
-				}
 				add_popularity = {
 					ideology = paternal_autocrat
 					popularity = -0.10
@@ -1449,7 +1429,7 @@ focus_tree = {
 			hidden_effect = {
 				if = {
 					limit = { has_idea = quebec_riots }
-					country_event = { days = 1 id = canada.32 }
+					country_event = { id = canada.32 }
 				}
 			}
 		}
@@ -2468,7 +2448,7 @@ focus_tree = {
 		y = 1
 		cost = 4 
 		ai_will_do = {
-			factor = 2
+			factor = 20
 			modifier = {
 				factor = 2 
 				OR = {

@@ -5020,10 +5020,260 @@ country_event = {	# Gulf of Persia
 }
 
 
+###############################################################################
+# Ottoman Domestic Events
+###############################################################################
 
-###############################################################################
-# Ottoman Domestic Policy
-###############################################################################
+### Sultan's Imperial Address
+#
+#country_event = {
+#	id = ott.85
+#	title = ott.85.t
+#	desc = ott.85.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = ott.85.a
+#
+#		add_political_power = 50
+#	}
+#
+#}
+#
+#### Dissolve the Parliament focus - intro event
+#
+#country_event = {
+#	id = ott.86
+#	title = ott.86.t
+#	desc = ott.86.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = ott.86.a
+#
+#		if = {
+#			limit = {
+#				has_political_power > 50
+#			}
+#			set_political_power = 0
+#			
+#			else = {
+#				add_political_power = -50
+#			}
+#		}
+#		set_country_flag = OTT_parliament_dissolved
+#		country_event = { id = ott.87 days = 5 }
+#	}
+#
+#}
+#
+## Shut down political parties?
+#
+#country_event = {
+#	id = ott.87
+#	title = ott.87.t
+#	desc = ott.87.d
+#	
+#	is_triggered_only = yes
+#
+#	mean_time_to_happen = {
+#		days = 1
+#	}
+#	
+#	option = {			# arrest political party leaders
+#		name = ott.87.a
+#
+#		ai_chance = { factor = 90 }
+#		add_political_power = -200
+#		# TODO - disable ministers or something?
+#		country_event = { id = ott.88 days = 5 }
+#	}
+#
+#	option = {			# allow them to exist
+#		name = ott.87.b
+#
+#		ai_chance = { factor = 10 }
+#		add_political_power = 20
+#		country_event = { id = ott.92 days = 10 }
+#	}
+#
+#}
+#
+## Protestors gather
+#
+#country_event = {
+#	id = ott.88
+#	title = ott.88.t
+#	desc = ott.88.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {			# arrest protestors
+#		name = ott.88.a
+#
+#		ai_chance = { factor = 55 }
+#		add_political_power = -100
+#		country_event = { id = ott.89 days = 2 }
+#	}
+#
+#	option = {			# do nothing
+#		name = ott.88.b
+#
+#		ai_chance = { factor = 45 }
+#		add_political_power = -20
+#		country_event = { id = ott.91 days = 5 }
+#	}
+#
+#}
+#
+## Galata massacre
+#
+#country_event = {
+#	id = ott.89
+#	title = ott.89.t
+#	desc = ott.89.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = ott.89.a
+#
+#		add_political_power = -150
+#		country_event = { id = ott.90 days = 3 }
+#	}
+#
+#}
+#
+## The New Reformers
+#
+#country_event = {
+#	id = ott.90
+#	title = ott.90.t
+#	desc = ott.90.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {			# What are you waiting for? Swear them in!
+#		name = ott.90.a
+#
+#		ai_chance = { factor = 80 }
+#		add_political_power = 120
+#		# TODO - appoint CUP government
+#		# TODO - fail and lock focus forever
+#		# TODO - add broken monarchy idea
+#	}
+#
+#	option = {			# Keep shooting people
+#		name = ott.90.b
+#
+#		ai_chance = { factor = 20 }
+#		add_political_power = -250	# stability goes down to 'disaster'
+#		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+#	}
+#
+#}
+#
+## Mob violence
+#
+#
+#country_event = {
+#	id = ott.91
+#	title = ott.91.t
+#	desc = ott.91.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {			# they entered hagia sophia with their shoes on! :DDDD
+#		name = ott.91.a
+#
+#		add_political_power = -20
+#		# no more bad events 
+#	}
+#
+#}
+#
+## Prince Sabahaddin Agitates!
+#
+#country_event = {
+#	id = ott.92
+#	title = ott.92.t
+#	desc = ott.92.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {				# Force him into exile!
+#		name = ott.92.a
+#
+#		ai_chance = { factor = 70 }
+#		add_political_power = -50
+#		country_event = { id = ott.93 days = 20 }
+#		# TODO - sleepminister sabahaddin
+#	}
+#
+#	option = {				# Let him agitate
+#		name = ott.92.b
+#
+#		ai_chance = { factor = 30 }
+#		add_political_power = -80
+#		country_event = { id = ott.93 days = 10 }
+#	}
+#
+#}
+#
+## Organized opposition 
+#
+#country_event = {
+#	id = ott.93
+#	title = ott.93.t
+#	desc = ott.93.d
+#	
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = ott.93.a
+#
+#		add_political_power = -100
+#		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+#		country_event = { id = ott.88 days = 5 }
+#	}
+#
+#}
+#
+## Protests calm down
+#
+#country_event = {
+#	id = ott.94
+#	title = ott.94.t
+#	desc = ott.94.d
+#	
+#	fire_only_once = yes
+#	
+#	trigger = {
+#		tag = OTT
+#		NOT = { has_completed_focus = OTT_dissolve_parliament }
+#		focus_progress = {
+#			focus = OTT_dissolve_parliament
+#			progress > 0.90
+#		}
+#	}
+#
+#	mean_time_to_happen = {
+#		days = 1
+#	}
+#	
+#	option = {			# we will have ordnung!
+#		name = ott.94.a
+#
+#		add_political_power = 50
+#	}
+#
+#}
+#
+#### Write new constitution focus
+#
+
 
 ### Arabian nationalism - reaction to Egyptian cores
 #suspend constitution

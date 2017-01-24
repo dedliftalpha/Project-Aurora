@@ -23,7 +23,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			custom_effect_tooltip = CNT_election_success
+			custom_effect_tooltip = CNT_election_success_tooltip
 			add_political_power = 180
 			country_event = { id = cntd.1 }
 			set_country_flag = CNT_by_election
@@ -42,7 +42,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			custom_effect_tooltip = CNT_aftermath_of_civil_war
+			custom_effect_tooltip = CNT_aftermath_of_civil_war_tooltip
 			add_political_power = 200
 			country_event = { id = cntd.2 }
 			set_country_flag = CNT_by_war
@@ -90,7 +90,8 @@ focus = {
 		id = CNT_oppress_opposition
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = CNT_domestic }
-		x = 1
+		mutually_exclusive = { focus = CNT_reconcile_opposition }
+		x = 0
 		y = 3
 		cost = 10
 		ai_will_do = {
@@ -102,10 +103,30 @@ focus = {
 }
 
 focus = {
+		id = CNT_reconcile_opposition
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = CNT_domestic }
+		mutually_exclusive = { focus = CNT_oppress_opposition }
+		x = 2
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_political_power = 200
+			add_national_unity = 0.20
+		}
+}
+
+focus = {
 		id = CNT_home_rule
 		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = CNT_domestic }
-		x = 2
+		prerequisite = {
+			focus = CNT_oppress_opposition
+			focus = CNT_reconcile_opposition
+		}
+		x = 1
 		y = 4
 		cost = 10
 		ai_will_do = {
@@ -113,6 +134,7 @@ focus = {
 		}
 		completion_reward = {
 			add_political_power = 200
+			add_national_unity = 0.20
 		}
 }
 
@@ -289,41 +311,119 @@ focus = {
 		}
 }
 
+#focus = {
+#		id = CNT_helping_hand_1
+#		icon = GFX_goal_generic_national_unity
+#		prerequisite = { focus = CNT_helping_hand }
+#		x = 4
+#		y = 7
+#		cost = 10
+#		ai_will_do = {
+#			factor = 100
+#		}
+#		completion_reward = {
+#			add_political_power = 200
+#			add_ideas = CNT_helping_hand
+#		}
+#}
+
+#focus = {
+#		id = CNT_helping_hand_2
+#		icon = GFX_goal_generic_national_unity
+#		prerequisite = { focus = CNT_helping_hand }
+#		x = 6
+#		y = 7
+#		cost = 10
+#		ai_will_do = {
+#			factor = 100
+#		}
+#		completion_reward = {
+#			add_political_power = 200
+#			add_ideas = CNT_helping_hand
+#		}
+#}
+
+#focus = {
+#		id = CNT_helping_hand_3
+#		icon = GFX_goal_generic_national_unity
+#		prerequisite = { focus = CNT_helping_hand_1 }
+#		x = 4
+#		y = 8
+#		cost = 10
+#		ai_will_do = {
+#			factor = 100
+#		}
+#		completion_reward = {
+#			add_political_power = 200
+#			add_ideas = CNT_helping_hand
+#		}
+#}
+
+#focus = {
+#		id = CNT_helping_hand_4
+#		icon = GFX_goal_generic_national_unity
+#		prerequisite = { focus = CNT_helping_hand_2 }
+#		x = 6
+#		y = 8
+#		cost = 10
+#		ai_will_do = {
+#			factor = 100
+#		}
+#		completion_reward = {
+#			add_political_power = 200
+#			add_ideas = CNT_helping_hand
+#		}
+#}
+
 focus = {
-		id = CNT_militia_1
+		id = CNT_militia
 		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = CNT_industrial }
 		prerequisite = { focus = CNT_military }
 		x = 8
 		y = 3
 		cost = 10
+		completion_reward = {
+			add_ideas = CNT_militia
+		}
 }
 	
 focus = {
-		id = CNT_militia_2
-		prerequisite = { focus = CNT_militia_1 }
+		id = CNT_radio
+		prerequisite = { focus = CNT_militia }
 		icon = GFX_goal_generic_radar
 		x = 8
 		y = 4
 		cost = 10
+		completion_reward = {
+			custom_effect_tooltip =  CNT_radio_tooltip
+			add_ideas = CNT_radio
+			add_research_slot = 1
+		}
 }
 	
 focus = {
-		id = CNT_militia_3
+		id = CNT_propaganda
 		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = CNT_militia_2 }
+		prerequisite = { focus = CNT_radio }
 		x = 8
 		y = 5
 		cost = 10
+		completion_reward = {
+			add_ideas = CNT_propaganda
+		}
 }
 	
 focus = {
 		id = CNT_schools
 		icon = GFX_focus_research
-		prerequisite = { focus = CNT_militia_3 }
+		prerequisite = { focus = CNT_propaganda }
 		x = 8
 		y = 6
 		cost = 10
+		completion_reward = {
+			add_research_slot = 1
+		}
 }
 
 ### Military Reforms
@@ -347,6 +447,7 @@ focus = {
 		id = CNT_standing_army
 		icon = GFX_goal_generic_build_tank
 		prerequisite = { focus = CNT_military }
+		mutually_exclusive = { focus = CNT_mobile_army }
 		x = 10
 		y = 3
 		cost = 10
@@ -366,7 +467,10 @@ focus = {
 focus = {
 		id = CNT_infantry_weapons
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = CNT_standing_army }
+		prerequisite = {
+			focus = CNT_standing_army
+			focus = CNT_mobile_army
+		}
 		x = 10
 		y = 4
 		cost = 10
@@ -407,6 +511,7 @@ focus = {
 		id = CNT_mobile_army
 		icon = GFX_goal_generic_production2
 		prerequisite = { focus = CNT_military }
+		mutually_exclusive = { focus = CNT_standing_army }
 		x = 12
 		y = 3
 		cost = 10
@@ -426,7 +531,10 @@ focus = {
 focus = {
 		id = CNT_motorisation
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CNT_mobile_army }
+		prerequisite = {
+			focus = CNT_standing_army
+			focus = CNT_mobile_army
+		}
 		x = 12
 		y = 4
 		cost = 10
@@ -474,11 +582,7 @@ focus = {
 		y = 6
 		cost = 10
 		completion_reward = {
-			add_tech_bonus = {
-				name = doctrine_bonus
-				bonus = 0.5
-				uses = 3
-			}
+			add_ideas = CNT_army_innovations
 		}
 }
 
@@ -502,15 +606,62 @@ focus = {
 focus = {
 		id = CNT_join_france
 		icon = GFX_goal_generic_alliance
+		available = {
+			FRA = { 
+				has_war_with = GER
+				is_faction_leader = yes
+			}
+		}
 		prerequisite = { focus = CNT_foreign }
+		x = 14
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			FRA = {
+				add_to_faction = CNT
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			}
+			declare_war_on = {
+				target = GER
+				type = annex_everything
+			}
+		}
+}
+
+focus = {
+		id = CNT_join_french_war
+		icon = GFX_goal_generic_major_war
+		available = {
+			FRA = { 
+				has_war_with = GER
+				is_faction_leader = yes
+			}
+		}
+		prerequisite = { focus = CNT_join_france }
 		x = 14
 		y = 4
 		cost = 10
 		ai_will_do = {
 			factor = 100
 		}
-		completion_reward = {
-			add_political_power = 200
+}
+
+focus = {
+		id = CNT_morocco
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		prerequisite = { focus = CNT_portugal }
+		x = 16
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 100
 		}
 }
 
@@ -518,13 +669,21 @@ focus = {
 		id = CNT_portugal
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = CNT_foreign }
-		x = 15
+		x = 16
 		y = 3
 		cost = 10
 		ai_will_do = {
 			factor = 100
 		}
 		completion_reward = {
-			add_political_power = 200
+			declare_war_on = {
+				target = POR
+				type = annex_everything
+			}
+			POR = {
+				start_civil_war = {
+				ideology = radical_socialist
+				size = 0.5
+			}
 		}
 }

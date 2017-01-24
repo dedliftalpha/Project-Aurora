@@ -15,6 +15,7 @@ country_event = {
 
 	trigger = {
 		tag = ROM
+		is_ai = no
 	}
 
 	mean_time_to_happen = {
@@ -36,7 +37,7 @@ country_event = {
 		tag = ROM
 		OR = {
 			has_government = national_populist
-			has_government = paternal_autocratist
+			has_government = paternal_autocrat
 		}
 		NOT = { country_exists = RRM }
 	}
@@ -141,13 +142,7 @@ news_event = {
 		days = 2
 	}
 
-	option = {
-		name = romania.4.a
-		trigger = {
-			tag = ROM
-		}
-		add_political_power = 20
-
+	immediate = {
 		hidden_effect = {
 			news_event = { days = 365 id = romania.5 }
 			news_event = { days = 730 id = romania.5 }
@@ -160,6 +155,12 @@ news_event = {
 			news_event = { days = 3285 id = romania.5 }
 			news_event = { days = 3650 id = romania.5 }
 		}
+	}
+
+	option = {
+		name = romania.4.a
+
+		add_political_power = 20
 	}
 }
 
@@ -174,9 +175,7 @@ news_event = {
 
 	option = {
 		name = romania.4.a
-		trigger = {
-			tag = ROM
-		}
+
 		add_political_power = 20
 	}
 }
@@ -244,6 +243,15 @@ country_event = {
 			 country_exists = RRM
 		}
 
+		# No civil war if Romania is a puppet
+		is_puppet = no
+
+		# Controls the base two provinces
+		AND = {
+			78 = { is_owned_by = ROM }
+			79 = { is_owned_by = ROM }
+		}
+
 		# If Bucharest Circle was not immediately purged, or if the country is unstable
 		OR = {
 			has_country_flag = bucharest_circle
@@ -256,7 +264,7 @@ country_event = {
 		# Only if the Iron Guard hasn't been ousted
 		OR = {
 			has_government = national_populist
-			has_government = paternal_autocratist
+			has_government = paternal_autocrat
 		}
 	}
 
@@ -273,7 +281,12 @@ country_event = {
 	}
 
 	immediate = {
-		hidden_effect = { ROM = { every_owned_state = { add_core_of = RRM } }	}
+		hidden_effect = {
+			every_state = {
+				limit = { is_core_of = ROM }
+				add_core_of = RRM
+			}
+		}
 	}
 
 	option = {
@@ -288,12 +301,12 @@ country_event = {
 			transfer_state = 79 # Moldova
 
 			if = {
-				limit = { 80 = { is_owned_by = ROM } }
+				limit = { 80 = { is_owned_and_controlled_by = ROM } }
 				transfer_state = 80 # Bucovina
 			}
 
 			if = {
-				limit = { 789 = { is_owned_by = ROM } }
+				limit = { 789 = { is_owned_and_controlled_by = ROM } }
 				transfer_state = 789 # East Transylvania
 			}
 
@@ -340,7 +353,7 @@ country_event {
 		RRM = {
 			declare_war_on = {
 				target = ROM
-				type = civil_war
+				type = annex_everything
 			}
 		}
 
@@ -1376,7 +1389,7 @@ country_event = {
 		# Set Sima as leader of the paternal autocratists
 		hidden_effect = {
 			set_party_name = {
-				ideology = paternal_autocratist
+				ideology = paternal_autocrat
 				name = ROM_totul_pentru_tara
 				long_name = ROM_totul_pentru_tara_long
 			}
@@ -1386,7 +1399,7 @@ country_event = {
 				desc = "POLITICS_HORIA_SIMA_DESC"
 				picture = "Portrait_Romania_Horia_Sima.tga"
 				expire = "1965.1.1"
-				ideology = paternal_autocratist_subtype
+				ideology = paternal_autocrat_subtype
 				traits = { }
 			}
 		}
@@ -1616,8 +1629,7 @@ country_event = {
 
 		declare_war_on = {
 			target = BUL
-			type = take_core_state
-			generator = { 77 }
+			type = annex_everything
 		}
 	}
 	option = {
@@ -1658,8 +1670,7 @@ country_event = {
 
 		declare_war_on = {
 			target = BUL
-			type = take_core_state
-			generator = { 77 }
+			type = annex_everything
 		}
 	}
 }
@@ -1769,8 +1780,7 @@ country_event = {
 
 		declare_war_on = {
 			target = BUL
-			type = take_core_state
-			generator = { 77 }
+			type = annex_everything
 		}
 	}
 }
@@ -2232,8 +2242,8 @@ country_event = {
 
 		ai_chance = { factor = 25 }
 
-	 	set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-		add_popularity = { ideology = authoritarian_democratist popularity = 0.4 }
+	 	set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.4 }
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RRM_Miron_Cristea_hog_ade
@@ -2257,8 +2267,8 @@ country_event = {
 
 		ai_chance = { factor = 40 }
 
-		set_politics = { ruling_party = social_conservatist elections_allowed = no }
-		add_popularity = { ideology = social_conservatist popularity = 0.05 } # just a small increase as they should be the ruling party already
+		set_politics = { ruling_party = social_conservative elections_allowed = no }
+		add_popularity = { ideology = social_conservative popularity = 0.05 } # just a small increase as they should be the ruling party already
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RRM_Gheorghe_Tatarescu_hog_sco # same as before
@@ -2269,8 +2279,8 @@ country_event = {
 		remove_ideas_with_trait = economy_minister
 		add_ideas = RRM_Constantin_Bratianu_eco_sco # same as before
 
-		remove_ideas_with_trait = intel_minister
-		add_ideas = RRM_Mihail_Moruzov_int_sco # same as before
+		remove_ideas_with_trait = security_minister
+		add_ideas = RRM_Mihail_Moruzov_sec_sco # same as before
 
 	}
 
@@ -2279,8 +2289,8 @@ country_event = {
 
 		ai_chance = { factor = 40 }
 
-		set_politics = { ruling_party = social_democratist elections_allowed = no }
-		add_popularity = { ideology = social_democratist popularity = 0.4 }
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		add_popularity = { ideology = social_democrat popularity = 0.4 }
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RRM_Iuliu_Maniu_hog_sde
@@ -2291,8 +2301,8 @@ country_event = {
 		remove_ideas_with_trait = economy_minister
 		add_ideas = RRM_Constantin_Bratianu_eco_sco # same as before
 
-		remove_ideas_with_trait = intel_minister
-		add_ideas = RRM_Istrate_Micescu_int_sco # same as before
+		remove_ideas_with_trait = security_minister
+		add_ideas = RRM_Istrate_Micescu_sec_sco # same as before
 	}
 
 	option = {
@@ -2300,8 +2310,8 @@ country_event = {
 
 		ai_chance = { factor = 20 }
 
-		set_politics = { ruling_party = social_liberalist elections_allowed = no }
-		add_popularity = { ideology = social_liberalist popularity = 0.4 }
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		add_popularity = { ideology = social_liberal popularity = 0.4 }
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RRM_Octavian_Goga_hog_sli
@@ -2312,8 +2322,8 @@ country_event = {
 		remove_ideas_with_trait = economy_minister
 		add_ideas = RRM_Virgil_Madgearu_eco_sli
 
-		remove_ideas_with_trait = intel_minister
-		add_ideas = RRM_Helene_Vacaresco_int_sli
+		remove_ideas_with_trait = security_minister
+		add_ideas = RRM_Helene_Vacaresco_sec_sli
 	}
 
 	option = {
@@ -2321,8 +2331,8 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 
-		set_politics = { ruling_party = authoritarian_democratist elections_allowed = no }
-		add_popularity = { ideology = authoritarian_democratist popularity = 0.4 }
+		set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.4 }
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = RRM_Miron_Cristea_hog_ade
@@ -2333,7 +2343,7 @@ country_event = {
 		remove_ideas_with_trait = economy_minister
 		add_ideas = RRM_Constantin_Bratianu_eco_sco # same as before
 
-		remove_ideas_with_trait = intel_minister
-		add_ideas = RRM_Istrate_Micescu_int_sco # same as before
+		remove_ideas_with_trait = security_minister
+		add_ideas = RRM_Istrate_Micescu_sec_sco # same as before
 	}
 }

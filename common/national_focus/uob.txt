@@ -14,10 +14,8 @@ focus_tree = {
 	default = no
 	
 	###################
-	### Trade Union Congress
+	### Trade Union Congresseseses
 	###################
-	
-	### Hold the Trade Congress
 	
 	focus = {
 		id = ENG_tuc
@@ -38,40 +36,14 @@ focus_tree = {
 	
 	### Initial policy choices
 	
-	# Economy
-	
-	focus = {
-		id = ENG_tuc_economy
-		icon = GFX_goal_generic_construction
-		prerequisite = { focus = ENG_tuc }
-		x = 1
-		y = 1
-		cost = 1
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			ENG = {
-				custom_effect_tooltip = ENG_congress_vote
-			}
-			hidden_effect = {
-				ENG = {
-					country_event = { id = uob.1 days = 1 }
-				}
-			}
-		}
-	}
-	
-	# Internal
-	
 	focus = {
 		id = ENG_tuc_internal
 		icon = GFX_goal_generic_improve_relations
-		prerequisite = { focus = ENG_tuc }
-		x = 7
-		y = 1
+		available = {
+			has_completed_focus = ENG_tuc
+		}
+		x = 3
+		y = 0
 		cost = 1
 		
 		ai_will_do = {
@@ -79,24 +51,37 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			ENG = {
-				custom_effect_tooltip = ENG_congress_vote
-			}
-			hidden_effect = {
-				ENG = {
-					country_event = { id = uob.2 days = 1 }
-				}
-			}
+			country_event = { id = uob.2 }
 		}
 	}
-	# Military
+	
+	focus = {
+		id = ENG_tuc_economy
+		icon = GFX_goal_generic_construction
+		available = {
+			has_completed_focus = ENG_tuc
+		}
+		x = 11
+		y = 0
+		cost = 1
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			country_event = { id = uob.1 }
+		}
+	}
 	
 	focus = {
 		id = ENG_tuc_military
 		icon = GFX_goal_generic_construct_military
-		prerequisite = { focus = ENG_tuc }
-		x = 13
-		y = 1
+		available = {
+			has_completed_focus = ENG_tuc
+		}
+		x = 19
+		y = 0
 		cost = 1
 		
 		ai_will_do = {
@@ -104,25 +89,18 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			ENG = {
-				custom_effect_tooltip = ENG_congress_vote
-			}
-			hidden_effect = {
-				ENG = {
-					country_event = { id = uob.4 days = 1 }
-				}
-			}
+			country_event = { id = uob.4 }
 		}
 	}
-	
-	# Foreign
 	
 	focus = {
 		id = ENG_tuc_foreign
 		icon = GFX_goal_generic_improve_relations
-		prerequisite = { focus = ENG_tuc }
-		x = 19
-		y = 1
+		available = {
+			has_completed_focus = ENG_tuc
+		}
+		x = 11
+		y = 8
 		cost = 1
 		
 		ai_will_do = {
@@ -130,32 +108,50 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			ENG = {
-				custom_effect_tooltip = ENG_congress_vote
-			}
-			hidden_effect = {
-				ENG = {
-					country_event = { id = uob.5 days = 1 }
-				}
-			}
+			country_event = { id = uob.5 }
 		}
 	}
 	
-	### Further development
-	
-	# Economy
+	### Internal
 	
 	focus = {
-		id = ENG_central_industry_research
-		icon = GFX_goal_generic_scientific_exchange
-		prerequisite = { focus = ENG_tuc_economy }
-		available = {
-			has_idea = ENG_tuc_economy_mosley_idea 
+		id = ENG_home_rule
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = ENG_tuc_internal }
+		prerequisite = { focus = ENG_tuc }
+		mutually_exclusive = { focus = ENG_political_commissars }
+		available = { 
+			has_government = syndicalist
 			hidden_trigger = { 
 				has_completed_focus = ENG_tuc_economy
 				has_completed_focus = ENG_tuc_internal
 				has_completed_focus = ENG_tuc_military
 				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		available = { }
+		x = 2
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = ENG_home_rule_idea
+			add_political_power = -100
+		}
+	}	
+	
+	focus = {
+		id = ENG_dissolve_tuc
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = ENG_home_rule }
+		mutually_exclusive = { focus = ENG_new_capital }
+		available = {
+			NOT = {
+				has_completed_focus = ENG_devolution
 			}
 		}
 		x = 0
@@ -167,9 +163,285 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_political_power = -200
+			custom_effect_tooltip = ENG_dissolve_tuc_tp
+		}
+	}
+	
+	focus = {
+		id = ENG_new_capital
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = ENG_home_rule }
+		mutually_exclusive = { focus = ENG_dissolve_tuc }
+		available = { }
+		x = 2
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			set_capital = 9297
+			custom_effect_tooltip = ENG_new_capital_tp
+		}
+	}	
+	
+	focus = {
+		id = ENG_political_commissars
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ENG_tuc_internal }
+		prerequisite = { focus = ENG_tuc }
+		mutually_exclusive = { focus = ENG_home_rule }
+		available = { 
+			OR = {
+				has_government = radical_socialist
+				has_government = totalist
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 4
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = ENG_political_commissars_idea
+			add_political_power = -50
+		}
+	}
+	
+	focus = {
+		id = ENG_merge
+		icon = GFX_goal_authoritarian
+		prerequisite = { focus = ENG_political_commissars }
+		available = { }
+		x = 5
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = ENG_merge_tp
+			add_political_power = 100
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = horner_chairman
+					}
+					country_event = { id = uob.102 days = 1 }
+				}
+				if = {
+					limit = {
+						has_country_flag = mosley_chairman
+					}
+					country_event = { id = uob.103 days = 1 }
+				}
+				if = {
+					limit = {
+						has_country_flag = kenney_chairman
+					}
+					country_event = { id = uob.104 days = 1 }
+				}
+				if = {
+					limit = {
+						has_country_flag = glais_chairman
+					}
+					country_event = { id = uob.105 days = 1 }
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_devolution
+		icon = GFX_goal_autonomism
+		prerequisite = { focus = ENG_new_capital focus = ENG_dissolve_tuc }
+		mutually_exclusive = { focus = ENG_evolution }
+		mutually_exclusive = { focus = ENG_revolution }
+		available = { }
+		x = 1
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 25
+		}
+		
+		completion_reward = {
+			add_political_power = -200
+			release = WAL
+			release = SCT
+			if = {
+				limit = {
+					NOT = { 
+						has_completed_focus = ENG_dissolve_tuc
+					}
+				}
+				puppet = WAL
+				puppet = SCT
+				#else = {
+				
+				### Todo
+				# Add cosmetic tag: Union of England
+				
+				#}
+			}			
+			hidden_effect = {
+				news_event = { id = uob.190 }
+				add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
+				SCT = {
+					add_opinion_modifier = { target = ENG modifier = ENG_devolution_op }
+				}
+				add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
+				WAL = {
+					add_opinion_modifier = { target = ENG modifier = ENG_devolution_op }
+				}
+				SCT = {
+					set_politics = { ruling_party = syndicalist }
+				}
+				WAL = {
+					set_politics = { ruling_party = syndicalist }
+				}
+				
+				### Todo
+				# Do stuff for SCT & WAL
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_evolution
+		icon = GFX_goal_syndicalism
+		prerequisite = { focus = ENG_tuc_internal focus = ENG_political_commissars }
+		mutually_exclusive = { focus = ENG_devolution }
+		mutually_exclusive = { focus = ENG_revolution }
+		available = { 
+			has_government = radical_socialist
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 3
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 25
+		}
+		
+		completion_reward = {
+			add_national_unity = 0.1
+		}
+	}
+	
+	focus = {
+		id = ENG_revolution
+		icon = GFX_goal_totalism
+		bypass = {
+			has_completed_focus = ENG_dissolve_militias
+			has_completed_focus = ENG_end_isolation
+		}
+		prerequisite = { focus = ENG_merge }
+		mutually_exclusive = { focus = ENG_evolution }
+		mutually_exclusive = { focus = ENG_devolution }
+		available = { }
+		x = 5
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 25
+		}
+		
+		completion_reward = {
+			add_political_power = -200
+			if = {
+				limit = {
+					has_idea = ENG_militia_idea
+				}
+				remove_ideas = ENG_militia_idea
+			}
+			if = {
+				limit = {
+					has_idea = ENG_isolation_idea
+				}
+				remove_ideas = ENG_isolation_idea
+			}
+			custom_effect_tooltip = ENG_revolution_tp
+			hidden_effect = {
+				country_event = { id = uob.201 }
+			}
+		}
+	}
+	
+	# Finisher
+	
+	focus = {
+		id = ENG_tuc2
+		icon = GFX_goal_tripartite_pact
+		prerequisite = { focus = ENG_devolution focus = ENG_evolution focus = ENG_revolution }
+		x = 3
+		y = 6
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			
+		}
+	}
+	
+	### Economy
+	
+	focus = {
+		id = ENG_central_industry_research
+		icon = GFX_goal_generic_scientific_exchange
+		prerequisite = { focus = ENG_tuc_economy }
+		prerequisite = { focus = ENG_tuc }
+		mutually_exclusive = { focus = ENG_local_help }
+		available = {
+			OR = {
+				has_country_flag = ENG_tuc_economy_fem
+				has_country_flag = ENG_tuc_economy_mosley
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 12
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
 			add_tech_bonus = {		
 				name = concentrated_industry_bonus
-				bonus = 0.25
+				bonus = 0.5
 				uses = 1
 				technology = concentrated_industry
 				technology = concentrated_industry2
@@ -180,11 +452,16 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_local_help
-		icon = GFX_goal_generic_construction2
+		id = ENG_local_talent
+		icon = GFX_goal_generic_scientific_exchange
 		prerequisite = { focus = ENG_tuc_economy }
-		available = { 
-			has_idea = ENG_tuc_economy_glaise_idea 
+		prerequisite = { focus = ENG_tuc }
+		mutually_exclusive = { focus = ENG_central_industry_research }
+		available = {
+			OR = {
+				has_country_flag = ENG_tuc_economy_glais
+				has_country_flag = ENG_tuc_economy_fem
+			}
 			hidden_trigger = { 
 				has_completed_focus = ENG_tuc_economy
 				has_completed_focus = ENG_tuc_internal
@@ -192,8 +469,8 @@ focus_tree = {
 				has_completed_focus = ENG_tuc_foreign 
 			}
 		}
-		x = 2
-		y = 2
+		x = 10
+		y = 1
 		cost = 10
 		
 		ai_will_do = {
@@ -203,8 +480,8 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 50
 			add_tech_bonus = {		
-				name = concentrated_industry_bonus
-				bonus = 0.25
+				name = dispersed_industry_bonus
+				bonus = 0.5
 				uses = 1
 				technology = dispersed_industry
 				technology = dispersed_industry2
@@ -215,40 +492,42 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_expand_industry_1
-		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = ENG_tuc_economy focus = ENG_central_industry_research focus = ENG_local_help }
-		available = { 
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 1
-		y = 3
+		id = ENG_local_help
+		icon = GFX_goal_generic_construction2
+		prerequisite = { focus = ENG_local_talent }
+		available = { }
+		x = 8
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
-			factor = 5
+			factor = 10
 		}
 		
 		completion_reward = {
-			122 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes	
-				}
-			}
 			add_tech_bonus = {
-				name = construction_tech_bonus
-				bonus = 0.25
+				bonus = 0.5
 				uses = 1
-				category = construction_tech					
+				category = industry
 			}
+		}
+	}
+	
+	focus = {
+		id = ENG_local_initiative
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = ENG_local_talent }
+		available = { }
+		x = 8
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
 		}
 	}
 	
@@ -257,8 +536,8 @@ focus_tree = {
 		icon = GFX_goal_generic_production2
 		prerequisite = { focus = ENG_central_industry_research }
 		available = { }
-		x = 0
-		y = 4
+		x = 14
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -266,52 +545,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_political_power = -50
-			add_tech_bonus = {		
-				name = military_efficiency_bonus
-				bonus = 0.5
-				uses = 1
-				technology = basic_machine_tools
-				technology = improved_machine_tools
-				technology = advanced_machine_tools
-				technology = assembly_line_production
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_expand_industry_2
-		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = ENG_expand_industry_1 }
-		available = { }
-		x = 1
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			127 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes	
-				}
-			}
+			add_ideas = ENG_militarized_industry_idea
 		}
 	}
 	
 	focus = {
 		id = ENG_synthetic_industry
 		icon = GFX_goal_generic_oil_refinery
-		prerequisite = { focus = ENG_militarized_industry }
-		prerequisite = { focus = ENG_expand_industry_2 }
+		prerequisite = { focus = ENG_central_industry_research }
 		available = { }
-		x = 0
-		y = 6
+		x = 13
+		y = 3
 		cost = 10
 		
 		ai_will_do = {
@@ -329,12 +573,19 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_expand_industry_3
+		id = ENG_expand_industry_1
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = ENG_expand_industry_2 }
-		available = { }
-		x = 2
-		y = 6
+		prerequisite = { focus = ENG_tuc_economy }
+		available = { 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 11
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -342,11 +593,42 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			133 = {
-				add_extra_state_shared_building_slots = 1
+			122 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
+					instant_build = yes	
+				}
+			}
+			add_tech_bonus = {
+				name = construction_tech_bonus
+				bonus = 0.25
+				uses = 1
+				category = construction_tech					
+			}
+		}
+	}
+
+	focus = {
+		id = ENG_expand_industry_2
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = ENG_expand_industry_1 }
+		available = { }
+		x = 11
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			127 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 					instant_build = yes	
 				}
 			}
@@ -356,10 +638,9 @@ focus_tree = {
 	focus = {
 		id = ENG_british_rail_reform
 		icon = GFX_goal_generic_construct_infrastructure
-		prerequisite = { focus = ENG_expand_industry_1 }
-		available = { has_idea = ENG_tuc_economy_fem_idea }
-		x = 2
-		y = 4
+		prerequisite = { focus = ENG_local_talent }
+		x = 9
+		y = 3
 		cost = 10
 		
 		ai_will_do = {
@@ -367,787 +648,52 @@ focus_tree = {
 		}
 		
 		completion_reward = {	
-			hidden_effect = {
-				set_country_flag = ENG_brr
-				128 = {
-					add_building_construction = {
-						type = infrastructure
-						level = 9
-						instant_build = yes
-					}
-				}
-				131 = {
-					add_building_construction = {
-						type = infrastructure
-						level = 9
-						instant_build = yes
-					}
-				}
-				136 = {
-					add_building_construction = {
-						type = infrastructure
-						level = 7
-						instant_build = yes
-					}
-				}
-				122 = {
-					add_building_construction = {
-						type = infrastructure
-						level = 7
-						instant_build = yes
-					}
-				}
-				120 = {
-					add_building_construction = {
-						type = infrastructure
-						level = 6
-						instant_build = yes
-					}
-				}
-			}
-			custom_effect_tooltip = ENG_brr			
-		}
-	}
-	
-	# Autonomist Reforms
-	
-	focus = {
-		id = ENG_local_industry
-		icon = GFX_goal_generic_production
-		prerequisite = { focus = ENG_local_help }
-		available = { }
-		x = 3
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 3
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes	
-				}
-			}	
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = dockyard
-						size > 3
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes	
-				}
-			}	
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 3
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes	
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_local_talent
-		icon = GFX_goal_generic_scientific_exchange
-		prerequisite = { focus = ENG_local_industry }
-		available = { }
-		x = 3
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = industry
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_devolution
-		icon = GFX_goal_autonomism
-		prerequisite = { focus = ENG_dissolve_tuc }
-		mutually_exclusive = { focus = ENG_evolution }
-		mutually_exclusive = { focus = ENG_revolution }
-		available = { }
-		x = 5
-		y = 6
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			add_political_power = -200
-			add_national_unity = 0.05
-			custom_effect_tooltip = ENG_devolution_tp	
-			hidden_effect = {
-				release = WAL
-				puppet = WAL
-				release = SCT
-				puppet = SCT 		
-				news_event = { id = uob.190 days = 1 }
-				add_opinion_modifier = { target = SCT modifier = ENG_devolution_op }
-				SCT = {
-					add_opinion_modifier = { target = ENG modifier = ENG_devolution_op }
-				}
-				add_opinion_modifier = { target = WAL modifier = ENG_devolution_op }
-				WAL = {
-					add_opinion_modifier = { target = ENG modifier = ENG_devolution_op }
-				}
-			}
-		}
-	}
-	
-	# Internal
-	
-	focus = {
-		id = ENG_political_commissars
-		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = ENG_tuc_internal }
-		available = { 
-			has_idea = ENG_tuc_internal_mosley_idea 
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 8
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_ideas = ENG_political_commissars_idea
-			add_political_power = -50
-		}
-	}
-	
-	focus = {
-		id = ENG_country_reorganization
-		icon = GFX_goal_generic_neutrality_focus
-		prerequisite = { focus = ENG_tuc_internal }
-		available = {
-			has_idea = ENG_tuc_internal_glaise_idea 
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 6
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_political_power = -50
-		}
-	}
-	
-	
-	focus = {
-		id = ENG_three_under_one
-		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = ENG_country_reorganization }
-		available = { }
-		x = 5
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_ideas = ENG_three_under_one_idea
-			add_political_power = -100
-		}
-	}
-	
-	focus = {
-		id = ENG_dissolve_tuc
-		icon = GFX_goal_generic_forceful_treaty
-		prerequisite = { focus = ENG_three_under_one }
-		mutually_exclusive = { focus = ENG_city_upon_a_hill }
-		available = { }
-		x = 4
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			add_political_power = -200
-		}
-	}
-
-	focus = {
-		id = ENG_merge_chairman_and_secretary
-		icon = GFX_goal_generic_dangerous_deal
-		prerequisite = { focus = ENG_political_commissars }
-		available = { }
-		x = 9
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			if = {
-				limit = {
-					has_country_flag = horner_chairman
-				}
-				country_event = { id = uob.102 days = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = mosley_chairman
-				}
-				country_event = { id = uob.103 days = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = kenney_chairman
-				}
-				country_event = { id = uob.104 days = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = glais_chairman
-				}
-				country_event = { id = uob.105 days = 1 }
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_defend_the_revolution
-		icon = GFX_goal_generic_defence
-		prerequisite = { focus = ENG_tuc_internal }
-		available = { 
-			has_idea = ENG_tuc_internal_fem_idea 
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 7
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_political_power = -50
-		}
-	}	
-	
-	# Federationist reforms
-	
-	focus = {
-		id = ENG_city_upon_a_hill
-		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = ENG_defend_the_revolution focus = ENG_three_under_one }
-		mutually_exclusive = { focus = ENG_turn_the_other_cheek focus = ENG_dissolve_tuc }
-		available = { }
-		x = 6
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			add_political_power = -100
-		}
-	}
-	
-	focus = {
-		id = ENG_turn_the_other_cheek
-		icon = GFX_goal_generic_dangerous_deal
-		prerequisite = { focus = ENG_defend_the_revolution focus = ENG_merge_chairman_and_secretary }
-		mutually_exclusive = { focus = ENG_city_upon_a_hill focus = ENG_dissolve_militias }
-		available = { }
-		x = 8
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			add_political_power = -100
-		}
-	}
-	
-	focus = {
-		id = ENG_evolution
-		icon = GFX_goal_syndicalism
-		prerequisite = { focus = ENG_turn_the_other_cheek focus = ENG_city_upon_a_hill }
-		mutually_exclusive = { focus = ENG_devolution }
-		mutually_exclusive = { focus = ENG_revolution }
-		available = { }
-		x = 7
-		y = 6
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			add_national_unity = 0.1
-		}
-	}
-	
-	# Maximist reforms
-	
-	focus = {
-		id = ENG_dissolve_militias
-		icon = GFX_goal_generic_forceful_treaty
-		prerequisite = { focus = ENG_political_commissars focus = ENG_experience_exchange_instruction}
-		mutually_exclusive = { focus = ENG_turn_the_other_cheek }
-		available = { }
-		x = 10
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			remove_ideas = ENG_militia
-			add_political_power = -100
-		}
-	}
-	
-	focus = {
-		id = ENG_purge_militia_remains
-		icon = GFX_goal_generic_political_pressure
-		prerequisite = { focus = ENG_dissolve_militias }
-		prerequisite = { focus = ENG_officer_corps_academy }
-		available = { }
-		x = 11
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			army_experience = 100
-			add_political_power = -100
-			
-			### Todo
-			# division_template?
-			# Kill officers
-			
-		}
-	}
-	
-	focus = {
-		id = ENG_revolution
-		icon = GFX_goal_totalism
-		prerequisite = { focus = ENG_dissolve_militias }
-		mutually_exclusive = { focus = ENG_evolution }
-		mutually_exclusive = { focus = ENG_devolution }
-		available = { }
-		x = 9
-		y = 6
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			add_political_power = -200
-			add_national_unity = 0.05
-			custom_effect_tooltip = ENG_revolution_tp
-			hidden_effect = {
-				country_event = { id = uob.201 days = 1 }
-			}
-		}
-	}
-	
-	# Military
-	
-	focus = {
-		id = ENG_experience_exchange_instruction
-		icon = GFX_goal_generic_political_pressure
-		prerequisite = { focus = ENG_tuc_military }
-		available = { 
-			has_idea = ENG_tuc_military_mosley_idea
-			has_country_flag = ENG_defecting_officers
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 12
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			custom_effect_tooltip = ENG_eei_tp
-			army_experience = 50
-			navy_experience = 25
-			add_political_power = -100
-			hidden_effect = {
-				create_corps_commander = { ### Noble War Hero
-					name = "Harold Alexander"
-					picture = "Portrait_Britain_Harold_Alexander.dds"
-					traits = {  }
-					skill = 5
-				}
-				create_corps_commander = {
-					name = "Thomas Jacomb Hutton"
-						picture = "Portrait_Britain_Thomas_Jacomb_Hutton.dds"
-					traits = {  }
-					skill = 2
-				}
-				create_navy_leader = {
-					name = "Algernon Willis"
-						picture = "Portrait_Britain_Algernon_Willis.dds"
-					traits = { spotter }
-					skill = 3
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_good_riddance
-		icon = GFX_goal_generic_political_pressure
-		prerequisite = { focus = ENG_tuc_military }
-		available = { 
-			has_idea = ENG_tuc_military_glaise_idea 
-			has_country_flag = ENG_defecting_officers
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 14
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			custom_effect_tooltip = ENG_good_riddance_tp
+			set_country_flag = ENG_brr
 			add_political_power = 50
-			hidden_effect = {
-				clr_country_flag = ENG_defecting_officers
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_officer_recall_vote
-		icon = GFX_goal_generic_neutrality_focus
-		prerequisite = { focus = ENG_tuc_military }
-		available = { 
-			has_idea = ENG_tuc_military_fem_idea 
-			has_country_flag = ENG_defecting_officers
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			} 
-		}
-		x = 13
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			custom_effect_tooltip = ENG_officer_recall_vote_tp
-			army_experience = 25
-			navy_experience = 25
-			hidden_effect = {
-				create_corps_commander = { ### Noble War Hero
-					name = "Harold Alexander"
-					picture = "Portrait_Britain_Harold_Alexander.dds"
-					traits = {  }
-					skill = 5
+			128 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
 				}
-				create_navy_leader = {
-					name = "Algernon Willis"
-						picture = "Portrait_Britain_Algernon_Willis.dds"
-					traits = { spotter }
-					skill = 3
+			}
+			131 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			136 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			122 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			120 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
 	}
-	
-	focus = {
-		id = ENG_central_command
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = ENG_experience_exchange_instruction }
-		available = { }
-		x = 11
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {		
-				name = central_command_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-				category = air_doctrine
-				category = naval_doctrine				
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_three_armies
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = ENG_good_riddance }
-		available = {
-			WAL = {
-				is_puppet_of = ENG
-			}
-			SCT = {
-				is_puppet_of = ENG
-			}
-		}
-		x = 15
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			hidden_effect = {
-				set_equipment_fraction = 0.5
-				WAL = { load_oob = WAL_three_armies }
-				SCT = { load_oob = SCT_three_armies }
-				add_opinion_modifier = { target = WAL modifier = ENG_three_armies_op }
-				add_opinion_modifier = { target = SCT modifier = ENG_three_armies_op }
-			}
-			custom_effect_tooltip = ENG_three_armies_tp
-		}
-	}
-	
-	focus = {
-		id = ENG_improve_army
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_officer_corps_academy focus = ENG_officer_corps_experience }
-		available = {  }
-		x = 13
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = infantry_weapons
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_officer_corps_academy
-		icon = GFX_goal_generic_position_armies
-		prerequisite = { focus = ENG_experience_exchange_instruction focus = ENG_officer_recall_vote }
-		mutually_exclusive = { focus = ENG_officer_corps_experience }
-		available = { }
-		x = 12
-		y = 4
-		cost = 10
-		
-		completion_reward = {			
-			army_experience = 50
-		}
-		
-		ai_will_do = {
-			factor = 5
-		}
-	}
-	
-	focus = {
-		id = ENG_red
-		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = ENG_improve_army }
-		available = { }
-		x = 12
-		y = 6
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.25
-				uses = 1
-				category = para_tech
-			}	
-			
-			add_tech_bonus = {
-				bonus = 0.25
-				uses = 1
-				category = marine_tech
-			}
-			hidden_effect = {
-				country_event = { id = uob.150 days = 60 }
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_raf
-		icon = GFX_goal_generic_occupy_start_war
-		prerequisite = { focus = ENG_improve_army }
-		available = { }
-		x = 14
-		y = 6
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			ENG = {
-			country_event = { id = uobflavour.18 days = 1 }
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_officer_corps_experience
-		icon = GFX_goal_generic_position_armies
-		prerequisite = { focus = ENG_officer_recall_vote focus = ENG_good_riddance }
-		mutually_exclusive = { focus = ENG_officer_corps_academy }
-		available = { }
-		x = 14
-		y = 4
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {	
-			army_experience = 50
-		}
-	}
-	
-	focus = {
-		id = ENG_women_soldiers
-		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = ENG_officer_corps_experience }
-		available = { }
-		x = 15
-		y = 5
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_ideas = ENG_women_soldiers_idea	
-		}
-	}
-	
-	### War!
-	
-	# Economy
 	
 	focus = {
 		id = ENG_military_industry
 		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = ENG_synthetic_industry focus = ENG_expand_industry_3 }
-		available = { has_war = yes threat > 0.5}
-		x = 1
-		y = 7
+		prerequisite = { focus = ENG_expand_industry_2 }
+		x = 12
+		y = 4
 		cost = 10
 		
 		ai_will_do = {
@@ -1156,62 +702,10 @@ focus_tree = {
 		
 		completion_reward = {
 			338 = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
-					instant_build = yes	
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_mobilized_industry
-		icon = GFX_goal_generic_construct_civilian
-		prerequisite = { focus = ENG_synthetic_industry focus = ENG_military_industry }
-		x = 0
-		y = 8
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			128 = {
-				remove_building = { 
-					type = industrial_complex level = 1 
-				} 
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes	
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_mobilized_industry2
-		icon = GFX_goal_generic_construct_civilian
-		prerequisite = { focus = ENG_mobilized_industry }
-		x = 0
-		y = 10
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			129 = {
-				remove_building = { 
-					type = industrial_complex level = 1 
-				} 
-				add_building_construction = {
-					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes	
 				}
 			}
@@ -1222,8 +716,8 @@ focus_tree = {
 		id = ENG_military_industry2
 		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = ENG_military_industry }
-		x = 1
-		y = 9
+		x = 12
+		y = 5
 		cost = 10
 		
 		ai_will_do = {
@@ -1232,10 +726,10 @@ focus_tree = {
 		
 		completion_reward = {
 			123 = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes	
 				}
 			}
@@ -1243,11 +737,15 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_military_industry3
-		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = ENG_military_industry2 }
-		x = 1
-		y = 11
+		id = ENG_mobilized_industry
+		icon = GFX_goal_economic_control
+		prerequisite = { focus = ENG_militarized_industry }
+		prerequisite = { focus = ENG_military_industry }
+		available = {
+			has_war = yes
+		}
+		x = 14
+		y = 5
 		cost = 10
 		
 		ai_will_do = {
@@ -1255,13 +753,9 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			132 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes	
-				}
+			swap_ideas = {
+				remove_idea = ENG_militarized_industry_idea
+				add_idea = ENG_mobilized_industry_idea
 			}
 		}
 	}
@@ -1269,9 +763,9 @@ focus_tree = {
 	focus = {
 		id = ENG_conscript_vessels
 		icon = GFX_goal_generic_amphibious_assault
-		prerequisite = { focus = ENG_military_industry }
-		x = 2
-		y = 8
+		prerequisite = { focus = ENG_expand_industry_2 }
+		x = 10
+		y = 4
 		cost = 10
 		
 		ai_will_do = {
@@ -1290,9 +784,8 @@ focus_tree = {
 		id = ENG_naval_dockyards
 		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = ENG_conscript_vessels }
-		prerequisite = { focus = ENG_military_industry2 }
-		x = 2
-		y = 10
+		x = 10
+		y = 5
 		cost = 10
 		
 		ai_will_do = {
@@ -1327,12 +820,291 @@ focus_tree = {
 		}
 	}
 	
+	# Finisher
+	
 	focus = {
-		id = ENG_provision
-		icon = GFX_goal_generic_consumer_goods
-		prerequisite = { focus = ENG_military_industry }
-		x = 3
-		y = 9
+		id = ENG_technical_expertise
+		icon = GFX_focus_research
+		prerequisite = { focus = ENG_mobilized_industry focus = ENG_local_initiative }
+		x = 10
+		y = 6
+		cost = 10
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+	
+	focus = {
+		id = ENG_home_front_victory
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = ENG_mobilized_industry focus = ENG_local_initiative }
+		available = { has_war = yes }
+		x = 12
+		y = 6
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			add_ideas = ENG_home_front_victory_idea
+		}
+	}
+	
+	### Military
+	
+	# Officers & Militias & Stuff
+	
+	focus = {
+		id = ENG_women_soldiers
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = ENG_tuc }
+		prerequisite = { focus = ENG_tuc_military }
+		available = { has_country_flag = ENG_tuc_military_fem }
+		x = 18
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 25
+		}
+		
+		completion_reward = {
+			add_ideas = ENG_women_soldiers_idea	
+		}
+	}
+	
+	focus = {
+		id = ENG_officer_corps_experience
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = ENG_tuc focus = ENG_tuc_military }
+		mutually_exclusive = { focus = ENG_officer_corps_academy }
+		available = { 
+			has_country_flag = ENG_defecting_officers 
+			OR = {
+				has_country_flag = ENG_tuc_military_fem
+				has_country_flag = ENG_tuc_military_glais
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 17
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {	
+			army_experience = 25
+			hidden_effect = {
+				create_corps_commander = { ### Noble War Hero
+					name = "Harold Alexander"
+					picture = "Portrait_Britain_Harold_Alexander.dds"
+					traits = {  }
+					skill = 5
+				}
+				create_corps_commander = {
+					name = "Thomas Jacomb Hutton"
+						picture = "Portrait_Britain_Thomas_Jacomb_Hutton.dds"
+					traits = {  }
+					skill = 2
+				}
+				create_navy_leader = {
+					name = "Algernon Willis"
+						picture = "Portrait_Britain_Algernon_Willis.dds"
+					traits = { spotter }
+					skill = 3
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_officer_corps_academy
+		icon = GFX_goal_government_icon
+		prerequisite = { focus = ENG_tuc focus = ENG_tuc_military }
+		mutually_exclusive = { focus = ENG_officer_corps_experience }
+		available = { 
+			has_country_flag = ENG_defecting_officers
+			OR = {
+				has_country_flag = ENG_tuc_military_fem
+				has_country_flag = ENG_tuc_military_mosley
+			}
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 19
+		y = 1
+		cost = 10
+		
+		completion_reward = {			
+			army_experience = 50
+			add_political_power = -100
+		}
+		
+		ai_will_do = {
+			factor = 5
+		}
+	}
+	
+	focus = {
+		id = ENG_reform_militia
+		icon = GFX_goal_generic_alliance
+		prerequisite = { focus = ENG_officer_corps_experience }
+		mutually_exclusive = { focus = ENG_dissolve_militias }
+		available = { }
+		x = 17
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = ENG_militia_idea
+				add_idea = ENG_reformed_militia_idea
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_dissolve_militias
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = ENG_officer_corps_academy }
+		available = { }
+		x = 19
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 25
+		}
+		
+		completion_reward = {
+			remove_ideas = ENG_militia_idea
+			add_political_power = -100
+		}
+	}
+	
+	focus = {
+		id = ENG_three_armies
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = ENG_reform_militia }
+		mutually_exclusive = { focus = ENG_central_command }
+		available = {
+			WAL = {
+				is_puppet_of = ENG
+			}
+			SCT = {
+				is_puppet_of = ENG
+			}
+			has_country_flag = ENG_tuc_military_glais
+		}
+		x = 17
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			hidden_effect = {
+				set_equipment_fraction = 0.5
+				WAL = { load_oob = WAL_three_armies }
+				SCT = { load_oob = SCT_three_armies }
+				add_opinion_modifier = { target = WAL modifier = ENG_three_armies_op }
+				add_opinion_modifier = { target = SCT modifier = ENG_three_armies_op }
+			}
+			custom_effect_tooltip = ENG_three_armies_tp
+		}
+	}
+	
+	focus = {
+		id = ENG_central_command
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = ENG_reform_militia focus = ENG_dissolve_militias }
+		mutually_exclusive = { focus = ENG_three_armies }
+		available = { }
+		x = 19
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {		
+				name = central_command_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+				category = air_doctrine
+				category = naval_doctrine				
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_purge_militia_remains
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = ENG_central_command focus = ENG_three_armies }
+		prerequisite = { focus = ENG_artillery_research focus = ENG_tank_research }
+		mutually_exclusive = { focus = ENG_reform_militia }
+		available = { }
+		x = 19
+		y = 6
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			army_experience = 50
+			navy_experience = 50
+			air_experience = 50
+			if = {
+				limit = {
+					has_completed_focus = ENG_dissolve_militias
+				}
+				custom_effect_tooltip = ENG_purge_militia_tp
+				add_political_power = -50
+				### Todo
+				# Kill officers
+			}
+			
+		}
+	}
+	
+	# Army
+	
+	focus = {
+		id = ENG_improve_army
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = ENG_tuc focus = ENG_tuc_military }
+		available = {  }
+		x = 21
+		y = 1
 		cost = 10
 		
 		ai_will_do = {
@@ -1340,33 +1112,17 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_national_unity = 0.02
+			country_event = { id = uob.108 }
 		}
 	}
 	
 	focus = {
-		id = ENG_propaganda
-		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = ENG_provision }
-		x = 3
-		y = 11
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			add_national_unity = 0.03
-		}
-	}
-	
-	focus = {
-		id = ENG_military_industry_experience
-		icon = GFX_goal_generic_intelligence_exchange
-		prerequisite = { focus = ENG_military_industry }
-		x = 4
-		y = 8
+		id = ENG_red
+		icon = GFX_goal_generic_special_forces
+		prerequisite = { focus = ENG_improve_army }
+		available = { }
+		x = 21
+		y = 2
 		cost = 10
 		
 		ai_will_do = {
@@ -1376,18 +1132,423 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				bonus = 0.25
-				uses = 2
-				category = industry
+				uses = 1
+				category = para_tech
+			}	
+			
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = marine_tech
+			}
+			hidden_effect = {
+				country_event = { id = uob.150 days = 60 }
 			}
 		}
 	}
 	
 	focus = {
+		id = ENG_improve_army2
+		icon = GFX_goal_generic_cavalry
+		prerequisite = { focus = ENG_red }
+		x = 21
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = support_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_motorized
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = ENG_improve_army2 }
+		x = 21
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_artillery_research
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = ENG_motorized }
+		mutually_exclusive = { focus = ENG_tank_research }
+		x = 20
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = cat_superior_firepower
+			}		
+		}
+	}
+	
+	focus = {
+		id = ENG_tank_research
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = ENG_motorized }
+		mutually_exclusive = { focus = ENG_artillery_research }
+		x = 22
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = armor
+			}	
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = cat_mobile_warfare
+			}	
+		}
+	}
+	
+	# Navy
+	
+	focus = {
+		id = ENG_big_boat_research
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = ENG_tuc }
+		prerequisite = { focus = ENG_tuc_military }
+		mutually_exclusive = { focus = ENG_float_boat_research }
+		x = 24
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = bc_tech
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_float_boat_research
+		icon = GFX_goal_generic_navy_carrier
+		prerequisite = { focus = ENG_tuc }
+		prerequisite = { focus = ENG_tuc_military }
+		mutually_exclusive = { focus = ENG_big_boat_research }
+		x = 26
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cv_tech
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_small_boat_research
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = ENG_float_boat_research focus = ENG_big_boat_research }
+		x = 25
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_sub_research
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = ENG_float_boat_research }
+		x = 24
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = submarine_doctrine
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_navbomb_research
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = ENG_float_boat_research }
+		x = 26
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = naval_air
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_navy_doctrine
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = ENG_sub_research focus = ENG_navbomb_research }
+		prerequisite = { focus = ENG_small_boat_research }
+		x = 25
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+	}
+	
+	# Air Force
+	
+	focus = {
+		id = ENG_raf
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = ENG_tuc }
+		prerequisite = { focus = ENG_tuc_military }
+		available = { }
+		x = 29
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			ENG = {
+			country_event = { id = uob.107 }
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_fighter_research
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = ENG_raf }
+		x = 29
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = light_fighter
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_heavy_fighter
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_bomber_research
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ENG_fighter_research }
+		x = 29
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_air1
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ENG_bomber_research }
+		x = 29
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_air21
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ENG_air1 }
+		mutually_exclusive = { focus = ENG_air22 }
+		x = 28
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_air22
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = ENG_air1 }
+		mutually_exclusive = { focus = ENG_air21 }
+		x = 30
+		y = 5
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}	
+		}
+	}
+	
+	# Finishers
+	
+	focus = {
 		id = ENG_statistical_warfare
 		icon = GFX_focus_research
-		prerequisite = { focus = ENG_military_industry_experience }
-		x = 4
-		y = 10
+		prerequisite = { focus = ENG_artillery_research focus = ENG_tank_research focus = ENG_navy_doctrine focus = ENG_air21 focus = ENG_air22 }
+		x = 24
+		y = 6
 		cost = 10
 		
 		ai_will_do = {
@@ -1400,13 +1561,15 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ENG_home_front_victory
-		icon = GFX_goal_generic_production
-		prerequisite = { focus = ENG_military_industry3 }
-		prerequisite = { focus = ENG_propaganda }
-		available = { }
-		x = 2
-		y = 12
+		id = ENG_blood
+		icon = GFX_goal_generic_attack_allies
+		prerequisite = { focus = ENG_artillery_research focus = ENG_tank_research focus = ENG_navy_doctrine focus = ENG_air21 focus = ENG_air22 }
+		available = {
+			has_war = yes
+			threat > 0.5
+		}
+		x = 26
+		y = 6
 		cost = 10
 		
 		ai_will_do = {
@@ -1414,19 +1577,252 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = ENG_home_front_victory_idea
+			add_ideas = ENG_blood_idea
 		}
 	}
 	
-	# Total War
+	### Foreign
+	
+	focus = {
+		id = ENG_end_isolation
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = ENG_tuc }
+		prerequisite = { focus = ENG_tuc_foreign }
+		available = { 
+			hidden_trigger = { 
+				has_completed_focus = ENG_tuc_economy
+				has_completed_focus = ENG_tuc_internal
+				has_completed_focus = ENG_tuc_military
+				has_completed_focus = ENG_tuc_foreign 
+			}
+		}
+		x = 11
+		y = 9
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			FRA = {
+				add_to_faction = ENG
+				news_event = { id = uob.65 days = 3 }
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_go_with_france
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = ENG_end_isolation }
+		x = 9
+		y = 10
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			FRA = {
+				add_to_faction = ENG
+				news_event = { id = uob.65 days = 3 }
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			}
+		}
+	}
+	
+	# Mission to Norway
+	
+	focus = {
+		id = ENG_mission_to_norway
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = ENG_end_isolation }
+		available = { 
+			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
+					has_idea = ENG_tuc_foreign_fem_idea		
+			}
+		}
+		x = 11
+		y = 10
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					NOR = {
+						OR = {
+							has_government = totalist
+							has_government = syndicalist
+							has_government = radical_socialist
+						}
+					}
+				}
+				NOR = {
+					country_event = { id = uob.334 }
+				}
+			}
+			if = {
+				limit = {
+					NOR = {
+						NOT = {
+							has_government = totalist
+							has_government = syndicalist
+							has_government = radical_socialist
+						}
+					}
+				}
+				NOR = {
+					country_event = { id = uob.335 }
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_invite_norway
+		icon = GFX_goal_generic_alliance
+		prerequisite = { focus = ENG_mission_to_norway }
+		available = {
+			NOR = {
+				OR = {
+					has_government = totalist
+					has_government = syndicalist
+					has_government = radical_socialist
+				}
+				NOT = {
+					is_in_faction_with = ENG
+				}
+			}
+		}
+		x = 11
+		y = 11
+		cost = 10
+		
+		ai_will_do = {
+			factor = 15
+		}
+		
+		completion_reward = {
+			NOR = {
+				country_event = { id = uob.337 }
+			}
+		}
+	}
+	
+	# Show of Force
+	
+	focus = {
+		id = ENG_show_of_force
+		icon = GFX_goal_generic_occupy_states_coastal
+		prerequisite = { focus = ENG_end_isolation }
+		available = { 
+			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
+					has_idea = ENG_tuc_foreign_fem_idea		
+			}
+		}
+		x = 13
+		y = 10
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			navy_experience = 50
+			ENG = {
+				country_event = { id = uob.15 days = 14 }
+			}
+		}
+	}
+	
+	# Military Interventions
+	
+	focus = {
+		id = ENG_military_interventions
+		icon = GFX_goal_generic_territory_or_war
+		prerequisite = { focus = ENG_end_isolation }
+		available = { 
+			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
+					has_idea = ENG_tuc_foreign_fem_idea		
+			}
+		}
+		x = 15
+		y = 10
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = ENG_revolutionary_spirit_idea
+			
+		}
+	}
+	
+	# Class War
+	
+	focus = {
+		id = ENG_class_war
+		icon = GFX_goal_generic_war_with_comintern
+		available = { 
+			NOT = {
+				has_idea = ENG_isolation_idea
+			}
+			OR = {
+				AND = {
+					has_government = totalist
+					OR = {
+						has_war = yes
+						threat > 0.5
+					}
+				}
+				AND = {
+					OR = {
+						has_government = radical_socialist
+						has_government = syndicalist
+					}
+					has_war = yes
+					threat > 0.75
+				}
+			}
+		}
+		x = 14
+		y = 12
+		cost = 20
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		completion_reward = {
+			add_national_unity = 0.05
+			add_ideas = ENG_class_war_idea
+		}
+	}
 	
 	focus = {
 		id = ENG_westminster_project
 		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = ENG_military_industry_experience }
 		prerequisite = { focus = ENG_class_war }
-		x = 5
-		y = 9
+		x = 12
+		y = 13
 		cost = 10
 		
 		ai_will_do = {
@@ -1446,8 +1842,8 @@ focus_tree = {
 		id = ENG_total_mobilization
 		icon = GFX_goal_generic_soviet_construction
 		prerequisite = { focus = ENG_class_war }
-		x = 7
-		y = 9
+		x = 14
+		y = 13
 		cost = 10
 		
 		ai_will_do = {
@@ -1462,10 +1858,9 @@ focus_tree = {
 	focus = {
 		id = ENG_fortress_britain
 		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = ENG_expand_army }
 		prerequisite = { focus = ENG_class_war }
-		x = 9
-		y = 9
+		x = 16
+		y = 13
 		cost = 15
 		
 		ai_will_do = {
@@ -1648,802 +2043,6 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = ENG_fortress_britain_tp
-		}
-	}
-
-	# Internal
-
-	focus = {
-		id = ENG_emergency_powers
-		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = ENG_devolution focus = ENG_evolution }
-		mutually_exclusive = { focus = ENG_new_society }
-		available = { has_war = yes threat > 0.5 }
-		x = 6
-		y = 7
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			add_political_power = 100
-		}
-	}
-	
-	focus = {
-		id = ENG_new_society
-		icon = GFX_goal_generic_military_sphere
-		prerequisite = { focus = ENG_evolution focus = ENG_revolution }
-		mutually_exclusive = { focus = ENG_emergency_powers }
-		available = { has_war = yes threat > 0.5 }
-		x = 8
-		y = 7
-		cost = 10
-		
-		ai_will_do = {
-			factor = 13
-		}
-		
-		completion_reward = {
-			add_political_power = 100
-			
-			### Todo
-			# Consequences
-			
-		}
-	}
-	
-	focus = {
-		id = ENG_class_war
-		icon = GFX_goal_generic_war_with_comintern
-		prerequisite = { focus = ENG_emergency_powers focus = ENG_new_society }
-		available = {
-		}
-		x = 7
-		y = 8
-		cost = 20
-		
-		ai_will_do = {
-			factor = 20
-		}
-		
-		completion_reward = {
-			add_national_unity = 0.05
-			hidden_effect = {
-				remove_ideas = ENG_tuc_economy_mosley_idea
-				remove_ideas = ENG_tuc_economy_fem_idea
-				remove_ideas = ENG_tuc_economy_glaise_idea
-				remove_ideas = ENG_tuc_internal_mosley_idea
-				remove_ideas = ENG_tuc_internal_fem_idea
-				remove_ideas = ENG_tuc_internal_glaise_idea
-				remove_ideas = ENG_tuc_military_mosley_idea
-				remove_ideas = ENG_tuc_military_fem_idea
-				remove_ideas = ENG_tuc_military_glaise_idea
-				remove_ideas = ENG_tuc_foreign_mosley_idea
-				remove_ideas = ENG_tuc_foreign_fem_idea
-				remove_ideas = ENG_tuc_foreign_glaise_idea
-			}
-			add_ideas = ENG_class_war_idea
-		}
-	}
-	
-	# Military
-	
-	focus = {
-		id = ENG_expand_army
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_improve_army2 }
-		x = 10
-		y = 8
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			army_experience = 25
-			navy_experience = 25
-			air_experience = 25
-		}
-	}
-	
-	focus = {
-		id = ENG_expand_army2
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_improve_army2 }
-		x = 10
-		y = 10
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = support_tech
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_artillery_research
-		icon = GFX_goal_generic_army_artillery2
-		prerequisite = { focus = ENG_expand_army2 }
-		x = 11
-		y = 11
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = artillery
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_small_boat_research
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = ENG_improve_army2 }
-		x = 12
-		y = 8
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = dd_tech
-			}	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = cl_tech
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_navy_doctrine
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		prerequisite = { focus = ENG_small_boat_research }
-		x = 11
-		y = 9
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_big_boat_research
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = ENG_small_boat_research }
-		x = 12
-		y = 10
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = bc_tech
-			}	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = bb_tech
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_motorized
-		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = ENG_improve_army2 }
-		x = 13
-		y = 9
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = motorized_equipment
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_tank_research
-		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = ENG_motorized }
-		x = 13
-		y = 11
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = armor
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_improve_army2
-		icon = GFX_goal_generic_allies_build_infantry
-		prerequisite = { focus = ENG_red }
-		prerequisite = { focus = ENG_raf }
-		available = { has_war = yes threat > 0.5}
-		x = 13
-		y = 7
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = infantry_weapons
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_fighter_research
-		icon = GFX_goal_generic_air_fighter
-		prerequisite = { focus = ENG_improve_army2 focus = ENG_raf }
-		x = 14
-		y = 8
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = light_fighter
-			}	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = cat_heavy_fighter
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_air_doctrine
-		icon = GFX_goal_generic_air_doctrine
-		prerequisite = { focus = ENG_fighter_research }
-		x = 15
-		y = 9
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_bomber_research
-		icon = GFX_goal_generic_air_bomber
-		prerequisite = { focus = ENG_fighter_research }
-		x = 14
-		y = 10
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = tactical_bomber
-			}	
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = cat_strategic_bomber
-			}	
-		}
-	}
-	
-	focus = {
-		id = ENG_blood
-		icon = GFX_goal_generic_attack_allies
-		prerequisite = { focus = ENG_artillery_research }
-		prerequisite = { focus = ENG_tank_research }
-		x = 12
-		y = 12
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			add_ideas = ENG_blood_idea
-		}
-	}
-	
-	# Foreign
-	
-	#focus = {
-	#	id = ENG_convoy_system
-	#	icon = GFX_goal_generic_consumer_goods
-	#	prerequisite = { focus = ENG_transatlantic_trade focus = ENG_north_sea_trade }
-	#	available = { has_war = yes threat > 0.5}
-	#	x = 17
-	#	y = 7
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#	}
-	#}
-	
-	### Phalanstere
-	
-	# Phalanstere
-	
-	#focus = {
-	#	id = ENG_phalanstere_internationale
-	#	icon = GFX_goal_generic_production
-	#	prerequisite = { focus = ENG_third_international }
-	#	x = 26
-	#	y = 1
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#	
-	#	}
-	#}
-	
-	# Develop...
-	
-	#focus = {
-	#	id = ENG_develop_europe
-	#	icon = GFX_goal_generic_construct_civ_factory
-	#	prerequisite = { focus = ENG_phalanstere_internationale }
-	#	x = 24
-	#	y = 2
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#		custom_effect_tooltip = ENG_phalanstere_tp
-	#		every_other_country = { 
-	#			limit = { 
-	#				AND = {
-	#					all_owned_state = {
-	#						is_on_continent = europe
-	#					}
-	#					is_in_faction_with = ENG
-	#				}
-	#			}
-	#			add_opinion_modifier = { 
-	#				target = ENG modifier = aided_industry 
-	#			}
-	#			random_owned_state = {
-	#				add_extra_state_shared_building_slots = 2
-	#				add_building_construction = {
-	#					type = industrial_complex
-	#					level = 2
-	#					instant_build = yes
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
-	
-	#focus = {
-	#	id = ENG_develop_middle_east
-	#	icon = GFX_goal_generic_construct_civ_factory
-	#	prerequisite = { focus = ENG_phalanstere_internationale }
-	#	x = 25
-	#	y = 3
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#		custom_effect_tooltip = ENG_phalanstere_tp
-	#		every_other_country = { 
-	#			limit = { 
-	#				AND = {
-	#					all_owned_state = {
-	#						is_on_continent = middle_east
-	#					}
-	#					is_in_faction_with = ENG
-	#				}
-	#			}
-	#			add_opinion_modifier = { 
-	#				target = ENG modifier = aided_industry 
-	#			}
-	#			random_owned_state = {
-	#				add_extra_state_shared_building_slots = 2
-	#				add_building_construction = {
-	#					type = industrial_complex
-	#					level = 2
-	#					instant_build = yes
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
-	
-	#focus = {
-	#	id = ENG_develop_far_east
-	#	icon = GFX_goal_generic_construct_civ_factory
-	#	prerequisite = { focus = ENG_phalanstere_internationale }
-	#	x = 26
-	#	y = 2
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#		custom_effect_tooltip = ENG_phalanstere_tp
-	#		every_other_country = { 
-	#			limit = { 
-	#				AND = {
-	#					all_owned_state = {
-	#						is_on_continent = asia
-	#					}
-	#					is_in_faction_with = ENG
-	#				}
-	#			}
-	#			add_opinion_modifier = { 
-	#				target = ENG modifier = aided_industry 
-	#			}
-	#			random_owned_state = {
-	#				add_extra_state_shared_building_slots = 2
-	#				add_building_construction = {
-	#					type = industrial_complex
-	#					level = 2
-	#					instant_build = yes
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
-	
-	#focus = {
-	#	id = ENG_develop_central_america
-	#	icon = GFX_goal_generic_construct_civ_factory
-	#	prerequisite = { focus = ENG_phalanstere_internationale }
-	#	x = 27
-	#	y = 3
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#		custom_effect_tooltip = ENG_phalanstere_tp
-	#		every_other_country = { 
-	#			limit = { 
-	#				AND = {
-	#					all_owned_state = {
-	#						is_on_continent = central_america
-	#					}
-	#					is_in_faction_with = ENG
-	#				}
-	#			}
-	#			add_opinion_modifier = { 
-	#				target = ENG modifier = aided_industry 
-	#			}
-	#			random_owned_state = {
-	#				add_extra_state_shared_building_slots = 2
-	#				add_building_construction = {
-	#					type = industrial_complex
-	#					level = 2
-	#					instant_build = yes
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
-
-	
-	#focus = {
-	#	id = ENG_develop_south_america
-	#	icon = GFX_goal_generic_construct_civ_factory
-	#	prerequisite = { focus = ENG_phalanstere_internationale }
-	#	x = 28
-	#	y = 2
-	#	cost = 10
-	#	
-	#	completion_reward = {
-	#		custom_effect_tooltip = ENG_phalanstere_tp
-	#		every_other_country = { 
-	#			limit = { 
-	#				AND = {
-	#					all_owned_state = {
-	#						is_on_continent = south_america
-	#					}
-	#					is_in_faction_with = ENG
-	#				}
-	#			}
-	#			add_opinion_modifier = { 
-	#				target = ENG modifier = aided_industry 
-	#			}
-	#			random_owned_state = {
-	#				add_extra_state_shared_building_slots = 2
-	#				add_building_construction = {
-	#					type = industrial_complex
-	#					level = 2
-	#					instant_build = yes
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
-	
-	# Foreign
-	
-	focus = {
-		id = ENG_go_with_france
-		icon = GFX_goal_anschluss
-		prerequisite = { focus = ENG_tuc_foreign }
-		available = { 
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 16
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			FRA = {
-				add_to_faction = ENG
-				news_event = { id = uob.65 days = 3 }
-			}
-			add_ai_strategy = {
-				type = alliance
-				id = "FRA"
-				value = 200
-			}
-		}
-	}
-	
-	# Syndicalist Mission to Norway
-	
-	focus = {
-		id = ENG_mission_to_norway
-		icon = GFX_goal_generic_improve_relations
-		prerequisite = { focus = ENG_tuc_foreign }
-		available = { 
-			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
-					has_idea = ENG_tuc_foreign_fem_idea		
-			}
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 18
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			if = {
-				limit = {
-					NOR = {
-						OR = {
-							has_government = totalist
-							has_government = syndicalist
-							has_government = radical_socialist
-						}
-					}
-				}
-				NOR = {
-					country_event = { id = uob.334 }
-				}
-			}
-			if = {
-				limit = {
-					NOR = {
-						NOT = {
-							has_government = totalist
-							has_government = syndicalist
-							has_government = radical_socialist
-						}
-					}
-				}
-				NOR = {
-					country_event = { id = uob.335 }
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ENG_invite_norway
-		icon = GFX_goal_generic_alliance
-		prerequisite = { focus = ENG_mission_to_norway }
-		available = {
-			NOR = {
-				OR = {
-					has_government = totalist
-					has_government = syndicalist
-					has_government = radical_socialist
-				}
-			}
-		}
-		x = 18
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 15
-		}
-		
-		completion_reward = {
-			NOR = {
-				country_event = { id = uob.337 }
-			}
-		}
-	}
-	
-	#focus = {
-	#	id = ENG_the_hague_conference
-	#	icon = GFX_goal_generic_major_alliance
-	#	prerequisite = { focus = ENG_tuc_foreign }
-	#	available = { 
-	#		has_idea = ENG_tuc_foreign_glaise_idea
-	#		NOT = {
-	#			FRA = {
-	#				has_war_with = GER
-	#			}
-	#		}
-	#		threat > 0.3
-	#		hidden_trigger = { 
-	#			has_completed_focus = ENG_tuc_economy
-	#			has_completed_focus = ENG_tuc_internal
-	#			has_completed_focus = ENG_tuc_military
-	#			has_completed_focus = ENG_tuc_foreign 
-	#		}
-	#	}
-	#	x = 16
-	#	y = 2
-	#	cost = 10
-	#	
-	#	ai_will_do = {
-	#		factor = 5
-	#	}
-	#	
-	#	completion_reward = {
-			#set_country_flag = ENG_hague
-			#FRA = {
-			#	country_event = { id = uob.301 days = 7 }
-			#}
-			#GER = {
-			#	country_event = { id = uob.302 days = 7 }
-			#}
-	#	}
-	#}
-	
-	# Show of Force
-	
-	focus = {
-		id = ENG_show_of_force
-		icon = GFX_goal_generic_occupy_states_coastal
-		prerequisite = { focus = ENG_tuc_foreign }
-		available = { 
-			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
-					has_idea = ENG_tuc_foreign_fem_idea		
-			}
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 20
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 5
-		}
-		
-		completion_reward = {
-			ENG = {
-				country_event = { id = uob.15 days = 14 }
-			}
-		}
-	}
-	
-	# Military Interventions
-	
-	focus = {
-		id = ENG_military_interventions
-		icon = GFX_goal_generic_territory_or_war
-		prerequisite = { focus = ENG_tuc_foreign }
-		available = { 
-			OR = { 	has_idea = ENG_tuc_foreign_mosley_idea
-					has_idea = ENG_tuc_foreign_fem_idea		
-			}
-			hidden_trigger = { 
-				has_completed_focus = ENG_tuc_economy
-				has_completed_focus = ENG_tuc_internal
-				has_completed_focus = ENG_tuc_military
-				has_completed_focus = ENG_tuc_foreign 
-			}
-		}
-		x = 22
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_ideas = ENG_revolutionary_spirit_idea
-			
 		}
 	}
 }

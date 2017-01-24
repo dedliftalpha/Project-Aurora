@@ -15,7 +15,7 @@ country_event = { #Go down to good stab
 	}
 	
 	mean_time_to_happen = {
-		days = 30
+		days = 50
 		
 		modifier = {
 			factor = 0.75
@@ -32,6 +32,7 @@ country_event = { #Go down to good stab
 		name = kr.political.1.a
 			hidden_effect = { remove_ideas = very_good_stability }
 			add_ideas = good_stability
+			set_country_flag = good_stability
 		
 	}
 }
@@ -47,7 +48,7 @@ country_event = { #Go down to normal stab
 	}
 	
 	mean_time_to_happen = {
-		days = 45
+		days = 75
 		
 		modifier = {
 			factor = 0.75
@@ -64,6 +65,8 @@ country_event = { #Go down to normal stab
 		name = kr.political.2.a
 			hidden_effect = { remove_ideas = good_stability }
 			add_ideas = normal_stability
+			set_country_flag = normal_stability
+			clr_country_flag = good_stability
 		
 	}
 }
@@ -74,7 +77,7 @@ country_event = { #Go down to low stab
 	desc = kr.political.3.d
 	
 	trigger = {
-		has_political_power < -60
+		has_political_power < -50
 		has_idea = normal_stability	
 	}
 	
@@ -96,6 +99,7 @@ country_event = { #Go down to low stab
 		name = kr.political.3.a
 			hidden_effect = { remove_ideas = normal_stability }
 			add_ideas = low_stability
+			clr_country_flag = normal_stability
 			if = { limit = { has_idea = usa_cw_average } remove_ideas = usa_cw_average add_ideas = usa_cw_low }
 			if = { limit = { has_idea = rus_cw_average } remove_ideas = rus_cw_average add_ideas = rus_cw_low }
 		
@@ -108,7 +112,7 @@ country_event = { #Go down to very low stab
 	desc = kr.political.4.d
 	
 	trigger = {
-		has_political_power < -200
+		has_political_power < -250
 		has_idea = low_stability	
 	}
 	
@@ -175,7 +179,7 @@ country_event = { #Go up to very low stab
 	desc = kr.political.6.d
 	
 	trigger = {
-		has_political_power > -450
+		has_political_power > -500
 		has_idea = desaster
 	}
 	
@@ -207,7 +211,7 @@ country_event = { #Go up to low stab
 	desc = kr.political.7.d
 	
 	trigger = {
-		has_political_power > -100
+		has_political_power > -250
 		has_idea = very_low_stability
 	}
 	
@@ -239,7 +243,7 @@ country_event = { #Go up to normal stab
 	desc = kr.political.8.d
 	
 	trigger = {
-		has_political_power > 50
+		has_political_power > -50
 		has_idea = low_stability
 	}
 	
@@ -260,15 +264,18 @@ country_event = { #Go up to normal stab
 		name = kr.political.8.a
 			hidden_effect = { remove_ideas = low_stability }
 			add_ideas = normal_stability
+			set_country_flag = normal_stability
 			if = { limit = { has_idea = usa_cw_low } remove_ideas = usa_cw_low add_ideas = usa_cw_average }
 			if = { limit = { has_idea = rus_cw_low } remove_ideas = rus_cw_low add_ideas = rus_cw_average }
 	}
 }
 
-country_event = { #Go up to good stab
+country_event = { #Informal event: Go up to good stab
 	id = kr.political.9
 	title = kr.political.9.t
 	desc = kr.political.9.d
+	
+	fire_only_once = yes
 	
 	trigger = {
 		has_political_power > 150
@@ -276,50 +283,66 @@ country_event = { #Go up to good stab
 	}
 	
 	mean_time_to_happen = {
-		days = 90
+		days = 5
 	}
 	
 	option = {
 		name = kr.political.9.a
-		ai_chance = { factor = 50 }
-		add_political_power = -150
-			hidden_effect = { remove_ideas = normal_stability }
-			add_ideas = good_stability
-	}
-	option = {
-		name = kr.political.9.b
-		ai_chance = { factor = 50 }
-		
 	}
 }
 
-country_event = { #Go up to very good stab
+country_event = { #Check for good stab
 	id = kr.political.10
 	title = kr.political.10.t
 	desc = kr.political.10.d
 	
+	fire_only_once = no
+	
+	hidden = yes
+	
 	trigger = {
-		has_political_power > 150
 		has_idea = good_stability
+		NOT = { has_country_flag = good_stability }
 	}
 	
 	mean_time_to_happen = {
-		days = 150
+		days = 2
 	}
 	
 	option = {
 		name = kr.political.10.a
-		ai_chance = { factor = 25 }
-		add_political_power = -150
-			hidden_effect = { remove_ideas = good_stability }
-			add_ideas = very_good_stability
-	}
-	option = {
-		name = kr.political.10.b
-		ai_chance = { factor = 75 }
-		
+		clr_country_flag = normal_stability
+		set_country_flag = good_stability
 	}
 }
+
+#country_event = { #Go up to very good stab
+	#id = kr.political.10
+	#title = kr.political.10.t
+	#desc = kr.political.10.d
+	
+	#trigger = {
+		#has_political_power > 150
+		#has_idea = good_stability
+	#}
+	
+	#mean_time_to_happen = {
+		#days = 150
+	#}
+	
+	#option = {
+		#name = kr.political.10.a
+		#ai_chance = { factor = 25 }
+		#add_political_power = -150
+			#hidden_effect = { remove_ideas = good_stability }
+			#add_ideas = very_good_stability
+	#}
+	#option = {
+		#name = kr.political.10.b
+		#ai_chance = { factor = 75 }
+		
+	#}
+#}
 
 ### very_high_popularity
 country_event = {
@@ -405,52 +428,52 @@ country_event = {
 		OR = {
 			AND = {
 				has_government = totalist
-				totalist < 0.79
+				totalist < 0.799
 				totalist > 0.60
 			}
 			AND = {
 				has_government = radical_socialist
-				radical_socialist < 0.79
+				radical_socialist < 0.799
 				radical_socialist > 0.60
 			}
 			AND = {
 				has_government = syndicalist
-				syndicalist < 0.79
+				syndicalist < 0.799
 				syndicalist > 0.60
 			}
 			AND = {
 				has_government = social_democrat
-				social_democrat < 0.79
+				social_democrat < 0.799
 				social_democrat > 0.60
 			}
 			AND = {
 				has_government = social_liberal
-				social_liberal < 0.79
+				social_liberal < 0.799
 				social_liberal > 0.60
 			}
 			AND = {
 				has_government = market_liberal
-				market_liberal < 0.79
+				market_liberal < 0.799
 				market_liberal > 0.60
 			}
 			AND = {
 				has_government = social_conservative
-				social_conservative < 0.79
+				social_conservative < 0.799
 				social_conservative > 0.60
 			}
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat < 0.79
+				authoritarian_democrat < 0.799
 				authoritarian_democrat > 0.60
 			}
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat < 0.79
+				paternal_autocrat < 0.799
 				paternal_autocrat > 0.60
 			}
 			AND = {
 				has_government = national_populist
-				national_populist < 0.79
+				national_populist < 0.799
 				national_populist > 0.60
 			}
 		}
@@ -486,52 +509,52 @@ country_event = {
 		OR = {
 			AND = {
 				has_government = totalist
-				totalist < 0.59
+				totalist < 0.599
 				totalist > 0.40
 			}
 			AND = {
 				has_government = radical_socialist
-				radical_socialist < 0.59
+				radical_socialist < 0.599
 				radical_socialist > 0.40
 			}
 			AND = {
 				has_government = syndicalist
-				syndicalist < 0.59
+				syndicalist < 0.599
 				syndicalist > 0.40
 			}
 			AND = {
 				has_government = social_democrat
-				social_democrat < 0.59
+				social_democrat < 0.599
 				social_democrat > 0.40
 			}
 			AND = {
 				has_government = social_liberal
-				social_liberal < 0.59
+				social_liberal < 0.599
 				social_liberal > 0.40
 			}
 			AND = {
 				has_government = market_liberal
-				market_liberal < 0.59
+				market_liberal < 0.599
 				market_liberal > 0.40
 			}
 			AND = {
 				has_government = social_conservative
-				social_conservative < 0.59
+				social_conservative < 0.599
 				social_conservative > 0.40
 			}
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat < 0.59
+				authoritarian_democrat < 0.599
 				authoritarian_democrat > 0.40
 			}
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat < 0.59
+				paternal_autocrat < 0.599
 				paternal_autocrat > 0.40
 			}
 			AND = {
 				has_government = national_populist
-				national_populist < 0.59
+				national_populist < 0.599
 				national_populist > 0.40
 			}
 		}
@@ -567,52 +590,52 @@ country_event = {
 		OR = {
 			AND = {
 				has_government = totalist
-				totalist < 0.39
+				totalist < 0.399
 				totalist > 0.20
 			}
 			AND = {
 				has_government = radical_socialist
-				radical_socialist < 0.39
+				radical_socialist < 0.399
 				radical_socialist > 0.20
 			}
 			AND = {
 				has_government = syndicalist
-				syndicalist < 0.39
+				syndicalist < 0.399
 				syndicalist > 0.20
 			}
 			AND = {
 				has_government = social_democrat
-				social_democrat < 0.39
+				social_democrat < 0.399
 				social_democrat > 0.20
 			}
 			AND = {
 				has_government = social_liberal
-				social_liberal < 0.39
+				social_liberal < 0.399
 				social_liberal > 0.20
 			}
 			AND = {
 				has_government = market_liberal
-				market_liberal < 0.39
+				market_liberal < 0.399
 				market_liberal > 0.20
 			}
 			AND = {
 				has_government = social_conservative
-				social_conservative < 0.39
+				social_conservative < 0.399
 				social_conservative > 0.20
 			}
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat < 0.39
+				authoritarian_democrat < 0.399
 				authoritarian_democrat > 0.20
 			}
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat < 0.39
+				paternal_autocrat < 0.399
 				paternal_autocrat > 0.20
 			}
 			AND = {
 				has_government = national_populist
-				national_populist < 0.39
+				national_populist < 0.399
 				national_populist > 0.20
 			}
 		}
@@ -648,45 +671,45 @@ country_event = {
 		OR = {
 			AND = {
 				has_government = totalist
-				totalist < 0.19
+				totalist < 0.199
 			}
 			AND = {
 				has_government = radical_socialist
-				radical_socialist < 0.19
+				radical_socialist < 0.199
 				
 			}
 			AND = {
 				has_government = syndicalist
-				syndicalist < 0.19
+				syndicalist < 0.199
 
 			}
 			AND = {
 				has_government = social_democrat
-				social_democrat < 0.19
+				social_democrat < 0.199
 			}
 			AND = {
 				has_government = social_liberal
-				social_liberal < 0.19
+				social_liberal < 0.199
 			}
 			AND = {
 				has_government = market_liberal
-				market_liberal < 0.19
+				market_liberal < 0.199
 			}
 			AND = {
 				has_government = social_conservative
-				social_conservative < 0.19
+				social_conservative < 0.199
 			}
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat < 0.19
+				authoritarian_democrat < 0.199
 			}
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat < 0.19
+				paternal_autocrat < 0.199
 			}
 			AND = {
 				has_government = national_populist
-				national_populist < 0.19
+				national_populist < 0.199
 			}
 		}
 	}
@@ -723,9 +746,9 @@ country_event = {
 			has_government = syndicalist
 		}
 		OR = {
-		AND = { has_idea_with_trait =  totalist totalist < 70 }
-		AND = { has_idea_with_trait =  radical_socialist radical_socialist < 70 }
-		AND = { has_idea_with_trait =  syndicalist syndicalist < 70 }
+		AND = { has_idea_with_trait =  totalist totalist < 0.7 }
+		AND = { has_idea_with_trait =  radical_socialist radical_socialist < 0.7 }
+		AND = { has_idea_with_trait =  syndicalist syndicalist < 0.7 }
 		}
 	}
 	
@@ -735,16 +758,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = totalist
-				totalist > 30
-				totalist < 39
+				totalist > 0.3
+				totalist < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = totalist
-				totalist > 40
-				totalist < 50
+				totalist > 0.4
+				totalist < 0.5
 			}
 		}
 		
@@ -752,16 +775,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = radical_socialist
-				radical_socialist > 30
-				radical_socialist < 39
+				radical_socialist > 0.3
+				radical_socialist < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = radical_socialist
-				radical_socialist > 40
-				radical_socialist < 50
+				radical_socialist > 0.4
+				radical_socialist < 0.5
 			}
 		}
 		
@@ -769,16 +792,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = syndicalist
-				syndicalist > 30
-				syndicalist < 39
+				syndicalist > 0.3
+				syndicalist < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = syndicalist
-				syndicalist > 40
-				syndicalist < 50
+				syndicalist > 0.4
+				syndicalist < 0.5
 			}
 		}
 	}
@@ -923,16 +946,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = totalist
-				totalist > 60
-				totalist < 79
+				totalist > 0.6
+				totalist < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = totalist
-				totalist > 80
-				totalist < 100
+				totalist > 0.8
+				totalist < 1
 			}
 		}
 		
@@ -940,16 +963,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = radical_socialist
-				radical_socialist > 60
-				radical_socialist < 79
+				radical_socialist > 0.6
+				radical_socialist < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = radical_socialist
-				radical_socialist > 80
-				radical_socialist < 100
+				radical_socialist > 0.8
+				radical_socialist < 1
 			}
 		}
 		
@@ -957,16 +980,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = syndicalist
-				syndicalist > 60
-				syndicalist < 79
+				syndicalist > 0.6
+				syndicalist < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = syndicalist
-				syndicalist > 80
-				syndicalist < 100
+				syndicalist > 0.8
+				syndicalist < 1
 			}
 		}
 	}
@@ -1057,12 +1080,12 @@ country_event = {
 		AND = {
 			has_government = authoritarian_democrat	
 			has_idea_with_trait =  authoritarian_democrat
-			authoritarian_democrat < 97
+			authoritarian_democrat < 0.97
 		}
 		AND = {
 			has_government = paternal_autocrat	
 			has_idea_with_trait =  paternal_autocrat
-			paternal_autocrat < 97
+			paternal_autocrat < 0.97
 		} }
 	}
 	
@@ -1072,16 +1095,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat > 60
-				authoritarian_democrat < 79
+				authoritarian_democrat > 0.6
+				authoritarian_democrat < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = authoritarian_democrat
-				authoritarian_democrat > 80
-				authoritarian_democrat < 100
+				authoritarian_democrat > 0.8
+				authoritarian_democrat < 1
 			}
 		}
 		
@@ -1089,16 +1112,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat > 60
-				paternal_autocrat < 79
+				paternal_autocrat > 0.6
+				paternal_autocrat < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = paternal_autocrat
-				paternal_autocrat > 80
-				paternal_autocrat < 100
+				paternal_autocrat > 0.8
+				paternal_autocrat < 1
 			}
 		}
 	}
@@ -1182,16 +1205,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = national_populist
-				national_populist > 60
-				national_populist < 79
+				national_populist > 0.6
+				national_populist < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = national_populist
-				national_populist > 80
-				national_populist < 100
+				national_populist > 0.8
+				national_populist < 1
 			}
 		}
 	}
@@ -1279,16 +1302,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = social_democrat
-				social_democrat > 60
-				social_democrat < 79
+				social_democrat > 0.6
+				social_democrat < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = social_democrat
-				social_democrat > 80
-				social_democrat < 100
+				social_democrat > 0.8
+				social_democrat < 1
 			}
 		}
 		
@@ -1296,16 +1319,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = social_liberal
-				social_liberal > 60
-				social_liberal < 79
+				social_liberal > 0.6
+				social_liberal < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = social_liberal
-				social_liberal > 80
-				social_liberal < 100
+				social_liberal > 0.8
+				social_liberal < 1
 			}
 		}
 		
@@ -1313,16 +1336,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = market_liberal
-				market_liberal > 60
-				market_liberal < 79
+				market_liberal > 0.6
+				market_liberal < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = market_liberal
-				market_liberal > 80
-				market_liberal < 100
+				market_liberal > 0.8
+				market_liberal < 1
 			}
 		}
 		
@@ -1330,16 +1353,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_government = social_conservative
-				social_conservative > 60
-				social_conservative < 79
+				social_conservative > 0.6
+				social_conservative < 0.799
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_government = social_conservative
-				social_conservative > 80
-				social_conservative < 100
+				social_conservative > 0.8
+				social_conservative < 1
 			}
 		}
 	}
@@ -1457,16 +1480,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = paternal_autocrat
-				paternal_autocrat > 30
-				paternal_autocrat < 39
+				paternal_autocrat > 0.3
+				paternal_autocrat < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = paternal_autocrat
-				paternal_autocrat > 40
-				paternal_autocrat < 50
+				paternal_autocrat > 0.4
+				paternal_autocrat < 0.5
 			}
 		}
 		
@@ -1474,16 +1497,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = authoritarian_democrat
-				authoritarian_democrat > 30
-				authoritarian_democrat < 39
+				authoritarian_democrat > 0.3
+				authoritarian_democrat < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = authoritarian_democrat
-				authoritarian_democrat > 40
-				authoritarian_democrat < 50
+				authoritarian_democrat > 0.4
+				authoritarian_democrat < 0.5
 			}
 		}
 	}
@@ -1621,16 +1644,16 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = national_populist
-				paternal_autocrat > 30
-				paternal_autocrat < 39
+				paternal_autocrat > 0.3
+				paternal_autocrat < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = national_populist
-				paternal_autocrat > 40
-				paternal_autocrat < 50
+				paternal_autocrat > 0.4
+				paternal_autocrat < 0.5
 			}
 		}
 	}
@@ -1777,64 +1800,64 @@ country_event = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = social_conservative
-				social_conservative > 30
-				social_conservative < 39
+				social_conservative > 0.3
+				social_conservative < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = social_conservative
-				social_conservative > 40
-				social_conservative < 50
+				social_conservative > 0.4
+				social_conservative < 0.5
 			}
 		}
 		modifier = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = market_liberal
-				market_liberal > 30
-				market_liberal < 39
+				market_liberal > 0.3
+				market_liberal < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = market_liberal
-				market_liberal > 40
-				market_liberal < 50
+				market_liberal > 0.4
+				market_liberal < 0.5
 			}
 		}
 		modifier = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = social_liberal
-				social_liberal > 30
-				social_liberal < 39
+				social_liberal > 0.3
+				social_liberal < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = social_liberal
-				social_liberal > 40
-				social_liberal < 50
+				social_liberal > 0.4
+				social_liberal < 0.5
 			}
 		}
 		modifier = {
 			factor = 2
 			AND = {
 				has_idea_with_trait = social_democrat
-				social_democrat > 30
-				social_democrat < 39
+				social_democrat > 0.3
+				social_democrat < 0.399
 			}
 		}
 		modifier = {
 			factor = 4
 			AND = {
 				has_idea_with_trait = social_democrat
-				social_democrat > 40
-				social_democrat < 50
+				social_democrat > 0.4
+				social_democrat < 0.5
 			}
 		}
 	}

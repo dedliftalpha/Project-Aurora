@@ -15,6 +15,7 @@ country_event = {
 
 	trigger = {
 		tag = ROM
+		is_ai = no
 	}
 
 	mean_time_to_happen = {
@@ -141,13 +142,7 @@ news_event = {
 		days = 2
 	}
 
-	option = {
-		name = romania.4.a
-		trigger = {
-			tag = ROM
-		}
-		add_political_power = 20
-
+	immediate = {
 		hidden_effect = {
 			news_event = { days = 365 id = romania.5 }
 			news_event = { days = 730 id = romania.5 }
@@ -160,6 +155,12 @@ news_event = {
 			news_event = { days = 3285 id = romania.5 }
 			news_event = { days = 3650 id = romania.5 }
 		}
+	}
+
+	option = {
+		name = romania.4.a
+
+		add_political_power = 20
 	}
 }
 
@@ -174,9 +175,7 @@ news_event = {
 
 	option = {
 		name = romania.4.a
-		trigger = {
-			tag = ROM
-		}
+
 		add_political_power = 20
 	}
 }
@@ -244,6 +243,15 @@ country_event = {
 			 country_exists = RRM
 		}
 
+		# No civil war if Romania is a puppet
+		is_puppet = no
+
+		# Controls the base two provinces
+		AND = {
+			78 = { is_owned_by = ROM }
+			79 = { is_owned_by = ROM }
+		}
+
 		# If Bucharest Circle was not immediately purged, or if the country is unstable
 		OR = {
 			has_country_flag = bucharest_circle
@@ -273,7 +281,12 @@ country_event = {
 	}
 
 	immediate = {
-		hidden_effect = { ROM = { every_owned_state = { add_core_of = RRM } }	}
+		hidden_effect = {
+			every_state = {
+				limit = { is_core_of = ROM }
+				add_core_of = RRM
+			}
+		}
 	}
 
 	option = {
@@ -288,12 +301,12 @@ country_event = {
 			transfer_state = 79 # Moldova
 
 			if = {
-				limit = { 80 = { is_owned_by = ROM } }
+				limit = { 80 = { is_owned_and_controlled_by = ROM } }
 				transfer_state = 80 # Bucovina
 			}
 
 			if = {
-				limit = { 789 = { is_owned_by = ROM } }
+				limit = { 789 = { is_owned_and_controlled_by = ROM } }
 				transfer_state = 789 # East Transylvania
 			}
 

@@ -735,5 +735,686 @@ focus_tree = {
 			add_ideas = LIT_anbo_superiority
 		}
 	}
+	
+	focus = {
+		id = LIT_election_1938
+		icon = GFX_goal_support_democracy
+		x = 27
+		y = 0
+		cost = 10
+		available = { always = no }
+		bypass = {
+			has_country_flag = LIT_1938_elc
+		}		
+		ai_will_do = {
+			factor = 0
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = LIT_elc_tooltip
+		}
+	}
+	
+	focus = {
+		id = LIT_loyalty
+		icon = GFX_goal_generic_dangerous_deal
+		x = 23
+		y = 1
+		cost = 1
+		mutually_exclusive = { focus = LIT_republic }
+		prerequisite = { focus = LIT_election_1938 }		
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0.1
+				has_government = national_populist
+			}
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			#add_opinion_modifier = { target = GER modifier = LIT_loyalty_op }
+		}
+	}
+	
+	focus = {
+		id = LIT_socdem_agenda
+		icon = GFX_goal_support_democracy
+		x = 20
+		y = 2
+		cost = 10
+		mutually_exclusive = { focus = LIT_chrdem_agenda focus = LIT_natdem_agenda }
+		prerequisite = { focus = LIT_loyalty }	
+		available = {
+			has_government = social_democrat
+		}		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 40
+			if = { limit = { NOT = { has_idea = LIT_welfare_state } } 
+			add_ideas = LIT_welfare_state }
+		}
+	}
+	
+	focus = {
+		id = LIT_welfare
+		icon = GFX_goal_generic_propaganda
+		x = 20
+		y = 3
+		cost = 10
+		prerequisite = { focus = LIT_socdem_agenda }	
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			11 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_siauliai_affair
+		icon = GFX_goal_generic_military_sphere
+		x = 19
+		y = 4
+		cost = 10
+		prerequisite = { focus = LIT_welfare }	
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = -40
+			add_popularity = { ideology = national_populist popularity = -0.10 }
+			set_country_flag = LIT_voldemaras_arrested
+		}
+	}
+	
+	focus = {
+		id = LIT_democratic_reform
+		icon = GFX_goal_support_democracy
+		x = 21
+		y = 4
+		cost = 10
+		prerequisite = { focus = LIT_welfare }	
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			add_popularity = { ideology = social_democrat popularity = 0.10 }
+			add_national_unity = 0.05
+		}
+	}
+	
+	focus = {
+		id = LIT_crush_syndies
+		icon = GFX_goal_generic_forceful_treaty
+		x = 19
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_democratic_reform }	
+		mutually_exclusive = { focus = LIT_negotiate_syndies }
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = -50
+			add_popularity = { ideology = syndicalist popularity = -0.50 }
+			add_popularity = { ideology = totalist popularity = -0.50 }
+			add_popularity = { ideology = radical_socialist popularity = -0.50 }
+			set_country_flag = totalist_banned
+			set_country_flag = syndicalist_banned
+			set_country_flag = radical_socialist_banned
+			add_manpower = -500
+		}
+	}
+	
+	focus = {
+		id = LIT_negotiate_syndies
+		icon = GFX_goal_support_democracy
+		x = 21
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_democratic_reform }	
+		mutually_exclusive = { focus = LIT_crush_syndies }
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 40
+			set_country_flag = totalist_banned	
+			189 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_national_unity = -0.05
+		}
+	}
+	
+	focus = {
+		id = LIT_baltic_model
+		icon = GFX_goal_generic_neutrality_focus
+		x = 20
+		y = 6
+		cost = 10
+		prerequisite = { focus = LIT_crush_syndies focus = LIT_negotiate_syndies }	
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			remove_ideas = LIT_welfare_state 
+			add_political_power = 100
+			add_ideas = LIT_baltic_model
+		}
+	}
+	
+	focus = {
+		id = LIT_chrdem_agenda
+		icon = GFX_goal_generic_dangerous_deal
+		x = 23
+		y = 2
+		cost = 10
+		mutually_exclusive = { focus = LIT_socdem_agenda focus = LIT_natdem_agenda }
+		prerequisite = { focus = LIT_loyalty }	
+		available = {
+			has_government = authoritarian_democrat
+		}		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			add_ideas = LIT_christian_society
+		}
+	}
+	
+	focus = {
+		id = LIT_crush_radicals
+		icon = GFX_goal_generic_dangerous_deal
+		x = 23
+		y = 3
+		cost = 10
+		prerequisite = { focus = LIT_chrdem_agenda }			
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			set_country_flag = totalist_banned
+			set_country_flag = syndicalist_banned
+			set_country_flag = radical_socialist_banned
+			set_country_flag = national_populist_banned
+			set_country_flag = LIT_voldemaras_arrested
+			add_manpower = -500
+		}
+	}	
+	
+	focus = {
+		id = LIT_invite_settlers
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 23
+		y = 4
+		cost = 10
+		prerequisite = { focus = LIT_crush_radicals }			
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			11 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			11 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_manpower = 4000
+		}
+	}	
+	
+	focus = {
+		id = LIT_revise_constitution
+		icon = GFX_goal_support_democracy
+		x = 23
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_invite_settlers }			
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 150
+			set_country_flag = LIT_democracy
+			country_event = { id = lithuania.12 }
+			add_popularity = { ideology = social_conservative popularity = 0.35 }
+		}
+	}
+	
+	focus = {
+		id = LIT_diplomatic_autonomy
+		icon = GFX_goal_generic_neutrality_focus
+		x = 23
+		y = 6
+		cost = 10
+		prerequisite = { focus = LIT_revise_constitution }			
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			#add_ideas = LIT_autonomous
+		}
+	}
+	
+	focus = {
+		id = LIT_belarus_alignment
+		icon = GFX_goal_generic_demand_territory
+		x = 22
+		y = 7
+		cost = 10
+		prerequisite = { focus = LIT_diplomatic_autonomy }	
+		mutually_exclusive = { focus = LIT_baltic_alignment }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 1
+		}
+	}
+	
+	focus = {
+		id = LIT_baltic_alignment
+		icon = GFX_goal_generic_demand_territory
+		x = 24
+		y = 7
+		cost = 10
+		prerequisite = { focus = LIT_diplomatic_autonomy }
+		mutually_exclusive = { focus = LIT_belarus_alignment }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 1
+		}
+	}
+	
+	focus = {
+		id = LIT_natdem_agenda
+		icon = GFX_goal_support_fascism
+		x = 25
+		y = 2
+		cost = 10
+		mutually_exclusive = { focus = LIT_chrdem_agenda focus = LIT_socdem_agenda }
+		prerequisite = { focus = LIT_loyalty }	
+		available = {
+			has_government = national_populist
+		}		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+		}
+	}
+	
+	focus = {
+		id = LIT_promote_paramilitary
+		icon = GFX_goal_support_fascism
+		x = 25
+		y = 3
+		cost = 10
+		prerequisite = { focus = LIT_natdem_agenda }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = LIT_iron_wolf_domination
+			add_manpower = 5000
+		}
+	}
+	
+	focus = {
+		id = LIT_ban_trade_unions
+		icon = GFX_goal_generic_demand_territory
+		x = 25
+		y = 4
+		cost = 10
+		prerequisite = { focus = LIT_promote_paramilitary }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			set_country_flag = totalist_banned
+			set_country_flag = syndicalist_banned
+			set_country_flag = radical_socialist_banned
+			add_ideas = LIT_corporate_state
+		}
+	}
+	
+	focus = {
+		id = LIT_land_reform
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 25
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_ban_trade_unions }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+			11 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			189 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_limited_nationalism
+		icon = GFX_goal_generic_political_pressure
+		x = 25
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_ban_trade_unions }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			#add_ideas = LIT_autonomous
+			add_national_unity = 0.05
+		}
+	}
+	
+	focus = {
+		id = LIT_historical_revisionism
+		icon = GFX_goal_generic_dangerous_deal
+		x = 27
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_ban_trade_unions focus = LIT_reorganize_the_state }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			#add_opinion_modifier = { target = BLR modifier = LIT_revisionist }
+			#add_opinion_modifier = { target = UKR modifier = LIT_revisionist }
+			#add_opinion_modifier = { target = RUS modifier = LIT_revisionist }
+			#add_opinion_modifier = { target = POL modifier = LIT_revisionist }
+		}
+	}
+	
+	focus = {
+		id = LIT_anti_slavic_laws
+		icon = GFX_goal_generic_dangerous_deal
+		x = 27
+		y = 6
+		cost = 10
+		prerequisite = { focus = LIT_historical_revisionism }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 50
+		}
+	}
+	
+	focus = {
+		id = LIT_september_8
+		icon = GFX_goal_generic_dangerous_deal
+		x = 27
+		y = 7
+		cost = 10
+		prerequisite = { focus = LIT_anti_slavic_laws }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = LIT_national_pride
+		}
+	}
+	
+	focus = {
+		id = LIT_republic
+		icon = GFX_goal_support_fascism
+		x = 31
+		y = 1
+		cost = 1
+		prerequisite = { focus = LIT_election_1938 }	
+		mutually_exclusive = { focus = LIT_loyalty }
+		available = { has_government = national_populist }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			every_country = {
+				limit = { is_in_faction_with = LIT }
+				add_opinion_modifier = { modifier = LIT_revolution }
+			}
+			country_event = { id = lithuania.13 }
+		}
+	}
+	
+	focus = {
+		id = LIT_desperate_defense
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 33
+		y = 2
+		cost = 1
+		prerequisite = { focus = LIT_republic }	
+		available = { has_war_with = GER }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+
+		completion_reward = {
+			add_ideas = war_economy
+			
+		}
+	}		
+	
+	focus = {
+		id = LIT_nationalization_act
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 31
+		y = 2
+		cost = 10
+		prerequisite = { focus = LIT_republic }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			#add_opinion_modifier = { target = GER modifier = LIT_nationalization_act_opinion }
+			add_ideas = LIT_corporate_state
+		}
+	}
+	
+	focus = {
+		id = LIT_reorganize_the_state
+		icon = GFX_goal_support_fascism
+		x = 29
+		y = 4
+		cost = 10
+		prerequisite = { focus = LIT_nationalization_act }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 150
+		}
+	}
+	
+	focus = {
+		id = LIT_rewrite_the_constitution
+		icon = GFX_goal_support_fascism
+		x = 29
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_reorganize_the_state }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 150
+			add_popularity = { ideology = national_populist popularity = 0.2 }
+		}
+	}
+	
+	focus = {
+		id = LIT_iron_wolf_supremacy
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 29
+		y = 6
+		cost = 10
+		prerequisite = { focus = LIT_rewrite_the_constitution }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = LIT_iron_wolf_domination_2
+		}
+	}
+	
+	focus = {
+		id = LIT_vacation_in_varniai
+		icon = GFX_goal_generic_more_territorial_claims
+		x = 29
+		y = 7
+		cost = 10
+		prerequisite = { focus = LIT_iron_wolf_supremacy }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			add_ideas = very_high_popularity
+		}
+	}
+	
+	focus = {
+		id = LIT_industrial_effort
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 31
+		y = 5
+		cost = 10
+		prerequisite = { focus = LIT_reorganize_the_state }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			11 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			189 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = LIT_fortress_lithuania
+		icon = GFX_goal_generic_fortify_city
+		x = 31
+		y = 6
+		cost = 10
+		prerequisite = { focus = LIT_industrial_effort }		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			11 = {
+				add_building_construction = {
+					type = bunker
+					level = 5
+					province = 3320
+					instant_build = yes
+				}
+			}
+		}
+	}
 }
 

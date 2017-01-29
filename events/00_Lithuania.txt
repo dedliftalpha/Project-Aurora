@@ -240,7 +240,7 @@ country_event = {
 	
 }
 
-#The Red Flood
+#Syndicalist rally (Blue Cockades)
 news_event = { 
 	id = lithuania.10
 	title = lithuania.10.t
@@ -251,13 +251,23 @@ news_event = {
 	
 	trigger ={ 
 		tag = LIT
-		date > 1938.1.1
+		date > 1936.1.1
+		NOT = { has_government = totalist }
+		NOT = { has_government = syndicalist }
+		NOT = { has_government = radical_socialist }
+		NOT = { has_completed_focus = LIT_crush_syndies }
+		NOT = { has_completed_focus = LIT_negotiate_syndies }
+		NOT = { has_completed_focus = LIT_crush_radicals }
+		NOT = { has_completed_focus = LIT_ban_trade_unions }
+		NOT = { has_completed_focus = LIT_nationalization_act }
 	}
 		
-	mean_time_to_happen = {days = 180}
+	mean_time_to_happen = { days = 200 }
 		
 	option = {
 		name = lithuania.10.a
+		add_political_power = -40
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
 	}
 
 }
@@ -438,3 +448,277 @@ country_event = {
 	}
 }
 
+#Voldemort - picking the second in command
+country_event = { 
+	id = lithuania.15
+	title = lithuania.15.t
+	desc = lithuania.15.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	trigger = {
+		has_completed_focus = LIT_republic
+	}
+	
+	mean_time_to_happen = { days = 2 }
+		
+	option = { #Vladas Mironas
+		name = lithuania.15.a
+		ai_chance = { factor = 25 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = LIT_Vladas_Mironas_hog_pau
+		add_popularity = { ideology = paternal_autocrat popularity = 0.05 }
+		add_political_power = 50
+	}
+	option = { #Petras Kubiliunas
+		name = lithuania.15.b
+		ai_chance = { factor = 25 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = LIT_Petras_Kubiliunas_hog_npo
+		add_political_power = 20
+		army_experience = 10
+		air_experience = 5
+	}
+	option = { #Juozas Eretas
+		name = lithuania.15.c
+		ai_chance = { factor = 25 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = LIT_Pranciskus_Misiunas_hog_npo
+		add_popularity = { ideology = national_populist popularity = 0.05 }
+		add_political_power = 40
+	}
+	option = { #Stay with Voldemaras
+		name = lithuania.15.c
+		ai_chance = { factor = 25 }
+		add_popularity = { ideology = national_populist popularity = 0.1 }
+		add_political_power = -60
+	}
+}
+
+### Peace events
+
+#Germany
+country_event = { 
+	id = lithuania.16
+	title = lithuania.16.t
+	desc = lithuania.16.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		has_war_with = LIT
+		LIT = { controls_state = 188 } # Memel
+		LIT = { controls_state = 5 } # Konigsberg
+	}
+	
+	mean_time_to_happen = { days = 7 }
+		
+	option = { #We need peace
+		name = lithuania.16.a
+		ai_chance = { 
+		factor = 50 
+		modifier = {
+				factor = 2
+				has_war_with = FRA }
+		modifier = {
+				factor = 1.5
+				WHR = { NOT = { has_war_with = LIT } } }
+		}
+		add_political_power = -60
+		LIT = { country_event = { id = lithuania.16 } }
+		
+	}
+	option = { #We can still beat them
+		name = lithuania.16.b
+		ai_chance = { factor = 50 }
+		add_political_power = -40
+	}
+}
+
+#Lithuania - Germany wants peace
+country_event = { 
+	id = lithuania.17
+	title = lithuania.17.t
+	desc = lithuania.17.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { #Peace in exchange for Memel
+		name = lithuania.17.a
+		ai_chance = { factor = 90 }
+		add_political_power = 100
+		every_country = {
+			limit = { 	is_in_faction_with = GER 
+						has_war_with = LIT 
+						}
+			white_peace = LIT
+		}
+		add_state_core = 188
+		GER = { country_event = { id = lithuania.18 } }
+		
+	}
+	option = { #Hold my beer while I conquer Germany
+		name = lithuania.17.b
+		ai_chance = { factor = 10 
+		modifier = {
+				factor = 5
+				GER = { has_war_with = FRA } }
+		}
+		add_political_power = -40
+		GER = { country_event = { id = lithuania.19 } }
+	}
+}
+
+#Germany - seceding Memel
+country_event = { 
+	id = lithuania.18
+	title = lithuania.18.t
+	desc = lithuania.18.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { 
+		name = lithuania.18.a
+		add_political_power = -60
+		LIT = { transfer_state = 188 }
+	}
+}
+
+#Germany - Lithuania declines
+country_event = { 
+	id = lithuania.19
+	title = lithuania.19.t
+	desc = lithuania.19.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { 
+		name = lithuania.19.a
+		add_political_power = 50
+	}
+}
+
+#White Ruthenia
+country_event = { 
+	id = lithuania.20
+	title = lithuania.20.t
+	desc = lithuania.20.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = WHR
+		has_war_with = LIT
+		LIT = { controls_state = 95 } # Nowogrodek
+		OR = {
+			LIT = { controls_state = 94 } # Brest
+			LIT = { controls_state = 206 } # Minsk
+		}
+	}
+	
+	mean_time_to_happen = { days = 7 }
+		
+	option = { #We need peace
+		name = lithuania.20.a
+		ai_chance = { 
+		factor = 75 
+		modifier = {
+				factor = 2
+				has_war_with = RUS }
+		modifier = {
+				factor = 2
+				GER = { NOT = { has_war_with = LIT } } }
+		}
+		add_political_power = -60
+		LIT = { country_event = { id = lithuania.21 } }
+		
+	}
+	option = { #We can still beat them
+		name = lithuania.20.b
+		ai_chance = { factor = 25 }
+		add_political_power = -40
+	}
+}
+
+#Lithuania - WHR wants peace
+country_event = { 
+	id = lithuania.21
+	title = lithuania.21.t
+	desc = lithuania.21.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { #Peace in exchange for Naugardukas
+		name = lithuania.21.a
+		ai_chance = { factor = 75 }
+		add_political_power = 60
+		white_peace = WHR
+		add_state_core = 95
+		WHR = { country_event = { id = lithuania.22 } }
+		
+	}
+	option = { #Let's reunite the Grand Duchy
+		name = lithuania.21.b
+		ai_chance = { factor = 52
+		modifier = {
+				factor = 0.5
+				has_war_with = UKR }
+		modifier = {
+				factor = 0.5
+				has_war_with = GER }
+		}
+		add_political_power = -40
+		WHR = { country_event = { id = lithuania.23 } }
+	}
+}
+
+#WHR secedes Novogrudok
+country_event = { 
+	id = lithuania.22
+	title = lithuania.22.t
+	desc = lithuania.22.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { 
+		name = lithuania.22.a
+		add_political_power = -60
+		LIT = { transfer_state = 95 }
+	}
+}
+
+#WHR - Lithuania declines
+country_event = { 
+	id = lithuania.23
+	title = lithuania.23.t
+	desc = lithuania.23.d
+	picture = LIT_nationalism
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+		
+	option = { 
+		name = lithuania.23.a
+		add_political_power = 50
+	}
+}

@@ -431,6 +431,7 @@ country_event = { #HUN liberation
             transfer_state = 155
             transfer_state = 154
             transfer_state = 43
+			transfer_state = 784 
         }
         puppet = HUN
         add_political_power = 100
@@ -477,10 +478,36 @@ country_event = { #AUS liberation
         ai_chance = {
             factor = 20
         }
-        AUS = {
-            remove_state_core = 105
-            remove_state_core = 102
-        }
+        
+		every_state = {
+		
+			limit = {
+				
+				OR = {
+				
+					is_core_of = AUS
+				
+				}
+			
+			}
+			
+			AUS = { remove_state_core = PREV }
+		
+		}
+		
+		AUS = { 
+			
+			add_state_core = 153 
+			add_state_core = 836 
+			add_state_core = 775 
+			add_state_core = 4 
+			add_state_core = 152 
+			add_state_core = 835 
+			add_state_core = 
+	
+		}
+		
+		
         every_state = {
             limit = {
                 is_core_of = AUS
@@ -8147,7 +8174,7 @@ country_event = { #Integration of New England
         OR = {
             tag = USA
             tag = CSA
-            tag = AUS
+            tag = TEX
         }
 
         controls_state = 357
@@ -9250,7 +9277,7 @@ country_event = { #The Irish Question
             }
             IRE = {
                 country_event = {
-                    id = annex.?
+                    id = annex.?#THERE IS NO EVENT LOL 
                 }
             }
         }
@@ -10679,7 +10706,7 @@ country_event = { #The treaty of Vienna?"
                 has_war_with = CAN
                 CAN = {
                     NOT = {
-                        has_war_with = AUS
+                        has_war_with = TEX
                     }
                 }
                 CAN = {
@@ -16791,6 +16818,8 @@ country_event = {#Fate of Tibet
 	
 	}
 	
+	mean_time_to_happen = { days = 15 }
+	
 	option = {#occupy 
 	
 		name = annex.124.a 
@@ -17119,22 +17148,7 @@ country_event = {#Fate of Tibet
 		name = annex.126.c 
 		ai_chance = { factor = 20 }
 		
-		every_state = {
-		
-			limit = {
-			
-				is_core_of = TIB 
-				is_controlled_by = ROOT 
-			
-			}
-			
-			TIB = {
-			
-				transfer_state = PREV 
-			
-			}
-		
-		}
+		release = TIB 
 		
 		puppet = TIB 
 	
@@ -17819,6 +17833,126 @@ country_event = {#Fate of the Horn of Africa
 		
 		add_political_power = 100 
 	
+	}
+
+}
+
+country_event = {#Fate of Bhutan
+
+	name = annex.130
+	title = annex.130.t 
+	desc = annex.130.d 
+	
+	trigger = {
+	
+		NOT = {
+		
+			tag = BHU
+			
+			has_country_flag = BHU_CONQ 
+			
+			has_war_with = TIB 
+			has_war_with = BHC 
+			has_war_with = DEH 
+			has_war_with = PRF 
+			has_war_with = QIE 
+			has_war_with = AOG 
+			has_war_with = CHI 
+			has_war_with = SQI 
+			has_war_with = PRC 
+			has_war_with = SIA 
+			has_war_with = BUR 
+			has_war_with = YUN 
+			has_war_with = NPA 
+		
+		}
+	
+		BHU = { exists = no }
+		
+		controls_state = 324 
+		
+	}
+	
+	mean_time_to_happen = { days = 10 }
+	
+	option = {#occupation 
+	
+		name = annex.130.a 
+		ai_chance = { factor = 0 }
+		
+		set_country_flag = BHU_CONQ 
+		
+		add_political_power = -60 
+	
+	}
+	
+	option = {#puppet 
+	
+		name = annex.130.b 
+		ai_chance = { factor = 80 }
+		
+		every_state = {
+		
+			limit = {
+			
+				is_core_of = BHU 
+				is_controlled_by = ROOT
+			
+			}
+			
+			BHU = { transfer_state = PREV }
+		
+		}
+		
+		puppet = BHU 
+		
+		if = {
+		
+			limit = {
+			
+				OR = {
+				
+					tag = DEH 
+					tag = BHC 
+					tag = PRF
+				
+				}
+			
+			}
+			
+			transfer_state = 858 
+			
+			add_state_core = 858 
+		
+		}
+		
+		add_political_power = 100 
+	
+	}
+	
+	option = {#integrate 
+
+		trigger = {
+		
+			OR = {
+			
+				tag = DEH 
+				tag = BHC 
+				tag = PRF 
+			
+			}
+		
+		}
+		
+		name = annex.130.c 
+		ai_chance = { factor = 20 }
+		
+		add_political_power = -40 
+		
+		add_state_core = 858 
+		add_state_core = 324 
+		
+
 	}
 
 }

@@ -5,7 +5,6 @@
 add_namespace = beng
 
 # 182002 - 182009 are in the 00_Burma events instead 
-
 ####### These events are to be done by PPsyrius ####################################
 # 182047 - Invite Ho Chi Minh to Calcutta?
 # 182048 - Ho Chi Minh is Invited to Calcutta # FRA
@@ -213,5 +212,61 @@ country_event = { # XXXXXXXXX - Adding Bharatiyan Commune into the International
 	option = {
 		name = beng.50.a
 		FRA = { add_to_faction = BHC }
+	}
+}
+#################################################################################
+#Expanding the Revolution to Indochina
+#################################################################################
+country_event = { #  182064 - Fostering a Revolution in Indochina?
+	id = beng.64
+	title = beng.64.t
+	desc = beng.64.d
+	# picture = hochiminh_event
+	
+	trigger = {
+		tag = BHC
+		has_global_flag = BHC_Second_congress_done
+		is_puppet = yes
+		NOT = { 
+			country_exists = INC #Pretty Obvious here :p
+			country_exists = PRF
+			country_exists = DEH
+			BHC = {
+				has_war_with = BUR
+				has_war_with = AFG
+			}
+		}
+		286 = { is_controlled_by = GER } #Saigon
+		286 = { is_owned_by = GER }
+		671 = { is_controlled_by = GER } #Hanoi
+		671 = { is_owned_by = GER }
+        		date > 1936.01.01
+	}
+	
+	mean_time_to_happen = { days = 10 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = beng.64.a #Dispatch advisers, material and volunteers!
+		ai_chance = { factor = 95 }
+		trigger = { NOT = { has_global_flag = HoChiMinh_Calcutta } }
+		add_political_power = 20 # -1 dissent
+		BHC = { add_opinion_modifier = { target = GER modifier = BHC_Indochina } } # -100
+		hidden_effect = { GER = { country_event = { id = viet.0 days = 4 } } } #Volunteers pour into Indochina in Indochina file
+	}
+	option = {
+		name = beng.64.b #Bring in Ho Chi Minh to spearhead a revolutionary insurgency!
+		ai_chance = { factor = 100 }
+		trigger = { has_global_flag = HoChiMinh_Calcutta }
+		add_political_power = 20 # -1 dissent
+		BHC = { add_opinion_modifier = { target = GER modifier = BHC_Indochina } } # -100
+		hidden_effect = { GER = { country_event = { id = viet.1 days = 4 } } } #Volunteers pour into Indochina in Indochina file
+	}
+	option = {
+		name = beng.64.c #We have no interests in expanding the revolution beyond India.
+		ai_chance = { factor = 5 }
+		add_political_power = -100 # 5 dissent
+		BHC = { add_opinion_modifier = { target = GER modifier = BHC_NoIndochina } } # 20
 	}
 }

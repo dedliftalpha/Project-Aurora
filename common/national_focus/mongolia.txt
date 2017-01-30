@@ -18,7 +18,7 @@ focus_tree = {
 		y = 1
 
 		completion_reward = {
-			
+			add_manpower = 10000
 		}
 	}
 	
@@ -30,7 +30,8 @@ focus_tree = {
 		y = 1
 
 		completion_reward = {
-			
+			330 = { add_extra_state_shared_building_slots = 2 }
+			330 = { add_building_construction = { type = infrastructure	level = 1 instant_build = yes }}
 		}
 	}
 	
@@ -42,7 +43,15 @@ focus_tree = {
 		y = 1
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = air_bonus
+				bonus = 0.5
+				uses = 1
+				category = fighter_techs 
+				category = light_air 
+				category = medium_air 
+				category = heavy_air
+			}
 		}
 	}
 	
@@ -57,7 +66,7 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			add_ideas = mon_improve_prod_infantry_equipment
 		}
 	}
 	
@@ -72,7 +81,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons 
+			}
 		}
 	}
 	
@@ -87,7 +101,51 @@ focus_tree = {
 		y = 6
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = artillery_bonus
+				bonus = 0.5
+				uses = 1
+				category = artillery 
+			}
+		}
+	}
+
+	focus = {
+		id = MON_conscript_the_tribesmen
+		icon = GFX_goal_unknown
+		cost = 10
+		prerequisite = {
+			focus = MON_improve_infantry_equipment
+		}
+		x = 1
+		y = 3
+
+		completion_reward = {
+			add_ideas = conscript_tribesmen
+		}
+	}
+	
+	focus = {
+		id = MON_conscript_conquered_peoples
+		icon = GFX_goal_unknown
+		cost = 10
+
+		prerequisite = {
+			focus = MON_conscript_the_tribesmen
+		}
+
+		available = { 
+			OR = {
+				owns_state = 604
+			    any_allied_country = { owns_state = 604 }
+			}
+		}
+
+		x = 1
+		y = 5
+
+		completion_reward = {
+			add_ideas = conscript_conquered
 		}
 	}
 	
@@ -102,7 +160,12 @@ focus_tree = {
 		y = 3
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = land_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
 		}
 	}
 	
@@ -117,7 +180,12 @@ focus_tree = {
 		y = 5
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = land_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
 		}
 	}
 	
@@ -132,7 +200,7 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			swap_ideas = { remove_idea = scourge_of_the_steppes add_idea = scourge_of_the_steppes_II }
 		}
 	}
 	
@@ -150,7 +218,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = motorized_equipment_bonus
+				bonus = 0.5
+				uses = 1
+				category = motorized_equipment 
+			}
 		}
 	}
 	
@@ -165,7 +238,12 @@ focus_tree = {
 		y = 6
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 0.5
+				uses = 1
+				category = armor 
+			}
 		}
 	}
 	
@@ -183,7 +261,7 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			load_oob = MON_Khan_cav_the_best
 		}
 	}
 	
@@ -198,7 +276,7 @@ focus_tree = {
 		y = 6
 
 		completion_reward = {
-			
+			load_oob = MON_Khan_bests
 		}
 	}
 	
@@ -216,14 +294,19 @@ focus_tree = {
 		y = 7
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear 
+			}
 		}
 	}
 
 	focus = {
 		id = MON_the_russians_arent_watching
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 2
 
 		available = {
 			date > 1936.2.1
@@ -267,7 +350,7 @@ focus_tree = {
 	focus = {
 		id = MON_alliance_with_tibet
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 2
 
 		prerequisite = {
 			focus = MON_the_russians_arent_watching
@@ -319,7 +402,7 @@ focus_tree = {
 	focus = {
 		id = MON_mongol_minority_in_xibei
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = MON_the_russians_arent_watching
 		}
@@ -849,7 +932,8 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			330 = { add_extra_state_shared_building_slots = 1 }
+			330 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
 		}
 	}
 	
@@ -857,14 +941,25 @@ focus_tree = {
 		id = MON_improve_xibei_inf_I
 		icon = GFX_goal_unknown
 		cost = 10
+
 		prerequisite = {
 			focus = MON_improve_inf_I
 		}
+
+		available = { 
+			OR = {
+				any_allied_country = { owns_state = 616 }
+				owns_state = 616
+			}
+		}
+
 		x = 28
 		y = 3
 
 		completion_reward = {
-			
+			604 = { add_extra_state_shared_building_slots = 2 }
+			604 = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
+			616 = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
 		}
 	}
 	
@@ -879,7 +974,8 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			604 = { add_extra_state_shared_building_slots = 2 }
+			604 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
 		}
 	}
 	
@@ -894,7 +990,8 @@ focus_tree = {
 		y = 5
 
 		completion_reward = {
-			
+			604 = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
+			616 = { add_building_construction = { type = infrastructure level = 1 instant_build = yes } }
 		}
 	}
 	
@@ -909,14 +1006,14 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			add_ideas = partial_economic_mobilisation
 		}
 	}
 	
 	focus = {
 		id = MON_new_resources_invest
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 1
 		prerequisite = {
 			focus = MON_improve_xibei_inf_I
 		}
@@ -924,37 +1021,79 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_ideas = Expand_Mining
 		}
 	}
 	
 	focus = {
 		id = MON_khem_beldyr_resources
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 19
+
 		prerequisite = {
 			focus = MON_new_resources_invest
 		}
+
+		available = { 
+			has_idea = Expand_Mining
+		}
+
 		x = 30
 		y = 5
 
 		completion_reward = {
-			
+			remove_ideas = Expand_Mining
+
+			add_resource = { type = steel amount = 7 state = 330 }
+			add_resource = { type = aluminium amount = 10 state = 330 }
+			add_resource = { type = tungsten amount = 8 state = 330 }
 		}
 	}
 	
 	focus = {
-		id = MON_new_resources
+		id = MON_new_resources_start
 		icon = GFX_goal_unknown
-		cost = 10
+		cost = 1
+
 		prerequisite = {
 			focus = MON_khem_beldyr_resources
 		}
+
+		available = { 
+			has_idea = Expand_Mining
+		}
+
 		x = 30
 		y = 6
 
 		completion_reward = {
-			
+			add_ideas = Expand_Mining
+		}
+	}
+
+	focus = {
+		id = MON_new_resources
+		icon = GFX_goal_unknown
+		cost = 19
+
+		prerequisite = {
+			focus = MON_new_resources_start
+		}
+
+		available = { 
+			has_idea = Expand_Mining
+		}
+
+		x = 30
+		y = 7
+
+		completion_reward = {
+			remove_ideas = Expand_Mining
+
+			add_resource = { type = steel amount = 7 state = 330 }
+			add_resource = { type = aluminium amount = 10 state = 330 }
+			add_resource = { type = tungsten amount = 8 state = 330 }
+			add_resource = { type = oil amount = 8 state = 330 }
 		}
 	}
 	
@@ -969,7 +1108,8 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			random_owned_state = { add_building_construction = { type = air_base level = 2 instant_build = yes } }
+			random_owned_state = { add_building_construction = { type = air_base level = 2 instant_build = yes } }
 		}
 	}
 	
@@ -984,7 +1124,12 @@ focus_tree = {
 		y = 3
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = air_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine 
+			}
 		}
 	}
 	
@@ -999,7 +1144,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = air_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine 
+			}
 		}
 	}
 	
@@ -1014,7 +1164,7 @@ focus_tree = {
 		y = 2
 
 		completion_reward = {
-			
+			add_ideas = mon_better_air_bases_production_focus
 		}
 	}
 	
@@ -1032,7 +1182,12 @@ focus_tree = {
 		y = 3
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = fighter_techs_bonus
+				bonus = 0.5
+				uses = 1
+				category = fighter_techs 
+			}
 		}
 	}
 	
@@ -1050,7 +1205,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = light_fighter_bonus
+				bonus = 0.5
+				uses = 1
+				category = light_fighter 
+			}
 		}
 	}
 	
@@ -1068,7 +1228,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = cat_heavy_fighter_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_heavy_fighter 
+			}
 		}
 	}
 	
@@ -1086,7 +1251,13 @@ focus_tree = {
 		y = 3
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = medium_air_bonus
+				bonus = 0.5
+				uses = 1
+				category = medium_air 
+				category = heavy_air 
+			}
 		}
 	}
 	
@@ -1104,7 +1275,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = tactical_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = tactical_bomber 
+			}
 		}
 	}
 	
@@ -1184,7 +1360,12 @@ focus_tree = {
 		y = 4
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = cat_strategic_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber 
+			}
 		}
 	}
 }

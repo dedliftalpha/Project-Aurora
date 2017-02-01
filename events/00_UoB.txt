@@ -26,7 +26,7 @@ country_event = {
 	option = {
 		name = uob.1.a
 		ai_chance = { factor = 40 }	
-		set_country_flag = ENG_tuc_economy_mosley		
+		set_country_flag = ENG_tuc_economy_mosley
 		add_popularity = { ideology = totalist popularity = 0.05 }
 	}
 	option = {
@@ -205,6 +205,7 @@ country_event = {
 	
 	option = {
 		name = uob.6.a
+		add_political_power = -50
 		set_country_flag = philip_snowden_resigns
 	}
 }
@@ -1065,7 +1066,7 @@ country_event = {
 		retire_country_leader = yes
 		create_country_leader = {
 			name = "Trade Union Congress"
-			desc = "ENG_tuc_desc"
+			desc = "ENG_trade_union_congress_desc"
 			picture = "Portrait_England_Trade_Union_Congress.tga"
 			expire = "1965.1.1"
 			ideology = syndicalist_subtype
@@ -3003,6 +3004,49 @@ country_event = {
 	}
 }
 
+# A new 1066
+
+country_event = {
+	id = uob.109
+	title = uob.109.t
+	desc = uob.109.d
+	picture = GFX_report_event_communists_cheer
+	
+	trigger = {
+		tag = ENG
+		controls_state = 126
+		has_war = yes
+		any_state = {
+			is_core_of = ENG
+			NOT = {
+				OR = {
+					is_controlled_by = ENG
+					is_controlled_by = WAL
+					is_controlled_by = SCT
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 5 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.109.a
+		add_political_power = -50
+		add_manpower = 50000
+		load_oob = ENG_1066
+		if = {
+			limit = {
+				is_ai = yes
+			}
+			load_oob = ENG_1066_AI
+		}
+	}
+}
+			
+
 ############################
 ### T.E. Lawrence
 ############################
@@ -3295,10 +3339,7 @@ country_event = {
 					30 = { country_event = { id = uob.205 } } # Yay...?
 				}
 				else = {
-					random_list = {
-						30 = { country_event = { id = uob.205 } } # Yay...?
-						70 = { country_event = { id = uob.206 } } # Nay
-					}
+					country_event = { id = uob.205 } } # Yay...?
 				}
 			}
 		}
@@ -3316,10 +3357,7 @@ country_event = {
 					30 = { country_event = { id = uob.208 } } # Yay...?
 				}
 				else = {
-					random_list = {
-						30 = { country_event = { id = uob.208 } } # Yay...?
-						70 = { country_event = { id = uob.209 } } # Nay
-					}
+					country_event = { id = uob.208 } } # Yay...?
 				}
 			}
 		}
@@ -3337,7 +3375,6 @@ country_event = {
                     70 = { country_event = { id = uob.212 } } # Nay
                 }
 				else = {
-					random_list = {
 						70 = { country_event = { id = uob.210 } } # Yay
 						30 = { country_event = { id = uob.211 } } # Yay...?
 					}
@@ -3854,6 +3891,9 @@ country_event = {
 			has_completed_focus = ENG_devolution
 			has_completed_focus = ENG_evolution
 		}
+		NOT = {
+			has_completed_focus = ENG_tuc2
+		}
 	}
 
 	mean_time_to_happen = { days = 1000 }
@@ -4091,37 +4131,8 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	option = { # Proclaim a General Strike!
+	option = {
 		name = uob.203.a
-		hidden_effect = {
-			random_list = {
-				40 = { country_event = { id = uob.XX } } # Yay
-				30 = { country_event = { id = uob.XX } } # Yay...?
-				30 = { country_event = { id = uob.XX } } # Nay
-			}
-		}
-	}
-	
-	option = { # Conspire with army elements
-		name = uob.203.b
-		hidden_effect = {
-			random_list = {
-				40 = { country_event = { id = uob.XX } } # Yay
-				30 = { country_event = { id = uob.XX } } # Yay...?
-				30 = { country_event = { id = uob.XX } } # Nay
-			}
-		}
-	}
-	
-	option = { # Bring in the army!
-		name = uob.203.c
-		hidden_effect = {
-			random_list = {
-				40 = { country_event = { id = uob.XX } } # Yay
-				30 = { country_event = { id = uob.XX } } # Yay...?
-				30 = { country_event = { id = uob.XX } } # Nay
-			}
-		}
 	}
 }	
 
@@ -5469,6 +5480,8 @@ news_event = {
 		load_oob = FRA_refugees
 	}
 }
+
+### Norway
 
 # Norway gets positive idea
 

@@ -30,37 +30,6 @@ country_event = {
 		add_state_claim = 675
 		add_state_claim = 455
 		
-		####### 
-		# THIS WAS NECESSARY BECAUSE OF A BUG LEAVE IT IN 
-		#######
-if = {
-	limit = {
-		has_dlc = "Together for Victory"
-	}
-	set_autonomy = {
-		target = ARM
-		autonomous_state = autonomy_puppet
-	}
-	set_autonomy = {
-		target = OMA
-		autonomous_state = autonomy_colony
-	}
-	set_autonomy = {
-		target = LYB
-		autonomous_state = autonomy_colony
-	}
-	set_autonomy = {
-		target = ALB
-		autonomous_state = autonomy_colony
-	}
-	else = {
-                 puppet = OMA
-		puppet = ALB
-		puppet = LYB
-		puppet = ARM
-	}
-}
-		#######
 	}
 
 }
@@ -1023,13 +992,13 @@ country_event = {
 						tag = TUR
 						AND = {
 							has_war_with = KUR
-							is_puppet_of = ROOT
+							is_puppet_of = ROOT	# TODO - fix all is_puppet_of
 						}
 					}
 				}
 				white_peace = KUR		
 		}
-
+		
 		if = {
 			limit = {
 				KUR = { controls_state = 350 }
@@ -5025,254 +4994,1449 @@ country_event = {	# Gulf of Persia
 ###############################################################################
 
 ### Sultan's Imperial Address
-#
-#country_event = {
-#	id = ott.85
-#	title = ott.85.t
-#	desc = ott.85.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {
-#		name = ott.85.a
-#
-#		add_political_power = 50
-#	}
-#
-#}
-#
-#### Dissolve the Parliament focus - intro event
-#
-#country_event = {
-#	id = ott.86
-#	title = ott.86.t
-#	desc = ott.86.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {
-#		name = ott.86.a
-#
-#		if = {
-#			limit = {
-#				has_political_power > 50
-#			}
-#			set_political_power = 0
-#			
-#			else = {
-#				add_political_power = -50
-#			}
-#		}
-#		set_country_flag = OTT_parliament_dissolved
-#		country_event = { id = ott.87 days = 5 }
-#	}
-#
-#}
-#
-## Shut down political parties?
-#
-#country_event = {
-#	id = ott.87
-#	title = ott.87.t
-#	desc = ott.87.d
-#	
-#	is_triggered_only = yes
-#
-#	mean_time_to_happen = {
-#		days = 1
-#	}
-#	
-#	option = {			# arrest political party leaders
-#		name = ott.87.a
-#
-#		ai_chance = { factor = 90 }
-#		add_political_power = -200
-#		# TODO - disable ministers or something?
-#		country_event = { id = ott.88 days = 5 }
-#	}
-#
-#	option = {			# allow them to exist
-#		name = ott.87.b
-#
-#		ai_chance = { factor = 10 }
-#		add_political_power = 20
-#		country_event = { id = ott.92 days = 10 }
-#	}
-#
-#}
-#
-## Protestors gather
-#
-#country_event = {
-#	id = ott.88
-#	title = ott.88.t
-#	desc = ott.88.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {			# arrest protestors
-#		name = ott.88.a
-#
-#		ai_chance = { factor = 55 }
-#		add_political_power = -100
-#		country_event = { id = ott.89 days = 2 }
-#	}
-#
-#	option = {			# do nothing
-#		name = ott.88.b
-#
-#		ai_chance = { factor = 45 }
-#		add_political_power = -20
-#		country_event = { id = ott.91 days = 5 }
-#	}
-#
-#}
-#
-## Galata massacre
-#
-#country_event = {
-#	id = ott.89
-#	title = ott.89.t
-#	desc = ott.89.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {
-#		name = ott.89.a
-#
-#		add_political_power = -150
-#		country_event = { id = ott.90 days = 3 }
-#	}
-#
-#}
-#
-## The New Reformers
-#
-#country_event = {
-#	id = ott.90
-#	title = ott.90.t
-#	desc = ott.90.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {			# What are you waiting for? Swear them in!
-#		name = ott.90.a
-#
-#		ai_chance = { factor = 80 }
-#		add_political_power = 120
-#		# TODO - appoint CUP government
-#		# TODO - fail and lock focus forever
-#		# TODO - add broken monarchy idea
-#	}
-#
-#	option = {			# Keep shooting people
-#		name = ott.90.b
-#
-#		ai_chance = { factor = 20 }
-#		add_political_power = -250	# stability goes down to 'disaster'
-#		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
-#	}
-#
-#}
-#
-## Mob violence
-#
-#
-#country_event = {
-#	id = ott.91
-#	title = ott.91.t
-#	desc = ott.91.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {			# they entered hagia sophia with their shoes on! :DDDD
-#		name = ott.91.a
-#
-#		add_political_power = -20
-#		# no more bad events 
-#	}
-#
-#}
-#
-## Prince Sabahaddin Agitates!
-#
-#country_event = {
-#	id = ott.92
-#	title = ott.92.t
-#	desc = ott.92.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {				# Force him into exile!
-#		name = ott.92.a
-#
-#		ai_chance = { factor = 70 }
-#		add_political_power = -50
-#		country_event = { id = ott.93 days = 20 }
-#		# TODO - sleepminister sabahaddin
-#	}
-#
-#	option = {				# Let him agitate
-#		name = ott.92.b
-#
-#		ai_chance = { factor = 30 }
-#		add_political_power = -80
-#		country_event = { id = ott.93 days = 10 }
-#	}
-#
-#}
-#
-## Organized opposition 
-#
-#country_event = {
-#	id = ott.93
-#	title = ott.93.t
-#	desc = ott.93.d
-#	
-#	is_triggered_only = yes
-#	
-#	option = {
-#		name = ott.93.a
-#
-#		add_political_power = -100
-#		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
-#		country_event = { id = ott.88 days = 5 }
-#	}
-#
-#}
-#
-## Protests calm down
-#
-#country_event = {
-#	id = ott.94
-#	title = ott.94.t
-#	desc = ott.94.d
-#	
-#	fire_only_once = yes
-#	
-#	trigger = {
-#		tag = OTT
-#		NOT = { has_completed_focus = OTT_dissolve_parliament }
-#		focus_progress = {
-#			focus = OTT_dissolve_parliament
-#			progress > 0.90
-#		}
-#	}
-#
-#	mean_time_to_happen = {
-#		days = 1
-#	}
-#	
-#	option = {			# we will have ordnung!
-#		name = ott.94.a
-#
-#		add_political_power = 50
-#	}
-#
-#}
-#
-#### Write new constitution focus
-#
+
+country_event = {
+	id = ott.85
+	title = ott.85.t
+	desc = ott.85.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.85.a
+
+		add_political_power = 50
+	}
+
+}
+
+### Dissolve the Parliament focus - intro event
+
+country_event = {
+	id = ott.86
+	title = ott.86.t
+	desc = ott.86.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.86.a
+
+		if = {
+			limit = {
+				has_political_power > 50
+			}
+			set_political_power = 0
+			
+			else = {
+				add_political_power = -50
+			}
+		}
+		set_country_flag = OTT_parliament_dissolved
+		country_event = { id = ott.87 days = 5 }
+	}
+
+}
+
+# Shut down political parties?
+
+country_event = {
+	id = ott.87
+	title = ott.87.t
+	desc = ott.87.d
+	
+	is_triggered_only = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {			# arrest political party leaders
+		name = ott.87.a
+
+		ai_chance = { factor = 90 }
+		add_political_power = -200
+		# TODO - disable ministers or something?
+		country_event = { id = ott.88 days = 5 }
+	}
+
+	option = {			# allow them to exist
+		name = ott.87.b
+
+		ai_chance = { factor = 10 }
+		add_political_power = 20
+		country_event = { id = ott.92 days = 10 }
+	}
+
+}
+
+# Protestors gather
+
+country_event = {
+	id = ott.88
+	title = ott.88.t
+	desc = ott.88.d
+	
+	is_triggered_only = yes
+	
+	option = {			# arrest protestors
+		name = ott.88.a
+
+		ai_chance = { factor = 55 }
+		add_political_power = -100
+		country_event = { id = ott.89 days = 2 }
+	}
+
+	option = {			# do nothing
+		name = ott.88.b
+
+		ai_chance = { factor = 45 }
+		add_political_power = -20
+		country_event = { id = ott.91 days = 5 }
+	}
+
+}
+
+# Galata massacre
+
+country_event = {
+	id = ott.89
+	title = ott.89.t
+	desc = ott.89.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.89.a
+
+		add_political_power = -150
+		country_event = { id = ott.90 days = 3 }
+	}
+
+}
+
+# The New Reformers
+
+country_event = {
+	id = ott.90
+	title = ott.90.t
+	desc = ott.90.d
+	
+	is_triggered_only = yes
+	
+	option = {			# What are you waiting for? Swear them in!
+		name = ott.90.a
+
+		ai_chance = { factor = 80 }
+		add_political_power = 120
+		# TODO - appoint TF government
+		# TODO - fail and lock focus forever
+		# TODO - add broken monarchy idea
+	}
+
+	option = {			# Keep shooting people
+		name = ott.90.b
+
+		ai_chance = { factor = 20 }
+		add_political_power = -250	# stability goes down to 'disaster'
+		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+	}
+
+}
+
+# Mob violence
+
+
+country_event = {
+	id = ott.91
+	title = ott.91.t
+	desc = ott.91.d
+	
+	is_triggered_only = yes
+	
+	option = {			# they entered hagia sophia with their shoes on! :DDDD
+		name = ott.91.a
+
+		add_political_power = -20
+		# no more bad events 
+	}
+
+}
+
+# Prince Sabahaddin Agitates!
+
+country_event = {
+	id = ott.92
+	title = ott.92.t
+	desc = ott.92.d
+	
+	is_triggered_only = yes
+	
+	option = {				# Force him into exile!
+		name = ott.92.a
+
+		ai_chance = { factor = 70 }
+		add_political_power = -50
+		country_event = { id = ott.93 days = 20 }
+		set_country_flag = sabahaddin_exiled
+		# TODO - sleepminister sabahaddin
+	}
+
+	option = {				# Let him agitate
+		name = ott.92.b
+
+		ai_chance = { factor = 30 }
+		add_political_power = -30
+		country_event = { id = ott.93 days = 10 }
+	}
+
+}
+
+# Organized opposition 
+
+country_event = {
+	id = ott.93
+	title = ott.93.t
+	desc = ott.93.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.93.a
+
+		if = {
+			limit = {
+				has_country_flag = sabahaddin_exiled
+			}
+				add_political_power = -150
+			
+			else = {
+				add_political_power = -100
+			}
+		}
+		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+		country_event = { id = ott.88 days = 5 }
+	}
+
+}
+
+# Protests calm down
+
+country_event = {
+	id = ott.94
+	title = ott.94.t
+	desc = ott.94.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		NOT = { has_completed_focus = OTT_dissolve_parliament }
+		focus_progress = {
+			focus = OTT_dissolve_parliament
+			progress > 0.90
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {			# we will have ordnung!
+		name = ott.94.a
+
+		add_political_power = 50
+	}
+
+}
+
+### New constitution focus
+
+#Sublime Committee for Constitution
+
+country_event = {
+	id = ott.95
+	title = ott.95.t
+	desc = ott.95.d
+	
+	is_triggered_only = yes
+
+	immediate = {
+		country_event = { id = ott.96 days = 30 }
+	}
+	option = {
+		name = ott.95.a
+
+		add_political_power = 20
+	}
+
+}
+
+country_event = {	# 1,2,3,4 Basic stuff
+	id = ott.96
+	title = ott.96.t
+	desc = ott.96.d
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		country_event = { id = ott.97 days = 1 }
+	}
+	option = {
+		name = ott.96.a
+
+	}
+
+}
+
+country_event = {	# 5,6,7,8 Definition of the Monarchy
+	id = ott.97
+	title = ott.97.t
+	desc = ott.97.d
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		country_event = { id = ott.98 days = 1 }
+	}
+	option = {
+		name = ott.97.a
+
+	}
+
+}
+
+country_event = {	# 9 Sovereign Rights of the Sultan
+	id = ott.98
+	title = ott.98.t
+	desc = ott.98.d
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		country_event = { id = ott.99 days = 1 }
+	}
+	option = {
+		name = ott.98.a
+
+	}
+
+}
+
+country_event = {	# 10, 11, 12, 13, 14 Basic Human Rights & Minority Rights
+	id = ott.99
+	title = ott.99.t
+	desc = ott.99.d
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		country_event = { id = ott.100 days = 1 }
+	}
+	option = {
+		name = ott.99.a
+
+	}
+
+}
+
+country_event = {	# 24 Houses of Parliament
+	id = ott.100
+	title = ott.100.t
+	desc = ott.100.d
+	
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = ott.101 days = 1 }
+	}
+	
+	option = {			# sultan will appoint the grand vizier
+		name = ott.100.a
+
+		ai_chance = { factor = 70 }
+	}
+
+	option = {			# the government shall be formed by the Parliament
+		name = ott.100.b
+
+		ai_chance = { factor = 30 }
+		set_country_flag = ott_constitution_1
+	}
+
+}
+
+country_event = {	# 32 Parliament Schedule
+	id = ott.101
+	title = ott.101.t
+	desc = ott.101.d
+	
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = ott.102 days = 1 }
+	}
+	
+	option = {			# sultan opens and dissolves the parliament
+		name = ott.101.a
+
+		ai_chance = {
+			factor = 60
+
+			modifier = {
+				factor = 0.1
+				
+				has_country_flag = ott_constitution_1
+			}
+		}
+	}
+
+	option = {			# parliament schedule is set by constitution
+		name = ott.101.b
+
+		ai_chance = { factor = 40 }
+		set_country_flag = ott_constitution_2
+	}
+
+}
+
+country_event = {	# 39 Veto Rights
+	id = ott.102
+	title = ott.102.t
+	desc = ott.102.d
+	
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = ott.103 days = 1 }
+	}
+	
+	option = {			# sultan gets the last word
+		name = ott.102.a
+
+		ai_chance = {
+			factor = 80
+
+			modifier = {
+				factor = 0.05
+				
+				has_country_flag = ott_constitution_1
+			}
+		}
+	}
+
+	option = {			# the veto can be overturned by 2/3rds majority
+		name = ott.102.b
+
+		ai_chance = { factor = 20 }
+		set_country_flag = ott_constitution_3
+	}
+
+}
+
+country_event = {	# 63 Right to Petition
+	id = ott.103
+	title = ott.103.t
+	desc = ott.103.d
+	
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = ott.104 days = 1 }
+	}
+	
+	option = {			# Allow petitions written in local languages
+		name = ott.103.a
+
+		ai_chance = { factor = 90 }
+		set_country_flag = ott_constitution_petitions
+	}
+
+	option = {			# If they want to complain, they should learn turkish
+		name = ott.103.b
+
+		ai_chance = { factor = 10 }
+		add_political_power = -20
+	}
+
+}
+
+country_event = {	# 83, 84, 85 Rights of Trade Unions
+	id = ott.104
+	title = ott.104.t
+	desc = ott.104.d
+	
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = ott.105 days = 10 }
+	}
+	
+	option = {			# Allow all trade unions, strikes and lockouts
+		name = ott.104.a
+
+		ai_chance = { factor = 80 }
+		add_popularity = { ideology = syndicalist popularity = -0.01 }
+		add_popularity = { ideology = radical_socialist popularity = -0.01 }
+		add_popularity = { ideology = social_democrat popularity = 0.02 }
+		set_country_flag = ott_constitution_syndicates
+	}
+
+	option = {			# Such godless syndicalism has no place in the Ottoman Empire!
+		name = ott.104.b
+
+		ai_chance = { factor = 20 }
+		add_popularity = { ideology = totalist popularity = 0.01 }
+		add_popularity = { ideology = syndicalist popularity = 0.01 }
+		add_popularity = { ideology = radical_socialist popularity = 0.01 }
+	}
+
+}
+
+country_event = {	# The new constitution is declared!
+	id = ott.105
+	title = ott.105.t
+	desc = ott.105.d
+	
+	is_triggered_only = yes
+	
+	option = {			# Long live the Sultan!
+		name = ott.105.a
+
+		add_political_power = 50
+		complete_national_focus = OTT_write_constitution
+		# TODO - add solid / compromise constitution
+	}
+
+}
+
+### Judicial Reforms
+
+country_event = {	# appointment of judges
+	id = ott.106
+	title = ott.106.t
+	desc = ott.106.d
+	
+	is_triggered_only = yes
+	
+	option = {			# ensure independent judiciary
+		name = ott.106.a
+
+		ai_chance = {
+			factor = 20
+
+			modifier = {
+				factor = 100
+				
+				has_idea = ott_solid_constitution
+			}
+		}
+		add_political_power = 20
+	}
+
+	option = {			# they shall have oversight
+		name = ott.106.b
+
+		ai_chance = { factor = 60 }
+	}
+
+	option = {			# I AM THE LAW
+		name = ott.106.c
+
+		ai_chance = {
+			factor = 20
+
+			modifier = {
+				factor = 100
+				
+				has_completed_focus = OTT_dissolve_parliament
+			}
+		}
+		add_political_power = -50
+		set_country_flag = ott_arbitrary_rulings
+	}
+
+}
+
+### Administrative Reforms - Centralisation or Decentralisation?
+
+country_event = {
+	id = ott.107
+	title = ott.107.t
+	desc = ott.107.d
+	
+	is_triggered_only = yes
+	
+	option = {			# more power to the local governments!
+		name = ott.107.a
+
+		ai_chance = { factor = 40 }
+		add_political_power = 40
+		350 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes	
+			}
+		}
+		554 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes	
+			}
+		}
+		291 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes	
+			}
+		}
+		set_country_flag = ott_admin_decentralise
+	}
+
+	option = {			# focus on constantinople
+		name = ott.107.b
+
+		ai_chance = { factor = 60 }
+		773 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes	
+			}
+		}
+	}
+
+}
+
+### Reforms not working (gives player clues about the extent of corruption)
+
+country_event = {	# indifference to new laws
+	id = ott.108
+	title = ott.108.t
+	desc = ott.108.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_country_flag = ott_reform_resistance # TODO - replace with better system when flag values are added
+		has_completed_focus = OTT_legal_reform
+		NOT = { has_country_flag = ott_arbitrary_rulings }
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {			# what is this insolence?!
+		name = ott.108.a
+
+		add_political_power = -20
+		set_country_flag = ott_reform_resistance_1
+	}
+
+}
+
+country_event = {	# interference in courts!
+	id = ott.109
+	title = ott.109.t
+	desc = ott.109.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_country_flag = ott_reform_resistance
+		has_completed_focus = OTT_judicial_reform
+		NOT = { has_country_flag = ott_arbitrary_rulings }
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {			# who dares interrupt justice?
+		name = ott.109.a
+
+		add_political_power = -20
+		set_country_flag = ott_reform_resistance_2
+	}
+
+}
+
+country_event = {	# ineffective administration
+	id = ott.110
+	title = ott.110.t
+	desc = ott.110.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_country_flag = ott_reform_resistance
+		has_completed_focus = OTT_administrative_reform
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {			# who hired all these useless officials?!
+		name = ott.110.a
+
+		add_political_power = -20
+		set_country_flag = ott_reform_resistance_3
+	}
+
+}
+
+country_event = {	# corrupt bureaucracy
+	id = ott.111
+	title = ott.111.t
+	desc = ott.111.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_country_flag = ott_reform_resistance
+		has_completed_focus = OTT_bureaucratic_reform
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {			# reinstitute the anti-bribery oath!
+		name = ott.111.a
+
+		add_political_power = -20
+		set_country_flag = ott_reform_resistance_4
+	}
+
+}
+
+###############################################################################
+# Ottoman Corruption Events
+###############################################################################
+
+### Report on corruption
+
+country_event = {
+	id = ott.112
+	title = ott.112.t
+	desc = {
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+		desc = ott.112.d1
+	}
+	desc = {
+		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
+		desc = ott.112.d2
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_war = no
+		OR = {
+			has_completed_focus = OTT_enforce_autocracy
+			has_completed_focus = OTT_enforce_rule_of_law
+		}
+		has_country_flag = ott_reform_resistance
+		has_country_flag = ott_reform_resistance_1
+		has_country_flag = ott_reform_resistance_2
+		has_country_flag = ott_reform_resistance_3
+		has_country_flag = ott_reform_resistance_4
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {		# I want action on this!
+		name = ott.112.a
+		
+		ai_chance = { factor = 40 }
+		set_country_flag = ott_investigation
+		# TODO - tooltip about unlocked focus
+		# TODO - investigation idea
+	}
+
+	option = {		# Let it slide, this is too dangerous
+		name = ott.112.b
+
+		ai_chance = { factor = 60 }
+		add_political_power = -100
+	}
+
+}
+
+### Head of Security murdered!
+
+country_event = {
+	id = ott.113
+	title = ott.113.t
+	desc = {
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+		desc = ott.113.d1
+	}
+	desc = {
+		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
+		desc = ott.113.d2
+	}
+	
+	is_triggered_only = yes
+	
+	option = {		# issue arrests
+		name = ott.113.a
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+		
+		ai_chance = { factor = 99 }
+		add_political_power = -20
+		country_event = { id = ott.114 days = 5 }
+	}
+
+	option = {		# you have my full support
+		name = ott.113.b
+		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
+		
+		ai_chance = { factor = 99 }
+		add_political_power = -10
+		country_event = { id = ott.114 days = 5 }
+	}
+
+	option = {		# forgive offenders, close the investigation
+		name = ott.113.c
+
+		ai_chance = { factor = 1 }
+		add_political_power = -100
+		clr_country_flag = ott_investigation
+	}
+
+}
+
+### Arrests lead to high officials and political parties
+
+country_event = {
+	id = ott.114
+	title = ott.114.t
+	desc = {
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+		desc = ott.114.d1
+	}
+	desc = {
+		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
+		desc = ott.114.d2
+	}
+	
+	is_triggered_only = yes
+	
+	option = {		# make no exceptions!
+		name = ott.114.a
+		
+		ai_chance = { factor = 90 }
+		add_political_power = -50
+		country_event = { id = ott.115 days = 5 }
+	}
+
+	option = {		# forgive offenders, close the investigation
+		name = ott.114.b
+
+		ai_chance = { factor = 10 }
+		add_political_power = -100
+		clr_country_flag = ott_investigation
+	}
+
+}
+
+### Definitive evidence pointing to Mehmed Cavid & TF
+
+country_event = {
+	id = ott.115
+	title = ott.115.t
+	desc = {
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+		desc = ott.115.d1
+	}
+	desc = {
+		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
+		desc = ott.115.d2
+	}
+	
+	is_triggered_only = yes
+	
+	option = {		# bring them to justice!
+		name = ott.115.a
+		
+		ai_chance = { factor = 80 }
+		add_political_power = -100
+		country_event = { id = ott.116 days = 1 }
+	}
+
+	option = {		# forgive all offenders, close the investigation
+		name = ott.115.b
+
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		clr_country_flag = ott_investigation
+	}
+
+}
+
+### TF Paramilitary, Constantinople Army prevent arrests
+
+country_event = {
+	id = ott.116
+	title = ott.116.t
+	desc = ott.116.d
+	
+	is_triggered_only = yes
+	
+	option = {	# what's going on?!??
+		name = ott.116.a
+
+		add_political_power = -10
+		country_event = { id = ott.117 hours = 6 }
+	}
+
+}
+
+### TF PUTSCH
+
+country_event = {
+	id = ott.117
+	title = ott.117.t
+	desc = ott.117.d
+	
+	is_triggered_only = yes
+	
+	option = {	# oh fugggg
+		name = ott.117.a
+
+		if = {
+			limit = {
+				has_political_power > -50
+			}
+			set_political_power = -100
+			hidden_effect = {
+				remove_ideas = very_good_stability
+				remove_ideas = good_stability
+				remove_ideas = normal_stability
+				remove_ideas = low_stability
+				remove_ideas = very_low_stability
+				remove_ideas = disaster
+			}
+			add_ideas = very_low_stability
+			clr_country_flag = good_stability
+			clr_country_flag = normal_stability
+			
+			else = {
+				add_political_power = -50
+			}
+		}
+		country_event = { id = ott.118 hours = 2 }
+	}
+
+}
+
+### Abdulmecid II murdered, Ahmed Nihad captured
+
+country_event = {
+	id = ott.118
+	title = ott.118.t
+	desc = ott.118.d
+	# TODO - write post-1944 alternative where ahmed nihad gets murdered
+	
+	is_triggered_only = yes
+	
+	option = {	# accept the inevitable
+		name = ott.118.a
+
+		ai_chance = { factor = 90 }
+		kill_country_leader = yes
+		clr_country_flag = abdulmecid_2
+		create_country_leader = {
+			name = "Ahmed Nihad IV"
+			desc = "POLITICS_AHMED_NIHAD_DESC"
+			picture = "Portrait_Ottoman_AhmedNihad.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+				
+			}
+		}
+		set_country_flag = ahmed_4
+		add_political_power = -50
+		clr_country_flag = ott_investigation
+		# TODO - appoint TF government
+		# TODO - remove investigation idea
+		# TODO - add broken monarchy idea
+
+	}
+
+	option = {	# this ends here! - starts Osman Fuad event chain
+		name = ott.118.b
+
+		ai_chance = { factor = 10 }
+		kill_country_leader = yes
+		clr_country_flag = abdulmecid_2
+		create_country_leader = {
+			name = "Ahmed Nihad IV"
+			desc = "POLITICS_AHMED_NIHAD_DESC"
+			picture = "Portrait_Ottoman_AhmedNihad.tga" # TODO - add portrait
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+				
+			}
+		}
+		set_country_flag = ahmed_4
+		add_political_power = -50
+		country_event = { id = ott.119 hours = 2 }
+	}
+
+}
+
+##### Osman Fuad event chain
+
+# Osman takes control of Ertugrul Cavalry
+
+country_event = {
+	id = ott.119
+	title = ott.119.t
+	desc = ott.119.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.119.a
+		country_event = { id = ott.120 hours = 1 }
+	}
+
+}
+
+# Osman captures the palace
+
+country_event = {
+	id = ott.120
+	title = ott.120.t
+	desc = ott.120.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.120.a
+
+		random_list = {
+			90 = { country_event = { id = ott.121 hours = 1 } }
+			10 = { country_event = { id = ott.129 hours = 1 } }
+		} 
+	}
+
+}
+
+# Army reinforcements join loyalist forces
+
+country_event = {
+	id = ott.121
+	title = ott.121.t
+	desc = ott.121.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.121.a
+
+		country_event = { id = ott.122 hours = 2 }
+	}
+
+}
+
+# Osman captures the Parliament
+
+country_event = {
+	id = ott.122
+	title = ott.122.t
+	desc = ott.122.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.122.a
+
+		country_event = { id = ott.123 hours = 3 }
+	}
+
+}
+
+# Osman captures Galata Bridge
+
+country_event = {
+	id = ott.123
+	title = ott.123.t
+	desc = ott.123.d
+	
+	is_triggered_only = yes
+	
+	# TODO - genc_osman.ogg?
+	option = {
+		name = ott.123.a
+
+		country_event = { id = ott.124 hours = 1 }
+	}
+
+}
+
+# Osman fights uphill towards Sublime Porte
+
+country_event = {
+	id = ott.124
+	title = ott.124.t
+	desc = ott.124.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.124.a
+
+		random_list = {
+			90 = { country_event = { id = ott.125 hours = 4 } }
+			10 = { country_event = { id = ott.130 hours = 6 } }
+		}
+	}
+
+}
+
+# Osman routs rebels after heavy fighting
+
+country_event = {
+	id = ott.125
+	title = ott.125.t
+	desc = ott.125.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.125.a
+
+		country_event = { id = ott.126 hours = 2 }
+	}
+
+}
+
+# Osman captures the War Ministry
+
+country_event = {
+	id = ott.126
+	title = ott.126.t
+	desc = ott.126.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.126.a
+
+		country_event = { id = ott.127 hours = 1 }
+	}
+
+}
+
+# Osman sends radio and telegraph orders to Constantinople Corps
+
+country_event = {
+	id = ott.127
+	title = ott.127.t
+	desc = ott.127.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.127.a
+
+		country_event = { id = ott.128 hours = 6 }
+	}
+
+}
+
+# Osman directs cleanup operations
+
+country_event = {
+	id = ott.128
+	title = ott.128.t
+	desc = ott.128.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.128.a
+
+		country_event = { id = ott.135 days = 3 }
+	}
+
+}
+
+# Army reinforcements overwhelm loyalist forces
+
+country_event = {
+	id = ott.129
+	title = ott.129.t
+	desc = ott.129.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.129.a
+
+		country_event = { id = ott.131 days = 1 }
+	}
+
+}
+
+# Rebels successfully defend the Sublime Porte
+
+country_event = {
+	id = ott.130
+	title = ott.130.t
+	desc = ott.130.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.130.a
+
+		country_event = { id = ott.131 days = 1 }
+	}
+
+}
+
+# Osman Fuad retreats to Edirne
+
+country_event = {
+	id = ott.131
+	title = ott.131.t
+	desc = ott.131.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.131.a
+
+		country_event = { id = ott.132 days = 1 }
+		# TODO - figure out how to fight the rebels in Constantinople
+		
+	}
+
+}
+
+# Civil War
+
+country_event = {
+	id = ott.132
+	title = ott.132.t
+	desc = ott.132.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.132.a
+
+		add_political_power = -20
+			set_capital = 341
+			load_oob = "OTT_ertugrul"
+			start_civil_war = {
+				ruling_party = paternal_autocrat 
+				ideology = authoritarian_democrat
+				size = 0.01 # TODO - fix as necessary
+				capital = 773
+				states = { 773 }
+			}
+			random_other_country = {
+				limit = {
+					original_tag = OTT
+					has_government = authoritarian_democrat
+				}
+				set_cosmetic_tag = OTT_TF_authoritarian_democrat
+				load_oob = "OTT_tf"
+				set_national_unity = 0.5
+				add_popularity = {
+					ideology = authoritarian_democrat
+					popularity = 0.35
+				}
+			}
+		country_event = { id = ott.134 days = 60 }
+		set_global_flag = OTT_civil_war
+	}
+
+}
+
+# Osman Fuad wins civil war
+
+country_event = {
+	id = ott.133
+	title = ott.133.t
+	desc = ott.133.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_global_flag = OTT_civil_war
+		controls_state = 341
+		controls_state = 773
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ott.133.a
+
+		add_political_power = 20
+		country_event = { id = ott.128 days = 1 }
+		clr_global_flag = OTT_civil_war
+	}
+
+}
+
+# Osman Fuad loses civil war
+
+country_event = {
+	id = ott.134
+	title = ott.134.t
+	desc = ott.134.d
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		tag = OTT
+		has_global_flag = OTT_civil_war
+		NOT = { controls_state = 773 }
+	}
+	
+	option = {
+		name = ott.134.a
+
+		add_political_power = -100
+		# TODO link stuff - country_event = { id = turkey.zzz days = 1 }
+		clr_global_flag = OTT_civil_war
+	}
+
+}
+
+# Osman executes rebels
+
+country_event = {
+	id = ott.135
+	title = ott.135.t
+	desc = ott.135.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.135.a
+
+		country_event = { id = ott.136 days = 1 }
+		# TODO - firing_squad.ogg?
+	}
+
+}
+
+# Osman executes Abdulmecid's murderers
+
+country_event = {
+	id = ott.136
+	title = ott.136.t
+	desc = ott.136.d
+	
+	is_triggered_only = yes
+	
+	option = {		# firing squad
+		name = ott.136.a
+
+		add_political_power = 50
+		country_event = { id = ott.137 days = 1 }
+	}
+
+	option = {		# hanging
+		name = ott.136.b
+
+		add_political_power = 50
+		country_event = { id = ott.137 days = 1 }
+	}
+
+}
+
+# Order restored to the capital!
+
+country_event = {
+	id = ott.137
+	title = ott.137.t
+	desc = ott.137.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.137.a
+
+		if = {
+			limit = {
+				has_political_power > -50
+			}
+			add_political_power = 50
+			
+			else = {
+				set_political_power = 0
+				hidden_effect = {
+					remove_ideas = very_good_stability
+					remove_ideas = good_stability
+					remove_ideas = normal_stability
+					remove_ideas = low_stability
+					remove_ideas = very_low_stability
+					remove_ideas = disaster
+				}
+				add_ideas = normal_stability
+				set_country_flag = normal_stability
+			}
+		}
+		# TODO - remove investigation idea
+		country_event = { id = ott.138 days = 7 }
+	}
+
+}
+
+# Osman Fuad crowned Osman IV
+
+country_event = {
+	id = ott.138
+	title = ott.138.t
+	desc = ott.138.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ott.138.a
+
+		add_political_power = 100
+		retire_country_leader = yes
+		clr_country_flag = ahmed_4
+		create_country_leader = {
+			name = "Osman Fuad IV"
+			desc = "POLITICS_OSMAN_FUAD_DESC"
+			picture = "Portrait_Ottoman_OsmanFuad.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+				
+			}
+		}
+		set_country_flag = osman_4
+		complete_national_focus = OTT_fight_corruption
+	}
+
+}
+
+
 
 
 ### Arabian nationalism - reaction to Egyptian cores

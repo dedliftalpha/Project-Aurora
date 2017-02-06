@@ -2427,6 +2427,12 @@
 						id = japfor.56 days = 1
 					}
 				}
+				
+				else = {
+				
+					JAP = { country_event = { id = japfor.58 days = 1 } }
+				
+				}
 			}
 		}
 		option = { #surrender 
@@ -5761,7 +5767,7 @@
 				50 = {
 					hidden_effect = {
 						country_event = {
-							id = japfor.13?
+							id = japfor.132
 							days = 14
 						}
 					}
@@ -7762,4 +7768,1035 @@
 			name = japfor.159.a
 			add_state_core = 745
 		}
+	}
+	
+	###NEW COLONIAL PATH###
+	###Indonesia###
+	country_event = {#Japanese demands - HOL 
+	
+		id = japfor.176
+		title = japfor.176.t 
+		desc = japfor.176.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#Germany 
+			
+			trigger = {
+			
+				GER = { exists = yes }
+				
+				NOT = { 
+
+					has_global_flag = GER_Capitulation 
+					has_global_flag = GER_CON_Capitulation
+					
+					has_war_with = GER 
+					
+					is_in_faction = yes 
+					
+					has_government = radical_socialist
+					has_government = syndicalist
+					has_government = totalist
+
+				}
+			
+			}
+			
+			name = japfor.176.a 
+			ai_chance = { factor = 80 }
+			
+			GER = { country_event = { id = japfor.177 days = 1 } }
+			
+			add_political_power = -20 
+		
+		}
+		
+		option = {#surrender 
+		
+			trigger = {
+			
+			 NOT = {
+			 
+				has_government = national_populist 
+			 
+			 }
+			
+			}
+			
+			name = japfor.176.b 
+			ai_chance = { factor = 10 }
+			
+			add_political_power = -80 
+			
+			JAP = { country_event = { id = japfor.181 days = 2 } }
+		
+		}
+		
+		option = {#face them alone 
+		
+			name = japfor.176.c 
+			ai_chance = { 
+			
+				factor = 10 
+				
+				modifier = {
+
+					add = 10
+					
+					is_in_faction_with = FRA 
+
+				}
+			
+			}
+			
+			add_political_power = -60 
+			
+			JAP = { country_event = { id = japfor.182 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#Dutch beg for help 
+	
+		id = japfor.177 
+		title = japfor.177.t 
+		desc = japfor.177.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#Agree 
+		
+			name = japfor.177.a 
+			ai_chance = { 
+			
+				factor = 70
+
+				modifier = {
+
+					add = -65
+					
+					has_war_with = FRA 
+
+				}
+			
+			}
+			
+			add_to_faction = HOL 
+			
+			JAP = { country_event = { id = japfor.178 days = 1 } }
+		
+		}
+		
+		option = {#decline 
+		
+			name = japfor.177.b 
+			ai_chance = { factor = 30 }
+			
+			add_political_power = -20 
+			
+			HOL = { country_event = { id = japfor.180 days = 1 } }
+		
+		}
+	
+	}
+	
+	country_event = {#Germany supports the netherlands
+
+		id = japfor.178 
+		title = japfor.178.t 
+		desc = japfor.178.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#attack 
+		
+			name = japfor.178.a 
+			ai_chance = { factor = 50 }
+			
+			declare_war_on = { target = GER type = annex_everything }
+
+			add_political_power = 30 
+			
+		}
+		
+		option = {#Pull back 
+		
+			name = japfor.178.b 
+			ai_chance = { factor = 50 }
+			
+			add_political_power = -50 
+			
+			add_named_threat = { threat = -1 name = backed_down }
+			
+			HOL = { country_event = { id = japfor.179 days = 1 } }
+			GER = { country_event = { id = japfor.179 days = 1 } }
+		
+		}
+		
+	}
+	
+	country_event = {#The Japanese back down 
+	
+		id = japfor.179 
+		title = japfor.179.t 
+		desc = japfor.179.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+			
+			name = japfor.179.a 
+			
+			add_political_power = 50  
+		
+		}
+	
+	}
+	
+	country_event = {#The Germans refuse! 
+	
+		id = japfor.180 
+		title = japfor.180.t 
+		desc = japfor.180.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#surrender 
+		
+			trigger = {
+			
+				NOT = { 
+					
+					has_government = national_populist 
+
+				}
+			
+			}
+			
+			name = japfor.180.a 
+			ai_chance = { factor = 90 }
+			
+			add_political_power = -100 
+			
+			JAP = { country_event = { id = japfor.181 days = 2 } }
+		
+		}
+		
+		option = {#fight 
+		
+			name = japfor.180.b 
+			ai_chance = { factor = 10 }
+			
+			add_political_power = 50 
+			
+			JAP = { country_event = { id = japfor.182 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Dutch fold! 
+		
+		id = japfor.181 
+		title = japfor.181.t 
+		desc = japfor.181.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.181.a 
+			
+			add_political_power = 100 
+			
+			every_state = {
+			
+				limit = {
+				
+					is_controlled_by = HOL 
+					is_core_of = INS 
+				
+				}
+				
+				JAP = { 
+				
+					transfer_state = PREV
+					
+					add_state_claim = PREV 
+
+				}
+			
+			}
+		
+		}
+	
+	}
+	
+	country_event = {#The Dutch resist! 
+		
+		id = japfor.182 
+		title = japfor.182.t 
+		desc = japfor.182.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#war 
+		
+			name = japfor.182.a 
+			ai_chance = { factor = 95 }
+			
+			add_political_power = 40 
+			
+			declare_war_on = { target = HOL type = annex_everything }
+			
+			every_state = {
+			
+				limit = {
+				
+					is_owned_by = HOL 
+					is_core_of = INS 
+				
+				}
+				
+				JAP = {
+					
+					add_state_claim = PREV 
+
+				}
+			
+			}
+		
+		}
+		
+		option = {#back down 
+		
+			name = japfor.182.b 
+			ai_chance = { factor = 5 }
+			
+			add_political_power = -100 
+			
+			add_named_threat = { threat = -1 name = backed_down }
+			
+			HOL = { country_event = { id = japfor.183 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese back down!
+	
+		id = japfor.183 
+		title = japfor.183.t 
+		desc = japfor.183.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.183.a 
+			
+			add_political_power = 100 
+			
+		}
+	
+	}
+	
+	country_event = {#Fall of the Dutch East Indies 
+	
+		id = japfor.184 
+		title = japfor.184.t 
+		desc = japfor.184.d 
+		
+		fire_only_once = yes 
+		
+		trigger = {
+		
+			tag = HOL 
+			
+			has_war_with = JAP 
+			
+			is_in_faction = no
+
+			JAP = {
+			
+				controls_state = 672 #Sumatra
+				controls_state = 335 #Java 
+				controls_state = 673 #Sulawesi 
+			
+			}
+						
+		}
+		
+		mean_time_to_happen = { days = 20 }
+		
+		option = {#surrender 
+			
+			name = japfor.184.a 
+			ai_chance = { factor = 95 }
+			
+			add_political_power = -200 
+			
+			JAP = { country_event = { id = japfor.185 days = 2 } }
+		
+		}
+		
+		option = {#fight on! 
+		
+			name = japfor.184.b 
+			ai_chance = { factor = 5 }
+			
+			add_political_power = -100 
+		
+		}
+	
+	}
+	
+	country_event = {#The Dutch beg for peace!
+	
+		id = japfor.185 
+		title = japfor.185.t 
+		desc = japfor.185.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#accept 
+		
+			name = japfor.185.a 
+			ai_chance = { factor = 100 }
+			
+			every_state = {
+			
+				limit = {
+				
+					is_owned_by = HOL 
+					is_core_of = INS  
+				
+				}
+				
+				JAP = { transfer_state = PREV }
+			
+			}
+			
+			add_political_power = 150 
+			
+			white_peace = HOL 
+			
+		
+		}
+		
+		option = {#refuse 
+		
+			name = japfor.185.b 
+			ai_chance = { factor = 0 }
+			
+			HOL = { country_event = { id = japfor.186 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese refuse! 
+	
+		id = japfor.186 
+		title = japfor.186.t 
+		desc = japfor.186.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.186.a 
+			
+			add_political_power = -100 
+		
+		}
+	
+	}
+	
+	country_event = {#Japanese victory
+	
+		id = japfor.187 
+		title = japfor.187.t 
+		desc = japfor.187.d 
+		
+		fire_only_once = yes 
+		
+		trigger = {
+		
+			tag = GER 
+			
+			has_war_with = JAP 
+			
+			is_in_faction_with = HOL 
+
+			JAP = {
+			
+				controls_state = 672 #Sumatra
+				controls_state = 335 #Java 
+				controls_state = 673 #Sulawesi 
+				controls_state = 846 #Malaya 
+				controls_state = 336 #Singapore 
+				controls_state = 333 #Sarawak 
+				controls_state = 757 #German New Guinea
+			
+			}
+						
+		}
+		
+		mean_time_to_happen = { days = 20 }
+		
+		option = {#surrender 
+			
+			name = japfor.187.a 
+			ai_chance = { factor = 70 }
+			
+			add_political_power = -100 
+			
+			JAP = { country_event = { id = japfor.188 days = 2 } }
+		
+		}
+		
+		option = {#fight on! 
+		
+			name = japfor.187.b 
+			ai_chance = { factor = 30 }
+			
+			add_political_power = -50 
+		
+		}
+	
+	}
+	
+	country_event = {#The Germans beg for peace!
+	
+		id = japfor.188 
+		title = japfor.188.t 
+		desc = japfor.188.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#accept 
+		
+			name = japfor.185.a 
+			ai_chance = { factor = 70 }
+			
+			every_state = {
+			
+				limit = {
+				
+					is_owned_by = HOL 
+					is_core_of = INS  
+				
+				}
+				
+				JAP = { transfer_state = PREV }
+			
+			}
+			
+			add_political_power = 150 
+			
+			white_peace = GER 
+			white_peace = HOL 
+			
+			transfer_state = 846 
+			transfer_state = 336 
+			transfer_state = 333 
+			transfer_state = 828 
+			transfer_state = 757 
+			transfer_state = 737 
+			transfer_state = 634 
+			transfer_state = 635 
+			
+		
+		}
+		
+		option = {#refuse 
+		
+			name = japfor.188.b 
+			ai_chance = { factor = 30 }
+			
+			GER = { country_event = { id = japfor.189 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese refuse! 
+	
+		id = japfor.189 
+		title = japfor.189.t 
+		desc = japfor.189.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.189.a 
+			
+			add_political_power = -50 
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese demands INS 
+	
+	 id = japfor.190 
+	 title = japfor.190.t 
+	 desc = japfor.190.d 
+	 
+	 is_triggered_only = yes 
+	 
+	 option = {#Germany 
+			
+			trigger = {
+			
+				GER = { exists = yes }
+				
+				NOT = { 
+
+					has_global_flag = GER_Capitulation 
+					has_global_flag = GER_CON_Capitulation
+					
+					has_war_with = GER 
+					
+					is_in_faction = yes 
+					
+					has_government = radical_socialist
+					has_government = syndicalist
+					has_government = totalist
+
+				}
+			
+			}
+			
+			name = japfor.176.a 
+			ai_chance = { factor = 80 }
+			
+			GER = { country_event = { id = japfor.191 days = 2 } }
+			
+			add_political_power = -20 
+		
+		}
+		
+		option = {#surrender 
+		
+			trigger = {
+			
+			 NOT = {
+			 
+				has_government = national_populist 
+			 
+			 }
+			
+			}
+			
+			name = japfor.176.b 
+			ai_chance = { factor = 10 }
+			
+			add_political_power = -80 
+			
+			JAP = { country_event = { id = japfor.195 days = 2 } }
+		
+		}
+		
+		option = {#face them alone 
+		
+			name = japfor.176.c 
+			ai_chance = { 
+			
+				factor = 5 
+				
+				modifier = {
+
+					add = 10
+					
+					is_in_faction_with = FRA 
+
+				}
+			
+			}
+			
+			add_political_power = -60 
+			
+			JAP = { country_event = { id = japfor.196 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#Indonesia begs for help! 
+	
+	id = japfor.191 
+	title = japfor.191.t 
+	desc = japfor.191.d 
+	
+	
+	
+	is_triggered_only = yes 
+		
+		option = {#Agree 
+		
+			name = japfor.177.a 
+			ai_chance = { 
+			
+				factor = 70
+
+				modifier = {
+
+					add = -65
+					
+					has_war_with = FRA 
+
+				}
+			
+			}
+			
+			add_to_faction = INS  
+			
+			JAP = { country_event = { id = japfor.192 days = 1 } }
+		
+		}
+		
+		option = {#decline 
+		
+			name = japfor.177.b 
+			ai_chance = { factor = 30 }
+			
+			add_political_power = -20 
+			
+			INS = { country_event = { id = japfor.194 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#Germany supports Indonesia 
+
+		id = japfor.192 
+		title = japfor.192.t 
+		desc = japfor.192.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#attack 
+		
+			name = japfor.178.a 
+			ai_chance = { factor = 50 }
+			
+			declare_war_on = { target = GER type = annex_everything }
+
+			add_political_power = 30 
+			
+		}
+		
+		option = {#Pull back 
+		
+			name = japfor.178.b 
+			ai_chance = { factor = 50 }
+			
+			add_political_power = -50 
+			
+			add_named_threat = { threat = -1 name = backed_down }
+			
+			HOL = { country_event = { id = japfor.193 days = 1 } }
+			GER = { country_event = { id = japfor.193 days = 1 } }
+		
+		}
+		
+	}
+	
+	country_event = {#The Japanese back down 
+	
+		id = japfor.193 
+		title = japfor.179.t 
+		desc = japfor.179.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+			
+			name = japfor.179.a 
+			
+			add_political_power = 50  
+		
+		}
+	
+	}
+	
+	country_event = {#The Germans refuse! 
+	
+		id = japfor.194 
+		title = japfor.180.t 
+		desc = japfor.180.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#surrender 
+		
+			trigger = {
+			
+				NOT = { 
+					
+					has_government = national_populist 
+
+				}
+			
+			}
+			
+			name = japfor.180.a 
+			ai_chance = { factor = 50 }
+			
+			add_political_power = -100 
+			
+			JAP = { country_event = { id = japfor.195 days = 2 } }
+		
+		}
+		
+		option = {#fight 
+		
+			name = japfor.180.b 
+			ai_chance = { factor = 50 }
+			
+			add_political_power = 50 
+			
+			JAP = { country_event = { id = japfor.196 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Indonesians fold! 
+		
+		id = japfor.195 
+		title = japfor.195.t 
+		desc = japfor.195.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.181.a 
+			
+			add_political_power = 100 
+			
+			every_state = {
+			
+				limit = {
+				
+					is_controlled_by = INS 
+					is_core_of = INS 
+				
+				}
+				
+				JAP = { 
+				
+					transfer_state = PREV
+					
+					add_state_claim = PREV 
+
+				}
+			
+			}
+		
+		}
+	
+	}
+	
+	country_event = {#The Indonsians resist! 
+		
+		id = japfor.196 
+		title = japfor.196.t 
+		desc = japfor.196.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#war 
+		
+			name = japfor.196.a 
+			ai_chance = { factor = 100 }
+			
+			add_political_power = 40 
+			
+			declare_war_on = { target = INS type = annex_everything }
+			
+			every_state = {
+			
+				limit = {
+				
+					is_owned_by = INS 
+					is_core_of = INS 
+				
+				}
+				
+				JAP = {
+					
+					add_state_claim = PREV 
+
+				}
+			
+			}
+		
+		}
+		
+		option = {#back down 
+		
+			name = japfor.182.b 
+			ai_chance = { factor = 0 }
+			
+			add_political_power = -100 
+			
+			add_named_threat = { threat = -1 name = backed_down }
+			
+			HOL = { country_event = { id = japfor.197 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese back down!
+	
+		id = japfor.197 
+		title = japfor.183.t 
+		desc = japfor.183.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.183.a 
+			
+			add_political_power = 100 
+			
+		}
+	
+	}
+	
+	
+	country_event = {#Japanese victory
+	
+		id = japfor.199 
+		title = japfor.199.t 
+		desc = japfor.199.d 
+		
+		fire_only_once = yes 
+		
+		trigger = {
+		
+			tag = GER 
+			
+			has_war_with = JAP 
+			
+			is_in_faction_with = INS 
+
+			JAP = {
+			
+				controls_state = 672 #Sumatra
+				controls_state = 335 #Java 
+				controls_state = 673 #Sulawesi 
+				controls_state = 846 #Malaya 
+				controls_state = 336 #Singapore 
+				controls_state = 333 #Sarawak 
+				controls_state = 757 #German New Guinea
+			
+			}
+						
+		}
+		
+		mean_time_to_happen = { days = 20 }
+		
+		option = {#surrender 
+			
+			name = japfor.187.a 
+			ai_chance = { factor = 70 }
+			
+			add_political_power = -100 
+			
+			JAP = { country_event = { id = japfor.200 days = 2 } }
+		
+		}
+		
+		option = {#fight on! 
+		
+			name = japfor.187.b 
+			ai_chance = { factor = 30 }
+			
+			add_political_power = -50 
+		
+		}
+	
+	}
+	
+	country_event = {#The Germans beg for peace!
+	
+		id = japfor.200 
+		title = japfor.200.t 
+		desc = japfor.200.d 
+		
+		is_triggered_only = yes 
+		
+		option = {#accept 
+		
+			name = japfor.185.a 
+			ai_chance = { factor = 70 }
+			
+			every_state = {
+			
+				limit = {
+				
+					is_owned_by = INS 
+					is_core_of = INS  
+				
+				}
+				
+				JAP = { transfer_state = PREV }
+			
+			}
+			
+			add_political_power = 150 
+			
+			white_peace = GER 
+			white_peace = INS 
+			
+			transfer_state = 846 
+			transfer_state = 336 
+			transfer_state = 333 
+			transfer_state = 828 
+			transfer_state = 757 
+			transfer_state = 737 
+			transfer_state = 634 
+			transfer_state = 635 
+			
+		
+		}
+		
+		option = {#refuse 
+		
+			name = japfor.188.b 
+			ai_chance = { factor = 30 }
+			
+			GER = { country_event = { id = japfor.201 days = 2 } }
+		
+		}
+	
+	}
+	
+	country_event = {#The Japanese refuse! 
+	
+		id = japfor.201 
+		title = japfor.189.t 
+		desc = japfor.189.d 
+		
+		is_triggered_only = yes 
+		
+		option = {
+		
+			name = japfor.189.a 
+			
+			add_political_power = -50 
+		
+		}
+	
 	}

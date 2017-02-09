@@ -2786,7 +2786,7 @@ country_event = {
 		}
 		add_political_power = -50
 		hidden_effect = {
-			add_ideas = ENG_Eric_Blair_hog_syn
+			add_ideas = ENG_Eric_Blair_hog_tot
 		}
 	}
 	
@@ -3243,7 +3243,7 @@ news_event = {
 	}
 }
 
-# Lawrence has taken control of the Union!
+# What now?
 
 country_event = {
 	id = uob.158
@@ -3253,15 +3253,20 @@ country_event = {
 	
 	trigger = {
 		tag = ENG
-		has_government = paternal_autocrat
+		has_country_flag = junta
 	}
 	
-	mean_time_to_happen = { days = 5 }
+	mean_time_to_happen = { days = 50 }
 	
 	fire_only_once = yes
 	
+	immediate = {
+		clr_country_flag = junta
+	}
+	
 	option = {
 		name = uob.158.a
+		ai_chance = { factor = 45 }
 		GBR = {
 			annex_country = { target = ENG transfer_troops = yes }
 			set_global_flag = UK_lawrence
@@ -3272,7 +3277,7 @@ country_event = {
 				retire_country_leader = yes
 				create_country_leader = {
 					name = "T.E. Lawrence"
-					desc = "GBR_lawrence_desc"
+					desc = "ENG_lawrence_desc"
 					picture = "Portrait_England_T_E_Lawrence.tga"
 					expire = "1965.1.1"
 					ideology = paternal_autocrat_subtype
@@ -3281,6 +3286,52 @@ country_event = {
 				country_event = { id = uk.2 days = 1 }
 			}
 		}
+	}
+	
+	option = {
+		name = uob.158.b 
+		ai_chance = { factor = 5 }
+		add_political_power = -400
+	}
+	
+	option = {
+		name = uob.158.c 
+		ai_chance = { factor = 25 }
+		set_politics = { ruling_party = syndicalist }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Clem Attlee"
+			desc = "ENG_attlee_desc"
+			picture = "Portrait_England_Clem_Attlee.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = { }
+		}
+		add_political_power = 200
+		add_ideas = ENG_Clement_Attlee_hog_rso
+		add_ideas = ENG_Barbara_Castle_eco_rso
+		add_ideas = ENG_James_Maxton_for_rso
+		add_ideas = ENG_John_Anderson_sec_mli
+	}
+	
+	option = {
+		name = uob.158.d 
+		ai_chance = { factor = 25 }
+		set_politics = { ruling_party = radical_socialist }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Barbara Castle"
+			desc = "ENG_castle_desc"
+			picture = "Portrait_England_Barbara_Castle.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = { }
+		}
+		add_political_power = 200
+		add_ideas = ENG_JB_Priestley_hog_syn
+		add_ideas = ENG_Annie_Kenney_eco_rso
+		add_ideas = ENG_Violet_Lansbury_sec_tot
+		add_ideas = ENG_Niclas_y_Glais_for_syn
 	}
 }
 
@@ -3554,6 +3605,10 @@ country_event = {
 	option = {
 		name = uob.212.a
 		hidden_effect = {
+			set_politics = {
+				ruling_party = paternal_autocrat
+			}
+			retire_country_leader = yes
 			create_country_leader = {
 				name = "T.E. Lawrence"
 				desc = "ENG_lawrence_desc"
@@ -3562,10 +3617,7 @@ country_event = {
 				ideology = paternal_autocrat_subtype
 				traits = { dictator }
 			}
-			set_politics = {
-				ruling_party = paternal_autocrat
-			}
-			news_event = { id = uob.223 } # LAWRENCE COUP
+			set_country_flag = junta
 		}
 	}
 }
@@ -4088,23 +4140,6 @@ country_event = {
 	}
 }
 
-##############################
-### A rainy day for Eric Blair
-##############################
-
-country_event = {
-	id = uob.203
-	title = uob.203.t
-	desc = uob.203.d
-	picture = GFX_report_event_election_vote # Todo
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = uob.203.a
-	}
-}
-
 # Refugees from the Commune of France
 
 news_event = {
@@ -4310,6 +4345,8 @@ country_event = {
 	}
 }
 
+### Offices
+
 # Exchequer
 
 country_event = {
@@ -4326,6 +4363,10 @@ country_event = {
 	mean_time_to_happen = { days = 10 }
 	
 	fire_only_once = yes
+	
+	immediate = {
+		set_country_flag = tuc2_eco
+	}
 	
 	option = {
 		name = uob.352.a
@@ -4377,6 +4418,10 @@ country_event = {
 	mean_time_to_happen = { days = 10 }
 	
 	fire_only_once = yes
+	
+	immediate = {
+		set_country_flag = tuc2_for
+	}
 	
 	option = {
 		name = uob.353.a
@@ -4436,6 +4481,10 @@ country_event = {
 	
 	fire_only_once = yes
 	
+	immediate = {
+		set_country_flag = tuc2_sec
+	}
+	
 	option = {
 		name = uob.354.a
 		ai_chance = { factor = 40 }	
@@ -4470,6 +4519,10 @@ country_event = {
 	
 	fire_only_once = yes
 	
+	immediate = {
+		set_country_flag = tuc2_int
+	}
+	
 	option = {
 		name = uob.355.a
 		ai_chance = { factor = 50 }	
@@ -4479,5 +4532,546 @@ country_event = {
 		name = uob.355.b
 		ai_chance = { factor = 50 }	
 		add_ideas = ENG_Anthony_Blunt_int_rso
+	}
+}
+
+### Chairmen/-woman
+
+# Mosley is Chairman
+
+country_event = {
+	id = uob.356
+	title = uob.356.t
+	desc = uob.356.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = tuc2_eco
+		has_country_flag = tuc2_for
+		has_country_flag = tuc2_sec
+		has_country_flag = tuc2_int
+		has_country_flag = mosley_chairman
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	immediate = {
+		clr_country_flag = tuc2_eco
+		clr_country_flag = tuc2_for
+		clr_country_flag = tuc2_sec
+		clr_country_flag = tuc2_int
+	}
+	
+	option = {
+		name = uob.356.a
+		ai_chance = { factor = 40 }
+		add_ideas = ENG_Jack_Jones_hog_tot
+	}
+	
+	option = {
+		name = uob.356.b
+		ai_chance = { factor = 20 }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Eric Blair"
+			desc = "ENG_blair_desc"
+			picture = "Portrait_England_Eric_Blair.tga"
+			expire = "1965.1.1"
+			ideology  = totalist_subtype
+			traits = { }
+		}
+		set_country_flag = blair_chairman
+		add_ideas = ENG_Phil_Piratin_hog_tot
+		add_political_power = 60
+	}
+	
+	option = {
+		name = uob.356.c
+		ai_chance = { factor = 20 }
+		set_politics = { ruling_party = syndicalist }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Annie Kenney"
+			desc = "ENG_kenney_desc"
+			picture = "Portrait_England_Annie_Kenney.tga"
+			expire = "1965.1.1"
+			ideology  = syndicalist_subtype
+			traits = { }
+		}
+		set_country_flag = kenney_chairman
+		add_ideas = ENG_Barbara_Castle_hog_rso
+		hidden_effect = {
+			set_party_name = { ideology = syndicalist long_name = ENG_CON_syndicalist_party_long name = ENG_CON_syndicalist_party }
+		}
+	}
+	
+	option = {
+		name = uob.356.d
+		ai_chance = { factor = 20 }
+		trigger = {
+			has_country_flag = WK2W
+		}
+		set_country_flag = mosley_dictator
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Oswald Mosley"
+			desc = "ENG_mosley_desc"
+			picture = "Portrait_England_Oswald_Mosley.tga"
+			expire = "1965.1.1"
+			ideology = totalist_subtype
+			traits = { dictator }
+		}
+		add_political_power = -400
+	}
+	
+	option = {
+		name = uob.356.d
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_country_flag = PWH2
+		}
+		set_country_flag = mosley_dictator
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Oswald Mosley"
+			desc = "ENG_mosley_desc"
+			picture = "Portrait_England_Oswald_Mosley.tga"
+			expire = "1965.1.1"
+			ideology = totalist_subtype
+			traits = { dictator }
+		}
+		add_political_power = -400
+	}
+}
+
+# Kenney is Chairwoman
+
+country_event = {
+	id = uob.357
+	title = uob.357.t
+	desc = uob.357.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = tuc2_eco
+		has_country_flag = tuc2_for
+		has_country_flag = tuc2_sec
+		has_country_flag = tuc2_int
+		has_country_flag = kenney_chairman
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	immediate = {
+		clr_country_flag = tuc2_eco
+		clr_country_flag = tuc2_for
+		clr_country_flag = tuc2_sec
+		clr_country_flag = tuc2_int
+	}
+	
+	option = {
+		name = uob.357.a
+		ai_chance = { factor = 20 }
+		set_politics = { ruling_party = totalist }
+		add_ideas = ENG_Jack_Jones_hog_tot
+	}
+	
+	option = {
+		name = uob.357.b
+		ai_chance = { factor = 20 }
+		add_ideas = ENG_Clement_Attlee_hog_rso
+		add_political_power = -100
+	}
+	
+	option = {
+		name = uob.357.c
+		ai_chance = { factor = 40 }
+		add_ideas = ENG_Barbara_Castle_hog_rso
+		add_political_power = -40
+	}
+	
+	option = {
+		name = uob.357.d
+		ai_chance = { factor = 20 }
+		trigger = {
+			AND = {
+				has_country_flag = WK2W
+				has_country_flag = lawrence_back
+			}
+		}
+		add_political_power = -400
+		set_politics = { ruling_party = paternal_autocrat }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "T.E. Lawrence"
+			desc = "ENG_lawrence_desc"
+			picture = "Portrait_England_T_E_Lawrence.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { dictator }
+		}
+		set_country_flag = junta
+	}
+	
+	option = {
+		name = uob.357.d
+		ai_chance = { factor = 60 }
+		trigger = {
+			AND = {
+				has_country_flag = WK2W
+				has_country_flag = lawrence_back
+			}
+		}
+		add_political_power = -400
+		set_politics = { ruling_party = paternal_autocrat }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "T.E. Lawrence"
+			desc = "ENG_lawrence_desc"
+			picture = "Portrait_England_T_E_Lawrence.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { dictator }
+		}
+		set_country_flag = junta
+	}
+}
+
+# y Glais is Chairman
+
+country_event = {
+	id = uob.358
+	title = uob.358.t
+	desc = uob.358.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = tuc2_eco
+		has_country_flag = tuc2_for
+		has_country_flag = tuc2_sec
+		has_country_flag = tuc2_int
+		has_country_flag = glais_chairman
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	immediate = {
+		clr_country_flag = tuc2_eco
+		clr_country_flag = tuc2_for
+		clr_country_flag = tuc2_sec
+		clr_country_flag = tuc2_int
+	}
+	
+	option = {
+		name = uob.358.a
+		ai_chance = { factor = 20 }
+		set_politics = { ruling_party = totalist }
+		add_ideas = ENG_Jack_Jones_hog_tot
+	}
+	
+	option = {
+		name = uob.358.b
+		ai_chance = { factor = 20 }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "William Gallacher"
+			desc = "ENG_gallacher_desc"
+			picture = "Portrait_England_William_Gallacher.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = { }
+		}
+		add_ideas = ENG_JB_Priestley_hog_syn
+	}
+	
+	option = {
+		name = uob.358.c
+		ai_chance = { factor = 40 }
+		add_ideas = ENG_Nye_Bevan_hog_rso
+		add_political_power = -40
+	}
+	
+	option = {
+		name = uob.358.d
+		ai_chance = { factor = 20 }
+		trigger = {
+			AND = {
+				has_country_flag = WK2W
+				has_country_flag = lawrence_back
+			}
+		}
+		add_political_power = -400
+		set_politics = { ruling_party = paternal_autocrat }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "T.E. Lawrence"
+			desc = "ENG_lawrence_desc"
+			picture = "Portrait_England_T_E_Lawrence.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { dictator }
+		}
+		set_country_flag = junta
+	}
+	
+	option = {
+		name = uob.358.d
+		ai_chance = { factor = 60 }
+		trigger = {
+			AND = {
+				has_country_flag = WK2W
+				has_country_flag = lawrence_back
+			}
+		}
+		add_political_power = -400
+		set_politics = { ruling_party = paternal_autocrat }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "T.E. Lawrence"
+			desc = "ENG_lawrence_desc"
+			picture = "Portrait_England_T_E_Lawrence.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { dictator }
+		}
+		set_country_flag = junta
+	}
+}
+
+# Horner is Chairman
+
+country_event = {
+	id = uob.359
+	title = uob.359.t
+	desc = uob.359.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = tuc2_eco
+		has_country_flag = tuc2_for
+		has_country_flag = tuc2_sec
+		has_country_flag = tuc2_int
+		has_country_flag = horner_chairman
+	}
+	
+	mean_time_to_happen = { days = 2 }
+	
+	fire_only_once = yes
+	
+	immediate = {
+		clr_country_flag = tuc2_eco
+		clr_country_flag = tuc2_for
+		clr_country_flag = tuc2_sec
+		clr_country_flag = tuc2_int
+	}
+	
+	option = {
+		name = uob.359.a
+		ai_chance = { factor = 20 }
+		set_politics = { ruling_party = totalist }
+		add_ideas = ENG_GDH_Cole_hog_rso
+		add_political_power = -60
+	}
+	
+	option = {
+		name = uob.359.b
+		ai_chance = { factor = 20 }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Clem Attlee"
+			desc = "ENG_attlee_desc"
+			picture = "Portrait_England_Clem_Attlee.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = { }
+		}
+		add_ideas = ENG_GDH_Cole_hog_rso
+	}
+	
+	option = {
+		name = uob.359.c
+		ai_chance = { factor = 40 }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Oswald Mosley"
+			desc = "ENG_mosley_desc"
+			picture = "Portrait_England_Oswald_Mosley.tga"
+			expire = "1965.1.1"
+			ideology = totalist_subtype
+			traits = { }
+		}
+		add_ideas = ENG_Eric_Blair_hog_tot
+		add_political_power = -40
+	}
+	
+	option = {
+		name = uob.359.d
+		ai_chance = { factor = 20 }
+		set_politics = { ruling_party = syndicalist }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Barbara Castle"
+			desc = "ENG_castle_desc"
+			picture = "Portrait_England_Barbara_Castle.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = { }
+		}
+		add_ideas = ENG_James_Maxton_hog_rso
+		add_political_power = -50
+	}
+}
+
+# Maximists dont like Autonomy
+
+country_event = {
+	id = uob.360
+	title = uob.360.t
+	desc = uob.360.d
+	picture = GFX_report_event_election_vote
+	
+	trigger = {
+		tag = ENG
+		WAL = {
+			is_puppet_of = ENG
+		}
+		SCT = {
+			is_puppet_of = ENG
+		}
+		has_government = totalist
+	}
+	
+	mean_time_to_happen = { days = 30 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.360.a 
+		ai_chance = { factor = 100 }
+		annex_country = { target = WAL transfer_troops = yes }
+		annex_country = { target = SCT transfer_troops = yes }
+		add_political_power = -400
+		add_timed_idea = { idea = ENG_home_rule_broken_idea days = 365 }
+	}
+	
+	option = {
+		name = uob.360.b 
+		ai_chance = { factor = 0 }
+		add_political_power = -200
+	}
+}
+
+# A cold, wet day for Eric Blair
+
+country_event = {
+	id = uob.361
+	title = uob.361.t
+	desc = uob.361.d
+	picture = UoB_country_cold_wet_day
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = mosley_dictator
+		NOT = {
+			has_country_flag = Eric_Blair_dead
+		}
+	}
+	
+	mean_time_to_happen = { days = 200 }
+	
+	fire_only_once = yes
+	
+	immediate = {
+		clr_country_flag = mosley_dictator
+	}
+	
+	option = {
+		name = uob.361.a 
+		ai_chance = { factor = 40 }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Eric Blair"
+			desc = "ENG_blair_desc"
+			picture = "Portrait_England_Eric_Blair.tga"
+			expire = "1965.1.1"
+			ideology  = radical_socialist_subtype
+			traits = { }
+		}
+		add_ideas = ENG_Harry_Pollitt_hog_rso
+		add_ideas = ENG_Barbara_Castle_eco_rso
+		add_ideas = ENG_Nye_Bevan_sec_rso
+		add_ideas = ENG_James_Maxton_for_rso
+		add_political_power = -50
+		hidden_effect = {
+			set_politics = { ruling_party = radical_socialist }
+			set_party_name = { ideology = radical_socialist long_name = ENG_BLR_radical_socialist_party_long name = ENG_BLR_radical_socialist_party }
+		}
+	}
+	
+	option = {
+		name = uob.361.b
+		ai_chance = { factor = 25 }
+		trigger = {
+			has_country_flag = lawrence_back
+		}
+		set_politics = { ruling_party = paternal_autocrat }
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "T.E. Lawrence"
+			desc = "ENG_lawrence_desc"
+			picture = "Portrait_England_T_E_Lawrence.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { dictator }
+		}
+		set_country_flag = junta
+		add_ideas = ENG_Tom_Wintringham_hog_syn
+		add_ideas = ENG_John_Strachey_eco_tot
+		add_ideas = ENG_Eric_Blair_sec_tot
+		add_ideas = ENG_Bernard_Montgomery_for_sde
+		add_political_power = -500
+	}
+	
+	option = {
+		name = uob.361.c 
+		ai_chance = { factor = 30 }
+		set_country_flag = Eric_Blair_dead
+		add_political_power = -600
+	}
+}
+
+# A cold, wet, dark day for Eric Blair
+
+news_event = {
+	id = uob.362
+	title = uob.362.t
+	desc = uob.362.d
+	picture = UoB_news_cold_wet_day
+	
+	trigger = {
+		tag = ENG
+		has_country_flag = mosley_dictator
+		NOT = {
+			has_country_flag = Eric_Blair_dead
+		}
+	}
+	
+	mean_time_to_happen = { days = 400 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = uob.362.a
+		set_country_flag = Eric_Blair_dead
 	}
 }

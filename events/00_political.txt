@@ -1935,16 +1935,60 @@ country_event = {
 }
 
 #####Introduction#######
+
+country_event = {          #Event fired one hour after gamestart by the SWI history file
+	id = kr.political.2400
+	title = kr.political.2400.t 
+	desc = kr.political.2400.d 
+	
+	hidden = yes
+		
+    is_triggered_only = yes
+						
+	option = {
+		name = kr.political.2400.a
+		
+		every_country = {      #Intro events
+            limit = { is_ai = no }
+            country_event = { id = kr.political.24 hours = 1 } 
+        }
+		
+		every_country = {      #Normal stability flag
+            limit = { has_idea = normal_stability }
+            set_country_flag = normal_stability
+        }
+		
+		if = {                 #FIX for totalist alash orda
+			limit = {
+				has_dlc = "Together for Victory"
+			}
+			RUS = {
+				set_autonomy = {
+					target = ALO
+					autonomous_state = autonomy_colony
+					freedom_level = 0.75
+				}
+			}
+			else = {
+				RUS = { puppet = ALO }
+			}
+		}
+        ALO = {
+		set_politics = {
+	
+		ruling_party = authoritarian_democrat
+		elections_allowed = no
+		}
+        }
+	}
+}
+
 country_event = {
 	id = kr.political.24 
 	title = kr.political.24.t 
 	desc = kr.political.24.d 
 		
-	fire_only_once = yes
-		
-	trigger = {
-		is_ai = no
-	}
+    is_triggered_only = yes
 	
 	immediate = {
 		hidden_effect = { set_global_flag = newspaper_boiz }
@@ -2019,7 +2063,7 @@ country_event = {
 		has_global_flag = newspaper_boiz
 	}
 	
-	mean_time_to_happen = { days = 1 } # 10 day is too long - 3 days should be just fine
+	mean_time_to_happen = { days = 3 } # 10 day is too long - 3 days should be just fine
 								
 	option = {
 		name = kr.political.28.a #All the events

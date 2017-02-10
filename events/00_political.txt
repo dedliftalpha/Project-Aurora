@@ -1936,7 +1936,7 @@ country_event = {
 
 #####Introduction#######
 
-country_event = {
+country_event = {          #Event fired one hour after gamestart by the SWI history file
 	id = kr.political.2400
 	title = kr.political.2400.t 
 	desc = kr.political.2400.d 
@@ -1946,17 +1946,38 @@ country_event = {
     is_triggered_only = yes
 						
 	option = {
-		name = kr.political.2400.a #Continue the credits
-		every_country = { 
+		name = kr.political.2400.a
+		every_country = {       #Intro events
             limit = { is_ai = no }
             country_event = { id = kr.political.24 hours = 1 } 
         }
-		every_country = { 
+		every_country = {      #Normal stability flag
             limit = { has_idea = normal_stability }
             set_country_flag = normal_stability
+        }               #FIX for totalist alash orda
+		if = {
+			limit = {
+				has_dlc = "Together for Victory"
+			}
+			RUS = {
+			set_autonomy = {
+				target = ALO
+				autonomous_state = autonomy_colony
+				freedom_level = 0.75
+			}
+		else = {
+			puppet = ALO
+		}
+		}
+		}
+        ALO = {
+		set_politics = {
+	
+		ruling_party = authoritarian_democrat
+		elections_allowed = no
+		}
         }
 	}
-
 }
 
 country_event = {

@@ -42,7 +42,7 @@ default_peace = {
 			}
 		}
 		modifier = { #Closer land is better land
-			factor = 1.25
+			factor = 4
 
 			capital_scope = {
 				distance_to = {
@@ -53,7 +53,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 1.25
+			factor = 2
 
 			capital_scope = {
 				distance_to = {
@@ -64,7 +64,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 1.25
+			factor = 1.5
 
 			capital_scope = {
 				distance_to = {
@@ -75,7 +75,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 1.25
+			factor = 1
 
 			capital_scope = {
 				distance_to = {
@@ -225,6 +225,91 @@ default_peace = {
 				}
 			}
 		}
+		modifier = { #If in faction, not a faction leader, not have land on the same continent, and not have cores/claim on the land THEN do not take the land
+			factor = 0
+			ROOT = {
+				is_in_faction = yes
+				is_faction_leader = no 
+			}
+			FROM = {
+				NOT = { 
+					OR = {
+						is_claimed_by = ROOT
+						is_core_of = ROOT 
+					}
+				}
+			}
+			OR = {
+				AND = { #Europe
+					FROM = { is_on_continent = europe }
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								is_on_continent = europe
+							}
+						}
+					}
+				}
+				AND = { #Asia and/or Australia
+					OR = {
+						FROM = { is_on_continent = asia }
+						FROM = { is_on_continent = australia }
+					}
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								OR = {
+									is_on_continent = asia
+									is_on_continent = australia
+								}
+							}
+						}
+					}
+				}
+				AND = { #North America
+					FROM = { is_on_continent = north_america }
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								is_on_continent = north_america
+							}
+						}
+					}
+				}
+				AND = { #South America
+					FROM = { is_on_continent = south_america }
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								is_on_continent = south_america
+							}
+						}
+					}
+				}
+				AND = { #Middle East
+					FROM = { is_on_continent = middle_east }
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								is_on_continent = middle_east
+							}
+						}
+					}
+				}
+				AND = { #Africa
+					FROM = { is_on_continent = africa }
+					ROOT = {
+						NOT = {
+							any_owned_state = {
+								is_on_continent = africa
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		
 	}
 
 	# ROOT = Taker, FROM = Giver

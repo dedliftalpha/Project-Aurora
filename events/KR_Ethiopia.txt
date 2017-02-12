@@ -1,4 +1,9 @@
-﻿#Ethiopia Events
+﻿### Ethiopia Events
+## KEY:
+# 7: Introduction
+# 27: Cattle War Chain
+# 328: Black Monday Event(s)
+# 363: Civil War Chain
 
 add_namespace = ethiopia
 
@@ -19,7 +24,8 @@ country_event = {
 		}
 }
 
-## Selling the railway - Germany
+### CATTLE WAR CHAIN
+# Selling the railway - Germany
 country_event = {
 	id = ethiopia.2
 	title = etheopia.2.t
@@ -351,5 +357,106 @@ country_event = {
 		name = ethiopia.15.a
 		add_political_power = 30
 		remove_ideas = ETH_black_monday
+	}
+}
+
+### CIVIL WAR CHAIN
+# remove_ideas_with_trait =
+# add_ideas = 
+country_event = { # The extent of Noble Power
+	id = ethiopia.16
+	title = ethiopia.16.t
+	desc = ethiopia.16.d
+
+	is_triggered_only = yes
+
+	option = { # Give them some important civil and military offices
+		name = ethiopia.16.a
+		ai_chance = { factor = 50 }
+		remove_ideas_with_trait = economy_minister
+		add_ideas = ETH_Ras_Hailu_Tekle_Haimanot_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = ETH_Lij_Asrate_sec_pau
+		add_political_power = -20
+		army_experience = -10
+		hidden_effect = {
+			country_event = { id = ethiopia.17 days = 30 }
+			set_country_flag = ETH_MNC
+		}
+	}
+
+	option = { # The nobles serve their country best in the military
+		name = ethiopia.16.b
+		ai_chance = { factor = 20 }
+		add_political_power = -60
+		army_experience = -30
+		hidden_effect = {
+			country_event = { id = ethiopia.17 days = 30 }
+			set_country_flag = ETH_MNC
+		}
+	}
+
+	option = { # Give them control over the civil offices
+		name = ethiopia.16.c
+		ai_chance = { factor = 20 }
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = ETH_Ras_Hailu_Tekle_Haimanot_for_pau
+		remove_ideas_with_trait = economy_minister
+		add_ideas = ETH_Ras_Hailu_Tekle_Haimanot_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = ETH_Lij_Asrate_sec_pau
+		hidden_effect = {
+			country_event = { id = ethiopia.17 days = 30 }
+			set_country_flag = ETH_MNC
+		}
+	}
+
+	option = { # Total noble control
+		name = ethiopia.16.e
+		ai_chance = { factor = 10 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = ETH_Haile_Selassie_Gugsa_hog_pau
+		remove_ideas_with_trait = economy_minister
+		add_ideas = ETH_Ras_Hailu_Tekle_Haimanot_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = ETH_Lij_Asrate_sec_pau
+		add_political_power = -60
+		army_experience = -30
+		custom_effect_tooltip = ETH_Total_Control
+		hidden_effect = {
+			country_event = { id = ethiopia.17 days = 30 }
+			set_country_flag = ETH_TNC
+		}
+	}
+}
+
+# The fate of the reforms
+country_event = {
+	id = ethiopia.17
+	title = ethiopia.17.t
+	desc = ethiopia.17.d
+
+	is_triggered_only = yes
+
+	option = { # The nobles be damned, the reforms will continue
+		name = ethiopia.17.a
+		trigger = { has_country_flag = ETH_MNC }
+		add_political_power = -60
+		hidden_effect = {
+			# country_event = { id = ethiopia.18 days = 30 }
+			news_event = { id = worldnews.257 days = 32 }
+			clr_country_flag = ETH_MNC
+		}
+	}
+
+	option = { # The nobles be damned, the reforms will continue
+		name = ethiopia.17.a
+		trigger = { has_country_flag = ETH_TNC }
+		add_political_power = -120
+		hidden_effect = {
+			# country_event = { id = ethiopia.18 days = 30 }
+			news_event = { id = worldnews.257 days = 32 }
+			clr_country_flag = ETH_TNC
+		}
 	}
 }

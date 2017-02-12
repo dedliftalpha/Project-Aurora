@@ -205,7 +205,26 @@ default_peace = {
 				}
 			}
 		}
-
+		modifier = { #Do not take land if an ally has cores or claim and you do not
+			factor = 0
+			FROM = {
+				NOT = { 
+					OR = {
+						is_claimed_by = ROOT
+						is_core_of = ROOT 
+					}
+				}
+			}
+			any_allied_country = { 
+				is_in_peace_conference = yes
+				FROM = {
+					OR = {
+						is_claimed_by = PREV
+						is_core_of = PREV
+					}
+				}
+			}
+		}
 	}
 
 	# ROOT = Taker, FROM = Giver

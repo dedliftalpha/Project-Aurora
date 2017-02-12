@@ -8,4 +8,4 @@ Enable the mod in the Launcher mod menu and enjoy!
 Other questions and answers can be found at:
 https://forum.paradoxplaza.com/forum/index.php?threads/kaiserreich-info-download.996902/
 
-- The KR4 Team: ~mw~, Aarn, AllyJammy, Arda, Augenis, Axelius, BattleSarge, Chef Exellence, CulturalMarxist, Dedlift, DoctorPainkiller, Esmaerla, Firefly, Gibzit, Hayro, Kakletron, Kallar, MattTheCzar, Miinda, Mikus, MonarchistKaiser, Mark, Musteline, Nijato, Packard, Phil, Pinback, PPsyrius, Rebi-chan, Selim, Strategia, Tatiana, TheBlackWinds, VincentDN, Wyandotte, Zankoas, Zarasophos and our beloved Kaiserbot!
+- The KR4 Team: ~mw~, Aarn, AllyJammy, Arda, Augenis, Axelius, BattleSarge, Chef Exellence, CrazyZombie, CulturalMarxist, Dedlift, Denizz, DDago, DoctorPainkiller, Dskod1, Esmaerla, Fatherlorris, Firefly, Flamefang, Gibzit, HappyNTH, Hayro, Herkles, Jak, Kakletron, Kallar, MattTheCzar, Miinda, Mikus, MonarchistKaiser, Mark, Musteline, Nijato, Packard, Phil, Pinback, PPsyrius, Rebi-chan, Selim, Strategia, Tatiana, TheBlackWinds, VincentDN, Wyandotte, Zankoas, Zarasophos and our beloved Kaiserbot!

@@ -246,6 +246,8 @@ country_event = { # Bulgaria claimed Adrianople, Ottoman response
 		    add_building_construction = { type = bunker province = 3893 level = 1 instant_build = yes } 
 	        add_building_construction = { type = bunker province = 849 level = 1 instant_build = yes } 
 		}
+		
+		BUL = { set_country_flag = thrace_war }
 	}
 }	
 
@@ -286,8 +288,10 @@ country_event = { # Bulgaria claimed Constantinople, Ottoman response
 		    add_building_construction = { type = bunker province = 3893 level = 2 instant_build = yes } 
 		    add_building_construction = { type = bunker province = 849 level = 2 instant_build = yes } 
 		}
+		
+		BUL = { set_country_flag = thrace_war }
 	}
-}
+} ### See bulgaria.12 for peace events
 
 ### Tsar's Pensions
 
@@ -402,6 +406,212 @@ country_event = { # Economic prosperity leads to people complaining about factor
 	    add_political_power = -200
 	}
 }
+
+### Thrace War Peace Events
+
+country_event = { # Peace with Bulgaria?
+    
+	id = bulgaria.12
+	title = bulgaria.12.t
+	desc = bulgaria.12.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+	    tag = OTT
+	    BUL = { 
+		    has_war_with = OTT
+			has_country_flag = thrace_war
+			surrender_progress > 0.2
+			is_subject = no
+		}
+		OTT = {
+		    is_subject = no
+			controls_state = 184
+			controls_state = 211
+			controls_state = 212
+			controls_state = 769
+		}
+	}
+	
+	option = { # Demand Eastern Rumelia
+	    name = bulgaria.12.a
+		
+		ai_chance = { factor = 40 }
+		
+		OTT = {
+		    add_state_core = 184
+			add_state_core = 211
+			add_state_claim = 212
+			add_state_claim = 769
+		}
+		
+		BUL = { country_event = { days = 1 id = bulgaria.13 } }
+	}
+	
+	option = { # Demand Eastern Rumelia and Installation of Friendly Government
+	    name = bulgaria.12.b
+		
+		ai_chance = { factor = 60 }
+		
+		OTT = {
+		    add_state_core = 184
+			add_state_core = 211
+			add_state_claim = 212
+			add_state_claim = 769
+		}
+		
+		BUL = { country_event = { days = 1 id = bulgaria.14 } }
+	}
+	
+	option = { # Demand Eastern Rumelia
+	    name = bulgaria.12.c
+		
+		ai_chance = { factor = 0 }
+		
+		add_political_power = -100
+		
+		add_opinion_modifier = { target = GER modifier = ottoman_aggression_bulgaria_GER }
+	}
+}
+
+### Ottomans demand Eastern Rumelia
+
+country_event = {
+    
+	id = bulgaria.13
+	title = bulgaria.13.t
+	desc = bulgaria.13.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = bulgaria.13.a
+		
+		OTT = {
+            transfer_state = 184
+			transfer_state = 211
+			transfer_state = 212
+			transfer_state = 769
+			white_peace = BUL
+		}
+		
+		OTT = { country_event = { days = 1 id = bulgaria.16 } }
+	}
+	
+	option = {
+	    name = bulgaria.13.b
+		
+		add_political_power = -60
+	}
+}
+
+### Ottomans demand Eastern Rumelia and puppet
+
+country_event = {
+    
+	id = bulgaria.14
+	title = bulgaria.14.t
+	desc = bulgaria.14.d
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = bulgaria.14.a
+		
+		OTT = {
+            transfer_state = 184
+			transfer_state = 211
+			transfer_state = 212
+			transfer_state = 769
+			white_peace = BUL
+		}
+		
+		BUL = {
+		    remove_state_core = 184
+			remove_state_core = 211
+		    remove_state_core = 212
+			remove_state_core = 769
+			remove_state_core = 341
+			remove_state_claim = 773
+		}
+		
+		OTT = { country_event = { days = 1 id = bulgaria.15 } }
+	}
+	
+	option = {
+	    name = bulgaria.14.b
+		
+		add_political_power = -20
+	}
+}
+
+### Ottomans puppet Bulgaria
+
+country_event = {
+    
+	id = bulgaria.15
+	title = bulgaria.15.t
+	desc = bulgaria.15.d
+	
+	is_triggered_only = yes
+	
+	option = {
+	    name = bulgaria.15.a
+		
+		add_political_power = 100
+		puppet = BUL
+		add_opinion_modifier = { target = BUL modifier = bulgaria_ottoman_puppet_BUL }
+		
+		effect_tooltip = {
+		    OTT = {
+                transfer_state = 184
+			    transfer_state = 211
+			    transfer_state = 212
+			    transfer_state = 769
+			    white_peace = BUL
+		    }
+		
+		    BUL = {
+		        remove_state_core = 184
+			    remove_state_core = 211
+		        remove_state_core = 212
+			    remove_state_core = 769
+			    remove_state_core = 341
+			    remove_state_claim = 773
+		    }
+		}
+	}
+}
+
+### Ottoman take Eastern Rumelia
+
+country_event = {
+    
+	id = bulgaria.16
+	title = bulgaria.16.t
+	desc = bulgaria.16.d
+	
+	is_triggered_only = yes
+	
+	option = {
+	    name = bulgaria.16.a
+		
+		add_political_power = 100
+		
+		effect_tooltip = {
+		
+		    OTT = {
+                transfer_state = 184
+			    transfer_state = 211
+			    transfer_state = 212
+			    transfer_state = 769
+			    white_peace = BUL
+		    }
+		}   
+	}
+}
+
 
 ### ELECTIONS ###
 

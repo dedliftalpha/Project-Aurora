@@ -1,7 +1,7 @@
 ﻿###########################
-# Shanqing Events
+# Kingdom of Siam
 ###########################
-# By DoctorPainkiller and PPsyrius
+# By DoctorPainkiller (Delhi Demands event) and PPsyrius
 ###########################
 
 add_namespace = siam
@@ -1307,6 +1307,127 @@ country_event = { # Introduction
 		name = siam.25.a
 	}
 }
+country_event = { # Siamese Royal Ploughing Ceremony - trigger (hidden)
+	id = siam.26
+	title = siam.26.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	fire_only_once = yes
+
+	trigger = {
+		tag = SIA
+		date > 1936.5.3
+		date < 1936.5.12
+	}
+
+	immediate = {
+		remove_ideas = SIA_RPC_good
+		remove_ideas = SIA_RPC_neutral
+		remove_ideas = SIA_RPC_bad
+		hidden_effect = { country_event = { id = siam.26 days = 365 } } # triggers every year
+	}	
+	option = {
+		name= siam.27.a # Proceeded as Normal
+		trigger = { NOT = { has_global_flag = RPCevent_banned_SIA } }
+		random_list = {
+			33 = { SIA = { country_event = { id = siam.27 } } } # bonus
+			33= { SIA = { country_event = { id = siam.28 } } } # neutral
+			33 = { SIA = { country_event = { id = siam.29 } } } # malus
+		}
+	}
+	option = {
+		name= siam.27.b # Banned
+		trigger = { has_global_flag = RPCevent_banned_SIA }
+	}
+}
+country_event = { # Royal Ploughing Ceremony - Successs
+	id = siam.27
+	title = siam.27.t 
+	immediate = { add_ideas = { SIA_RPC_good } }
+	desc = { 
+		text = siam.27.d_sia
+		trigger = { tag = SIA }
+	}
+	desc = { 
+		text = siam.27.d_cey
+		trigger = { tag = CEY }
+	}	
+	desc = { 
+		text = siam.27.d_bur
+		trigger = { tag = BUR }
+	}
+	desc = { 
+		text = siam.27.d_cam
+		trigger = { tag = CAM }
+	}	
+	picture = GFX_report_RoyalPloughingCeremony
+	
+	is_triggered_only = yes
+
+	option = {
+		name= siam.27.a # Good
+        add_political_power = 20
+	}
+}
+country_event = { # Royal Ploughing Ceremony - Neutral
+	id = siam.28
+	title = siam.28.t 
+	immediate = { add_ideas = { SIA_RPC_neutral } }
+	desc = { 
+		text = siam.28.d_sia
+		trigger = { tag = SIA }
+	}
+	desc = { 
+		text = siam.28.d_cey
+		trigger = { tag = CEY }
+	}	
+	desc = { 
+		text = siam.28.d_bur
+		trigger = { tag = BUR }
+	}
+	desc = { 
+		text = siam.28.d_cam
+		trigger = { tag = CAM }
+	}	
+	picture = GFX_report_RoyalPloughingCeremony
+	
+	is_triggered_only = yes
+
+	option = {
+		name= siam.28.a # OK
+	}
+}
+country_event = { # Royal Ploughing Ceremony - Failed
+	id = siam.29
+	title = siam.29.t 
+	immediate = { add_ideas = { SIA_RPC_bad } }
+	desc = { 
+		text = siam.29.d_sia
+		trigger = { tag = SIA }
+	}
+	desc = { 
+		text = siam.29.d_cey
+		trigger = { tag = CEY }
+	}	
+	desc = { 
+		text = siam.29.d_bur
+		trigger = { tag = BUR }
+	}
+	desc = { 
+		text = siam.29.d_cam
+		trigger = { tag = CAM }
+	}	
+	picture = GFX_report_RoyalPloughingCeremony
+	
+	is_triggered_only = yes
+
+	option = {
+		name= siam.29.a # RIP
+        add_political_power = -20
+	}
+}
+
+
 ### Events needed to be done ###
 # Siamese Black Mondays
 # Prachapibarn (Decentralization) - xxxxxxx

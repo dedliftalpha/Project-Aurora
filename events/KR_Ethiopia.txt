@@ -446,7 +446,7 @@ country_event = {
 		trigger = { has_country_flag = ETH_MNC }
 		add_political_power = -60
 		hidden_effect = {
-			# country_event = { id = ethiopia.18 days = 30 }
+			country_event = { id = ethiopia.18 days = 30 }
 			news_event = { id = worldnews.257 days = 32 }
 			clr_country_flag = ETH_MNC
 		}
@@ -457,9 +457,101 @@ country_event = {
 		trigger = { has_country_flag = ETH_TNC }
 		add_political_power = -120
 		hidden_effect = {
-			# country_event = { id = ethiopia.18 days = 30 }
+			country_event = { id = ethiopia.18 days = 30 }
 			news_event = { id = worldnews.257 days = 32 }
 			clr_country_flag = ETH_TNC
 		}
+	}
+}
+
+#
+news_event = {
+	id = ethiopia.18
+	title = ethiopia.18.t
+	desc = ethiopia.18.d
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ethiopia.18.a
+		ETH = { start_civil_war = { ideology = paternal_autocrat size = 0.2 } }
+		hidden_effect = {
+			set_global_flag = ETH_CW
+			load_oob = ETH_civil_defence
+		}
+	}
+}
+
+news_event = {
+	event = {
+	id = ethiopia.19
+	title = ethiopia.19.t
+	desc = ethiopia.19.d
+
+	trigger = {
+		has_global_flag = ETH_CW
+		original_tag = ETH #Only for triggering to the rebelling nation (since we don't know the TAG due to dynamic TAG allocation)
+		NOT = { tag = ETH }
+		has_government = paternal_autocrat
+	}
+
+	fire_only_once = yes
+	mean_time_to_happen  = { days = 1 }
+
+	option = {
+		name = ethiopia.19.a
+		load_oob = ETH_civil_war
+	}
+}
+
+# Government overthrown - Addis Ababa in rebel hands
+country_event = {
+	id = ethiopia.20
+	title = ethiopia.20.t
+	desc = ethiopia.20.d
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		has_global_flag = ETH_CW
+		original_tag = ETH #Only for triggering to the rebelling nation (since we don't know the TAG due to dynamic TAG allocation)
+		controls_state = 271
+		NOT = { tag = ETH }
+		has_government = paternal_autocrat
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+
+	option = {
+		name = ethiopia.20.a
+		ETH = { 
+			change_tag_from = ROOT
+			annex_country = { target = ROOT transfer_troops = yes }
+			news_event = { id = ethiopia.21 days = 1 }
+		}
+	}
+}
+
+# Ethiopia has fallen!
+news_event = {
+	id = ethiopia.20
+	title = ethiopia.20.t
+	desc = ethiopia.20.d
+
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		trigger = { tag = ETH }
+		name = ethiopia.20.a
+	}
+
+	option = {
+		trigger = { NOT = { tag = ETH } }
+		name = ethiopia.20.b
 	}
 }

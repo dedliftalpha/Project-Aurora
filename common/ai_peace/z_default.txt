@@ -31,7 +31,7 @@ default_peace = {
 	take_states = {
 		factor = 50
 		
-
+		####Priorities####
 		modifier = { #Priortize taking claimed or cored land
 			factor = 40
 			FROM = {
@@ -42,7 +42,7 @@ default_peace = {
 			}
 		}
 		modifier = { #Closer land is better land
-			factor = 4
+			factor = 1.5
 
 			capital_scope = {
 				distance_to = {
@@ -53,7 +53,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 2
+			factor = 1.5
 
 			capital_scope = {
 				distance_to = {
@@ -75,7 +75,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 1
+			factor = 1.5
 
 			capital_scope = {
 				distance_to = {
@@ -164,7 +164,68 @@ default_peace = {
 				}
 			}
 		}
+		modifier = { #prioritize states on the same continent as AI capital
+			factor = 1.5
+			OR = {
+				AND = { #Europe
+					FROM = { is_on_continent = europe }
+					ROOT = {
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+				}
+				AND = { #Asia and/or Australia
+					OR = {
+						FROM = { is_on_continent = asia }
+						FROM = { is_on_continent = australia }
+					}
+					ROOT = {
+						capital_scope = {
+							OR = {
+								is_on_continent = asia
+								is_on_continent = australia
+							}
+						}
+					}
+				}
+				AND = { #North America
+					FROM = { is_on_continent = north_america }
+					ROOT = {
+						capital_scope = {
+							is_on_continent = north_america
+						}
+					}
+				}
+				AND = { #South America
+					FROM = { is_on_continent = south_america }
+					ROOT = {
+						capital_scope = {
+							is_on_continent = south_america
+						}
+					}
+				}
+				AND = { #Middle East
+					FROM = { is_on_continent = middle_east }
+					ROOT = {
+						capital_scope = {
+							is_on_continent = middle_east
+						}
+					}
+				}
+				AND = { #Africa
+					FROM = { is_on_continent = africa }
+					ROOT = {
+						capital_scope = {
+							is_on_continent = africa
+						}
+					}
+				}
+			}
+			
+		}
 
+		####Restrictions####
 		modifier = {
 			factor = 0		
 			NOT = { FROM = { is_claimed_by = ROOT } }

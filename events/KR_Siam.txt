@@ -1426,6 +1426,92 @@ country_event = { # Royal Ploughing Ceremony - Failed
         add_political_power = -20
 	}
 }
+country_event = { # Burmese Royal Ploughing Ceremony - trigger (hidden)
+	id = siam.30
+	title = siam.30.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	fire_only_once = yes
+
+	trigger = {
+		tag = BUR
+		date > 1936.6.15
+		date < 1936.7.15
+	}
+
+	immediate = {
+		remove_ideas = SIA_RPC_good
+		remove_ideas = SIA_RPC_neutral
+		remove_ideas = SIA_RPC_bad
+		hidden_effect = { country_event = { id = siam.30 days = 365 } } # triggers every year
+	}	
+	option = {
+		name= siam.30.a # Proceeded as Normal
+		trigger = { NOT = { has_global_flag = RPCevent_banned_BUR } }
+		random_list = {
+			33= { BUR = { country_event = { id = siam.28 } } } # neutral
+			33 = { BUR = { country_event = { id = siam.29 } } } # malus
+		}
+	}
+	option = {
+		name= siam.30.b # Banned
+		trigger = { has_global_flag = RPCevent_banned_BUR }
+	}
+}
+country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 1 (hidden)
+	id = siam.31
+	title = siam.31.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	fire_only_once = yes
+
+	trigger = {
+		tag = SIA #CAM didn't exist yet at the game start ffs
+		date > 1936.5.14
+		date < 1936.5.24
+	}
+
+	immediate = {
+		hidden_effect = { country_event = { id = siam.31 } } # triggers every year
+	}	
+	
+	option = {
+		name= siam.31.a # Proceeded as Normal
+		trigger = {
+			has_global_flag = RPCevent_allowed_CAM
+			country_exists = CAM
+		}
+		hidden_effect = { country_event = { id = siam.32 } } # triggers part 2
+	}
+	option = {
+		name= siam.31.b # Banned
+		trigger = { 
+				NOT = { has_global_flag = RPCevent_allowed_CAM } 
+				country_exists = CAM
+		}
+	}
+	option = {
+		name= siam.31.c # Didn't existed at all
+		trigger = { NOT = { country_exists = CAM } }
+	}
+}
+country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 2 (hidden)
+	id = siam.32
+	title = siam.32.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	
+	is_triggered_only = yes
+
+	immediate = {
+		remove_ideas = SIA_RPC_good
+		remove_ideas = SIA_RPC_neutral
+		remove_ideas = SIA_RPC_bad
+		random_list = {
+		}
+		hidden_effect = { country_event = { id = siam.32 days = 365 } } # triggers every year
+	}	
+}
 
 
 ### Events needed to be done ###

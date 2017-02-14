@@ -3855,146 +3855,106 @@ country_event = {
 	}
 }
 
-### Focus & Tech Transfer for the Danubian Federation
-
+### Status of Bosnia
 country_event = {
-	id = ausgleich.200
-	title = ausgleich.200.t
-	desc = ausgleich.200.d
-	picture = GFX_report_event_soviet_finnish_pact
+	id = ausgleich.118
+	title = ausgleich.118.t
+	desc = ausgleich.118.d
 	
-	is_triggered_only = yes
-
-	hidden = yes
-	
-	option = {
-		name = ausgleich.200.a
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_alpine_highways}
-			}
-		
-			unlock_national_focus = DNF_alpine_highways
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_alpine_mines}
-			}
-		
-			unlock_national_focus = DNF_alpine_mines
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_homeland_eco}
-			}
-		
-			unlock_national_focus = DNF_homeland_eco
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_istria_ports}
-			}
-		
-			unlock_national_focus = DNF_istria_ports
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_airbase_expansion}
-			}
-		
-			unlock_national_focus = DNF_airbase_expansion
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_homeland_mil}
-			}
-		
-			unlock_national_focus = DNF_homeland_mil
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_fortify_vienna}
-			}
-		
-			unlock_national_focus = DNF_fortify_vienna
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_fortify_italy}
-			}
-		
-			unlock_national_focus = DNF_fortify_italy
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_daimler}
-			}
-		
-			unlock_national_focus = DNF_daimler
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_eco_comeup}
-			}
-		
-			unlock_national_focus = DNF_eco_comeup
-		}
-		
-		if = {
-			limit= {
-				AUS = { has_completed_focus = AUS_skoda}
-			}
-		
-			unlock_national_focus = DNF_skoda
-		}
-		
-		hidden_effect = { AUS = { country_event = { id = ausgleich.201 } } }
-	}	
-}
-
-# Austrian tech for DNF
-
-news_event = {
-	id = ausgleich.201
-	title = ausgleich.201.t
-	desc = ausgleich.201.d
-	picture = GFX_report_event_generic_research_lab
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ausgleich.201.a
-		DNF = {
-			transfer_technology = yes
-		}
-	}
-}
-
-# Austria introduction
-
-country_event = {
-	id = ausgleich.202
-	title = ausgleich.202.t
-	desc = ausgleich.202.d
-	
-	is_triggered_only = yes
+	fire_only_once = yes
 	
 	trigger = {
-		has_cosmetic_tag = DNF
+		tag = AUS
+		has_war = no
+		any_state = {
+			AND = { 
+				is_owned_by = SER
+				is_core_of = BOS
+			}
+		}
+		AUS = { is_subject = no }
+		SER = { is_subject = no }
+		NOT = {
+			SER = {
+				is_in_faction_with = HUN
+				is_in_faction_with = GER
+				is_in_faction_with = AUS
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	option = {
+		name = ausgleich.118.a
+		ai_chance = { factor = 80 }
+
+		SER = { country_event = ausgleich.119 }
+
 	}
 
 	option = {
-		name = ausgleich.202.a
+		name = ausgleich.118.b
+		ai_chance = { factor = 20 }	
+	}
+}
+
+### Austria demands Bosnia
+country_event = {
+	id = ausgleich.119
+	title = ausgleich.119.t
+	desc = ausgleich.119.d
+	
+	is_triggered_only = yes
+	
+	option = { #Submit
+		name = ausgleich.119.a
+		ai_chance = { factor = 80 }
+
+		AUS = { country_event = ausgleich.120 }
+		
+		AUS = { transfer_state = 104 }
 	}
 
+	option = { #Decline
+		name = ausgleich.119.b
+		ai_chance = { factor = 20 }	
+		
+		AUS = { country_event = ausgleich.121 }
+	}
 }
+### Austria demands Bosnia
+country_event = {
+	id = ausgleich.120
+	title = ausgleich.120.t
+	desc = ausgleich.120.d
+	
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = ausgleich.120.a
+	}
+	
+}
+
+### Austria demands Bosnia
+country_event = {
+	id = ausgleich.121
+	title = ausgleich.121.t
+	desc = ausgleich.121.d
+	
+	is_triggered_only = yes
+
+	option = { #War
+		name = ausgleich.121.a
+		declare_war_on = { target = SER type = annex_everything }
+	}
+	
+	option = { #Forget it
+		name = ausgleich.121.b
+	}
+	
+}
+

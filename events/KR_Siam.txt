@@ -651,9 +651,9 @@ news_event = { # Death of Rama VII - 3967403
 
 	immediate = {
 		hidden_effect = {
-		remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = head_of_government
        		add_ideas = { SIA_Phraya_Manopakorn_Nitithada_hog_ade }
-		set_global_flag = Prajadhipok_dead
+			set_global_flag = Prajadhipok_dead
 		SIA = {
 			create_country_leader = {
 				name = "Ananda Mahidol"
@@ -747,6 +747,7 @@ country_event = { # Paribatra Sukhumbhand reacts - xxxxxxx
 		ai_chance = { factor = 25 }
 		hidden_effect = {
 		kill_country_leader = yes
+		set_global_flag = Paribatra_Line
 		create_country_leader = { # Throne Pretender
 			name = "Paribatra Sukhumbhand"
 			desc = "POLITICS_SUKHUMBHAND_DESC"
@@ -816,6 +817,7 @@ country_event = { # Paribatra Sukhumbhand reacts - xxxxxxx
 		name = siam.14.b # Nothing for now
 		ai_chance = { factor = 75 }
 		set_global_flag = rama_8_safe
+		set_global_flag = Mahidol_Line
 	}
 }
 news_event = { # Death of Rama VIII - xxxxxxx
@@ -832,7 +834,6 @@ news_event = { # Death of Rama VIII - xxxxxxx
 		date > 1946.5.25 # Make Sure he died this month
 		has_global_flag = rama_8_safe
 		NOT = { has_global_flag = Ananda_Mahidol_dead }
-		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
@@ -1459,64 +1460,244 @@ country_event = { # Burmese Royal Ploughing Ceremony - trigger (hidden)
 		trigger = { has_global_flag = RPCevent_banned_BUR }
 	}
 }
-#country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 1 (hidden)
-#	id = siam.31
-#	title = siam.31.t
-#	hidden = yes
-#	picture = GFX_report_RoyalPloughingCeremony
-#	fire_only_once = yes
-#
-#	trigger = {
-#		tag = SIA #CAM didn't exist yet at the game start ffs
-#		date > 1936.5.14
-#		date < 1936.5.24
-#	}
-#
-#	immediate = {
-#		hidden_effect = { country_event = { id = siam.31 } } # triggers every year
-#	}	
-#	
-#	option = {
-#		name= siam.31.a # Proceeded as Normal
-#		trigger = {
-#			has_global_flag = RPCevent_allowed_CAM
-#			country_exists = CAM
-#		}
-#		hidden_effect = { country_event = { id = siam.32 } } # triggers part 2
-#	}
-#	option = {
-#		name= siam.31.b # Banned
-#		trigger = { 
-#				NOT = { has_global_flag = RPCevent_allowed_CAM } 
-#				country_exists = CAM
-#		}
-#	}
-#	option = {
-#		name= siam.31.c # Didn't existed at all
-#		trigger = { NOT = { country_exists = CAM } }
-#	}
-#}
-#country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 2 (hidden)
-#	id = siam.32
-#	title = siam.32.t
-#	hidden = yes
-#	picture = GFX_report_RoyalPloughingCeremony
-#	
-#	is_triggered_only = yes
-#
-#	immediate = {
-#		remove_ideas = SIA_RPC_good
-#		remove_ideas = SIA_RPC_neutral
-#		remove_ideas = SIA_RPC_bad
-#		random_list = {
-#			33 = { CAM = { country_event = { id = siam.27  } } # bonus
-#			33= { CAM = { country_event = { id = siam.28 } } } # neutral
-#			33 = { CAM = { country_event = { id = siam.29 } } } # malus
-#		}
-#		hidden_effect = { country_event = { id = siam.32 days = 365 } } # triggers every year
-#	}	
-#}
+country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 1 (hidden)
+	id = siam.31
+	title = siam.31.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	fire_only_once = yes
 
+	trigger = {
+		tag = SIA #CAM didn't exist yet at the game start ffs
+		date > 1936.5.14
+		date < 1936.5.24
+	}
+
+	immediate = {
+		remove_ideas = SIA_RPC_good
+		remove_ideas = SIA_RPC_neutral
+		remove_ideas = SIA_RPC_bad
+		hidden_effect = { country_event = { id = siam.31 days = 365 } } # triggers every year
+	}	
+	
+	option = {
+		name= siam.31.a # Proceeded as Normal
+		trigger = {
+			has_global_flag = RPCevent_allowed_CAM
+			country_exists = CAM
+		}
+		hidden_effect = { country_event = { id = siam.32 } } # triggers part 2
+	}
+	option = {
+		name= siam.31.b # Banned
+		trigger = { 
+				NOT = { has_global_flag = RPCevent_allowed_CAM } 
+				country_exists = CAM
+		}
+	}
+	option = {
+		name= siam.31.c # Didn't existed at all
+		trigger = { NOT = { country_exists = CAM } }
+	}
+}
+country_event = { # Cambodian Royal Ploughing Ceremony - trigger part 2 (hidden)
+	id = siam.32
+	title = siam.32.t
+	hidden = yes
+	picture = GFX_report_RoyalPloughingCeremony
+	
+	is_triggered_only = yes
+
+	immediate = {
+		random_list = {
+			33 = { CAM = { country_event = { id = siam.27 } } } # bonus
+			33= { CAM = { country_event = { id = siam.28 } } } # neutral
+			33 = { CAM = { country_event = { id = siam.29 } } } # malus
+		}
+	}	
+}
+news_event = { # Death of Paribatra Sukhumbhand (Paribatra Line of Sucession) - xxxxxxx
+	id = siam.33
+	title = siam.33.t 
+	desc = siam.33.d
+	picture = GFX_news_event_rama_8_death
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SIA
+		country_exists = SIA
+		date > 1944.4.5 # Make Sure he died this month
+		has_global_flag = Paribatra_Line
+	}
+
+	immediate = {
+		hidden_effect = {
+		set_global_flag = Paribatra_Sukhumbhand_dead
+		SIA = {
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = syndicalist_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = radical_socialist_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = social_democrat_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = social_liberal_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = market_liberal_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = social_conservative_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Chumbhotbongs Paribatra"
+				desc = "POLITICS_CHUMBHOTBONGS_PARIBATRA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Chumbhotbongs_Paribatra.tga"
+				expire = "1959.9.15"
+				ideology = paternal_autocrat_subtype
+				traits = {}
+			}
+		}}
+	}
+
+	option = {
+		name = siam.15.a # RIP for him
+		ai_chance = { factor = 100 }
+	}
+}
+news_event = { # Death of Chumbhotbongs Paribatra (Paribatra Line of Sucession) - xxxxxxx
+	id = siam.34
+	title = siam.34.t 
+	desc = siam.34.d
+	picture = GFX_news_event_rama_8_death
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SIA
+		country_exists = SIA
+		date > 1959.9.5 # Make Sure he died this month
+		has_global_flag = Paribatra_Line
+	}
+
+	immediate = {
+		hidden_effect = {
+		set_global_flag = Chumbhotbongs_Paribatra_dead
+		SIA = {
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = syndicalist_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = radical_socialist_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = social_democrat_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = social_liberal_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = market_liberal_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = social_conservative_subtype
+				traits = {}
+			}
+			create_country_leader = {
+				name = "Sukhumabhinanda"
+				desc = "POLITICS_SUKHUMABHININDA_DESC"
+				picture = "gfx/leaders/SIA/Portrait_Siam_Sukhumapinan_Paribatra.tga"
+				expire = "2003.4.10"
+				ideology = paternal_autocrat_subtype
+				traits = {}
+			}
+		}}
+	}
+
+	option = {
+		name = siam.15.a # RIP for him
+		ai_chance = { factor = 100 }
+	}
+}
 
 ### Events needed to be done ###
 # Siamese Black Mondays

@@ -9,6 +9,7 @@ focus_tree = {
 		}
 	}
 
+	### Civil War Chain
 	focus = {
 		id = ETH_reform
 		icon = GFX_goal_government_icon
@@ -27,9 +28,8 @@ focus_tree = {
 		icon = GFX_goal_generic_national_unity
 		x = 5
 		y = 1
-		cost = 5
+		cost = 10
 		prerequisite = { focus = ETH_reform }
-		available = { always = yes }
 		ai_will_do = { factor = 100 }
 		completion_reward = {
 			add_political_power = 50
@@ -94,6 +94,158 @@ focus_tree = {
 			has_government = paternal_autocrat
 		}
 		completion_reward = { add_political_power = 200 }
+	}
+
+	### Ethiopia Remains ONLY (Free Elections or Imperial Decree:
+	## Continuation of Reforms:
+	focus = {
+		id = ETH_Continue_Ref
+		icon = GFX_focus_generic_the_giant_wakes
+		x = 3
+		y = 4
+		cost = 5
+		prerequisite = { 
+			focus = ETH_Free_Elections
+			focus = ETH_Imperial_Decree 
+		}
+		completion_reward = {
+			550 = { add_building_construction = {
+					type = infastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			271 = { add_building_construction = {
+					type = infastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			559 = { add_building_construction = {
+					type = infastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Fac_Ref
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 2
+		y = 5
+		cost = 10
+		prerequisite = { focus = ETH_Continue_Ref }
+		completion_reward = {
+			271 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Land_Ref
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 4
+		y = 5
+		cost = 10
+		prerequisite = { focus = ETH_Continue_Ref }
+		completion_reward = {
+			271 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Modern
+		icon = GFX_goal_generic_construction
+		x = 2
+		y = 6
+		cost = 10
+		prerequisite = { focus = ETH_Fac_Ref }
+		completion_reward = {
+			550 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			559 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Mecha
+		icon = GFX_goal_generic_production2
+		x = 4
+		y = 6
+		cost = 10
+		prerequisite = { focus = ETH_Land_Ref }
+		completion_reward = {
+			550 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			559 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Enc_Sci
+		icon = GFX_focus_research
+		x = 3
+		y = 7
+		cost = 10
+		prerequisite = { focus = ETH_Mecha }
+		prerequisite = { focus = ETH_Modern }
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = ETH_End_BM
+		icon = GFX_goal_generic_consumer_goods
+		x = 3
+		y = 8
+		cost = 10
+		prerequisite = { focus = ETH_Enc_Sci }
+		completion_reward = {
+			swap_ideas = { remove_idea = ETH_recovering_economy add_idea = ETH_prospering_economy }
+			add_political_power = 150
+		}
 	}
 }
 

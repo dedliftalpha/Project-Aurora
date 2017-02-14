@@ -3,11 +3,10 @@ focus_tree = {
 	
 	country = {
 		factor = 0
-		
-		#modifier = {
-		#	add = 10
-		#	original_tag = ETH
-		#}
+		modifier = {
+			add = 10
+			original_tag = ETH
+		}
 	}
 
 	focus = {
@@ -15,281 +14,86 @@ focus_tree = {
 		icon = GFX_goal_government_icon
 		x = 5
 		y = 0
+		cost = 10
+		available = { date > 1936.2.14 }
+		ai_will_do = { factor = 100 }
+		completion_reward = {
+			swap_ideas = { remove_idea = ETH_black_monday add_idea = ETH_recovering_economy }
+		}
+	}
+
+	focus = {
+		id = ETH_Nobility
+		icon = GFX_goal_generic_national_unity
+		x = 5
+		y = 1
 		cost = 5
-		completion_reward = {
-		add_equipment_to_stockpile = { type = convoy_1 amount = 50 producer = ETH }
-		}
-		
-	}
-	focus = {
-		id = ETH_infrastructure
 		prerequisite = { focus = ETH_reform }
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 0
-		y = 1
-		cost = 10
-		
+		available = { always = yes }
+		ai_will_do = { factor = 100 }
 		completion_reward = {
-			271 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 3
-					instant_build = yes
-				}
-			}
-			559 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 3
-					instant_build = yes
-				}
-			}
-			550 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 3
-					instant_build = yes
-				}
+			add_political_power = 50
+			hidden_effect = {
+				country_event = { id = ethiopia.16 days = 2}
 			}
 		}
 	}
+
 	focus = {
-		id = ETH_airport
-		prerequisite = { focus = ETH_infrastructure }
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 1
+		id = ETH_Times_Of_Trouble
+		icon = GFX_focus_RAJ_lions_of_the_great_war
+		x = 5
 		y = 2
-		cost = 8
-		
-		completion_reward = {
-			271 = {
-				add_building_construction = {
-					type = air_base
-					level = 5
-					instant_build = yes
-				}
-			}
-		}
+		cost = 1
+		prerequisite = { focus = ETH_Nobility }
+		available = { always = no }
+		bypass = { has_civil_war = yes }
+		completion_reward = { add_named_threat = { threat = 2 name = ETH_civil_war } }
 	}
+
 	focus = {
-		id = ETH_factory_company
-		prerequisite = { focus = ETH_airport }
-		icon = GFX_goal_generic_production
-		x = 1
+		id = ETH_Imperial_Decree
+		icon = GFX_goal_tfv_strengthen_commonwealth_ties
+		x = 5
 		y = 3
-		cost = 12
-
-		completion_reward = { # This shall be replaced with giving access to a industrial company.
-			559 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
+		cost = 5
+		prerequisite = { focus = ETH_Times_Of_Trouble }
+		mutually_exclusive = { focus = ETH_Free_Elections focus = ETH_New_ETH }
+		available = { 
+			has_civil_war = no
+			NOT = { has_government = paternal_autocrat }
 		}
+		completion_reward = { add_political_power = 200 }
 	}
-	focus = {
-		id = ETH_milfactory_1
-		prerequisite = { focus = ETH_infrastructure }
-		icon = GFX_goal_generic_construct_mil_factory
-		x = 3
-		y = 2
-		cost = 10
 
-		completion_reward = {
-			271 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-	}
 	focus = {
-		id = ETH_milfactory_2
-		prerequisite = { focus = ETH_milfactory_1 }
-		icon = GFX_goal_generic_construct_mil_factory
+		id = ETH_Free_Elections
+		icon = GFX_goal_generic_intelligence_exchange
 		x = 3
 		y = 3
-		cost = 10
+		cost = 5
+		prerequisite = { focus = ETH_Times_Of_Trouble }
+		mutually_exclusive = { focus = ETH_Imperial_Decree focus = ETH_New_ETH }
+		available = { 
+			has_civil_war = no
+			NOT = { has_government = paternal_autocrat }
+		}
+		completion_reward = { add_political_power = 200 }
+	}
 
-		completion_reward = {
-			559 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-	}
 	focus = {
-		id = ETH_science
-		icon = GFX_focus_research
-		prerequisite = { focus = ETH_milfactory_2 }
-		prerequisite = { focus = ETH_factory_company }
-		x = 2.5
-		y = 4
-		cost = 15
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-	focus = {
-		id = ETH_military
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 11
-		y = 1
-		cost = 10
-		prerequisite = { focus = ETH_reform }
-		completion_reward = {
-			army_experience = 10
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 2
-				category = land_doctrine
-			}
-		}
-		
-	}
-	focus = {
-		id = ETH_doc
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 11
-		y = 2
-		cost = 10
-		prerequisite = { focus = ETH_military }
-		completion_reward = {
-			army_experience = 30
-			navy_experience = 30
-		}
-		
-	}
-	focus = {
-		id = ETH_land_doc_inf
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 10
+		id = ETH_New_ETH
+		icon = GFX_goal_generic_demand_territory
+		x = 7
 		y = 3
-		cost = 10
-		prerequisite = { focus = ETH_doc }
-		completion_reward = {
-			army_experience = 20
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+		cost = 5
+		prerequisite = { focus = ETH_Times_Of_Trouble }
+		mutually_exclusive = { focus = ETH_Free_Elections focus = ETH_Imperial_Decree }
+		available = { 
+			has_civil_war = no
+			has_government = paternal_autocrat
 		}
-	}
-	focus = {
-		id = ETH_land_doc_inf2
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 10
-		y = 4
-		cost = 10
-		prerequisite = { focus = ETH_doc }
-		completion_reward = {
-			army_experience = 20
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-	focus = {
-		id = ETH_land_doc_inf3
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 10
-		y = 5
-		cost = 10
-		prerequisite = { focus = ETH_doc }
-		completion_reward = {
-			army_experience = 20
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-	focus = {
-		id = ETH_sea_doc
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 12
-		y = 3
-		prerequisite = { focus = ETH_doc }
-		completion_reward = {
-			navy_experience = 20
-			add_tech_bonus = {
-				name = naval_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
-		}
-		
-	}
-	focus = {
-		id = ETH_sea_doc2
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 12
-		y = 4
-		prerequisite = { focus = ETH_sea_doc }
-		completion_reward = {
-			navy_experience = 20
-			add_tech_bonus = {
-				name = naval_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
-		}
-		
-	}
-	focus = {
-		id = ETH_sea_doc3
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 12
-		y = 5
-		prerequisite = { focus = ETH_sea_doc2 }
-		completion_reward = {
-			navy_experience = 30
-		}
-		
-	}
-	focus = {
-		id = ETH_military_finish
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 11
-		y = 6
-		prerequisite = { focus = ETH_reform }
-		completion_reward = {
-			army_experience = 50
-			navy_experience = 50
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 2
-				category = land_doctrine
-			}
-			add_tech_bonus = {
-				name = naval_doc_bonus
-				bonus = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
-		}
-		
+		completion_reward = { add_political_power = 200 }
 	}
 }
 

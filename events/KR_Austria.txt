@@ -659,8 +659,10 @@ country_event = {
 	
 	option = {
 		name = austria.28.a
-		set_country_flag = huszar_apeared
-		custom_effect_tooltip = AUS_huszar_apeared
+		set_country_flag = horthy_apeared
+		custom_effect_tooltip = AUS_horthy_apeared
+		
+		remove_unit_leader = 40000
 	}
 }
 
@@ -677,7 +679,7 @@ country_event = {
 	trigger = {
 		tag = AUS
 		has_idea = AUS_racial_tensions
-		has_country_flag = huszar_apeared
+		has_country_flag = horthy_apeared
 	}
 	
 	mean_time_to_happen = {
@@ -709,6 +711,7 @@ country_event = {
 	}
 }
 
+
 ### Racial tensions escalate
 country_event = {
 	id = austria.50
@@ -720,7 +723,7 @@ country_event = {
 	trigger = {
 		tag = AUS
 		has_idea = AUS_racial_tensions
-		has_country_flag = huszar_apeared
+		has_country_flag = horthy_apeared
 	}
 	
 	mean_time_to_happen = {
@@ -762,8 +765,127 @@ country_event = {
 		name = austria.30.a
 		set_country_flag = prowlers_apeared
 		custom_effect_tooltip = AUS_prowlers_apeared
+		
+		hidden_effect = { 
+		random_list = {
+				70 = { AUS = { country_event = {id = austria.31 days = 3 } } } 
+				30 = {  } 
+			}
+		}
+		
 	}
 }
+
+### Budapest Arsenal Raid 
+country_event = {
+	id = austria.31
+	title = austria.31.t
+	desc = austria.31.d
+	
+	is_triggered_only = yes
+	
+	option = { # this is not good
+		name = austria.31.a
+		
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = -0.10
+		}
+		
+		hidden_effect = { AUS = { country_event = {id = austria.32 days = 3 } } }
+	}
+	
+}
+### Budapest City Raid 
+country_event = {
+	id = austria.32
+	title = austria.32.t
+	desc = austria.32.d
+	
+	is_triggered_only = yes
+	
+	option = { # shoot them
+		name = austria.32.a
+		
+		add_political_power = -50
+		
+		hidden_effect = { 
+			random_list = {
+					70 = { AUS = { country_event = {id = austria.33 days = 3 } } } 
+					30 = {  } 
+				}
+		}
+
+	}
+	
+	option = { # let them be
+		name = austria.32.a
+		
+		add_political_power = -200
+		
+		hidden_effect = { 
+			random_list = {
+					40 = { AUS = { country_event = {id = austria.33 days = 3 } } } 
+					30 = {  } 
+				}
+		}
+	}
+	
+}
+
+##### Civil war in Austria Hungary
+country_event = {
+	id = austria.33
+	title = austria.33.t
+	desc = austria.33.d
+	
+	is_triggered_only = yes
+	
+	option = { # Oh noe
+		name = austria.33.a
+		
+		hidden_effect = { 
+		
+			HUN = {
+				transfer_state = 789
+				transfer_state = 84
+				transfer_state = 790
+				transfer_state = 76
+				transfer_state = 83
+				transfer_state = 82
+				transfer_state = 45
+				
+				set_capital = 790
+				
+				load_oob = "HUN_AUS_Civil_war"
+				
+				hidden_effect = { retire_country_leader = yes }
+
+				create_country_leader = {
+					name = "Miklós Horthy"
+					desc = "MIKLOS_HORTHY_DESC"
+					picture = "Miklos_Horthy.tga"
+					expire = "1965.1.1"
+					ideology = paternal_autocrat_subtype
+					traits = { }
+				}
+				
+				set_politics = {
+					ruling_party = paternal_autocrat
+					last_election = "1888.15.6"
+					election_frequency = 48
+					elections_allowed = no
+				}
+			}
+		}
+		
+		custom_effect_tooltip = AUS_HUN_Civil_war
+		
+		AUS = { declare_war_on = { target = HUN type = annex_everything } }
+
+	}
+}
+
 
 ### Racial Tensions calm down
 country_event = {

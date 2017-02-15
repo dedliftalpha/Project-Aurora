@@ -81,7 +81,10 @@ belgrade_pact_gain_land_from_bulgaria = {
 }
 
 belgrade_pact_gain_land_from_ottomans = {
-  SER = { transfer_state = 765 } # Kosovo
+  if = {
+    limit = { ALB = { is_subject_of = OTT } }
+    SER = { transfer_state = 765 } # Kosovo
+  }
 
   GRE = {
     transfer_state = 187 # Aegan Islands
@@ -112,6 +115,31 @@ belgrade_pact_gain_land_from_ottomans = {
       }
       transfer_state = 182 # Crete
       hidden_effect = { add_state_core = 182 }
+    }
+  }
+}
+
+# When Bulgaria has been defeated but the Ottomans pushed the Pact back
+ottomans_liberate_bulgaria = {
+  every_country = {
+    limit = {
+      OR = {
+        has_country_flag = founded_belgradepact
+        has_country_flag = joined_belgradepact
+      }
+    }
+    every_owned_state  = {
+      limit = { is_core_of = BUL }
+      BUL = { transfer_state = PREV }
+    }
+    if = {
+      limit = {
+        731 = {
+          is_owned_by = THIS
+          NOT = { is_core_of = BUL }
+        }
+      }
+      BUL = { transfer_state = 731 } # Special case for Central Macedonia, as it usually isn't a Bulgarian core
     }
   }
 }

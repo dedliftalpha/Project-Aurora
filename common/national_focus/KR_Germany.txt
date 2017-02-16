@@ -12,36 +12,27 @@ focus_tree = {
 	
 	default = no
 	
+### Military
+focus = {
+	id = GER_mil_expansion
+	icon = GFX_goal_generic_build_tank
+	x = 5
+	y = 0
+	cost = 10
 	
-### Start of Military part	
-	focus = {
-		id = GER_mil_expansion
-		icon = GFX_goal_generic_build_tank
-		x = 5
-		y = 0
-		
-		ai_will_do = {
-			factor = 100
-		}
-		
-		cost = 10
-		
-		available = { 
-			OR = {
-				threat > 0.05
-				has_war = yes
-			}
-		}
-		
-		continue_if_invalid = yes
-		
-		completion_reward = {
-			army_experience = 10
-			navy_experience = 10
-			air_experience = 10
-		}
-	
+	ai_will_do = {
+		factor = 100
 	}
+	
+	continue_if_invalid = yes
+	
+	completion_reward = {
+		army_experience = 10
+		navy_experience = 10
+		air_experience = 10
+	}
+
+}
 
 ### Air	
 	focus = {
@@ -1163,172 +1154,101 @@ focus_tree = {
 		
 	}
 
-### Kaiserbund Proposial
-	focus = {
-		id = GER_kaiserbund_proposial
-		icon = GFX_goal_generic_more_territorial_claims
-		available = { date > 1941.1.1 }
-		prerequisite = { focus = GER_political_1 }
-		x = 23
-		y = 1
-		cost = 1
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			
-			country_event = { id = gerdom.67 }
-		}
-			
-		
-	}
-	### Agreed 
-	focus = {
-		id = GER_kaiserbund_proposial_agreed
-		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = GER_kaiserbund_proposial }
-		available = { has_country_flag = kaiserbund }
-		bypass = { has_country_flag = kaiserbund }
-		x = 23
-		y = 2
-		cost = 10
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.05
-			
-		}
-			
-		
-	}
-### Marocco
-	focus = {
-		id = GER_kaiserbund_proposial_marocco
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
-		bypass = { NOT = { controls_state = 461 controls_state = 462 } }
-		x = 21
-		y = 3
-		cost = 4
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.01
-			if = { limit = { OR = { controls_state = 461 controls_state = 462 } } country_event = { id = gerdom.68 } } 
-			
-		}
-			
-		
-	}
-### Sierra Leone
-	focus = {
-		id = GER_kaiserbund_proposial_sierra_leone
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
-		bypass = { NOT = { controls_state = 700 } }
-		x = 22
-		y = 4
-		cost = 4
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.01
-			if = { limit = {  controls_state = 700  } country_event = { id = gerdom.69 } }
-			
-		}
-			
-		
-	}
-### Madagascar
-	focus = {
-		id = GER_kaiserbund_proposial_madagascar
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
-		bypass = { NOT = { controls_state = 543 } }
-		x = 23
-		y = 3
-		cost = 4
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.01
-			if = { limit = {  controls_state = 543  } country_event = { id = gerdom.70 } }
-		}
-			
-		
-	}
-### Sri Lanca, Malaisia, Sarawak
-	focus = {
-		id = GER_kaiserbund_proposial_lanca_mala_sarawak
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
-		bypass = { NOT = { controls_state = 422 controls_state = 333 controls_state = 846 } }
-		x = 24
-		y = 4
-		cost = 4
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.01
-		if = { limit = {  controls_state = 422  } country_event = { id = gerdom.71 } }	
-		if = { limit = {  AND = {controls_state = 333  controls_state = 422 }} country_event = { id = gerdom.72 days = 2} }
-		}
-			
-		
-	}
-### Vietnam, Laos, Cambodia
-	focus = {
-		id = GER_kaiserbund_cambodia_laos_vietnam
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = GER_kaiserbund_proposial_agreed }
-		bypass = { NOT = { controls_state = 286 controls_state = 670 controls_state = 671 controls_state = 750  } }
-		x = 25
-		y = 3
-		cost = 4
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_national_unity = 0.01
-			if = { limit = { OR = { controls_state = 286 controls_state = 670 controls_state = 671 controls_state = 750 } } country_event = { id = gerdom.73 days = 2} }
-			
-		}
-			
-		
-	}
-####End of kaiserbund
+### Kaiserbund
+	
 focus = {
-		id = GER_kaiserbund_last
-		icon = GFX_goal_generic_more_territorial_claims
-		available = { date > 1941.1.1 }
-		prerequisite = { focus = GER_kaiserbund_cambodia_laos_vietnam }
-		prerequisite = { focus = GER_kaiserbund_proposial_lanca_mala_sarawak }
-		prerequisite = { focus = GER_kaiserbund_proposial_madagascar }
-		prerequisite = { focus = GER_kaiserbund_proposial_sierra_leone }
-		prerequisite = { focus = GER_kaiserbund_proposial_marocco }
-		x = 23
-		y = 5
-		cost = 2
-        ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			
-			remove_ideas = GER_col
-			if = { limit = { MAF = { is_subject_of = GER } } country_event = { id = gerdom.74  days = 10 } }
-			country_event = { id = gerdom.75 days = 15 }
-			country_event = { id = gerdom.76 days = 20 }
-		if = { limit = { AOG = { is_subject_of = GER } }	country_event = { id = gerdom.79 days = 25 } }
-			country_event = { id = gerdom.81 days = 30 }
-		}
-			
-		
+	id = GER_kaiserbund
+	icon = GFX_goal_generic_national_unity
+	prerequisite = { focus = GER_political_1 }
+	x = 23
+	y = 2
+	cost = 20
+	
+	ai_will_do = {
+		factor = 10
 	}
+	
+	completion_reward = {
+		add_national_unity = 0.05
+		remove_ideas = GER_col
+		if = { 
+			limit = { 
+				OR = { 
+					controls_state = 461 
+					controls_state = 462 
+				} 
+			}
+			release = MOR
+			puppet = MOR
+			MOR = {
+				set_politics = {
+					ruling_party = authoritarian_democrat elections_allowed = no
+				}
+				create_country_leader = {
+					name = "Johannes Bell"
+					desc = "Johannes_Bell_DESC"
+					picture = "Johannes_Bell.tga"
+					expire = "1965.1.1"
+					ideology = authoritarian_democrat_subtype
+					traits = {}
+				}
+				load_oob = MOR
+			}
+		}
+		if = { 
+			limit = { 
+				controls_state = 700 
+			}
+			release = SIE
+			puppet = SIE
+			SIE = {
+				set_politics = {
+					ruling_party = authoritarian_democrat elections_allowed = no
+				}
+				load_oob = SIE
+				create_country_leader = {
+					name = "Hermann Detzner"
+					desc = "Hermann_Detzner_DESC"
+					picture = "Hermann_Detzner.tga"
+					expire = "1965.1.1"
+					ideology = authoritarian_democrat_subtype
+					traits = {}
+				}
+			}
+		}
+		if = { 
+			limit = { 
+				controls_state = 543 
+			}
+			release = MAG
+			puppet = MAG
+			MAG = {
+				set_politics = {
+					ruling_party = authoritarian_democrat elections_allowed = no
+				}
+				load_oob = MAG
+				create_country_leader = {
+					name = "Arnold Schultze"
+					desc = "Arnold_Schultze_DESC"
+					picture = "Arnold_Schultze.tga"
+					expire = "1965.1.1"
+					ideology = authoritarian_democrat_subtype
+					traits = {}
+				}
+			}
+		}
+		
+		release = CEY
+        puppet = CEY
+        CEY = {
+            set_politics = {
+                ruling_party = authoritarian_democrat elections_allowed = no
+            }
+            load_oob = CEY
+        }
+	}	
+}
+
 ### German Homeland focus
 	focus = {
 		id = GER_homeland

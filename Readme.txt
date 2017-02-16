@@ -1,4 +1,4 @@
-Thank you for downloading Kaiserreich for Hearts of Iron 4!
+Thank you for downloading Kaiserreich for Hearts of Iron 4! test
 This is version 0.3
 Manual Installation Instructions
 1) Download the mod

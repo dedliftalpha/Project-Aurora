@@ -7,4 +7,4 @@ tags={
 	"Gameplay"
 }
 picture="KR.jpg"
-supported_version="1.3.x"
+supported_version="1.3.x.x"

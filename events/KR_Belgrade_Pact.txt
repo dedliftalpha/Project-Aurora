@@ -216,7 +216,7 @@ country_event = {
 	option = {
 		name = pact.6.a # Agree
 
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 50 }
 
 		set_country_flag = joined_belgradepact
 
@@ -240,7 +240,7 @@ country_event = {
 	option = {
 		name = pact.6.c # We shouldn't focus on the Balkans
 
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 10 }
 
 		add_political_power = -100
 
@@ -659,6 +659,8 @@ country_event = {
 			target = BUL
 			type = annex_everything
 		}
+
+		set_global_flag = balkan_war_started
 
 		# Notify all Pact members
 		every_country = {
@@ -1593,6 +1595,8 @@ country_event = {
 
 		ai_chance = { factor = 100 }
 
+		set_global_flag = balkan_war_ended
+
 		white_peace = SER
 
 		SER = { dismantle_faction = yes }
@@ -1660,5 +1664,255 @@ country_event = {
 
 	option = {
 		name = pact.46.a # We need to turn the tide
+	}
+}
+
+### Serbia: we're losing, sue for peace?
+country_event = {
+	id = pact.47
+	title = pact.47.t
+	desc = pact.47.d
+
+	trigger = {
+		tag = SER
+		is_faction_leader = yes
+		has_country_flag = founded_belgradepact
+
+		NOT = { has_global_flag = balkan_war_ended }
+
+		has_war_with = BUL
+
+		# Morava or Nis is occupied by the enemy
+		OR = {
+			NOT = { 767 = { is_controlled_by = SER } }
+			NOT = { 108 = { is_controlled_by = SER } }
+		}
+
+		# Greece or Romania has also to be in a bad shape
+		OR = {
+			AND = {
+				NOT = { is_in_faction_with = GRE }
+				NOT = { is_in_faction_with = ROM }
+				NOT = { is_in_faction_with = RRM }
+			}
+			OR = {
+				GRE = { has_capitulated = yes }
+				GRE = { surrender_progress > 0.7 }
+			}
+			OR = {
+				ROM = { has_capitulated = yes }
+				ROM = { surrender_progress > 0.7 }
+			}
+			OR = {
+				RRM = { has_capitulated = yes }
+				RRM = { surrender_progress > 0.7 }
+			}
+  	}
+	}
+
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = pact.47.a # Sue for peace.
+
+		ai_chance = { factor = 100 }
+
+		BUL = { country_event = { id = pact.48 } }
+	}
+
+	option = {
+		name = pact.47.b # We can still win this
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100
+	}
+}
+
+### Bulgaria: Serbia offers peace
+country_event = {
+	id = pact.48
+	title = pact.48.t
+	desc = pact.48.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.48.a # We are triumphant.
+
+		ai_chance = { factor = 100 }
+
+		set_global_flag = balkan_war_ended
+
+		add_political_power = 100
+
+		white_peace = SER
+		if = {
+			limit = {
+				OTT = {
+					has_country_flag = alliance_with_bulgaria
+					has_war_with = SER
+				}
+			}
+			OTT = { white_peace = SER }
+			every_country = {
+				limit = { is_subject_of = OTT }
+				white_peace = SER
+			}
+		}
+
+		SER = { dismantle_faction = yes }
+
+		effect_tooltip = {
+			767 = { set_demilitarized_zone = yes } # Nis
+			81 = { set_demilitarized_zone = yes } # Oltenia
+			768 = { set_demilitarized_zone = yes } # Thessalia
+
+			add_timed_idea = { idea = BUL_reparation_payments_from_serbia days = 1460 }
+		}
+
+		hidden_effect = {
+			# Notify all Pact members of peace
+			SER = { country_event = { id = pact.49 hours = 2 } }
+			if = {
+				limit = { ROM = { has_country_flag = joined_belgradepact } }
+				ROM = { country_event = { id = pact.50 hours = 2 } }
+			}
+			if = {
+				limit = { RRM = { has_country_flag = joined_belgradepact } }
+				RRM = { country_event = { id = pact.50 hours = 2 } }
+			}
+			if = {
+				limit = { GRE = { has_country_flag = joined_belgradepact } }
+				GRE = { country_event = { id = pact.51 hours = 2 } }
+			}
+		}
+	}
+
+	option = {
+		name = pact.48.b # No, they shall be crushed.
+
+		ai_chance = { factor = 0 }
+
+		add_political_power = -100
+
+		SER = { country_event = { id = pact.46 } } # Notify Serbia of refusal
+	}
+}
+
+### Serbia: peace was signed, we lost the war
+country_event = {
+	id = pact.49
+	title = pact.49.t
+	desc = pact.49.d
+
+	is_triggered_only = yes
+
+	immediate = {
+		767 = { set_demilitarized_zone = yes } # Nis
+
+		SER = { add_timed_idea = { idea = SER_reparation_payments days = 1460 } }
+
+		hidden_effect = {
+			BUL = { add_timed_idea = { idea = BUL_reparation_payments_from_serbia days = 1460 } }
+		}
+	}
+
+	option = {
+		name = pact.49.a # At least we exist
+
+		effect_tooltip = {
+			BUL = { white_peace = SER }
+
+			SER = { dismantle_faction = yes }
+		}
+	}
+}
+
+### Romania: peace was signed, we lost the war
+country_event = {
+	id = pact.50
+	title = pact.50.t
+	desc = pact.50.d
+
+	is_triggered_only = yes
+
+	immediate = {
+		81 = { set_demilitarized_zone = yes } # Oltenia
+
+		if = {
+			limit = { owns_state = 772 }
+			BUL = { transfer_state = 772 } # Dobrogea
+		}
+
+		if = {
+			limit = {
+				tag = ROM
+				NOT = { country_exists = RRM }
+				is_ai = yes
+			}
+			set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+		 	hidden_effect = { add_popularity = { ideology = authoritarian_democrat popularity = 0.3 } }
+		}
+	}
+
+	option = {
+		name = pact.50.a # At least we exist
+
+		effect_tooltip = {
+			BUL = { white_peace = SER }
+
+			SER = { dismantle_faction = yes }
+		}
+	}
+}
+
+### Greece: peace was signed, we lost the war
+country_event = {
+	id = pact.51
+	title = pact.51.t
+	desc = {
+		trigger = { OTT = { has_country_flag = alliance_with_bulgaria } }
+		text = pact.51.desc_payments_to_ottomans
+	}
+	desc = {
+		trigger = { NOT = { OTT = { has_country_flag = alliance_with_bulgaria } } }
+		text = pact.51.desc_no_ottomans
+	}
+
+	is_triggered_only = yes
+
+	immediate = {
+		768 = { set_demilitarized_zone = yes } # Thessalia
+
+		if = {
+      limit = { 731 = { is_core_of  = ROOT } }
+      remove_state_core = 731 # Greece renounces their claims on Central Macedonia
+			BUL = { add_state_core = 731 }
+    }
+
+		if = {
+			limit = { OTT = { has_country_flag = alliance_with_bulgaria } }
+
+			GRE = { add_timed_idea = { idea = GRE_reparation_payments days = 1460 } }
+
+			hidden_effect = {
+				OTT = { add_timed_idea = { idea = OTT_reparation_payments_from_greece days = 1460 } }
+			}
+		}
+	}
+
+	option = {
+		name = pact.51.a # At least we exist
+
+		effect_tooltip = {
+			BUL = { white_peace = SER }
+
+			SER = { dismantle_faction = yes }
+		}
 	}
 }

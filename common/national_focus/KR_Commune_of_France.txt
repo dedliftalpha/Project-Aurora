@@ -37,7 +37,7 @@ focus = {
 		available = {  }
 		prerequisite = { focus = FRA_eco_direction }
 		completion_reward = {
-			
+		add_ideas = FRA_amenagement_idea
 		}
 }
 
@@ -53,7 +53,23 @@ focus = {
 		available = {  }
 		prerequisite = { focus = FRA_amenagement }
 		completion_reward = {
-			
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					region = 20
+					}				
+				
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}	
 		}
 }
 
@@ -66,10 +82,22 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-		available = {  }
+		available = { owns_state = 760 controls_state = 760 }
 		prerequisite = { focus = FRA_hydroelectricity }
 		completion_reward = {
-			
+		760 = {						
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}	
 		}
 }
 
@@ -85,7 +113,48 @@ focus = {
 		available = {  }
 		prerequisite = { focus = FRA_amenagement }
 		completion_reward = {
-			
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+        random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+        random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 0
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}			
 		}
 }
 
@@ -102,7 +171,21 @@ focus = {
 		prerequisite = { focus = FRA_chemins_de_fer }
 		prerequisite = { focus = FRA_hydroelectricity }
 		completion_reward = {
-			
+		add_resource = {
+				type = steel 
+				amount = 17
+				state = 32
+			}
+        add_resource = {
+				type = steel 
+				amount = 23 
+				state = 26
+			}	
+        add_resource = {
+				type = oil 
+				amount = 2
+				state = 16
+			}			
 		}
 }
 
@@ -118,7 +201,7 @@ focus = {
 		available = {  }
 		prerequisite = { focus = FRA_chemins_de_fer }
 		completion_reward = {
-			
+		swap_ideas = { remove_idea = FRA_amenagement_idea add_idea = FRA_plan_prost_idea }
 		}
 }
 
@@ -134,7 +217,48 @@ focus = {
 		available = {  }
 		prerequisite = { focus = FRA_plan_prost }
 		completion_reward = {
-			
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+        random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+        random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+					}				
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}	
 		}
 }
 
@@ -791,7 +915,7 @@ focus = {
 			factor = 80
 		}
 		completion_reward = {
-		custom_effect_tooltip = FRA_innovation_tooltip
+		add_ideas = FRA_socialist_education
 		}
 }
 
@@ -806,7 +930,7 @@ focus = {
 		}
 		prerequisite = { focus = FRA_socialist_education }
 		completion_reward = {
-		custom_effect_tooltip = FRA_innovation_tooltip
+		add_political_power = 200
 		}
 }
 
@@ -821,7 +945,8 @@ focus = {
 		}
 		prerequisite = { focus = FRA_department_revolutionary_ideals }
 		completion_reward = {
-        add_ideas = Blanqui_research_institute }
+        add_research_slot = 1
+		}
 	    }
 		
 focus = {
@@ -868,7 +993,11 @@ focus = {
 		}
 		prerequisite = { focus = FRA_road_to_war }
 		completion_reward = {
-		add_political_power = 50
+		remove_ideas = FRA_bad_intel
+		if = { limit = { OR = { has_country_flag = FRA2_SPY_SORE has_country_flag = FRA2_SPY_JACO } }
+		add_ideas = FRA_hawkish_renseignements }
+		if = { limit = { has_country_flag = FRA2_SPY_ANAR }
+		add_ideas = FRA_peace_renseignements }
 		}
 }
 
@@ -937,7 +1066,6 @@ focus = {
 		
 			available = {
 			785 = { is_controlled_by = FRA }
-			29 = { is_controlled_by = FRA }
 			}
 
 			completion_reward = {
@@ -976,34 +1104,7 @@ focus = {
 				province = 3546
 				level = 2
 			}
-			add_building_construction = {
-				type = bunker
-				province = 9472
-				level = 2
-			}
 		}
-        29 = {
-			add_building_construction = {
-				type = bunker
-				province = 3447
-				level = 1
-			}
-			add_building_construction = {
-				type = bunker
-				province = 11606
-				level = 1
-			}
-			add_building_construction = {
-				type = bunker
-				province = 11483
-				level = 1
-			}
-			add_building_construction = {
-				type = bunker
-				province = 575
-				level = 1
-			}
-		} 
     } 
 }
 
@@ -1019,12 +1120,55 @@ focus = {
 		    prerequisite = { focus = FRA_German_borders }
 		
 			available = {
-			785 = { is_controlled_by = FRA }
 			29 = { is_controlled_by = FRA }
 			}
 
-			completion_reward = { 
-            } 
+			completion_reward = {
+			29 = {
+			add_building_construction = {
+				type = bunker
+				province = 3447
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11606
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 11483
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 575
+				level = 2
+			}
+		    }
+			785 = {
+			add_building_construction = {
+				type = bunker
+				province = 9472
+				level = 2
+			}
+			add_building_construction = {
+				type = bunker
+				province = 9505
+				level = 1
+			}
+			add_building_construction = {
+				type = bunker
+				province = 6545
+				level = 1
+			}
+			add_building_construction = {
+				type = bunker
+				province = 3546
+				level = 1
+			}
+		    }
+            }
 }
 
 focus = {
@@ -1307,7 +1451,7 @@ focus = {
 
    focus = {
    		id = FRA_War_with_germany
-available = {
+		available = {
    			GER = { exists = yes NOT = { is_subject_of = FRA } }
             date > 1939.10.5
 			is_subject = no
@@ -1361,14 +1505,14 @@ focus = {
 	              AUS = { exists = yes NOT  = { has_government = radical_socialist
 				                   has_government = syndicalist
 					               has_government = totalist }}
-				  OR = { OR = { controls_state = 160 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 160 } AND = { tag = SRI controls_state = 160 } } } }
-				  OR = { controls_state = 52 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 52 } AND = { tag = GRU controls_state = 52 } } } }
-				  OR = { controls_state = 786 any_other_country = { AND = { is_subject_of = FRA controls_state = 786 } } } }
-}
+				  OR = { OR = { controls_state = 160 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 160 } AND = { is_in_faction_with = FRA controls_state = 160 } } } }
+				  OR = { controls_state = 52 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 52 } AND = { is_in_faction_with = FRA controls_state = 52 } } } }
+				  OR = { controls_state = 786 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 786 } AND = { is_in_faction_with = FRA controls_state = 786 } } } } }
+	}
 bypass = { OR = { has_war_with = AUS
 		AUS = { is_subject_of = FRA }
 		is_in_faction_with = AUS } 
-		OR = { controls_state = 4 any_other_country = { AND = { is_subject_of = FRA controls_state = 4 } } } }
+		OR = { controls_state = 4 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 4 } AND = { is_in_faction_with = FRA controls_state = 4 } } } } }
 prerequisite = { focus = FRA_War_with_germany }
 	icon = GFX_goal_generic_occupy_start_war
 	x = 24
@@ -1415,9 +1559,9 @@ focus = {
 bypass = { OR = { has_war_with = ITA
 		ITA = { is_subject_of = FRA }
 		is_in_faction_with = ITA
-		AND = { OR = { controls_state = 735 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 735 } AND = { tag = SRI controls_state = 735 } } } } 
-		OR = { controls_state = 159 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 159 } AND = { tag = SRI controls_state = 159 } } } } }
-		} }
+		AND = { OR = { controls_state = 735 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 735 } AND = { is_in_faction_with = FRA controls_state = 735 } } } } 
+		OR = { controls_state = 159 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 159 } AND = { is_in_faction_with = FRA controls_state = 159 } } } }
+		} } }
 		x = 22
 		y = 5
 		cost = 10
@@ -1449,13 +1593,13 @@ focus = {
 	AND = { NOT = { is_in_faction_with = CAR CAR = { is_subject_of = FRA } }
 	              CAR = { exists = yes } } }
 				  controls_state = 31 
-}
+		}
 bypass = { OR = { has_war_with = SPR
 		SPR = { is_subject_of = FRA }
 		is_in_faction_with = SPR
         AND = { country_exists = CNT CNT = { NOT = { has_war_with = CAR has_war_with = SPR } } }
-		AND = { OR = { controls_state = 41 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 41 } } } } 
-		OR = { controls_state = 165 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 165 } } } } } }
+		AND = { OR = { controls_state = 41 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 41 } AND = { is_in_faction_with = FRA controls_state = 41 } } } }
+		OR = { controls_state = 165 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 165 } AND = { is_in_faction_with = FRA controls_state = 165 } } } } } }
 		}
 		x = 23
 		y = 6
@@ -1480,54 +1624,129 @@ bypass = { OR = { has_war_with = SPR
 	}
 	
 focus = {
-id = FRA_World_revolution
-icon = GFX_goal_generic_more_territorial_claims
-prerequisite = { focus = FRA_War_with_austria }
-prerequisite = { focus = FRA_War_with_Italian_Federation }
-prerequisite = { focus = FRA_war_with_spain }
-available = { date > 1942.1.1 }
-mutually_exclusive = { focus = FRA_peaceful_revolution focus = FRA_european_revolution }
-x = 23
-y = 7
-cost = 10
-ai_will_do = {
+	id = FRA_World_revolution
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = { focus = FRA_War_with_austria }
+	prerequisite = { focus = FRA_War_with_Italian_Federation }
+	prerequisite = { focus = FRA_war_with_spain }
+	available = { OR = { has_country_flag = FRA2_FOR_SORE has_country_flag = FRA2_FOR_JACO } 
+	AND = { OR = { controls_state = 4 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 4 } AND = { is_in_faction_with = FRA controls_state = 4 } } } } 
+		OR = { controls_state = 43 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 43 } AND = { is_in_faction_with = FRA controls_state = 43 } } } }
+        OR = { controls_state = 2 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 2 } AND = { is_in_faction_with = FRA controls_state = 2 } } } }
+        OR = { controls_state = 41 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 41 } AND = { is_in_faction_with = FRA controls_state = 41 } } } }		
+	} 
+	}
+	
+	mutually_exclusive = { focus = FRA_peaceful_revolution focus = FRA_european_revolution }
+	x = 23
+	y = 7
+	cost = 10
+	
+	ai_will_do = {
 			factor = 10
-		}
-completion_reward = { add_ideas = Revolutionary_spirit } 
+	}
+	
+	completion_reward = { add_ideas = Revolutionary_spirit } 
 }
 
 focus = {
-id = FRA_european_revolution
-icon = GFX_goal_generic_more_territorial_claims
-prerequisite = { focus = FRA_War_with_austria }
-prerequisite = { focus = FRA_War_with_Italian_Federation }
-prerequisite = { focus = FRA_war_with_spain }
-available = { date > 1942.1.1 }
-mutually_exclusive = { focus = FRA_World_revolution focus = FRA_peaceful_revolution }
-x = 25
-y = 7
-cost = 10
-ai_will_do = {
+	id = FRA_european_revolution
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = { focus = FRA_War_with_austria }
+	prerequisite = { focus = FRA_War_with_Italian_Federation }
+	prerequisite = { focus = FRA_war_with_spain }
+	available = { has_country_flag = FRA2_FOR_ANAR 
+	AND = { OR = { controls_state = 4 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 4 } AND = { is_in_faction_with = FRA controls_state = 4 } } } } 
+		OR = { controls_state = 43 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 43 } AND = { is_in_faction_with = FRA controls_state = 43 } } } }
+        OR = { controls_state = 2 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 2 } AND = { is_in_faction_with = FRA controls_state = 2 } } } }
+        OR = { controls_state = 41 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 41 } AND = { is_in_faction_with = FRA controls_state = 41 } } } }		
+	} }
+
+	mutually_exclusive = { focus = FRA_World_revolution focus = FRA_peaceful_revolution }
+	x = 25
+	y = 7
+	cost = 10
+
+	ai_will_do = {
 			factor = 10
-		}
-completion_reward = { add_ideas = Revolutionary_spirit } 
+	}
+	
+	completion_reward = {
+		if = { limit = { country_exists = BUL BUL = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = BUL
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = SER SER = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = SER
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = ROM ROM = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = ROM
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = MTN MTN = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = MTN
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = GRE GRE = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = GRE
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = ALB ALB = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = ALB
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = POL POL = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = POL
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = WHR WHR = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = WHR
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = LIT LIT = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = LIT
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = BAT BAT = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = BAT
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = UKR UKR = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = UKR
+				type = annex_everything
+			} }
+		if = { limit = { country_exists = RRM RRM = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist has_war_with = FRA } } } create_wargoal = {
+				target = RRM
+				type = annex_everything
+			} }
+         		
+	}
 }
 
 focus = {
-id = FRA_peaceful_revolution
-icon = GFX_goal_generic_more_territorial_claims
-prerequisite = { focus = FRA_War_with_austria }
-prerequisite = { focus = FRA_War_with_Italian_Federation }
-prerequisite = { focus = FRA_war_with_spain }
-available = { date > 1942.1.1 }
-mutually_exclusive = { focus = FRA_World_revolution focus = FRA_european_revolution }
-x = 21
-y = 7
-cost = 10
-ai_will_do = {
+	id = FRA_peaceful_revolution
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = { focus = FRA_War_with_austria }
+	prerequisite = { focus = FRA_War_with_Italian_Federation }
+	prerequisite = { focus = FRA_war_with_spain }
+	available = { has_country_flag = FRA2_FOR_TRAV 
+	AND = { OR = { controls_state = 4 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 4 } AND = { is_in_faction_with = FRA controls_state = 4 } } } } 
+		OR = { controls_state = 43 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 43 } AND = { is_in_faction_with = FRA controls_state = 43 } } } }
+        OR = { controls_state = 2 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 2 } AND = { is_in_faction_with = FRA controls_state = 2 } } } }
+        OR = { controls_state = 41 any_other_country = { OR = { AND = { is_subject_of = FRA controls_state = 41 } AND = { is_in_faction_with = FRA controls_state = 41 } } } }		
+	} }
+
+	mutually_exclusive = { focus = FRA_World_revolution focus = FRA_european_revolution }
+	x = 21
+	y = 7
+	cost = 10
+
+	ai_will_do = {
 			factor = 10
-		}
-completion_reward = { add_ideas = Revolutionary_spirit } 
+	}
+		
+	completion_reward = { add_ideas = FRA_peaceful_revolution } 
 }
 
 focus = {
@@ -1551,17 +1770,17 @@ focus = {
 }
 
 focus = {
-id = FRA_special_forces
-icon = GFX_goal_generic_special_forces
-x = 27
-y = 3
-cost = 10
-ai_will_do = {
+		id = FRA_special_forces
+	    icon = GFX_goal_generic_special_forces
+		x = 27
+		y = 3
+		cost = 10
+		ai_will_do = {
 			factor = 10
 		}
-prerequisite = { focus = FRA_equipment_modern }
-completion_reward = {
-	add_tech_bonus = {
+		prerequisite = { focus = FRA_equipment_modern }
+		completion_reward = {
+			add_tech_bonus = {
 				name = mountaineers_bonus
 				bonus = 0.5
 				uses = 1
@@ -1569,7 +1788,7 @@ completion_reward = {
 				technology = tech_mountaineers2
 				technology = tech_mountaineers3
 			}
-}
+		}
 }
 
 focus = {
@@ -2147,7 +2366,7 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    air_experience = 50
 		}
 }
 
@@ -2162,6 +2381,7 @@ focus = {
 
         completion_reward = {
 	    air_experience = 25
+		add_ideas = FRA_amateur_pilots_idea
 			set_rule = {
 				can_generate_female_aces = yes
 			}
@@ -2178,7 +2398,12 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = air_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
 		}
 }
 
@@ -2192,7 +2417,7 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_ideas = FRA_ecole_air_idea
 		}
 }
 
@@ -2206,7 +2431,38 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    random_owned_controlled_state = {
+				limit = {
+					state_population > 1500000
+					air_base < 9
+				}
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
+		random_owned_controlled_state = {
+				limit = {
+					state_population > 1500000
+					air_base < 9
+				}
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
+		random_owned_controlled_state = {
+				limit = {
+					air_base > 6
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 }
 
@@ -2221,7 +2477,13 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.5
+				uses = 2
+				category = light_fighter
+				category = cat_heavy_fighter
+			}
 		}
 }
 
@@ -2236,7 +2498,13 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 0.5
+				uses = 2
+				category = tactical_bomber
+				category = cas_bomber
+			}
 		}
 }
 
@@ -2250,7 +2518,12 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = strategic_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}
 		}
 }
 
@@ -2264,7 +2537,12 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = paratroopers_bonus
+				bonus = 0.5
+				uses = 1
+				category = para_tech
+			}
 		}
 }
 
@@ -2279,7 +2557,12 @@ focus = {
 		cost = 10
 
         completion_reward = {
-	    air_experience = 25
+	    add_tech_bonus = {
+				name = rocket_bonus
+				bonus = 0.5
+				uses = 1
+				category = rocketry
+			}
 		}
 }
 
@@ -2291,7 +2574,8 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			navy_experience = 50
+			add_equipment_to_stockpile = { type = convoy_1 amount = 30 producer = FRA } 
 		}
 }
 
@@ -2305,7 +2589,60 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			random_owned_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			if = {
+				limit = {	14 = { is_controlled_by = ROOT }	}
+				14 = {
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 3552
+						instant_build = yes
+					}
+				}
+			}
+		    if = {
+				limit = {	21 = { is_controlled_by = ROOT }	}
+				21 = {
+					add_building_construction = {
+						type = naval_base
+						level = 3
+						province = 911
+						instant_build = yes
+					}
+				}
+			}
 		}
 }
 
@@ -2320,7 +2657,12 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = convoy_defense_bonus
+				bonus = 0.5
+				uses = 2
+				category = convoy_defense_tree
+			}
 		}
 }
 
@@ -2335,7 +2677,12 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = trade_interdiction_bonus
+				bonus = 0.5
+				uses = 2
+				category = trade_interdiction_tree
+			}
 		}
 }
 
@@ -2351,7 +2698,26 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = bb_bonus
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+				category = bc_tech
+				category = shbb_tech
+			}
+			add_tech_bonus = {
+				name = ca_bonus
+				bonus = 0.5
+				uses = 1
+				category = ca_tech
+			}
+			add_tech_bonus = {
+				name = cl_bonus
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}
 		}
 }
 
@@ -2366,7 +2732,18 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 0.5
+				uses = 2
+				category = dd_tech
+			}
+			add_tech_bonus = {
+				name = cl_bonus
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}
 		}
 }
 
@@ -2377,10 +2754,25 @@ focus = {
 		y = 5
 		relative_position_id = FRA_navy_focus
 		prerequisite = { focus = FRA_home_fleet }
+		available = {
+   			NFA = { exists = yes NOT = { is_subject_of = FRA } }
+			has_completed_focus = FRA_Demand_Alsace_Lorraine
+			is_subject = no
+			NOT = { is_in_faction_with = NFA }
+   		}
+		bypass = {
+		OR = { NFA = { exists = no }
+		NFA = { is_subject_of = FRA }
+		has_war_with = FRA }
+		}
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+		add_named_threat = { threat = 5 name = FRA_strike_nat_france }
+   			create_wargoal = {
+   				type = annex_everything
+   				target = NFA
+		}
 		}
 }
 
@@ -2395,7 +2787,19 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = bb_bonus
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+			}
+			add_tech_bonus = {
+				name = transport_bonus
+				bonus = 0.5
+				uses = 1
+				category = tp_tech
+			}
+			add_ideas = FRA_waves_of_syndicalism_idea
 		}
 }
 
@@ -2409,7 +2813,13 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = marine_bonus
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}
+			add_ideas = FRA_colonnes_neptune_idea
 		}
 }
 
@@ -2425,7 +2835,18 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+		   add_tech_bonus = {
+				name = ss_bonus
+				bonus = 0.5
+				uses = 2
+				category = ss_tech
+			}
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}
 		}
 }
 
@@ -2439,7 +2860,19 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 0.5
+				uses = 1
+				category = ss_tech
+			}
+			add_tech_bonus = {
+				name = trade_interdiction_bonus
+				bonus = 0.5
+				uses = 2
+				category = trade_interdiction_tree
+			}
+			add_ideas = FRA_cut_off_capitalists_idea
 		}
 }
 
@@ -2450,10 +2883,16 @@ focus = {
 		y = 5
 		relative_position_id = FRA_navy_focus
 		prerequisite = { focus = FRA_cut_off_capitalists }
+		available = { has_completed_focus = FRA_bombers }
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			add_tech_bonus = {
+				name = naval_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
 		}
 }
 
@@ -2467,7 +2906,63 @@ focus = {
 		cost = 10
 
 		completion_reward = {
-			navy_experience = 25
+			21 = {
+			add_building_construction = {
+				type = coastal_bunker
+				province = 911
+				level = 2
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 11834
+				level = 2
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 11849
+				level = 2
+			}
+		    }
+			22 = {
+			add_building_construction = {
+				type = coastal_bunker
+				province = 9898
+				level = 3
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 6960
+				level = 2
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 11877
+				level = 2
+			}
+		    }
+			15 = {
+			add_building_construction = {
+				type = coastal_bunker
+				province = 485
+				level = 2
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 9434
+				level = 2
+			}
+			add_building_construction = {
+				type = coastal_bunker
+				province = 6449
+				level = 2
+			}
+		    }
+			add_tech_bonus = {
+				name = radar_bonus
+				bonus = 0.5
+				uses = 1
+				category = radar_tech
+			}
 		}
 }
 

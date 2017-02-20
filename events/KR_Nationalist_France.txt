@@ -3895,16 +3895,45 @@ country_event = { #German Empire Offers a Partition of France
 		GER = { country_event = { id = nfa.81 } }
 		add_political_power = -40
 		add_opinion_modifier = { target = NFA modifier = NFA_accepted_share_france }
-		if = { limit = { AND = { NOT = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } } }
-		NOT = { OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } } } set_global_flag = NFA_LIMC }
-		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } }
+		if = {
+			limit = {
+				AND = {
+					NOT = {
+						OR = {
+							controls_state = 31 any_other_country = {    #Doesn't control Toulouse
+								AND = {
+									NOT = {
+										tag = NFA
+									}
+									is_in_faction_with = NFA controls_state = 31
+								}
+							}
+						}
+					}
+					NOT = {
+						OR = {
+							controls_state = 20 any_other_country = {   #Doesn't control Lyon
+								AND = {
+									NOT = {
+										tag = NFA
+									}
+									is_in_faction_with = NFA controls_state = 20
+								}
+							}
+						}
+					}
+				}
+			}
+    set_global_flag = NFA_LIMC
+        }
+		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } } #control lyon or toulouse but neither bordeaux or orléans
 		OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } 
 		AND = { NOT = { OR = { controls_state = 19 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 19 } } } }
-		NOT = { OR = { controls_state = 24 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 24 } } } } } } } set_global_flag = NFA_EXNC }
-		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } }
+		NOT = { OR = { controls_state = 33 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 33 } } } } } } } set_global_flag = NFA_EXNC }
+		if = { limit = { AND = { OR = { OR = { controls_state = 31 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 31 } } } #control lyon or toulouse and bordeaux or orléans
 		OR = { controls_state = 20 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 20 } } } } 
 		OR = { OR = { controls_state = 19 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 19 } } }
-		OR = { controls_state = 24 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 24 } } } } } } set_global_flag = NFA_MAXC }
+		OR = { controls_state = 33 any_other_country = { AND = { NOT = { tag = NFA } is_in_faction_with = NFA controls_state = 33 } } } } } } set_global_flag = NFA_MAXC }
 	}
 	
 	option = {
@@ -3942,7 +3971,7 @@ country_event = { #Treaty of Bordeaux GER
 		NFA = { transfer_state = 19 transfer_state = 20 } }
 		
 		if = { limit = { has_global_flag = NFA_MAXC }
-		NFA = { transfer_state = 23 transfer_state = 24 transfer_state = 33 } }
+		NFA = { transfer_state = 23 } }
 		
 		NFA = { country_event = { id = nfa.82 } }
 		every_other_country = { limit = { is_in_faction_with = NFA NOT = { tag = NFA } } country_event = { id = nfa.83 } }
@@ -3968,13 +3997,15 @@ country_event = { #Treaty of Bordeaux NFA
 		transfer_state = 15
 		transfer_state = 16
 		transfer_state = 29
+		transfer_state = 24
 		transfer_state = 18
 		transfer_state = 27
-transfer_state = 17
-transfer_state = 785 }
+        transfer_state = 17
+        transfer_state = 785 
+		transfer_state = 33 }
 		
 		if = { limit = { OR = { has_global_flag = NFA_EXNC has_global_flag = NFA_LIMC } }
-		GER = { transfer_state = 23 transfer_state = 24 transfer_state = 33 } }
+		GER = { transfer_state = 23 } }
 		
 		if = { limit = { has_global_flag = NFA_LIMC }
 		GER = { transfer_state = 19 transfer_state = 20 } }

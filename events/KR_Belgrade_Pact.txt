@@ -1166,7 +1166,7 @@ country_event = {
 }
 
 ###########################
-# End of the war
+# End of the war, lessons learned
 ###########################
 
 ### End of the war: lessons learned for countries that sent aid
@@ -1211,6 +1211,10 @@ country_event = {
 		clr_country_flag = supported_serbia
 	}
 }
+
+###########################
+# Peace events
+###########################
 
 ### Bulgaria: we're losing, sue for peace?
 country_event = {
@@ -1769,8 +1773,20 @@ country_event = {
 
 		effect_tooltip = {
 			767 = { set_demilitarized_zone = yes } # Nis
-			81 = { set_demilitarized_zone = yes } # Oltenia
-			768 = { set_demilitarized_zone = yes } # Thessalia
+
+			if = {
+				limit = { ROM = { has_country_flag = joined_belgradepact } }
+				81 = { set_demilitarized_zone = yes } # Oltenia
+			}
+			if = {
+				limit = { RRM = { has_country_flag = joined_belgradepact } }
+				81 = { set_demilitarized_zone = yes } # Oltenia
+			}
+			if = {
+				limit = { GRE = { has_country_flag = joined_belgradepact } }
+				768 = { set_demilitarized_zone = yes } # Thessalia
+				add_state_core = 731
+			}
 
 			add_timed_idea = { idea = BUL_reparation_payments_from_serbia days = 1460 }
 		}
@@ -1890,7 +1906,7 @@ country_event = {
 		768 = { set_demilitarized_zone = yes } # Thessalia
 
 		if = {
-      limit = { 731 = { is_core_of  = ROOT } }
+      limit = { 731 = { is_core_of = ROOT } }
       remove_state_core = 731 # Greece renounces their claims on Central Macedonia
 			BUL = { add_state_core = 731 }
     }
@@ -1913,6 +1929,371 @@ country_event = {
 			BUL = { white_peace = SER }
 
 			SER = { dismantle_faction = yes }
+		}
+	}
+}
+
+###########################
+# Post-war joining of Greece and Romania
+###########################
+
+### Serbia: we control Central Macedonia, offer it to the Greeks?
+country_event = {
+	id = pact.52
+	title = pact.52.t
+	desc = pact.52.d
+
+	trigger = {
+		tag = SER
+		is_faction_leader = yes
+		has_country_flag = founded_belgradepact
+
+		has_war = no
+
+		NOT = {
+			is_in_faction_with = GRE
+			GRE = { has_country_flag = joined_belgradepact }
+		}
+
+		owns_state = 731 # Central Macedonia
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = pact.52.a # Offer Central Macedonia to Greece
+
+		ai_chance = { factor = 80 }
+
+		GRE = { country_event = { id = pact.53 } }
+	}
+	option = {
+		name = pact.52.b # It will remain with us
+
+		ai_chance = {
+			factor = 20
+
+			modifier = {
+				factor = 0
+				NOT = { has_country_flag = occupation_of_bulgaria }
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { is_in_faction_with = OTT }
+			}
+		}
+	}
+}
+
+### Greece: Serbia offers us Central Macedonia
+country_event = {
+	id = pact.53
+	title = pact.53.t
+	desc = pact.53.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.53.a # Welcome home Macedonia.
+
+		ai_chance = { factor = 85 }
+
+		SER = { add_to_faction = GRE }
+		set_country_flag = joined_belgradepact
+
+		transfer_state = 731 # Central Macedonia
+
+		if = {
+			limit = { 769 = { is_owned_by = SER } }
+			transfer_state = 769 # Western Thrace
+			hidden_effect = { add_state_core = 769 }
+		}
+
+		hidden_effect = { SER = { country_event = { id = pact.54 } } }
+	}
+	option = {
+		name = pact.53.b # Agree, but demand Eastern Thrace as well
+
+		trigger = {
+			OTT = {
+				has_country_flag = joined_belgradepact
+				owns_state = 184 # Eastern Thrace
+			}
+		}
+
+		ai_chance = { factor = 10 }
+
+		SER = { add_to_faction = GRE }
+		set_country_flag = joined_belgradepact
+
+		transfer_state = 731 # Central Macedonia
+
+		if = {
+			limit = { 769 = { is_owned_by = SER } }
+			transfer_state = 769 # Western Thrace
+			hidden_effect = { add_state_core = 769 }s
+		}
+
+		hidden_effect = { SER = { country_event = { id = pact.54 } } } # The Greeks joined
+		SER = { country_event = { id = pact.55 hours = 6 } } # The Greeks want all of Thrace as well
+	}
+
+	option = {
+		name = pact.53.c # Decline
+
+		ai_chance = { factor = 5 }
+
+		SER = { country_event = { id = pact.60 hours = 6 } }
+	}
+}
+
+### Serbia: Greece joined the Pact
+country_event = {
+	id = pact.54
+	title = pact.54.t
+	desc = pact.54.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.54.a # Welcome to the Pact.
+
+		effect_tooltip = {
+			add_to_faction = GRE
+
+			GRE = {
+				transfer_state = 731 # Central Macedonia
+
+				if = {
+					limit = { 769 = { is_owned_by = GRE } }
+					transfer_state = 769 # Western Thrace
+				}
+			}
+		}
+	}
+}
+
+### Serbia: Greece demands Eastern Thrace as well
+country_event = {
+	id = pact.55
+	title = pact.55.t
+	desc = pact.55.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.55.a # Demand the Ottomans to cede it to Greece
+
+		ai_chance = { factor = 10 }
+
+		OTT = { country_event = { id = pact.56 hours = 6 } }
+	}
+
+	option = {
+		name = pact.55.b # It will stay under Ottoman occupation
+
+		ai_chance = { factor = 90 }
+
+		GRE = { country_event = { id = pact.58 hours = 6 } }
+	}
+}
+
+### Ottomans: Greece demands Eastern Thrace
+country_event = {
+	id = pact.56
+	title = pact.56.t
+	desc = pact.56.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.56.a # Very well then
+
+		ai_chance = { factor = 60 }
+
+		GRE = { country_event = { id = pact.57 } }
+	}
+
+	option = {
+		name = pact.56.b # No, we are keeping our new lands
+
+		ai_chance = { factor = 40 }
+
+		GRE = { country_event = { id = pact.59 hours = 6 } }
+	}
+}
+
+### Greece: Ottomans agreed
+country_event = {
+	id = pact.57
+	title = pact.57.t
+	desc = pact.57.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.57.a # Great
+
+		GRE = {
+			if = {
+				limit = { OTT = { owns_state = 769 } }
+				transfer_state = 769 # Western Thrace
+				hidden_effect = { add_state_core = 769 }
+			}
+			transfer_state = 184 # Eastern Thrace
+			hidden_effect = { add_state_core = 184 }
+		}
+	}
+}
+
+### Greece: Serbia will not pressure the Ottomans
+country_event = {
+	id = pact.58
+	title = pact.58.t
+	desc = pact.58.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.58.a # We will get it later
+
+		# TODO relations
+	}
+}
+
+### Greece: The Ottomans will not cede Thrace
+country_event = {
+	id = pact.59
+	title = pact.59.t
+	desc = pact.59.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.59.a # We will get it later
+
+		# TODO relations
+	}
+}
+
+### Serbia: Greece won't join the Belgrade Pact
+country_event = {
+	id = pact.60
+	title = pact.60.t
+	desc = pact.60.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.60.a # We will get it later
+	}
+}
+
+### Serbia: we control Dobrudzha, offer it to Romania?
+country_event = {
+	id = pact.61
+	title = pact.61.t
+	desc = pact.61.d
+
+	trigger = {
+		tag = SER
+		is_faction_leader = yes
+		has_country_flag = founded_belgradepact
+
+		has_war = no
+
+		OR = {
+			NOT = {
+				is_in_faction_with = ROM
+				ROM = { has_country_flag = joined_belgradepact }
+				country_exists = RRM
+			}
+			NOT = {
+				is_in_faction_with = RRM
+				RRM = { has_country_flag = joined_belgradepact }
+				country_exists = ROM
+			}
+		}
+
+		owns_state = 77 # Dobrudzha
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = pact.61.a # Offer Dobrudzha to Romania
+
+		ai_chance = { factor = 100 }
+
+		if = {
+			limit = { country_exists = ROM }
+			ROM = { country_event = { id = pact.62 } }
+		}
+		if = {
+			limit = { country_exists = RRM }
+			RRM = { country_event = { id = pact.62 } }
+		}
+	}
+	option = {
+		name = pact.61.b # It will remain with us
+
+		ai_chance = { factor = 0 }
+	}
+}
+
+### Romania: Serbia offers us Dobrudzha
+country_event = {
+	id = pact.62
+	title = pact.62.t
+	desc = pact.62.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.62.a # Welcome home, Dobrudzha.
+
+		ai_chance = { factor = 99 }
+
+		SER = { add_to_faction = ROOT }
+		set_country_flag = joined_belgradepact
+
+		transfer_state = 77 # Dobrudzha
+
+		hidden_effect = { SER = { country_event = { id = pact.63 } } }
+	}
+
+	option = {
+		name = pact.62.b # We don't want it.
+
+		ai_chance = { factor = 1 }
+
+		SER = { country_event = { id = pact.60 } }
+	}
+}
+
+### Serbia: Romania joined the Pact
+country_event = {
+	id = pact.63
+	title = pact.63.t
+	desc = pact.63.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = pact.63.a # Great!
+
+		effect_tooltip = {
+			add_to_faction = FROM
+
+			FROM = { transfer_state = 77 } # Dobrudzha
 		}
 	}
 }

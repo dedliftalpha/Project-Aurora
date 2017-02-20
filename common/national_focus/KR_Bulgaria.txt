@@ -579,7 +579,7 @@ focus_tree = {
 
     focus = {
 		id = BUL_balkan_victors
-		icon = GFX_goal_generic_political_pressure
+		icon = GFX_focus_generic_strike_at_democracy1
 		available = {
 		    OR = {
 			    SER = { is_subject_of = BUL }
@@ -636,15 +636,34 @@ focus_tree = {
 		}
 	}
 	
-	 focus = {
-		id = BUL_secure_dobrogea
-		icon = GFX_goal_generic_allies_build_infantry
+	focus = {
+		id = BUL_secure_macedonia
+		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = BUL_consolidate_victory }
+		available = {
+		     BUL = { owns_state = 731 } 
+		}
+		bypass = { 731 = { is_core_of = BUL } }
+		x = 9
+		y = 2
+		cost = 5
+		completion_reward = {
+		    add_state_core = 731
+		}
+		ai_will_do = {
+			factor = 3
+		}
+	}
+	
+	focus = {
+		id = BUL_secure_dobrogea
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = BUL_secure_macedonia }
 		available = {
 		     BUL = { owns_state = 772 } 
 		}
 		x = 9
-		y = 2
+		y = 3
 		cost = 5
 		completion_reward = {
 		    add_state_core = 772
@@ -656,7 +675,7 @@ focus_tree = {
 	
 	focus = {
 		id = BUL_seize_thrace
-		icon = GFX_goal_generic_political_pressure
+		icon = GFX_goal_generic_territory_or_war
 		prerequisite = { focus = BUL_balkan_victors }
 		available = {
 		
@@ -680,6 +699,31 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 40
+		}
+	}
+	
+	focus = {
+		id = BUL_dominate_albania
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = BUL_seize_thrace }
+		available = {
+		    ALB = { has_war = no is_subject = no }
+			BUL = { has_war = no is_subject = no }
+		}
+		bypass = { 
+		    OR ={
+		        ALB = { is_subject_of = BUL }
+				ALB = { exists = no }
+			}
+		}
+		x = 11
+		y = 2
+		cost = 4
+		completion_reward = {
+		    puppet = ALB
+		}
+		ai_will_do = {
+			factor = 1
 		}
 	}
 	

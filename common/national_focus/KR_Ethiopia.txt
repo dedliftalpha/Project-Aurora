@@ -150,39 +150,34 @@ focus_tree = {
 		cost = 10
 		ai_will_do = { factor = 80 }
 		available = { 
-			GER = { OR = { has_war_with = FRA  has_war_with = CAN has_war_with SOV } }
-			GER = { OR = { owns_state = 269 owns_state = 268 } }
-			NOT = { is_in_faction_with = GER }
+			has_global_flag = GER_Capitulation
+			NOT = { OR = { is_in_faction_with = GER has_war_with = GER } }
 		}
 		prerequisite = { focus = ETH_reform }
 		bypass = { AND = { owns_state = 269 owns_state = 268 } }
 		completion_reward = {
-			set_state_owner = 269
-			add_state_core = 269
-			set_state_owner = 268
-			add_state_core = 268
+			transfer_state = 268
+			transfer_state = 269
 			GER = { country_event = { id = ethiopia.23 days = 1 } }
 		}
 	}
 
 	focus = {
-		id = ETH_Seize_Canal
+		id = ETH_Intergrate_Ger_Som
 		icon = GFX_goal_generic_demand_territory
 		x = 6
 		y = 2
 		cost = 10
 		ai_will_do = { factor = 100 }
 		available = {
-			GER = { OR = { has_war_with = FRA  has_war_with = CAN has_war_with SOV } }
-			GER = { owns_state = 753 }
-			NOT = { is_in_faction_with = GER }
+			NOT = { has_war_with = GER }
 		}
 		prerequisite = { focus = ETH_Seize_Ger_Som }
 		bypass = { owns_state = 753 }
 		completion_reward = {
-			set_state_owner = 753
-			add_state_core = 753
-			GER = { country_event = { id = ethiopia.24 days = 1 } }
+			add_state_core = 268
+			add_state_core = 269
+			add_political_power = 50
 		}
 	}
 
@@ -517,6 +512,181 @@ focus_tree = {
 		prerequisite = { focus = ETH_Oil_Pro }
 		completion_reward = {
 			add_ideas = ETH_Examine_Euro_Tech
+		}
+	}
+
+	### Navy Focus Tree
+	focus = {
+		id = ETH_Navy
+		icon = GFX_goal_generic_build_navy
+		x = 1
+		y = 16
+		cost = 10
+		ai_will_do = { factor = 90 }
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Strat_Place
+		icon = GFX_goal_generic_wolf_pack
+		x = 2
+		y = 15
+		cost = 10
+		ai_will_do = { factor = 80 }
+		prerequisite = { focus = ETH_Navy }
+		mutually_exclusive = { focus = ETH_Aim_Eyes }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_trade_interdiction
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Aim_Eyes
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 2
+		y = 17
+		cost = 10
+		ai_will_do = { factor = 80 }
+		prerequisite = { focus = ETH_Navy }
+		mutually_exclusive = { focus = ETH_Strat_Place }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_base_strike
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_North_Ports
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 3
+		y = 14
+		cost = 10
+		ai_will_do = { factor = 40 }
+		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		completion_reward = {
+			550 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Ger_Som_Ports
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 3
+		y = 16
+		cost = 10
+		ai_will_do = { factor = 40 }
+		available = { AND = { owns_state = 268 owns_state = 269 } }
+		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		completion_reward = {
+			268 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			269 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_South_Ports
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 3
+		y = 18
+		cost = 10
+		ai_will_do = { factor = 40 }
+		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		completion_reward = {
+			559 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Sub_Focus
+		icon = GFX_goal_generic_navy_submarine
+		x = 4
+		y = 15
+		cost  = 10
+		ai_will_do = { factor = 20 }
+		prerequisite = { focus = ETH_Strat_Place }
+		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
+		completion_reward = {
+			# add_ideas = ETH_Sub_Focus
+		}
+	}
+
+	focus = {
+		id = ETH_NB_Focus
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 4
+		y = 15
+		cost  = 10
+		ai_will_do = { factor = 20 }
+		prerequisite = { focus = ETH_Aim_Eyes }
+		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
+		completion_reward = {
+			# add_ideas = ETH_NB_Focus
+		}
+	}
+
+	focus = {
+		id = ETH_Further_Doctrine
+		icon = GFX_goal_generic_occupy_states_coastal
+		x = 5
+		y = 16
+		ai_will_do = { factor = 10 }
+		prerequisite = { focus = ETH_Sub_Focus focus = ETH_NB_Focus }
+		completion_reward = {
+			# add_ideas = ETH_Naval_Doctrine
 		}
 	}
 }

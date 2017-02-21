@@ -8,7 +8,7 @@
 # 11 - 20 Austro-Hungarian clay (Romania, Greece, Italy, various Slavic states)
 # 21 - 30 Miscellaneous Balkan clay
 # 31 - 40 Russian reconquest of everything
-# 
+# 41 - 50 Japan, Taiwan, Korea, Fengtian 
 
 add_namespace = rename
 
@@ -26,7 +26,7 @@ country_event = {
 		28 = { is_controlled_by = FRA }
 		779 = { is_controlled_by = FRA }
 		NOT = {
-			has_global_flag = ren_28_Alsace
+			has_global_flag = FRA_28_Alsace
 		}
 	}
 	
@@ -40,6 +40,135 @@ country_event = {
 		28 = { set_state_name = Alsace }
 		set_province_name = { id = 9503 name = "Strasbourg"}
 		set_province_name = { id = 678 name = "Mulhouse"}
-		set_global_flag = ren_28_Alsace
+		set_global_flag = FRA_28_Alsace
+	}
+}
+
+
+
+
+
+
+
+
+
+
+###### 41 - 50 Japan, Taiwan, Korea, Fengtian #####
+country_event = { #Taiwan Renaming - Taipei (TAI and other chinese factions)
+	id = rename.41
+	title = rename.41.t
+	hidden = yes
+
+	fire_only_once = no
+	
+	trigger = {
+		tag = JAP
+		524 = {
+			OR = {
+				is_controlled_by = TAI
+				is_controlled_by = CHI
+				is_controlled_by = QIE
+				is_controlled_by = YUN
+				is_controlled_by = NPA
+				is_controlled_by = SQI
+				is_controlled_by = FNG
+				is_controlled_by = XSM
+			}
+		}
+		NOT = { has_global_flag = TAI_524_TAIPEI }
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rename.41.a
+		524 = { set_state_name = Taipei }
+		set_province_name = { id = 7186 name = "Taipei"}
+		set_global_flag = TAI_524_TAIPEI
+	}
+}
+country_event = { #Taiwan Renaming - Taihoku (JAP)
+	id = rename.42
+	title = rename.42.t
+	hidden = yes
+
+	fire_only_once = no
+	
+	trigger = {
+		tag = JAP
+		524 = { is_controlled_by = JAP }
+		has_global_flag = TAI_524_TAIPEI
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rename.41.a
+		859 = { set_state_name = Taihoku }
+		set_province_name = { id = 7186 name = "Taihoku"}
+		clr_global_flag = TAI_524_TAIPEI
+	}
+}
+country_event = { #Taiwan Renaming - Kaohsiung (TAI and other chinese factions)
+	id = rename.43
+	title = rename.43.t
+	hidden = yes
+
+	fire_only_once = no
+	
+	trigger = {
+		tag = JAP
+		859 = {
+			OR = {
+				is_controlled_by = TAI
+				is_controlled_by = CHI
+				is_controlled_by = QIE
+				is_controlled_by = YUN
+				is_controlled_by = NPA
+				is_controlled_by = SQI
+				is_controlled_by = FNG
+				is_controlled_by = XSM
+			}
+		}
+		NOT = { has_global_flag = TAI_859_TAKAU }
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rename.41.a
+		trigger = { NOT = { 859 = { is_controlled_by = TAI } } }
+		859 = { set_state_name = Kaohsiung }
+		set_province_name = { id = 12068 name = "Kaohsiung"}
+		set_global_flag = TAI_859_TAKAU
+	}
+	option = {
+		name = rename.41.b
+		trigger = { 859 = { is_controlled_by = TAI } }
+		859 = { set_state_name = Takau }
+		set_province_name = { id = 12068 name = "Takau"}
+		set_global_flag = TAI_859_TAKAU
+	}
+}
+country_event = { #Taiwan Renaming - Takao (JAP)
+	id = rename.44
+	title = rename.44.t
+	hidden = yes
+
+	fire_only_once = no
+	
+	trigger = {
+		tag = JAP
+		859 = { is_controlled_by = JAP }
+		has_global_flag = TAI_859_TAKAU
+	}
+	
+	mean_time_to_happen = { days = 7 }
+	
+	option = {
+		name = rename.41.a
+		859 = { set_state_name = Takao }
+		set_province_name = { id = 12068 name = "Takao"}
+		clr_global_flag = TAI_859_TAKAU
 	}
 }

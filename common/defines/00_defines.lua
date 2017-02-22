@@ -124,7 +124,7 @@ NDiplomacy = {
 	VICTORY_POINT_WORTH_FACTOR = 10,				-- multiplier when calcualting proince worth (surrender)
 	VICTORY_POINT_WORTH_FACTOR_WARSCORE = 0.2,		-- multiplier when calcualting province worth with autonomy/warscore
 	IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0.3,			-- ideology limit required to join faction
-	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = -0.3,			-- Change tension requirement for joining faction by amount when at war
+	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = 0.5,			-- if in defensive war this or your modifier is counted as limit to join factions (so if you have 80% join limit this now means you can join at 50%)
 },
 
 NCountry = {
@@ -1151,6 +1151,7 @@ NAI = {
 	INDUSTRY_IC_AIR_IMPORTANCE_FACTOR = 0.02,			-- AI very specific IC cost factor for air missions
 	
 	AIR_SCORE_DISTANCE_IMPACT = 0.3,					-- Effect of distance applied to the score calculations
+	DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 4,				-- Amount of days between air ai updates priorities for air wings ( from 1 to N )
 	
 	NAVAL_AIR_SUPERIORITY_IMPORTANCE = 0.10,			-- Strategic importance of air superiority ( amount of enemy planes in area )
 	NAVAL_SHIP_AIR_IMPORTANCE = 2.0,					-- Naval ship air importance

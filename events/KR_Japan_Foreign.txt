@@ -6844,16 +6844,24 @@ add_namespace = japfor
 					target = FNG transfer_troops = no
 				}
 			}
+			if = { limit = { MON = { is_subject_of = JAP } }
+			RUS = {
+				annex_country = {
+					target = MON transfer_troops = no
+				}
+			}
+			}
 			RUS = {
 				transfer_state = 655
 				transfer_state = 537
 				transfer_state = 555
 				transfer_state = 745
 				transfer_state = 612
-				transfer_state = 612
 				transfer_state = 610
 				transfer_state = 409
 				transfer_state = 408
+				transfer_state = 525
+				transfer_state = 527
 				add_state_core = 409
 				add_state_core = 408
 				add_state_core = 655
@@ -6862,6 +6870,8 @@ add_namespace = japfor
 				add_state_core = 745
 				add_state_core = 612
 				add_state_core = 610
+				add_state_core = 525
+				add_state_core = 527
 			}
 			white_peace = JAP
 			every_country = {
@@ -6871,7 +6881,7 @@ add_namespace = japfor
 						is_in_faction_with = RUS
 					}
 				}
-				white_peace = JAP
+				JAP = { white_peace = PREV }
 			}
 			JAP = {
 				set_country_flag = JAP_ISO
@@ -6907,7 +6917,10 @@ add_namespace = japfor
 			every_state = {
 				limit = {
 					is_core_of = QIE
-					is_controlled_by = JAP
+					OR = { is_controlled_by = JAP
+					any_country = { limit = { is_subject_of = JAP }
+					controls_state = PREV }
+					}
 				}
 				RUS = {
 					transfer_state = PREV
@@ -6928,9 +6941,9 @@ add_namespace = japfor
 						is_controlled_by = JAP
 					}
 				}
-
+				remove_state_core = PREV
 			}
-			remove_state_core = PREV
+			
 			if = {
 				limit = {
 					has_war_with = GER
@@ -6949,8 +6962,10 @@ add_namespace = japfor
 						controls_state = 525
 					}
 				}
+				RUS = { 
 				country_event = {
 					id = japfor.157 days = 15
+				}
 				}
 			}
 
@@ -6975,9 +6990,9 @@ add_namespace = japfor
 						is_controlled_by = JAP
 					}
 				}
-
+				remove_state_claim = PREV
 			}
-			remove_state_claim = PREV
+			
 			add_named_threat = {
 				threat = -5 name = sakoku
 			}

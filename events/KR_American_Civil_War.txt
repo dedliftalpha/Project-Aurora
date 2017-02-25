@@ -11879,7 +11879,7 @@ country_event = { # England End ACW
 ########################################
 
 ############ CSA Cities
-### Detroid
+### Detroit
 
 country_event = {
 	id = amcivwar.305
@@ -11947,7 +11947,12 @@ country_event = {
 		owns_state = 393
 		controls_state = 393
 		has_global_flag = CAP_DET
-		NOT = { has_global_flag = CAP_DET_2 }	
+		NOT = { has_global_flag = CAP_DET_2 }
+		OR = {
+		has_war_with = TEX
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12067,7 +12072,12 @@ country_event = {
 		owns_state = 360
 		controls_state = 360
 		has_global_flag = CAP_PIT
-		NOT = { has_global_flag = CAP_PIT_2 }	
+		NOT = { has_global_flag = CAP_PIT_2 }
+		OR = {
+		has_war_with = TEX
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12188,6 +12198,11 @@ country_event = {
 		controls_state = 358
 		has_global_flag = CAP_NYC
 		NOT = { has_global_flag = CAP_NYC_2 }
+		OR = {
+		has_war_with = TEX
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12309,7 +12324,12 @@ country_event = {
 		owns_state = 261
 		controls_state = 261
 		has_global_flag = CAP_CLE
-		NOT = { has_global_flag = CAP_CLE_2 }	
+		NOT = { has_global_flag = CAP_CLE_2 }
+		OR = {
+		has_war_with = TEX
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12468,6 +12488,11 @@ country_event = {
 		owns_state = 395
 		controls_state = 395
 		has_global_flag = CAP_CHI
+		OR = {
+		has_war_with = TEX
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12488,32 +12513,19 @@ country_event = {
 	title = amcivwar.315.t
 	desc = amcivwar.315.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = USA
-				controls_state = 367
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_BIR_USA }
-			}
-		}		
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 367
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_BIR_CSA }
-			}
+		tag = USA
+		tag = CSA
+		tag = CAL
 		}
-		OR = {
-			and = {
-				tag = CAL
-				controls_state = 367
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_BIR_CAL }
-			}
-		}
+		
+		controls_state = 367
+		has_war_with = TEX
+		NOT = { has_global_flag = CAP_BIR }
 		TEX = { owns_state = 367 }
 	}
 
@@ -12529,25 +12541,10 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 367 }
-		add_political_power = 20
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = TEX }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_BIR_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_BIR_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_BIR_CSA
-        }
+        set_global_flag = CAP_BIR
 	}
 
 	option = { 
@@ -12557,25 +12554,9 @@ country_event = {
 			factor = 35
 		}
 
-		add_political_power = -20
+		add_political_power = 20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_BIR_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_BIR_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_BIR_CSA
-        }
+        set_global_flag = CAP_BIR
 	}		
 }
 
@@ -12591,15 +12572,13 @@ country_event = {
 		TAG = TEX
 		owns_state = 367
 		controls_state = 367
-		has_global_flag = CAP_BIR_USA
-		has_global_flag = CAP_BIR_CSA
-		has_global_flag = CAP_BIR_CAL
+		has_global_flag = CAP_BIR
 		NOT = { has_global_flag = CAP_BIR_2 }
 		OR = {
-			has_war_with = USA
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12609,11 +12588,46 @@ country_event = {
 	option = { 
 		name = amcivwar.316.a
 
-		remove_building = { type = industrial_complex level = 1 state = 367 }
+		remove_building = { type = naval_base level = 2 state = 367 }
 		add_political_power = 20
 
         set_global_flag = CAP_BIR_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.31600
+	title = amcivwar.31600.t
+	desc = amcivwar.31600.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = USA
+		tag = CAL
+		tag = CSA
+		}
+		
+		controls_state = 367
+		has_war_with = TEX
+		has_global_flag = CAP_BIR_2
+
+		TEX = { owns_state = 367 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30600.a
+
+		remove_building = { type = infrastructure level = 3 state = 367 }
+		add_political_power = 20
+		
+	}		
 }
 
 ### Memphis
@@ -12626,30 +12640,14 @@ country_event = {
 
 	trigger = {
 		OR = {
-			and = {
-				tag = USA
-				controls_state = 368
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_MEM_USA }
-			}
-		}		
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 368
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_MEM_CSA }
-			}
-		}
-		OR = {
-			and = {
-				tag = CAL
-				controls_state = 368
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_MEM_CAL }
-			}
+		tag = USA
+		tag = CAL
+		tag = CSA
 		}
 
+		controls_state = 368
+	    has_war_with = TEX
+		NOT = { has_global_flag = CAP_MEM }
 		TEX = { owns_state = 368 }
 	}
 
@@ -12665,25 +12663,10 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 368 }
-		add_political_power = 20
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = TEX }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_MEM_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_MEM_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_MEM_CSA
-        }
+        set_global_flag = CAP_MEM
 	}
 
 	option = { 
@@ -12693,25 +12676,9 @@ country_event = {
 			factor = 35
 		}
 
-		add_political_power = -20
+		add_political_power = 20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_MEM_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_MEM_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_MEM_CSA
-        }
+        set_global_flag = CAP_MEM
 	}		
 }
 
@@ -12724,18 +12691,16 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		TAG = TEX
+		tag = TEX
 		owns_state = 368
 		controls_state = 368
-		has_global_flag = CAP_MEM_USA
-		has_global_flag = CAP_MEM_CSA
-		has_global_flag = CAP_MEM_CAL
+		has_global_flag = CAP_MEM
 		NOT = { has_global_flag = CAP_MEM_2 }
 		OR = {
-			has_war_with = USA
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -12745,11 +12710,46 @@ country_event = {
 	option = { 
 		name = amcivwar.318.a
 
-		remove_building = { type = industrial_complex level = 1 state = 368 }
+		remove_building = { type = infrastructure level = 3 state = 368 }
 		add_political_power = 20
 
         set_global_flag = CAP_MEM_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.31800
+	title = amcivwar.31800.t
+	desc = amcivwar.31800.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = USA
+		tag = CAL
+		tag = CSA
+		}
+		
+		controls_state = 368
+		has_war_with = TEX
+		has_global_flag = CAP_MEM_2
+
+		TEX = { owns_state = 368 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30600.a
+
+		add_resource = { type = steel amount = -35 state = 368 }
+		add_political_power = 20
+		
+	}		
 }
 
 ### NEW ORLEANS
@@ -12759,32 +12759,19 @@ country_event = {
 	title = amcivwar.319.t
 	desc = amcivwar.319.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = USA
-				controls_state = 371
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_NEW_USA }
-			}
-		}		
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 371
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_NEW_CSA }
-			}
+		tag = USA
+		tag = CAL
+		tag = CSA
 		}
-		OR = {
-			and = {
-				tag = CAL
-				controls_state = 371
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_NEW_CAL }
-			}
-		}
+		
+		controls_state = 371
+		has_war_with = TEX
+		NOT = { has_global_flag = CAP_NEW }
 
 		TEX = { owns_state = 371 }
 	}
@@ -12801,25 +12788,10 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 371 }
-		add_political_power = 20
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = TEX }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_NEW_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_NEW_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_NEW_CSA
-        }
+        set_global_flag = CAP_NEW
 	}
 
 	option = { 
@@ -12831,23 +12803,7 @@ country_event = {
 
 		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_NEW_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_NEW_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_NEW_CSA
-        }
+        set_global_flag = CAP_NEW
 	}		
 }
 
@@ -12863,15 +12819,13 @@ country_event = {
 		TAG = TEX
 		owns_state = 371
 		controls_state = 371
-		has_global_flag = CAP_NEW_USA
-		has_global_flag = CAP_NEW_CSA
-		has_global_flag = CAP_NEW_CAL
+		has_global_flag = CAP_NEW
 		NOT = { has_global_flag = CAP_NEW_2 }
 		OR = {
-			has_war_with = USA
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = USA
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -12881,11 +12835,47 @@ country_event = {
 	option = { 
 		name = amcivwar.320.a
 
-		remove_building = { type = industrial_complex level = 1 state = 371 }
+		remove_building = { type = infrastructure level = 3 state = 371 }
+		remove_building = { type = naval_base level = 2 state = 371 }
 		add_political_power = 20
 
         set_global_flag = CAP_NEW_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.32000
+	title = amcivwar.32000.t
+	desc = amcivwar.32000.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = USA
+		tag = CAL
+		tag = CSA
+		}
+		
+		controls_state = 371
+		has_war_with = TEX
+		has_global_flag = CAP_NEW_2
+
+		TEX = { owns_state = 371 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30600.a
+
+		remove_building = { type = arms_factory level = 1 state = 371 }
+		add_political_power = 20
+		
+	}		
 }
 
 ### Atlanta
@@ -12895,35 +12885,20 @@ country_event = {
 	title = amcivwar.321.t
 	desc = amcivwar.321.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = USA
-				controls_state = 365
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_ATL_VEN_USA }
-				NOT = { has_global_flag = CAP_ATL_USA }
-			}
-		}		
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 365
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_ATL_VEN_CSA }
-				NOT = { has_global_flag = CAP_ATL_CSA }
-			}
+		tag = USA
+		tag = CAL
+		tag = CSA
 		}
-		OR = {
-			and = {
-				tag = CAL
-				controls_state = 365
-				has_war_with = TEX
-				NOT = { has_global_flag = CAP_ATL_VEN_CAL }
-				NOT = { has_global_flag = CAP_ATL_CAL }
-			}
-		}
+		
+		controls_state = 365
+		has_war_with = TEX
+		NOT = { has_global_flag = CAP_ATL_VEN }
+		NOT = { has_global_flag = CAP_ATL }
 
 		TEX = { owns_state = 365 }
 	}
@@ -12937,28 +12912,23 @@ country_event = {
 
 		ai_chance = {
 			factor = 22
+			modifier = {
+			factor = 2
+			tag = CSA
+			}
+			modifier = {
+			factor = 3.4
+			tag = CAL
+			}
 		}
 
-		remove_building = { type = industrial_complex level = 2 state = 365 }
+		remove_building = { type = industrial_complex level = 1 state = 365 }
+		remove_building = { type = dockyard level = 1 state = 365 }
+		remove_building = { type = infrastructure level = 2 state = 365 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 5000 producer = TEX }
 		add_political_power = -100
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_ATL_VEN_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_ATL_VEN_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_ATL_VEN_CSA
-        }
+        set_global_flag = CAP_ATL_VEN
 	}
 
 	option = { 
@@ -12966,28 +12936,21 @@ country_event = {
 
 		ai_chance = {
 			factor = 66
+			modifier = {
+			factor = 0.33
+			tag = CSA
+			}
+			modifier = {
+			factor = 0.22
+			tag = CAL
+			}
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 365 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 2000 producer = TEX }
 		add_political_power = 20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_ATL_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_ATL_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_ATL_CSA
-        }
+       set_global_flag = CAP_ATL
 	}
 
 	option = { 
@@ -12995,27 +12958,19 @@ country_event = {
 
 		ai_chance = {
 			factor = 12
+			modifier = {
+			factor = 3
+			tag = CSA
+			}
+			modifier = {
+			factor = 0.8
+			tag = CAL
+			}
 		}
 
 		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_ATL_CAL
-        }
-
-        if = {
-        	limit = { tag = USA }
-
-        	set_global_flag = CAP_ATL_USA
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_ATL_CSA
-        }
+        set_global_flag = CAP_ATL
 	}		
 }
 
@@ -13031,20 +12986,13 @@ country_event = {
 		TAG = TEX
 		owns_state = 365
 		controls_state = 365
-		OR = {
-			has_global_flag = CAP_ATL_USA
-			has_global_flag = CAP_ATL_CSA
-			has_global_flag = CAP_ATL_CAL
-			has_global_flag = CAP_ATL_VEN_USA
-			has_global_flag = CAP_ATL_VEN_CSA
-			has_global_flag = CAP_ATL_VEN_CAL
-		}
+		has_global_flag = CAP_ATL
 		NOT = { has_global_flag = CAP_ATL_2 }
 		OR = {
-			has_war_with = USA
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = USA
+		}
 	}
 
 	mean_time_to_happen = {
@@ -13053,9 +13001,8 @@ country_event = {
 	
 	option = { 
 		name = amcivwar.322.a
-
-		remove_building = { type = industrial_complex level = 1 state = 365 }
-		add_political_power = 20
+		
+		add_political_power = 40
 
         set_global_flag = CAP_ATL_2
 	}	
@@ -13069,6 +13016,8 @@ country_event = {
 	title = amcivwar.323.t
 	desc = amcivwar.323.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
@@ -13096,6 +13045,7 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 373 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = USA }
 		add_political_power = -20
 
         set_global_flag = CAP_STL
@@ -13127,7 +13077,12 @@ country_event = {
 		owns_state = 373
 		controls_state = 373
 		has_global_flag = CAP_STL
-		NOT = { has_global_flag = CAP_STL_2 }	
+		NOT = { has_global_flag = CAP_STL_2 }
+		OR = {
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = TEX
+		}
 	}
 
 	mean_time_to_happen = {
@@ -13149,6 +13104,8 @@ country_event = {
 	title = amcivwar.32400.t
 	desc = amcivwar.32400.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
@@ -13184,32 +13141,19 @@ country_event = {
 	title = amcivwar.325.t
 	desc = amcivwar.325.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = CAL
-				controls_state = 361
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_BAL_CAL }
-			}
-		}		
-		OR = {
-			and = {
-				tag = TEX
-				controls_state = 361
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_BAL_TEX }
-			}
+		tag = CAL
+		tag = TEX
+		tag = CSA
 		}
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 361
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_BAL_CSA }
-			}
-		}
+		
+		controls_state = 361
+		has_war_with = USA
+		NOT = { has_global_flag = CAP_BAL }
 
 		USA = { owns_state = 361 }
 	}
@@ -13225,26 +13169,11 @@ country_event = {
 			factor = 65
 		}
 
-		remove_building = { type = industrial_complex level = 2 state = 361 }
-		add_political_power = 20
+		remove_building = { type = industrial_complex level = 1 state = 361 }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = USA }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_BAL_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_BAL_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_BAL_CSA
-        }
+        set_global_flag = CAP_BAL
 	}
 
 	option = { 
@@ -13256,23 +13185,7 @@ country_event = {
 
 		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_BAL_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_BAL_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_BAL_CSA
-        }
+        set_global_flag = CAP_BAL
 	}		
 }
 
@@ -13288,15 +13201,13 @@ country_event = {
 		TAG = USA
 		owns_state = 361
 		controls_state = 361
-		has_global_flag = CAP_BAL_TEX
-		has_global_flag = CAP_BAL_CSA
-		has_global_flag = CAP_BAL_CAL
+		has_global_flag = CAP_BAL
 		NOT = { has_global_flag = CAP_BAL_2 }
-		OR = {
-			has_war_with = TEX
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+        OR = {
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = TEX
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -13306,11 +13217,47 @@ country_event = {
 	option = { 
 		name = amcivwar.326.a
 
-		remove_building = { type = industrial_complex level = 2 state = 373 }
+		remove_building = { type = industrial_complex level = 1 state = 361 }
 		add_political_power = 20
 
         set_global_flag = CAP_BAL_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.32600
+	title = amcivwar.32600.t
+	desc = amcivwar.32600.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = CSA
+		tag = CAL
+		tag = TEX
+		}
+		
+		controls_state = 361
+		has_war_with = USA
+		has_global_flag = CAP_BAL_2
+
+		USA = { owns_state = 361 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30800.a
+
+		remove_building = { type = industrial_complex level = 1 state = 361 }
+		remove_building = { type = infrastructure level = 4 state = 361 }
+		add_political_power = 20
+		
+	}		
 }
 
 ### Louisville
@@ -13320,32 +13267,19 @@ country_event = {
 	title = amcivwar.327.t
 	desc = amcivwar.327.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = CAL
-				controls_state = 369
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_Lou_CAL }
-			}
-		}		
-		OR = {
-			and = {
-				tag = TEX
-				controls_state = 369
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_Lou_TEX }
-			}
+		tag = CSA
+		tag = CAL
+		tag = TEX
 		}
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 369
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_Lou_CSA }
-			}
-		}
+		
+		controls_state = 369
+		has_war_with = USA
+		NOT = { has_global_flag = CAP_LOU }
 
 		USA = { owns_state = 369 }
 	}
@@ -13362,25 +13296,10 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 369 }
-		add_political_power = 20
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = USA }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_Lou_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_Lou_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_Lou_CSA
-        }
+        set_global_flag = CAP_LOU
 	}
 
 	option = { 
@@ -13390,25 +13309,9 @@ country_event = {
 			factor = 35
 		}
 
-		add_political_power = -20
+		add_political_power = 20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_Lou_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_Lou_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_Lou_CSA
-        }
+        set_global_flag = CAP_LOU
 	}		
 }
 
@@ -13424,15 +13327,13 @@ country_event = {
 		TAG = USA
 		owns_state = 369
 		controls_state = 369
-		has_global_flag = CAP_Lou_TEX
-		has_global_flag = CAP_Lou_CSA
-		has_global_flag = CAP_Lou_CAL
-		NOT = { has_global_flag = CAP_Lou_2 }
+		has_global_flag = CAP_LOU
+		NOT = { has_global_flag = CAP_LOU_2 }
 		OR = {
-			has_war_with = TEX
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = TEX
+		}
 	}
 
 	mean_time_to_happen = {
@@ -13445,8 +13346,43 @@ country_event = {
 		remove_building = { type = industrial_complex level = 1 state = 369 }
 		add_political_power = 20
 
-        set_global_flag = CAP_Lou_2
+        set_global_flag = CAP_LOU_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.32800
+	title = amcivwar.32800.t
+	desc = amcivwar.32800.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = CSA
+		tag = CAL
+		tag = TEX
+		}
+		
+		controls_state = 369
+		has_war_with = USA
+		has_global_flag = CAP_LOU_2
+
+		USA = { owns_state = 369 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30800.a
+
+		remove_building = { type = infrastructure level = 2 state = 369 }
+		add_political_power = 20
+		
+	}		
 }
 
 ### Dallas
@@ -13456,32 +13392,19 @@ country_event = {
 	title = amcivwar.329.t
 	desc = amcivwar.329.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
 
 	trigger = {
 		OR = {
-			and = {
-				tag = CAL
-				controls_state = 375
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_DAL_CAL }
-			}
-		}		
-		OR = {
-			and = {
-				tag = TEX
-				controls_state = 375
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_DAL_TEX }
-			}
+		tag = CSA
+		tag = CAL
+		tag = TEX
 		}
-		OR = {
-			and = {
-				tag = CSA
-				controls_state = 375
-				has_war_with = USA
-				NOT = { has_global_flag = CAP_DAL_CSA }
-			}
-		}
+		
+		controls_state = 375
+		has_war_with = USA
+		NOT = { has_global_flag = CAP_DAL }
 
 		USA = { owns_state = 375 }
 	}
@@ -13498,25 +13421,10 @@ country_event = {
 		}
 
 		remove_building = { type = industrial_complex level = 1 state = 375 }
-		add_political_power = 20
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = USA }
+		add_political_power = -20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_DAL_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_DAL_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_DAL_CSA
-        }
+        set_global_flag = CAP_DAL
 	}
 
 	option = { 
@@ -13526,25 +13434,9 @@ country_event = {
 			factor = 35
 		}
 
-		add_political_power = -20
+		add_political_power = 20
 
-        if = {
-        	limit = { tag = CAL }
-
-        	set_global_flag = CAP_DAL_CAL
-        }
-
-        if = {
-        	limit = { tag = TEX }
-
-        	set_global_flag = CAP_DAL_TEX
-        }
-
-        if = {
-        	limit = { tag = CSA }
-
-        	set_global_flag = CAP_DAL_CSA
-        }
+        set_global_flag = CAP_DAL
 	}		
 }
 
@@ -13560,15 +13452,13 @@ country_event = {
 		TAG = USA
 		owns_state = 375
 		controls_state = 375
-		has_global_flag = CAP_DAL_TEX
-		has_global_flag = CAP_DAL_CSA
-		has_global_flag = CAP_DAL_CAL
+		has_global_flag = CAP_DAL
 		NOT = { has_global_flag = CAP_DAL_2 }
 		OR = {
-			has_war_with = TEX
-			has_war_with = CSA
-			has_war_with = CAL
-		}	
+		has_war_with = CSA
+		has_war_with = CAL
+		has_war_with = TEX
+		}
 	}
 
 	mean_time_to_happen = {
@@ -13583,6 +13473,41 @@ country_event = {
 
         set_global_flag = CAP_DAL_2
 	}	
+}
+
+country_event = {
+	id = amcivwar.33000
+	title = amcivwar.33000.t
+	desc = amcivwar.33000.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+		tag = CSA
+		tag = CAL
+		tag = TEX
+		}
+		
+		controls_state = 369
+		has_war_with = USA
+		has_global_flag = CAP_DAL_2
+
+		USA = { owns_state = 369 }
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
+	
+	option = {
+		name = amcivwar.30800.a
+
+		remove_building = { type = infrastructure level = 2 state = 369 }
+		add_political_power = 20
+		
+	}		
 }
 
 ############ PSA Cities

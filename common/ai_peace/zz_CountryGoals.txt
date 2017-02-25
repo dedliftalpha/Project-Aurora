@@ -1,0 +1,84 @@
+#Redone by Dskod1, now with even more duct tape
+#This is specific goals for countries who are in a faction and not the faction leader. The country will only take what it wants and will leave the rest. Faction leaders will leave allied wanted territory alone. Faction leader always annex whatever is left over.
+
+default_peace = {
+	enable = {
+		always = yes
+	}
+
+	annex_randomness = 0 #350
+	liberate_randomness = 0 #100
+	puppet_randomness = 0 #200
+	take_states_randomness = 0 #150
+	force_government_randomness = 0 #50
+	
+	# ROOT = Taker, FROM = Giver
+	annex = {
+		factor = 1000
+	}
+
+	# ROOT = Taker, FROM = Liberated
+	liberate = {
+		factor = 0 #100
+	}
+
+	# ROOT = Taker, FROM = Giver
+	puppet = {
+		factor = 0 #200
+
+	}
+
+	# ROOT = Taker, FROM = State
+	take_states = {
+		factor = 600
+		
+		###Greece###
+		#Greece Restriction#
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Greece is in faction and is not the faction leader
+				is_in_faction = yes
+				is_faction_leader = no
+				tag = GRE
+			}
+			NOT = { #State is not a Claim
+				FROM = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			NOT = { #State is not a core
+				FROM = { 
+					is_core_of = ROOT 
+				} 
+			}
+			NOT = { #State not apart of the greece region  
+				FROM = { region = 25 } 
+			} 
+			NOT = { #State not apart of the eastern mediterreanean
+				FROM = { region = 69 } 
+			} 
+
+		}
+		#Faction Ally Restriction#
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #In faction with greece
+				is_in_faction_with = GRE
+			}
+			NOT = { #State is not a Claim
+				FROM = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			NOT = { #State is not a core
+				FROM = { 
+					is_core_of = ROOT 
+				} 
+			}
+			OR = { #State is in either the Greece Region or the Eastern Mediterreanean Region
+				FROM = { region = 25 } 			
+				FROM = { region = 69 } 			
+			}
+		}
+	}
+}

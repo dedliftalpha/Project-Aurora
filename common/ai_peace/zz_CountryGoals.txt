@@ -1,5 +1,6 @@
 #Redone by Dskod1, now with even more duct tape
 #This is specific goals for countries who are in a faction and not the faction leader. The country will only take what it wants and will leave the rest. Faction leaders will leave allied wanted territory alone. Faction leader always annex whatever is left over.
+#This is to only be used for 
 
 default_peace = {
 	enable = {
@@ -31,16 +32,16 @@ default_peace = {
 	# ROOT = Taker, FROM = State
 	take_states = {
 		factor = 600
-		
-		###Greece###
-		#Greece Restriction#
+		########Balkans########
+		####Greece####
+		##Greece Restriction##
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Greece is in faction and is not the faction leader
-				is_in_faction = yes
-				is_faction_leader = no
-				tag = GRE
-			}
+			#Greece is in faction and is not the faction leader
+			is_in_faction = yes
+			is_faction_leader = no
+			tag = GRE
+
 			NOT = { #State is not a Claim
 				FROM = { 
 					is_claimed_by = ROOT 
@@ -59,12 +60,11 @@ default_peace = {
 			} 
 
 		}
-		#Faction Ally Restriction#
+		##Faction Ally Restriction##
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #In faction with greece
-				is_in_faction_with = GRE
-			}
+			#In faction with greece
+			is_in_faction_with = GRE
 			NOT = { #State is not a Claim
 				FROM = { 
 					is_claimed_by = ROOT 
@@ -78,6 +78,81 @@ default_peace = {
 			OR = { #State is in either the Greece Region or the Eastern Mediterreanean Region
 				FROM = { region = 25 } 			
 				FROM = { region = 69 } 			
+			}
+		}
+		####Serbia####
+		##Serbia Restriction##
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#Serbia is in faction and is not the faction leader
+				is_in_faction = yes
+				is_faction_leader = no
+				tag = SER
+			NOT = { #State is not a Claim
+				FROM = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			NOT = { #State is not a core
+				FROM = { 
+					is_core_of = ROOT 
+				} 
+			}
+			NOT = { #State not apart of eastern balkans
+				FROM = { region = 24 } 
+			} 
+			NOT = { #State not apart of the western balkans
+				FROM = { region = 26 } 
+			} 
+
+		}
+		##Faction Ally Restriction##
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#In faction with greece
+			is_in_faction_with = SER
+			NOT = { #State is not a Claim
+				FROM = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			NOT = { #State is not a core
+				FROM = { 
+					is_core_of = ROOT 
+				} 
+			}
+			OR = { #State is in either the western balkans or the eastern balkans
+				FROM = { region = 24 } 			
+				FROM = { region = 26 } 			
+			}
+		}
+		########Middle East########
+		####Cyprus####
+		##Cyprus Restriction##
+		modifier = { #Only take claimed/core land, Cyprus has no goal other than to exist
+			factor = 0
+			tag = CYP
+			FROM = {
+				NOT = {
+					OR = { 
+						is_claimed_by = ROOT
+						is_core_of = ROOT
+					}
+				}
+			}
+		}
+		####Kurdistan####
+		##Kurdistan Restriction##
+		modifier = { #Only take claimed/core land, Kurdistan has no goal other than to exist
+			factor = 0
+			tag = KUR
+			FROM = {
+				NOT = {
+					OR = { 
+						is_claimed_by = ROOT
+						is_core_of = ROOT
+					}
+				}
 			}
 		}
 	}

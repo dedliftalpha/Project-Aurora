@@ -80,6 +80,53 @@ default_peace = {
 				FROM = { region = 69 } 			
 			}
 		}
+		####Belgrade Pact####
+		##Belgrade Pact vs Ottomans vs Axis##
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#In faction with serbia as leader or Serbia and faction leader
+			OR {
+				AND = {
+					is_in_faction_with = SER
+					SER = {
+						is_faction_leader = yes
+					}
+				}
+				AND = {
+					tag = SER
+					is_faction_leader = yes
+				}
+			}
+			OR = {# one of the Axis members are in a peace conference alongside the belgrade pact
+				PER = {
+					is_in_peace_conference = yes
+				}
+				EGY = {
+					is_in_peace_conference = yes
+				}
+				SAU = {
+					is_in_peace_conference = yes
+				}
+			
+			}
+			NOT = { #State is not a Claim
+				FROM = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			NOT = { #State is not a core
+				FROM = { 
+					is_core_of = ROOT 
+				} 
+			}
+			NOT = { #State not apart of Middle East
+				FROM = { is_on_continent = middle_east } 
+			} 
+			NOT = { #State not apart of Africa
+				FROM = { is_on_continent = africa } 
+			} 
+
+		}
 		####Serbia####
 		##Serbia Restriction##
 		modifier = { #Will forbid taking the states if the below triggers are met

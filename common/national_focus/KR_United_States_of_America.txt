@@ -42,24 +42,28 @@ focus_tree = {
 	focus = {# The Labor-Relations Act
 		id = USA_labor_relations_act
 		icon = GFX_goal_generic_soviet_construction
-		cost = 10.00
+		cost = 3
 		prerequisite = {
 			focus = USA_president_reed
 		}
 		x = 0
 		y = 2
-
+		completion_reward = {
+			add_political_power = 50
+		}
 	}
 	focus = {# Worker's Social Security
 		id = USA_workers_security
 		icon = GFX_goal_syndicalism
-		cost = 10.00
+		cost = 3
 		prerequisite = {
 			focus = USA_labor_relations_act
 		}
 		x = -1
 		y = 3
-
+		completion_reward = {
+			add_political_power = 50
+		}
 	}
 	focus = {# Nationalize the Resources
 		id = USA_resource_nationalization
@@ -70,7 +74,10 @@ focus_tree = {
 		}
 		x = -1
 		y = 4
-
+		completion_reward = {
+			country_event = { id = ustates.61 }
+			add_political_power = -10
+		}
 	}
 ###President Long###
 	focus = {# Long is President!
@@ -97,29 +104,38 @@ focus_tree = {
 		}
 		x = 2
 		y = 2
-
+		completion_reward = {
+			country_event = { id = ustates.157 }
+			add_political_power = -10
+		}
 	}
-	focus = {# Long's infrastructure plan
-		id = USA_infastructure_building
-		icon = GFX_goal_generic_construct_infrastructure
+	focus = {# Long's Tarrif
+		id = USA_infastructure_building 
+		icon = GFX_goal_generic_trade
 		cost = 10.00
 		prerequisite = {
 			focus = USA_long_farmer_relief
 		}
 		x = 2
 		y = 3
-
+		completion_reward = {
+			country_event = { id = ustates.40 }
+			add_political_power = -10
+		}
 	}
-	focus = {# Long's tarrifs
+	focus = {# Coast to Coast Reform
 		id = USA_longs_tarrifs
-		icon = GFX_goal_generic_trade
+		icon = GFX_goal_generic_construct_infrastructure
 		cost = 10.00
 		prerequisite = {
 			focus = USA_infastructure_building
 		}
 		x = 2
 		y = 4
-
+		completion_reward = {
+			country_event = { id = ustates.43 }
+			add_political_power = -10
+		}
 	}
 ###President Garner###
 	focus = {# Garner is President!
@@ -276,7 +292,7 @@ focus_tree = {
 	focus = {# Protector of Democracy
 		id = USA_protector_of_democracy
 		icon = GFX_focus_generic_diplomatic_treaty
-		cost = 10.00
+		cost = 1.5
 		prerequisite = {
 			focus = USA_general_macarthur
 		}
@@ -285,12 +301,14 @@ focus_tree = {
 		}
 		x = 11
 		y = 1
-
+		completion_reward = {
+			country_event = { id = ustates.157 }
+		}
 	}
 	focus = {# Domestic Enemies
 		id = USA_domestic_enemies
 		icon = GFX_goal_generic_dangerous_deal
-		cost = 10.00
+		cost = 1.5
 		prerequisite = {
 			focus = USA_general_macarthur
 		}
@@ -299,7 +317,9 @@ focus_tree = {
 		}
 		x = 17
 		y = 1
-
+		completion_reward = {
+			country_event = { id = ustates.15 }
+		}
 	}
 	focus = {# Declare Martial law
 		id = USA_martial_law
@@ -450,6 +470,13 @@ focus = {# Review Military Policy
 		id = USA_review_military
 		icon = GFX_goal_generic_military_sphere
 		cost = 10.00
+		available = {
+			OR = {
+				has_country_flag = AMERICAN_CIVIL_WAR 
+				has_country_flag = civil_war_avoided
+			}
+		}
+	
 		x = 27
 		y = 0
 		completion_reward = {
@@ -1226,9 +1253,18 @@ focus = {# Review Military Policy
 		mutually_exclusive = {
 			focus = USA_the_new_deal
 		}
+		available = { has_country_flag = AMERICAN_CIVIL_WAR }
 		x = 40
 		y = 0
-
+		completion_reward = {
+			custom_effect_tooltip = USA_civil_economy_tooltip
+			add_tech_bonus = {
+				name = construction_tech_bonus
+				bonus = 0.25
+				uses = 1
+				category = construction_tech					
+			}
+		}
 	}
 	focus = {# Move our Industry Westwards
 		id = USA_move_industry_west
@@ -1395,9 +1431,18 @@ focus = {# Review Military Policy
 		prerequisite = {
 			focus = USA_military_economy
 		}
+		available = { has_country_flag = END_ACW }
 		x = 40
 		y = 6
-
+		completion_reward = {
+			custom_effect_tooltip = USA_reconstruction_tooltip
+			add_tech_bonus = {
+				name = construction_tech_bonus
+				bonus = 0.25
+				uses = 1
+				category = construction_tech					
+			}
+		}
 	}
 	focus = {# Post War America fate
 		id = USA_post_war_america
@@ -1564,9 +1609,18 @@ focus = {# Review Military Policy
 		id = USA_the_new_deal
 		icon = GFX_focus_generic_the_giant_wakes
 		cost = 10.00
+		available = { has_country_flag = civil_war_avoided }
 		x = 49
 		y = 0
-
+		completion_reward = {
+			custom_effect_tooltip = USA_fair_deal_tooltip
+			add_tech_bonus = {
+				name = construction_tech_bonus
+				bonus = 0.25
+				uses = 1
+				category = construction_tech					
+			}
+		}
 	}
 	focus = {# found FERA
 		id = USA_found_fera
@@ -1807,6 +1861,12 @@ focus = {# Review Military Policy
 		id = USA_foreign_policy
 		icon = GFX_goal_generic_intelligence_exchange
 		cost = 0.00
+		available = {
+			OR = {
+				has_country_flag = AMERICAN_CIVIL_WAR 
+				has_country_flag = civil_war_avoided
+			}
+		}		
 		x = 66
 		y = 0
 

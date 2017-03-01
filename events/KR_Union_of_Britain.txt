@@ -1187,6 +1187,7 @@ country_event = {
 	}
 	option = {
 		name = uob.15.b
+		trigger = { IRE = { NOT = { is_in_faction_with = GER is_in_faction_with = CAN is_in_faction_with = USA is_guaranteed_by = GER is_guaranteed_by = CAN is_guaranteed_by = USA is_guaranteed_by = ENG  } } }
 		ai_chance = { factor = 70 }
 		navy_experience = 50
 		IRE = {
@@ -1230,12 +1231,11 @@ country_event = {
 	option = {
 		name = uob.16.a
 		ai_chance = { factor = 40 }
-		hidden_effect = {
-			ENG = {
-				create_wargoal = { type = annex_everything target = IRE }
+		set_global_flag = ENG_IRE_alone
+		ENG = {
+			news_event = { id = uob.73 days = 1 }
 			}
 		}
-	}
 	option = {
 		name = uob.16.b
 		ai_chance = { factor = 40 }
@@ -1275,10 +1275,11 @@ country_event = {
 	option = {
 		name = uob.17.a
 		ai_chance = { factor = 40 }
+		add_political_power = 50
+		set_global_flag = ENG_CANIRE_protection
 		hidden_effect = {
 			ENG = {
 				news_event = { id = uob.18 days = 3 }
-				set_country_flag = ENG_CAN_protection
 				add_political_power = -50
 			}
 			IRE = {
@@ -1289,10 +1290,11 @@ country_event = {
 	option = {
 		name = uob.17.b
 		ai_chance = { factor = 40 }
+		add_political_power = 25
 		hidden_effect = {
+		set_global_flag = ENG_CANIRE_support
 			ENG = {
 				news_event = { id = uob.19 days = 3 }
-				set_country_flag = ENG_CAN_support
 				add_political_power = -25
 			}
 			IRE = {
@@ -1303,10 +1305,11 @@ country_event = {
 	option = {
 		name = uob.17.c
 		ai_chance = { factor = 20 }
+	    add_political_power = -25
 		hidden_effect = {
+		set_global_flag = ENG_IRE_alone
 			ENG = {
 				news_event = { id = uob.20 days = 3 }
-				set_country_flag = ENG_alone
 				add_political_power = 50
 			}
 			IRE = {
@@ -1401,13 +1404,14 @@ country_event = {
 	option = {
 		name = uob.21.a
 		ai_chance = { factor = 50 }
+		add_political_power = 50
 		hidden_effect = {
+		set_global_flag = ENG_GERIRE_protection
 			IRE = {
 				news_event = { id = uob.22 days = 3 }
 			}
 			ENG = {
 				news_event = { id = uob.22 days = 3 }
-				set_country_flag = ENG_GER_protection
 				add_political_power = -50
 			}
 		}
@@ -1415,10 +1419,11 @@ country_event = {
 	option = {
 		name = uob.21.b
 		ai_chance = { factor = 40 }
+		add_political_power = 25
 		hidden_effect = {
+		set_global_flag = ENG_GERIRE_support
 			ENG = {
 				news_event = { id = uob.23 days = 3 }
-				set_country_flag = ENG_GER_support
 				add_political_power = -25
 			}
 			IRE = {
@@ -1429,11 +1434,12 @@ country_event = {
 	option = {
 		name = uob.21.c
 		ai_chance = { factor = 10 }
+		add_political_power = -25
 		hidden_effect = {
+		set_global_flag = ENG_IRE_alone
 			ENG = {
 				news_event = { id = uob.24 days = 3 }
 				add_political_power = 50
-				set_country_flag = ENG_alone
 			}
 			IRE = {
 				news_event = { id = uob.24 days = 3 }
@@ -1701,8 +1707,8 @@ country_event = {
 	
 	trigger = {
 		tag = CAN
+		has_global_flag = ENG_CANIRE_protection
 		ENG = {
-			has_country_flag = ENG_CAN_protection
 			has_offensive_war_with = IRE
 		}
 	}
@@ -1719,7 +1725,6 @@ country_event = {
 		}
 		add_political_power = 50
 		hidden_effect = {
-			clr_country_flag = ENG_CAN_protection
 			news_event = { id = uob.34 days = 3 }
 		}
 	}
@@ -1728,7 +1733,7 @@ country_event = {
 		ai_chance = { factor = 20 }
 		add_political_power = -50
 		hidden_effect = {
-			clr_country_flag = ENG_CAN_protection
+			clr_global_flag = ENG_CANIRE_protection
 			news_event = { id = uob.35 days = 3 }
 		}
 	}
@@ -1863,8 +1868,8 @@ country_event = {
 	
 	trigger = {
 		tag = GER
+		has_global_flag = ENG_GERIRE_protection
 		ENG = {
-			has_country_flag = ENG_GER_protection
 			has_offensive_war_with = IRE
 		}
 	}
@@ -1881,7 +1886,6 @@ country_event = {
 		}
 		add_political_power = 50
 		hidden_effect = {
-			clr_country_flag = ENG_GER_protection
 			news_event = { id = uob.40 days = 3 }
 		}
 	}
@@ -1890,7 +1894,7 @@ country_event = {
 		ai_chance = { factor = 20 }
 		add_political_power = -50
 		hidden_effect = {
-			clr_country_flag = ENG_GER_protection
+			clr_global_flag = ENG_GERIRE_protection
 			news_event = { id = uob.42 days = 3 }
 		}
 	}
@@ -2023,8 +2027,8 @@ country_event = {
 	
 	trigger = {
 		tag = CAN
+		has_global_flag = ENG_CANIRE_support
 		ENG = {
-			has_country_flag = ENG_CAN_support
 			has_offensive_war_with = IRE
 		}
 	}
@@ -2041,7 +2045,6 @@ country_event = {
 		}
 		add_political_power = -100
 		hidden_effect = {
-			clr_country_flag = ENG_CAN_support
 			news_event = { id = uob.34 days = 3 }
 		}
 	}
@@ -2050,7 +2053,7 @@ country_event = {
 		ai_chance = { factor = 50 }
 		add_political_power = -50
 		hidden_effect = {
-			clr_country_flag = ENG_CAN_support
+			clr_global_flag = ENG_CANIRE_support
 			news_event = { id = uob.35 days = 3 }
 		}
 	}
@@ -2066,8 +2069,8 @@ country_event = {
 	
 	trigger = {
 		tag = GER
+		has_global_flag = ENG_GERIRE_support
 		ENG = {
-			has_country_flag = ENG_GER_support
 			has_offensive_war_with = IRE
 		}
 	}
@@ -2078,22 +2081,21 @@ country_event = {
 	
 	option = {
 		name = uob.44.a
-		ai_chance = { factor = 50 }
+		ai_chance = { factor = 65 }
 		ENG = {
 			country_event = { id = uob.38 days = 3 }
 		}
-		add_political_power = -100
+		add_political_power = -50
 		hidden_effect = {
-			clr_country_flag = ENG_GER_support
 			news_event = { id = uob.40 days = 3 }
 		}
 	}
 	option = {
 		name = uob.44.b
-		ai_chance = { factor = 50 }
+		ai_chance = { factor = 35 }
 		add_political_power = -50
 		hidden_effect = {
-			clr_country_flag = ENG_GER_support
+			clr_global_flag = ENG_GERIRE_support
 			news_event = { id = uob.42 days = 3 }
 		}
 	}
@@ -2136,14 +2138,15 @@ country_event = {
 	
 	trigger = {
 		tag = CAN
-		ENG = {
 			OR = {
-				has_country_flag = ENG_CAN_protection
-				has_country_flag = ENG_CAN_support
+				has_global_flag = ENG_CANIRE_protection
+				has_global_flag = ENG_CANIRE_support
 			}
+			ENG = {
 			OR = {
 				has_country_flag = ENG_IRE_annex
 				has_country_flag = ENG_IRE_bases
+				has_country_flag = ENG_IRE_influence
 			}
 		}
 	}
@@ -2154,30 +2157,25 @@ country_event = {
 	
 	option = {
 		name = uob.46.a
+		ai_chance = { factor = 100 }
 		ENG = {
 			country_event = { id = uob.47 days = 3 }
 		}
 		add_political_power = 50
-		hidden_effect = {
-			ENG = {
-				clr_country_flag = ENG_CAN_protection
-				clr_country_flag = ENG_CAN_support
-			}
-			news_event = { id = uob.49 days = 3 }
+		news_event = { id = uob.49 days = 3 }
 		}
-	}
 	option = {
 		name = uob.46.b
+		ai_chance = { factor = 0 }
 		add_political_power = -50
+		set_global_flag = ENG_IRE_alone
 		hidden_effect = {
-			ENG = {
-				clr_country_flag = ENG_CAN_protection
-				clr_country_flag = ENG_CAN_support
+			clr_global_flag = ENG_CANIRE_protection
+			clr_global_flag = ENG_CANIRE_support
 			}
-			news_event = { id = uob.50 days = 3 }
+			news_event = { id = uob.51 days = 3 }
 		}
-	}
-}
+		}
 
 # British reaction
 
@@ -2191,6 +2189,7 @@ country_event = {
 	
 	option = {
 		name = uob.47.aa
+		ai_chance = { factor = 25 }
 		hidden_effect = {
 			news_event = { id = uob.50 days = 3 }
 		}
@@ -2198,6 +2197,7 @@ country_event = {
 	
 	option = {
 		name = uob.47.ab
+		ai_chance = { factor = 45 }
 		hidden_effect = {
 			news_event = { id = uobflavour.33 days = 3 } # Dinner party with a twist
 		}
@@ -2205,6 +2205,7 @@ country_event = {
 	
 	option = {
 		name = uob.47.ac
+		ai_chance = { factor = 20 }
 		add_political_power = -50
 		hidden_effect = {
 			CAN = {
@@ -2215,6 +2216,7 @@ country_event = {
 	
 	option = {
 		name = uob.47.ad
+		ai_chance = { factor = 10 }
 		add_political_power = -50
 		create_wargoal = { type = annex_everything target = IRE }
 	}
@@ -2232,18 +2234,23 @@ country_event = {
 	
 	option = {
 		name = uob.48.a
+	    ai_chance = { factor = 95 }
 		add_to_faction = IRE
-		add_political_power = -50
+		add_political_power = 25
 		news_event = { id = uob.52 days = 3 }
 	}
 	option = {
 		name = uob.48.b
+		ai_chance = { factor = 5 }
 		news_event = { id = uob.51 days = 3 }
-		ENG = {
-			set_country_flag = ENG_alone
+		add_political_power = -50
+		set_global_flag = ENG_IRE_alone
+		hidden_effect = {
+			clr_global_flag = ENG_CANIRE_protection
+			clr_global_flag = ENG_CANIRE_support
+			}
 		}
 	}
-}
 
 # News - Canadian Ultimatum
 
@@ -2341,14 +2348,15 @@ country_event = {
 	
 	trigger = {
 		tag = GER
-		ENG = {
 			OR = {
-				has_country_flag = ENG_GER_protection
-				has_country_flag = ENG_GER_support
+				has_global_flag = ENG_GERIRE_protection
+				has_global_flag = ENG_GERIRE_support
 			}
+		ENG = {
 			OR = {
 				has_country_flag = ENG_IRE_annex
 				has_country_flag = ENG_IRE_bases
+				has_country_flag = ENG_IRE_influence
 			}
 		}
 	}
@@ -2359,30 +2367,25 @@ country_event = {
 	
 	option = {
 		name = uob.53.a
+	    ai_chance = { factor = 100 }
 		ENG = {
 			country_event = { id = uob.54 days = 3 }
 		}
 		add_political_power = 50
-		hidden_effect = {
-			ENG = {
-				clr_country_flag = ENG_GER_protection
-				clr_country_flag = ENG_GER_support
-			}
-			news_event = { id = uob.56 days = 3 }
+		news_event = { id = uob.56 days = 3 }
 		}
-	}
 	option = {
 		name = uob.53.b
+	    ai_chance = { factor = 0 }
 		add_political_power = -50
+		set_global_flag = ENG_IRE_alone
 		hidden_effect = {
-			ENG = {
-				clr_country_flag = ENG_GER_protection
-				clr_country_flag = ENG_GER_support
+		clr_global_flag = ENG_GERIRE_protection
+		clr_global_flag = ENG_GERIRE_support
 			}
-			news_event = { id = uob.57 days = 3 }
+		news_event = { id = uob.58 days = 3 }
 		}
-	}
-}
+		}
 
 # British reaction
 
@@ -2396,6 +2399,7 @@ country_event = {
 	
 	option = {
 		name = uob.54.aa
+		ai_chance = { factor = 25 }
 		hidden_effect = {
 			news_event = { id = uob.57 days = 1 }
 		}
@@ -2404,13 +2408,15 @@ country_event = {
 	
 	option = {
 		name = uob.54.ab
+	    ai_chance = { factor = 45 }
 		hidden_effect = {
-			news_event = { id = uob.34 days = 1 }
+			news_event = { id = uobflavour.34 days = 1 }
 		}
 	}
 	
 	option = {
 		name = uob.54.ac
+		ai_chance = { factor = 20 }
 		add_political_power = -50
 		hidden_effect = {
 			GER = {
@@ -2421,6 +2427,7 @@ country_event = {
 	
 	option = {
 		name = uob.54.ad
+		ai_chance = { factor = 10 }
 		add_political_power = -50
 		create_wargoal = { type = annex_everything target = IRE }
 	}
@@ -2438,18 +2445,23 @@ country_event = {
 	
 	option = {
 		name = uob.55.a
+		ai_chance = { factor = 95 }
 		add_to_faction = IRE
-		add_political_power = -50
+		add_political_power = 25
 		news_event = { id = uob.59 days = 3 }
 	}
 	option = {
 		name = uob.55.b
+	    ai_chance = { factor = 5 }
 		news_event = { id = uob.58 days = 3 }
-		ENG = {
-			set_country_flag = ENG_alone
+		add_political_power = -50
+		set_global_flag = ENG_IRE_alone
+		hidden_effect = {
+			clr_global_flag = ENG_GERIRE_protection
+			clr_global_flag = ENG_GERIRE_support
+			}
 		}
 	}
-}
 
 # News - German Ultimatum
 
@@ -2549,19 +2561,19 @@ country_event = {
 	
 	option = {
 		name = uob.60.a
-		ai_chance = { factor = 35 }
+		ai_chance = { factor = 10 }
 		set_country_flag = ENG_IRE_annex
 	}
 	
 	option = {
 		name = uob.60.b
-		ai_chance = { factor = 45 }
+		ai_chance = { factor = 65 }
 		set_country_flag = ENG_IRE_bases
 	}
 	
 	option = {
 		name = uob.60.c
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 25 }
 		set_country_flag = ENG_IRE_influence
 	}
 }
@@ -2577,7 +2589,7 @@ country_event = {
 	trigger = {
 		tag = ENG
 		has_country_flag = ENG_IRE_annex
-		has_country_flag = ENG_alone
+		has_global_flag = ENG_IRE_alone
 	}
 	
 	mean_time_to_happen = { days = 7 }
@@ -2586,9 +2598,10 @@ country_event = {
 	
 	option = {
 		name = uob.61.a
-		annex_country = { target = IRE }
-		add_political_power = 100
+		IRE = {
+		country_event = { id = uob.64 days = 1 }
 	}
+}
 }
 
 country_event = {
@@ -2600,7 +2613,7 @@ country_event = {
 	trigger = {
 		tag = ENG
 		has_country_flag = ENG_IRE_bases
-		has_country_flag = ENG_alone
+		has_global_flag = ENG_IRE_alone
 	}
 	
 	mean_time_to_happen = { days = 7 }
@@ -2609,9 +2622,10 @@ country_event = {
 	
 	option = {
 		name = uob.62.a
-		puppet = IRE
-		add_political_power = 50
+		IRE = {
+		country_event = { id = uob.65 days = 1 }
 	}
+}
 }
 
 country_event = {
@@ -2623,7 +2637,7 @@ country_event = {
 	trigger = {
 		tag = ENG
 		has_country_flag = ENG_IRE_influnce
-		has_country_flag = ENG_alone
+		has_global_flag = ENG_IRE_alone
 	}
 	
 	mean_time_to_happen = { days = 7 }
@@ -2633,13 +2647,10 @@ country_event = {
 	option = {
 		name = uob.63.a
 		IRE = {
-			add_ideas = ENG_political_pressure_idea
-		}
-		add_political_power = 50
+		country_event = { id = uob.66 days = 1 }
 	}
 }
-
-# Diplomacy or Military?
+}
 
 country_event = {
 	id = uob.64
@@ -2647,55 +2658,214 @@ country_event = {
 	desc = uob.64.d
 	picture = GFX_report_event_usa_heavy_cruiser
 	
-	trigger = {
-		tag = ENG
-		OR = {
-			has_country_flag = ENG_CAN_protection
-			has_country_flag = ENG_CAN_support
-			has_country_flag = ENG_GER_protection
-			has_country_flag = ENG_GER_support
-			has_country_flag = ENG_alone
-		}
-	}
-	
-	mean_time_to_happen = { days = 7 }
-	
-	fire_only_once = yes
+	is_triggered_only = yes
 	
 	option = {
 		name = uob.64.a
-		ai_chance = { factor = 50 }
-		create_wargoal = { type = annex_everything target = IRE }
-	}
+		ai_chance = { factor = 5 }
+		IRE = {
+		country_event = { id = uob.67 days = 1 }
+		}
+    }
 	
 	option = {
-		name = uob.64.b
-		ai_chance = { factor = 50 }
-		country_event = { id = uob.60 days = 3 }
+	name = uob.64.b
+		ai_chance = { factor = 95 }
+		add_political_power = 50
 		IRE = {
-			news_event = { id = uob.45 days = 14 }
-		}
-		CAN = {
-			news_event = { id = uob.45 days = 14 }
-		}
-		GER = {
-			news_event = { id = uob.45 days = 14 }
-		}
+		country_event = { id = uob.68 days = 1 }
+				}
 	}
-}
+	}
 
-# Britain has joined the Third International!
-
-news_event = {
+country_event = {
 	id = uob.65
 	title = uob.65.t
 	desc = uob.65.d
-	picture = GFX_news_event_020
+	picture = GFX_report_event_usa_heavy_cruiser
 	
 	is_triggered_only = yes
 	
 	option = {
 		name = uob.65.a
+		ai_chance = { factor = 35 }
+		IRE = {
+		country_event = { id = uob.69 days = 1 }
+		}
+    }
+	
+	option = {
+	name = uob.65.b
+		ai_chance = { factor = 65 }
+		add_political_power = 30
+		IRE = {
+		country_event = { id = uob.70 days = 1 }
+				}
+	}
+	}
+
+country_event = {
+	id = uob.66
+	title = uob.66.t
+	desc = uob.66.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.66.a
+		ai_chance = { factor = 70 }
+		IRE = {
+		country_event = { id = uob.71 days = 1 }
+		}
+    }
+	
+	option = {
+	name = uob.66.b
+		ai_chance = { factor = 30 }
+		add_political_power = 15
+		IRE = {
+		country_event = { id = uob.72 days = 1 }
+				}
+	}
+	}
+	
+	country_event = {
+	id = uob.67
+	title = uob.67.t
+	desc = uob.67.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.67.a
+		annex_country = { target = IRE }
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	id = uob.68
+	title = uob.68.t
+	desc = uob.68.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.68.a
+		ai_chance = { factor = 100 }
+		create_wargoal = { type = annex_everything target = IRE }
+		}
+	
+	option = {
+	name = uob.68.b
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+				}
+				}
+	
+	country_event = {
+	id = uob.69
+	title = uob.69.t
+	desc = uob.69.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.69.a
+		puppet = IRE
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	id = uob.70
+	title = uob.70.t
+	desc = uob.70.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.70.a
+		ai_chance = { factor = 100 }
+		create_wargoal = { type = puppet target = IRE }
+		}
+	
+	option = {
+	name = uob.70.b
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+				}
+				}
+	
+	
+	country_event = {
+	id = uob.71
+	title = uob.71.t
+	desc = uob.71.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.71.a
+		IRE = {
+			add_ideas = ENG_political_pressure_idea
+		}
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	id = uob.72
+	title = uob.72.t
+	desc = uob.72.d
+	picture = GFX_report_event_usa_heavy_cruiser
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.72.a
+		ai_chance = { factor = 100 }
+		create_wargoal = { type = puppet target = IRE }
+		}
+	
+	option = {
+	name = uob.72.b
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+				}
+    }
+	
+	news_event = {
+	id = uob.73
+	title = uob.73.t
+	desc = uob.73.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.73.a
+		}
+	}
+
+# Britain has joined the Third International!
+
+news_event = {
+	id = uob.75
+	title = uob.75.t
+	desc = uob.75.d
+	picture = GFX_news_event_020
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = uob.75.a
 	}
 }
 

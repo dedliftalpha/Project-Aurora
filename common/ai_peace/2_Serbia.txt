@@ -1,0 +1,123 @@
+#Redone by Dskod1, now with even more duct tape
+#This is specific goals for countries who are in a faction and not the faction leader. The country will only take what it wants and will leave the rest. Faction leaders will leave allied wanted territory alone. Faction leader always annex whatever is left over.
+#This is to only be used for 
+
+default_peace = {
+	enable = {
+		tag = SER
+		is_in_faction = yes		
+	}
+
+	annex_randomness = 0 #350
+	liberate_randomness = 0 #100
+	puppet_randomness = 0 #200
+	take_states_randomness = 0 #150
+	force_government_randomness = 0 #50
+	
+	# ROOT = Taker, FROM = Giver
+	annex = {
+		factor = 1000
+	}
+
+	# ROOT = Taker, FROM = Liberated
+	liberate = {
+		factor = 0 #100
+	}
+
+	# ROOT = Taker, FROM = Giver
+	puppet = {
+		factor = 0 #200
+
+	}
+
+	# ROOT = Taker, FROM = State
+	take_states = {
+		factor = 600
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#In faction with greece
+			is_in_faction_with = GRE
+			FROM = { #State is not a Claim
+				NOT = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			FROM = { #State is not a core
+				NOT = { 
+					is_core_of = ROOT 
+				} 
+			}
+			FROM = { #State is in either the Greece Region or the Eastern Mediterreanean Region
+				OR = {
+					region = 25 
+					region = 69
+				}			
+			}
+		}
+		####Belgrade Pact####
+		##Belgrade Pact vs Ottomans vs Axis##
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#In faction with serbia as leader or Serbia and faction leader
+			is_faction_leader = yes
+			}
+			OR = {# one of the Axis members are in a peace conference alongside the belgrade pact
+				PER = {
+					is_in_peace_conference = yes
+				}
+				EGY = {
+					is_in_peace_conference = yes
+				}
+				SAU = {
+					is_in_peace_conference = yes
+				}
+			
+			}
+			FROM = { #State is not a Claim
+				NOT = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			FROM = { #State is not a core
+				NOT = { 
+					is_core_of = ROOT 
+				} 
+			}
+			FROM = { #State not apart of Middle East
+				NOT = { is_on_continent = middle_east } 
+			} 
+			FROM = { #State not apart of Africa
+				NOT = { is_on_continent = africa } 
+			} 
+
+		}
+		####Serbia####
+		##Serbia Restriction##
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			#Serbia is in faction and is not the faction leader
+			is_faction_leader = no
+			FROM = { #State is not a Claim
+				NOT = { 
+					is_claimed_by = ROOT 
+				} 
+			}
+			FROM = { #State is not a core
+				NOT = { 
+					is_core_of = ROOT 
+				} 
+			}
+			FROM = { #State not apart of eastern balkans
+				NOT = { region = 24 } 
+			} 
+			FROM = { #State not apart of the western balkans
+				NOT = { region = 26 } 
+			} 
+
+		}
+	}
+	# ROOT = Taker, FROM = Giver
+	force_government = {
+		factor = 0 #10 - neutrals should never do this
+	}
+}

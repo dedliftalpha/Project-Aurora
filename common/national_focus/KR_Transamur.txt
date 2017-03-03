@@ -12,13 +12,29 @@ focus_tree = {
 	
 	default = no
 
-###Vladivostok Navy###
+###Navy###
 
 focus = {
-		id = TRM_Navy_Start
+	id = TRM_Navy_Start
+	icon = GFX_goal_generic_navy_doctrines_tactics
+	x = 8
+	y = 1
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		navy_experience = 25
+	}
+}
+
+focus = {
+		id = TRM_Navy_Vlad
 		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = {focus = TRM_Navy_Start}
+		available = {owns_state = 408 controls_state = 408}
 		x = 3
-		y = 1
+		y = 2
 		cost = 10
 		ai_will_do = {
 			factor = 100
@@ -53,18 +69,19 @@ focus = {
 	}
 
 focus = {
-	id = TRM_Navy_Fen
+	id = TRM_Navy_Fng
 	icon = GFX_goal_generic_construct_infrastructure
 	x = 5
-	y = 2
+	y = 3
 	cost = 10
-	prerequisite = {focus = TRM_Navy_Start}
+	prerequisite = {focus = TRM_Navy_Vlad}
 	available = {is_puppet_of = JAP}
+	available = {FNG = exists}
 	ai_will_do = {
 		factor = 100
 	}
 	completion_reward = {
-		add_natonal_unity = -0.02
+		add_national_unity = -0.02
 		408 = { 
 			add_building_construction = {
 				type = infrastructure
@@ -79,9 +96,9 @@ focus = {
 	id = TRM_Navy_Jap
 	icon = GFX_goal_generic_scientific_exchange
 	x = 1
-	y = 2
+	y = 3
 	cost = 10
-	prerequisite = {focus = TRM_Navy_Start}
+	prerequisite = {focus = TRM_Navy_Vlad}
 	available = {is_puppet_of = JAP}
 	ai_will_do = {
 		factor = 100
@@ -91,3 +108,225 @@ focus = {
 	}
 }
 
+focus = {
+	id = TRM_Navy_Doc
+	icon = GFX_goal_generic_navy_doctrines_tactics
+	x = 3
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Vlad}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = naval_doctrine_bonus
+			bonus = 0.5
+			uses = 2
+	            	category = naval_doctrine
+		}
+	}
+}
+
+focus = {
+	id = TRM_Navy_Ships
+	icon = GFX_goal_generic_navy_battleship
+	mutually_exclusive = { focus = TRM_Navy_Docks }
+	x = 2
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Doc}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		TRM = {country_event = {id = tram.100 days = 2} }
+	}
+}
+
+focus = {
+	id = TRM_Navy_Docks
+	icon = GFX_focus_generic_coastal_fort
+	x = 4
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Doc}
+	mutually_exclusive = { focus = TRM_Navy_Ships }
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		408 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				
+		}
+	}
+}
+
+focus = {
+		id = TRM_Navy_Petr
+		icon = GFX_goal_generic_construct_naval_dockyard
+		available = {owns_state = 195 controls_state = 195}
+		prerequisite = {focus = TRM_Navy_Start}
+		x = 8
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			195 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3151
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 3151
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+focus = {
+	id = TRM_Navy_Sub
+	icon = GFX_goal_generic_navy_submarine
+	x = 7
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Petr}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = submarine_bonus
+			bonus = 0.5
+			uses = 1
+	            	category = ss_tech
+		}
+	}
+}
+
+focus = {
+	id = TRM_Navy_Carrier
+	icon = GFX_goal_generic_navy_carrier
+	x = 9
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Petr}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = carrier_bonus
+			bonus = 0.5
+			uses = 1
+			category = cv_tech
+		}	
+	}
+}
+
+focus = {
+		id = TRM_Navy_Seva
+		icon = GFX_goal_generic_construct_naval_dockyard
+		available = {owns_state = 137 controls_state = 137}
+		prerequisite = {focus = TRM_Navy_Start}
+		x = 12
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			137 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3686
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 3686
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+focus = {
+	id = TRM_Navy_BS
+	icon = GFX_goal_generic_navy_battleship
+	x = 11
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Seva}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		TRM = {country_event = {id = tram.101 days = 2} }
+	}
+}
+
+focus = {
+	id = TRM_Navy_Straits
+	icon = GFX_goal_generic_more_territorial_claims
+	x = 13
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Seva}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_state_claim = 341
+		add_state_claim = 774
+		add_state_claim = 340
+	}
+}

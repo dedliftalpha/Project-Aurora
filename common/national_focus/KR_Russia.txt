@@ -763,9 +763,10 @@ focus = {
 		cost = 3
 		available = { has_country_flag = RUS_SAVI
 		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
-		NOT = { OR = { has_country_flag = RUS_TSAR_PAV has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_CON_MON has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_TSAR_DMI has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_SOVIET has_country_flag = RUS_vozhd } } }
+		NOT = { OR = { has_country_flag = RUS_TSAR_PAV has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_CON_MON has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_TSAR_DMI has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_SOVIET has_country_flag = RUS_vozhd has_country_flag = RUS_MIL_DICT } } }
 		}
 		prerequisite = { focus = RUS_reinforce_kornilov }
+		mutually_exclusive = { focus = RUS_MIL_DICT }
 		
 		ai_will_do = {
 			factor = 10000
@@ -842,7 +843,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-         add_national_unity = 0.1
+         add_national_unity = 0.15
 		}		
 	}
 	
@@ -851,32 +852,36 @@ focus = {
 		icon = GFX_goal_authoritarian
 		x = 13
 		y = 2
-		cost = 6
-		available = { }
-		
+		cost = 3
+		available = { custom_trigger_tooltip = { tooltip = unlock_milgov has_country_flag = RUS_KORN OR = { has_country_flag = unlock_wrangel has_country_flag = unlock_denikin } }
+		custom_trigger_tooltip = { tooltip = russia_must_wait_unlock has_country_flag = RUS_KORN OR = { has_country_flag = unlock_wrangel has_country_flag = unlock_denikin } }
+		custom_trigger_tooltip = { tooltip = can_only_take_one_path	
+		NOT = { OR = { has_country_flag = RUS_TSAR_PAV has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_CON_MON has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_TSAR_DMI has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_SOVIET has_country_flag = RUS_vozhd has_country_flag = RUS_MIL_DICT  } } }
+		}
 		prerequisite = { focus = RUS_reinforce_kornilov }
-		prerequisite = { focus = RUS_vozhd  }
+		mutually_exclusive = { focus = RUS_vozhd }
 		
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				OR = { has_idea = disaster
-				has_idea = very_low_stability }
-			}
+			factor = 1000
 		}
 
 		completion_reward = {
-		add_political_power = 50
+		custom_effect_tooltip = MIL_DICT_focus_tooltip
+		if = { limit = { has_idea = rus_political_instability } remove_ideas = rus_political_instability }
+		if = { limit = { has_idea = soviet_worker_soldier } remove_ideas = soviet_worker_soldier }
+		add_political_power = -100
+        if = { limit = { has_country_flag = unlock_denikin } add_political_power = -200 }
+		hidden_effect = { set_country_flag = RUS_MIL_DICT
+		country_event = { id = russia.183 } }
 		}		
 	}
 	
 focus = {
 		id = RUS_legacy_whites
-		icon = GFX_focus_generic_strike_at_democracy1
+		icon = GFX_goal_anschluss
 		x = 13
 		y = 5
-		cost = 6
+		cost = 10
 		available = { }
 		prerequisite = { focus = RUS_military_spirit }
 		
@@ -889,20 +894,18 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		 add_ideas = rus_military_spirit_idea
-		 army_experience = 50
+         add_national_unity = 0.1
 		}		
 	}
 	
 focus = {
 		id = RUS_military_spirit
-		icon = GFX_goal_anschluss
+		icon = GFX_focus_generic_strike_at_democracy1
 		x = 13
 		y = 4
-		cost = 6
+		cost = 10
 		available = { }
 		prerequisite = { focus = RUS_anti_bolshevik }
-		prerequisite = { focus = RUS_WRA_POL3 }
 		
 		ai_will_do = {
 			factor = 1
@@ -913,19 +916,19 @@ focus = {
 			}
 		}	
 		completion_reward = {
-        add_national_unity = 0.05
+          add_ideas = rus_military_spirit_idea
+		  army_experience = 50
 		}		
 	}
 	
 focus = {
 		id = RUS_anti_bolshevik
-		icon = GFX_goal_generic_allies_build_infantry
+		icon = GFX_goal_generic_political_pressure
 		x = 13
 		y = 3
-		cost = 6
+		cost = 10
 		available = { }
 		prerequisite = { focus = RUS_MIL_DICT }
-		prerequisite = { focus = RUS_WRA_POL2 }
 		
 		ai_will_do = {
 			factor = 1
@@ -936,6 +939,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
+		 add_political_power = 50
 		 add_ideas = rus_anti_bolshevik_idea
 		}		
 	}

@@ -38,14 +38,19 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = USA_reed_victory_tooltip
 			hidden_effect = {
-				USA = { country_event = { id = ustates.80 days = 120 } }							
-			}			
+			if = {
+				limit = { NOT = { has_country_flag = macarthur_takes_over_september} }
+				USA = { country_event = { id = ustates.500 days = 120 } }							
+				}								
+			}
+			
 		}
 	}
 	focus = {# The Labor-Relations Act
 		id = USA_labor_relations_act
 		icon = GFX_goal_generic_soviet_construction
-		cost = 3
+		cost = 5
+		available = { NOT = { has_country_flag = macarthur_takes_over }}	
 		prerequisite = {
 			focus = USA_president_reed
 		}
@@ -59,10 +64,11 @@ focus_tree = {
 		id = USA_workers_security
 		icon = GFX_goal_syndicalism
 		cost = 3
+		available = { NOT = { has_country_flag = macarthur_takes_over }}		
 		prerequisite = {
 			focus = USA_labor_relations_act
 		}
-		x = -1
+		x = 0
 		y = 3
 		completion_reward = {
 			add_political_power = 50
@@ -72,10 +78,11 @@ focus_tree = {
 		id = USA_resource_nationalization
 		icon = GFX_goal_syndicalist_industry
 		cost = 10.00
+		available = { NOT = { has_country_flag = macarthur_takes_over }}			
 		prerequisite = {
 			focus = USA_workers_security
 		}
-		x = -1
+		x = 0
 		y = 4
 		completion_reward = {
 			country_event = { id = ustates.61 }
@@ -86,7 +93,7 @@ focus_tree = {
 	focus = {# Long is President!
 		id = USA_president_long
 		icon = GFX_focus_generic_strike_at_democracy1
-		cost = 10.00
+		cost = 5.00
 		prerequisite = {
 			focus = USA_1936_election
 		}
@@ -97,14 +104,18 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = USA_long_victory_tooltip
 			hidden_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = macarthur_takes_over_september} }
 				USA = { country_event = { id = ustates.59 days = 120 } } 								
-			}
+				}								
+			}			
 		}
 	}
 	focus = {# Long's Farmer Relief program
 		id = USA_long_farmer_relief
 		icon = GFX_goal_generic_construct_civilian
-		cost = 10.00
+		cost = 5.00
+		available = { NOT = { has_country_flag = macarthur_takes_over }}	
 		prerequisite = {
 			focus = USA_president_long
 		}
@@ -120,7 +131,8 @@ focus_tree = {
 	focus = {# Long's Tarrif
 		id = USA_infastructure_building 
 		icon = GFX_goal_generic_trade
-		cost = 10.00
+		cost = 5.00
+		available = { NOT = { has_country_flag = macarthur_takes_over }}	
 		prerequisite = {
 			focus = USA_long_farmer_relief
 		}
@@ -134,7 +146,8 @@ focus_tree = {
 	focus = {# Coast to Coast Reform
 		id = USA_longs_tarrifs
 		icon = GFX_goal_generic_construct_infrastructure
-		cost = 10.00
+		cost = 5.00
+		available = { NOT = { has_country_flag = macarthur_takes_over }}	
 		prerequisite = {
 			focus = USA_infastructure_building
 		}
@@ -210,8 +223,11 @@ focus_tree = {
 		x = 6
 		y = 3
 		completion_reward = {
-			add_national_unity = 0.05
 			add_political_power = 50
+			add_popularity = { ideology = social_conservative popularity = 0.03 }
+			add_popularity = { ideology = market_liberal popularity = 0.03}
+			add_popularity = { ideology = social_democrat popularity = 0.03 }
+			add_popularity = { ideology = social_liberal popularity = 0.03 }
 		}
 	}
 	focus = {# Defend Democracy
@@ -387,7 +403,9 @@ focus_tree = {
 		}
 		x = 14
 		y = 2
-
+		completion_reward = {
+			add_political_power = 175
+		}
 	}
 	focus = {# FBI COINTELPRO 
 		id = USA_fbi_cointelpro
@@ -398,7 +416,10 @@ focus_tree = {
 		}
 		x = 12
 		y = 3
-
+		completion_reward = {
+			army_experience = 10
+			add_ideas = USA_fbi_secret_police
+		}
 	}	
 	focus = {# Loyalty to MacArthur
 		id = USA_loyalty_to_mac_arthur
@@ -409,7 +430,10 @@ focus_tree = {
 		}
 		x = 14
 		y = 3
-
+		completion_reward = {
+			add_national_unity = 0.05
+			add_political_power = 125
+		}
 	}	
 	focus = {# Army Education
 		id = USA_army_education
@@ -420,7 +444,10 @@ focus_tree = {
 		}
 		x = 16
 		y = 3
-
+		completion_reward = {
+			army_experience = 10
+			add_ideas = macarthur_education_reforms_mil
+		}
 	}
 	focus = {# Purge enemies
 		id = USA_purge_enemies
@@ -437,18 +464,44 @@ focus_tree = {
 		}
 		x = 14
 		y = 4
-
+		completion_reward = {
+			add_political_power = 75
+			add_popularity = {
+				ideology = authoritarian_democrat
+				popularity = 0.15
+			}  		
+			add_popularity = {
+				ideology = paternal_autocrat
+				popularity = -0.10
+			}   
+			add_popularity = {
+				ideology = national_populist
+				popularity = -0.1
+			}   
+			add_popularity = {
+				ideology = social_democrat
+				popularity = -0.1
+			}
+			add_popularity = {
+				ideology = syndicalist
+				popularity = -0.1
+			}			
+		}
 	}
 	focus = {# National Rehabilitation
 		id = USA_national_rehabilitation
 		icon = GFX_goal_generic_demand_territory
 		cost = 10.00
+		available = { has_country_flag = END_ACW }
 		prerequisite = {
 			focus = USA_purge_enemies
 		}
 		x = 14
 		y = 5
-
+		completion_reward = {
+			add_national_unity = 0.05		
+			add_political_power = 125
+		}
 	}	
 	focus = {# American Ceaser
 		id = USA_american_ceaser

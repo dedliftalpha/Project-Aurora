@@ -17982,3 +17982,210 @@ country_event = {#Fate of Bhutan
 	}
 
 }
+
+country_event = { #Irish Annexation of Britain
+    id = annex.131
+    title = annex.131.t
+    desc = annex.131.d
+
+    fire_only_once = yes
+
+    trigger = {
+        tag = IRE
+        controls_state = 126
+        controls_state = 122
+        controls_state = 136
+        ENG = {
+            exists = no
+        }
+        SCT = {
+            exists = no
+        }
+        WAL = {
+            exists = no
+        }
+    }
+    mean_time_to_happen = {
+        days = 15
+    }
+	
+    option = {
+	name = annex.131.a #No land taken
+	ai_chance = {
+    factor = 50
+    }
+    country_event = { id = annex.132 }
+    }
+	
+	option = {
+	name = annex.131.b #Highlands
+	ai_chance = {
+    factor = 30
+    }
+	SCT = {
+    remove_state_core = 120
+    }
+	GBR = {
+	remove_state_core = 120
+	}
+	add_state_claim = 120
+    country_event = { id = annex.132 }
+    }
+	
+    option = {
+	name = annex.131.c #Highlands and Cornwall
+	ai_chance = {
+    factor = 20
+    }
+	SCT = {
+    remove_state_core = 120
+    }
+    GBR = {
+    remove_state_core = 120
+	remove_state_core = 123
+    }
+	ENP = {
+	remove_state_core = 123
+	}
+	add_state_claim = 120
+	add_state_claim = 123
+    country_event = { id = annex.132 }
+    }
+	
+	option = { #canada
+        trigger = {
+            is_in_faction_with = CAN
+        }
+        name = annex.131.e
+        ai_chance = {
+            factor = 500
+        }
+        every_state = {
+            limit = {
+                is_core_of = ENG
+            }
+            CAN = {
+                transfer_state = PREV
+            }
+        }
+    }
+	}
+	
+	country_event = {
+    id = annex.132
+    title = annex.132.t
+    desc = annex.132.d
+
+    is_triggered_only = yes
+
+    option = { #divide all
+        name = annex.132.a
+        ai_chance = {
+            factor = 90
+        }
+		
+        every_country = {
+            limit = {
+                OR = {
+                    tag = IRE
+                    is_in_faction_with = IRE
+                }
+            }
+        }
+        every_state = {
+            limit = {
+                is_controlled_by = PREV
+
+                is_core_of = ENP
+
+            }
+            ENP = {
+                transfer_state = PREV
+            }
+
+        }
+        puppet = ENP
+        every_country = {
+            limit = {
+                OR = {
+                    tag = IRE
+                    is_in_faction_with = IRE
+                }
+            }
+        }
+        every_state = {
+            limit = {
+                is_controlled_by = PREV
+
+                is_core_of = WAL
+
+            }
+            WAL = {
+                transfer_state = PREV
+            }
+
+        }
+        puppet = WAL
+		
+        every_country = {
+            limit = {
+                OR = {
+                    tag = IRE
+                    is_in_faction_with = IRE
+                }
+            }
+        }
+        every_state = {
+            limit = {
+                is_controlled_by = PREV
+
+                is_core_of = SCT
+            }
+            SCT = {
+                transfer_state = PREV
+            }
+
+        }
+        puppet = SCT
+		#event
+    }
+
+    option = { #united britain 
+        name = annex.132.b
+        ai_chance = {
+            factor = 10
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    tag = IRE
+                    is_in_faction_with = IRE
+                }
+            }
+        }
+        every_state = {
+            limit = {
+                is_controlled_by = PREV
+
+                is_core_of = GBR
+
+            }
+            GBR = {
+                transfer_state = PREV
+            }
+
+        }
+        puppet = GBR
+		GBR = {
+		set_cosmetic_tag = GBR_republic }
+	}
+
+    option = { #occupy all 
+        name = annex.132.c
+        ai_chance = {
+            factor = 0
+        }
+    }
+
+}
+

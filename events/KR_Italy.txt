@@ -90,11 +90,13 @@ country_event = {
 		}
 		set_politics = { ruling_party = social_liberal }
 		add_popularity = { ideology = social_liberal popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = army_chief
+			remove_ideas_with_trait = air_chief
+		}
 		add_ideas = ITA_Stephen_X_hog_ade
-		remove_ideas_with_trait = army_chief
 		add_ideas = ITA_Amedeo_Duca_d'Aosta_carm_sli
-		remove_ideas_with_trait = air_chief
 		add_ideas = ITA_Amedeo_Duca_d'Aosta_cair_sli
 	}
 	option = {
@@ -109,11 +111,13 @@ country_event = {
 			ideology = authoritarian_democrat_subtype
 			traits = {}
 		}
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = high_command
+		}
 		add_ideas = ITA_Stephen_X_hog_ade
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_for_ade
-		remove_ideas_with_trait = high_command
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
 		AUS = { add_opinion_modifier = { target = ITA modifier = ITA_likes_govt } }
 	}
@@ -146,7 +150,7 @@ country_event = {
 		}
 		set_politics = { ruling_party = social_conservative }
 		add_popularity = { ideology = social_conservative popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
 		add_ideas = ITA_Giovanni_Gronchi_hog_sco
 	}
 	option = {
@@ -160,7 +164,7 @@ country_event = {
 		}
 		set_politics = { ruling_party = social_liberal }
 		add_popularity = { ideology = social_liberal popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
 		add_ideas = ITA_Bartolomeo_Meuccio_Ruini_hog_sli
 	}
 	option = {
@@ -174,7 +178,7 @@ country_event = {
 		}
 		set_politics = { ruling_party = social_democrat }
 		add_popularity = { ideology = social_democrat popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
 		add_ideas = ITA_Ferruccio_Parri_hog_sde
 	}
 	option = {
@@ -188,98 +192,159 @@ country_event = {
 		}
 		set_politics = { ruling_party = radical_socialist }
 		add_popularity = { ideology = radical_socialist popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
 		add_ideas = ITA_Giuliano_Vassalli_hog_rso
 	}
 }
 
-# Latium controlled by SRI, ITA no longer exists
+# SRI no longer exists, but is not controlled by ITA
 country_event = {
-	id = ita.17
-	title = ita.17.t
-	desc = ita.17.d
+	id = ita.14
+	title = ita.14.t
+	desc = ita.14.d
 	picture = GFX_report_event_worried_french
 	
 	trigger = {
-		tag = SRI
-		2 = { is_controlled_by = SRI }
-		NOT = { country_exists = ITA }}
+		tag = ITA
+		has_idea = Divided_Nation
+		NOT = { country_exists = SRI }
+		OR = {
+			NOT = { owns_state = 742 } #Abruzzo
+			NOT = { owns_state = 117 } #Campania
+			NOT = { owns_state = 837 } #Puglia
+			NOT = { owns_state = 156 } #Calabria
+			NOT = { owns_state = 115 } #Sicilia
+		}
+	}
 		
 	fire_only_once = yes
 	
 	mean_time_to_happen = {
-		days = 120
+		days = 30
 	}
 	option = {
-	name = ita.17.a
-	add_state_core = 764
-    add_state_core = 2
-	add_state_core = 157
-	add_state_core = 162
-	add_state_core = 161
-	add_state_core = 159
-	add_state_core = 160
-	add_state_core = 158
-	add_state_core = 735
-	add_state_core = 762
-	add_state_core = 1
-	add_state_core = 114
-	add_state_core = 838
-	remove_ideas = Divided_Nation
-	
-
-	}
-}
-
-# SRI asked to unite
-country_event = {
-	id = ita.18
-	title = ita.18.t
-	desc = ita.18.d
-	picture = GFX_report_event_finnish_letter
-	
-	is_triggered_only = yes
-		
-	fire_only_once = yes
-	
-	option = {
-	name = ita.18.a
-	ai_chance = { factor = 60 }
-	
-	ITA = { country_event = ita.19 }
-	
-
-	}
-	option = {
-	name = ita.18.b
-	ai_chance = { factor = 0 }
-	
-	ITA = { country_event = ita.20 }
-	
-
+		name = ita.14.a
+			if = {
+				limit = { owns_state = 742 }
+				add_state_core = 742 #Abruzzo
+			}
+			if = {
+				limit = { owns_state = 117 }
+				add_state_core = 117 #Campania
+			}
+			if = {
+				limit = { owns_state = 837 }
+				add_state_core = 837 #Puglia
+			}
+			if = {
+				limit = { owns_state = 156 }
+				add_state_core = 156 #Calabria
+			}
+			if = {
+				limit = { owns_state = 115 }
+				add_state_core = 115 #Sicilia
+			}
+			remove_ideas = Divided_Nation
 	}
 }
 
-# SRI agreed to unite
+# SRI has become democratic and has been asked to re-unite with the north
 country_event = {
-	id = ita.19
-	title = ita.19.t
-	desc = ita.19.d
+	id = ita.15
+	title = ita.15.t
+	desc = ita.15.d
 	picture = GFX_report_event_finnish_letter
 	
 	is_triggered_only = yes
-		
-	fire_only_once = yes
 	
 	option = {
-		name = ita.19.a
-		
-		add_ideas = Rebellious_Nobility 
-		add_political_power = 150
+		name = ita.15.a #Accept, for a new united Italy!
+		ai_chance = {
+			chance = 20
+			modifier = {
+				factor = 4.5
+				FROM = { has_cosmetic_tag = ITA_republic }
+			}
+			modifier = {
+				factor = 2.5
+				has_government = authoritarian_democrat
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+		}
+		if = {
+			limit = { is_ai = no }
+			ITA = {
+				change_tag_from = SRI
+				effect_tooltip = { annex_country = { target = SRI } }
+			}
+		}
+		ITA = { country_event = { id = ita.16 } }
+	}
+	option = {
+		name = ita.15.b #No, we will never be ruled by you!
+		ai_chance = {
+			chance = 80
+			modifier = {
+				factor = 0.5
+				is_in_faction = no
+			}
+			modifier = {
+				factor = 0.1
+				FROM = { has_cosmetic_tag = ITA_republic }
+			}
+			modifier = {
+				factor = 0.6
+				has_government = authoritarian_democrat
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+			modifier = {
+				factor = 0.5
+				has_government = social_democrat
+				FROM = { has_government = social_democrat }
+			}
+			modifier = {
+				factor = 0
+				has_government = social_conservative
+			}
+			modifier = {
+				factor = 0
+				has_government = social_liberal
+				FROM = { has_government = social_liberal }
+			}
+			modifier = {
+				factor = 0
+				has_government = radical_socialist
+				FROM = { has_government = radical_socialist }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+		add_political_power = -60
+		ITA = {
+			add_opinion_modifier = { target = SRI modifier = ITA_outraged }
+			country_event = { id = ita.17 }
+		}
+	}
+}
+
+# Italy informed that SRI has agreed to unite
+country_event = {
+	id = ita.16
+	title = ita.16.t
+	desc = ita.16.d
+	picture = GFX_report_event_finnish_letter
+	
+	is_triggered_only = yes
+	
+	option = {
+		ita.16.a
+		add_political_power = -160
 		annex_country = { target = SRI }
 		add_popularity = {
 			ideology = syndicalist
-			popularity = 0.1
+			popularity = 0.2
 		}
 		add_popularity = {
 			ideology = radical_socialist
@@ -289,30 +354,33 @@ country_event = {
 			ideology = totalist
 			popularity = 0.05
 		}
-		add_state_core = 742 #Abruzzo
-		add_state_core = 117 #Campania
-		add_state_core = 837 #Puglia
-		add_state_core = 156 #Calabria
-		add_state_core = 115 #Sicilia
 	}
 }
 
-# SRI refuses to unite
+# Italy informed that SRI has refused to unite
 country_event = {
-	id = ita.20
-	title = ita.20.t
-	desc = ita.20.d
-	picture = GFX_report_event_finnish_letter
+	id = ita.17
+	title = ita.17.t
+	desc = ita.17.d
+	picture = GFX_report_event_worried_french
 	
 	is_triggered_only = yes
-		
-	fire_only_once = yes
 	
 	option = {
-	name = ita.20.a
-	add_political_power = -50
-	
-
+		name = ita.17a
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+	option = {
+		name = ita.17b
+		ai_chance = { factor = 100 }
+		if = {
+			limit = { NOT = { has_annex_war_goal = SRI } }
+			create_wargoal = {
+				type = annex_everything
+				target = SRI
+			}
+		}
 	}
 }
 
@@ -823,7 +891,7 @@ country_event = {
 		}
 		if = {
 			limit = { has_idea = ITA_Conte_Stefano_Jacini_hog_sco }
-			remove_ideas = ITA_Conte_Stefano_Jacini_hog_sco
+			hidden_effect = { remove_ideas = ITA_Conte_Stefano_Jacini_hog_sco }
 			add_ideas = ITA_Don_Luigi_Sturzo_hog_sco
 		}
 		hidden_effect = {
@@ -912,15 +980,17 @@ country_event = {
 		}
 		set_politics = { ruling_party = national_populist }
 		add_popularity = { ideology = national_populist popularity = 0.1 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Julius_IV_hog_npo
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Pedro_Cardinal_Segura_y_Saenz_for_npo
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Mother_Pasqualina_Lehnert_eco_ade
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Elias_I_di_Borbone_Parma_sec_npo
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Giovanni_Cardinal_Montini_int_ade
 		set_country_flag = Josef_von_Oesterreich_Toskana_dead
 		FROM = { country_event = { id = ita.43 } }
@@ -945,17 +1015,19 @@ country_event = {
 			limit = { NOT = { has_government = authoritarian_democrat } }
 			set_politics = { ruling_party = authoritarian_democrat }
 		}
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Stephen_X_hog_ade
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_for_ade
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Alberto_Pariani_eco_pau
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Donato_Cardinal_Sbarretti_sec_pau
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Cesare_Ame_int_ade
-		remove_ideas_with_trait = high_command
+		hidden_effect = { remove_ideas_with_trait = high_command }
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
 		FROM = { country_event = { id = ita.46 } }
 	}
@@ -978,17 +1050,19 @@ country_event = {
 			limit = { NOT = { has_government = authoritarian_democrat } }
 			set_politics = { ruling_party = authoritarian_democrat }
 		}
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Julius_IV_hog_npo
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Pietro_Duca_d'Acquarone_for_ade
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Giovanni_Cardinal_Montini_eco_ade
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Elia_Cardinal_dalla_Costa_sec_pau
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Enzo_Galbiati_int_pau
-		remove_ideas_with_trait = high_command
+		hidden_effect = { remove_ideas_with_trait = high_command }
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
 		FROM = { country_event = { id = ita.47 } }
 	}
@@ -1097,35 +1171,7 @@ country_event = {
 	
 	option = {
 		name = ita.46.a #Hurrah!
-		ai_chance = {
-			factor = 90
-		}
 		puppet = FROM
-	}
-	option = {
-		name = ita.46.b #Great news, in exchange we will return Venetia!
-		trigger = {
-			owns_state = 759
-			owns_state = 736
-			owns_state = 795
-		}
-		ai_chance = {
-			factor = 10
-		}
-		add_political_power = 40
-		puppet = FROM
-		FROM = {
-			add_opinion_modifier = { target = ROOT modifier = ITA_returned_venetia }
-			add_state_core = 759
-			add_state_core = 736
-			add_state_core = 795
-			transfer_state = 759
-			transfer_state = 736
-			transfer_state = 795
-		}
-		remove_state_core = 759
-		remove_state_core = 736
-		remove_state_core = 795
 	}
 }
 
@@ -1241,17 +1287,19 @@ country_event = {
 		}
 		set_politics = { ruling_party = national_populist }
 		add_popularity = { ideology = national_populist popularity = 0.1 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Julius_IV_hog_npo
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Pedro_Cardinal_Segura_y_Saenz_for_npo
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Mother_Pasqualina_Lehnert_eco_ade
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Elias_I_di_Borbone_Parma_sec_npo
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Giovanni_Cardinal_Montini_int_ade
-		remove_ideas_with_trait = high_command
+		hidden_effect = { remove_ideas_with_trait = high_command }
 		add_ideas = ITA_Francesco_Grazioli_mhc_pau
 		set_country_flag = Josef_von_Oesterreich_Toskana_dead
 		FROM = { country_event = { id = ita.43 } }
@@ -1271,17 +1319,19 @@ country_event = {
 			ideology = authoritarian_democrat_subtype
 			traits = {}
 		}
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Stephen_X_hog_ade
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_for_ade
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Alberto_Pariani_eco_pau
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Donato_Cardinal_Sbarretti_sec_pau
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Cesare_Ame_int_ade
-		remove_ideas_with_trait = high_command
+		hidden_effect = { remove_ideas_with_trait = high_command }
 		add_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
 		FROM = { country_event = { id = ita.46 } }
 	}
@@ -1314,15 +1364,17 @@ country_event = {
 		}
 		set_politics = { ruling_party = paternal_autocrat }
 		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Luigi_Cardinal_Maglione_hog_ade
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Luigi_Cardinal_Maglione_for_ade
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Lorenzo_Cardinal_Lauri_eco_ade
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Francesco_Cardinal_Marchetti_Selvaggiani_sec_ade
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Domenico_Cardinal_Tardini_int_pau
 		hidden_effect = {
 			SRI = { country_event = { id = ita.56 days = 20 } }
@@ -1347,15 +1399,17 @@ country_event = {
 			set_politics = { ruling_party = authoritarian_democrat }
 		}
 		add_popularity = { ideology = authoritarian_democrat popularity = 0.2 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Stephen_X_hog_ade
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Eugene_Cardinal_Tisserant_for_ade
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Eugenio_Cardinal_Pacelli_eco_pau
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Elia_Cardinal_dalla_Costa_sec_pau
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Enzo_Galbiati_int_pau
 		hidden_effect = {
 			SRI = { country_event = { id = ita.56 days = 20 } }
@@ -1376,15 +1430,17 @@ country_event = {
 		}
 		set_politics = { ruling_party = social_democrat }
 		add_popularity = { ideology = social_democrat popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Eugene_Cardinal_Tisserant_hog_sde
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Ivanoe_Bonomi_for_sli
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Luigi_Einaudi_eco_sli
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Ferruccio_Parri_sec_sde
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Angelo_Giuseppe_Cardinal_Roncalli_int_sde
 		AUS = { add_opinion_modifier = { target = ITA modifier = ITA_hates_govt } }
 		HUN = { add_opinion_modifier = { target = ITA modifier = ITA_hates_govt } }
@@ -1408,15 +1464,17 @@ country_event = {
 		}
 		set_politics = { ruling_party = national_populist }
 		add_popularity = { ideology = national_populist popularity = 0.3 }
-		remove_ideas_with_trait = head_of_government
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			remove_ideas_with_trait = intel_minister
+		}
 		add_ideas = ITA_Julius_IV_hog_npo
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = ITA_Pedro_Cardinal_Segura_y_Saenz_for_npo
-		remove_ideas_with_trait = economy_minister
 		add_ideas = ITA_Mother_Pasqualina_Lehnert_eco_ade
-		remove_ideas_with_trait = security_minister
 		add_ideas = ITA_Elias_I_di_Borbone_Parma_sec_npo
-		remove_ideas_with_trait = intel_minister
 		add_ideas = ITA_Giovanni_Cardinal_Montini_int_ade
 		GER = { add_opinion_modifier = { target = ITA modifier = ITA_dislikes_govt } }
 		CRO = { add_opinion_modifier = { target = ITA modifier = ITA_likes_govt } }

@@ -601,10 +601,8 @@ focus_tree = {
 		id = ITA_Black_Monday_Recovery
 		icon = GFX_goal_continuous_increase_nu
 		cost = 10.00
-		prerequisite = {
-			focus = ITA_Construction_Effort_II
-			focus = ITA_Armament_Effort_II
-		}
+		prerequisite = { focus = ITA_Construction_Effort_II }
+		prerequisite = { focus = ITA_Armament_Effort_II }
 		available = { has_idea = ITA_black_monday_1 }
 		x = 2
 		y = 5
@@ -663,7 +661,10 @@ focus_tree = {
 	focus = {
 		id = ITA_Initiate_Risoregimento
 		icon = GFX_goal_generic_alliance
-		available = { is_subject = no }
+		available = {
+			is_subject = no
+			NOT = { has_annex_war_goal = SRI }
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -725,12 +726,28 @@ focus_tree = {
 		icon = GFX_goal_generic_improve_relations
 		available = {
 			country_exists = SRI
-			SRI = { has_war = no }
 			has_war = no
 			is_subject = no
-			custom_trigger_tooltip = {
-				tooltip = ITA_is_republic
-				has_cosmetic_tag = ITA_republic
+			SRI = {
+				has_war = no
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = RSI_is_democratic
+						NOT = {
+							has_government = syndicalist
+							has_government = totalist
+							has_government = radical_socialist
+						}
+					}
+					AND = {
+						has_government = radical_socialist
+						ITA = { has_government = radical_socialist }
+					}
+				}
+				OR = {
+					is_subject = no
+					is_subject_of = ITA
+				}
 			}	
 		}
 		x = 14
@@ -738,40 +755,32 @@ focus_tree = {
 		cost = 10.00
 		
 		ai_will_do = {
-			factor = 1
+			factor = 10
 			modifier = {
-				factor = 0
-				OR = {
-					has_opinion = { target = SRI value < -100 }
-					SRI = { has_opinion = { target = ITA value < -100 } }
+				factor = 0.01
+				ITA = {
+					NOT = { has_cosmetic_tag = ITA_republic }
 				}
-			}
-			modifier = {
-				factor = 0.5
-				SRI = {
-					OR = {
-						has_government = syndicalist
-						has_government = totalist
-						has_government = radical_socialist
-					}
-				}
-				ITA = { NOT = { has_government = social_democrat } }
-			}
-			modifier = {
-				factor = 5
-				SRI = {
+				RSI = {
 					NOT = {
-						has_government = syndicalist
-						has_government = totalist
-						has_government = radical_socialist
+						has_government = authoritarian_democrat
+						has_government = social_conservative
+						is_in_faction_with = ITA
+						AND = {
+							has_government = radical_socialist
+							ITA = { has_government = radical_socialist }
+						}
 					}
 				}
 			}
 		}
 		
 		completion_reward = {
-			SRI = { country_event = { id = ita.18 } }
-			#TODO: this needs to incorporate the full chain from DH
+			add_political_power = 20
+			custom_effect_tooltip = ITA_propose_to_RSI
+			hidden_effect = {
+				SRI = { country_event = { id = ita.15 } }
+			}
 		}
 	}	
 	
@@ -802,11 +811,33 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 150
-			add_state_core = 742 #Abruzzo
-			add_state_core = 117 #Campania
-			add_state_core = 837 #Puglia
-			add_state_core = 156 #Calabria
-			add_state_core = 115 #Sicilia
+			if = {
+				limit = { 742 = { NOT = { is_core_of = ITA } } }
+				add_state_core = 742 #Abruzzo
+			}
+			if = {
+				limit = { 117 = { NOT = { is_core_of = ITA } } }
+				add_state_core = 117 #Campania
+			}
+			if = {
+				limit = { 837 = { NOT = { is_core_of = ITA } } }
+				add_state_core = 837 #Puglia
+			}
+			if = {
+				limit = { 156 = { NOT = { is_core_of = ITA } } }
+				add_state_core = 156 #Calabria
+			}
+			if = {
+				limit = { 115 = { NOT = { is_core_of = ITA } } }
+				add_state_core = 115 #Sicilia
+			}
+			SRI = {
+				remove_state_core = 742 #Abruzzo
+				remove_state_core = 117 #Campania
+				remove_state_core = 837 #Puglia
+				remove_state_core = 156 #Calabria
+				remove_state_core = 115 #Sicilia
+			}
 			if = {
 				limit = { has_idea = Divided_Nation }
 				remove_ideas = Divided_Nation
@@ -817,6 +848,8 @@ focus_tree = {
 	focus = {
 		id = ITA_Irredentism
 		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = ITA_Incorporate_South }
+		mutually_exclusive = { focus = ITA_Isolationism }
 		
 		available = {
 			is_subject = no
@@ -828,13 +861,6 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 2
-		}
-		
-		prerequisite = {
-			focus = ITA_Incorporate_South
-		}
-		mutually_exclusive = {
-			focus = ITA_Isolationism
 		}
 		
 		available_if_capitulated = no
@@ -1079,6 +1105,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = -50
+			add_named_threat = { threat = -3 name = ITA_irredentism }
 			#TODO: Temporary
 		}
 	}	

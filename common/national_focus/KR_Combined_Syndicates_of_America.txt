@@ -1807,7 +1807,9 @@ focus_tree = {
 		}
 		x = 66
 		y = 2
-
+		completion_reward = {
+			add_ideas = CSA_syndicalism_arsenal
+		}
 	}
 	focus = {# Liberty Ships
 		id = CSA_liberty_ships
@@ -1818,21 +1820,47 @@ focus_tree = {
 		}
 		x = 68
 		y = 2
-
+		completion_reward = {
+			add_ideas = CSA_liberty_ship
+		}
 	}	
 	focus = {# War Plan Black
 		id = CSA_war_plan_black
 		icon = GFX_goal_generic_political_pressure
 		cost = 10.00
+		available = {
+   			CSA = {
+				is_in_faction_with = FRA
+				is_subject = no	
+			}
+			GER = { 
+				exists = yes 
+				is_subject = no	
+				NOT = { is_in_faction_with = CSA }
+			}
+		}
 		prerequisite = {
 			focus = CSA_arsenal_of_syndicalism
 		}
 		prerequisite = {
 			focus = CSA_liberty_ships
 		}
+		bypass = {
+			OR = { has_war_with = GER
+				is_in_faction_with = GER
+				GER = { is_subject_of = FRA }
+				GER = { is_subject_of =  }
+			} 
+		}		
 		x = 67
 		y = 3
-
+   		completion_reward = {
+			add_named_threat = { threat = 5 name = GER_war_with_america_threat }
+   			create_wargoal = {
+   				type = annex_everything
+   				target = GER
+			}
+		}
 	}
 ###War Plan Red####
 	focus = {# War Plan Red
@@ -1844,7 +1872,9 @@ focus_tree = {
 		}
 		x = 51
 		y = 1
-
+		completion_reward = {
+			add_political_power = 100
+		}
 	}
 	focus = {# The Great Northern Wall
 		id = CSA_great_northern_wall
@@ -1855,7 +1885,32 @@ focus_tree = {
 		}
 		x = 50
 		y = 2
-
+		completion_reward = {
+			393 = {
+				add_building_construction = { type = bunker province = 5205 level = 4 instant_build = yes }
+				add_building_construction = { type = bunker province = 9724 level = 4 instant_build = yes }
+			}
+			391 = {
+				add_building_construction = { type = bunker province = 6767 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 7896 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 12588 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 11667 level = 3 instant_build = yes }
+			}
+			389 = {
+				add_building_construction = { type = bunker province = 4759 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 12685 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 1870 level = 3 instant_build = yes }	
+			}
+			388 = {
+				add_building_construction = { type = bunker province = 4838 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 1854 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 1857 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 10593 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 10624 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 4863 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 7883 level = 3 instant_build = yes }
+			}
+		}
 	}	
 	focus = {# Naval exercises
 		id = CSA_naval_exrcises
@@ -1878,9 +1933,27 @@ focus_tree = {
 		prerequisite = {
 			focus = CSA_naval_exrcises
 		}
+		available = {
+			CSA = {
+				NOT = { is_in_faction_with = CAN }
+				is_subject = no
+			}
+		}		
+		bypass = {
+			OR = {
+				CSA = { has_war_with = CAN }
+				OR = {
+					CAN = { has_capitulated = yes }
+					NOT = { country_exists = CAN } 
+				}
+			}
+		}		
 		x = 51
 		y = 3
-
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = CAN }
+			add_named_threat = { threat = 8 name = CSA_attack_CAN }
+		}
 	}
 	focus = {# Fate of the British Empire
 		id = CSA_fate_of_the_empire
@@ -2470,11 +2543,13 @@ focus_tree = {
 		}
 		x = 27
 		y = 12
-
+		completion_reward = {
+			remove_ideas = recovering_from_acw
+		}
 	}
 #############################
 ###    Five Year Plan	  ###
-#############################		
+#############################
 	focus = {# Start the Five year plan
 		id = CSA_five_year_plan
 		icon = GFX_goal_generic_soviet_construction

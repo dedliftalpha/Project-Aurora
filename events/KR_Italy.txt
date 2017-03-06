@@ -409,6 +409,7 @@ country_event = {
 			}
 		}
 		effect_tooltip = { add_to_faction = FROM }
+		FROM = { country_event = { id = ita.20 } }
 	}
 	option = {
 		name = ita.18.b #We will guarantee their independence instead
@@ -428,6 +429,7 @@ country_event = {
 			give_guarantee = FROM
 			FROM = { give_military_access = ROOT }
 		}
+		FROM = { country_event = { id = ita.21 } }
 	}
 	option = {
 		name = ita.18.c #They are on their own
@@ -471,6 +473,7 @@ country_event = {
 				FROM = { has_government = national_populist }
 			}
 		}
+		FROM = { country_event = { id = ita.22 } }
 	}
 }
 
@@ -497,6 +500,11 @@ country_event = {
 				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
 			}
 		}
+		effect_tooltip = {
+			give_guarantee = FROM
+			FROM = { give_military_access = ROOT }
+		}
+		FROM = { country_event = { id = ita.21 } }		
 	}
 	option = {
 		name = ita.19.b #They are on their own
@@ -540,6 +548,7 @@ country_event = {
 				FROM = { has_government = national_populist }
 			}
 		}
+		FROM = { country_event = { id = ita.22 } }
 	}
 }
 
@@ -1892,7 +1901,355 @@ country_event = {
 	}
 }
 
-## TODO: The Battle of Anzio event chain, if SRI seizes church property
+# Catholics are fleeing northward from SRI
+country_event = {
+	id = ita.59
+	title = ita.59.t
+	desc = ita.59.d
+	picture = hungry_people
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SRI
+		is_subject = no
+		country_exists = ITA
+		has_country_flag = SRI_church_ban
+		OR = {
+			has_government = syndicalist
+			has_government = totalist
+		}
+		ITA = {
+			owns_state = 764
+			NOT = { has_war_with = SRI }
+			NOT = { has_cosmetic_tag = ITA_republic }
+			NOT = { has_cosmetic_tag = ITA_kingdom }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+	}
+	
+	option = {
+		name = ita.59.a #Seal off the border and occupy Anzio
+		ai_chance = { factor = 95 }
+		clr_country_flag = SRI_church_ban
+		add_political_power = -100
+		reverse_add_opinion_modifier = { target = ITA modifier = ITA_outraged }
+		add_manpower = -25000
+		ITA = {
+			country_event = { id = ita.60 days = 1 }
+			hidden_event = { country_event = { id = ita.61 days = 3 } }
+		}
+	}
+	option = {
+		name = ita.59.b #Less drastic measures will have to be employed
+		ai_chance = { factor = 5 }
+		clr_country_flag = SRI_church_ban
+		add_political_power = -200
+		add_manpower = -50000
+		ITA = {
+			set_country_flag = ITA_no_anzio_war
+			country_event = { id = ita.60 days = 1 }
+		}
+	}
+}
+
+# Italy notified of fleeing Catholics
+country_event = {
+	id = ita.60
+	title = ita.60.t
+	desc = ita.60.d
+	picture = hungry_people
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.60.a
+		if = {
+			limit = { has_country_flag = ITA_no_anzio_war }
+			clr_country_flag = ITA_no_anzio_war
+			add_manpower = 50000
+			else = { add_manpower = 25000 }
+		}
+	}
+}
+
+# The Battle of Anzio - possible war with the SRI
+country_event = {
+	id = ita.61
+	title = ita.61.t
+	desc = ita.61.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		owns_state = 764
+		NOT = { has_war_with = SRI }
+		NOT = { has_cosmetic_tag = ITA_republic }
+		NOT = { has_cosmetic_tag = ITA_kingdom }
+	}
+	
+	option = {
+		name = ita.61.a #We have lost this battle
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				is_in_faction = yes
+			}
+			modifier = {
+				factor = 0.5
+				SRI = { is_in_faction = no }
+			}
+		}
+		add_political_power = -40
+		effect_tooltip = { SRI = { transfer_state = 764 } } #Anzio
+		SRI = {
+			country_event = { id = ita.62 }
+			hidden_event = { country_event = { id = ita.63 days = 180 } }
+		}
+	}
+	option = {
+		name = ita.61.b #Deus vult!
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = SRI ratio > 1.0 }
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = SRI ratio > 1.5 }
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = SRI ratio < 0.75 }
+			}
+		}
+		add_political_power = 100
+		declare_war_on = {
+			target = SRI
+			type = annex_everything
+		}
+		hidden_event = { SRI = { country_event = { id = ita.63 days = 90 } } }
+	}
+}
+
+# The Battle of Anzio - Italy gives up
+country_event = {
+	id = ita.62
+	title = ita.62.t
+	desc = ita.62.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.62.a
+		transfer_state = 764 #Anzio
+		add_state_core = 764 #Anzio
+	}
+}
+
+# The formation of the NeoSanfedisti
+country_event = {
+	id = ita.63
+	title = ita.63.t
+	desc = ita.63.d
+	picture = GFX_report_event_IRE_fire
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		tag = SRI
+		country_exists = ITA
+		OR = {
+			has_government = syndicalist
+			has_government = totalist
+			has_government = radical_socialist
+		}
+			
+	}
+	
+	option = {
+		name = ita.63.a
+		add_political_power = -100
+		set_country_flag = SRI_neosanfedisti
+	}
+}
+
+# Neosanfedisti terrorism - factory sabotaged
+country_event = {
+	id = ita.64
+	title = ita.64.t
+	desc = ita.64.d
+	picture = GFX_report_event_generic_factory
+	
+	trigger = {
+		tag = SRI
+		country_exists = ITA
+		has_country_flag = SRI_neosanfedisti
+		OR = {
+			has_government = syndicalist
+			has_government = totalist
+			has_government = radical_socialist
+		}
+		NOT = {
+			has_country_flag = SRI_neosanfedisti_sabotage_1
+			has_country_flag = SRI_neosanfedisti_sabotage_2
+		}
+		any_owned_state = {
+			is_core_of = SRI
+			industrial_complex > 0
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			factor = 0.75
+			has_war_with = ITA
+		}
+		modifier = {
+			factor = 2
+			ITA = { has_capitulated = yes }
+		}
+	}
+	
+	option = {
+		name = ita.64.a
+		set_country_flag = SRI_neosanfedisti_sabotage_1
+		
+		random_owned_state = {
+			limit = {
+				is_core_of = SRI
+				industrial_complex > 0
+			}
+			damage_building = {
+				type = industrial_complex
+				damage = 0.7
+			}
+		}
+	}
+}
+
+# Neosanfedisti terrorism - arms factory sabotaged
+country_event = {
+	id = ita.65
+	title = ita.65.t
+	desc = ita.65.d
+	picture = GFX_report_event_generic_factory
+	
+	trigger = {
+		tag = SRI
+		country_exists = ITA
+		has_country_flag = SRI_neosanfedisti_sabotage_1
+		NOT = { has_country_flag = SRI_neosanfedisti_sabotage_2 }
+		OR = {
+			has_government = syndicalist
+			has_government = totalist
+			has_government = radical_socialist
+		}
+		any_owned_state = {
+			is_core_of = SRI
+			arms_factory > 0
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 4
+		modifier = {
+			factor = 0.75
+			has_war_with = ITA
+		}
+		modifier = {
+			factor = 2
+			ITA = { has_capitulated = yes }
+		}
+	}
+	
+	option = {
+		name = ita.65.a
+		set_country_flag = SRI_neosanfedisti_sabotage_2
+		
+		random_owned_state = {
+			limit = {
+				is_core_of = SRI
+				arms_factory > 0
+			}
+			damage_building = {
+				type = arms_factory
+				damage = 0.7
+			}
+		}
+	}
+}
+
+# Neosanfedisti terrorism - infrastructure sabotaged
+country_event = {
+	id = ita.66
+	title = ita.66.t
+	desc = ita.66.d
+	picture = GFX_report_event_generic_factory
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SRI
+		country_exists = ITA
+		has_country_flag = SRI_neosanfedisti_sabotage_2
+		OR = {
+			has_government = syndicalist
+			has_government = totalist
+			has_government = radical_socialist
+		}
+		any_owned_state = {
+			is_core_of = SRI
+			arms_factory > 0
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+		modifier = {
+			factor = 0.75
+			has_war_with = ITA
+		}
+		modifier = {
+			factor = 2
+			ITA = { has_capitulated = yes }
+		}
+	}
+	
+	option = {
+		name = ita.66.a
+		clr_country_flag = SRI_neosanfedisti_sabotage_1
+		clr_country_flag = SRI_neosanfedisti_sabotage_2
+		random_owned_state = {
+			limit = {
+				is_core_of = SRI
+				infrastructure > 3
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 1
+			}
+		}
+		random_owned_state = {
+			limit = {
+				is_core_of = SRI
+				infrastructure > 3
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 1
+			}
+		}
+	}
+}
 
 ### ITALIAN SWITZERLAND EVENTS
 

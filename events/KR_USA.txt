@@ -5177,32 +5177,11 @@ country_event = {# Form of government
 	desc = ustates.175.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
-	trigger = {
-		tag = USA
-		has_global_flag = ACW_CSA
-		has_global_flag = ACW_AUS
-		has_government = authoritarian_democrat
-		NOT = {
-			country_exists = TEX
-			country_exists = CSA
-		}
-		date > 1937.1.1
-	}
-
-	mean_time_to_happen = {
-		days = 15
-	}
-
-
-	option = { 
+	option = {# Restore Democracy 
 		name = ustates.175.a
-
-		ai_chance = {
-			factor = 50
-		}
-
+		set_country_flag = USA_restore_democracy
 		add_popularity = { ideology = social_conservative popularity = 0.4 }
 		add_popularity = { ideology = authoritarian_democrat popularity = -0.3 }
 		set_politics = { ruling_party = social_conservative elections_allowed = no }
@@ -5214,76 +5193,31 @@ country_event = {# Form of government
 			expire = "1965.1.1"
 			ideology = social_conservative_subtype
 			traits = {}
-		}
-	    
+		} 
 	}	
-
-	option = { 
-		name = ustates.175.b
-
-		ai_chance = {
-			factor = 50
-		}
-
-		add_political_power = -200
-		country_event = { id = ustates.176 days = 15 }
-	}
-}
-country_event = {# Forging new USA - internal policy
-	id = ustates.176
-	title = ustates.176.t
-	desc = ustates.176.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-
-	is_triggered_only = yes
-
-	option = { 
-		name = ustates.176.a
-
-		ai_chance = {
-			factor = 50
-		}
-
-		add_political_power = 100
-		set_country_flag = USA_MIN_JUNTA
-		add_popularity = { ideology = social_conservative popularity = 0.1 }
-	}	
-
-	option = { 
+	option = {# Establish a small Junta
 		name = ustates.176.b
-
-		ai_chance = {
-			factor = 30
-		}
-
+		add_political_power = 200
+		set_country_flag = USA_MIN_JUNTA
+		set_country_flag = USA_small_junta
+		set_country_flag = USA_MACARTHUR
+	}
+	option = {# Establish a Permanent Military Junta
+		name = ustates.176.b
 		add_political_power = 200
 		set_country_flag = USA_MAX_JUNTA
+		set_country_flag = USA_permanet_junta
 		set_country_flag = USA_MACARTHUR
 	}
-
-	option = { 
-		name = ustates.176.c
-
-		ai_chance = {
-			factor = 20
-		}
-
-		add_political_power = -100
+	option = {# Establish a Military Dictatorship 
+		name = ustates.176.b
+		add_political_power = 200
 		set_country_flag = USA_TOTALITARIAN
+		set_country_flag = USA_macarthur_dictatorship
 		set_country_flag = USA_MACARTHUR
-		add_popularity = { ideology = paternal_autocrat popularity = 0.4 }
-		add_popularity = { ideology = authoritarian_democrat popularity = -0.3 }
-		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
-		create_country_leader = {
-			name = "Douglas MacArthur"
-			desc = "MACARTHUR_DESC"
-			picture = "Portrait_USA_Douglas_MacArthur.dds"
-			expire = "1965.1.1"
-			ideology = paternal_autocrat_subtype
-			traits = {}
-		}
+	}		
+
 	}
-}
 country_event = {# 1940 presidential elections
 	id = ustates.177
 	title = ustates.177.t
@@ -5488,7 +5422,7 @@ country_event = {# 1944 presidential elections
 		clr_country_flag = USA_MACARTHUR
 	}
 }
-country_event = {#1948 presidential elections
+country_event = {# 1948 presidential elections
 	id = ustates.179
 	title = ustates.179.t
 	desc = ustates.179.d

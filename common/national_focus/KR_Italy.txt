@@ -270,7 +270,7 @@ focus_tree = {
 				uses = 1
 				category = industry
 			}
-			hidden_effect = { country_event = { id = ita.33 days = 5 } }
+			hidden_effect = { country_event = { id = ita.33 days = 20 } }
 		}
 	}
 	
@@ -1294,6 +1294,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 2
+			modifier = {
+				factor = 2.5
+				country_exists = SRI
+			}
 		}
 		
 		completion_reward = {
@@ -1318,8 +1322,13 @@ focus_tree = {
 			is_subject = no
 			has_war = no
 			country_exists = GER
-			NOT = { any_owned_state = { is_core_of = GER } }
 			GER = { NOT = { any_owned_state = { is_core_of = ITA } } }
+			NOT = {
+				any_owned_state = { is_core_of = GER }
+				has_government = syndicalist
+				has_government = totalist
+				has_government = radical_socialist
+			}
 		}
 		x = 12
 		y = 6
@@ -1329,6 +1338,16 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 3
+			modifier = {
+				factor = 0
+				GER = {
+					has_war = yes
+					OR = {
+						any_war_score < 0 
+						surrender_progress > 0.25
+					}
+				}
+			}
 			modifier = {
 				factor = 0
 				GER = { strength_ratio = { tag = ITA ratio < 1.0 } }
@@ -1358,27 +1377,12 @@ focus_tree = {
 					}
 				}
 			}
-			modifier = {
-				factor = 0
-				OR = {
-					has_government = syndicalist
-					has_government = totalist
-					has_government = radical_socialist
-				}
-				GER = {
-					NOT = {
-						has_government = syndicalist
-						has_government = totalist
-						has_government = radical_socialist
-					}
-				}
-			}
 		}
 		
 		completion_reward = {
-			add_opinion_modifier = { target = GER modifier = POL_seek_accommodation_with_germany }
-			GER = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
-			#TODO: Temporary, expand with full chain from DH
+			add_opinion_modifier = { target = GER modifier = ITA_likes_govt }
+			reverse_add_opinion_modifier = { target = GER modifier = ITA_likes_govt }
+			GER = { country_event = { id = ita.18 } }
 		}
 	}
 
@@ -1395,6 +1399,7 @@ focus_tree = {
 			is_subject = no
 			has_war = no
 			country_exists = AUS
+			NOT = { is_guaranteed_by = AUS }
 			NOT = { any_owned_state = { is_core_of = AUS } }
 			AUS = { NOT = { any_owned_state = { is_core_of = ITA } } }
 		}
@@ -1409,6 +1414,16 @@ focus_tree = {
 			modifier = {
 				factor = 2
 				has_cosmetic_tag = ITA_kingdom
+			}
+			modifier = {
+				factor = 0
+				AUS = {
+					has_war = yes
+					OR = {
+						any_war_score < 0 
+						surrender_progress > 0.25
+					}
+				}
 			}
 			modifier = {
 				factor = 0
@@ -1457,9 +1472,15 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_opinion_modifier = { target = AUS modifier = POL_seek_accommodation_with_germany }
-			AUS = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
-			#TODO: Temporary, expand with full chain from DH
+			add_opinion_modifier = { target = AUS modifier = ITA_likes_govt }
+			reverse_add_opinion_modifier = { target = AUS modifier = ITA_likes_govt }
+			if = {
+				limit = { AUS = { is_faction_leader = yes } }
+				AUS = { country_event = { id = ita.18 } }
+				else = {
+					AUS = { country_event = { id = ita.19 } }
+				}
+			}
 		}
 	}
 	
@@ -1477,6 +1498,12 @@ focus_tree = {
 			has_war = no
 			country_exists = CAN
 			CAN = { is_faction_leader = yes }
+			NOT = {
+				has_government = syndicalist
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = national_populist
+			}
 		}
 		x = 10
 		y = 6
@@ -1492,6 +1519,16 @@ focus_tree = {
 			}
 			modifier = {
 				factor = 0
+				CAN = {
+					has_war = yes
+					OR = {
+						any_war_score < 0 
+						surrender_progress > 0.25
+					}
+				}
+			}
+			modifier = {
+				factor = 0
 				OR = {
 					CAN = { any_owned_state = { is_core_of = ITA } }
 					any_country = {
@@ -1502,28 +1539,8 @@ focus_tree = {
 			}
 			modifier = {
 				factor = 0
-				NOT = {
-					has_government = syndicalist
-					has_government = totalist
-					has_government = radical_socialist
-				}
 				CAN = {
 					OR = {
-						has_government = syndicalist
-						has_government = totalist
-						has_government = radical_socialist
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				OR = {
-					has_government = syndicalist
-					has_government = totalist
-					has_government = radical_socialist
-				}
-				CAN = {
-					NOT = {
 						has_government = syndicalist
 						has_government = totalist
 						has_government = radical_socialist
@@ -1533,9 +1550,9 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_opinion_modifier = { target = CAN modifier = POL_seek_accommodation_with_germany }
-			CAN = { add_opinion_modifier = { target = ROOT modifier = POL_seek_accommodation_with_germany } }
-			#TODO: Temporary, expand with full chain from DH
+			add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
+			reverse_add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
+			CAN = { country_event = { id = ita.18 } }
 		}
 	}
 

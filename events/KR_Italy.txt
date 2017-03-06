@@ -381,6 +381,222 @@ country_event = {
 	}
 }
 
+# Italy attempts to join a faction
+country_event = {
+	id = ita.18
+	title = ita.18.t
+	desc = ita.18.d
+	picture = diplomacy4
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.18.a #Admit them into the faction
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				has_guaranteed = FROM
+			}
+			modifier = {
+				factor = 1.5
+				tag = AUS
+			}
+			modifier = {
+				factor = 0.5
+				tag = CAN
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+		}
+		effect_tooltip = { add_to_faction = FROM }
+	}
+	option = {
+		name = ita.18.b #We will guarantee their independence instead
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 1.5
+				tag = AUS
+			}
+			modifier = {
+				factor = 0.5
+				tag = CAN
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+		}
+		effect_tooltip = {
+			give_guarantee = FROM
+			FROM = { give_military_access = ROOT }
+		}
+	}
+	option = {
+		name = ita.18.c #They are on their own
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.8
+				has_opinion = { target = FROM value > 20 }
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = { target = FROM value > 50 }
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = { target = FROM value > 100 }
+			}
+			modifier = {
+				factor = 1.2
+				has_opinion = { target = FROM value < 0 }
+			}
+			modifier = {
+				factor = 1.5
+				has_opinion = { target = FROM value < -50 }
+			}
+			modifier = {
+				factor = 2
+				has_opinion = { target = FROM value < -100 }
+			}
+			modifier = {
+				factor = 0.5
+				tag = AUS
+			}
+			modifier = {
+				factor = 1.5
+				tag = CAN
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { has_government = national_populist }
+			}
+		}
+	}
+}
+
+# Italy seeks a country's protection
+country_event = {
+	id = ita.19
+	title = ita.19.t
+	desc = ita.19.d
+	picture = diplomacy4
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.19.a #That sounds like an excellent deal
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				tag = AUS
+			}
+			modifier = {
+				factor = 0.5
+				tag = CAN
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+		}
+	}
+	option = {
+		name = ita.19.b #They are on their own
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.8
+				has_opinion = { target = FROM value > 20 }
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = { target = FROM value > 50 }
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = { target = FROM value > 100 }
+			}
+			modifier = {
+				factor = 1.2
+				has_opinion = { target = FROM value < 0 }
+			}
+			modifier = {
+				factor = 1.5
+				has_opinion = { target = FROM value < -50 }
+			}
+			modifier = {
+				factor = 2
+				has_opinion = { target = FROM value < -100 }
+			}
+			modifier = {
+				factor = 0.5
+				tag = AUS
+			}
+			modifier = {
+				factor = 1.5
+				tag = CAN
+				FROM = { NOT = { has_cosmetic_tag = ITA_republic } }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { has_government = national_populist }
+			}
+		}
+	}
+}
+
+# Italy is admitted to a faction
+country_event = {
+	id = ita.20
+	title = ita.20.t
+	desc = ita.20.d
+	picture = diplomacy3
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.20.a
+		add_political_power = 40
+		FROM = { add_to_faction = ROOT }
+	}
+}
+
+# Italy is given guarantee rather than admission to a faction
+country_event = {
+	id = ita.21
+	title = ita.21.t
+	desc = ita.21.d
+	picture = diplomacy3
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.21.a
+		add_political_power = 20
+		FROM = { give_guarantee = ROOT }
+		give_military_access = FROM
+		hide_effect = {
+			every_country = {
+				limit = { is_in_faction_with = FROM }
+				ROOT = { give_military_access = PREV }
+			}
+		}
+	}
+}
+
+# Italy is turned down
+country_event = {
+	id = ita.22
+	title = ita.22.t
+	desc = ita.22.d
+	picture = GFX_report_event_worried_french
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.22.a
+		add_political_power = -20
+	}
+}
+
 # Kingdom of Italy seeks closer ties with Austria
 country_event = {
 	id = ita.26

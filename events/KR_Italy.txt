@@ -2699,6 +2699,7 @@ country_event = {
 			factor = 80
 		}
 		add_state_core = 761
+		set_country_flag = ITA_ticino_war
 		declare_war_on = { target = FROM type = take_core_state }
 		if = {
 			limit = { FROM = { tag = SWI } }
@@ -2786,7 +2787,154 @@ country_event = {
 	}
 }
 
-# TODO: Add Swiss/Italian victory & defeat war events
+# The Italians control Ticino - white peace?
+country_event = {
+	id = ita.82
+	title = ita.82.t
+	desc = ita.82.d	
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_war_with = ITA
+		owns_state = 761
+		surrender_progress > 0.1
+		ITA = {
+			has_country_flag = ITA_ticino_war
+			controls_state = 761
+			NOT = { surrender_progress > 0.1 }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	immediate = {
+		ITA = { clr_country_flag = ITA_ticino_war }
+	}
+
+	option = {
+		name = ita.82.a #Send the envoys and offer to surrender Ticino
+		ai_chance = { factor = 100 }
+		add_political_power = -140
+		ITA = { country_event = { id = ita.83 } }
+	}
+	option = {
+		name = ita.82.b #This war won't stop until we're marching on Rome!
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+}
+
+# Sued for peace: Ticino is surrendered
+country_event = {
+	id = ita.83
+	title = ita.83.t
+	desc = ita.83.d	
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.83.a #Yes, let's end this now
+		ai_chance = { factor = 75 }
+		add_political_power = 100
+		FROM = { white_peace = ITA }
+		transfer_state = 761
+	}
+	option = {
+		name = ita.83.b #This war won't be over until we're marching on [From.Capital.GetName]!
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				FROM = { NOT = { tag = SWI } }
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+# The Italians are losing the war - white peace?
+country_event = {
+	id = ita.84
+	title = ita.84.t
+	desc = ita.84.d
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		has_war = yes
+		surrender_progress > 0.1
+		has_country_flag = ITA_ticino_war
+		any_enemy_country = {
+			has_war_with = ITA
+			owns_state = 761
+			controls_state = 761
+			NOT = { any_owned_state = { is_controlled_by = ITA } }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	immediate = {
+		ITA = { clr_country_flag = ITA_ticino_war }
+	}
+
+	option = {
+		name = ita.82.a #Send the envoys and offer white peace
+		ai_chance = { factor = 100 }
+		add_political_power = -300
+		random_enemy_country = {
+			limit = {
+				has_war_with = ITA
+				owns_state = 761
+				controls_state = 761
+				NOT = { any_owned_state = { is_controlled_by = ITA } }
+			}
+			country_event = { id = ita.85 }
+		}
+	}
+	option = {
+		name = ita.82.b #We can still win this!
+		ai_chance = { factor = 0 }
+		add_political_power = -200
+	}
+}
+
+# Sued for peace: white peace with Italy?
+country_event = {
+	id = ita.85
+	title = ita.85.t
+	desc = ita.85.d	
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.83.a #Yes, let's end this now
+		ai_chance = { factor = 75 }
+		add_political_power = 200
+		ITA = { white_peace = ROOT }
+	}
+	option = {
+		name = ita.83.b #This war won't be over until we're marching on [From.Capital.GetName]!
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				tag = SWI
+			}
+		}
+		add_political_power = -100
+	}
+}
 
 ### MALTA EVENTS
 
@@ -3067,7 +3215,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 5
+		days = 30
 	}
 	
 	immediate = {
@@ -3121,7 +3269,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = ita.96.a #This war won't be over until we're marching on [From.Capital.GetName]!
+		name = ita.96.b #This war won't be over until we're marching on [From.Capital.GetName]!
 		ai_chance = { factor = 0 }
 		add_political_power = -100
 	}
@@ -3153,8 +3301,11 @@ country_event = {
 	
 	option = {
 		name = ita.97.a
+		clr_country_flag = ITA_malta_war
 		add_political_power = -50
 		add_state_core = 116
 	}
 }
 	
+### TUNISIA EVENTS
+

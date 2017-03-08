@@ -1062,19 +1062,54 @@ focus_tree = {
 			focus = ITA_Claim_Northeast
 			focus = ITA_Claim_Italian_Switzerland
 		}
+		available = {
+			has_war = no
+			is_subject = no
+			OR = {
+				owns_state = 458
+				custom_trigger_tooltip = {
+					tooltip = ITA_tunisia_owner_is_puppet
+					any_country = {
+						is_subject_of = ITA
+						owns_state = 458
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ITA_tunisia_owner_is_tunisia
+					TUN = {
+						owns_state = 458
+						controls_state = 458
+						is_subject = no
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ITA_tunisia_owner_can_sell
+					OR = {
+						any_country = {
+							NOT = { tag = ITA }
+							owns_state = 458
+							controls_state = 458
+							OR = {
+								is_subject = no
+								NOT = { is_subject_of = ITA }
+							}
+							OR = {
+								is_subject = yes
+								NOT = { tag = TUN }
+							}
+						}
+					}
+				}
+			}
+		}
 		x = 6
 		y = 4
 		
 		ai_will_do = {
 			factor = 2
 			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
 				factor = 5
 				owns_state = 458 #Tunisia
-				owns_state = 665 #Gabes
 			}
 			modifier = {
 				factor = 2
@@ -1087,46 +1122,99 @@ focus_tree = {
 			}
 		}
 		
+		bypass = {
+			owns_state = 458
+			458 = { is_core_of = ITA }
+		}
+		
 		completion_reward = {
-			every_country = {
+			if = {
+				limit = { owns_state = 458 } #Tunisia
+				add_state_core = 458
+			}
+			if = {
+				limit = { owns_state = 665 } #Gabes
+				add_state_claim = 665
+			}
+			if = {
 				limit = {
-					is_subject_of = ITA
-					NOT = { tag = ITA }
-					OR = {
-						owns_state = 458 #Tunisia
-						owns_state = 665 #Gabes
+					any_country = {
+						is_subject_of = ITA
+						owns_state = 458
 					}
 				}
-				if = { limit = { controls_state = 458 } ITA = { transfer_state = 458 } }
-				if = { limit = { controls_state = 665 } ITA = { transfer_state = 665 } }
-			}
-			if = {
-				limit = { owns_state = 458 }
-				add_state_core = 458
-				else = { add_state_claim = 458 }
-			}
-			if = {
-				limit = { owns_state = 665 }
-				add_state_core = 665
-				else = { add_state_claim = 665 }
-			}
-			every_country = {
-				limit = {
-					NOT = { is_subject_of = ITA }
-					NOT = { tag = ITA }
-					OR = {
+				random_country = {
+					limit = {
+						is_subject_of = ITA
 						owns_state = 458
+					}
+					ITA = {
+						transfer_state = 458
+						add_state_core = 458
+					}
+				}
+				random_country = {
+					limit = {
+						is_subject_of = ITA
 						owns_state = 665
+					}
+					ITA = { transfer_state = 665 }
+				}
+				ITA = { add_state_claim = 665 }
+			}
+			if = {
+				limit = {
+					TUN = {
+						is_subject = no
+						owns_state = 458
 					}
 				}
 				ITA = {
+					add_state_claim = 458
+					add_state_claim = 665
 					create_wargoal = {
 						type = take_claimed_state
-						target = PREV
+						target = TUN
 					}
 				}
 			}
-			#TODO: Temporary, need to add event chain from DH
+			if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						NOT = { is_subject_of = ITA }
+						owns_state = 458
+					}
+				}
+				ITA = {
+					add_state_claim = 458
+					add_state_claim = 665
+				}
+				random_country = {
+					limit = { owns_state = 458 }
+					overlord = { country_event = { id = ita.100 } }
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						owns_state = 458
+						TUN = { owns_state = 458 }
+						any_country = {
+							is_subject = yes
+							owns_state = 458
+						}
+					}
+				}
+				ITA = {
+					add_state_claim = 458
+					add_state_claim = 665
+				}
+				random_country = {
+					limit = { owns_state = 458 }
+					country_event = { id = ita.100 }
+				}
+			}
 		}
 	}
 
@@ -1139,8 +1227,8 @@ focus_tree = {
 			focus = ITA_Claim_Italian_Switzerland
 		}
 		available = {
-			is_subject = no
 			has_war = no
+			is_subject = no
 			OR = {
 				owns_state = 116
 				custom_trigger_tooltip = {
@@ -1161,17 +1249,18 @@ focus_tree = {
 				custom_trigger_tooltip = {
 					tooltip = ITA_malta_owner_can_sell
 					OR = {
-						MLT = {
-							owns_state = 116
-							controls_state = 116
-							is_subject = yes
-						}
 						any_country = {
-							NOT = { tag = MLT }
 							NOT = { tag = ITA }
 							owns_state = 116
 							controls_state = 116
-							is_subject = no
+							OR = {
+								is_subject = no
+								NOT = { is_subject_of = ITA }
+							}
+							OR = {
+								is_subject = yes
+								NOT = { tag = MLT }
+							}
 						}
 					}
 				}
@@ -1182,10 +1271,6 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 			modifier = {
 				factor = 5
 				owns_state = 116
@@ -1246,7 +1331,7 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					MLT = {
+					any_country = {
 						is_subject = yes
 						NOT = { is_subject_of = ITA }
 						owns_state = 116
@@ -1254,8 +1339,8 @@ focus_tree = {
 				}
 				ITA = { add_state_claim = 116 }
 				random_country = {
-					limit = { MLT = { is_subject_of = PREV } }
-					country_event = { id = ita.90 }
+					limit = { owns_state = 116 }
+					overlord = { country_event = { id = ita.90 } }
 				}
 			}
 			if = {
@@ -1264,7 +1349,7 @@ focus_tree = {
 						owns_state = 116
 						MLT = { owns_state = 116 }
 						any_country = {
-							is_subject_of = ITA
+							is_subject = yes
 							owns_state = 116
 						}
 					}

@@ -2947,6 +2947,16 @@ country_event = {
 	
 	is_triggered_only = yes
 	
+	immediate = {
+		random_country = {
+			limit = {
+				owns_state = 116
+				is_subject_of = ROOT
+			}
+			save_event_target_as = puppet_owner
+		}
+	}
+	
 	option = {
 		name = ita.90.a #Accept their offer, we don't need Malta that much anymore
 		ai_chance = {
@@ -2979,8 +2989,8 @@ country_event = {
 					give_military_access = ROOT
 				}
 				if = {
-					limit = { MLT = { is_subject_of = ROOT } }
-					puppet = MLT
+					limit = { event_target:puppet_owner = { owns_state = 116 } }
+					puppet = event_target:puppet_owner
 					else = { transfer_state = 116 } #Malta
 				}
 			}
@@ -2988,7 +2998,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = ita.90.b
+		name = ita.90.b #They're joking, right?
 		ai_chance = {
 			factor = 95
 			modifier = {
@@ -3027,11 +3037,9 @@ country_event = {
 			give_military_access = FROM
 		}
 		if = {
-			limit = { MLT = { is_subject_of = FROM } }
-			puppet = MLT
-			else = {
-				transfer_state = 116 #Malta
-			}
+			limit = { event_target:puppet_owner = { owns_state = 116 } }
+			puppet = event_target:puppet_owner
+			else = { transfer_state = 116 } #Malta
 		}
 	}
 }
@@ -3117,13 +3125,13 @@ country_event = {
 	trigger = {
 		OR = {
 			owns_state = 116
-			MLT = {
+			any_country = {
 				owns_state = 116
 				is_subject_of = ROOT
 			}
 		}
 	}
-
+	
 	option = {
 		name = ita.93.a #Right, right, we don't even need Malta that much anyway...
 		ai_chance = {
@@ -3138,8 +3146,8 @@ country_event = {
 		ITA = {
 			effect_tooltip = {
 				if = {
-					limit = { MLT = { is_subject_of = ROOT } }
-					puppet = MLT
+					limit = { event_target:puppet_owner = { owns_state = 116 } }
+					puppet = event_target:puppet_owner
 					else = { transfer_state = 116 } #Malta
 				}
 			}
@@ -3182,8 +3190,8 @@ country_event = {
 		name = ita.94.a
 		add_political_power = 100
 		if = {
-			limit = { MLT = { is_subject_of = FROM } }
-			puppet = MLT
+			limit = { event_target:puppet_owner = { owns_state = 116 } }
+			puppet = event_target:puppet_owner
 			else = { transfer_state = 116 } #Malta
 		}
 	}
@@ -3200,6 +3208,7 @@ country_event = {
 	
 	trigger = {
 		has_war_with = ITA
+		surrender_progress > 0.10
 		OR = {
 			owns_state = 116
 			MLT = {
@@ -3220,6 +3229,13 @@ country_event = {
 	
 	immediate = {
 		ITA = { clr_country_flag = ITA_malta_war }
+		random_country = {
+			limit = {
+				owns_state = 116
+				is_subject_of = ROOT
+			}
+			save_event_target_as = puppet_owner
+		}
 	}
 	
 	option = {
@@ -3262,9 +3278,9 @@ country_event = {
 		add_political_power = 100
 		FROM = { white_peace = ITA }
 		if = {
-			limit = { MLT = { is_subject_of = FROM } }
-			MLT = { white_peace = ITA }
-			puppet = MLT
+			limit = { event_target:puppet_owner = { owns_state = 116 } }
+			event_target:puppet_owner = { white_peace = ITA }
+			puppet = event_target:puppet_owner
 			else = { transfer_state = 116 } #Malta
 		}
 	}
@@ -3306,6 +3322,582 @@ country_event = {
 		add_state_core = 116
 	}
 }
+
+# Italy failed to take Malta in the war
+country_event = {
+	id = ita.98
+	title = ita.98.t
+	desc = ita.98.d	
+	picture = GFX_report_event_malta
 	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		has_country_flag = ITA_malta_war
+		has_war = no
+		NOT = {
+			owns_state = 116
+			any_country = {
+				is_subject_of = ITA
+				owns_state = 116
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = {
+		name = ita.98.a
+		clr_country_flag = ITA_malta_war
+		add_political_power = -100
+	}
+}
+
 ### TUNISIA EVENTS
+
+# Italy offers to buy Tunisia
+country_event = {
+	id = ita.100
+	title = ita.100.t
+	desc = ita.100.d
+	picture = GFX_report_event_malta
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		random_country = {
+			limit = {
+				owns_state = 458
+				is_subject_of = ROOT
+			}
+			save_event_target_as = puppet_owner
+		}
+	}
+	
+	option = {
+		name = ita.100.a #Accept their offer and give them Tunisia
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 5
+				is_in_faction_with = ITA
+			}
+			modifier = {
+				factor = 2
+				has_opinion = { target = ITA value > 20 }
+			}
+			modifier = {
+				factor = 2
+				has_opinion = { target = ITA value > 50 }
+			}
+			modifier = {
+				factor = 0
+				has_opinion = { target = ITA value < -20 }
+			}
+			modifier = {
+				factor = 0
+				458 = { is_core_of = ROOT }
+			}
+			modifier = {
+				factor = 0
+				has_government = national_populist
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = syndicalist
+					has_government = totalist
+					has_government = radical_socialist
+				}
+				ITA = {
+					NOT = {
+						has_government = syndicalist
+						has_government = totalist
+						has_government = radical_socialist
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_government = syndicalist
+					has_government = totalist
+					has_government = radical_socialist
+				}
+				ITA = {
+					OR = {
+						has_government = syndicalist
+						has_government = totalist
+						has_government = radical_socialist
+					}
+				}
+			}
+		}
+		add_political_power = -100
+		ITA = {
+			add_opinion_modifier = { target = ROOT modifier = ITA_sold_us_tunisia }
+			effect_tooltip = {
+				send_equipment = { target = ROOT type = infantry_equipment amount = 2500 }
+				diplomatic_relation = { country = ROOT relation = non_aggression_pact }
+				if = {
+					limit = { NOT = { gives_military_access_to = ROOT } }
+					give_military_access = ROOT
+				}
+				if = {
+					limit = { event_target:puppet_owner = { owns_state = 458 } }
+					puppet = event_target:puppet_owner
+				}
+				if = {
+					limit = { ROOT = { owns_state = 458 } }
+					transfer_state = 458
+				}
+				if = {
+					limit = { ROOT = { owns_state = 665 } }
+					transfer_state = 665
+				}
+			}
+			country_event = { id = ita.101 }
+		}
+	}
+	option = {
+		name = ita.100.b #They're joking, right?
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0.5
+				ITA = { gives_military_access_to = ROOT }
+			}
+		}
+		ITA = {
+			add_opinion_modifier = { target = ROOT modifier = ITA_hates_govt }
+			diplomatic_relation = { country = ROOT relation = non_aggression_pact active = no }
+			if = {
+				limit = { gives_military_access_to = ROOT }
+				diplomatic_relation = { country = ROOT relation = military_access active = no }
+			}
+			country_event = { id = ita.102 }
+		}
+	}
+}
+
+# Tunisia has been bought
+country_event = {
+	id = ita.101
+	title = ita.101.t
+	desc = ita.101.d
+	picture = GFX_report_event_malta
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.101.a
+		send_equipment = { target = FROM type = infantry_equipment amount = 2500 }
+		diplomatic_relation = { country = FROM relation = non_aggression_pact }
+		if = {
+			limit = { NOT = { gives_military_access_to = FROM } }
+			give_military_access = FROM
+		}
+		if = {
+			limit = { event_target:puppet_owner = { owns_state = 458 } }
+			puppet = event_target:puppet_owner
+		}
+		if = {
+			limit = { FROM = { owns_state = 458 } } #Tunisia
+			transfer_state = 458
+		}
+		if = {
+			limit = { FROM = { owns_state = 665 } } #Gabes
+			transfer_state = 665
+		}
+	}
+}
+
+# Tunisia's sale has been refused
+country_event = {
+	id = ita.102
+	title = ita.102.t
+	desc = ita.102.d
+	picture = GFX_report_event_malta
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.102.a #Threaten them with war
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				OR = {
+					has_government = syndicalist
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 0.1
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				factor = 0.25
+				is_in_faction = no
+				FROM = {
+					has_war = no
+					OR = {
+						is_in_faction = yes
+						strength_ratio = { tag = ROOT ratio > 1.5 }
+					}
+				}
+			}
+		}
+		if = {
+			limit = { is_in_faction_with = FROM }
+			remove_from_faction = ITA
+		}
+		FROM = {
+			add_opinion_modifier = { target = ROOT modifier = ITA_outraged }
+			country_event = { id = ita.102 hours = 3 }
+		}
+	}
+	option = {
+		name = ita.102.b #It is too risky...
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0.3
+				strength_ratio = { tag = FROM ratio > 1.0 }
+			}
+			modifier = {
+				factor = 0.3
+				strength_ratio = { tag = FROM ratio > 1.5 }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { has_war = yes }
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+# Italy makes an ultimatum: turn over Tunisia or else...
+country_event = {
+	id = ita.103
+	title = ita.103.t
+	desc = ita.103.d
+	picture = GFX_report_event_malta
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			owns_state = 458
+			any_country = {
+				owns_state = 458
+				is_subject_of = ROOT
+			}
+		}
+	}
+
+	option = {
+		name = ita.103.a #Right, right, we don't even need Tunisia that much anyway...
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+				surrender_progress > 0.20
+			}
+		}
+		add_political_power = -300
+		ITA = {
+			effect_tooltip = {
+				if = {
+					limit = { event_target:puppet_owner = { owns_state = 458 } }
+					puppet = event_target:puppet_owner
+				}
+				if = {
+					limit = { ROOT = { owns_state = 458 } }
+					transfer_state = 458
+				}
+				if = {
+					limit = { ROOT = { owns_state = 665 } }
+					transfer_state = 665
+				}
+			}
+			country_event = { id = ita.104 hours = 3 }
+		}
+	}
+	option = {
+		name = ita.103.b #Such insolence will be punished!
+		ai_chance = {
+			factor = 95
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = FROM ratio < 0.75 }
+			}
+		}
+		ITA = { set_country_flag = ITA_tunisia_war }
+		add_political_power = 100
+		diplomatic_relation = { country = ITA relation = non_aggression_pact active = no }
+		declare_war_on = {
+			target = ITA
+			type = annex_everything
+		}
+	}
+}
+
+# The ultimatum succeeds: Tunisia is surrendered
+country_event = {
+	id = ita.104
+	title = ita.104.t
+	desc = ita.104.d	
+	picture = GFX_report_event_malta
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.104.a
+		add_political_power = 100
+		if = {
+			limit = { event_target:puppet_owner = { owns_state = 458 } }
+			puppet = event_target:puppet_owner
+		}
+		if = {
+			limit = { FROM = { owns_state = 458 } }
+			transfer_state = 458
+		}
+		if = {
+			limit = { FROM = { owns_state = 665 } }
+			transfer_state = 665
+		}
+	}
+}
+
+# Italy has taken Malta - white peace?
+country_event = {
+	id = ita.105
+	title = ita.105.t
+	desc = ita.105.d	
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_war_with = ITA
+		surrender_progress > 0.10
+		OR = {
+			owns_state = 458
+			any_country = {
+				owns_state = 458
+				is_subject_of = ROOT
+			}
+		}
+		ITA = {
+			NOT = { surrender_progress > 0.1 }
+			has_country_flag = ITA_tunisia_war
+			controls_state = 458
+			OR = {
+				controls_state = 665
+				NOT = {
+					ROOT = { owns_state = 665 }
+					any_country = {
+						owns_state = 665
+						is_subject_of = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	immediate = {
+		ITA = { clr_country_flag = ITA_tunisia_war }
+		random_country = {
+			limit = {
+				owns_state = 458
+				is_subject_of = ROOT
+			}
+			save_event_target_as = puppet_owner
+		}
+	}
+	
+	option = {
+		name = ita.105.a #Pull back our forces, sign a peace treaty and cede Tunisia to the Italians
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 1.5
+				ITA = { NOT = { surrender_progress > 0.05 } }
+			}
+		}
+		add_political_power = -200
+		ITA = { country_event = { id = ita.106 } }
+	}
+	option = {
+		name = ita.105.b #This war won't be over until we're marching on Rome!
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0.5
+				ITA = { NOT = { surrender_progress > 0.05 } }
+			}
+		}
+		add_political_power = -300
+	}
+}
+
+# Sued for peace: Tunisia is surrendered
+country_event = {
+	id = ita.106
+	title = ita.106.t
+	desc = ita.106.d	
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.106.a #Yes, let's end this now
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		FROM = { white_peace = ITA }
+		if = {
+			limit = { event_target:puppet_owner = { owns_state = 458 } }
+			event_target:puppet_owner = { white_peace = ITA }
+			puppet = event_target:puppet_owner
+		}
+		if = {
+			limit = { FROM = { owns_state = 458 } }
+			transfer_state = 458
+		}
+		if = {
+			limit = { FROM = { owns_state = 665 } }
+			transfer_state = 665
+		}
+	}
+	option = {
+		name = ita.106.b #This war won't be over until we're marching on [From.Capital.GetName]!
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+}
+
+# Tunisia is integrated into Italy
+country_event = {
+	id = ita.107
+	title = ita.107.t
+	desc = ita.107.d	
+	picture = GFX_report_event_malta
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		owns_state = 458
+		458 = { NOT = { is_core_of = ITA } }
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 730
+		modifier = {
+			factor = 0.5
+			458 = { is_claimed_by = ITA }
+		}
+	}
+	
+	immediate = { clr_country_flag = ITA_tunisia_war }
+	
+	option = {
+		name = ita.107.a #Integrate Tunisia into Italy proper
+		ai_chance = { factor = 5 }
+		add_political_power = -50
+		add_state_core = 458
+		if = {
+			limit = { owns_state = 665 }
+			add_state_core = 665
+		}
+	}
+	option = {
+		name = ita.107.b #Create Italian Tunisia
+		trigger = { NOT = { country_exists = TUN } }
+		ai_chance = { factor = 50 }
+		add_political_power = 100
+		every_state = {
+			limit = {
+				is_core_of = TUN 
+				is_controlled_by = ROOT
+			}
+			ITA = { remove_state_claim = PREV }
+			TUN = { transfer_state = PREV }
+		}
+		puppet = TUN 
+	}
+	option = {
+		name = ita.107.c #Make Tunisia part of Italian North Africa
+		trigger = {
+			owns_state = 665
+			LYB = {
+				is_subject_of = ITA
+				owns_state = 448
+			}
+		}
+		ai_chance = { factor = 50 }
+		add_political_power = 100
+		every_state = {
+			limit = {
+				is_core_of = TUN 
+				is_controlled_by = ROOT
+			}
+			ITA = { remove_state_claim = PREV }
+			LYB = {
+				add_state_core = PREV
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+# Italy failed to take Tunisia in the war
+country_event = {
+	id = ita.108
+	title = ita.108.t
+	desc = ita.108.d	
+	picture = GFX_report_event_malta
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		has_country_flag = ITA_tunisia_war
+		has_war = no
+		NOT = {
+			owns_state = 458
+			any_country = {
+				is_subject_of = ITA
+				owns_state = 458
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = {
+		name = ita.108.a
+		clr_country_flag = ITA_tunisia_war
+		add_political_power = -100
+	}
+}
 

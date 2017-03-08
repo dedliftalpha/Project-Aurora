@@ -1434,6 +1434,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CSA_nationalization
 			focus = CSA_unions_take_over
+			focus = CSA_intence_the_bourgise
 		}
 		x = 25
 		y = 4
@@ -1448,6 +1449,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CSA_nationalization
 			focus = CSA_unions_take_over
+			focus = CSA_intence_the_bourgise
 		}
 		x = 29
 		y = 4
@@ -2218,6 +2220,7 @@ focus_tree = {
 		x = 27
 		y = 7
 		completion_reward = {
+			remove_ideas = 
 			add_ideas = CSA_reconstruction_policy
 			add_tech_bonus = {
 				name = construction_bonus
@@ -2237,6 +2240,9 @@ focus_tree = {
 		}
 		x = 33
 		y = 8
+		completion_reward = {
+			add_national_unity = 0.03
+		}		
 	}
 	focus = {# Integrate the Native Americans
 		id = CSA_native_american_integration
@@ -2247,6 +2253,9 @@ focus_tree = {
 		}
 		x = 32
 		y = 9
+		completion_reward = {
+			add_political_power = 100
+		}
 	}
 	focus = {# African American Desegregation
 		id = CSA_african_american_desegregation
@@ -2257,39 +2266,33 @@ focus_tree = {
 		}
 		x = 34
 		y = 9
-
+		completion_reward = {
+			add_political_power = 100
+		}
 	}
-	focus = {# Forty Acres and a Mule
-		id = CSA_forty_acres_mule
-		icon = GFX_goal_generic_major_alliance
+	focus = {# Fight the Klan
+		id = CSA_fight_the_klan
+		icon = GFX_goal_generic_war_with_comintern
 		cost = 10.00
 		prerequisite = {
 			focus = CSA_african_american_desegregation
 		}
-		x = 34
-		y = 10
-
-	}
-	focus = {# Indian Self Determination
-		id = CSA_indian_self_determination
-		icon = GFX_goal_generic_major_alliance
-		cost = 10.00
 		prerequisite = {
 			focus = CSA_native_american_integration
 		}
-		x = 32
+		x = 33
 		y = 10
-
+		completion_reward = {
+			country_event = { id = combinedsyndicates.15 }
+		}
 	}
 	focus = {# Equality for all
 		id = CSA_equality_for_all
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 10.00
+        available = { has_country_flag = CSA_minutemen_destroyed }	
 		prerequisite = {
-			focus = CSA_indian_self_determination
-		}
-		prerequisite = {
-			focus = CSA_forty_acres_mule
+			focus = CSA_fight_the_klan
 		}
 		x = 33
 		y = 11
@@ -2430,7 +2433,15 @@ focus_tree = {
 		}
 		x = 20
 		y = 8
-
+		completion_reward = {		
+			add_tech_bonus = {
+				name = industrial_bonus 
+				bonus = 0.5
+				uses = 3
+				category = industry
+				category = electronics			
+			}		
+		}
 	}
 	focus = {# Rebuild the South
 		id = CSA_the_south
@@ -2441,7 +2452,56 @@ focus_tree = {
 		}
 		x = 18
 		y = 9
-
+		completion_reward = {
+			370 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			367 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			365 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			364 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}			
+		}
 	}
 	focus = {# Rebuild the Steel Belt
 		id = CSA_the_midwest
@@ -2452,12 +2512,66 @@ focus_tree = {
 		}
 		x = 20
 		y = 9
-
+		completion_reward = {
+			395 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			396 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			261 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			360 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}			
+		}
 	}
 	focus = {# Rebuild New England
 		id = CSA_new_england
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
+		available = {
+			NOT = { country_exists = NEE }
+			357 = {	is_owned_by = CSA }
+			796 = {	is_owned_by = CSA }		
+		}
 		prerequisite = {
 			focus = CSA_the_south
 		}
@@ -2469,8 +2583,32 @@ focus_tree = {
 		}
 		x = 19
 		y = 10
-
-
+		completion_reward = {
+			357 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			796 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}			
+		}
 	}
 	focus = {# Rebuild the West
 		id = CSA_the_west
@@ -2481,12 +2619,70 @@ focus_tree = {
 		}
 		x = 22
 		y = 9
-
+		completion_reward = {
+			392 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			384 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			390 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			381 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}			
+		}
 	}
 	focus = {# Rebuild the Pacific Coast
 		id = CSA_the_pacific_coast
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
+		available = {
+			NOT = { country_exists = CAL }
+			386 = {	is_owned_by = CSA }
+			385 = {	is_owned_by = CSA }
+			378 = {	is_owned_by = CSA }
+			829 = {	is_owned_by = CSA }
+			797 = {	is_owned_by = CSA }	
+			798 = {	is_owned_by = CSA }					
+		}
 		prerequisite = {
 			focus = CSA_the_west
 		}
@@ -2498,7 +2694,56 @@ focus_tree = {
 		}
 		x = 21
 		y = 10
-
+		completion_reward = {
+			386 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			385 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			378 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}
+			829 = {
+				if = {
+					limit = {
+						is_owned_by = CSA
+					}
+					add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+					}
+				}
+			}			
+		}
 	}
 	focus = {# Recovery from the War
 		id = CSA_recovery_from_the_war
@@ -2512,7 +2757,15 @@ focus_tree = {
 		}
 		x = 20
 		y = 11
-
+		completion_reward = {		
+			add_tech_bonus = {
+				name = industrial_bonus 
+				bonus = 0.5
+				uses = 3
+				category = industry
+				category = electronics			
+			}		
+		}
 	}	
 ###End of Reconstruction###	
 	focus = {# End of Reconstruction
@@ -2531,8 +2784,12 @@ focus_tree = {
 		}
 		x = 27
 		y = 12
+		
 		completion_reward = {
+			remove_ideas = CSA_reconstruction_policy
 			remove_ideas = recovering_from_acw
+			add_political_power = 250
+			add_national_unity = 0.05
 		}
 	}
 }

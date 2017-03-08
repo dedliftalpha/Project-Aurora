@@ -33,3 +33,242 @@ country_event = { #Transamur breaks away!
         add_political_power = -200
     }
 }
+
+###Expansion Events###
+###Siberia gets a demand from Transamur###
+country_event = { 
+    id = tram.20
+    title = tram.20.t
+    desc = tram.20.d
+    is_triggered_only = yes
+
+    option = { #Accept
+        name = tram.20.a
+        ai_chance = {
+            factor = 80
+        }
+        add_political_power = -200
+	TRM = { country_event = {id = tram.26 days = 2} }
+		
+    }
+
+    option = { #Refuse
+		name = tram.20.b
+        ai_chance = {
+            factor = 20
+        }
+        TRM = {country_event = { id = tram.27 days = 2} }
+    }
+}
+###Russia gets a demand from Transamur###
+country_event = { 
+    id = tram.21
+    title = tram.21.t
+    desc = tram.21.d
+    is_triggered_only = yes
+
+    option = { #Accept
+        name = tram.21.a
+        ai_chance = {
+            factor = 80
+        }
+        add_political_power = -200
+	TRM = { country_event = {id = tram.23 days = 2} }
+		
+    }
+
+    option = { #Refuse
+        name = tram.21.b
+        ai_chance = {
+            factor = 20
+        }
+        TRM = {country_event = { id = tram.24 days = 2} }
+    }
+}
+###Soviets gets a demand from Transamur###
+country_event = { 
+    id = tram.22
+    title = tram.22.t
+    desc = tram.22.d
+    is_triggered_only = yes
+
+    option = { 
+        name = tram.22.a
+        ai_chance = {
+            factor = 100
+        }
+        add_political_power = -40
+	TRM = { country_event = {id = tram.25 days = 2} }	
+    }   
+}
+
+###Russia transfer states###
+country_event = { 
+    id = tram.23
+    title = tram.23.t
+    desc = tram.23.d
+    is_triggered_only = yes
+
+    option = { 
+        name = tram.23.a
+	TRM = { 
+	transfer_state = 560
+	transfer_state = 561
+	transfer_state = 657
+	transfer_state = 574
+	transfer_state = 644
+	transfer_state = 637
+	transfer_state = 562
+	}
+		
+    }
+
+}
+
+###Soviets tranfer states###
+country_event = { 
+    id = tram.25
+    title = tram.25.t
+    desc = tram.25.d
+    is_triggered_only = yes
+
+    option = { 
+        name = tram.25.a
+	TRM = { 
+	transfer_state = 560
+	transfer_state = 561
+	transfer_state = 657
+	transfer_state = 574
+	transfer_state = 644
+	transfer_state = 637
+	transfer_state = 562
+	}
+		
+    }
+
+}
+
+
+###Anti-Kolchak Coup###
+country_event = { 
+    id = tram.50
+    title = tram.50.t
+    desc = tram.50.d
+    trigger = {
+		tag = TRM
+		date > 1937.1.1
+	}
+    mean_time_to_happen = { days = 120}
+	
+    option = { #Kolchak survived
+        name = tram.50.a
+		add_political_power = -100
+		set_country_flag = TRM_Kolchak_alive
+		JAP = {country_event = {id = tram.52 days = 7} }
+    }
+
+	option = { #Kolchak dead
+        name = tram.50.b
+		country_event = {id = tram.51 days = 1}
+    }
+
+}
+
+###Kolchak dead, choose new ruler###
+country_event = { 
+    id = tram.51
+    title = tram.51.t
+    desc = tram.51.d
+    is_triggered_only = yes
+	
+    	option = { #New Dictator
+        	name = tram.51.a
+		add_political_power = -200
+		set_country_flag = TRM_Mil_coup 
+    	}
+
+	option = { #Republic
+        	name = tram.51.b
+		add_political_power = -40
+		set_country_flag = TRM_Dem_coup
+		JAP = {country_event = {id = tram.54 days = 7} }
+    	}
+
+}
+
+###Kolchak survived, Japan gets a message###
+country_event = { 
+    id = tram.52
+    title = tram.52.t
+    desc = tram.52.d
+    is_triggered_only = yes
+	
+    option = { #Remove Kolchak
+        name = tram.52.a
+		TRM = {country_event = {id = tram.53 days = 7} }
+    }
+
+	option = { #Do Nothing
+        name = tram.52.b
+    }
+
+}
+###Transamur gets a message about Kolchak resign###
+country_event = { 
+    id = tram.53
+    title = tram.53.t
+    desc = tram.53.d
+    is_triggered_only = yes
+	
+    option = { #Remove Kolchak
+        name = tram.53.a
+		clr_country_flag = TRM_Kolchak_alive
+		set_country_flag = TRM_Mil_coup
+    }
+
+	option = { #Break Away
+        name = tram.53.b
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id= tram.1 days = 1}}
+    }
+
+}
+
+###Kolchak dead, Transamur become a republic, Japan gets a message###
+country_event = { 
+    id = tram.54
+    title = tram.54.t
+    desc = tram.54.d
+    is_triggered_only = yes
+	
+    option = { #Demand new military dictator
+        name = tram.54.a
+		TRM = {country_event = {id = tram.55 days = 2} }
+    }
+
+	option = { #Do Nothing
+        name = tram.54.b
+    }
+
+}
+
+###Dem Transamur responds###
+country_event = { 
+    id = tram.55
+    title = tram.55.t
+    desc = tram.55.d
+    is_triggered_only = yes
+	
+    option = { #Remove Republic
+        name = tram.55.a
+		clr_country_flag = TRM_Dem_coup
+		set_country_flag = TRM_Mil_coup
+    }
+
+	option = { #Break Away
+        name = tram.55.b
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id = tram.1 days = 1}}
+    }
+
+}

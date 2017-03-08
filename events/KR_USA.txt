@@ -11422,113 +11422,8 @@ country_event = {
 #####################################################
 #USA and Second Weltkrieg
 #####################################################
-country_event = {
-	id = ustates.295
-	title = ustates.295.t
-	desc = ustates.295.d
-	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
 
-	trigger = {
-		tag = USA
-		has_war = no
-		is_subject = no
-		GER = { has_war_with = FRA }
-		CAN = { has_war_with = ENG }
-		NOT = {
-		    country_exists = CSA
-			country_exists = TEX
-			country_exists = CAL
-			country_exists = NEE
-			is_in_faction_with = CAN
-			is_in_faction_with = GER
-			has_government = totalist
-			has_government = radical_socialist
-			has_government = syndicalist
-		}
-		date < 1939.1.1
-	}
-
-	mean_time_to_happen = {
-		days = 7
-	}
-
-	option = { 
-		name = ustates.295.a # Join Entente
-
-		ai_chance = {
-			factor = 40
-		}
-		add_political_power = -300
-		add_opinion_modifier = { target = CAN modifier = USA_joins_us }
-
-		CAN = { country_event = { id = ustates.298 } }
-	}
-
-	option = { 
-		name = ustates.295.b # Join Mitteleuropa
-
-		ai_chance = {
-			factor = 30
-		}
-		trigger = { has_opinion = { target = GER value > 100 } GER = { NOT = { surrender_progress > 0.1 has_war_with = CAN } } }
-        add_political_power = -400
-		GER = { country_event = { id = ustates.300 } }
-		add_opinion_modifier = { target = GER modifier = USA_joins_us } # 200
-	}
-	
-	option = { 
-		name = ustates.295.e # Maximize support for Canada, but maintain our neutrality... for now.
-
-		ai_chance = {
-			factor = 50
-		}
-		CAN = { country_event = { id = ustates.302 days = 1 }}
-		add_opinion_modifier = { target = CAN modifier = USA_suport_us } # 50
-		set_global_flag = US_SUP_CAN
-		add_political_power = -20
-
-		send_equipment = {
-            target = CAN
-            type = infantry_equipment
-            amount = 10000
-        }
-
-        add_ideas = usa_supp_IIWW
-	}
-	
-	option = { 
-		name = ustates.295.f # We should lend Germany a hand, but not join war...for now at least
-
-		ai_chance = {
-			factor = 30
-		}
-		trigger = { has_opinion = { target = GER value > 10 } GER = { NOT = { surrender_progress > 0.1 has_war_with = CAN } } }
-        hidden_effect = { GER = { country_event = { id = ustates.303 days = 1 }}}
-		add_opinion_modifier = { target = GER modifier = USA_suport_us } # 50
-		set_global_flag = US_SUP_GER
-		add_political_power = -40
-
-		send_equipment = {
-            target = GER
-            type = infantry_equipment
-            amount = 10000
-        }
-
-        add_ideas = usa_supp_IIWW
-	}
-
-	option = { 
-		name = ustates.295.c # Neutrality
-
-		ai_chance = {
-			factor = 20
-		}
-
-		add_political_power = 60
-	}
-}
 country_event = {
 	id = ustates.298
 	title = ustates.298.t
@@ -11550,7 +11445,6 @@ country_event = {
 		clr_global_flag = US_SUP_CAN
 		add_to_faction = USA
 	}
-
 	option = { 
 		name = ustates.298.b
 
@@ -11621,6 +11515,8 @@ country_event = {
 		add_political_power = -80
 	}
 }
+
+
 country_event = {
 	id = ustates.301
 	title = ustates.301.t

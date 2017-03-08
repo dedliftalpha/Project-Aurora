@@ -87,22 +87,22 @@ country_event = {# USA responds to Canada seizing New England
 	}		
 }
 country_event = {# CSA responds to Canada seizing New England
-	id = amcivwar.3
-	title = amcivwar.3.t
-	desc = amcivwar.3.d
+	id = neeflavor.3
+	title = neeflavor.3.t
+	desc = neeflavor.3.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes
 	
 	option = { 
-		name = amcivwar.3.a
+		name = neeflavor.3.a
 		ai_chance = {
 			factor = 1
 		}
 		declare_war_on = { target = CAN type = annex_everything }
 	}
 	option = { 
-		name = amcivwar.3.b
+		name = neeflavor.3.b
 		ai_chance = {
 			factor = 99
 		}
@@ -110,15 +110,15 @@ country_event = {# CSA responds to Canada seizing New England
 	}			
 }
 country_event = {# AUS responds to Canada seizing New England
-	id = amcivwar.4
-	title = amcivwar.4.t
-	desc = amcivwar.4.d
+	id = neeflavor.4
+	title = neeflavor.4.t
+	desc = neeflavor.4.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
 	is_triggered_only = yes
 	
 	option = { 
-		name = amcivwar.4.a
+		name = neeflavor.4.a
 
 		ai_chance = {
 			factor = 1
@@ -127,7 +127,7 @@ country_event = {# AUS responds to Canada seizing New England
 		declare_war_on = { target = CAN type = annex_everything }
 	}
 	option = { 
-		name = amcivwar.4.b
+		name = neeflavor.4.b
 
 		ai_chance = {
 			factor = 99
@@ -188,8 +188,8 @@ country_event = {# Canada Releases New England
 			add_state_core = 357
 			add_state_core = 796
 
-			hidden_effect = { country_event = { id = neeflavor.125 days = 2 }}
-			hidden_effect = { country_event = { id = neeflavor.341 days = 0 } }
+			hidden_effect = { country_event = { id = neeflavor.6 days = 2 }}
+			hidden_effect = { country_event = { id = amcivwar.341 days = 0 } }
 			change_tag_from = CAN
 		}
 	}
@@ -282,23 +282,8 @@ country_event = {# New England and the USA
 	
 	fire_only_once = yes
 
-	trigger = {
-		tag = NEE
-		has_global_flag = END_ACW
-		country_exists = USA
-		NOT = { 
-			is_subject = yes
-			USA = { is_subject = yes }
-			country_exists = TEX
-			country_exists = CSA
-			has_war_with = USA 
-		}	
-	}
+	is_triggered_only = yes
 
-	mean_time_to_happen = {
-		days = 15
-	}
-	
 	option = { 
 		name = neeflavor.8.a
 
@@ -575,6 +560,19 @@ country_event = {# The Great New England Hurricane!
 
 		add_political_power = -100
 	}	
+}
+country_event = {# New England Constitution
+	id = neeflavor.30
+	title = neeflavor.30.t
+	desc = neeflavor.30.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+	
+	option = {
+		name = neeflavor.30.a
+			add_political_power = 140
+	}					
 }
 ###########################################
 ###		 New England Elections			###
@@ -1012,13 +1010,15 @@ country_event = {# Integration of New England
 	trigger = {
 		tag = CAN
 		NOT = { country_exists = NEE }
-		has_country_flag = CANOCCNE
+		has_country_flag = yankee_revolt2
 		controls_state = 357
 		controls_state = 796
+		clr_country_flag = yankee_revolt2
+
 	}
 
 	mean_time_to_happen = {
-		days = 1780
+		days = 60
 	}
 	
 	option = {
@@ -1028,3 +1028,428 @@ country_event = {# Integration of New England
 		add_state_core = 796
 	}					
 }
+country_event = {# The Yanke Rebellion
+    id = neeflavor.20
+    title = neeflavor.20.t
+    desc = neeflavor.20.d
+	
+    fire_only_once = yes
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		has_country_flag = CANOCCNE
+        OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+    mean_time_to_happen = {
+        days = 30
+    }
+    
+	option = {# New England is ours!
+		ai_chance = {
+			factor = 75
+		}
+        name = neeflavor.20.a
+        add_political_power = -20
+        set_country_flag = yankee_revolt
+    }
+	option = { 
+		name = neeflavor.20.b
+		ai_chance = {
+			factor = 25
+		}
+		add_political_power = 20
+		NEE = {
+			transfer_state = 357
+			transfer_state = 796
+			add_state_core = 357
+			add_state_core = 796
+			hidden_effect = { country_event = { id = neeflavor.6 days = 2 }}
+			hidden_effect = { country_event = { id = amcivwar.341 days = 0 } }
+		}
+	}	
+	option = { 
+		name = neeflavor.20.c
+
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = 20
+		NEE = {
+			transfer_state = 357
+			transfer_state = 796
+
+			add_state_core = 357
+			add_state_core = 796
+
+			hidden_effect = { country_event = { id = neeflavor.6 days = 2 }}
+			hidden_effect = { country_event = { id = amcivwar.341 days = 0 } }
+			change_tag_from = CAN
+		}
+	}	
+	
+}
+country_event = {# Riots throughout New England
+    id = neeflavor.21
+    title = neeflavor.21.t
+    desc = neeflavor.21.d
+	
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		OR = {
+			has_country_flag = yankee_revolt
+			has_country_flag = yankee_revolt2
+		}
+	    OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+    mean_time_to_happen = {
+        days = 100
+    }
+    option = {
+        name = neeflavor.21.a
+
+        add_political_power = -20
+    }
+}
+country_event = {# the Yankee Resistance
+    id = neeflavor.21
+    title = neeflavor.21.t
+    desc = neeflavor.21.d
+
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		OR = {
+			has_country_flag = yankee_revolt
+			has_country_flag = yankee_revolt2
+		}
+	    OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+
+    mean_time_to_happen = {
+        days = 175
+    }
+
+    option = {
+        name = mexico.40.a
+        ai_chance = {
+            factor = 33
+        }
+        add_political_power = -40
+        random_owned_controlled_state = {
+            prioritize = {
+                375
+            }
+            prioritize = {
+                376
+            }
+            prioritize = {
+                377
+            }
+            prioritize = {
+                378
+            }
+            prioritize = {
+                798
+            }
+            prioritize = {
+                829
+            }
+            prioritize = {
+                797
+            }
+            prioritize = {
+                833
+            }
+
+            limit = {
+                industrial_complex > 0
+            }
+            damage_building = {
+                type = industrial_complex
+                damage = 0.8
+            }
+        }
+        add_manpower = -100
+    }
+    option = {
+        name = mexico.40.b
+        ai_chance = {
+            factor = 33
+        }
+        add_political_power = -40
+        random_owned_controlled_state = {
+            prioritize = {
+                375
+            }
+            prioritize = {
+                376
+            }
+            prioritize = {
+                377
+            }
+            prioritize = {
+                378
+            }
+            prioritize = {
+                798
+            }
+            prioritize = {
+                829
+            }
+            prioritize = {
+                797
+            }
+            prioritize = {
+                833
+            }
+
+            limit = {
+                industrial_complex > 0
+            }
+            damage_building = {
+                type = infrastructure
+                damage = 0.9
+            }
+        }
+        random_owned_controlled_state = {
+            prioritize = {
+                375
+            }
+            prioritize = {
+                376
+            }
+            prioritize = {
+                377
+            }
+            prioritize = {
+                378
+            }
+            prioritize = {
+                798
+            }
+            prioritize = {
+                829
+            }
+            prioritize = {
+                797
+            }
+            prioritize = {
+                833
+            }
+
+            limit = {
+                industrial_complex > 0
+            }
+            damage_building = {
+                type = infrastructure
+                damage = 0.9
+            }
+        }
+        add_manpower = -100
+        random_owned_controlled_state = {
+            prioritize = {
+                375
+            }
+            prioritize = {
+                376
+            }
+            prioritize = {
+                377
+            }
+            prioritize = {
+                378
+            }
+            prioritize = {
+                798
+            }
+            prioritize = {
+                829
+            }
+            prioritize = {
+                797
+            }
+            prioritize = {
+                833
+            }
+
+            limit = {
+                industrial_complex > 0
+            }
+            damage_building = {
+                type = infrastructure
+                damage = 0.9
+            }
+        }
+    }
+    option = {
+        name = mexico.40.c
+        ai_chance = {
+            factor = 34
+        }
+        add_political_power = -40
+        add_manpower = -2500
+
+    }
+}
+country_event = {# Yankees attack our troops
+    id = neeflavor.22
+    title = neeflavor.22.t
+    desc = neeflavor.22.d
+	
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		OR = {
+			has_country_flag = yankee_revolt
+			has_country_flag = yankee_revolt2
+		}
+	    OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+    mean_time_to_happen = {
+        days = 200
+    }
+    option = {
+        name = neeflavor.22.a
+        add_political_power = -60
+        add_manpower = -5000
+    }
+}
+country_event = {# Major attack
+    id = neeflavor.23
+    title = neeflavor.23.t
+    desc = neeflavor.23.d
+	
+	
+    fire_only_once = yes
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		has_country_flag = yankee_revolt
+	    OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+    mean_time_to_happen = {
+        days = 900
+    }
+    option = {
+        name = mexico.23.a
+        ai_chance = {
+            factor = 100
+        }
+        add_political_power = -200
+        add_manpower = -35000
+
+    }
+}
+country_event = {# Resolving New England
+    id = neeflavor.24
+    title = neeflavor.24.t
+    desc = neeflavor.24.d
+
+    trigger = {
+        CAN = {
+            has_war = no
+        }
+        tag = CAN
+		has_country_flag = yankee_revolt
+
+        OR = {
+            CAN = {
+                controls_state = 796
+            }
+            CAN = {
+                controls_state = 357
+            }
+        }
+    }
+
+    mean_time_to_happen = {
+        days = 175
+    }
+
+    option = {# give it to the USA
+        name = mexico.24.a
+		 ai_chance = {
+            factor = 35
+        }
+		trigger = { 
+			country_exists = USA
+		}
+		USA = { 
+			transfer_state = 357
+			transfer_state = 796  
+		}
+		clr_country_flag = yankee_revolt
+
+    }
+    option = {# Give it to the AUS
+        name = mexico.24.b
+        ai_chance = {
+            factor = 15
+        }
+		trigger = { 
+			country_exists = TEX
+		}
+		
+		TEX = { 
+			transfer_state = 357
+			transfer_state = 796  
+		}
+		clr_country_flag = yankee_revolt
+    }
+    option = {# Grant them rights
+        name = mexico.24.c
+        ai_chance = {
+            factor = 50
+        }
+        add_political_power = 40
+        set_country_flag = yankee_revolt2
+		clr_country_flag = yankee_revolt
+    }
+}
+

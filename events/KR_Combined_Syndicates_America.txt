@@ -1951,138 +1951,94 @@ country_event = {# Integration of the Federal Officer Corps
 ####################################
 # 	  Foreign Policy Events 	   #
 ####################################
-country_event = {# The CSA and New England
+country_event = {# The Strike Begins
 	id = combinedsyndicates.43
 	title = combinedsyndicates.43.t
 	desc = combinedsyndicates.43.d
 	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CSA
-		has_global_flag = END_ACW
-		country_exists = NEE
-		NOT = {
-			country_exists = USA
-			country_exists = TEX
-			is_in_faction_with = NEE
-		}
-		NOT = {
-			has_war_with = NEE
-			has_war_with = CAL
-			has_war_with = MEX
-			surrender_progress > 0.1
-		}
-		date > 1940.5.15
-	}
 
-	mean_time_to_happen = {
-		days = 20
-	}
+	is_triggered_only = yes
 
-	option = {
+	option = {# Do nothing
 		name = combinedsyndicates.43.a
 
 		ai_chance = {
-			factor = 99
+			factor = 60
 		}
-
-		CSA = {
-			remove_state_claim = 357
-			remove_state_claim = 796
-			add_state_core = 357
-			add_state_core = 796
-		}
-
-		add_opinion_modifier = { target = CAN modifier = CSA_DEMANDS_NE }
-		add_opinion_modifier = { target = NEE modifier = CSA_DEMANDS_NE }
-
-		set_global_flag = CSA_NE_DEM
+		set_global_flag = NEE_general_strike
+		add_ideas = { NEE_general_strike_malus }
+		hidden_effect = {
+			country_event = { days = 60 id = combinedsyndicates.31}
+        }
 	}
+	option = {# crack down on them
+		name = combinedsyndicates.43.b
+		ai_chance = { factor = 30 }
 
-	option = {
+		set_global_flag = NEE_general_strike
+		add_ideas = { NEE_general_strike_malus }
+		hidden_effect = {
+			country_event = { days = 25 id = combinedsyndicates.31}
+        }	
+	}
+	option = {# buy them off
 		name = combinedsyndicates.43.b
 
 		ai_chance = {
-			factor = 1
+			factor = 10
 		}
 
 		add_political_power = -100
+		add_ideas = { NEE_worker_benefits }
+		hidden_effect = {
+			country_event = { days = 25 id = combinedsyndicates.34}
+        }	
 	}
 }
-country_event = {# CSA demands New England Canada responds
+country_event = {# General Strike grows violent
 	id = combinedsyndicates.31
 	title = combinedsyndicates.31.t
 	desc = combinedsyndicates.31.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CAN
-		has_global_flag = CSA_NE_DEM
-		is_in_faction_with = NEE
-	}
+	is_triggered_only = yes
 
-	option = {
+	option = {# the Strikers take control!
 		name = combinedsyndicates.31.a
 
 		ai_chance = {
-			factor = 99
+			factor = 80
 		}
-
-		clr_global_flag = CSA_NE_DEM
+		remove_ideas = { NEE_general_strike_malus }
+		clr_global_flag = NEE_general_strike
 		NEE = { country_event = { id = combinedsyndicates.35 } }
+		set_politics = { ruling_party = syndicalist	}
 	}
-
-	option = {
+	option = {# Order is restored
 		name = combinedsyndicates.31.b
-
 		ai_chance = {
-			factor = 1
+			factor = 20
 		}
-
-		add_political_power = -100
-		remove_from_faction = NEE
+		clr_global_flag = NEE_general_strike
+		remove_ideas = { NEE_general_strike_malus }
+		hidden_effect = { CSA = { country_event = { id = combinedsyndicates.34 } } }	
 	}
 }
-country_event = {# NEW ENGLAND RESPONDS TO THE CSA THREAT
+country_event = {# Strikers take control of the government
 	id = combinedsyndicates.32
 	title = combinedsyndicates.32.t
 	desc = combinedsyndicates.32.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = NEE
-		has_global_flag = CSA_NE_DEM
-		NOT = { CAN = { is_in_faction_with = NEE }}
-	}
+	is_triggered_only = yes
 
-	option = {
+	option = {# Lets rejoin with America!
 		name = combinedsyndicates.32.a
-
-		ai_chance = {
-			factor = 99
-		}
 
 		CSA = { country_event = { id = combinedsyndicates.33 } }
 	}
-
-	option = {
-		name = combinedsyndicates.32.b
-
-		ai_chance = {
-			factor = 1
-		}
-
-		remove_from_faction = NEE
-		CSA = { country_event = { id = combinedsyndicates.34 } }
-	}
 }
-country_event = {# CSA INHERITS NEW ENGLAND
+country_event = {# syndie New England seeks to rejoin the CSA
 	id = combinedsyndicates.33
 	title = combinedsyndicates.33.t
 	desc = combinedsyndicates.33.d
@@ -2096,7 +2052,7 @@ country_event = {# CSA INHERITS NEW ENGLAND
 		annex_country = { target = NEE transfer_troops = no }
 	}
 }
-country_event = {# To hell with the CSA
+country_event = {# Strikers fail(CSA)
 	id = combinedsyndicates.34
 	title = combinedsyndicates.34.t
 	desc = combinedsyndicates.34.d
@@ -2124,152 +2080,93 @@ country_event = {# To hell with the CSA
 		add_political_power = -100
 	}
 }
-country_event = {# We Stand on Guard for Thee
+country_event = {# The PSA Strike Begins
 	id = combinedsyndicates.35
 	title = combinedsyndicates.35.t
 	desc = combinedsyndicates.35.d
 	picture = GFX_report_event_spain_civil_war_soldiers
-	
+
 	is_triggered_only = yes
 
-	option = {
+	option = {# Do nothing
 		name = combinedsyndicates.35.a
 
 		ai_chance = {
-			factor = 99
+			factor = 60
 		}
-
-		CSA = { country_event = { id = combinedsyndicates.34 }} 
+		set_global_flag = CAL_general_strike
+		add_ideas = { CAL_general_strike_malus }
+		hidden_effect = {
+			country_event = { days = 60 id = combinedsyndicates.36}
+        }
 	}
-
-	option = {
+	option = {# crack down on them
 		name = combinedsyndicates.35.b
+		ai_chance = { factor = 30 }
 
-		ai_chance = {
-			factor = 1
-		}
-
-		CSA = { country_event = { id = combinedsyndicates.33 }} 
+		set_global_flag = CAL_general_strike
+		add_ideas = { NEE_general_strike_malus }
+		hidden_effect = {
+			country_event = { days = 25 id = combinedsyndicates.36}
+        }	
 	}
-}
-country_event = {# THE PSA and the CSA
-	id = combinedsyndicates.36
-	title = combinedsyndicates.36.t
-	desc = combinedsyndicates.36.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CSA
-		has_global_flag = END_ACW
-		country_exists = CAL
-		NOT = { 
-			CAL = {
-			    OR = {
-					is_in_faction_with = CSA
-					is_in_faction_with = CAN
-					is_in_faction_with = JAP
-				}
-			}
-			is_subject = yes
-			has_war = yes
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 15
-	}
-
-	option = {
-		name = combinedsyndicates.36.a
-
-		ai_chance = {
-			factor = 90
-		}
-
-		add_political_power = -60
-		declare_war_on = { target = CAL type = annex_everything	}
-	}
-
-	option = {
-		name = combinedsyndicates.36.b
+	option = {# buy them off
+		name = combinedsyndicates.35.b
 
 		ai_chance = {
 			factor = 10
 		}
 
-		add_opinion_modifier = { target = CAL modifier = CSA_COEXIST_CAL }
-		add_political_power = -20
+		add_political_power = -100
+		hidden_effect = {
+			country_event = { days = 25 id = combinedsyndicates.39}
+        }	
 	}
 }
-country_event = {# The Reed Doctrine
+country_event = {# General Strike grows violent
+	id = combinedsyndicates.36
+	title = combinedsyndicates.36.t
+	desc = combinedsyndicates.36.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	is_triggered_only = yes
+
+	option = {# the Strikers take control!
+		name = combinedsyndicates.36.a
+
+		ai_chance = {
+			factor = 60
+		}
+		remove_ideas = { CAL_general_strike_malus }
+		clr_global_flag = CAL_general_strike
+		NEE = { country_event = { id = combinedsyndicates.37 } }
+		set_politics = { ruling_party = syndicalist	}
+	}
+	option = {# Order is restored
+		name = combinedsyndicates.36.b
+		ai_chance = {
+			factor = 40
+		}
+		remove_ideas = { CAL_general_strike_malus }
+		clr_global_flag = CAL_general_strike
+		hidden_effect = {country_event = { days = 15 id = combinedsyndicates.39 }}	
+	}
+}
+country_event = {# Strikers take control of the government
 	id = combinedsyndicates.37
 	title = combinedsyndicates.37.t
 	desc = combinedsyndicates.37.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CSA
-		has_global_flag = END_ACW
-		OR = {
-			has_government = totalist
-			has_government = radical_socialist
-			has_government = syndicalist
-		}	
-		NOT = { 
-			country_exists = USA
-			country_exists = TEX
-			is_subject = yes
-			has_war = yes
-		}
-	}
+	is_triggered_only = yes
 
-	mean_time_to_happen = {
-		days = 10
-	}
+	option = {# Lets rejoin with America!
+		name = combinedsyndicates.32.a
 
-	option = {
-		name = combinedsyndicates.37.a
-
-		ai_chance = {
-			factor = 99
-		}
-
-		add_opinion_modifier = { target = ENG modifier = CSA_REED_DOCTRINE_INT }
-		add_opinion_modifier = { target = FRA modifier = CSA_REED_DOCTRINE_INT }
-		add_opinion_modifier = { target = SRI modifier = CSA_REED_DOCTRINE_INT }
-		if = {
-			limit = { SOV = { OR = { has_government = totalist has_government = radical_socialist has_government = syndicalist }}}	
-
-			add_opinion_modifier = { target = SOV modifier = CSA_REED_DOCTRINE_INT }				
-		}
-		
-		add_opinion_modifier = { target = CAL modifier = CSA_REED_DOCTRINE_ENT }
-		add_opinion_modifier = { target = CAN modifier = CSA_REED_DOCTRINE_ENT }
-		add_opinion_modifier = { target = JAP modifier = CSA_REED_DOCTRINE_ENT }
-		add_opinion_modifier = { target = GER modifier = CSA_REED_DOCTRINE_ENT }
-
-
-		if = { limit = { NOT = { MEX = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } } MEX = { country_event = { id = combinedsyndicates.38 } } }
-		if = { limit = { NOT = { ARG = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } } ARG = { country_event = { id = combinedsyndicates.39 } } }
-		if = { limit = { NOT = { HON = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } } HON = { country_event = { id = combinedsyndicates.40 } } }
-		if = { limit = { NOT = { NIC = { OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } } } } NIC = { country_event = { id = combinedsyndicates.41 } } }
-	}
-
-	option = {
-		name = combinedsyndicates.37.b
-
-		ai_chance = {
-			factor = 1
-		}
-
-		add_political_power = -20
+		CSA = { country_event = { id = combinedsyndicates.38 } }
 	}
 }
-country_event = {# The Reed Doctrine
+country_event = {# syndie PSA seeks to rejoin the CSA
 	id = combinedsyndicates.38
 	title = combinedsyndicates.38.t
 	desc = combinedsyndicates.38.d
@@ -2280,11 +2177,10 @@ country_event = {# The Reed Doctrine
 	option = {
 		name = combinedsyndicates.38.a
 
-		add_opinion_modifier = { target = CSA modifier = REED_DOCTRINE }
-		set_global_flag = MEX_REED_DOCTRINE
+		annex_country = { target = CAL transfer_troops = no }
 	}
 }
-country_event = {# The Reed Doctrine
+country_event = {# Strikers fail(CSA)
 	id = combinedsyndicates.39
 	title = combinedsyndicates.39.t
 	desc = combinedsyndicates.39.d
@@ -2295,7 +2191,21 @@ country_event = {# The Reed Doctrine
 	option = {
 		name = combinedsyndicates.39.a
 
-		add_opinion_modifier = { target = CSA modifier = REED_DOCTRINE }
+		ai_chance = {
+			factor = 99
+		}
+
+		declare_war_on = { target = CAL type = annex_everything	}
+	}
+
+	option = {
+		name = combinedsyndicates.39.b
+
+		ai_chance = {
+			factor = 1
+		}
+
+		add_political_power = -100
 	}
 }
 country_event = {# The Reed Doctrine
@@ -2309,80 +2219,199 @@ country_event = {# The Reed Doctrine
 	option = {
 		name = combinedsyndicates.40.a
 
-		add_opinion_modifier = { target = CSA modifier = REED_DOCTRINE }
-	}
-}
-country_event = {# The Reed Doctrine
-	id = combinedsyndicates.41
-	title = combinedsyndicates.41.t
-	desc = combinedsyndicates.41.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	is_triggered_only = yes
-
-	option = {
-		name = combinedsyndicates.41.a
-
-		add_opinion_modifier = { target = CSA modifier = REED_DOCTRINE }
-	}
-}
-country_event = {# THE Mexico and the TEX
-	id = combinedsyndicates.42
-	title = combinedsyndicates.42.t
-	desc = combinedsyndicates.42.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CSA
-		has_global_flag = END_ACW
-		has_global_flag = MEX_REED_DOCTRINE
-		country_exists = MEX
-		controls_state = 395
-		controls_state = 378
-		controls_state = 365
-		NOT = { 
-			MEX = {
-				OR = { 
-				is_in_faction_with = CSA
-				is_in_faction_with = FRA
-				is_in_faction_with = CAN
-				is_in_faction_with = GER
-				is_subject = yes
+		add_opinion_modifier = { target = ENG modifier = CSA_REED_DOCTRINE_INT }
+		add_opinion_modifier = { target = FRA modifier = CSA_REED_DOCTRINE_INT }
+		add_opinion_modifier = { target = SRI modifier = CSA_REED_DOCTRINE_INT }
+		if = {# the Soviet Union exists
+			limit = {
+				SOV = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
 				}
-			}
-			country_exists = CAL
-			country_exists = USA
-			country_exists = TEX
-			is_subject = yes
-			has_war = yes
+			}	
+			add_opinion_modifier = { target = SOV modifier = CSA_REED_DOCTRINE_INT }				
 		}
-	}
-
-	mean_time_to_happen = {
-		days = 30
-	}
-
-	option = {
-		name = combinedsyndicates.42a
-
-		ai_chance = {
-			factor = 90
+		if = {# Bolivia is Syndie
+			limit = {
+				BOL = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
+				}
+			}	
+			add_opinion_modifier = { target = BOL modifier = CSA_REED_DOCTRINE_INT }				
 		}
-
-		add_political_power = -20
-		declare_war_on = { target = MEX type = annex_everything	}
-	}
-
-	option = {
-		name = combinedsyndicates.42.b
-
-		ai_chance = {
-			factor = 10
+		if = {# CentroAmerica is exists
+			limit = {
+				GUA = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
+				}
+			}	
+			add_opinion_modifier = { target = GUA modifier = CSA_REED_DOCTRINE_INT }				
 		}
-
-		add_opinion_modifier = { target = MEX modifier = CSA_COEXIST_MEX }
-		add_political_power = -60
+		if = {# Mexico is Syndie
+			limit = {
+				MEX = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
+				}
+			}	
+			add_opinion_modifier = { target = MEX modifier = CSA_REED_DOCTRINE_INT }				
+		}
+		if = {# Friendship with CNT-FAI
+			limit = {
+				CNT = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
+				}
+			}	
+			add_opinion_modifier = { target = CNT modifier = CSA_REED_DOCTRINE_INT }				
+		}
+		if = {# If Brazil is Syndie
+			limit = {
+				BRA = {
+					OR = { 
+						has_government = totalist
+						has_government = radical_socialist
+						has_government = syndicalist 
+					}
+				}
+			}	
+			add_opinion_modifier = { target = BRA modifier = CSA_REED_DOCTRINE_INT }				
+		}
+		
+		
+		add_opinion_modifier = { target = CAL modifier = CSA_REED_DOCTRINE_ENT }
+		add_opinion_modifier = { target = CAN modifier = CSA_REED_DOCTRINE_ENT }
+		add_opinion_modifier = { target = JAP modifier = CSA_REED_DOCTRINE_ENT }
+		add_opinion_modifier = { target = GER modifier = CSA_REED_DOCTRINE_ENT }
+		if = {# If Mexico is not Syndie
+			limit = {
+				NOT = {
+					MEX = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = MEX modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# United Provinces is not Syndie	
+			limit = {
+				NOT = {
+					NIC = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = NIC modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# Panama is not Syndie
+			limit = {
+				NOT = {
+					PNM = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = PNM modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# Columbia is not Syndie	
+			limit = {
+				NOT = {
+					COL = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = COL modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# Peru is not Syndie	
+			limit = {
+				NOT = {
+					PRU = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = PRU modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# Bolivia is not Syndie	
+			limit = {
+				NOT = {
+					BOL = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = BOL modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# La Plata is not Syndie	
+			limit = {
+				NOT = {
+					ARG = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = ARG modifier = CSA_REED_DOCTRINE_ENT }				
+		}
+		if = {# Brazil is not Syndie	
+			limit = {
+				NOT = {
+					BRA = {
+						OR = { 
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist 
+						} 
+					}	 
+				}	 
+			} 
+			add_opinion_modifier = { target = BRA modifier = CSA_REED_DOCTRINE_ENT }				
+		}
 	}
 }
+

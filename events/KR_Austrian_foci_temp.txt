@@ -252,7 +252,7 @@ country_event = { #Galica reacts
 			}
 			country_event = aus.9012
 		}
-		set_global_flag = Dualism_Bohemia
+		set_global_flag = Dualism_Galicia
     }
 
     option = {
@@ -376,5 +376,232 @@ country_event = { #Hungary, if Galicia declares war
     option = {
         name = aus.9015.b
 		ai_chance = { factor = 95 }
+    }
+}
+
+### ILLYRIA ###
+
+country_event = { #Illyria
+    id = aus.9020
+    title = aus.9020.t
+    desc = aus.9020.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9021.a
+		ILL = {
+			country_event = aus.9021
+		}
+    }
+}
+
+country_event = { #Illyria reacts
+    id = aus.9021
+    title = aus.9021.t
+    desc = aus.9021.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9021.a
+		ai_chance = { factor = 30 }
+		AUS = {
+			annex_country = {
+				target = ILL
+				transfer_troops = yes
+			}
+			country_event = aus.9022
+		}
+		set_global_flag = Dualism_Illyria
+    }
+
+    option = {
+        name = aus.9021.b
+		ai_chance = { factor = 70 }
+		set_global_flag = Austrian_Civil_War
+		AUS = { 
+			end_puppet = ILL
+		}
+		ILL = {
+			declare_war_on = {
+				target = AUS
+				type = annex_everything
+			}
+		}
+		AUS = {
+			if = {
+				limit = {
+					exists = yes
+				}
+				country_event = aus.9023
+			}
+		}
+		GAL = {
+			if = {
+				limit = {
+					exists = yes
+				}
+				country_event = aus.9024
+			}
+		}
+		BOM = {
+			if = {
+				limit = {
+					exists = yes
+				}
+				country_event = aus.9025
+			}
+		}
+		HUN = {
+			if = {
+				limit = {
+					exists = yes
+				}
+				country_event = aus.9026
+			}
+		}
+    }
+}
+
+country_event = { #Illyria yields
+    id = aus.9022
+    title = aus.9022.t
+    desc = aus.9022.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = { #Split Illyria with Hungary, restore the Condominium
+        name = aus.9022.a
+		ai_chance = { factor = 95 }
+		
+		HUN = {
+			transfer_state = 103
+			transfer_state = 109
+			transfer_state = 794
+		}
+		release_puppet = BOS
+    }
+    option = { #Take all of Illyria
+        name = aus.9022.b
+		ai_chance = { factor = 2 }
+		
+		add_political_power = -120
+    }
+    option = { #Give Hungary all of Illyria
+        name = aus.9022.c
+		ai_chance = { factor = 3 }
+		
+		HUN = {
+			every_state = {
+				limit = {
+					is_core_of = ILL
+				}
+				transfer_state = PREV
+			}
+		}
+    }
+}
+
+country_event = { #Illyria rebels
+    id = aus.9023
+    title = aus.9023.t
+    desc = aus.9023.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9023.a
+    }
+}
+
+country_event = { #Galicia, if Illyria declares war
+    id = aus.9024
+    title = aus.9024.t
+    desc = aus.9024.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9024.a
+		ai_chance = { factor = 30 }
+		AUS = { 
+			end_puppet = GAL
+		}
+		GAL = {
+			declare_war_on = {
+				target = AUS
+				type = annex_everything
+			}
+		}
+		set_global_flag = Austrian_Civil_War
+    }
+
+    option = {
+        name = aus.9024.b
+		ai_chance = { factor = 70 }
+    }
+}
+
+country_event = { #Bohemia, if Illyria declares war
+    id = aus.9025
+    title = aus.9025.t
+    desc = aus.9025.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9025.a
+		ai_chance = { factor = 60 }
+		AUS = { 
+			end_puppet = BOM
+		}
+		BOM = {
+			declare_war_on = {
+				target = AUS
+				type = annex_everything
+			}
+		}
+		set_global_flag = Austrian_Civil_War
+    }
+
+    option = {
+        name = aus.9025.b
+		ai_chance = { factor = 40 }
+    }
+}
+
+country_event = { #Hungary, if Illyria declares war
+    id = aus.9026
+    title = aus.9026.t
+    desc = aus.9026.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = aus.9026.a
+		ai_chance = { factor = 1 }
+		AUS = { 
+			end_puppet = HUN
+		}
+		HUN = {
+			declare_war_on = {
+				target = AUS
+				type = annex_everything
+			}
+		}
+		set_global_flag = Austrian_Civil_War
+    }
+
+    option = {
+        name = aus.9026.b
+		ai_chance = { factor = 99 }
     }
 }

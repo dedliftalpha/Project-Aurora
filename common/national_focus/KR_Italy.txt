@@ -906,6 +906,7 @@ focus_tree = {
 		cost = 10.00
 		prerequisite = { focus = ITA_Irredentism }
 		available = {
+			has_war = no
 			is_subject = no
 			owns_state = 160 #Veneto
 			OR = {
@@ -913,7 +914,6 @@ focus_tree = {
 				NOT = { owns_state = 759 } #Friuli
 				NOT = { owns_state = 795 } #Trieste
 				NOT = { owns_state = 783 } #Trentino
-				NOT = { owns_state = 39 } #Sudtirol
 			}
 		}
 		x = 7
@@ -921,18 +921,25 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 2
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 		}
 		
 		bypass = {
-			owns_state = 736
-			owns_state = 759
-			owns_state = 795
-			owns_state = 783
-			owns_state = 39
+			736 = {
+				is_owned_by = ITA
+				is_core_of = ITA
+			}
+			759 = {
+				is_owned_by = ITA
+				is_core_of = ITA
+			}
+			795 = {
+				is_owned_by = ITA
+				is_core_of = ITA
+			}
+			783 = {
+				is_owned_by = ITA
+				is_core_of = ITA
+			}
 		}
 		
 		completion_reward = {
@@ -952,10 +959,6 @@ focus_tree = {
 				limit = { 783 = { NOT = { is_core_of = ITA } } }
 				add_state_core = 783
 			}
-			if = {
-				limit = { 39 = { NOT = { is_core_of = ITA } } }
-				add_state_core = 39
-			}
 			every_country = {
 				limit = {
 					is_subject_of = ITA
@@ -965,25 +968,37 @@ focus_tree = {
 						owns_state = 759
 						owns_state = 795
 						owns_state = 783
-						owns_state = 39
 					}
 				}
 				if = { limit = { controls_state = 736 } ITA = { transfer_state = 736 } }
 				if = { limit = { controls_state = 759 } ITA = { transfer_state = 759 } }
 				if = { limit = { controls_state = 795 } ITA = { transfer_state = 795 } }
 				if = { limit = { controls_state = 783 } ITA = { transfer_state = 783 } }
-				if = { limit = { controls_state = 39 } ITA = { transfer_state = 39 } }
+			}
+			if = {
+				limit = {
+					AUS = {
+						NOT = { is_subject_of = ITA }
+						OR = {
+							owns_state = 736
+							owns_state = 759
+							owns_state = 795
+							owns_state = 783
+						}
+					}
+				}
+				AUS = { country_event = { id = ita.110 } }
 			}
 			every_country = {
 				limit = {
 					NOT = { is_subject_of = ITA }
 					NOT = { tag = ITA }
+					NOT = { tag = AUS }
 					OR = {
 						owns_state = 736
 						owns_state = 759
 						owns_state = 795
 						owns_state = 783
-						owns_state = 39
 					}
 				}
 				ITA = {
@@ -1001,14 +1016,28 @@ focus_tree = {
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		cost = 10.00
 		prerequisite = { focus = ITA_Irredentism }
+		available = {
+			has_war = no
+			is_subject = no
+		}
 		x = 9
 		y = 3
 		
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0
-				has_war = yes
+				factor = 0.5
+				SWI = { owns_state = 761 }
+				NOT = {
+					has_government = syndicalist
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 2
+				SWI = { NOT = { owns_state = 761 } }
 			}
 			modifier = {
 				factor = 2
@@ -3445,6 +3474,7 @@ focus_tree = {
 		icon = GFX_focus_research
 		cost = 10.00
 		prerequisite = { focus = ITA_Electronics }
+		available = { NOT = { has_idea = ITA_black_monday } }
 		x = 47
 		y = 3
 		
@@ -3497,6 +3527,10 @@ focus_tree = {
 		icon = GFX_focus_research
 		prerequisite = { focus = ITA_Decryption }
 		prerequisite = { focus = ITA_Extra_Tech_Slot }
+		available = {
+			NOT = { has_idea = ITA_black_monday_1 }
+			NOT = { has_idea = Decentralised_State }
+		}
 		x = 48
 		y = 4
 		cost = 10.00

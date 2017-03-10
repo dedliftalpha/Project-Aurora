@@ -2414,4 +2414,295 @@ country_event = {# The Reed Doctrine
 		}
 	}
 }
+####################################
+#		The Paris Summit		   #
+####################################
+country_event = {# Mexico gets the invite
+    id = combinedsyndicates.200
+    title = combinedsyndicates.200.t
+    desc = combinedsyndicates.200.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# To Paris we are going!
+        name = combinedsyndicates.200.a
+		ai_chance = {
+            factor = 95
+        }
+		add_political_power = 80
+		CSA = { country_event = { id = combinedsyndicates.201 days = 15 }}
+    }
+    option = {# We do need to go to Paris!
+		name = combinedsyndicates.200.b
+		trigger = { has_country_flag = Junta }
+        ai_chance = {
+            factor = 5
+        }
+        add_political_power = -100
+        CSA = { country_event = { id = combinedsyndicates.211 days = 10 }}
+    }
+}
+country_event = {# CSA gives their demands
+    id = combinedsyndicates.201
+    title = combinedsyndicates.201.t
+    desc = combinedsyndicates.201.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.201.a
+		MEX = { country_event = { id = combinedsyndicates.202 days = 1 }}
+    }
+
+}
+country_event = {# Mexico's Response
+    id = combinedsyndicates.202
+    title = combinedsyndicates.202.t
+    desc = combinedsyndicates.202.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {# accept Demands
+        name = combinedsyndicates.202.a
+        ai_chance = {
+            factor = 5
+        }
+		CSA = { 
+            transfer_state = 375
+            transfer_state = 376
+			transfer_state = 377
+            transfer_state = 833
+            transfer_state = 377
+            transfer_state = 376
+            transfer_state = 375
+            transfer_state = 832
+            transfer_state = 834			
+		}
+		if = {
+            limit = {
+                378 = { is_owned_by = MEX }
+            }
+            CSA = {
+                transfer_state = 378
+                transfer_state = 797
+                transfer_state = 798
+                transfer_state = 829
+            }
+        }
+        clr_country_flag = Anglo_Rebel	
+		CSA = { country_event = { id = combinedsyndicates.203 days = 1 }}
+    }
+    option = {# attempt to Negotiate
+        name = combinedsyndicates.202.a
+        ai_chance = {
+            factor = 90
+        }
+		MEX = { country_event = { id = combinedsyndicates.206 days = 1 }}
+
+    }
+    option = {# Reject the Demands
+        name = combinedsyndicates.202.b
+        ai_chance = {
+            factor = 5
+        }
+		CSA = { country_event = { id = combinedsyndicates.204 days = 1 }}
+    }
+}
+country_event = {# Mexico accepts the demands
+    id = combinedsyndicates.203
+    title = combinedsyndicates.203.t
+    desc = combinedsyndicates.203.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# Accept Demands
+        name = combinedsyndicates.203.a
+        add_political_power = 200
+        set_country_flag = CSA_mexican_csa_freindship
+    }
+
+}
+country_event = {# Mexico refuses demands
+    id = combinedsyndicates.204
+    title = combinedsyndicates.204.t
+    desc = combinedsyndicates.204.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# we have lost - lose the region
+        name = combinedsyndicates.204.a
+        ai_chance = {
+            factor = 25
+        }
+        remove_state_claim = 375
+        remove_state_claim = 376
+        remove_state_claim = 377
+        remove_state_claim = 378
+        remove_state_claim = 797
+        remove_state_claim = 798
+        remove_state_claim = 832
+        remove_state_claim = 833
+        remove_state_claim = 834
+		add_political_power = -250
+        set_country_flag = CSA_mexican_csa_freindship
+		MEX = { country_event = { id = combinedsyndicates.205 days = 2 }}
+
+    }
+    option = {# stupid Mexicans - Talks break down
+        name = combinedsyndicates.204.b
+        ai_chance = {
+            factor = 75
+        }
+        add_political_power = -500
+		CSA = { country_event = { id = combinedsyndicates.207 days = 2 }}
+
+    }
+
+}
+country_event = {# Mexican negotiations are successful 
+    id = combinedsyndicates.205
+    title = combinedsyndicates.205.t
+    desc = combinedsyndicates.205.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.205.a
+		add_political_power = 250
+        clr_country_flag = Anglo_Rebel
+    }
+}
+country_event = {# The Mexican-American Compromise
+    id = combinedsyndicates.206
+    title = combinedsyndicates.206.t
+    desc = combinedsyndicates.206.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# Accept the Compromise
+        name = combinedsyndicates.206.a
+		ai_chance = {
+            factor = 90
+        }
+		add_political_power = 80
+        clr_country_flag = Anglo_Rebel
+		remove_state_claim = 375
+        remove_state_claim = 376
+        remove_state_claim = 377
+        remove_state_claim = 378
+        remove_state_claim = 797
+        remove_state_claim = 798
+        remove_state_claim = 832
+        remove_state_claim = 833
+        remove_state_claim = 834
+		CSA = { country_event = { id = combinedsyndicates.207 days = 2 }}
+    }
+    option = {# Reject the Compromise
+        name = combinedsyndicates.206.b
+        ai_chance = {
+            factor = 10
+        }
+        add_political_power = -100
+        CSA = { country_event = { id = combinedsyndicates.208 days = 2 }}
+    }
+}
+country_event = {# Compromise is accepted(CSA)
+    id = combinedsyndicates.207
+    title = combinedsyndicates.207.t
+    desc = combinedsyndicates.207.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# yay!
+        name = combinedsyndicates.207.a
+        set_country_flag = CSA_mexican_csa_treaty
+        set_country_flag = CSA_mexican_csa_freindship
+		add_political_power = 100		
+    }
+}
+country_event = {# Compromise is not accepted(CSA)
+    id = combinedsyndicates.208
+    title = combinedsyndicates.208.t
+    desc = combinedsyndicates.208.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {# Damn the Mexicans
+        name = combinedsyndicates.208.a
+        set_country_flag = CSA_second_mexican_american_war
+    }
+}
+country_event = {# Talks break at Down
+    id = combinedsyndicates.209
+    title = combinedsyndicates.209.t
+    desc = combinedsyndicates.209.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.209.a
+        set_country_flag = CSA_second_mexican_american_war
+		add_political_power = -50
+    }
+}
+country_event = {# Talks break at Down(Mexico)
+    id = combinedsyndicates.210
+    title = combinedsyndicates.210.t
+    desc = combinedsyndicates.210.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.210.a
+		add_political_power = -50
+    }
+}
+country_event = {# Mexicans refuse to come to the Summit
+    id = combinedsyndicates.211
+    title = combinedsyndicates.211.t
+    desc = combinedsyndicates.211.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.211.a
+        set_country_flag = CSA_second_mexican_american_war
+    }
+}
+country_event = {# The Treaty is implemented
+    id = combinedsyndicates.212
+    title = combinedsyndicates.212.t
+    desc = combinedsyndicates.212.d
+    fire_only_once = yes
+    is_triggered_only = yes
+
+
+    option = {
+        name = combinedsyndicates.212.a
+		add_ideas = CSA_mexican_american_treaty
+		add_manpower = 10000
+		480 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
+		479 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
+		483 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
+		481 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
+		482 = { add_building_construction = { type = industrial_complex level = 2 instant_build = yes } }
+		480 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		479 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		483 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		481 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+		482 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
+    }
+}
+
 

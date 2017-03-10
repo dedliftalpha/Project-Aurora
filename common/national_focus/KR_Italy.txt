@@ -662,16 +662,13 @@ focus_tree = {
 		id = ITA_Initiate_Risoregimento
 		icon = GFX_goal_generic_alliance
 		available = {
+			has_war = no
 			is_subject = no
 			NOT = { has_annex_war_goal = SRI }
 		}
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 			modifier = {
 				factor = 0.01
 				OR = {
@@ -1400,15 +1397,41 @@ focus_tree = {
 			focus = ITA_Claim_Northeast
 			focus = ITA_Claim_Italian_Switzerland
 		}
+		available = {
+			has_war = no
+			is_subject = no
+			OR = {
+				owns_state = 448
+				custom_trigger_tooltip = {
+					tooltip = ITA_libya_owner_is_libya
+					LYB = {
+						owns_state = 448
+						controls_state = 448
+						is_subject = no
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ITA_libya_owner_can_sell
+					OR = {
+						any_country = {
+							NOT = { tag = ITA }
+							NOT = { is_subject_of = ITA }
+							owns_state = 448
+							controls_state = 448
+							OR = {
+								is_subject = yes
+								NOT = { tag = LYB }
+							}
+						}
+					}
+				}
+			}
+		}
 		x = 10
 		y = 4
 		
 		ai_will_do = {
 			factor = 2
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 			modifier = {
 				factor = 2
 				OR = {
@@ -1420,13 +1443,37 @@ focus_tree = {
 			}
 		}
 		
-		bypass = { owns_state = 448 } #Tripoli
+		bypass = {
+			OR = {
+				AND = {
+					owns_state = 448 #Tripoli
+					448 = { is_core_of = ITA }
+				}
+				any_country = {
+					is_subject_of = ITA
+					owns_state = 448
+				}
+			}
+		}
 		
 		completion_reward = {
 			if = {
+				limit = { any_owned_state = { is_core_of = LYB } }
+				every_owned_state = {
+					limit = { is_core_of = LYB }
+					ITA = { add_state_core = PREV }
+				}
+			}
+			if = {
 				limit = {
-					country_exists = LYB
-					LYB = { owns_state = 448 } #Tripoli
+					LYB = {
+						is_subject = no
+						owns_state = 448
+					}
+				}
+				every_state = {
+					limit = { is_core_of = LYB }
+					ITA = { add_state_claim = PREV }
 				}
 				ITA = {
 					create_wargoal = {
@@ -1434,11 +1481,47 @@ focus_tree = {
 						target = LYB
 					}
 				}
-				else = {
-					add_state_claim = 448
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						NOT = { is_subject_of = ITA }
+						owns_state = 448
+					}
+				}
+				every_state = {
+					limit = { is_core_of = LYB }
+					ITA = { add_state_claim = PREV }
+				}
+				random_country = {
+					limit = { owns_state = 448 }
+					overlord = { country_event = { id = ita.130 } }
 				}
 			}
-			#TODO: Add full chain from DH, including OTT surrender
+			if = {
+				limit = {
+					NOT = {
+						owns_state = 448
+						LYB = {
+							is_subject = no
+							owns_state = 448
+						}
+						any_country = {
+							is_subject = yes
+							owns_state = 448
+						}
+					}
+				}
+				every_state = {
+					limit = { is_core_of = LYB }
+					ITA = { add_state_claim = PREV }
+				}
+				random_country = {
+					limit = { owns_state = 448 }
+					country_event = { id = ita.130 }
+				}
+			}
 		}
 	}	
 	
@@ -1453,12 +1536,20 @@ focus_tree = {
 			owns_state = 116 #Malta
 			owns_state = 458 #Tunisia
 			OR = {
-				owns_state = 39 #Sudtirol
-				owns_state = 761 #Ticino
+				owns_state = 448 #Tripoli
+				any_country = {
+					is_subject_of = ITA
+					owns_state = 448
+				}
 			}
 			OR = {
-				owns_state = 448 #Tripoli
-				any_country = { is_subject_of = ITA owns_state = 448 }
+				owns_state = 761 #Ticino
+				AND = {
+					owns_state = 736 #Istria
+					owns_state = 759 #Friuli
+					owns_state = 795 #Trieste
+					owns_state = 783 #Trentino
+				}
 			}
 		}
 		x = 8

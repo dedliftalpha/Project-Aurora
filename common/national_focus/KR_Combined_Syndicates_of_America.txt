@@ -1736,21 +1736,42 @@ focus_tree = {
 		}
 		x = 47
 		y = 1
-
+		completion_reward = {
+			MEX = { country_event = { id = combinedsyndicates.200 days = 10 } }
+		}
 	}
 	focus = {# Second Mexican- American War
 		id = CSA_second_mexican_war
 		icon = GFX_goal_generic_attack_allies
-		cost = 10.00
+		cost = 3.00
+		available = {
+			has_country_flag = CSA_second_mexican_american_war
+			CSA = {
+				NOT = { is_in_faction_with = MEX }
+				is_subject = no
+			}			
+		}	
 		prerequisite = {
 			focus = CSA_paris_summet
 		}
 		mutually_exclusive = {
 			focus = CSA_mexican_freindship
 		}
+		bypass = {
+			OR = {
+				CSA = { has_war_with = MEX }
+				OR = {
+					MEX = { has_capitulated = yes }
+					NOT = { country_exists = MEX } 
+				}
+			}
+		}		
 		x = 48
 		y = 2
-
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = MEX }
+			add_named_threat = { threat = 8 name = CSA_second_mexican_american_war_mex }
+		}
 	}
 	focus = {# Fate of Mexico
 		id = CSA_fate_of_mexico
@@ -1763,10 +1784,11 @@ focus_tree = {
 		y = 4
 
 	}	
-	focus = {# Mexican-American Freindship
+	focus = {# Mexican-American Friendship
 		id = CSA_mexican_freindship
 		icon = GFX_goal_generic_improve_relations
-		cost = 10.00
+		cost = 3.00
+		available = { has_country_flag = CSA_mexican_csa_freindship }	
 		prerequisite = {
 			focus = CSA_paris_summet
 		}
@@ -1775,18 +1797,27 @@ focus_tree = {
 		}
 		x = 46
 		y = 2
-
+		completion_reward = {
+			add_national_unity = 0.05
+			add_opinion_modifier = { target = MEX modifier = CSA_mexican_american_friendship }
+			MEX = { add_opinion_modifier = { target = ROOT modifier = CSA_mexican_american_friendship } }
+		}
 	}
 	focus = {# Mexican-American Trade Agreement
 		id = CSA_mexican_american_trade_agreement
 		icon = GFX_goal_generic_oil_refinery
-		cost = 10.00
+		cost = 3.00
+		available = { has_country_flag = CSA_mexican_csa_treaty }	
 		prerequisite = {
 			focus = CSA_mexican_freindship
 		}
 		x = 46
 		y = 4
-
+		completion_reward = {
+			MEX = { country_event = { id = combinedsyndicates.212 days = 30 } }
+			add_opinion_modifier = { target = MEX modifier = CSA_mexican_american_trade }
+			MEX = { add_opinion_modifier = { target = ROOT modifier = CSA_mexican_american_trade } }
+		}
 	}	
 ####Joining the International####
 	focus = {# Join the International
@@ -1955,7 +1986,7 @@ focus_tree = {
 		y = 4
 		completion_reward = {
 			create_wargoal = { type = annex_everything target = CAN }
-			add_named_threat = { threat = 8 name = CSA_attack_CAN }
+			add_named_threat = { threat = 20 name = CSA_attack_CAN }
 		}
 	}
 ###Reclaiming America###

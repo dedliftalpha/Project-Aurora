@@ -14,37 +14,73 @@ focus_tree = {
 
 	
 focus = {
-		id = SAF_crysis
+		id = SAF_crisis
 		icon = GFX_goal_generic_improve_relations
 		x = 6
 		y = 0
 		cost = 10
-		available = { }
+		available = { has_idea = SAF_black_monday }
 		bypass = { }
 		prerequisite = { }
 		
 		ai_will_do = {
 			factor = 10
 		}
-
-		select_effect = {
-			country_event = { id = SAF.2 days = 50 }
-		}
 		
 		completion_reward = {
-			add_political_power = 100
+			country_event = { id = SAF.2 }
 		}
 	}
-	
+
 focus = {
-		id = SAF_protectorates
-		icon = GFX_goal_generic_national_unity
+		id = SAF_representation_of_natives
+		icon = GFX_goal_generic_improve_relations
 		x = 3
 		y = 1
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_crysis }
+		prerequisite = { focus = SAF_crisis }
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = SAF_representation_of_natives_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						SAF = {
+							OR = {
+								has_country_flag = SAF_NP_ALONE
+								has_country_flag = SAF_NP_LABOUR
+							}
+						}
+					}
+					country_event = { id = SAF.5 }
+				}
+				if = {
+					limit = {
+						SAF = {
+							has_country_flag = SAF_NP_UNITED
+						}
+					}
+					country_event = { id = SAF.6 }
+				}
+			}
+		}
+	}	
+	
+focus = {
+		id = SAF_protectorates
+		icon = GFX_goal_generic_national_unity
+		x = 3
+		y = 2
+		cost = 10
+		available = { }
+		bypass = { }
+		prerequisite = { focus = SAF_representation_of_natives }
 		
 		ai_will_do = {
 			factor = 8
@@ -53,16 +89,17 @@ focus = {
 		completion_reward = {
 			add_state_core = 542
 			add_state_core = 545
+			country_event = { id = SAF.8 }
 		}		
 	}	
 	
 focus = {
 		id = SAF_paramount_chiefs
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_goal_molotov_ribbentrop_pact
 		x = 1
-		y = 2
+		y = 3
 		cost = 10
-		available = { }
+		available = { has_country_flag = SAF_PARAMOUNT_CHIEFS }
 		bypass = { }
 		prerequisite = { focus = SAF_protectorates }
 		mutually_exclusive = { focus = SAF_nuweveld }		
@@ -77,82 +114,7 @@ focus = {
 		
 		completion_reward = {
 			add_ideas = paramount_chiefs
-		}		
-	}
-
-focus = {
-		id = SAF_chiefs_local
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 0
-		y = 3
-		cost = 10
-		available = { }
-		bypass = { }
-		prerequisite = { focus = SAF_paramount_chiefs }
-		mutually_exclusive = { focus = SAF_chiefs_full }
-		
-		ai_will_do = {
-			factor = 3
-			modifier = {
-				factor = 5
-				OR = {
-					has_country_flag = SAF_NP_ALONE
-					has_country_flag = SAF_NP_LABOUR
-				}
-			}
-		}	
-		
-		completion_reward = {
-			add_ideas = local_paramount_chiefs
-			542 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			545 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}		
-	}
-
-focus = {
-		id = SAF_chiefs_full
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 2
-		y = 3
-		cost = 10
-		available = { }
-		bypass = { }
-		prerequisite = { focus = SAF_paramount_chiefs }
-		mutually_exclusive = { focus = SAF_chiefs_local }
-		
-		ai_will_do = {
-			factor = 3
-		}	
-		
-		completion_reward = {
-			add_ideas = full_paramount_chiefs
-			542 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			545 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			add_political_power = -100 #unhappy boers
+			country_event = { id = SAF.10 }
 		}		
 	}
 
@@ -164,7 +126,7 @@ focus = {
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_chiefs_local focus = SAF_chiefs_full }
+		prerequisite = { focus = SAF_paramount_chiefs }
 		
 		ai_will_do = {
 			factor = 3
@@ -196,11 +158,11 @@ focus = {
 
 focus = {
 		id = SAF_nuweveld
-		icon = GFX_goal_generic_construct_infrastructure
+		icon = GFX_goal_tfv_saf_support_ossebrandwag
 		x = 5
-		y = 2
+		y = 3
 		cost = 10
-		available = { }
+		available = { has_country_flag = SAF_NUWEVELD }
 		bypass = { }
 		prerequisite = { focus = SAF_protectorates }
 		mutually_exclusive = { focus = SAF_paramount_chiefs }		
@@ -209,7 +171,7 @@ focus = {
 			factor = 8
 		}	
 		completion_reward = {
-			add_ideas = nuweveld
+			add_ideas = nuweveld_idea
 			542 = {
 				add_building_construction = {
 					type = infrastructure
@@ -224,15 +186,15 @@ focus = {
 					instant_build = yes
 				}
 			}
-			add_political_power = -150 #unhappy locals
+			add_political_power = -120 # Unhappy locals
 		}		
 	}	
 	
 focus = {
 		id = SAF_native_rights
-		icon = GFX_goal_generic_construction2
+		icon = GFX_goal_generic_forceful_treaty
 		x = 5
-		y = 3
+		y = 4
 		cost = 10
 		available = { }
 		bypass = { }
@@ -242,99 +204,19 @@ focus = {
 			factor = 5
 		}	
 		completion_reward = {
-			add_ideas = native_rights
+			country_event = { id = SAF.11 }
 		}		
 	}
-
-focus = {
-		id = SAF_native_labour
-		icon = GFX_goal_generic_construction2
-		x = 4
-		y = 4
+	
+focus = { # Dam
+		id = SAF_gesuiwerde_infrastructure
+		icon = GFX_goal_generic_production2
+		x = 5
+		y = 6
 		cost = 10
 		available = { }
 		bypass = { }
 		prerequisite = { focus = SAF_native_rights }
-		mutually_exclusive = { focus = SAF_gesuiwerde_plan }
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 8
-				OR = {
-					has_country_flag = SAF_NP_LABOUR
-				}
-			}
-		}	
-		completion_reward = {
-			add_ideas = native_labour
-		}		
-	}
-
-focus = {
-		id = SAF_native_infrastructure
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 4
-		y = 5
-		cost = 10
-		available = { }
-		bypass = { }
-		prerequisite = { focus = SAF_native_labour }
-		
-		ai_will_do = {
-			factor = 3
-		}	
-		completion_reward = {
-			542 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			545 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}		
-	}	
-	
-focus = {
-		id = SAF_gesuiwerde_plan
-		icon = GFX_goal_generic_construct_civ_factory
-		x = 6
-		y = 4
-		cost = 10
-		available = { }
-		bypass = { }
-		prerequisite = { focus = SAF_native_rights }
-		mutually_exclusive = { focus = SAF_native_labour }
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 8
-				has_country_flag = SAF_NP_ALONE
-			}
-		}	
-		completion_reward = {
-			add_ideas = gesuiwerde_plan
-			add_political_power = -100 #unhappy locals
-		}		
-	}	
-	
-focus = {
-		id = SAF_gesuiwerde_ifrastructure
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 6
-		y = 5
-		cost = 10
-		available = { }
-		bypass = { }
-		prerequisite = { focus = SAF_gesuiwerde_plan }
 		
 		ai_will_do = {
 			factor = 3
@@ -360,13 +242,13 @@ focus = {
 
 focus = {
 		id = SAF_gesuiwerde_mines
-		icon = GFX_goal_generic_oil_refinery
-		x = 6
-		y = 6
+		icon = GFX_all_resource
+		x = 4
+		y = 5
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_gesuiwerde_ifrastructure }
+		prerequisite = { focus = SAF_native_rights }
 		
 		ai_will_do = {
 			factor = 3
@@ -396,13 +278,13 @@ focus = {
 
 focus = {
 		id = SAF_gesuiwerde_steelworks
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_steel
 		x = 6
-		y = 7
+		y = 5
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_gesuiwerde_mines }
+		prerequisite = { focus = SAF_native_rights }
 		
 		ai_will_do = {
 			factor = 3
@@ -433,12 +315,12 @@ focus = {
 focus = {
 		id = SAF_gesuiwerde_dam
 		icon = GFX_goal_generic_production2
-		x = 6
-		y = 8
+		x = 5
+		y = 7
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_gesuiwerde_steelworks }
+		prerequisite = { focus = SAF_gesuiwerde_infrastructure }
 		
 		ai_will_do = {
 			factor = 3
@@ -450,10 +332,10 @@ focus = {
 				state = 545
 			}
 			545 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -469,7 +351,7 @@ focus = {
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_crysis }
+		prerequisite = { focus = SAF_crisis }
 		
 		ai_will_do = {
 			factor = 8
@@ -480,17 +362,19 @@ focus = {
 				bonus = 0.5
 				uses = 2
 				category = construction_tech
-			}	
+			}
+			country_event = { id = SAF.9 }
+			
 		}		
 	}
 
 focus = {
-		id = SAF_industrialisation
+		id = SAF_industrialization
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 8
 		y = 2
 		cost = 10
-		available = { }
+		available = { has_country_flag =  SAF_INDUSTRIALIZE }
 		bypass = { }
 		prerequisite = { focus = SAF_national_recovery_plan }
 		mutually_exclusive = { focus = SAF_detente focus = SAF_work_programs }
@@ -504,7 +388,7 @@ focus = {
 		}	
 		completion_reward = {
 			add_national_unity = 0.05
-			add_ideas = saf_industry
+			add_ideas = SAF_industry
 			add_political_power = -50 #unhappy dominionist
 		}		
 	}
@@ -517,7 +401,7 @@ focus = {
 		cost = 10
 		available = { }
 		bypass = { }
-		prerequisite = { focus = SAF_industrialisation }
+		prerequisite = { focus = SAF_industrialization }
 		
 		ai_will_do = {
 			factor = 3	
@@ -548,7 +432,7 @@ focus = {
 
 focus = {
 		id = SAF_new_mines
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_construction2
 		x = 8
 		y = 4
 		cost = 10
@@ -585,7 +469,7 @@ focus = {
 				remove_ideas = SAF_black_monday_minor_recovery
 				add_ideas = SAF_black_monday_major_recovery
 			}
-			add_ideas = open_new_mines
+			add_ideas = SAF_open_new_mines
 			add_political_power = -100 #unhappy dominionist
 		}		
 	}
@@ -634,11 +518,11 @@ focus = {
 
 focus = {
 		id = SAF_detente
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_intelligence_exchange
 		x = 10
 		y = 2
 		cost = 10
-		available = { }
+		available = { has_country_flag =  SAF_LIBERALIZE }
 		bypass = { }
 		prerequisite = { focus = SAF_national_recovery_plan }
 		mutually_exclusive = { focus = SAF_industrialisation focus = SAF_work_programs }
@@ -652,13 +536,13 @@ focus = {
 		}	
 		completion_reward = {
 			add_national_unity = 0.05
-			add_ideas = open_borders
+			add_ideas = SAF_open_borders
 		}		
 	}
 
 focus = {
 		id = SAF_new_docks
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_construct_naval_dockyard
 		x = 10
 		y = 3
 		cost = 10
@@ -710,7 +594,7 @@ focus = {
 
 focus = {
 		id = SAF_kimberly_mines
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_construction2
 		x = 10
 		y = 4
 		cost = 10
@@ -748,7 +632,7 @@ focus = {
 				remove_ideas = SAF_black_monday_minor_recovery
 				add_ideas = SAF_black_monday_major_recovery
 			}
-			add_ideas = open_new_mines
+			add_ideas = SAF_open_new_mines
 			add_political_power = -50 #unhappy boers
 		}		
 	}
@@ -791,11 +675,11 @@ focus = {
 
 focus = {
 		id = SAF_work_programs
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_construct_civilian
 		x = 12
 		y = 2
 		cost = 10
-		available = { }
+		available = { has_country_flag =  SAF_WORK_PROGRAMS }
 		bypass = { }
 		prerequisite = { focus = SAF_national_recovery_plan }
 		mutually_exclusive = { focus = SAF_industrialisation focus = SAF_detente }
@@ -805,14 +689,14 @@ focus = {
 		}	
 		completion_reward = {
 			add_national_unity = 0.10
-			add_ideas = work_programs
+			add_ideas = work_programs_idea
 			add_political_power = 50
 		}		
 	}
 
 focus = {
 		id = SAF_new_roads
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_construct_infrastructure
 		x = 12
 		y = 3
 		cost = 10
@@ -824,7 +708,21 @@ focus = {
 			factor = 3
 		}	
 		completion_reward = {
+			719 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
 			275 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			681 = {
 				add_building_construction = {
 					type = infrastructure
 					level = 1
@@ -843,7 +741,7 @@ focus = {
 	
 focus = {
 		id = SAF_orange_river_mines
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_construction2
 		x = 12
 		y = 4
 		cost = 10
@@ -873,7 +771,7 @@ focus = {
 				remove_ideas = SAF_black_monday_minor_recovery
 				add_ideas = SAF_black_monday_major_recovery
 			}
-			add_ideas = open_new_mines
+			add_ideas = SAF_open_new_mines
 			add_political_power = 50
 		}		
 	}

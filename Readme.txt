@@ -1,5 +1,5 @@
 Thank you for downloading Kaiserreich for Hearts of Iron 4!
-This is version 0.3.4 - Eternal Peace!
+This is version 0.4 - UNKNOWN!
 Manual Installation Instructions
 1) Download the mod
 2) Delete the former Version if you have one

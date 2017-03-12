@@ -892,7 +892,6 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
-			add_political_power = 100 
 			add_named_threat = { threat = 3 name = ITA_irredentism }
 		}
 	}
@@ -1561,11 +1560,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 120
-			add_national_unity = 0.05
-			if = {
-				limit = { is_in_faction = no }
-				create_faction = "Italian Alliance"
-			}
+			add_ideas = ITA_rising_power
 		}
 	}	
 
@@ -1600,19 +1595,90 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ITA_Join_Canada
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = ITA_Interventionism }
+		available = {
+			is_in_faction = no
+			is_subject = no
+			has_war = no
+			country_exists = CAN
+			CAN = { is_faction_leader = yes }
+			NOT = {
+				has_government = syndicalist
+				has_government = totalist
+				has_government = radical_socialist
+				has_government = national_populist
+			}
+		}
+		x = 10
+		y = 6
+		cost = 10
+		
+		available_if_capitulated = no
+		
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 0.25
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			modifier = {
+				factor = 0
+				CAN = {
+					has_war = yes
+					OR = {
+						any_war_score < 0 
+						surrender_progress > 0.25
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					CAN = { any_owned_state = { is_core_of = ITA } }
+					any_country = {
+						is_in_faction_with = CAN
+						any_owned_state = { is_core_of = ITA }
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				CAN = {
+					OR = {
+						has_government = syndicalist
+						has_government = totalist
+						has_government = radical_socialist
+					}
+				}
+			}
+		}
+
+		bypass = {
+			is_in_faction = yes
+		}
+		
+		completion_reward = {
+			add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
+			reverse_add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
+			CAN = { country_event = { id = ita.18 } }
+		}
+	}
+
+	focus = {
 		id = ITA_Join_Germany
 		icon = GFX_goal_anschluss
 		prerequisite = { focus = ITA_Interventionism }
-		mutually_exclusive = {
-			focus = ITA_Join_Austria
-			focus = ITA_Join_Canada
-		}
 		available = {
 			is_in_faction = no
 			is_subject = no
 			has_war = no
 			country_exists = GER
-			GER = { NOT = { any_owned_state = { is_core_of = ITA } } }
+			GER = {
+				is_faction_leader = yes
+				NOT = { any_owned_state = { is_core_of = ITA } }
+			}
 			NOT = {
 				any_owned_state = { is_core_of = GER }
 				has_government = syndicalist
@@ -1669,27 +1735,29 @@ focus_tree = {
 			}
 		}
 		
+		bypass = {
+			is_in_faction = yes
+		}		
+		
 		completion_reward = {
 			add_opinion_modifier = { target = GER modifier = ITA_likes_govt }
 			reverse_add_opinion_modifier = { target = GER modifier = ITA_likes_govt }
 			GER = { country_event = { id = ita.18 } }
 		}
 	}
-
+	
 	focus = {
 		id = ITA_Join_Austria
 		icon = GFX_goal_anschluss
 		prerequisite = { focus = ITA_Interventionism }
-		mutually_exclusive = {
-			focus = ITA_Join_Germany
-			focus = ITA_Join_Canada
-		}
 		available = {
 			is_in_faction = no
 			is_subject = no
 			has_war = no
 			country_exists = AUS
 			NOT = { is_guaranteed_by = AUS }
+			NOT = { is_guaranteed_by = GER }
+			NOT = { is_guaranteed_by = CAN }
 			NOT = { any_owned_state = { is_core_of = AUS } }
 			AUS = { NOT = { any_owned_state = { is_core_of = ITA } } }
 		}
@@ -1698,6 +1766,10 @@ focus_tree = {
 		cost = 10
 		
 		available_if_capitulated = no
+		
+		bypass = {
+			is_in_faction = yes
+		}
 		
 		ai_will_do = {
 			factor = 2
@@ -1775,74 +1847,50 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ITA_Join_Canada
+		id = ITA_Form_Own_Faction
 		icon = GFX_goal_anschluss
 		prerequisite = { focus = ITA_Interventionism }
-		mutually_exclusive = {
-			focus = ITA_Join_Germany
-			focus = ITA_Join_Austria
-		}
 		available = {
 			is_in_faction = no
 			is_subject = no
 			has_war = no
-			country_exists = CAN
-			CAN = { is_faction_leader = yes }
-			NOT = {
-				has_government = syndicalist
-				has_government = totalist
-				has_government = radical_socialist
-				has_government = national_populist
-			}
 		}
-		x = 10
+		x = 16
 		y = 6
 		cost = 10
 		
 		available_if_capitulated = no
 		
 		ai_will_do = {
-			factor = 2
+			factor = 1
 			modifier = {
-				factor = 0.25
-				NOT = { has_cosmetic_tag = ITA_republic }
+				factor = 0.5
+				always = yes
 			}
 			modifier = {
 				factor = 0
-				CAN = {
-					has_war = yes
-					OR = {
-						any_war_score < 0 
-						surrender_progress > 0.25
-					}
-				}
+				NOT = { has_idea = ITA_rising_power }
 			}
 			modifier = {
 				factor = 0
-				OR = {
-					CAN = { any_owned_state = { is_core_of = ITA } }
-					any_country = {
-						is_in_faction_with = CAN
-						any_owned_state = { is_core_of = ITA }
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				CAN = {
-					OR = {
-						has_government = syndicalist
-						has_government = totalist
-						has_government = radical_socialist
-					}
+				NOT = {
+					has_government = syndicalist
+					has_government = totalist
+					has_government = radical_socialist
+					has_government = national_populist
+					has_government = paternal_autocrat
+					has_government = authoritarian_democrat
 				}
 			}
 		}
 		
+		bypass = {
+			is_in_faction = yes
+		}
+		
 		completion_reward = {
-			add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
-			reverse_add_opinion_modifier = { target = CAN modifier = ITA_likes_govt }
-			CAN = { country_event = { id = ita.18 } }
+			add_political_power = 100
+			create_faction = "Italian Alliance"
 		}
 	}
 
@@ -1882,7 +1930,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_national_unity = 0.05
+			add_ideas = ITA_isolated
 			add_named_threat = { threat = -3 name = ITA_irredentism }
 		}
 	}	
@@ -2196,7 +2244,13 @@ focus_tree = {
 	focus = {
 		id = ITA_Elia_dalla_Costa
 		icon = GFX_goal_generic_consumer_goods
-		available = { has_country_leader = { name = "Stephen X" } }
+		available = {
+			has_country_leader = { name = "Stephen X" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
+		}
 		prerequisite = { focus = ITA_Papal_Conclave }
 		mutually_exclusive = {
 			focus = ITA_Eugenio_Pacelli
@@ -2211,6 +2265,10 @@ focus_tree = {
 		
 		bypass = {
 			has_country_leader = { name = "Stephen X" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
 		}
         
 		ai_will_do = {
@@ -2245,6 +2303,16 @@ focus_tree = {
 		id = ITA_Rise_Masses
 		icon = GFX_goal_generic_propaganda
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Soup_Kitchens }
 		x = 20
 		y = 3
@@ -2380,7 +2448,13 @@ focus_tree = {
 	focus = {
 		id = ITA_Achille_Lienart
 		icon = GFX_goal_generic_national_unity
-		available = { has_country_leader = { name = "John XXIII" } }
+		available = {
+			has_country_leader = { name = "John XXIII" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
+		}
 		prerequisite = { focus = ITA_Papal_Conclave }
 		mutually_exclusive = {
 			focus = ITA_Eugenio_Pacelli
@@ -2395,6 +2469,10 @@ focus_tree = {
 		
 		bypass = {
 			has_country_leader = { name = "John XXIII" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
 		}
         
 		ai_will_do = {
@@ -2603,7 +2681,13 @@ focus_tree = {
 	focus = {
 		id = ITA_Theodor_Innitzer
 		icon = GFX_goal_generic_political_pressure
-		available = { has_country_leader = { name = "Julius IV" } }
+		available = {
+			has_country_leader = { name = "Julius IV" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
+		}
 		prerequisite = { focus = ITA_Papal_Conclave }
 		mutually_exclusive = {
 			focus = ITA_Eugenio_Pacelli
@@ -2618,6 +2702,10 @@ focus_tree = {
 		
 		bypass = {
 			has_country_leader = { name = "Julius IV" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
 		}
         
 		ai_will_do = {
@@ -2767,6 +2855,16 @@ focus_tree = {
 		id = ITA_Papal_Knights
 		icon = GFX_focus_generic_strike_at_democracy1
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Promote_Corporativism_II }
 		x = 29
 		y = 4
@@ -2786,6 +2884,16 @@ focus_tree = {
 		id = ITA_Papal_Authority
 		icon = GFX_goal_authoritarian
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Centralise4 }
 		prerequisite = { focus = ITA_Papal_Knights }
 		x = 28
@@ -2813,6 +2921,14 @@ focus_tree = {
 		}
 		available = {
 			country_exists = SRI
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
 			SRI = {
 				OR = {
 					has_government = syndicalist
@@ -2911,7 +3027,13 @@ focus_tree = {
 	focus = {
 		id = ITA_Eugenio_Pacelli
 		icon = GFX_goal_generic_neutrality_focus
-		available = { has_country_leader = { name = "Pius XII" } }
+		available = {
+			has_country_leader = { name = "Pius XII" }
+			custom_trigger_tooltip = {
+				tooltip = ITA_new_pope_not_dead
+				NOT = { has_country_flag = ITA_new_pope_dead }
+			}
+		}
 		prerequisite = { focus = ITA_Papal_Conclave }
 		mutually_exclusive = {
 			focus = ITA_Elia_dalla_Costa
@@ -2941,6 +3063,16 @@ focus_tree = {
 		id = ITA_Promote_Traditional_Values
 		icon = GFX_goal_generic_defence
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Eugenio_Pacelli }
 		x = 33
 		y = 2
@@ -2979,6 +3111,16 @@ focus_tree = {
 		id = ITA_Encyclical_Corruption
 		icon = GFX_goal_generic_propaganda
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Promote_Traditional_Values }
 		x = 33
 		y = 3
@@ -3018,6 +3160,16 @@ focus_tree = {
 		id = ITA_Defenders_Faith
 		icon = GFX_focus_generic_strike_at_democracy1
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_republic
+				NOT = { has_cosmetic_tag = ITA_republic }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_not_kingdom
+				NOT = { has_cosmetic_tag = ITA_kingdom }
+			}
+		}
 		prerequisite = { focus = ITA_Encyclical_Corruption }
 		x = 33
 		y = 4
@@ -3085,6 +3237,12 @@ focus_tree = {
 		id = ITA_Patria_Noblis
 		icon = GFX_focus_generic_strike_at_democracy1
 		cost = 10.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_is_kingdom
+				has_cosmetic_tag = ITA_kingdom
+			}
+		}
 		prerequisite = { focus = ITA_Return_Kingdom }
 		x = 38
 		y = 5
@@ -3110,6 +3268,10 @@ focus_tree = {
 			OR = {
 				has_country_leader = { name = "Giuseppe I" }
 				is_subject_of = AUS
+			}
+			custom_trigger_tooltip = {
+				tooltip = ITA_is_kingdom
+				has_cosmetic_tag = ITA_kingdom
 			}
 			country_exists = AUS
 			AUS = {
@@ -3168,6 +3330,12 @@ focus_tree = {
 		id = ITA_Adopt_New_Constitution
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 20.00
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_is_republic
+				has_cosmetic_tag = ITA_republic
+			}
+		}
 		prerequisite = { focus = ITA_Return_Republic }
 		x = 43
 		y = 5
@@ -3565,7 +3733,6 @@ focus_tree = {
 		icon = GFX_focus_research
 		cost = 10.00
 		prerequisite = { focus = ITA_Electronics }
-		available = { NOT = { has_idea = ITA_black_monday } }
 		x = 47
 		y = 3
 		
@@ -3619,6 +3786,7 @@ focus_tree = {
 		prerequisite = { focus = ITA_Decryption }
 		prerequisite = { focus = ITA_Extra_Tech_Slot }
 		available = {
+			NOT = { has_idea = ITA_black_monday }
 			NOT = { has_idea = ITA_black_monday_1 }
 			NOT = { has_idea = Decentralised_State }
 		}

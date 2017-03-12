@@ -39,7 +39,127 @@ country_event = {
 	}
 }
 
-### TODO: Gabriele d'Annunzio dies - ita.2
+# Gabriele d'Annunzio dies
+country_event = {
+	title = ita.2.t
+	desc = ita.2.d
+	picture = GFX_report_event_ITA_gabriele
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		country_exists = SRI
+		date > 1938.3.1
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = ita.2.a
+		add_political_power = -20
+	}
+}
+
+# Quadragesimo Quinto Anno
+country_event = {
+	title = ita.3.t
+	desc = ita.3.d
+	picture = vatican
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		date > 1936.1.14
+		NOT = { has_cosmetic_tag = ITA_kingdom }
+		NOT = { has_cosmetic_tag = ITA_republic }
+		NOT = { has_country_flag = ITA_Dead_Pius_XI }
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = ita.3.a
+		add_political_power = 40
+	}
+}
+
+# Move capital to Florence?
+country_event = {
+	title = ita.4.t
+	desc = ita.4.d
+	picture = GFX_report_event_ITA_firenze
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		date > 1938.1.1
+		owns_state = 162
+		has_cosmetic_tag = ITA_kingdom
+		has_country_leader = { name = "Giuseppe I" }
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+	}
+
+	option = {
+		name = ita.4.a #Roma is and will always be our capital!
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0.5
+				is_subject_of = AUS
+			}
+		}
+		reverse_add_opinion_modifier = { target = AUS modifier = ITA_dislikes_govt }
+	}
+	option = {
+		name = ita.4.b #Firenze shall be the new capital!
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 9
+				is_subject_of = AUS
+			}
+		}
+		add_political_power = -160
+		reverse_add_opinion_modifier = { target = AUS modifier = ITA_likes_govt }
+		set_capital = 162
+	}
+}
+
+# Donations from the faithful
+country_event = {
+	title = ita.5.t
+	desc = ita.5.d
+	picture = vatican
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		has_war_with = SRI
+		NOT = { has_cosmetic_tag = ITA_kingdom }
+		NOT = { has_cosmetic_tag = ITA_republic }
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = ita.5.a
+		add_political_power = 50
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = ITA }
+	}
+}
 
 # Possible Italian revolution when unity is too low
 country_event = {
@@ -115,7 +235,7 @@ country_event = {
 	id = ita.12
 	title = ita.12.t
 	desc = ita.12.d
-	picture = GFX_report_event_usa_election_generic
+	picture = GFX_report_event_royal_parade
 	
 	is_triggered_only = yes
 	
@@ -644,6 +764,132 @@ country_event = {
 	}
 }
 
+# The spread of Italian cores
+country_event = {
+	id = ita.23
+	title = ita.23.t
+	desc = ita.23.d
+	
+	trigger = {
+		tag = ITA
+		any_owned_state = {
+			NOT = { is_core_of = ITA }
+			any_neighbor_state = { is_core_of = ITA }
+			OR = {
+				state = 1 #Corsica
+				state = 39 #Sudtirol
+				state = 115 #Sicilia
+				state = 117 #Campania
+				state = 156 #Calabria
+				state = 160 #Veneto
+				state = 153 #Dalmatia
+				state = 735 #Savoy
+				state = 736 #Kustenland
+				state = 742 #Abruzzo
+				state = 759 #Friuli
+				state = 761 #Ticino
+				state = 762 #Nice
+				state = 783 #Trentino
+				state = 794 #Trieste
+				state = 837 #Puglia
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 730
+		modifier = {
+			factor = 0.5
+			any_owned_state = {
+				NOT = { is_core_of = ITA }
+				is_claimed_by = ITA
+				any_neighbor_state = { is_core_of = ITA }
+				OR = {
+					state = 1 #Corsica
+					state = 39 #Sudtirol
+					state = 103 #Lika
+					state = 115 #Sicilia
+					state = 117 #Campania
+					state = 156 #Calabria
+					state = 160 #Veneto
+					state = 153 #Dalmatia
+					state = 735 #Savoy
+					state = 736 #Kurstenland
+					state = 742 #Abruzzo
+					state = 759 #Friuli
+					state = 761 #Ticino
+					state = 762 #Nice
+					state = 783 #Trentino
+					state = 794 #Trieste
+					state = 837 #Puglia
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		#First check for claimed states
+		random_owned_state = {
+			limit = {
+				NOT = { is_core_of = ITA }
+				is_claimed_by = ITA
+				any_neighbor_state = { is_core_of = ITA }
+				OR = {
+					state = 1 #Corsica
+					state = 39 #Sudtirol
+					state = 115 #Sicilia
+					state = 117 #Campania
+					state = 156 #Calabria
+					state = 160 #Veneto
+					state = 153 #Dalmatia
+					state = 735 #Savoy
+					state = 736 #Kustenland
+					state = 742 #Abruzzo
+					state = 759 #Friuli
+					state = 761 #Ticino
+					state = 762 #Nice
+					state = 783 #Trentino
+					state = 794 #Trieste
+					state = 837 #Puglia
+				}
+			}
+			save_event_target_as = new_italian_core
+		}
+		#Failing that, any remaining states will do
+		random_owned_state = {
+			limit = {
+				NOT = { event_target:new_italian_core = { always = yes } }
+				NOT = { is_core_of = ITA }
+				any_neighbor_state = { is_core_of = ITA }
+				OR = {
+					state = 1 #Corsica
+					state = 39 #Sudtirol
+					state = 115 #Sicilia
+					state = 117 #Campania
+					state = 156 #Calabria
+					state = 160 #Veneto
+					state = 153 #Dalmatia
+					state = 735 #Savoy
+					state = 736 #Kustenland
+					state = 742 #Abruzzo
+					state = 759 #Friuli
+					state = 761 #Ticino
+					state = 762 #Nice
+					state = 783 #Trentino
+					state = 794 #Trieste
+					state = 837 #Puglia
+				}
+			}
+			save_event_target_as = new_italian_core
+		}
+	}
+	
+	option = {
+		name = ita.23.a
+		add_state_core = event_target:new_italian_core
+	}
+}
+
 # Kingdom of Italy seeks closer ties with Austria
 country_event = {
 	id = ita.26
@@ -1127,7 +1373,7 @@ country_event = {
 	id = ita.40
 	title = ita.40.t
 	desc = ita.40.d
-	picture = GFX_report_event_europe_funeral
+	picture = GFX_report_ITA_pope_death
 	
 	fire_only_once = yes
 	
@@ -1167,7 +1413,7 @@ country_event = {
 	id = ita.41
 	title = ita.41.t
 	desc = ita.41.d
-	picture = GFX_report_event_europe_funeral
+	picture = GFX_report_ITA_pope_death
 	
 	is_triggered_only = yes
 	
@@ -1313,7 +1559,7 @@ country_event = {
 			remove_ideas_with_trait = security_minister
 		}
 		add_ideas = ITA_Julius_IV_hog_npo
-		add_ideas = ITA_Pietro_Duca_d'Acquarone_for_ade
+		add_ideas = ITA_Pietro_Duca_dAcquarone_for_ade
 		add_ideas = ITA_Giovanni_Cardinal_Montini_eco_ade
 		add_ideas = ITA_Elia_Cardinal_dalla_Costa_sec_pau
 		FROM = { country_event = { id = ita.47 } }
@@ -1325,6 +1571,7 @@ country_event = {
 	id = ita.43
 	title = ita.43.t
 	desc = ita.43.d
+	picture = GFX_report_ITA_pope
 	
 	is_triggered_only = yes
 	
@@ -1518,7 +1765,7 @@ country_event = {
 	id = ita.50
 	title = ita.50.t
 	desc = ita.50.d
-	picture = GFX_report_event_royal_parade
+	picture = GFX_report_ITA_pope
 	
 	is_triggered_only = yes
 	
@@ -1818,6 +2065,7 @@ country_event = {
 	id = ita.57
 	title = ita.57.t
 	desc = ita.57.d
+	picture = GFX_papal_conclave
 	
 	is_triggered_only = yes
 	
@@ -1897,6 +2145,7 @@ country_event = {
 	id = ita.58
 	title = ita.58.t
 	desc = ita.58.d
+	picture = GFX_report_ITA_pope
 	
 	is_triggered_only = yes
 	
@@ -3851,7 +4100,8 @@ country_event = {
 			ITA = { remove_state_claim = PREV }
 			TUN = { transfer_state = PREV }
 		}
-		puppet = TUN 
+		puppet = TUN
+		
 	}
 	option = {
 		name = ita.107.c #Make Tunisia part of Italian North Africa
@@ -4743,7 +4993,7 @@ country_event = {
 	}
 }
 
-# The ultimatum succeeds: Tunisia is surrendered
+# The ultimatum succeeds: Libya is surrendered
 country_event = {
 	id = ita.134
 	title = ita.134.t
@@ -5202,6 +5452,771 @@ country_event = {
 			target = FROM
 			type = annex_everything
 		}
+	}
+}
+
+### DEATH EVENTS
+
+# Death of the pope (Second time)
+country_event = {
+	id = ita.150
+	title = ita.150.t
+	desc = ita.150.d
+	picture = GFX_report_ITA_pope_death
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_cosmetic_tag = ITA_kingdom }
+		NOT = { has_cosmetic_tag = ITA_republic }
+		has_country_flag = ITA_Dead_Pius_XI
+		date > 1948.1.1
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	} 
+	
+	option = {
+		name = ita.150.a
+		set_country_flag = ITA_new_pope_dead
+		if = {
+			limit = { has_country_leader = { name = "Pius XII" } }
+			set_country_flag = Pius_XII_dead
+			set_country_flag = Eugenio_Cardinal_Pacelli_dead
+			set_politics = { ruling_party = authoritarian_democrat }
+		}
+		if = {
+			limit = { has_country_leader = { name = "Stephen X" } }
+			set_country_flag = Stephen_X_dead
+			set_country_flag = Elia_Cardinal_dalla_Costa_dead
+		}
+		if = {
+			limit = { has_country_leader = { name = "John XXIII" } }
+			set_country_flag = John_XXIII_dead
+			set_politics = { ruling_party = authoritarian_democrat }
+		}
+		if = {
+			limit = { has_country_leader = { name = "Julius IV" } }
+			set_country_flag = Julius_IV_dead
+			set_country_flag = Theodor_Cardinal_Innitzer_dead
+			set_politics = { ruling_party = authoritarian_democrat }
+		}
+		create_country_leader = {
+			name = "College of Cardinals"
+			desc = "POLITICS_COLLEGE_OF_CARDINALS_DESC"
+			picture = "Portrait_Italy_College_of_Cardinals.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		if = {
+			limit = { NOT = { has_idea = ITA_The_College_of_Cardinals_hog_ade } }
+			hidden_effect = { remove_ideas_with_trait = head_of_government }
+			add_ideas = ITA_The_College_of_Cardinals_hog_ade
+		}
+		hidden_effect = {
+			country_event = { id = ita.151 days = 30 }
+		}
+	}
+}
+
+# The Second Papal Conclave
+country_event = {
+	id = ita.151
+	title = ita.151.t
+	desc = ita.151.d
+	picture = GFX_papal_conclave
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ita.55.a #Elect the pious and popular Eugenio Cardinal Pacelli as Pius XII
+		trigger = {
+			NOT = {
+				has_country_flag = Pius_XII_dead
+				has_country_flag = Eugenio_Cardinal_Pacelli_dead
+			}
+		}
+		ai_chance = {
+			factor = 20
+		}
+		create_country_leader = {
+			name = "Pius XII"
+			desc = "POLITICS_PIUS_XII_DESC"
+			picture = "Portrait_Italy_PiusXII.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = paternal_autocrat }
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = ITA_Pius_XII_hog_ade
+		add_ideas = ITA_Augusta_Cardinal_da_Silva_for_ade
+		add_ideas = ITA_Adeodato_Cardinal_Piazza_eco_ade
+		add_ideas = ITA_Benedetto_Cardinal_Masella_sec_ade
+	}
+	option = {
+		name = ita.151.a #Elect Alfredo Ottaviani as Gregorius XVII
+		ai_chance = {
+			factor = 25
+		}
+		create_country_leader = {
+			name = "Gregorius XVII"
+			picture = "Portrait_Italy_GregoriusXVII.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = paternal_autocrat }
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = ITA_Giuseppe_Cardinal_Siri_hog_pau
+		add_ideas = ITA_Marcel_Cardinal_Lefebvre_for_npo
+		add_ideas = ITA_Antonio_Cardinal_Bacci_eco_pau
+		add_ideas = ITA_Josef_Cardinal_Frings_sec_pau
+	}
+	option = {
+		name = ita.151.b #Elect Angelo Giuseppe Roncalli as John XXIV
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 1.3
+				has_country_flag = Pius_XII_dead
+			}
+		}
+		create_country_leader = {
+			name = "John XXIV"
+			picture = "Portrait_Italy_JohnXXIV.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat }
+		add_popularity = { ideology = social_democrat popularity = 0.3 }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = ITA_John_XXIV_hog_sde
+		add_ideas = ITA_Monsignor_Angelo_dellAcqua_for_sde
+		add_ideas = ITA_Giacomo_Cardinal_Lercaro_eco_sli
+		add_ideas = ITA_Alberto_Cardinal_di_Jorio_sec_sde
+	}
+	option = {
+		name = ita.151.c #Elect Giovanni Battista Montini as Paulus VI
+		ai_chance = {
+			factor = 25
+		}
+		create_country_leader = {
+			name = "Paulus VI"
+			picture = "Portrait_Italy_PaulusVI.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.3 }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = ITA_Paulus_VI_hog_ade
+		add_ideas = ITA_Alfredo_Ildefonso_Cardinal_Schuster_for_ade
+		add_ideas = ITA_Giacomo_Cardinal_Lercaro_eco_sli
+		add_ideas = ITA_Giuseppe_Cardinal_Pizzardo_sec_ade
+	}
+}
+
+# Cardinal Dies
+country_event = {
+	id = ita.155
+	title = ita.155.t
+	desc = ita.155.d
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Donato_Cardinal_Sbarretti_dead }
+		date > 1939.4.1
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Donato_Cardinal_Sbarretti_sec_pau }
+			remove_ideas = ITA_Donato_Cardinal_Sbarretti_sec_pau
+		}
+		set_country_flag = Donato_Cardinal_Sbarretti_dead
+	}
+}
+
+# Cardinal Dies
+country_event = {
+	id = ita.156
+	title = ita.155.t
+	desc = ita.156.d
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Lorenzo_Cardinal_Lauri_dead }
+		date > 1941.10.7
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Lorenzo_Cardinal_Lauri_eco_ade }
+			remove_ideas = ITA_Lorenzo_Cardinal_Lauri_eco_ade
+		}
+		set_country_flag = Lorenzo_Cardinal_Lauri_dead
+	}
+}
+
+# Cardinal Dies
+country_event = {
+	id = ita.157
+	title = ita.155.t
+	desc = ita.157.d
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Luigi_Cardinal_Maglione_dead }
+		date > 1944.8.21
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Luigi_Cardinal_Maglione_hog_ade }
+			remove_ideas = ITA_Luigi_Cardinal_Maglione_hog_ade
+		}
+		if = {
+			limit = { has_idea = ITA_Luigi_Cardinal_Maglione_for_ade }
+			remove_ideas = ITA_Luigi_Cardinal_Maglione_for_ade
+		}
+		set_country_flag = Luigi_Cardinal_Maglione_dead
+	}
+}
+
+# Cardinal Dies
+country_event = {
+	id = ita.158
+	title = ita.155.t
+	desc = ita.158.d
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Theodor_Cardinal_Innitzer_dead }
+		NOT = { has_country_leader = { name = "Julius IV" } }
+		date > 1955.10.8
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Theodor_Cardinal_Innitzer_sec_npo }
+			remove_ideas = ITA_Theodor_Cardinal_Innitzer_sec_npo
+		}
+		if = {
+			limit = { has_idea = ITA_Julius_IV_hog_npo }
+			remove_ideas = ITA_Julius_IV_hog_npo
+		}
+		set_country_flag = Julius_IV_dead
+		set_country_flag = Theodor_Cardinal_Innitzer_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.159
+	title = ita.159.t
+	desc = ita.159.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Conte_Bernardo_Attolico_dead }
+		date > 1942.2.6
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Conte_Bernardo_Attolico_for_sco }
+			remove_ideas = ITA_Conte_Bernardo_Attolico_for_sco
+		}
+		set_country_flag = Conte_Bernardo_Attolico_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.160
+	title = ita.159.t
+	desc = ita.160.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Pier_Federico_Martinetti_dead }
+		date > 1943.3.22
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Pier_Federico_Martinetti_for_sco }
+			remove_ideas = ITA_Pier_Federico_Martinetti_for_sco
+		}
+		set_country_flag = Pier_Federico_Martinetti_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.161
+	title = ita.159.t
+	desc = ita.161.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Marcello_Soleri_dead }
+		date > 1945.7.22
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Marcello_Soleri_for_sde }
+			remove_ideas = ITA_Marcello_Soleri_for_sde
+		}
+		if = {
+			limit = { has_idea = ITA_Marcello_Soleri_mhc_sde }
+			remove_ideas = ITA_Marcello_Soleri_mhc_sde
+		}
+		set_country_flag = Marcello_Soleri_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.162
+	title = ita.159.t
+	desc = ita.162.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Pietro_Duca_dAcquarone_dead }
+		date > 1948.2.12
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Pietro_Duca_dAcquarone_for_ade }
+			remove_ideas = ITA_Pietro_Duca_dAcquarone_for_ade
+		}
+		set_country_flag = Pietro_Duca_dAcquarone_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.163
+	title = ita.159.t
+	desc = ita.163.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Josef_von_Oesterreich_Toskana_dead }
+		NOT = { has_country_leader = { name = "Giuseppe I" } }
+		date > 1949.6.10
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_hog_pau }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_hog_pau
+		}
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_for_ade }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_for_ade
+		}
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_mhc_ade }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
+		}
+		set_country_flag = Josef_von_Oesterreich_Toskana_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.164
+	title = ita.159.t
+	desc = ita.164.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Francesco_Grazioli_dead }
+		date > 1951.2.19
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Francesco_Grazioli_mhc_pau }
+			remove_ideas = ITA_Francesco_Grazioli_mhc_pau
+		}
+		set_country_flag = Francesco_Grazioli_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.165
+	title = ita.159.t
+	desc = ita.165.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Ivanoe_Bonomi_dead }
+		date > 1951.4.19
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		create_country_leader = {
+			name = "Bruno Villabruna"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		if = {
+			limit = { has_idea = ITA_Ivanoe_Bonomi_hog_sli }
+			remove_ideas = ITA_Ivanoe_Bonomi_hog_sli
+		}
+		if = {
+			limit = { has_idea = ITA_Ivanoe_Bonomi_for_sli }
+			remove_ideas = ITA_Ivanoe_Bonomi_for_sli
+		}
+		if = {
+			limit = { has_idea = ITA_Ivanoe_Bonomi_sec_sli }
+			remove_ideas = ITA_Ivanoe_Bonomi_sec_sli
+		}
+		set_country_flag = Ivanoe_Bonomi_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.166
+	title = ita.159.t
+	desc = ita.166.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Conte_Stefano_Jacini_dead }
+		date > 1951.5.21
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Conte_Stefano_Jacini_hog_sco }
+			remove_ideas = ITA_Conte_Stefano_Jacini_hog_sco
+		}
+		if = {
+			limit = { has_idea = ITA_Conte_Stefano_Jacini_sec_sco }
+			remove_ideas = ITA_Conte_Stefano_Jacini_sec_sco
+		}
+		set_country_flag = Conte_Stefano_Jacini_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.167
+	title = ita.159.t
+	desc = ita.167.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Carlo_Sforza_dead }
+		date > 1952.9.3
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Carlo_Sforza_for_sli }
+			remove_ideas = ITA_Carlo_Sforza_for_sli
+		}
+		if = {
+			limit = { has_idea = ITA_Carlo_Sforza_int_sli }
+			remove_ideas = ITA_Carlo_Sforza_int_sli
+		}
+		set_country_flag = Carlo_Sforza_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.168
+	title = ita.159.t
+	desc = ita.168.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Vittorio_Emanuele_Orlando_dead }
+		date > 1952.9.3
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = {
+				NOT = { has_country_leader = { name = "John XXIV" } }
+				NOT = { has_country_leader = { name = "John XXIII" } }
+			}
+			create_country_leader = {
+				name = "Ferruccio Parri"
+				expire = "1965.1.1"
+				ideology = social_democrat_subtype
+				traits = {}
+			}
+		}
+		if = {
+			limit = { has_idea = ITA_Vittorio_Emanuele_Orlando_hog_sli }
+			remove_ideas = ITA_Vittorio_Emanuele_Orlando_hog_sli
+		}
+		set_country_flag = Vittorio_Emanuele_Orlando_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.169
+	title = ita.159.t
+	desc = ita.169.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Vito_Reale_dead }
+		date > 1953.4.27
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		if = {
+			limit = { has_idea = ITA_Vito_Reale_sec_sco }
+			remove_ideas = ITA_Vito_Reale_sec_sco
+		}
+		set_country_flag = Vito_Reale_dead
+	}
+}
+
+# Minister Dies
+country_event = {
+	id = ita.170
+	title = ita.159.t
+	desc = ita.170.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		NOT = { has_country_flag = Alcide_de_Gasperi_dead }
+		date > 1954.4.18
+	}
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
+	option = {
+		name = ita.155.a
+		create_country_leader = {
+			name = "Giovanni Gronchi"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {}
+		}
+		if = {
+			limit = { has_idea = ITA_Alcide_de_Gasperi_hog_sco }
+			remove_ideas = ITA_Alcide_de_Gasperi_hog_sco
+		}
+		if = {
+			limit = { has_idea = ITA_Alcide_de_Gasperi_for_sco }
+			remove_ideas = ITA_Alcide_de_Gasperi_for_sco
+		}
+		set_country_flag = Alcide_de_Gasperi_dead
+	}
+}
+
+# The King of Italy dies
+country_event = {
+	id = ita.171
+	title = ita.171.t
+	desc = ita.171.d
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ITA
+		has_cosmetic_tag = ITA_kingdom
+		has_country_leader = { name = "Giuseppe I" }
+		NOT = { has_country_flag = Josef_von_Oesterreich_Toskana_dead }
+		date > 1949.6.10
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = ita.171.a
+		create_country_leader = {
+			name = "Giuseppe II"
+			picture = "Portrait_Italy_GiuseppeII.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_hog_pau }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_hog_pau
+		}
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_for_ade }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_for_ade
+		}
+		if = {
+			limit = { has_idea = ITA_Josef_von_Oesterreich_Toskana_mhc_ade }
+			remove_ideas = ITA_Josef_von_Oesterreich_Toskana_mhc_ade
+		}
+		set_country_flag = Josef_von_Oesterreich_Toskana_dead
 	}
 }
 

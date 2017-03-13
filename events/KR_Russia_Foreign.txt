@@ -21734,3 +21734,413 @@ country_event = { #New power in Europe
     }
 
 }
+
+country_event = { #White Ruthenian bonds
+    id = rusfor.1265
+    title = rusfor.1265.t
+    desc = rusfor.1265.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1265.a #Propose the investments
+        ai_chance = {
+            factor = 90
+        }
+        add_political_power = -20
+        WHR = {
+            country_event = {
+                id = rusfor.1266
+            }
+        }
+    }
+    option = {
+        name = rusfor.1265.b #We shall take back our stolen lands by force, right now!
+        ai_chance = {
+            factor = 9
+        }
+        trigger = {
+            has_country_flag = RUS_EXP
+        }
+        declare_war_on = {
+            target = WHR type = annex_everything
+        }
+		add_political_power = -40
+        add_named_threat = {
+            threat = 3 name = rusfor.1265.t
+        }
+    }
+
+    option = {
+        name = rusfor.1265.c #We don't need White Ruthenia
+        ai_chance = {
+            factor = 1
+        }
+        add_political_power = -60
+    }
+}
+
+country_event = { #Russian Investment WHR
+    id = rusfor.1266
+    title = rusfor.1266.t
+    desc = rusfor.1266.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1266.a #Invite the Russians to protect and develop White Ruthenia.
+        ai_chance = {
+            factor = 70
+        }
+        add_political_power = -100
+        RUS = {
+            country_event = {
+                id = rusfor.1267
+            }
+        }
+		end_puppet = WHR
+		remove_from_faction = WHR
+        204 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }
+        206 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }
+        207 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }		
+    }
+
+    option = {
+        name = rusfor.1266.b #Maybe the Germans will help us
+        ai_chance = {
+            factor = 25
+        }
+		
+		trigger = {
+            is_subject_of = GER
+            }
+		
+        add_political_power = 40
+        GER = {
+            country_event = {
+                id = rusfor.1269
+            }
+        }
+    }
+	
+    option = {
+        name = rusfor.1266.c #We will fight alone!
+        ai_chance = {
+            factor = 5
+        }
+		
+		trigger = {
+			is_subject = no
+            }
+		
+        add_political_power = 40
+        RUS = {
+            country_event = {
+                id = rusfor.1272
+            }
+        }
+    }	
+}
+
+country_event = { #WHR agrees
+    id = rusfor.1267
+    title = rusfor.1267.t
+    desc = rusfor.1267.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1267.a #Establish control over the WHR economy.
+        ai_chance = {
+            factor = 100
+        }
+        add_political_power = 100
+		add_to_faction = WHR
+		set_country_flag = RUS_WHR_ourpuppet
+		WHR = { add_opinion_modifier = { target = RUS modifier = WHR_RUS_allies_us }} # 150
+        puppet = WHR
+    }
+}
+
+country_event = { #Integration of Belarus
+    id = rusfor.1268
+    title = rusfor.1268.t
+    desc = rusfor.1268.d
+    picture = GFX_petain_NFA
+
+		trigger = {
+			has_country_flag = RUS_WHR_ourpuppet
+		}
+
+    mean_time_to_happen = {
+        days = 90
+    }
+		
+    option = {
+        name = rusfor.1268.a #Integrate belarus
+        ai_chance = {
+            factor = 100
+        }
+        add_political_power = 60
+        annex_country = {
+            target = WHR
+        }
+        add_state_core = 96
+        add_state_core = 206
+        add_state_core = 207
+        add_state_core = 94
+        add_state_core = 95
+        add_state_core = 204
+        add_state_core = 194
+    }
+
+    option = {
+        name = rusfor.1268.b #belarus independent
+        ai_chance = {
+            factor = 0
+        }
+        add_political_power = -100
+    }
+
+}
+
+country_event = { #White Ruthenia wants German help
+    id = rusfor.1269
+    title = rusfor.1269.t
+    desc = rusfor.1269.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1269.a #We will help our ally!
+        ai_chance = {
+            factor = 60
+        }
+		trigger = {
+			NOT = {
+			OR = {
+				has_war_with = FRA
+				has_war_with = ENG
+				}
+			}
+		}
+        add_political_power = -20
+        RUS = {
+            country_event = {
+                id = rusfor.1270
+            }
+        }
+    }
+    option = {
+        name = rusfor.1269.b #We will help our ally!
+        ai_chance = {
+            factor = 10
+        }
+		trigger = {
+			OR = {
+				has_war_with = FRA
+				has_war_with = ENG
+				}
+		}
+        add_political_power = 20
+        RUS = {
+            country_event = {
+                id = rusfor.1270
+            }
+        }
+    }
+    option = {
+        name = rusfor.1269.c #We don't need White Ruthenia
+        ai_chance = {
+            factor = 40
+        }
+		trigger = {
+			NOT = {
+			OR = {
+				has_war_with = FRA
+				has_war_with = ENG
+				}
+			}
+		}
+        add_political_power = 20
+		GER = { end_puppet = WHR }
+        WHR = {
+            country_event = {
+                id = rusfor.1271
+            }
+        }
+    }
+    option = {
+        name = rusfor.1269.d #We don't need White Ruthenia
+        ai_chance = {
+            factor = 90
+        }
+		trigger = {
+			OR = {
+				has_war_with = FRA
+				has_war_with = ENG
+				}
+		}
+        add_political_power = 20
+		GER = { end_puppet = WHR }
+        WHR = {
+            country_event = {
+                id = rusfor.1271
+            }
+        }
+    }
+}
+
+country_event = { #WHR and Germany - alliance
+    id = rusfor.1270
+    title = rusfor.1270.t
+    desc = rusfor.1270.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1270.a #We shall take back our stolen lands by force, right now!
+        ai_chance = {
+            factor = 70
+        }
+        declare_war_on = {
+            target = WHR type = annex_everything
+        }
+		add_political_power = -40
+        add_named_threat = {
+            threat = 3 name = rusfor.1265.t
+        }
+    }
+
+    option = {
+        name = rusfor.1270.b #We don't need White Ruthenia
+        ai_chance = {
+            factor = 30
+        }
+        add_political_power = -60
+    }
+}
+
+country_event = { #WHR is alone
+    id = rusfor.1271
+    title = rusfor.1271.t
+    desc = rusfor.1271.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1271.a #Invite the Russians to protect and develop White Ruthenia.
+        ai_chance = {
+            factor = 85
+        }
+        add_political_power = -100
+        RUS = {
+            country_event = {
+                id = rusfor.1267
+            }
+        }
+		end_puppet = WHR
+		remove_from_faction = WHR
+        204 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }
+        206 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }
+        207 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
+            }
+        }		
+    }
+
+    option = {
+        name = rusfor.1271.b #We will fight alone!
+        ai_chance = {
+            factor = 5
+        }
+		
+		trigger = {
+			is_subject = no
+            }
+		
+        add_political_power = 40
+		remove_from_faction = WHR
+        RUS = {
+            country_event = {
+                id = rusfor.1272
+            }
+        }
+    }	
+}
+
+country_event = { #WHR is alone
+    id = rusfor.1272
+    title = rusfor.1272.t
+    desc = rusfor.1272.d
+    picture = GFX_petain_NFA
+
+    is_triggered_only = yes
+
+    option = {
+        name = rusfor.1272.a #We shall take back our stolen lands by force, right now!
+        ai_chance = {
+            factor = 99
+        }
+        declare_war_on = {
+            target = WHR type = annex_everything
+        }
+		add_political_power = -40
+        add_named_threat = {
+            threat = 3 name = rusfor.1265.t
+        }
+    }
+
+    option = {
+        name = rusfor.1272.b #We don't need White Ruthenia
+        ai_chance = {
+            factor = 1
+        }
+        add_political_power = -60
+    }
+}

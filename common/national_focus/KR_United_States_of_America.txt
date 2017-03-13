@@ -357,7 +357,7 @@ focus_tree = {
 	focus = {# Protector of Democracy
 		id = USA_protector_of_democracy
 		icon = GFX_focus_generic_diplomatic_treaty
-		cost = 10
+		cost = 8
 		prerequisite = {
 			focus = USA_general_macarthur
 		}
@@ -379,7 +379,7 @@ focus_tree = {
 	focus = {# Domestic Enemies
 		id = USA_domestic_enemies
 		icon = GFX_goal_generic_dangerous_deal
-		cost = 10
+		cost = 8
 		prerequisite = {
 			focus = USA_general_macarthur
 		}
@@ -2822,7 +2822,6 @@ focus = {# Review Military Policy
 			swap_ideas = { remove_idea = USA_worst_is_over add_idea = USA_the_new_economy }
 		}
 	}
-	
 ###########################
 ###   Foreign Policy    ###
 ###########################
@@ -2941,7 +2940,19 @@ focus = {# Review Military Policy
 		}
 		x = 61
 		y = 3
-
+		completion_reward = {
+			custom_effect_tooltip = USA_united_provinces_invitation_tooltip
+			hidden_effect = {
+				if = {
+					limit = { is_faction_leader = yes }
+					NIC = { country_event = { id = ustates.273 days = 5 }}					
+				}	
+				if = {
+					limit = { NOT = { is_faction_leader = yes} }
+					NIC = { country_event = { id = ustates.276 days = 5 }}					
+				}								
+			}			
+		}
 	}
 	focus = {# Panama Intervention
 		id = USA_panaman_intervention
@@ -2952,7 +2963,19 @@ focus = {# Review Military Policy
 		}
 		x = 61
 		y = 4
-
+		completion_reward = {
+			custom_effect_tooltip = USA_panaman_invention_tooltip
+			hidden_effect = {
+				if = {
+					limit = { is_faction_leader = yes }
+					PNM = { country_event = { id = ustates.615 days = 5 }}					
+				}	
+				if = {
+					limit = { NOT = { is_faction_leader = yes} }
+					PNM = { country_event = { id = ustates.618 days = 5 }}					
+				}								
+			}			
+		}
 	}
 	focus = {# Cuban Intervention
 		id = USA_cuban_intervention
@@ -2963,7 +2986,19 @@ focus = {# Review Military Policy
 		}
 		x = 63
 		y = 2
-
+		completion_reward = {
+			custom_effect_tooltip = USA_cuban_invitation_tooltip
+			hidden_effect = {
+				if = {
+					limit = { is_faction_leader = yes }
+					CUB = { country_event = { id = ustates.600 days = 5 }}					
+				}	
+				if = {
+					limit = { NOT = { is_faction_leader = yes} }
+					CUB = { country_event = { id = ustates.603 days = 5 }}					
+				}								
+			}			
+		}
 	}
 	focus = {# Haitian Intervention
 		id = USA_haitian_intervention
@@ -2974,7 +3009,19 @@ focus = {# Review Military Policy
 		}
 		x = 63
 		y = 3
-
+		completion_reward = {
+			custom_effect_tooltip = USA_haitian_invitation_tooltip
+			hidden_effect = {
+				if = {
+					limit = { is_faction_leader = yes }
+					HAI = { country_event = { id = ustates.605 days = 5 }}					
+				}	
+				if = {
+					limit = { NOT = { is_faction_leader = yes} }
+					HAI = { country_event = { id = ustates.608 days = 5 }}					
+				}								
+			}			
+		}
 	}
 	focus = {# Dominican intervention
 		id = USA_dominican_intervention
@@ -2985,7 +3032,19 @@ focus = {# Review Military Policy
 		}
 		x = 63
 		y = 4
-
+		completion_reward = {
+			custom_effect_tooltip = USA_dominican_invitation_tooltip
+			hidden_effect = {
+				if = {
+					limit = { is_faction_leader = yes }
+					DOM = { country_event = { id = ustates.610 days = 5 }}					
+				}	
+				if = {
+					limit = { NOT = { is_faction_leader = yes} }
+					DOM = { country_event = { id = ustates.613 days = 5 }}					
+				}								
+			}			
+		}
 	}
 	focus = {# Columbian Intervention
 		id = USA_columbian_intervention
@@ -3020,43 +3079,13 @@ focus = {# Review Military Policy
 		y = 4
 
 	}
-	focus = {# Chilien Intervention
-		id = USA_chilan_intervention
-		icon = GFX_goal_tripartite_pact
-		cost = 10.00.00
-		prerequisite = {
-			focus = USA_peruvian_intervention
-		}
-		x = 67
-		y = 3
-
-	}
-	focus = {# Peruvian Intervention
-		id = USA_peruvian_intervention
-		icon = GFX_goal_generic_improve_relations
-		cost = 10.00.00
-		prerequisite = {
-			focus = USA_war_plan_purple
-		}
-		x = 67
-		y = 2
-
-	}
-	focus = {# Bolivian Intervention
-		id = USA_bolivian_intervnetion
-		icon = GFX_goal_generic_war_with_comintern
-		cost = 10.00.00
-		prerequisite = {
-			focus = USA_chilan_intervention
-		}
-		x = 67
-		y = 4
-
-	}	
 	focus = {# Brazilian Intervention
 		id = USA_brazil_intervention
 		icon = GFX_goal_generic_military_deal
 		cost = 10.00.00
+		mutually_exclusive = {
+			focus = USA_platan_intervention
+		}
 		prerequisite = {
 			focus = USA_war_plan_purple
 		}
@@ -3068,13 +3097,55 @@ focus = {# Review Military Policy
 		id = USA_platan_intervention
 		icon = GFX_goal_generic_demand_territory
 		cost = 10.00.00
+		mutually_exclusive = {
+			focus = USA_brazil_intervention
+		}
 		prerequisite = {
+			focus = USA_war_plan_purple
+		}
+		x = 67
+		y = 2
+
+
+	}
+	focus = {# Chilien Intervention
+		id = USA_chilan_intervention
+		icon = GFX_goal_tripartite_pact
+		cost = 10.00.00
+		prerequisite = {
+			focus = USA_platan_intervention
+			focus = USA_brazil_intervention
+		}
+		x = 67
+		y = 3
+
+	}
+	focus = {# Peruvian Intervention
+		id = USA_peruvian_intervention
+		icon = GFX_goal_generic_improve_relations
+		cost = 10.00.00
+		prerequisite = {
+			focus = USA_platan_intervention
 			focus = USA_brazil_intervention
 		}
 		x = 69
-		y = 4
+		y = 3
 
 	}
+	focus = {# Bolivian Intervention
+		id = USA_bolivian_intervnetion
+		icon = GFX_goal_generic_war_with_comintern
+		cost = 10.00.00
+		prerequisite = {
+			focus = USA_chilan_intervention
+		}
+		prerequisite = {
+			focus = USA_peruvian_intervention
+		}
+		x = 68
+		y = 4
+
+	}	
 	focus = {# Reclaiming America
 		id = USA_reclaiming_america
 		icon = GFX_goal_government_icon
@@ -3150,9 +3221,6 @@ focus = {# Review Military Policy
 		}
 		prerequisite = {
 			focus = USA_bolivian_intervnetion
-		}
-		prerequisite = {
-			focus = USA_platan_intervention
 		}
 		prerequisite = {
 			focus = USA_philippines_fate

@@ -10186,11 +10186,11 @@ country_event = {
 		army_experience = 30
 	}	
 }
-#############################################################
-#US and Honduras Civil War
-#############################################################
-country_event = {
-	id = ustates.273 ### Triggered by Honduras Descend into Civil War
+#############################
+#US and Central America		#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.273 
 	title = ustates.273.t
 	desc = ustates.273.d
 	picture = GFX_report_event_spain_civil_war_soldiers
@@ -10198,35 +10198,22 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { 
-		name = ustates.269.a
-
+		name = ustates.273.a
 		ai_chance = {
-			factor = 50
+			factor = 85
 		}
-
-		add_political_power = 40
-		add_manpower = -3000
-
-		send_equipment = {
-            target = HON
-            type = infantry_equipment
-            amount = 500
-        }
-
-		HON = { country_event = { id = ustates.274 days = 3 }}
-	}	
-
+		USA = { country_event = { id = ustates.274 days = 3 }}
+	}
 	option = { 
-		name = ustates.269.b
-
+		name = ustates.273.a
 		ai_chance = {
-			factor = 50
+			factor = 15
 		}
-
-		add_political_power = -60
-	}	
+		USA = { country_event = { id = ustates.275 days = 3 }}
+	}
+	
 }
-country_event = {
+country_event = {# United Provinces Joins League of Nations
 	id = ustates.274
 	title = ustates.274.t
 	desc = ustates.274.d
@@ -10234,389 +10221,415 @@ country_event = {
 
 	is_triggered_only = yes 
 
-	option = { 
+	option = {# welcome!
 		name = ustates.274.a
-
-		add_manpower = 3000
-		add_political_power = 60
-	}	
+		add_to_faction = NIC
+		add_political_power = 40
+	}		
 }
-######################################################
-#US and Central American War
-######################################################
-country_event = {
-	id = ustates.275 # NIC Vs GUA
+country_event = {# Friendly United Provinces
+	id = ustates.275 
 	title = ustates.275.t
 	desc = ustates.275.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
 
-	trigger = {
-		tag = USA
-		has_global_flag = monroe_doctrine
-		has_global_flag = END_ACW
-		NOT = {
-			is_subject = yes
-			country_exists = TEX
-			country_exists = CSA
-			country_exists = CAL
-			country_exists = NEE
-			is_in_faction_with = NIC
-			is_in_faction_with = MEX
-			is_in_faction_with = HON
-			is_in_faction_with = GUA
-		}
-		GUA = { 
-			OR = {
-				has_government = totalist
-				has_government = radical_socialist
-				has_government = syndicalist
-			}	
-		}
-		AND = {
-			AND = {
-				GUA = { has_war_with = NIC } # United Provinces of Centroamerica
-				NIC = {
-					NOT = {
-						has_government = totalist
-						has_government = radical_socialist
-						has_government = syndicalist
-					}
-				}
-			}
-			NOT = {
-				GUA = { has_war_with = MEX } # Mexico
-					NOT = {
-						has_government = totalist
-						has_government = radical_socialist
-						has_government = syndicalist
-				}
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
+	is_triggered_only = yes 
 
 	option = { 
 		name = ustates.275.a
-
-		ai_chance = {
-			factor = 85
-		}
-
-		add_opinion_modifier = { target = GUA modifier = USA_supports_them } # -50
-		add_opinion_modifier = { target = NIC modifier = USA_support_vs_gua } # +50
-		add_opinion_modifier = { target = HON modifier = USA_support_vs_gua } # +50
-
-		add_manpower = -5000
-
-		send_equipment = {
-            target = NIC
-            type = infantry_equipment
-            amount = 1000
-        }
-
-        send_equipment = {
-            target = HON
-            type = infantry_equipment
-            amount = 1000
-        }
-
-		hidden_effect = { NIC = { country_event = { id = ustates.277 days = 1 }}}
-		hidden_effect = { HON = { country_event = { id = ustates.279 days = 1 }}}
+		give_guarantee = NIC
+		add_political_power = 25
+		diplomatic_relation = { country = NIC relation = non_aggression_pact }
 	}	
-
-	option = { 
-		name = ustates.275.b
-
-		ai_chance = {
-			factor = 15
-		}
-
-		add_political_power = -40
-
-		add_opinion_modifier = { target = MEX modifier = USA_do_nothing } # -50
-		add_opinion_modifier = { target = MEX modifier = USA_no_help_us } # -50
-		add_opinion_modifier = { target = HON modifier = USA_no_help_us } # -50
-		if = {
-			limit = { NIC = { has_war_with = GUA }}
-			add_opinion_modifier = { target = NIC modifier = USA_no_help_us } # -50
-		}
-	}
 }
-country_event = {
-	id = ustates.276 # NIC and MEX Vs GUA
+country_event = {# An offer from the US government
+	id = ustates.276 
 	title = ustates.276.t
 	desc = ustates.276.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = USA
-		has_global_flag = monroe_doctrine
-		has_global_flag = END_ACW
-		NOT = {
-			is_subject = yes
-			country_exists = TEX
-			country_exists = CSA
-			country_exists = CAL
-			country_exists = NEE
-			is_in_faction_with = NIC
-			is_in_faction_with = MEX
-			is_in_faction_with = HON
-			is_in_faction_with = GUA
-			has_government = totalist
-			has_government = radical_socialist
-			has_government = syndicalist
-		}
-		GUA = { 
-			OR = {
-				has_government = totalist
-				has_government = radical_socialist
-				has_government = syndicalist
-			}	
-		}
-		AND = {
-			AND = {
-				GUA = { has_war_with = NIC } # United Provinces of Centroamerica
-				NIC = {
-					NOT = {
-						has_government = totalist
-						has_government = radical_socialist
-						has_government = syndicalist
-					}
-				}
-			}
-			AND = {
-				GUA = { has_war_with = MEX } # Mexico
-				MEX = {
-					NOT = {
-						has_government = totalist
-						has_government = radical_socialist
-						has_government = syndicalist
-					}
-				}
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
+	is_triggered_only = yes
 
 	option = { 
-		name = ustates.276.a
-
-		ai_chance = {
-			factor = 85
-		}
-
-		add_opinion_modifier = { target = GUA modifier = USA_supports_them } # -50
-		add_opinion_modifier = { target = NIC modifier = USA_support_vs_gua } # +50
-		add_opinion_modifier = { target = HON modifier = USA_support_vs_gua } # +50
-		add_opinion_modifier = { target = MEX modifier = USA_support_vs_gua } # +50
-
-		add_manpower = -10000
-
-		send_equipment = {
-            target = NIC
-            type = infantry_equipment
-            amount = 1000
-        }
-
-        send_equipment = {
-            target = HON
-            type = infantry_equipment
-            amount = 1000
-        }
-
-        send_equipment = {
-            target = MEX
-            type = infantry_equipment
-            amount = 1000
-        }
-
-		hidden_effect = { NIC = { country_event = { id = ustates.277 days = 1 }}}
-		hidden_effect = { MEX = { country_event = { id = ustates.278 days = 1 }}}
-		hidden_effect = { HON = { country_event = { id = ustates.279 days = 1 }}}
-	}	
-
-	option = { 
-		name = ustates.276.b
-
+		name = ustates.273.a
 		ai_chance = {
 			factor = 15
 		}
-
-		add_political_power = -40
-
-		add_opinion_modifier = { target = MEX modifier = USA_do_nothing } # -50
-		add_opinion_modifier = { target = MEX modifier = USA_no_help_us } # -50
-		add_opinion_modifier = { target = HON modifier = USA_no_help_us } # -50
-		if = {
-			limit = { NIC = { has_war_with = GUA }}
-			add_opinion_modifier = { target = NIC modifier = USA_no_help_us } # -50
-		}
+		USA = { country_event = { id = ustates.277 days = 3 }}
 	}
 }
-country_event = {
-	id = ustates.277
+country_event = {# Friendly United Provinces
+	id = ustates.277 
 	title = ustates.277.t
 	desc = ustates.277.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+
 
 	is_triggered_only = yes 
 
 	option = { 
 		name = ustates.277.a
-
-		add_manpower = 5000
-
-		hidden_effect = {
-			set_global_flag = USA_HELP_NIC
-		}
+		give_guarantee = NIC
+		add_political_power = 25
+		diplomatic_relation = { country = NIC relation = non_aggression_pact }
 	}	
 }
-country_event = {
-	id = ustates.278
-	title = ustates.278.t
-	desc = ustates.278.d
+#############################
+#		US and Cuba			#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.600 
+	title = ustates.600.t
+	desc = ustates.600.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.600.a
+		ai_chance = {
+			factor = 85
+		}
+		USA = { country_event = { id = ustates.601 days = 3 }}
+	}
+	option = { 
+		name = ustates.600.b
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.602 days = 3 }}
+	}
+	
+}
+country_event = {# Cuba Joins League of Nations
+	id = ustates.601
+	title = ustates.601.t
+	desc = ustates.601.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	is_triggered_only = yes 
 
-	option = { 
-		name = ustates.278.a
-
-		add_manpower = 5000
-
-		hidden_effect = {
-			set_global_flag = USA_HELP_MEX
-		}
-	}	
+	option = {# welcome!
+		name = ustates.601.a
+		add_to_faction = CUB
+		add_political_power = 40
+	}		
 }
-country_event = {
-	id = ustates.279
-	title = ustates.279.t
-	desc = ustates.279.d
+country_event = {# Friendly Cuban Government
+	id = ustates.602 
+	title = ustates.602.t
+	desc = ustates.602.d
 	picture = GFX_report_event_spain_civil_war_soldiers
+
 
 	is_triggered_only = yes 
 
 	option = { 
-		name = ustates.279.a
-
-		add_manpower = 5000
-
-		hidden_effect = {
-			set_global_flag = USA_HELP_HON
-		}
+		name = ustates.602.a
+		give_guarantee = CUB
+		add_political_power = 25
+		diplomatic_relation = { country = CUB relation = non_aggression_pact }
 	}	
 }
-country_event = {
-	id = ustates.280
-	title = ustates.280.t
-	desc = ustates.280.d
+country_event = {# An offer from the US government
+	id = ustates.603 
+	title = ustates.603.t
+	desc = ustates.603.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = USA
-		NOT = {
-			has_government = totalist
-			has_government = radical_socialist
-			has_government = syndicalist
-			GUA = {
-				has_war_with = NIC
-				has_war_with = HON
-				has_war_with = MEX
-			}
-		}
-		OR = {
-			has_global_flag = USA_HELP_NIC
-			has_global_flag = USA_HELP_MEX
-			has_global_flag = USA_HELP_HON
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 0
-	}
+	is_triggered_only = yes
 
 	option = { 
-		name = ustates.280.a
+		name = ustates.603.a
 
-		if = {
-			limit = { NIC = { not = { has_government = totalist has_government = radical_socialist has_government = syndicalist }}}
-			add_opinion_modifier = { target = NIC modifier = WON_CAW } # +10
-		}
-
-		if = {
-			limit = { HON = { not = { has_government = totalist has_government = radical_socialist has_government = syndicalist }}}
-			add_opinion_modifier = { target = HON modifier = WON_CAW } # +10
-		}
-
-		if = {
-			limit = { MEX = { not = { has_government = totalist has_government = radical_socialist has_government = syndicalist }}}
-			add_opinion_modifier = { target = MEX modifier = WON_CAW } # +10
-		}
-		
-		add_manpower = 5000
-		add_political_power = 20
-	}	
+		USA = { country_event = { id = ustates.604 days = 3 }}
+	}
 }
-######################################################
-#Office of Strategic Services
-######################################################
-country_event = {
-	id = ustates.281 
-	title = ustates.281.t
-	desc = ustates.281.d
+country_event = {# Friendly Cuban Government
+	id = ustates.604 
+	title = ustates.604.t
+	desc = ustates.604.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	fire_only_once = yes
 
-	trigger = {
-		tag = USA
-		has_global_flag = END_ACW
-		NOT = {
-			is_subject = yes
-			country_exists = TEX
-			country_exists = CSA
-		}
-		date > 1940.1.1
-	}
-
-	mean_time_to_happen = {
-		days = 30
-	}
+	is_triggered_only = yes 
 
 	option = { 
-		name = ustates.281.a
-
-		ai_chance = {
-			factor = 95
-		}
-
-		add_political_power = -60
-		set_country_flag = USA_OSS
+		name = ustates.604.a
+		give_guarantee = CUB
+		add_political_power = 25
+		diplomatic_relation = { country = CUB relation = non_aggression_pact }
 	}	
+}
+#############################
+#		US and Haiti		#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.605 
+	title = ustates.605.t
+	desc = ustates.605.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
 
 	option = { 
-		name = ustates.281.b
-
+		name = ustates.605.a
 		ai_chance = {
-			factor = 5
+			factor = 85
 		}
+		USA = { country_event = { id = ustates.606 days = 3 }}
+	}
+	option = { 
+		name = ustates.605.a
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.607 days = 3 }}
+	}
+	
+}
+country_event = {# Haiti Joins League of Nations
+	id = ustates.606
+	title = ustates.606.t
+	desc = ustates.606.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
-		add_political_power = 100
+	is_triggered_only = yes 
+
+	option = {# welcome!
+		name = ustates.606.a
+		add_to_faction = HAI
+		add_political_power = 40
+	}		
+}
+country_event = {# Friendly Haitian Government
+	id = ustates.607 
+	title = ustates.607.t
+	desc = ustates.607.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.607.a
+		give_guarantee = HAI
+		add_political_power = 25
+		diplomatic_relation = { country = HAI relation = non_aggression_pact }
+	}	
+}
+country_event = {# An offer from the US government
+	id = ustates.608 
+	title = ustates.608.t
+	desc = ustates.608.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.608.a
+		USA = { country_event = { id = ustates.609 days = 3 }}
 	}
 }
+country_event = {# Friendly Haitian Government
+	id = ustates.609 
+	title = ustates.609.t
+	desc = ustates.609.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.609.a
+		give_guarantee = HAI
+		add_political_power = 25
+		diplomatic_relation = { country = HAI relation = non_aggression_pact }
+	}	
+}
+#############################
+#US and dominican republic	#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.610 
+	title = ustates.610.t
+	desc = ustates.610.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.610.a
+		ai_chance = {
+			factor = 85
+		}
+		USA = { country_event = { id = ustates.611 days = 3 }}
+	}
+	option = { 
+		name = ustates.610.b
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.612 days = 3 }}
+	}
+	
+}
+country_event = {# United Provinces Joins League of Nations
+	id = ustates.611
+	title = ustates.611.t
+	desc = ustates.611.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes 
+
+	option = {# welcome!
+		name = ustates.611.a
+		add_to_faction = DOM
+		add_political_power = 40
+	}		
+}
+country_event = {# Friendly United Provinces
+	id = ustates.612 
+	title = ustates.612.t
+	desc = ustates.612.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.612.a
+		give_guarantee = DOM
+		add_political_power = 25
+		diplomatic_relation = { country = DOM relation = non_aggression_pact }
+	}	
+}
+country_event = {# An offer from the US government
+	id = ustates.613 
+	title = ustates.613.t
+	desc = ustates.613.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.613.a
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.614 days = 3 }}
+	}
+}
+country_event = {# Friendly United Provinces
+	id = ustates.614 
+	title = ustates.614.t
+	desc = ustates.614.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.614.a
+		give_guarantee = DOM
+		add_political_power = 25
+		diplomatic_relation = { country = DOM relation = non_aggression_pact }
+	}	
+}
+#############################
+#	    US and Panama		#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.615 
+	title = ustates.615.t
+	desc = ustates.615.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.615.a
+		USA = { country_event = { id = ustates.616 days = 3 }}
+	}
+	option = { 
+		name = ustates.615.a
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.617 days = 3 }}
+	}
+	
+}
+country_event = {# Panama Joins League of Nations
+	id = ustates.616
+	title = ustates.616.t
+	desc = ustates.616.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes 
+
+	option = {# welcome!
+		name = ustates.616.a
+		add_to_faction = PNM
+		add_political_power = 40
+	}		
+}
+country_event = {# Friendly Panama
+	id = ustates.617 
+	title = ustates.617.t
+	desc = ustates.617.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.617.a
+		give_guarantee = PNM
+		add_political_power = 25
+		diplomatic_relation = { country = PNM relation = non_aggression_pact }
+	}	
+}
+country_event = {# An offer from the US government
+	id = ustates.618 
+	title = ustates.618.t
+	desc = ustates.618.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.618.a
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.619 days = 3 }}
+	}
+}
+country_event = {# Friendly Panama
+	id = ustates.619 
+	title = ustates.619.t
+	desc = ustates.619.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.619.a
+		give_guarantee = PNM
+		add_political_power = 25
+		diplomatic_relation = { country = PNM relation = non_aggression_pact }
+	}	
+}
+
+
+
+
+
+
+
 ######################################################
 #The University of Free World
 ######################################################
@@ -12586,6 +12599,118 @@ country_event = {
 		load_oob = CGL_IND
 	}
 }
+#############################
+#		Interventions		#
+#############################
+country_event = {# Intervening in Mexico
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
+	is_triggered_only = yes
 
+	option = { 
+		name = ustates.325.a
 
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in Mexico(mexico didn't invade)
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in panama
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in Columbia
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in Bol 
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in central 
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}
+country_event = {# Intervening in central 
+	id = ustates.325
+	title = ustates.325.t
+	desc = ustates.325.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.325.a
+
+		add_political_power = -100
+		add_manpower = 100000
+		load_oob = CGL_IND
+	}
+}

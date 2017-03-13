@@ -563,6 +563,7 @@ country_event = {
         name = tram.28.a
 		puppet = SIB
 		set_autonomy = { target = SIB autonomy_state = autonomy_puppet }
+		set_country_flag = TRM_sib_pup
 	}
 	
 	option = { #Annex all
@@ -657,6 +658,165 @@ country_event = {
 	}
    
 }
+
+###SIB annexation after long period of being puppet###
+country_event = { 
+    id = tram.32
+    title = tram.32.t
+    desc = tram.32.d
+    trigger = {
+	tag = TRM
+	has_country_flag = TRM_sib_pup
+	SIB = {is_puppet_of = TRM}
+	}
+	mean_time_to_happen = {days = 500}
+	
+	option = { 
+        name = tram.32.a # Annex
+		annex_country = { target = SIB transfer_troops = yes }
+	}  
+}
+
+###Fate of Mongolia###
+country_event = { 
+    id = tram.33
+    title = tram.33.t
+    desc = tram.33.d
+    trigger = {
+		tag = TRM
+		has_offensive_war = yes
+		MON = {
+		surrender_progress > 0.30
+		}
+	}
+	mean_time_to_happen = {days = 2}
+	
+	option = { 
+		ai_chance = {
+            factor = 95
+        }
+        name = tram.33.a # Take the claims, sigh a white peace
+		MON = {country_event = {id = tram.34 days = 1} }
+	}  
+	
+	option = { 
+		ai_chance = {
+            factor = 5
+        }
+        name = tram.33.b # Total destruction
+	}
+}
+
+###Mongolia responds###
+country_event = { 
+    id = tram.34
+    title = tram.34.t
+    desc = tram.34.d
+    is_triggered_only = yes
+	
+	option = { 
+		ai_chance = {
+            factor = 90
+        }
+        name = tram.34.a # Give TRM it's claims, sigh a white peace
+		TRM = {country_event = {id = tram.35 days = 1} }
+	}  
+	
+	option = { 
+		ai_chance = {
+            factor = 10
+        }
+        name = tram.34.b # Continue the war
+		TRM = {country_event = {id = tram.36 days = 1} }
+	}
+}
+
+###Mongolia accepts###
+country_event = { 
+    id = tram.35
+    title = tram.35.t
+    desc = tram.35.d
+    is_triggered_only = yes
+	
+	option = { 
+        name = tram.35.a 
+		TRM = {
+		transfer_state = 563
+		transfer_state = 564
+		transfer_state = 654
+		transfer_state = 811
+		transfer_state = 329
+		563 = {remove_core_of = MON}
+		564 = {remove_core_of = MON}
+		654 = {remove_core_of = MON}
+		811 = {remove_core_of = MON}
+		329 = {remove_core_of = MON}
+		white_peace = MON
+		}
+	}  
+}
+
+###Mongolia going suicidal###
+country_event = { 
+    id = tram.36
+    title = tram.36.t
+    desc = tram.36.d
+    is_triggered_only = yes
+	
+	option = { 
+        name = tram.36.a 
+		add_political_power = -100
+	}  
+}
+
+###Tuvan Question###
+country_event = { 
+    id = tram.37
+    title = tram.37.t
+    desc = tram.37.d
+    trigger = {
+	tag = TRM
+	controls_state = 329
+	}
+	
+	mean_time_to_happen = {days = 10}
+	
+	option = { 
+		ai_chance = {
+            factor = 0
+        }
+        name = tram.37.a #Release
+		release = TAN
+		TAN = {
+		transfer_state = 329
+		}
+		329 = {add_core_of = TAN}
+	}  
+	
+	option = { 
+		ai_chance = {
+            factor = 55
+        }
+        name = tram.37.b #Release puppet
+		release = TAN
+		puppet = TAN
+		TAN = {
+		transfer_state = 329
+		}
+		329 = {add_core_of = TAN}
+	} 
+
+	option = { 
+		ai_chance = {
+            factor = 70
+        }
+        name = tram.37.c #Integrate
+		329 = {add_core_of = TRM}
+		add_political_power = -60
+	}
+}
+
+
 
 ####Political####
 

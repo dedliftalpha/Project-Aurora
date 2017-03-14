@@ -14,7 +14,9 @@ focus_tree = {
 focus = {
 		id = CNT_election_success
 		icon = GFX_goal_generic_demand_territory
-		available = { has_country_flag = election_success }
+		available = {
+			has_country_flag = election_success
+		}
 		mutually_exclusive = { focus = CNT_aftermath_of_civil_war }
 		x = 7
 		y = 0
@@ -34,9 +36,9 @@ focus = {
 		id = CNT_aftermath_of_civil_war
 		icon = GFX_goal_generic_major_war
 		available = {
-			has_country_flag = aftermath_of_the_civil_war
+			has_country_flag = had_war
 			NOT = { has_war_with = SPR }
-			NOT = { has_war_with = CNT }
+			NOT = { has_war_with = CAR }
 		}
 		mutually_exclusive = { focus = CNT_election_success }
 		x = 9
@@ -76,7 +78,7 @@ focus = {
 ### Internal Policies
 
 focus = {
-		id = CNT_domestic
+		id = CNT_domestic_focus
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = CNT_consolidating_spain }
 		x = 2
@@ -86,14 +88,14 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_ideas = CNT_domestic
+			add_ideas = CNT_domestic_focus
 		}
 }
 
 focus = {
 		id = CNT_oppress_opposition
 		icon = GFX_goal_generic_political_pressure
-		prerequisite = { focus = CNT_domestic }
+		prerequisite = { focus = CNT_domestic_focus }
 		mutually_exclusive = { focus = CNT_reconcile_opposition }
 		x = 0
 		y = 3
@@ -102,14 +104,15 @@ focus = {
 			factor = 60
 		}
 		completion_reward = {
-			add_political_power = 200
+			add_political_power = -20
+			add_national_unity = 0.05
 		}
 }
 
 focus = {
 		id = CNT_reconcile_opposition
 		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = CNT_domestic }
+		prerequisite = { focus = CNT_domestic_focus }
 		mutually_exclusive = { focus = CNT_oppress_opposition }
 		x = 2
 		y = 3
@@ -118,8 +121,8 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_political_power = 200
-			add_national_unity = 0.20
+			add_political_power = 20
+			add_national_unity = -0.05
 		}
 }
 
@@ -137,15 +140,15 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_political_power = 200
-			add_national_unity = 0.20
+			add_political_power = 40
+			add_national_unity = 0.1
 		}
 }
 
 ### Industrial Reforms
 
 focus = {
-		id = CNT_industrial
+		id = CNT_industrial_focus
 		icon = GFX_goal_generic_production
 		prerequisite = { focus = CNT_consolidating_spain }
 		x = 6
@@ -155,14 +158,14 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_ideas = CNT_industrial
+			add_ideas = CNT_industrial_focus
 		}
 }
 
 focus = {
-		id = CNT_industry_1
+		id = CNT_industry_focus_1
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = CNT_industrial }
+		prerequisite = { focus = CNT_industrial_focus }
 		x = 4
 		y = 3
 		cost = 20
@@ -186,9 +189,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_industry_2
+		id = CNT_industry_focus_2
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = CNT_industry_1 }
+		prerequisite = { focus = CNT_industry_focus_1 }
 		x = 4
 		y = 4
 		cost = 20
@@ -218,9 +221,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_industry_3
+		id = CNT_industry_focus_3
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = CNT_industry_2 }
+		prerequisite = { focus = CNT_industry_focus_2 }
 		x = 4
 		y = 5
 		cost = 20
@@ -242,9 +245,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_mining_1
+		id = CNT_mining_focus_1
 		icon = GFX_goal_chromium
-		prerequisite = { focus = CNT_industrial }
+		prerequisite = { focus = CNT_industrial_focus }
 		x = 6
 		y = 3
 		cost = 20
@@ -261,9 +264,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_mining_2
+		id = CNT_mining_focus_2
 		icon = GFX_goal_tungsten
-		prerequisite = { focus = CNT_mining_1 }
+		prerequisite = { focus = CNT_mining_focus_1 }
 		x = 6
 		y = 4
 		cost = 20
@@ -280,9 +283,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_mining_3
+		id = CNT_mining_focus_3
 		icon = GFX_goal_aluminium
-		prerequisite = { focus = CNT_mining_2 }
+		prerequisite = { focus = CNT_mining_focus_2 }
 		x = 6
 		y = 5
 		cost = 20
@@ -299,10 +302,10 @@ focus = {
 }
 
 focus = {
-		id = CNT_helping_hand
+		id = CNT_helping_hand_focus
 		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = CNT_industry_3 }
-		prerequisite = { focus = CNT_mining_3 }
+		prerequisite = { focus = CNT_industry_focus_3 }
+		prerequisite = { focus = CNT_mining_focus_3 }
 		x = 5
 		y = 6
 		cost = 10
@@ -311,7 +314,7 @@ focus = {
 		}
 		completion_reward = {
 			add_political_power = 200
-			add_ideas = CNT_helping_hand
+			add_ideas = CNT_helping_hand_focus
 		}
 }
 
@@ -327,7 +330,7 @@ focus = {
 #		}
 #		completion_reward = {
 #			add_political_power = 200
-#			add_ideas = CNT_helping_hand
+#			add_ideas = CNT_helping_hand_focus
 #		}
 #}
 
@@ -343,7 +346,7 @@ focus = {
 #		}
 #		completion_reward = {
 #			add_political_power = 200
-#			add_ideas = CNT_helping_hand
+#			add_ideas = CNT_helping_hand_focus
 #		}
 #}
 
@@ -359,7 +362,7 @@ focus = {
 #		}
 #		completion_reward = {
 #			add_political_power = 200
-#			add_ideas = CNT_helping_hand
+#			add_ideas = CNT_helping_hand_focus
 #		}
 #}
 
@@ -375,53 +378,53 @@ focus = {
 #		}
 #		completion_reward = {
 #			add_political_power = 200
-#			add_ideas = CNT_helping_hand
+#			add_ideas = CNT_helping_hand_focus
 #		}
 #}
 
 focus = {
-		id = CNT_militia
+		id = CNT_militia_focus
 		icon = GFX_goal_generic_military_sphere
-		prerequisite = { focus = CNT_industrial }
-		prerequisite = { focus = CNT_military }
+		prerequisite = { focus = CNT_industrial_focus }
+		prerequisite = { focus = CNT_military_focus }
 		x = 8
 		y = 3
 		cost = 10
 		completion_reward = {
-			add_ideas = CNT_militia
+			add_ideas = CNT_militia_focus
 		}
 }
 	
 focus = {
-		id = CNT_radio
-		prerequisite = { focus = CNT_militia }
+		id = CNT_radio_focus
+		prerequisite = { focus = CNT_militia_focus }
 		icon = GFX_goal_generic_radar
 		x = 8
 		y = 4
 		cost = 10
 		completion_reward = {
 			custom_effect_tooltip =  CNT_radio_tooltip
-			add_ideas = CNT_radio
+			add_ideas = CNT_radio_focus
 			add_research_slot = 1
 		}
 }
 	
 focus = {
-		id = CNT_propaganda
+		id = CNT_propaganda_focus
 		icon = GFX_goal_generic_propaganda
-		prerequisite = { focus = CNT_radio }
+		prerequisite = { focus = CNT_radio_focus }
 		x = 8
 		y = 5
 		cost = 10
 		completion_reward = {
-			add_ideas = CNT_propaganda
+			add_ideas = CNT_propaganda_focus
 		}
 }
 	
 focus = {
-		id = CNT_schools
+		id = CNT_school_focus
 		icon = GFX_focus_research
-		prerequisite = { focus = CNT_propaganda }
+		prerequisite = { focus = CNT_propaganda_focus }
 		x = 8
 		y = 6
 		cost = 10
@@ -430,10 +433,10 @@ focus = {
 		}
 }
 
-### Military Reforms
+### military Reforms
 
 focus = {
-		id = CNT_military
+		id = CNT_military_focus
 		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = CNT_consolidating_spain }
 		x = 10
@@ -443,15 +446,15 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_ideas = CNT_military
+			add_ideas = CNT_military_focus
 		}
 }
 
 focus = {
-		id = CNT_standing_army
+		id = CNT_standing_army_focus
 		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = CNT_military }
-		mutually_exclusive = { focus = CNT_mobile_army }
+		prerequisite = { focus = CNT_military_focus }
+		mutually_exclusive = { focus = CNT_mobile_army_focus }
 		x = 10
 		y = 3
 		cost = 10
@@ -469,11 +472,11 @@ focus = {
 }
 
 focus = {
-		id = CNT_infantry_weapons
+		id = CNT_infantry_weapon_focus
 		icon = GFX_goal_generic_small_arms
 		prerequisite = {
-			focus = CNT_standing_army
-			focus = CNT_mobile_army
+			focus = CNT_standing_army_focus
+			focus = CNT_mobile_army_focus
 		}
 		x = 10
 		y = 4
@@ -492,9 +495,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_artillery
+		id = CNT_artillery_focus
 		icon = GFX_goal_generic_army_artillery2
-		prerequisite = { focus = CNT_infantry_weapons }
+		prerequisite = { focus = CNT_infantry_weapon_focus }
 		x = 10
 		y = 5
 		cost = 10
@@ -512,10 +515,10 @@ focus = {
 }
 
 focus = {
-		id = CNT_mobile_army
+		id = CNT_mobile_army_focus
 		icon = GFX_goal_generic_production2
-		prerequisite = { focus = CNT_military }
-		mutually_exclusive = { focus = CNT_standing_army }
+		prerequisite = { focus = CNT_military_focus }
+		mutually_exclusive = { focus = CNT_standing_army_focus }
 		x = 12
 		y = 3
 		cost = 10
@@ -533,11 +536,11 @@ focus = {
 }
 
 focus = {
-		id = CNT_motorisation
+		id = CNT_motorisation_focus
 		icon = GFX_goal_generic_army_motorized
 		prerequisite = {
-			focus = CNT_standing_army
-			focus = CNT_mobile_army
+			focus = CNT_standing_army_focus
+			focus = CNT_mobile_army_focus
 		}
 		x = 12
 		y = 4
@@ -556,9 +559,9 @@ focus = {
 }
 
 focus = {
-		id = CNT_tanks
+		id = CNT_tank_focus
 		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = CNT_motorisation }
+		prerequisite = { focus = CNT_motorisation_focus }
 		x = 12
 		y = 5
 		cost = 10
@@ -576,24 +579,24 @@ focus = {
 }
 
 focus = {
-		id = CNT_army_innovations
+		id = CNT_army_innovation_focus
 		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { 
-			focus = CNT_artillery
-			focus = CNT_tanks
+			focus = CNT_artillery_focus
+			focus = CNT_tank_focus
 		}
 		x = 11
 		y = 6
 		cost = 10
 		completion_reward = {
-			add_ideas = CNT_army_innovations
+			add_ideas = CNT_army_innovation_focus
 		}
 }
 
 ### Foreign Policies
 
 focus = {
-		id = CNT_foreign
+		id = CNT_foreign_focus
 		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = CNT_consolidating_spain }
 		x = 14
@@ -603,7 +606,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			add_ideas = CNT_foreign
+			add_ideas = CNT_foreign_focus
 		}
 }
 
@@ -616,7 +619,7 @@ focus = {
 				is_faction_leader = yes
 			}
 		}
-		prerequisite = { focus = CNT_foreign }
+		prerequisite = { focus = CNT_foreign_focus }
 		x = 14
 		y = 3
 		cost = 10
@@ -677,7 +680,7 @@ focus = {
 		available = {
 			has_war = no
 		}
-		prerequisite = { focus = CNT_foreign }
+		prerequisite = { focus = CNT_foreign_focus }
 		x = 16
 		y = 3
 		cost = 10
@@ -685,14 +688,14 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			declare_war_on = {
-				target = POR
+			create_wargoal = {
 				type = annex_everything
+				target = POR
 			}
-			POR = {
-				start_civil_war = {
-				ideology = radical_socialist
-				size = 0.5
-			}
+			#POR = {
+			#	start_civil_war = {
+			#	ideology = radical_socialist
+			#	size = 0.5
+			#}
 		}
 }

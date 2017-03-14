@@ -1169,7 +1169,7 @@ focus_tree = {
 		y = 0
 		cost = 4
 		ai_will_do = {
-			factor = 20
+			factor = 100
 		}
 		available = {
 			has_global_flag = KING_GEORGE_V_DEATH
@@ -1188,7 +1188,7 @@ focus_tree = {
 		y = 1
 		cost = 5
 		ai_will_do = {
-			factor = 20
+			factor = 100
 		}
 		#available = { has_completed_focus = CAN_army_command }
 		prerequisite = { focus = CAN_kings_speech }
@@ -1244,7 +1244,7 @@ focus_tree = {
 		y = 2
 		cost = 6
 		ai_will_do = {
-			factor = 5
+			factor = 20
 		}
 		available = {
 			has_country_flag = CAN_king_ed
@@ -1273,7 +1273,7 @@ focus_tree = {
 		y = 2 
 		cost = 6
 		ai_will_do = {
-			factor = 2
+			factor = 20
 		}
 		available = {
 			has_country_flag = CAN_king_ed
@@ -1317,7 +1317,7 @@ focus_tree = {
 		y = 3
 		cost = 10
 		ai_will_do = {
-			factor = 4
+			factor = 20
 		}
 		available = { 
 			has_country_flag = CAN_king_ed
@@ -1492,6 +1492,19 @@ focus_tree = {
 		cost = 4
 		ai_will_do = {
 			factor = 10
+			modifier = {
+				factor = 20
+				ENG = { has_war_with = GER }
+			}
+			modifier = {
+				factor = 0.25 
+				OR = {
+					has_war_with = GER 
+					has_war_with = USA
+					has_war_with = CSA 
+					has_war_with = TEX 
+				}
+			}
 		}
 		available = {
 			NOT = { has_idea = CAN_divided_nation }
@@ -1543,9 +1556,11 @@ focus_tree = {
 		ai_will_do = {
 			factor = 10
 		}
+		bypass = { is_in_faction_with = IRE }
 		available = {
 			is_subject = no 
 			country_exists = IRE
+		    has_global_flag = ENG_CANIRE_protection
 			NOT = {
 				has_government = totalist
 				has_government = radical_socialist
@@ -1555,13 +1570,6 @@ focus_tree = {
 				IRE = { is_subject = yes }
 				IRE = { is_in_faction_with = FRA }
 				IRE = { is_in_faction_with = GER }
-			}
-		}
-		bypass = {
-			OR = {
-				has_global_flag = IRE_ENT
-				is_in_faction_with = IRE 
-				IRE = { has_capitulated = yes }
 			}
 		}
 		completion_reward = {
@@ -1608,31 +1616,36 @@ focus_tree = {
 		y = 1
 		cost = 2
 		ai_will_do = {
-			factor = 1 
-			modifier = {
-				factor = 10
-				DEN = { has_war = yes }
-			}
+			factor = 5
+			#modifier = {
+			#	factor = 10
+			#	DEN = { has_war = yes }
+			#}
 		}
 		available = {
 			is_subject = no 
 			NOT = { has_war_with = DEN }
 			DEN = {
-				controls_state = 100
-				controls_state = 101
+				NOT = { is_in_faction_with = CAN }
+				OR = {
+					controls_state = 100
+					controls_state = 101
+					controls_state = 337
+				}
 			}
 		}
 		bypass = { 
-			CAN = { controls_state = 100 }
-			CAN = { controls_state = 101 }
+			owns_state = 100
+			owns_state = 101
+			owns_state = 337
 		}
 		completion_reward = {
-			CAN = { add_state_claim = 100 }
-			CAN = { add_state_claim = 101 }
-			CAN = { add_state_claim = 337 }
-			add_opinion_modifier = { target = DEN modifier = CAN_CLAIM_GRICE }
+			add_state_claim = 100
+			add_state_claim = 101
+			add_state_claim = 337
+			reverse_add_opinion_modifier = { target = DEN modifier = CAN_CLAIM_GRICE }
 			add_named_threat = { threat = 2 name = CAN_threaten_DEN  }
-			DEN = { country_event = { days = 1 id = canada.66 } }
+			DEN = { country_event = { id = canada.66 } }
 		}
 	}
 		
@@ -1644,7 +1657,7 @@ focus_tree = {
 		y = 3 
 		cost = 4
 		ai_will_do = {
-			factor = 1
+			factor = 10
 			modifier = {
 				factor = 0.5
 				NOT = { has_completed_focus = CAN_ireland_treaty }				
@@ -1654,7 +1667,7 @@ focus_tree = {
 				has_completed_focus = CAN_claim_greenland 			
 			}
 			modifier = {
-				factor = 10 
+				factor = 20 
 				ENG = { has_war_with = GER }
 			}
 			modifier = {
@@ -1685,8 +1698,11 @@ focus_tree = {
 			NOT = { has_idea = CAN_divided_nation }
 		}
 		bypass = {
+			OR = {
 			CAN = { has_war_with = ENG }
-			ENG = { has_capitulated = yes }
+			OR = { ENG = { has_capitulated = yes }
+			NOT = { country_exists = ENG } }
+			}
 		}
 		completion_reward = {
 			create_wargoal = { type = annex_everything target = ENG }
@@ -1704,8 +1720,24 @@ focus_tree = {
 		ai_will_do = {
 			factor = 0.25
 			modifier = {
-				factor = 40 
-				ENG = { has_capitulated = yes }
+				factor = 20 
+				GBR = { controls_state = 126 }
+				is_in_faction_with = GBR
+				has_war = no
+			}
+			modifier = {
+				factor = 10 
+				OR = {
+				GER = { controls_state = 16 }
+				any_country = { AND = { is_puppet_of = GER controls_state = 16 } }
+				}
+				is_in_faction_with = NFA
+				GBR = { controls_state = 126 }
+				is_in_faction_with = GBR
+			}
+			modifier = {
+				factor = 0.01 
+				has_global_flag = GER_Capitulation
 			}
 		}
 		available = {
@@ -1727,8 +1759,11 @@ focus_tree = {
 			NOT = { has_idea = CAN_divided_nation }
 		}
 		bypass = {
+			OR = {
 			CAN = { has_war_with = GER }
-			GER = { has_capitulated = yes }
+			OR = { GER = { has_capitulated = yes }
+			NOT = { country_exists = GER } }
+			}
 		}
 		completion_reward = {
 			create_wargoal = { type = annex_everything target = GER }

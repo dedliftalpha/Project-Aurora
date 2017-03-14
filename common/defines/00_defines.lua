@@ -91,7 +91,7 @@ NDiplomacy = {
 	BASE_CONDITIONAL_PEACE_MONTHS = 6,				-- War length must be before a surrender i possible.
 	JOINING_NAP_WAR_PENALTY = 0.2,					-- National Unity penalty for breaking non-breakable NAP
 	BREAKING_GUARANTEE_PENALTY = 0.2,				-- National Unity penalty for breaking guarantee
-	PEACE_SCORE_PER_PASS = 0.2,						-- When you pass in a peace deal you gain this percent of your original score
+	PEACE_SCORE_PER_PASS = 0.5,						-- When you pass in a peace deal you gain this percent of your original score
 	MAX_REMEMBERED_LEASED_IC = 1000,				-- Maximum of leased equipment value that is remembered for opinion bonus
 	MAX_OPINION_FOR_LEASED_IC = 30,					-- Positive opinion when remembering the MAX_REMEMBERED_LEASED_IC equipment
 	MONTHLY_LEASED_IC_DECAY = 35,					-- How much of leased equipment is being "forgot" each month
@@ -124,7 +124,7 @@ NDiplomacy = {
 	VICTORY_POINT_WORTH_FACTOR = 10,				-- multiplier when calcualting proince worth (surrender)
 	VICTORY_POINT_WORTH_FACTOR_WARSCORE = 0.2,		-- multiplier when calcualting province worth with autonomy/warscore
 	IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0.3,			-- ideology limit required to join faction
-	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = -0.3,			-- Change tension requirement for joining faction by amount when at war
+	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = 0.5,			-- if in defensive war this or your modifier is counted as limit to join factions (so if you have 80% join limit this now means you can join at 50%)
 },
 
 NCountry = {
@@ -756,7 +756,7 @@ NTrade = {
 	DISTANCE_TRADE_FACTOR = -0.02,			-- Trade factor is modified by distance times this
 	RELATION_TRADE_FACTOR = 1,				-- Trade factor is modified by Opinion value times this
 	FEAR_TRADE_FACTOR = 1,
-	ALLOW_TRADE_CUT_OFF = 0,				-- If trade factor is less than this, no trade will be allowed
+	ALLOW_TRADE_CUT_OFF = 40,				-- If trade factor is less than this, no trade will be allowed
 	MONTH_TRADE_FACTOR = 2,					-- Each month a trade gets this much boost to it's trade factor
 	MAX_MONTH_TRADE_FACTOR = 50,			-- This is the maximum bonus that can be gained from time
 	BASE_TRADE_FACTOR = 150,				-- This is the base trade factor
@@ -1151,6 +1151,7 @@ NAI = {
 	INDUSTRY_IC_AIR_IMPORTANCE_FACTOR = 0.02,			-- AI very specific IC cost factor for air missions
 	
 	AIR_SCORE_DISTANCE_IMPACT = 0.3,					-- Effect of distance applied to the score calculations
+	DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 4,				-- Amount of days between air ai updates priorities for air wings ( from 1 to N )
 	
 	NAVAL_AIR_SUPERIORITY_IMPORTANCE = 0.10,			-- Strategic importance of air superiority ( amount of enemy planes in area )
 	NAVAL_SHIP_AIR_IMPORTANCE = 2.0,					-- Naval ship air importance

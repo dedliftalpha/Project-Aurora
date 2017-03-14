@@ -358,6 +358,32 @@ country_event = { #Check for good stab
 	#}
 #}
 
+country_event = {
+	id = kr.political.31 #set normal stability flag for newly released countries
+	title = kr.political.30.t 
+	desc = kr.political.30.d
+	hidden = yes
+	
+	trigger = {
+		date > 1936.10.1
+		has_idea = normal_stability
+		NOT = { has_country_flag = normal_stability }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+								
+	option = {
+		name = kr.political.30.a
+		every_country = {
+            limit = { has_idea = normal_stability }
+            set_country_flag = normal_stability
+        }
+	}
+
+}
+
 ### very_high_popularity
 country_event = {
 	id = kr.political.11
@@ -2054,10 +2080,6 @@ country_event = {
 		
     is_triggered_only = yes
 	
-	immediate = {
-		hidden_effect = { set_global_flag = newspaper_boiz }
-	}
-						
 	option = {
 		name = kr.political.24.a #Continue the credits
 		country_event = { id = kr.political.25  }
@@ -2070,8 +2092,7 @@ country_event = {
 	}
 
 }
-								
-								
+
 country_event = {
 	id = kr.political.25 #Kaiserreich team
 	title = kr.political.25.t 
@@ -2079,13 +2100,15 @@ country_event = {
 	picture = INTRO_team
 		
 	is_triggered_only = yes
-								
+
 	option = {
 		name = kr.political.25.a
+		country_event = { id = kr.political.28  }
 	}
-								
+
 	option = {
 		name = kr.political.25.b
+		country_event = { id = kr.political.28  }
 	}
 	
 }
@@ -2097,7 +2120,7 @@ country_event = {
 	picture = GFX_petain_NFA
 		
 	is_triggered_only = yes
-								
+
 	option = {
 		name = kr.political.27.a
 		add_political_power = -5
@@ -2112,15 +2135,8 @@ country_event = {
 	desc = kr.political.28.d 
 	picture = INTRO_news
 		
-	fire_only_once = yes
-		
-	trigger = {
-		is_ai = no
-		has_global_flag = newspaper_boiz
-	}
+	is_triggered_only = yes
 	
-	mean_time_to_happen = { days = 3 } # 10 day is too long - 3 days should be just fine
-								
 	option = {
 		name = kr.political.28.a #All the events
 		set_global_flag = NEWS_ALL

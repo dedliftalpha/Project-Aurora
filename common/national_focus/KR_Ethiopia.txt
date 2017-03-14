@@ -45,6 +45,7 @@ focus_tree = {
 		x = 8
 		y = 2
 		cost = 1
+		ai_will_do = { factor = 50 }
 		prerequisite = { focus = ETH_Nobility }
 		available = { always = no }
 		bypass = { has_civil_war = yes }
@@ -519,8 +520,8 @@ focus_tree = {
 	focus = {
 		id = ETH_Navy
 		icon = GFX_goal_generic_build_navy
-		x = 1
-		y = 16
+		x = 3
+		y = 10
 		cost = 10
 		ai_will_do = { factor = 90 }
 		completion_reward = {
@@ -544,51 +545,27 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ETH_Strat_Place
-		icon = GFX_goal_generic_wolf_pack
-		x = 2
-		y = 15
+		id = ETH_Reform_Navy
+		icon = GFX_goal_government_icon
+		x = 3
+		y = 11
 		cost = 10
-		ai_will_do = { factor = 80 }
+		ai_will_do = { factor = 60 }
 		prerequisite = { focus = ETH_Navy }
-		mutually_exclusive = { focus = ETH_Aim_Eyes }
 		completion_reward = {
-			add_tech_bonus = {
-				name = fleet_in_being_bonus
-				bonus = 0.5
-				uses = 2
-				category = cat_trade_interdiction
-			}
-		}
-	}
-
-	focus = {
-		id = ETH_Aim_Eyes
-		icon = GFX_goal_generic_air_naval_bomber
-		x = 2
-		y = 17
-		cost = 10
-		ai_will_do = { factor = 80 }
-		prerequisite = { focus = ETH_Navy }
-		mutually_exclusive = { focus = ETH_Strat_Place }
-		completion_reward = {
-			add_tech_bonus = {
-				name = fleet_in_being_bonus
-				bonus = 0.5
-				uses = 2
-				category = cat_base_strike
-			}
+			add_political_power = 100
+			navy_experience = 20
 		}
 	}
 
 	focus = {
 		id = ETH_North_Ports
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 3
-		y = 14
+		x = 1
+		y = 12
 		cost = 10
 		ai_will_do = { factor = 40 }
-		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		prerequisite = { focus = ETH_Reform_Navy }
 		completion_reward = {
 			550 = {
 				add_extra_state_shared_building_slots = 2
@@ -605,11 +582,11 @@ focus_tree = {
 		id = ETH_Ger_Som_Ports
 		icon = GFX_goal_generic_construct_naval_dockyard
 		x = 3
-		y = 16
+		y = 12
 		cost = 10
 		ai_will_do = { factor = 40 }
 		available = { AND = { owns_state = 268 owns_state = 269 } }
-		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		prerequisite = { focus = ETH_Reform_Navy }
 		completion_reward = {
 			268 = {
 				add_extra_state_shared_building_slots = 1
@@ -633,11 +610,11 @@ focus_tree = {
 	focus = {
 		id = ETH_South_Ports
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 3
-		y = 18
+		x = 5
+		y = 12
 		cost = 10
 		ai_will_do = { factor = 40 }
-		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		prerequisite = { focus = ETH_Reform_Navy }
 		completion_reward = {
 			559 = {
 				add_extra_state_shared_building_slots = 2
@@ -651,43 +628,231 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ETH_Strat_Place
+		icon = GFX_goal_generic_wolf_pack
+		x = 2
+		y = 13
+		cost = 10
+		ai_will_do = { factor = 80 }
+		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
+		mutually_exclusive = { focus = ETH_Aim_Eyes }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_trade_interdiction
+			}
+		}
+	}
+
+	focus = {
+		id = ETH_Aim_Eyes
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 4
+		y = 13
+		cost = 10
+		ai_will_do = { factor = 80 }
+		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
+		mutually_exclusive = { focus = ETH_Strat_Place }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_base_strike
+			}
+		}
+	}
+
+	focus = {
 		id = ETH_Sub_Focus
 		icon = GFX_goal_generic_navy_submarine
-		x = 4
-		y = 15
+		x = 1
+		y = 14
 		cost  = 10
 		ai_will_do = { factor = 20 }
 		prerequisite = { focus = ETH_Strat_Place }
-		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
 		completion_reward = {
-			# add_ideas = ETH_Sub_Focus
+			add_ideas = ETH_Sub_P_Focus
+		}
+	}
+
+
+	focus = {
+		id = ETH_Further_NDoctrine
+		icon = GFX_goal_generic_occupy_states_coastal
+		x = 3
+		y = 14
+		ai_will_do = { factor = 10 }
+		prerequisite = { focus = ETH_Strat_Place focus = ETH_Aim_Eyes }
+		completion_reward = {
+			add_ideas = ETH_Naval_Doctrine
 		}
 	}
 
 	focus = {
 		id = ETH_NB_Focus
 		icon = GFX_goal_generic_air_naval_bomber
-		x = 4
-		y = 15
+		x = 5
+		y = 14
 		cost  = 10
 		ai_will_do = { factor = 20 }
 		prerequisite = { focus = ETH_Aim_Eyes }
-		prerequisite = { focus = ETH_North_Ports focus = ETH_South_Ports focus = ETH_Ger_Som_Ports }
 		completion_reward = {
-			# add_ideas = ETH_NB_Focus
+			add_ideas = ETH_NB_P_Focus
+		}
+	}
+
+	### Air Focus Tree
+	focus = {
+		id = ETH_Air
+		icon = GFX_goal_generic_build_airforce
+		x = 10
+		y = 10
+		cost = 10
+		ai_will_do = { factor = 80 }
+		completion_reward = {
+			if = {
+                limit = {
+                    capital_scope = {
+                        NOT = {
+                            free_building_slots = {
+                                building = air_base
+                                size > 1
+                            }
+                        }
+                    }
+                }
+                random_owned_state = {
+                    limit = {
+                        free_building_slots = {
+                            building = air_base
+                            size > 1
+                        }
+                    }
+                    add_building_construction = {
+                        type = air_base
+                        level = 2
+                        instant_build = yes
+                    }
+                    ROOT = {
+                        set_country_flag = aviation_effort_AB
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    capital_scope = {
+                        free_building_slots = {
+                            building = air_base
+                            size > 1
+                        }
+                    }
+                }
+                capital_scope = {
+                    add_building_construction = {
+                        type = air_base
+                        level = 2
+                        instant_build = yes
+                    }
+                    ROOT = {
+                        set_country_flag = aviation_effort_AB
+                    }
+                }
+            }
 		}
 	}
 
 	focus = {
-		id = ETH_Further_NDoctrine
-		icon = GFX_goal_generic_occupy_states_coastal
-		x = 5
-		y = 16
-		ai_will_do = { factor = 10 }
-		prerequisite = { focus = ETH_Sub_Focus focus = ETH_NB_Focus }
+		id = ETH_Strat_Dest
+		icon = GFX_goal_generic_air_bomber
+		x = 8
+		y = 11
+		prerequisite = { focus = ETH_Air }
+	}
+
+	focus = {
+		id = ETH_Bat_Sup
+		icon = GFX_goal_generic_air_fighter2
+		x = 10
+		y = 11
+		prerequisite = { focus = ETH_Air }
+	}
+
+	focus = {
+		id = ETH_Op_Int
+		icon = GFX_goal_generic_air_fighter
+		x = 12
+		y = 11
+		prerequisite = { focus = ETH_Air }
+	}
+
+	focus = {
+		id = ETH_Air_N
+		icon = GFX_goal_generic_air_production
+		x = 9
+		y = 12
+		prerequisite = { focus = ETH_Strat_Dest focus = ETH_Bat_Sup focus = ETH_Op_Int }
+	}
+
+	focus = {
+		id = ETH_Air_S
+		icon = GFX_goal_generic_air_production
+		x = 11
+		y = 12
+		prerequisite = { focus = ETH_Strat_Dest focus = ETH_Bat_Sup focus = ETH_Op_Int }
+	}
+
+	focus = {
+		id = ETH_Make_Planes
+		icon = GFX_goal_generic_air_doctrine
+		x = 10
+		y = 13
+		prerequisite = { focus = ETH_Air_N }
+		prerequisite = { focus = ETH_Air_S }
+	}
+
+	### Outwards Ambitions
+
+	focus = {
+		id = ETH_Out_Amb
+		icon = GFX_goal_generic_position_armies
+		x = 21
+		y = 1
+		# available = { Do some stuff here }
 		completion_reward = {
-			# add_ideas = ETH_Naval_Doctrine
+			# country_event = { id = ethiopia.? }
 		}
+	}
+
+	## ISOLATION TREE
+
+	focus = {
+		id = ETH_Iso_S
+		icon = GFX_goal_generic_construct_military
+		x = 15
+		y = 3
+		prerequisite = { focus = ETH_Out_Amb }
+	}
+
+	## PANAFRICA TREE
+	focus = {
+		id = ETH_PanAfrica
+		icon = GFX_goal_panafrica
+		x = 21
+		y = 3
+		prerequisite = { focus = ETH_Out_Amb }
+	}
+	
+	## CLOSER MAJOR POWER BONDS TREE
+
+	focus = {
+		id = ETH_MPB
+		icon = GFX_goal_generic_improve_relations
+		x = 27
+		y = 3
+		prerequisite = { focus = ETH_Out_Amb }
 	}
 }
 

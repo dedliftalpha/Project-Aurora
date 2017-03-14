@@ -62,16 +62,26 @@ country_event = {
 		set_country_flag = founded_belgradepact
 
 		create_faction = Belgrade_Pact
+
+		hidden_effect = { add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_anti_bulgaria } }
 	}
 
 	option = {
 		name = pact.1.b # Close the Congress
 
-		ai_chance = {	factor = 10	}
+		ai_chance = { factor = 10 }
 
 		add_political_power = -100
 
-		# TODO relations
+		hidden_effect = {
+			reverse_add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = GER modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = AUS modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = HUN modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = CRO modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_closed_congress }
+			reverse_add_opinion_modifier = { target = ALB modifier = Belgrade_Pact_closed_congress }
+		}
 	}
 
 }
@@ -106,10 +116,21 @@ country_event = {
 		SER = {
 			add_to_faction = ROOT
 
+			add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_joined_yay }
+
 			hidden_effect = { country_event = { id = pact.3 hours = 6} } # Notify Serbia of joining
 		}
 
-		# TODO relations
+		hidden_effect = {
+			add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_anti_bulgaria }
+
+			reverse_add_opinion_modifier = { target = GER modifier = Belgrade_Pact_joined_boo }
+			reverse_add_opinion_modifier = { target = AUS modifier = Belgrade_Pact_joined_boo }
+			reverse_add_opinion_modifier = { target = HUN modifier = Belgrade_Pact_joined_boo }
+			reverse_add_opinion_modifier = { target = CRO modifier = Belgrade_Pact_joined_boo }
+			reverse_add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_joined_boo }
+			reverse_add_opinion_modifier = { target = ALB modifier = Belgrade_Pact_joined_boo }
+		}
 	}
 
 	option = {
@@ -119,14 +140,25 @@ country_event = {
 
 		add_political_power = -100
 
-		SER = { country_event = { id = pact.4 hours = 8 } } # Notify Serbia of the refusal
+		SER = {
+			country_event = { id = pact.4 hours = 8 } # Notify Serbia of the refusal
+			add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_refused }
+		}
 
 		if = {
 			limit = { tag = GRE }
 			hidden_effect = { SER = { country_event = { id = pact.5 days = 1 } } } # Greece has refused, invite Ottomans?
 		}
 
-		# TODO relations
+		hidden_effect = {
+			reverse_add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = GER modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = AUS modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = HUN modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = CRO modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = ALB modifier = Belgrade_Pact_did_not_join_yay }
+		}
 	}
 }
 
@@ -223,6 +255,8 @@ country_event = {
 		SER = {
 			add_to_faction = ROOT
 
+			add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_joined_yay }
+
 			hidden_effect = { country_event = { id = pact.3 hours = 6 } } # Notify Serbia of joining
 		}
 	}
@@ -244,7 +278,19 @@ country_event = {
 
 		add_political_power = -100
 
-		SER = { country_event = { id = pact.4 } } # Notify Serbia of refusal
+		SER = {
+			country_event = { id = pact.4 hours = 2 } # Notify Serbia of the refusal
+			add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_refused }
+		}
+
+		hidden_effect = {
+			reverse_add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = GER modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = AUS modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = HUN modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = CRO modifier = Belgrade_Pact_did_not_join_yay }
+			reverse_add_opinion_modifier = { target = ALB modifier = Belgrade_Pact_did_not_join_yay }
+		}
 	}
 }
 
@@ -283,7 +329,15 @@ country_event = {
 	option = {
 		name = pact.8.a # Not good
 
-		# TODO relations
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = joined_belgradepact
+					has_country_flag = founded_belgradepact
+				}
+			}
+			reverse_add_opinion_modifier = { target = BUL modifier = Belgrade_Pact_joined_against_us }
+		}
 	}
 }
 
@@ -347,7 +401,10 @@ country_event = {
 		SER = { country_event = { id = pact.10 days = 1 } } # Serbia: They support Bulgaria!
 		BUL = { country_event = { id = pact.11 days = 1 } } # Bulgaria: They support us!
 
-		# TODO relations
+		hidden_effect = {
+			SER = { add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_supported_enemy } }
+			BUL = { add_opinion_modifier = { target = ROOT modifier = Belgrade_Pact_supported_us } }
+		}
 	}
 	option = {
 		name = pact.9.b # Avoid the Balkans
@@ -456,11 +513,10 @@ country_event = {
 		ai_chance = { factor = 95 }
 
 		add_to_faction = FROM
+		hidden_effect = { add_opinion_modifier = { target = FROM modifier = Belgrade_Pact_joined_yay } }
 		add_political_power = 50
 
 		FROM = { country_event = { id = pact.14 hours = 4 } }
-
-		# TODO relations
 	}
 	option = {
 		name = pact.13.b # Rather not.
@@ -488,8 +544,6 @@ country_event = {
 		add_political_power = 50
 
 		set_country_flag = joined_belgradepact
-
-		# TODO relations
 	}
 }
 
@@ -506,7 +560,7 @@ country_event = {
 
 		add_political_power = -20
 
-		# TODO relations
+		add_opinion_modifier = { target = SER modifier = Belgrade_Pact_refused_us_entry }
 	}
 }
 
@@ -797,8 +851,6 @@ country_event = {
 		}
 
 		add_political_power = -100
-
-		# TODO relations
 	}
 }
 
@@ -813,7 +865,7 @@ country_event = {
 	option = {
 		name = pact.22 # We will deal with them later.
 
-		# TODO relations
+		add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_they_withdrew_boo }
 	}
 }
 
@@ -828,7 +880,7 @@ country_event = {
 	option = {
 		name = pact.23 # Good.
 
-		# TODO relations
+		add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_they_withdrew_yay }
 	}
 }
 
@@ -903,8 +955,6 @@ country_event = {
 		add_political_power = -100
 
 		BUL = { country_event = { id = pact.31 days = 1 } } # Notify Bulgaria of no support
-
-		# TODO relations
 	}
 }
 
@@ -922,6 +972,9 @@ country_event = {
 		custom_effect_tooltip = pact.26.tt
 
 		hidden_effect = { load_oob = BUL_BalkanWar_help }
+
+		hidden_effect = { add_opinion_modifier = { target = FROM modifier = Belgrade_Pact_sent_promised_aid }
+}
 	}
 }
 
@@ -1078,6 +1131,8 @@ country_event = {
 
 	option = {
 		name = pact.31.a # Traitors!
+
+		add_opinion_modifier = { target = FROM modifier = Belgrade_Pact_didnt_send_promised_aid }
 	}
 }
 
@@ -1107,6 +1162,8 @@ country_event = {
 		days = 3
 	}
 
+	fire_only_once = yes
+
 	option = {
 		name = pact.32.a # Send aid to Serbia.
 
@@ -1120,7 +1177,10 @@ country_event = {
 		hidden_effect = { SER = { add_manpower = 1000 } }
 		send_equipment = { target = SER type = infantry_equipment amount = 1000 }
 
-		# TODO relations
+		hidden_effect = {
+			SER = { add_opinion_modifier = { target = RUS modifier = Belgrade_Pact_supported_us } }
+			BUL = { add_opinion_modifier = { target = RUS modifier = Belgrade_Pact_supported_serbia_boo } }
+		}
 	}
 
 	option = {
@@ -1136,7 +1196,10 @@ country_event = {
 		hidden_effect = { BUL = { add_manpower = 1000 } }
 		send_equipment = { target = BUL type = infantry_equipment amount = 1000 }
 
-		# TODO relations
+		hidden_effect = {
+			SER = { add_opinion_modifier = { target = RUS modifier = Belgrade_Pact_supported_enemy } }
+			BUL = { add_opinion_modifier = { target = RUS modifier = Belgrade_Pact_supported_us } }
+		}
 	}
 
 	option = {
@@ -2005,6 +2068,7 @@ country_event = {
 		ai_chance = { factor = 85 }
 
 		SER = { add_to_faction = GRE }
+		hidden_effect = { reverse_add_opinion_modifier = { target = SER modifier = Belgrade_Pact_joined_yay }}
 		set_country_flag = joined_belgradepact
 
 		transfer_state = 731 # Central Macedonia
@@ -2030,6 +2094,7 @@ country_event = {
 		ai_chance = { factor = 10 }
 
 		SER = { add_to_faction = GRE }
+		hidden_effect = { reverse_add_opinion_modifier = { target = SER modifier = Belgrade_Pact_joined_yay }}
 		set_country_flag = joined_belgradepact
 
 		transfer_state = 731 # Central Macedonia
@@ -2163,7 +2228,7 @@ country_event = {
 	option = {
 		name = pact.58.a # We will get it later
 
-		# TODO relations
+		add_opinion_modifier = { target = SER modifier = Belgrade_Pact_serbia_wont_pressure_ottomans }
 	}
 }
 
@@ -2178,7 +2243,7 @@ country_event = {
 	option = {
 		name = pact.59.a # We will get it later
 
-		# TODO relations
+		add_opinion_modifier = { target = OTT modifier = Belgrade_Pact_refused_thrace }
 	}
 }
 
@@ -2265,6 +2330,7 @@ country_event = {
 		ai_chance = { factor = 99 }
 
 		SER = { add_to_faction = ROOT }
+		hidden_effect = { reverse_add_opinion_modifier = { target = SER modifier = Belgrade_Pact_joined_yay }}
 		set_country_flag = joined_belgradepact
 
 		transfer_state = 77 # Dobrudzha

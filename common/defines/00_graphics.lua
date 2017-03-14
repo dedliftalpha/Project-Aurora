@@ -1,7 +1,7 @@
 NDefines_Graphics = {
 	
 NWiki = {
-	BASE_URL = "http://www.hoi4wiki.com/",
+	BASE_URL = "http://kaiserreich.wikia.com/wiki/The_Kaiserreich_Wiki",
 	FORUM_URL = "http://forum.paradoxplaza.com/forum/index.php?link-forums/hearts-of-iron-iv.847/"
 },
 

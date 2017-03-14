@@ -1,0 +1,1318 @@
+focus_tree = {
+	id = TRM_focus
+	
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = TRM
+		}
+	}
+	
+	default = no
+
+###Navy###
+
+focus = {
+	id = TRM_Navy_Start
+	icon = GFX_goal_generic_navy_doctrines_tactics
+	x = 8
+	y = 1
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		navy_experience = 25
+	}
+}
+
+focus = {
+		id = TRM_Navy_Vlad
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = {focus = TRM_Navy_Start}
+		available = {owns_state = 408 controls_state = 408}
+		x = 3
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			408 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+focus = {
+	id = TRM_Navy_Fng
+	icon = GFX_goal_generic_construct_infrastructure
+	x = 5
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Vlad}
+	available = {is_puppet_of = JAP}
+	available = {FNG = {exists = yes} }
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_national_unity = -0.02
+		408 = { 
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}	
+	}
+}
+
+focus = {
+	id = TRM_Navy_Jap
+	icon = GFX_goal_generic_scientific_exchange
+	x = 1
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Vlad}
+	available = {is_puppet_of = JAP}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_jap_advisors	
+	}
+}
+
+focus = {
+	id = TRM_Navy_Doc
+	icon = GFX_goal_generic_navy_doctrines_tactics
+	x = 3
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Vlad}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = naval_doctrine_bonus
+			bonus = 0.5
+			uses = 2
+	            	category = naval_doctrine
+		}
+	}
+}
+
+focus = {
+	id = TRM_Navy_Ships
+	icon = GFX_goal_generic_navy_battleship
+	mutually_exclusive = { focus = TRM_Navy_Docks }
+	x = 2
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Doc}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		TRM = {country_event = {id = tram.100 days = 2} }
+	}
+}
+
+focus = {
+	id = TRM_Navy_Docks
+	icon = GFX_focus_generic_coastal_fort
+	x = 4
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Doc}
+	mutually_exclusive = { focus = TRM_Navy_Ships }
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		408 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 957
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				
+		}
+	}
+}
+
+focus = {
+		id = TRM_Navy_Petr
+		icon = GFX_goal_generic_construct_naval_dockyard
+		available = {owns_state = 195 controls_state = 195}
+		prerequisite = {focus = TRM_Navy_Start}
+		x = 8
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			195 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3151
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 3151
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+focus = {
+	id = TRM_Navy_Sub
+	icon = GFX_goal_generic_navy_submarine
+	x = 7
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Petr}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = submarine_bonus
+			bonus = 0.5
+			uses = 1
+	            	category = ss_tech
+		}
+	}
+}
+
+focus = {
+	id = TRM_Navy_Carrier
+	icon = GFX_goal_generic_navy_carrier
+	x = 9
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Petr}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = carrier_bonus
+			bonus = 0.5
+			uses = 1
+			category = cv_tech
+		}	
+	}
+}
+
+focus = {
+		id = TRM_Navy_Seva
+		icon = GFX_goal_generic_construct_naval_dockyard
+		available = {owns_state = 137 controls_state = 137}
+		prerequisite = {focus = TRM_Navy_Start}
+		x = 12
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			137 = { 
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3686
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 3686
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+focus = {
+	id = TRM_Navy_BS
+	icon = GFX_goal_generic_navy_battleship
+	x = 11
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Seva}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		TRM = {country_event = {id = tram.101 days = 2} }
+	}
+}
+
+focus = {
+	id = TRM_Navy_Straits
+	icon = GFX_goal_generic_more_territorial_claims
+	x = 13
+	y = 3
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Seva}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_state_claim = 341
+		add_state_claim = 774
+		add_state_claim = 340
+	}
+}
+
+###Industry###
+focus = {
+	id = TRM_Ind_Vlad
+	icon = GFX_goal_generic_construct_infrastructure
+	x = 16
+	y = 1
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		408 = { 
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+		}
+	}
+}
+
+focus = {
+	id = TRM_Ind_Jap_Inv1
+	icon = GFX_goal_generic_improve_relations
+	x = 15
+	y = 2
+	cost = 5
+	prerequisite = {focus = TRM_Ind_Vlad}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_national_unity = -0.02
+		add_ideas = TRM_jap_inv1
+	}
+}
+
+focus = {
+	id = TRM_Ind_Jap_Inv2
+	icon = GFX_goal_generic_intelligence_exchange
+	x = 15
+	y = 3
+	cost = 5
+	prerequisite = {focus = TRM_Ind_Jap_Inv1}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_national_unity = -0.03
+		remove_ideas = TRM_jap_inv1
+		add_ideas = TRM_jap_inv2
+	}
+}
+
+focus = {
+	id = TRM_Ind_Dock
+	icon = GFX_goal_generic_construct_naval_dockyard
+	x = 17
+	y = 2
+	cost = 5
+	prerequisite = {focus = TRM_Ind_Vlad}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		408 = { 
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+}
+
+focus = {
+	id = TRM_Ind_Khab
+	icon = GFX_goal_generic_construct_civ_factory
+	x = 17
+	y = 3
+	cost = 5
+	prerequisite = {focus = TRM_Ind_Dock}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		409 = { 
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+}
+
+focus = {
+	id = TRM_Ind_Transsib
+	icon = GFX_goal_generic_construct_infrastructure
+	x = 17
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Khab}
+	available = {
+	controls_state = 657
+	controls_state = 561
+	controls_state = 574
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		657 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+		561 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+		574 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+focus = {
+	id = TRM_Ind_Sib
+	icon = GFX_goal_generic_construct_civ_factory
+	x = 15
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Khab}
+	available = {
+	controls_state = 657
+	controls_state = 561
+	controls_state = 574
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		657 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		561 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		
+	}
+}
+
+focus = {
+	id = TRM_Ind_Okh
+	icon = GFX_goal_generic_construct_naval_dockyard
+	x = 19
+	y = 4
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Khab}
+	available = {
+	controls_state = 562
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		562 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 4810
+					instant_build = yes
+			}
+			add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 4810
+					instant_build = yes
+			}
+		}
+		
+	}
+}
+
+focus = {
+	id = TRM_Ind_Bai
+	icon = GFX_goal_generic_construction2
+	x = 16
+	y = 5
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Transsib focus = TRM_Ind_Sib focus = TRM_Ind_Okh}
+	available = {
+	controls_state = 565
+	controls_state = 566
+	controls_state = 575
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		565 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		566 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		575 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		
+	}
+}
+
+focus = {
+	id = TRM_Ind_Mon
+	icon = GFX_goal_generic_construction
+	x = 18
+	y = 5
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Transsib focus = TRM_Ind_Sib focus = TRM_Ind_Okh}
+	available = {
+	controls_state = 563
+	controls_state = 564
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		563 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		564 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		
+	}
+}
+
+focus = {
+	id = TRM_Ind_West_Sib
+	icon = GFX_goal_generic_construct_civilian
+	x = 15
+	y = 6
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Bai focus = TRM_Ind_Mon}
+	available = {
+	controls_state = 570
+	controls_state = 572
+	controls_state = 653
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		570 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		572 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}
+		653 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+			}
+		}	
+	}
+}
+
+focus = {
+	id = TRM_Ind_Transsib_exp
+	icon = GFX_goal_generic_construct_infrastructure
+	x = 17
+	y = 6
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Bai focus = TRM_Ind_Mon}
+	available = {
+	controls_state = 570
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		country_event = {id = tram.104 days = 1}	
+	}
+}
+
+focus = {
+	id = TRM_Ind_Research
+	icon = GFX_focus_research
+	x = 19
+	y = 6
+	cost = 10
+	prerequisite = {focus = TRM_Ind_Bai focus = TRM_Ind_Mon}
+	available = {
+	controls_state = 570
+	}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_research_slot = 1
+	}
+}
+
+
+###Army###
+
+focus = {
+	id = TRM_Arm_Start
+	icon = GFX_goal_generic_allies_build_infantry
+	x = 22
+	y = 1
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		army_experience = 25
+	}
+}
+
+focus = {
+	id = TRM_Arm_Doc
+	icon = GFX_goal_generic_army_doctrines
+	prerequisite = {focus = TRM_Arm_Start}
+	x = 21
+	y = 2
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+		}
+	}
+}
+
+focus = {
+	id = TRM_Arm_Inf1
+	icon = GFX_goal_generic_small_arms
+	prerequisite = {focus = TRM_Arm_Start}
+	x = 23
+	y = 2
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+		}
+	}
+}
+
+focus = {
+	id = TRM_Arm_Inf2
+	icon = GFX_Human_tsunami
+	prerequisite = {focus = TRM_Arm_Inf1}
+	x = 23
+	y = 3
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_north_exp
+		custom_effect_tooltip = TRM_north_expand
+	}
+}
+
+###Politic###
+
+focus = {
+	id = TRM_Crisis
+	icon = GFX_goal_generic_political_pressure
+	available = { always = no }
+	x = 6
+	y = 7
+	cost = 3
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	bypass = {
+	  has_country_flag = TRM_coup
+	}
+}
+
+focus = {
+	id = TRM_Kolchak
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Crisis}
+	x = 4
+	y = 8
+	available = {has_country_flag = TRM_Kolchak_alive}
+	cost = 3
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_political_power = 100
+	}
+
+}
+
+focus = {
+	id = TRM_Kolchak_Purge
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Kolchak}
+	x = 4
+	y = 9
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_political_power = 100
+		add_timed_idea = {
+			idea = TRM_purge
+			days = 180
+		}
+	}
+
+}
+
+focus = {
+	id = TRM_Kolchak_Mil
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Kolchak_Purge}
+	x = 4
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		408 = { 
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+	}
+
+}
+
+focus = {
+	id = TRM_Kolchak_Doc
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Kolchak_Mil}
+	x = 4
+	y = 11
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		
+	}
+
+}
+
+focus = {
+	id = TRM_Mil
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Crisis}
+	available = {has_country_flag = TRM_Mil_coup}
+	x = 6
+	y = 8
+	cost = 3
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_political_power = -200
+	}
+
+}
+
+focus = {
+	id = TRM_Mil_Doc
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Mil}
+	x = 6
+	y = 9
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_mil_stuff
+	}
+
+}
+
+focus = {
+	id = TRM_Mil_Inf
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Mil_Doc}
+	x = 6
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+		}
+	}
+
+}
+
+focus = {
+	id = TRM_Mil_ML_End
+	icon = GFX_goal_JAP_toseiha
+	prerequisite = {focus = TRM_Mil_Inf}
+	x = 6
+	y = 11
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+	
+	}
+
+}
+
+focus = {
+	id = TRM_Rep
+	icon = GFX_goal_generic_support_democracy
+	prerequisite = {focus = TRM_Crisis}
+	available = {has_country_flag = TRM_Dem_coup}
+	x = 8
+	y = 8
+	cost = 3
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_political_power = -40
+	}
+
+}
+
+focus = {
+	id = TRM_Rep_Res
+	icon = GFX_goal_generic_support_democracy
+	prerequisite = {focus = TRM_Rep}
+	x = 8
+	y = 9
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_research
+	}
+
+}
+
+focus = {
+	id = TRM_Rep_Fac
+	icon = GFX_goal_generic_support_democracy
+	prerequisite = {focus = TRM_Rep_Res}
+	x = 8
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_factory
+	}
+
+}
+
+focus = {
+	id = TRM_Rep_Goods
+	icon = GFX_goal_generic_support_democracy
+	prerequisite = {focus = TRM_Rep_Fac}
+	x = 8
+	y = 11
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_ideas = TRM_goods
+	}
+
+}
+
+
+
+###Expand###
+focus = {
+	id = TRM_Expand_RCW
+	icon = GFX_goal_generic_more_territorial_claims
+	available = { always = no }
+	mutually_exclusive = { focus = TRM_Expand }
+	x = 15
+	y = 7
+	cost = 2
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		
+	}
+	bypass = {
+	  has_country_flag = TRM_RCW
+	}
+}
+
+focus = {
+	id = TRM_Expand
+	icon = GFX_goal_generic_more_territorial_claims
+	available = {date > 1937.1.1}
+	mutually_exclusive = { focus = TRM_Expand_RCW }
+	x = 17
+	y = 7
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	
+}
+
+focus = {
+	id = TRM_FE_SIB
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Expand_RCW focus = TRM_Expand}
+	mutually_exclusive = { focus = TRM_FE_RUS focus = TRM_FE_SOV}
+	available = {SIB = {exists = yes} }
+	x = 13
+	y = 8
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		SIB = { country_event = {id = tram.2 days = 1} }
+	}
+	
+}
+
+focus = {
+	id = TRM_FE_RUS
+	icon = GFX_goal_generic_more_territorial_claims
+	mutually_exclusive = { focus = TRM_FE_SIB focus = TRM_FE_SOV}
+	prerequisite = {focus = TRM_Expand_RCW focus = TRM_Expand}
+	available = {
+	SIB = {exists = no}
+	RUS = {exists = yes}
+	}
+	x = 16
+	y = 8
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		RUS = { country_event = {id = tram.6 days = 1} }
+	}
+	
+}
+
+focus = {
+	id = TRM_FE_SOV
+	icon = GFX_goal_generic_more_territorial_claims
+	mutually_exclusive = { focus = TRM_FE_RUS focus = TRM_FE_SIB}
+	prerequisite = {focus = TRM_Expand_RCW focus = TRM_Expand}
+	available = {
+	SIB = {exists = no}
+	RUS = {exists = no}
+	SOV = {exists = yes}
+	}
+	x = 19 
+	y = 8
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		custom_effect_tooltip = TRM_sov
+		SOV = { country_event = {id = tram.10 days = 1} }
+	}
+	
+}
+
+focus = {
+	id = TRM_Demand_Bai
+	available = {has_country_flag = TRM_control_FE}
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_FE_SIB focus = TRM_FE_RUS focus = TRM_FE_SOV}
+	x = 14
+	y = 9
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	bypass = {
+	has_country_flag = TRM_sib_war
+	}
+	
+}
+
+focus = {
+	id = TRM_Demand_Mon
+	icon = GFX_goal_generic_more_territorial_claims
+	available = {has_country_flag = TRM_control_FE}
+	prerequisite = {focus = TRM_FE_SIB focus = TRM_FE_RUS focus = TRM_FE_SOV}
+	x = 18
+	y = 9
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		declare_war_on = {
+            target = MON type = annex_everything
+        }
+		811 = {add_claim_by = TRM}
+		654 = {add_claim_by = TRM}
+	}
+	
+}
+
+focus = {
+	id = TRM_Integrate_Bai
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Demand_Bai}
+	x = 15
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		565 = {add_core_of = TRM}
+		566 = {add_core_of = TRM}
+		575 = {add_core_of = TRM}
+	}
+	
+}
+focus = {
+	id = TRM_Cap_Irkutsk
+	available = {controls_state = 566}
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Demand_Bai}
+	x = 13
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+	set_capital = 566
+	set_cosmetic_tag = TRM_FE
+	}
+
+	
+}
+
+focus = {
+	id = TRM_Integrate_Mon
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Demand_Mon}
+	x = 17
+	y = 10
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		563 = {add_core_of = TRM}
+		564 = {add_core_of = TRM}
+		654 = {add_core_of = TRM}
+		811 = {add_core_of = TRM}
+	}
+	
+}
+focus = {
+	id = TRM_Claim_West_Sib
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Integrate_Mon focus = TRM_Integrate_Bai}
+	x = 16
+	y = 11
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	
+}
+
+focus = {
+	id = TRM_Integrate_West_Sib
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Claim_West_Sib }
+	x = 16
+	y = 12
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	
+}
+
+focus = {
+	id = TRM_Claim_Russia
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Integrate_West_Sib }
+	x = 16
+	y = 13
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	
+}
+
+focus = {
+	id = TRM_Become_Russia
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Claim_Russia }
+	x = 16
+	y = 14
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+
+	}
+	
+}

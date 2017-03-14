@@ -3345,7 +3345,7 @@ country_event = { # Ireland rejects aid deal
 	}
 }
 
- country_event = { # Denmark Accepts Claim
+country_event = { # Denmark Accepts Claim
 	 id = canada.64
 	 title = canada.64.t
 	 desc = canada.64.d
@@ -3355,8 +3355,20 @@ country_event = { # Ireland rejects aid deal
 
 	 option = {
 		name = canada.64.a
-		 
-		add_opinion_modifier = { target = DEN modifier = CAN_OCC_GREENLAND } 
+		FROM = {
+			if = {
+				limit = { controls_state = 100 }
+				CAN = { transfer_state = 100 }
+			}
+			if = {
+				limit = { controls_state = 101 }
+				CAN = { transfer_state = 101 }
+			}
+			if = {
+				limit = { controls_state = 337 }
+				CAN = { transfer_state = 337 }
+			}
+		}
 	}
  }
 
@@ -3383,7 +3395,7 @@ country_event = { # Denmark Rejects Claim
 	 }
 	 
 	 option = { #Go to war
-		name = canada.65.b 
+		name = canada.65.b
 		
 		ai_chance = {
 			factor = 50
@@ -3391,13 +3403,23 @@ country_event = { # Denmark Rejects Claim
 				factor = 1.5
 				DEN = { has_war = yes }
 			}
-		 }
+			modifier = {
+				factor = 0.5
+				DEN = {
+					OR = {
+						is_in_faction_with = GER
+						is_in_faction_with = ENG
+					}
+				}
+			}
+		}
+
 		declare_war_on = { target = DEN type = annex_everything	}
 		add_named_threat = { threat = 4 name = CAN_attack_DEN }
 	 }
  }
 
- country_event = { # Canada Claims Greenland and Iceland
+country_event = { # Canada Claims Greenland and Iceland
 	 id = canada.66
 	 title = canada.66.t
 	 desc = canada.66.d
@@ -3423,32 +3445,24 @@ country_event = { # Denmark Rejects Claim
 			}
 		}
 
-		if = {
-			limit = {
-				DEN = { controls_state = 100 }
+		effect_tooltip = {
+			if = {
+				limit = { controls_state = 100 } #Iceland
+				CAN = { transfer_state = 100 }
 			}
-
-			CAN = { transfer_state = 100 }
-		}
-		if = {
-			limit = {
-				DEN = { controls_state = 101 }
+			if = {
+				limit = { controls_state = 101 } #Greenland
+				CAN = { transfer_state = 101 }
 			}
-
-			CAN = { transfer_state = 101 }
-		}
-		if = {
-			limit = {
-				DEN = { controls_state = 337 }
+			if = {
+				limit = { controls_state = 337 } #Faeroe
+				CAN = { transfer_state = 337 }
 			}
-
-			CAN = { transfer_state = 337 }
 		}
 		
-		add_opinion_modifier = { target = CAN modifier = CAN_OCC_GREE } # -25
-
-		hidden_effect = { CAN = { country_event = { id = canada.64 days = 1 }}}
-	}	
+		add_opinion_modifier = { target = CAN modifier = CAN_OCC_GREENLAND } # -100
+		hidden_effect = { CAN = { country_event = { id = canada.64 days = 1 } } }
+	}
 
 	option = { #Reject 
 		name = canada.66.b
@@ -3477,11 +3491,140 @@ country_event = { # Denmark Rejects Claim
 			}
 		}
 		
-		add_opinion_modifier = { target = CAN modifier = DEN_CAN_REJ } # -50
-		
-		hidden_effect = { CAN = { country_event = { id = canada.65 days = 1 }}}
+		reverse_add_opinion_modifier = { target = CAN modifier = DEN_CAN_REJ } # -50
+		hidden_effect = { CAN = { country_event = { id = canada.65 days = 1 } } }
 	}
 }
+
+country_event = { # Greenland and Iceland occupied - white peace?
+	id = canada.660
+	title = canada.660.t
+	desc = canada.660.d
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DEN
+		has_war_with = CAN
+		OR = {
+			owns_state = 100
+			owns_state = 101
+			owns_state = 337
+		}
+		100 = {
+			OR = {
+				NOT = { is_owned_by = DEN }
+				is_controlled_by = CAN
+				controller = { is_in_faction_with = CAN }
+			}
+		}
+		101 = {
+			OR = {
+				NOT = { is_owned_by = DEN }
+				is_controlled_by = CAN
+				controller = { is_in_faction_with = CAN }
+			}
+		}
+		337 = {
+			OR = {
+				NOT = { is_owned_by = DEN }
+				is_controlled_by = CAN
+				controller = { is_in_faction_with = CAN }
+			}
+		}
+		CAN = {
+			has_completed_focus = CAN_claim_greenland
+			NOT = {
+				surrender_progress > 0.1
+				any_owned_state = { is_controlled_by = DEN }
+				any_owned_state = { controller = { is_in_faction_with = DEN } }
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = canada.660.a #Sue for peace and offer them the islands
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 1.5
+				any_enemy_country = {
+					has_war_with = DEN
+					NOT = { tag = CAN }
+					NOT = { is_in_faction_with = CAN }
+				}
+			}
+		}
+		add_political_power = -100
+		CAN = { country_event = { id = canada.661 } }
+	}
+	option = {
+		name = canada.660.b #No, we can still win this!
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = { controls_state = 99 } #Jutland
+					NOT = { controls_state = 37 } #Sjaelland
+				}
+			}
+			modifier = {
+				factor = 9
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+				}
+			}
+			modifier = {
+				factor = 0.5
+				has_political_power < 0
+			}
+		}
+		add_political_power = -200
+	}
+}
+	
+country_event = { # Canada considers Denmark's peace offer
+	id = canada.661
+	title = canada.661.t
+	desc = canada.661.d
+	picture = towar	
+
+	is_triggered_only = yes
+	
+	option = {
+		name = canada.661.a #Yes, let's end this now
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		DEN = {
+			white_peace = CAN
+			if = {
+				limit = { owns_state = 100 }
+				CAN = { transfer_state = 100 }
+			}
+			if = {
+				limit = { owns_state = 101 }
+				CAN = { transfer_state = 101 }
+			}
+			if = {
+				limit = { owns_state = 337 }
+				CAN = { transfer_state = 337 }
+			}
+		}
+	}
+	option = {
+		name = canada.661.b #This war isn't over until we're marching on Copenhagen!
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+}
+
 
 #########################################
 ### Disturbing development in the USA ###
@@ -3656,32 +3799,35 @@ country_event = { # Disturbances in the USA!
 	 # }
  # }
 
-country_event = { # The Union of Britain at War.
-	id = canada.72
-	title = canada.72.t
-	desc = canada.72.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+# country_event = { # The Union of Britain at War.
+	# id = canada.72
+	# title = canada.72.t
+	# desc = canada.72.d
+	# picture = GFX_report_event_spain_civil_war_soldiers
 	
-	fire_only_once = yes
+	# fire_only_once = yes
 	
-	trigger = {
-		tag = CAN
-		GER = { has_war_with = ENG }
-		has_war = no
-		is_subject = no
-	}
+	# trigger = {
+		# tag = CAN
+		# GER = { has_war_with = ENG }
+		# has_war = no
+		# is_subject = no
+	# }
 
-	mean_time_to_happen = {
-		days = 0
-	}
+	# mean_time_to_happen = {
+		# days = 0
+	# }
 
-	option = {
-		name = canada.72.a
-		set_global_flag = WW2_ON
-	}
+	# option = {
+		# name = canada.72.a
+		# set_global_flag = WW2_ON
+		# create_wargoal = {
+			# type = annex_everything target = ENG
+		# }
+	# }
 
 	
-}
+# }
 
 #############################################################
 #Canada and Honduras Civil War
@@ -4217,8 +4363,8 @@ country_event = {
 			factor = 90
 		}
 
-		add_opinion_modifier = { target = DEN modifier = CAN_OCC_GREENLAND } # -100
-		add_opinion_modifier = { target = GER modifier = CAN_OCC_GREENLAND } # -100
+		reverse_add_opinion_modifier = { target = DEN modifier = CAN_OCC_GREENLAND } # -100
+		reverse_add_opinion_modifier = { target = GER modifier = CAN_OCC_GREENLAND } # -100
 		hidden_effect = { DEN = { country_event = { id = canada.83 days = 1 }}}
 	}	
 
@@ -4230,7 +4376,7 @@ country_event = {
 		}
 
 		add_political_power = -100
-		add_opinion_modifier = { target = ENG modifier = CAN_NO_GREENLAND } # 25
+		reverse_add_opinion_modifier = { target = ENG modifier = CAN_NO_GREENLAND } # 25
 	}
 }
 ##Danish Response##
@@ -4250,23 +4396,16 @@ country_event = {
 		}
 
 		if = {
-			limit = {
-				DEN = { controls_state = 100 }
-			}
-
+			limit = { controls_state = 100 } #Iceland
 			CAN = { transfer_state = 100 }
 		}
-
 		if = {
-			limit = {
-				DEN = { controls_state = 101 }
-			}
-
+			limit = { controls_state = 101 } #Greenland
 			CAN = { transfer_state = 101 }
 		}
 
 		add_political_power = -40
-		add_opinion_modifier = { target = CAN modifier = CAN_OCC_GREE } # -25
+		reverse_add_opinion_modifier = { target = CAN modifier = CAN_OCC_GREE } # -25
 
 		hidden_effect = { DEN = { country_event = { id = canada.84 days = 1 }}}
 	}	
@@ -4279,24 +4418,8 @@ country_event = {
 		}
 
 		add_political_power = -100
-		declare_war_on = { target = CAN type = annex_everything	}
+		CAN = { declare_war_on = { target = DEN type = annex_everything	} }
 		add_opinion_modifier = { target = CAN modifier = DEN_WAR_CAN } # -200
-
-		if = {
-			limit = {
-				DEN = { controls_state = 100 }
-			}
-
-			CAN = { transfer_state = 100 }
-		}
-
-		if = {
-			limit = {
-				DEN = { controls_state = 101 }
-			}
-
-			CAN = { transfer_state = 101 }
-		}
 	}
 }
 
@@ -4372,7 +4495,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
@@ -4433,10 +4556,11 @@ country_event = {
 		tag = CAN
 		has_global_flag = OP_CAN_UVF
 		has_war_with = ENG
+		has_war_with = IRE
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
@@ -4490,12 +4614,13 @@ country_event = {
 
 	trigger = {
 		tag = CAN
-		has_global_flag = OP_CAN_UVF
+		has_global_flag = OP_CAN_UVFINA
 		has_war_with = ENG
+		has_war_with = IRE
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
@@ -4539,7 +4664,7 @@ country_event = {
 	}
 }
 
-country_event = { # IRA rising in Dublin - Full Republican support
+country_event = { # IRA rising in Munster - Full Republican support ( Syndicalist Ireland version )
 	id = canada.92
 	title = canada.92.t
 	desc = canada.92.d
@@ -4548,33 +4673,32 @@ country_event = { # IRA rising in Dublin - Full Republican support
 	fire_only_once = yes
 
 	trigger = {
+		tag = IRE
 		OR = {
-			tag = IRE
-			tag = ENG
+		has_government = radical_socialist
+		has_government = syndicalist
+		has_government = totalist
 		}
-
 		has_global_flag = OP_CAN_UVF
 		has_war_with = CAN
-		controls_state = 113
+		controls_state = 135
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
 		name = canada.92.a
 
-		ai_chance = { factor = 100 }
-
 		add_political_power = -200
 
 		IRE = { 
 			start_civil_war = { 
-				ideology = paternal_autocrat 
-				size = 0.2
+				ideology = paternal_autocrat
+				size = 0.8
 				capital = 113
-				states = { 113 } 
+				states = { 135 } 
 			} 
 		}
 
@@ -4583,7 +4707,15 @@ country_event = { # IRA rising in Dublin - Full Republican support
 				original_tag = IRE
 				has_government = paternal_autocrat
 			}
-
+            add_ideas = IRE_LAST_STAND
+			create_country_leader = {
+			name = "Gearóid Ó Cuinneagáin"
+			desc = "POLITICS_GEAROID_O_CUINNEAGAIN_DESC"
+			picture = "Portrait_Ireland_Gearoid_O_Cuinneagain.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { }
+			}
 			load_oob = IRE_REV_FULL_SUPP
 			add_popularity = {
 				ideology = paternal_autocrat
@@ -4591,42 +4723,9 @@ country_event = { # IRA rising in Dublin - Full Republican support
 			}
 		}	
 	}
-
-	option = { 
-		name = canada.92.b
-
-		ai_chance = { factor = 0 }
-
-		trigger = { is_ai = no }
-
-		add_political_power = -200
-
-		IRE = { 
-			start_civil_war = { 
-				ideology = paternal_autocrat 
-				size = 0.2
-				capital = 113
-				states = { 113 } 
-			} 
-		}
-
-		random_country = {
-			limit = {
-				original_tag = IRE
-				has_government = paternal_autocrat
-			}
-
-			load_oob = IRE_REV_FULL_SUPP
-			add_popularity = {
-				ideology = paternal_autocrat
-				popularity = 0.35
-			}
-			change_tag_from = IRE
-		}
-	}
 }
 
-country_event = { # IRA rising in Dublin - Split Republican support
+country_event = { # IRA rising in Munster - Split Republican support ( Syndicalist Ireland version )
 	id = canada.93
 	title = canada.93.t
 	desc = canada.93.d
@@ -4635,33 +4734,32 @@ country_event = { # IRA rising in Dublin - Split Republican support
 	fire_only_once = yes
 
 	trigger = {
+		tag = IRE
 		OR = {
-			tag = IRE
-			tag = ENG
-		}
+		has_government = radical_socialist
+		has_government = syndicalist
+		has_government = totalist }
 
 		has_global_flag = OP_CAN_UVFINA
 		has_war_with = CAN
-		controls_state = 113
+		controls_state = 135
 	}
 
 	mean_time_to_happen = {
-		days = 0
+		days = 10
 	}
 
 	option = { 
 		name = canada.93.a
 
-		ai_chance = { factor = 100 }
-
 		add_political_power = -200
 
 		IRE = { 
 			start_civil_war = { 
-				ideology = paternal_autocrat 
-				size = 0.2
+				ideology = paternal_autocrat
+				size = 0.4
 				capital = 113
-				states = { 113 } 
+				states = { 135 } 
 			} 
 		}
 
@@ -4670,46 +4768,21 @@ country_event = { # IRA rising in Dublin - Split Republican support
 				original_tag = IRE
 				has_government = paternal_autocrat
 			}
-
+			add_ideas = IRE_LAST_STAND
+			create_country_leader = {
+			name = "Gearóid Ó Cuinneagáin"
+			desc = "POLITICS_GEAROID_O_CUINNEAGAIN_DESC"
+			picture = "Portrait_Ireland_Gearoid_O_Cuinneagain.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { }
+			}
 			load_oob = IRE_REV_SPLIT_SUPP
 			add_popularity = {
 				ideology = paternal_autocrat
 				popularity = 0.35
 			}
 		}	
-	}
-
-	option = { 
-		name = canada.93.b
-
-		ai_chance = { factor = 0 }
-
-		trigger = { is_ai = no }
-
-		add_political_power = -100
-
-		IRE = { 
-			start_civil_war = { 
-				ideology = paternal_autocrat 
-				size = 0.2
-				capital = 113
-				states = { 113 } 
-			} 
-		}
-
-		random_country = {
-			limit = {
-				original_tag = IRE
-				has_government = paternal_autocrat
-			}
-
-			load_oob = IRE_REV_SPLIT_SUPP
-			add_popularity = {
-				ideology = paternal_autocrat
-				popularity = 0.35
-			}
-			change_tag_from = IRE
-		}
 	}
 }
 
@@ -6630,6 +6703,110 @@ country_event = { #A New Heir
 	option = {
 		name = canada.228.a 
 		add_political_power = 40
+	}
+}
+
+country_event = { # IRA rising in Munster - Full Republican support ( Syndicalist Ireland version )
+	id = canada.235
+	title = canada.235.t
+	desc = canada.235.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = ENG
+		has_global_flag = OP_CAN_UVF
+		has_war_with = CAN
+		controls_state = 135
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { 
+		name = canada.235.a
+
+		add_political_power = -100
+        
+		IRE = {
+		transfer_state = 135
+        hidden_effect = { 
+		        add_ideas = IRE_LAST_STAND
+				add_manpower = 25000
+				load_oob = IRE_REV_FULL_SUPP
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.35
+				}
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+			create_country_leader = {
+			name = "Gearóid Ó Cuinneagáin"
+			desc = "POLITICS_GEAROID_O_CUINNEAGAIN_DESC"
+			picture = "Portrait_Ireland_Gearoid_O_Cuinneagain.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { }
+			}
+		}
+		}
+	    declare_war_on = { target = IRE type = annex_everything	}
+	}
+}
+
+country_event = { # IRA rising in Munster - Split Republican support ( UoB version )
+	id = canada.236
+	title = canada.236.t
+	desc = canada.93.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = ENG
+		has_global_flag = OP_CAN_UVFINA
+		has_war_with = CAN
+		controls_state = 135
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { 
+		name = canada.236.a
+
+		add_political_power = -100
+
+		IRE = {
+		transfer_state = 135
+        hidden_effect = { 
+		        add_ideas = IRE_LAST_STAND
+		        add_manpower = 10000
+		        load_oob = IRE_REV_SPLIT_SUPP
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.35
+				}
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+			create_country_leader = {
+			name = "Gearóid Ó Cuinneagáin"
+			desc = "POLITICS_GEAROID_O_CUINNEAGAIN_DESC"
+			picture = "Portrait_Ireland_Gearoid_O_Cuinneagain.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = { }
+			}
+		}
+		}
+	    declare_war_on = { target = IRE type = annex_everything	}
 	}
 }
 

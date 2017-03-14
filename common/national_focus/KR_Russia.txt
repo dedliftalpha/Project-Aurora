@@ -193,7 +193,7 @@ focus = {
 		NOT = { OR = { has_country_flag = RUS_TSAR_PAV has_country_flag = RUS_CON_MON has_country_flag = RUS_ARI_REP has_country_flag = RUS_DEM_REP has_country_flag = RUS_TSAR_DMI  has_country_flag = RUS_SOVIET has_country_flag = RUS_vozhd has_country_flag = RUS_MIL_DICT } } }
 		}
 		bypass = {
-			OR = { has_country_flag = RUS_TSAR_WRA has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_TSAR_KYR } NOT = { has_country_flag = RUS_CON_MON }
+			OR = { has_country_flag = RUS_TSAR_WRANGEL has_country_flag = RUS_TSAR_VLA has_country_flag = RUS_TSAR_KYR } NOT = { has_country_flag = RUS_CON_MON }
 		}
 		prerequisite = { focus = RUS_KRSKY }
 		ai_will_do = {
@@ -1351,6 +1351,7 @@ focus = {
 				}
 				set_state_flag = RUS_DEM_IND2_2IC
 			}
+		add_national_unity = 0.05
         add_ideas = rus_richer_people_focus
 		if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
 		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
@@ -1455,7 +1456,7 @@ focus = {
 	
 focus = {
 		id = RUS_CON_ADM3
-		icon = GFX_focus_research
+		icon = GFX_goal_generic_intelligence_exchange
 		x = 29
 		y = 2
 		cost = 10
@@ -1569,7 +1570,7 @@ focus = {
 		y = 3
 		cost = 10
 		available = { }
-		prerequisite = { focus = RUS_CON_IND2 }
+		prerequisite = { focus = RUS_CON_IND4 }
 		
 		ai_will_do = {
 			factor = 1
@@ -1580,6 +1581,7 @@ focus = {
 			}
 		}
 		completion_reward = {
+		add_ideas = rus_conbrig_focus
 		random_owned_state = {
 				limit = {
 					state_population > 300000
@@ -1621,6 +1623,38 @@ focus = {
 		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
 		}		
 	}
+	
+focus = {
+		id = RUS_CON_IND4
+		icon = GFX_goal_state_economy
+		x = 25
+		y = 2
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_CON_IND2 }
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+		add_resource = {
+				type = aluminium
+				amount = 10
+				state = 220
+			}
+		add_resource = {
+				type = oil
+				amount = 8
+				state = 249
+			}
+		}		
+	}	
+	
 	
 focus = {
 		id = RUS_DMI_ADM1
@@ -1720,7 +1754,7 @@ focus = {
 	
 focus = {
 		id = RUS_DMI_ADM3
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_consumer_goods
 		x = 23
 		y = 2
 		cost = 10
@@ -1776,8 +1810,39 @@ focus = {
 	}
 
 focus = {
+		id = RUS_DMI_ADM4
+		icon = GFX_goal_oil
+		x = 23
+		y = 3
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_DMI_ADM3 }
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+		add_resource = {
+				type = aluminium
+				amount = 10
+				state = 573
+			}
+		add_resource = {
+				type = oil
+				amount = 10
+				state = 249
+			}
+			} 	
+	}	
+	
+focus = {
 		id = RUS_DMI_IND1
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_production2
 		x = 21
 		y = 1
 		cost = 10
@@ -1942,7 +2007,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-           add_political_power = -100
+           add_political_power = -25
 		}		
 	}
 	
@@ -1965,113 +2030,40 @@ focus = {
 		}
 		completion_reward = {
          add_ideas = rus_great_works_focus
-		 random_owned_state = {
-				limit = {
-					state_population > 300000
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_ADM2_2IC }
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2IC
+		}		
+	}
+
+focus = {
+		id = RUS_WRA_ADM3
+		icon = GFX_goal_generic_construct_civilian
+		x = 17
+		y = 2
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_WRA_ADM2 }
+		
+			ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
 			}
-		random_owned_state = {
-				limit = {
-					state_population > 200000
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_ADM2_2IC }
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2IC
-			}
-		random_owned_state = {
-				limit = {
-					state_population > 200000
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_ADM2_2IC }
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2IC
-			}
-		 random_owned_state = {
-				limit = { 
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					state_population > 200000
-					NOT = { has_state_flag = RUS_WRA_ADM2_2inf }
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2inf
-			}
-		random_owned_state = {
-				limit = { 
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					state_population > 200000
-					NOT = { has_state_flag = RUS_WRA_ADM2_2inf }
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2inf
-			}
-		random_owned_state = {
-				limit = { 
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					state_population > 200000
-					NOT = { has_state_flag = RUS_WRA_ADM2_2inf }
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_ADM2_2inf
-			}
+		}
+		
+		completion_reward = {
+         add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+		  }
+         add_ideas = rus_mechanization_focus		  
 		}		
 	}
 	
 focus = {
-		id = RUS_WRA_ADM3
+		id = RUS_WRA_NG1
 		icon = GFX_goal_generic_allies_build_infantry
 		x = 15
 		y = 1
@@ -2088,78 +2080,19 @@ focus = {
 			}
 		}	
 		completion_reward = {
-         add_national_unity = 0.15
+         add_national_unity = 0.05
 		 add_ideas = rus_esprit_de_corps_focus
 		}		
 	}
-
-focus = {
-		id = RUS_WRA_IND1
-		icon = GFX_goal_generic_construct_civ_factory
-		x = 19
-		y = 1
-		cost = 10
-		available = { }
-		prerequisite = { focus = RUS_WRA_ADM1 }
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				OR = { has_idea = disaster
-				has_idea = very_low_stability }
-			}
-		}	
-		completion_reward = {
-           add_political_power = -50
-		   random_owned_state = {
-				limit = {
-					state_population > 300000
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_IND1_2IC }
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_IND1_2IC
-			}
-		random_owned_state = {
-				limit = {
-					state_population > 300000
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_IND1_2IC }
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_IND1_2IC
-			}
-		}		
-	}
 	
 focus = {
-		id = RUS_WRA_IND2
-		icon = GFX_goal_generic_construct_mil_factory
-		x = 18
+		id = RUS_WRA_LA1
+		icon = GFX_goal_economic_control
+		x = 15
 		y = 2
 		cost = 10
 		available = { }
-		prerequisite = { focus = RUS_WRA_IND1 }
-		prerequisite = { focus = RUS_WRA_ADM2 }
+		prerequisite = { focus = RUS_WRA_NG1 }
 		
 		ai_will_do = {
 			factor = 1
@@ -2170,69 +2103,6 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		 add_ideas = rus_war_industry_focus	
-          random_owned_state = {
-				limit = {
-					state_population > 300000
-					free_building_slots = {
-						building = arms_factory
-						size > 2
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_IND2_3AF }
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_IND2_3AF
-			}
-        random_owned_state = {
-				limit = {
-					state_population > 300000
-					free_building_slots = {
-						building = arms_factory
-						size > 2
-						include_locked = yes
-					}
-					NOT = { has_state_flag = RUS_WRA_IND2_3AF }
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = RUS_WRA_IND2_3AF
-			}
-          if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
-		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
-		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }		
-		}		
-	}
-	
-focus = {
-		id = RUS_WRA_IND3
-		icon = GFX_focus_research
-		x = 17
-		y = 3
-		cost = 10
-		available = { }
-		prerequisite = { focus = RUS_WRA_ADM3 }
-		prerequisite = { focus = RUS_WRA_IND2 }
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				OR = { has_idea = disaster
-				has_idea = very_low_stability }
-			}
-		}	
-		completion_reward = {
-         add_research_slot = 1
          every_other_country = { add_opinion_modifier = { modifier = minor_sanctions } }
 		 if = {
 			limit = {
@@ -2265,8 +2135,130 @@ focus = {
 					level = 2
 					instant_build = yes
 					} }
+		}			
+	}	
+
+focus = {
+		id = RUS_WRA_IND1
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 19
+		y = 1
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_WRA_ADM1 }
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+		add_research_slot = 1
+        add_political_power = 30
+		set_country_flag = Savinkov_Yusupov1 
+		random_owned_state = {
+				limit = {
+					state_population > 300000
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+					NOT = { has_state_flag = RUS_WRA_IND1_2IC }
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+				set_state_flag = RUS_WRA_IND1_2IC
+			}
 		}		
 	}
+	
+focus = {
+		id = RUS_WRA_IND2
+		icon = GFX_goal_generic_army_motorized
+		x = 19
+		y = 2
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_WRA_IND1 }
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+			add_tech_bonus = {
+			name = mech_bonus
+			bonus = 0.5
+			uses = 1
+			category = cat_mechanized_equipment
+			}
+        219 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+focus = {
+		id = RUS_WRA_IND3
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 19
+		y = 3
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_WRA_IND2 }
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+        241 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+        220 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}		
+			}
+        216 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}		
+			}
+		}
+	}	
 	
 focus = {
 		id = RUS_nuclear_effort
@@ -4271,7 +4263,7 @@ focus = {
 		available = { }
 		prerequisite = { focus = RUS_central_asia_focus }
 		bypass = {
-			AND = { ALO = { OR = { has_capitulated = yes exists = no } } OR = { controls_state = 586 any_other_country = { AND = { is_subject_of = RUS controls_state = 586 } } }
+			AND = { ALO = { OR = { has_capitulated = yes exists = no } } OR = { controls_state = 589 any_other_country = { AND = { is_subject_of = RUS controls_state = 589 } } }
 			OR = { controls_state = 236 any_other_country = { AND = { is_subject_of = RUS controls_state = 236 } } } }
 		}
 		
@@ -4307,8 +4299,8 @@ focus = {
 		x = 20
 		y = 10
 		cost = 2
-		available = { custom_trigger_tooltip = { tooltip = rus_secure_turkestan_tooltip AND = { ALO = { OR = { has_capitulated = yes exists = no } } OR = { controls_state = 586 any_other_country = { AND = { is_subject_of = RUS controls_state = 586 } } }
-			OR = { controls_state = 236 any_other_country = { AND = { is_subject_of = RUS controls_state = 236 } } } } } }
+		available = { custom_trigger_tooltip = { tooltip = rus_secure_turkestan_tooltip AND = { ALO = { OR = { has_capitulated = yes exists = no } } OR = { controls_state = 589 any_other_country = { AND = { OR = { is_subject_of = RUS tag = TRK } controls_state = 589 } } }
+			OR = { controls_state = 236 any_other_country = { AND = { OR = { is_subject_of = RUS tag = TRK } controls_state = 236 } } } } } }
 		prerequisite = { focus = RUS_secure_kazakhstan }
 		bypass = {
 			AND = { TRK = { OR = { has_capitulated = yes exists = no } } OR = { controls_state = 585 any_other_country = { AND = { is_subject_of = RUS controls_state = 405 } } }
@@ -4953,7 +4945,7 @@ focus = {
 		x = 6
 		y = 7
 		cost = 10
-		available = { custom_trigger_tooltip = { tooltip = russia_pick_eastern_europe_direction_tooltip AND = { has_country_flag = RUS_CA_focus OR = { owns_state = 586 any_other_country = { AND = { is_subject_of = RUS owns_state = 586 } } } OR = { owns_state = 236 any_other_country = { AND = { is_subject_of = RUS owns_state = 236 } } } has_country_flag = RUS_CC_focus OR = { owns_state = 231 any_other_country = { AND = { is_subject_of = RUS owns_state = 231 } } } OR = { owns_state = 233 any_other_country = { AND = { is_subject_of = RUS owns_state = 233 } } } OR = { owns_state = 234 any_other_country = { AND = { is_subject_of = RUS owns_state = 234 } } } }
+		available = { custom_trigger_tooltip = { tooltip = russia_pick_eastern_europe_direction_tooltip AND = { has_country_flag = RUS_CA_focus OR = { owns_state = 589 any_other_country = { AND = { is_subject_of = RUS owns_state = 589 } } } OR = { owns_state = 236 any_other_country = { AND = { is_subject_of = RUS owns_state = 236 } } } has_country_flag = RUS_CC_focus OR = { owns_state = 231 any_other_country = { AND = { is_subject_of = RUS owns_state = 231 } } } OR = { owns_state = 233 any_other_country = { AND = { is_subject_of = RUS owns_state = 233 } } } OR = { owns_state = 234 any_other_country = { AND = { is_subject_of = RUS owns_state = 234 } } } }
 		} }
 		prerequisite = { focus = RUS_expansionism focus = RUS_real_politik }
 		
@@ -4978,7 +4970,7 @@ focus = {
 		add_opinion_modifier = { target = LIT modifier = RUS_eastern_europe_focus1 }
 		add_opinion_modifier = { target = POL modifier = RUS_eastern_europe_focus1 }
 		add_opinion_modifier = { target = FIN modifier = RUS_eastern_europe_focus2 }
-		if = { limit = { country_exists = FIN FIN = { has_war = no is_subject = no controls_state = 111 } NOT = { FIN = { has_government = radical_socialist has_government = totalist has_government = syndicalist is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = FRA is_in_faction_with = GER } } } FIN = { country_event = { id = rusfor.1118 days = 2 } } }
+		if = { limit = { country_exists = FIN FIN = { has_war = no is_subject = no controls_state = 840 } NOT = { FIN = { has_government = radical_socialist has_government = totalist has_government = syndicalist is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = FRA is_in_faction_with = GER } } } FIN = { country_event = { id = rusfor.1118 days = 2 } } }
 		if = { limit = { country_exists = POL POL = { has_war = no is_subject = no controls_state = 10 } NOT = { POL = { has_government = radical_socialist has_government = totalist has_government = syndicalist is_in_faction_with = CAN is_in_faction_with = RUS is_in_faction_with = FRA is_in_faction_with = GER } } } POL = { country_event = { id = rusfor.1121 days = 2 } } }
 		#Will add for commonwealth
 		}		
@@ -4989,8 +4981,7 @@ focus = {
 		icon = GFX_goal_generic_intelligence_exchange
 		x = 7
 		y = 8
-		cost = 2
-		available = { always = no }
+		cost = 1
 		prerequisite = { focus = RUS_eastern_europe_focus }
 		bypass = { AND = { WHR = { OR = { is_subject_of = RUS has_capitulated = yes exists = no } } OR = { controls_state = 94 any_other_country = { AND = { is_subject_of = RUS controls_state = 94 } } }
 			OR = { controls_state = 207 any_other_country = { AND = { is_subject_of = RUS controls_state = 207 } } }
@@ -5005,7 +4996,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-            
+        country_event = { id = rusfor.1265 }     
 		}		
 	}
 	

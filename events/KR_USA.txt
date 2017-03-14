@@ -6,7 +6,26 @@
 
 add_namespace = ustates
 
-country_event = { # A Day in September
+country_event = {# Start up Event
+	id = ustates.501
+	title = ustates.501.t
+	desc = ustates.501.d
+	picture = congress
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+	}
+	
+	mean_time_to_happen = {	days = 5 }
+	
+	option = {
+		name = ustates.501.a
+		add_political_power = 25
+	}
+}
+country_event = {# A Day in September
 	id = ustates.1
 	title = ustates.1.t
 	desc = ustates.1.d
@@ -77,7 +96,7 @@ country_event = { # A Day in September
         }
 	}
 }
-country_event = {  #4th of July
+country_event = {# 4th of July
 	id = ustates.3
 	title = ustates.3.t
 	desc = { 
@@ -144,7 +163,7 @@ country_event = {  #4th of July
 	}
 
 }
-country_event = {  #4th of July
+country_event = {# 4th of July
 	id = ustates.3000
 	title = ustates.3.t
 	desc = { 
@@ -566,6 +585,45 @@ country_event = {
 		}		
 	} 	
 }
+country_event = {
+    id = ustates.401
+    title = ustates.401.t
+    desc = ustates.401.d
+	picture = GFX_run_on_the_banks
+   
+	trigger = {
+		tag = USA
+		date > 1936.5.20
+		date < 1936.5.25
+	}
+		
+    mean_time_to_happen = { days = 1 }
+   
+    fire_only_once = yes
+   
+    option = {
+        name = ustates.401.a
+		add_political_power = -50
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.05 }	
+        add_popularity = { ideology = paternal_autocrat popularity = 0.05 }
+        add_popularity = { ideology = syndicalist popularity = 0.08 }		
+        add_popularity = { ideology = radical_socialist popularity = 0.08 }
+		set_global_flag = sacco_vanzetti_innocent
+		add_opinion_modifier = { target = SRI modifier = USA_sacco_vanzetti_innocent }
+		
+	}
+    option = {
+        name = ustates.401.b
+		add_political_power = -50
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.08 }	
+        add_popularity = { ideology = paternal_autocrat popularity = 0.08 }
+        add_popularity = { ideology = syndicalist popularity = 0.05 }		
+        add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		set_global_flag = sacco_vanzetti_guilty
+		add_opinion_modifier = { target = SRI modifier = USA_sacco_vanzetti_guilty }		
+	} 	 	
+}
+
 ################################################################
 ### MacArthur's regime
 ################################################################
@@ -2045,6 +2103,7 @@ country_event = { # MacArthur Seizes Power
 		hidden_effect = {
 		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_AUS
+		set_country_flag = macarthur_takes_over
 		country_event = { id = amcivwar.2 days = 4}
 		}
 	}	
@@ -2524,6 +2583,7 @@ country_event = { # MacArthur moves to take control
 		hidden_effect = {
 		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_CSA
+		set_country_flag = macarthur_takes_over
 		country_event = { id = amcivwar.1 days = 2 }
 		}
 	}	
@@ -2717,6 +2777,7 @@ country_event = { # Long supports a coup against Reed
 		set_global_flag = ACW_AUS
 		country_event = { id = amcivwar.2 days = 4}
 		set_country_flag = REED_DEPOSED
+		set_country_flag = macarthur_takes_over
 		country_event = { id = ustates.73 days = 0 }
 		}
 	}	
@@ -2731,6 +2792,7 @@ country_event = { # Long supports a coup against Reed
 		add_political_power = -20
 		hidden_effect = {
 		set_global_flag = ACW_AUS
+		country_event = { id = ustates.73 days = 0 }
 		country_event = { id = amcivwar.2 days = 4}
 		}
 	}
@@ -2745,6 +2807,7 @@ country_event = { # Long supports a coup against Reed
 		add_political_power = -100
 		hidden_effect = {
 		set_country_flag = REED_DEPOSED
+		set_country_flag = macarthur_takes_over
 		country_event = { id = ustates.73 days = 0 }
 		}
 	}
@@ -2763,6 +2826,7 @@ country_event = { # MacArthur Seizes Power
 		hidden_effect = {
 		set_global_flag = ACW_JUNTA
 		set_global_flag = ACW_CSA
+		set_country_flag = macarthur_takes_over
 		country_event = { id = amcivwar.1 days = 4}
 		}
 	}	
@@ -10623,7 +10687,93 @@ country_event = {# Friendly Panama
 		diplomatic_relation = { country = PNM relation = non_aggression_pact }
 	}	
 }
+#############################
+#		US and Peru			#
+#############################
+country_event = {# League of Nations Invite?
+	id = ustates.620 
+	title = ustates.620.t
+	desc = ustates.620.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.620.a
+		ai_chance = {
+			factor = 85
+		}
+		USA = { country_event = { id = ustates.621 days = 3 }}
+	}
+	option = { 
+		name = ustates.620.b
+		ai_chance = {
+			factor = 15
+		}
+		USA = { country_event = { id = ustates.622 days = 3 }}
+	}
+	
+}
+country_event = {# Peru Joins League of Nations
+	id = ustates.621
+	title = ustates.621.t
+	desc = ustates.621.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes 
+
+	option = {# welcome!
+		name = ustates.621.a
+		add_to_faction = PRU
+		add_political_power = 40
+	}		
+}
+country_event = {# Friendly Peruvian Government
+	id = ustates.622 
+	title = ustates.622.t
+	desc = ustates.622.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.622.a
+		give_guarantee = PRU
+		add_political_power = 25
+		diplomatic_relation = { country = PRU relation = non_aggression_pact }
+	}	
+}
+country_event = {# An offer from the US government
+	id = ustates.622 
+	title = ustates.622.t
+	desc = ustates.622.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = ustates.622.a
+
+		USA = { country_event = { id = ustates.623 days = 3 }}
+	}
+}
+country_event = {# Friendly Peruvian Government
+	id = ustates.623 
+	title = ustates.623.t
+	desc = ustates.623.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = ustates.623.a
+		give_guarantee = PRU
+		add_political_power = 25
+		diplomatic_relation = { country = PRU relation = non_aggression_pact }
+	}	
+}
 
 
 

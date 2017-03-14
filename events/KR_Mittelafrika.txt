@@ -274,6 +274,229 @@ country_event = { ############# New Stathalter
 ##########Expansion of Mittelafrika
 
 
+country_event = { ############# Taking Portugal's colonies
+    id = mittel.6
+    title = mittel.6.t
+    desc = mittel.6.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Run it by Germany First
+	    name = mittel.6.a
+        ai_chance = {
+            factor = 100
+        }
+	add_political_power = 20
+    GER = {country_event = { days = 1 id = mittel.7 }}
+    }
+
+
+}
+
+country_event = { ############# Germany's Permission
+    id = mittel.7
+    title = mittel.7.t
+    desc = mittel.7.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Give him the Green Light
+	    name = mittel.7.a
+        ai_chance = {
+            factor = 90
+        }
+	add_political_power = -20
+    MAF = {country_event = { days = 1 id = mittel.8 }}
+	add_opinion_modifier = { target = POR modifier = MAF_Gave_Expansion_Greenlight }
+    }
+	
+	    option = { ###Nope
+	    name = mittel.7.b
+        ai_chance = {
+            factor = 10
+        }
+    MAF = {country_event = { days = 1 id = mittel.9 }}
+    }
+
+}
+
+country_event = { ############# Germany Says Yes
+    id = mittel.8
+    title = mittel.8.t
+    desc = mittel.8.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Great
+	    name = mittel.8.a
+        ai_chance = {
+            factor = 100
+        }
+    POR = {country_event = { days = 1 id = mittel.10 }}
+    }	
+}
+
+country_event = { ############# Germany Says No
+    id = mittel.9
+    title = mittel.9.t
+    desc = mittel.9.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Damn
+	    name = mittel.9.a
+        ai_chance = {
+            factor = 100
+        }
+    add_political_power = -20
+    }	
+}
+
+country_event = { ############# Mittelafrika Demands Colonies
+    id = mittel.10
+    title = mittel.10.t
+    desc = mittel.10.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Negotiate
+	    name = mittel.10.a
+        ai_chance = {
+            factor = 50
+        }
+    MAF = {country_event = { days = 1 id = mittel.12 }}
+    }	
+	
+	option = { ###Never!
+	    name = mittel.10.b
+        ai_chance = {
+            factor = 50
+        }
+    MAF = {country_event = { days = 1 id = mittel.11 }}
+    }
+}
+
+country_event = { ############# Portugal Says No
+    id = mittel.11
+    title = mittel.11.t
+    desc = mittel.11.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###War
+	    name = mittel.11.a
+        ai_chance = {
+            factor = 75
+        }
+    	declare_war_on = { target = POR type = annex_everything }
+    }	
+	
+	option = { ###Back Down
+	    name = mittel.11.b
+        ai_chance = {
+            factor = 25
+        }
+    add_political_power = -20
+    }
+}
+
+country_event = { ############# Portugal Comes To the table
+    id = mittel.12
+    title = mittel.12.t
+    desc = mittel.12.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Send an offer
+	    name = mittel.12.a
+        ai_chance = {
+            factor = 100
+        }
+    	POR = {country_event = { days = 1 id = mittel.13 }}
+    }	
+	
+}
+		
+
+country_event = { ############# Mittelafrika Sends an offer
+    id = mittel.13
+    title = mittel.13.t
+    desc = mittel.13.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Accept
+	    name = mittel.13.a
+        ai_chance = {
+            factor = 70
+        }
+		add_timed_idea = { idea = MAF_POR_Payment_For_Colonies days = 100}  
+    	MAF = {country_event = { days = 1 id = mittel.14 }}
+		MAF = { transfer_state = 540 }
+		MAF = { transfer_state = 544 }
+		MAF = { transfer_state = 705 }
+    }
+
+    option = { ###Refuse
+	    name = mittel.14.b
+        ai_chance = {
+            factor = 30
+        }
+    	MAF = {country_event = { days = 1 id = mittel.11 }}
+    }	
+	
+}
+
+country_event = { ############# Portugal Accepts Our offer
+    id = mittel.14
+    title = mittel.14.t
+    desc = mittel.14.d
+    fire_only_once = yes
+    is_triggered_only = yes
+    option = { ###Accept
+	    name = mittel.14.a
+        ai_chance = {
+            factor = 100
+        }
+		add_timed_idea = { idea = MAF_Payment_For_Colonies days = 100}   
+			540 = { add_core_of = MAF}
+			544 = { add_core_of = MAF}
+			705 = { add_core_of = MAF}
+    }
+
+	
+	
+}
+
+country_event = { ############# Peace between Mittelafrika and Portugal
+    id = mittel.15
+    title = mittel.15.t
+    desc = mittel.15.d
+    fire_only_once = yes
+       trigger = {
+        tag = POR
+        MAF = { controls_state = 540 }
+		MAF = { controls_state = 544 }
+		has_war_with = MAF
+    }
+    option = { ###Accept
+	    name = mittel.15.a
+        ai_chance = {
+            factor = 100
+        }    
+		MAF = { transfer_state = 540 }
+		MAF = { transfer_state = 544 }
+		MAF = { transfer_state = 705 }
+		hidden_effect = {
+       	540 = { add_core_of = MAF}
+		544 = { add_core_of = MAF}
+		705 = { add_core_of = MAF}
+		}
+    }
+	
+	    option = { ###Refuse
+	    name = mittel.15.b
+        ai_chance = {
+            factor = 0
+        }    
+         add_political_power = -200
+		}
+    }
+
+	
+	
 
 
 

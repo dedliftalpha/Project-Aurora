@@ -38,9 +38,9 @@ focus_tree = {
 
 	focus = {
 		id = GER_easter_promises
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_goal_generic_national_unity
 		prerequisite = { focus = GER_political_1 }
-		x = 2
+		x = 3
 		y = 1
 		cost = 10
 		
@@ -55,15 +55,17 @@ focus_tree = {
 
 	focus = {
 		id = GER_women_suffrage
-		icon = GFX_goal_generic_cavalry
-		prerequisite = { focus = GER_easter_promises }
+		icon = GFX_IRE_women_industry
+		prerequisite = { focus = GER_county_reforms }
 		available = {
-			has_country_flag = {
-				flag = women_suffrage
-				value > 3 
+			OR = {
+				has_country_flag = {
+					flag = women_suffrage
+					value > 3 
+				}
 			}
 		}
-		x = 0
+		x = 1
 		y = 4
 		cost = 10
 		
@@ -78,7 +80,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_county_reforms
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_goal_democracy_in_prussia
 		prerequisite = { focus = GER_easter_promises }
 		x = 3
 		y = 3
@@ -94,9 +96,27 @@ focus_tree = {
 	}
 
 	focus = {
-		id = GER_parlamentsvertrauen
-		icon = GFX_goal_generic_cavalry
+		id = GER_restore_country_rights
+		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = GER_county_reforms }
+		mutually_exclusive = { focus = GER_post }
+		x = 3
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = GER_parlamentsvertrauen
+		icon = GFX_goal_government_icon
+		prerequisite = { focus = GER_restore_country_rights }
 		mutually_exclusive = { focus = GER_disband_reichstag }
 		x = 3
 		y = 5
@@ -113,12 +133,12 @@ focus_tree = {
 
 	focus = {
 		id = GER_pathfinders
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = GER_political_1 }
 		available = {
 			has_country_flag = GER_halbstarke
 		}
-		x = 4
+		x = 5
 		y = 1
 		cost = 10
 		
@@ -137,7 +157,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_embrace_faud
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_goal_syndicalist_industry
 		prerequisite = { focus = GER_easter_promises }
 		mutually_exclusive = { focus = GER_dcgb }
 		available = {
@@ -157,7 +177,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_dcgb
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_goal_dcgb
 		prerequisite = { focus = GER_pathfinders focus = GER_easter_promises }
 		mutually_exclusive = { focus = GER_embrace_faud }
 		x = 5
@@ -174,11 +194,11 @@ focus_tree = {
 
 	focus = {
 		id = GER_post
-		icon = GFX_goal_generic_cavalry
+		icon = GFX_goal_generic_consumer_goods
 		prerequisite = { focus = GER_dcgb }
-		prerequisite = { focus = GER_security }
-		x = 6
-		y = 3
+		mutually_exclusive = { focus = GER_restore_country_rights }
+		x = 5
+		y = 4
 		cost = 10
 		
 		ai_will_do = {
@@ -209,11 +229,11 @@ focus_tree = {
 
 	focus = {
 		id = GER_security_2
-		icon = GFX_goal_generic_construct_military
+		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = GER_security }
 		available = { NOT = { has_war_with = FRA } controls_state = 779 NOT = { has_country_flag = security_backdown} }
 		x = 8
-		y = 3
+		y = 2
 		cost = 10
 		ai_will_do = {
 			factor = 10
@@ -234,10 +254,12 @@ focus_tree = {
 
 	focus = {
 		id = GER_schleicher
-		icon = GFX_goal_generic_construct_military
-		prerequisite = { focus = GER_security }
-		available = { has_idea = GER_Kurt_von_Schleicher_hog_pau }
-		x = 7
+		icon = GFX_goal_shadow_government
+		prerequisite = { focus = GER_security_2 }
+		available = { 
+			has_idea = GER_Kurt_von_Schleicher_hog_pau 
+		}
+		x = 8
 		y = 4
 		cost = 10
 		
@@ -251,7 +273,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_disband_reichstag
-		icon = GFX_goal_generic_construct_military
+		icon = GFX_goal_authoritarian
 		prerequisite = { focus = GER_schleicher }
 		available = { has_idea = GER_Kurt_von_Schleicher_hog_pau }
 		mutually_exclusive = { focus = GER_parlamentsvertrauen }
@@ -274,7 +296,7 @@ focus_tree = {
 	### The Aftermath of Black Monday
 
 	focus = {
-		id = GER_black_monday
+		id = GER_black_monday_aftermath
 		icon = GFX_goal_generic_production
 		available = { 
 			has_idea = GER_black_monday
@@ -296,7 +318,7 @@ focus_tree = {
 	focus = {
 		id = GER_black_monday_radio
 		icon = GFX_goal_generic_production
-		prerequisite = { focus = GER_black_monday }
+		prerequisite = { focus = GER_black_monday_aftermath }
 		x = 13
 		y = 3
 		cost = 10
@@ -332,7 +354,7 @@ focus_tree = {
 	focus = {
 		id = GER_schacht1
 		icon = GFX_goal_generic_production
-		prerequisite = { focus = GER_black_monday }
+		prerequisite = { focus = GER_black_monday_aftermath }
 		mutually_exclusive = { focus = GER_groener1 }
 		x = 11
 		y = 1
@@ -404,8 +426,8 @@ focus_tree = {
 	
 	focus = {
 		id = GER_groener1
-		icon = GFX_goal_generic_production
-		prerequisite = { focus = GER_black_monday }
+		icon = GFX_goal_state_economy
+		prerequisite = { focus = GER_black_monday_aftermath }
 		mutually_exclusive = { focus = GER_schacht1 }
 		x = 15
 		y = 1
@@ -432,6 +454,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = GER_black_monday
+				add_idea = GER_black_monday2
+			}
 		}
 	}
 	
@@ -1384,7 +1410,7 @@ focus_tree = {
 			OR = { 
 				has_war_with = FRA
 				FRA = { 
-					country_exists = NO
+					exists = no
 					is_subject_of = GER 
 				}
 			} 
@@ -2361,7 +2387,15 @@ focus_tree = {
 		}
 
 		completion_reward = {	
-			country_event = { id = gerdom.90 }
+			DKB = {
+				country_event = {
+					id = gerdom.91 days = 14
+				}
+			}
+			add_manpower = -200
+			reverse_add_opinion_modifier = {
+				target = DKB modifier = DKB_aid
+			}
 		}
 	}
 		

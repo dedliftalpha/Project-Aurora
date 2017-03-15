@@ -780,8 +780,70 @@ country_event = { #CRO liberation
 	}
 }
 
+country_event = { #SLV liberation
+	id = annex.SLV
+	title = annex.SLV.t
+	desc = annex.SLV.d
+	trigger = {
+		NOT = {
+			tag = SLV tag = AUS tag = DNF tag = AHE tag = ILL
+		}
+		controls_state = 102
+		SLV = {
+			exists = no
+		}
+		NOT = {
+			has_country_flag = SLV_CONQ
+		}
+		NOT = {
+			has_war_with = SER
+			has_war_with = YUG
+			has_war_with = CRO
+			has_war_with = BOS
+			has_war_with = ITA
+			has_war_with = AUS
+			has_war_with = AHE
+			has_war_with = DNF
+			has_war_with = ILL
+		}
+	}
 
+	mean_time_to_happen = {
+		days = 15
+	}
 
+	option = { #liberate
+		name = annex.SLV.a
+		ai_chance = {
+			factor = 99
+		}
+		every_state = {
+			limit = {
+				is_core_of = SLV
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			SLV = {
+				transfer_state = PREV
+			}
+		}
+		puppet = SLV
+		add_political_power = 100
+
+	}
+
+	option = { #occupy
+		name = annex.SLV.b
+		ai_chance = {
+			factor = 1
+		}
+		set_country_flag = SLV_CONQ
+		add_political_power = -20
+	}
+}
 
 country_event = { #POL liberation
 	id = annex.22

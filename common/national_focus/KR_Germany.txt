@@ -451,9 +451,9 @@ focus_tree = {
 	focus = {
 		id = GER_mitteleuropa
 		icon = GFX_goal_generic_production
-		prerequisite = { focus = GER_schacht1 focus = GER_black_monday_finish }
+		prerequisite = { focus = GER_schacht3 focus = GER_black_monday_finish }
 		x = 12
-		y = 6
+		y = 5
 		cost = 10
 		
 		ai_will_do = {
@@ -658,14 +658,134 @@ focus_tree = {
 		}
 	}
 	
+	# Civilian
+
+	focus = {
+		id = GER_siemens
+		icon = GFX_goal_generic_construct_civilian
+		prerequisite = { focus = GER_economy }
+		x = 21
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {			
+			custom_effect_tooltip = GER_siemens_unlock
+			55 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GER_infra_1
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = GER_siemens }
+		x = 21
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GER_infra_2
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = GER_infra_1 }
+		x = 21
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
 	# Military
 
 	focus = {
 		id = GER_krupp
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_goal_generic_army_artillery2
 		prerequisite = { focus = GER_economy }
-		x = 25
-		y = 2
+		prerequisite = { focus = GER_mil_expansion }
+		x = 24
+		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -684,9 +804,30 @@ focus_tree = {
 	}
 
 	focus = {
+		id = GER_artillery_research
+		icon = GFX_goal_generic_army_artillery
+		prerequisite = { focus = GER_krupp }
+		x = 25
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {			
+			add_tech_bonus = {
+				name = artillery_bonus
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
 		id = GER_mil_industry_2
 		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = GER_krupp }
+		prerequisite = { focus = GER_artillery_research }
+		prerequisite = { focus = GER_Infantry_divs }
 		x = 25
 		y = 3
 		cost = 10
@@ -733,7 +874,6 @@ focus_tree = {
 		id = GER_mil_industry_3
 		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = GER_mil_industry_2 }
-		prerequisite = { focus = GER_civ_industry_2 }
 		x = 25
 		y = 4
 		cost = 10
@@ -781,7 +921,7 @@ focus_tree = {
 	focus = {
 		id = GER_civ_industry_1
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = GER_economy }
+		prerequisite = { focus = GER_siemens focus = GER_krupp }
 		x = 23
 		y = 2
 		cost = 10
@@ -828,7 +968,6 @@ focus_tree = {
 		id = GER_civ_industry_2
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = GER_civ_industry_1 }
-		prerequisite = { focus = GER_mil_industry_1 }
 		x = 23
 		y = 3
 		cost = 10
@@ -875,7 +1014,7 @@ focus_tree = {
 		id = GER_civ_industry_3
 		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = GER_civ_industry_2 }
-		prerequisite = { focus = GER_mil_industry_2 }
+		prerequisite = { focus = GER_infra_2 }
 		x = 23
 		y = 4
 		cost = 10
@@ -922,7 +1061,7 @@ focus_tree = {
 		
 	focus = {
 		id = GER_industry_finished
-		icon = GFX_goal_generic_construct_civ_factory
+		icon = GFX_goal_generic_trade
 		prerequisite = { focus = GER_civ_industry_3 }
 		prerequisite = { focus = GER_mil_industry_3 }
 		bypass = { has_country_flag = eco_reco }
@@ -1005,10 +1144,18 @@ focus_tree = {
 		x = 19
 		y = 2
 		cost = 10
+		
 		ai_will_do = {
 			factor = 10
 		}
-		completion_reward = {	
+		
+		completion_reward = {					
+			add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}		
 		}
 	}
 	
@@ -1021,10 +1168,18 @@ focus_tree = {
 		x = 19
 		y = 3
 		cost = 10
+		
 		ai_will_do = {
 			factor = 10
 		}
-		completion_reward = {	
+		
+		completion_reward = {						
+			add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}	
 		}
 	}
 
@@ -1100,33 +1255,9 @@ focus_tree = {
 	### Manufacturing
 
 	focus = {
-		id = GER_Infantry_divs
-		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = GER_Mauser_werke }
-		x = 27
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 10
-				OR = { date > 1938.1.1 has_war = yes }
-			}
-		}
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_weapons_bonus
-				bonus = 0.5
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-		}
-	}
-
-	focus = {
 		id = GER_Mauser_werke
 		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = GER_economy }
 		prerequisite = { focus = GER_mil_expansion }
 		x = 27
 		y = 1
@@ -1173,11 +1304,35 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = GER_Infantry_divs
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = GER_Mauser_werke }
+		x = 27
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = { date > 1938.1.1 has_war = yes }
+			}
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+	}
 	
 	focus = {
 		id = GER_doctrine_mobile_3
 		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = GER_mil_expansion_land_1 }
+		prerequisite = { focus = GER_mil_industry_2 }
 		x = 27
 		y = 4
 		cost = 10
@@ -1377,34 +1532,6 @@ focus_tree = {
 	}
 
 	### Army
-		
-	focus = {
-		id = GER_mil_expansion_land_1
-		prerequisite = { focus = GER_Infantry_divs }
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 27
-		y = 3
-		
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 10
-				OR = { date > 1939.1.1 has_war = yes }
-			}
-		}
-		
-		cost = 10
-		
-		available = { 
-
-		}
-		
-		continue_if_invalid = yes
-		
-		completion_reward = {
-			add_ideas = GER_renwed_militarism
-		}
-	}
 	
 	# Grand Battleplan
 
@@ -1508,14 +1635,32 @@ focus_tree = {
 		}
 	}
 	
-	# Finisher
+	# Finishers
+		
+	focus = {
+		id = GER_mil_expansion_land_1
+		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war }
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 33
+		y = 3
+		
+		cost = 10
+		
+		ai_will_do = {
+			factor = 50
+		}
+		
+		completion_reward = {
+			add_ideas = GER_renwed_militarism
+		}
+	}
 
 	focus = {
 		id = GER_doctrine_last
 		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war }
-		x = 34
-		y = 4
+		x = 35
+		y = 3
 		cost = 10
 		ai_will_do = {
 			factor = 10
@@ -1530,7 +1675,7 @@ focus_tree = {
 	focus = {
 		id = GER_security_3
 		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = GER_doctrine_last }
+		prerequisite = { focus = GER_doctrine_last focus = GER_mil_expansion_land_1 }
 		available = { 
 			has_country_flag = loth_armed 
 			NOT = { 
@@ -1540,7 +1685,7 @@ focus_tree = {
 			controls_state = 28 
 		}
 		x = 34
-		y = 5
+		y = 4
 		cost = 4
 		ai_will_do = {
 			factor = 100
@@ -1561,7 +1706,7 @@ focus_tree = {
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = GER_security_3 }
 		x = 34
-		y = 6
+		y = 5
 		cost = 8
 		bypass = { 
 			OR = { 
@@ -2200,6 +2345,7 @@ focus_tree = {
 		id = GER_marines1
 		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = GER_expansion_naval_1 }
+		prerequisite = { focus = GER_doctrine_fleet_in_beeing focus = GER_doctrine_base_strike }
 		x = 61
 		y = 2
 		cost = 10
@@ -2292,7 +2438,7 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics # Should be replaced by a proud Battleship *sniff*
 		prerequisite = { focus = GER_tirpitzprogramm }
 		x = 54
-		y = 6
+		y = 5
 		cost = 10
 		ai_will_do = {
 			factor = 10

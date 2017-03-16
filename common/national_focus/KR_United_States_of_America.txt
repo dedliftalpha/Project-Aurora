@@ -2830,8 +2830,8 @@ focus = {# Review Military Policy
 		cost = 10.00.00
 		available = {
 			OR = {
-				has_country_flag = END_ACW
-				has_country_flag = civil_war_avoided
+				has_global_flag = END_ACW
+				has_global_flag = civil_war_avoided
 			}
 		}		
 		x = 66
@@ -3117,7 +3117,31 @@ focus = {# Review Military Policy
 		}
 		x = 69
 		y = 4
+		completion_reward = {
+			if = {
+				limit = {
+					has_global_flag = civil_war_avoided
+				}
+				country_event = { id = phil.84 days = 5 }
+			}
+			if = {
+				limit = {
+					AND = {
+						has_global_flag = END_ACW
+						has_global_flag = USA_league_of_american_nations
+					}
+				}
+				PHL = {country_event = { id = phil.81 days = 5 } }
+			}
+			if = {
+				limit = {
+					has_global_flag = END_ACW
+					NOT = {has_global_flag = USA_league_of_american_nations }
+				}
+				PHL = {country_event = { id = phil.83 days = 5 }}
+			}
 
+		}
 	}	
 	focus = {# Pax Americana
 		id = USA_pax_american
@@ -3278,7 +3302,8 @@ focus = {# Review Military Policy
 		x = 83
 		y = 1
 		completion_reward = {	
-			create_faction = "american_states_league_of_nations"		
+			create_faction = "american_states_league_of_nations"
+			set_global_flag = USA_league_of_american_nations			
 		}
 	}
 	focus = {# School of Americas

@@ -11,31 +11,7 @@ country_event = { # The Union of Britain invade Denmark
 	title = gerfor.1.t
 	desc = gerfor.1.d
 
-	mean_time_to_happen = {
-		days = 15
-	}
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = GER
-		ENG = {
-			has_war_with = DEN
-		}
-		NOT = {
-			has_war_with = FRA
-			has_war_with = ENG
-			has_war_with = DEN
-			DEN = {
-				OR = {
-					is_in_faction_with = CAN
-					is_in_faction_with = RUS
-					is_in_faction_with = FRA
-				}
-			}
-		}
-		controls_state = 64
-	}
+	is_triggered_only = yes
 
 	option = { # Ultimatum
 		name = gerfor.1.a
@@ -55,11 +31,6 @@ country_event = { # The Union of Britain invade Denmark
 		ENG = {
 			country_event = {
 				id = gerfor.2 days = 1
-			}
-		}
-		DEN = {
-			country_event = {
-				id = gerfor.3 days = 1
 			}
 		}
 	}
@@ -138,17 +109,52 @@ country_event = { # The Germans Send an Ultimatum
 	}
 }
 
-country_event = { # The Ultimatum, Berlin Warns London
+country_event = { # Denmark gets invaded
 	id = gerfor.3
 	title = gerfor.3.t
 	desc = gerfor.3.d
 	picture = reichstag2
 
-	is_triggered_only = yes
+	trigger = {
+		tag = DEN
+		has_war_with = ENG
+		GER = {
+			NOT = {
+				has_war_with = FRA
+				has_war_with = ENG
+				has_war_with = DEN
+				DEN = {
+					OR = {
+						is_in_faction_with = CAN
+						is_in_faction_with = RUS
+						is_in_faction_with = FRA
+					}
+				}
+			}
+			controls_state = 64
+		}
+	}
+	
+	mean_time_to_happen = { days = 4 }
+	
+	fire_only_once = yes
 
 	option = {
 		name = gerfor.3.a
 		add_political_power = 60
+		ai_chance = { factor = 60 }
+		GER = {
+			country_event = { id = gerfor.1 days = 1 }
+		}
+	}
+
+	option = {
+		name = gerfor.3.b
+		add_political_power = -100
+		ai_chance = { factor = 40 }
+		GER = {
+			set_country_flag = GER_DEN_neutralist_pigs
+		}
 	}
 }
 
@@ -2424,3 +2430,74 @@ country_event = {
 		custom_effect_tooltip = received_equipment_10000
 	}
 }
+
+### Leasing Trondheim
+
+# Germany offers to lease Trondheim
+
+country_event = {
+	id = gerfor.63
+	title = gerfor.63.t
+	desc = gerfor.63.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.63.a
+		add_political_power = 100
+		ai_chance = { factor = 80 }
+		GER = {
+			country_event = { id = gerfor.64 days = 2 }
+		}
+	}
+
+	option = {
+		name = gerfor.63.b
+		add_political_power = -20
+		ai_chance = { factor = 20 }
+		GER = {
+			country_event = { id = gerfor.65 days = 2 }
+		}
+	}
+}
+
+# Norway agrees
+
+country_event = {
+	id = gerfor.63
+	title = gerfor.63.t
+	desc = gerfor.63.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.63.a
+		add_political_power = -50
+		ai_chance = { factor = 80 }
+		GER = {
+			country_event = { id = gerfor.64 days = 2 }
+		}
+		reverse_add_opinion_modifier = { target = NOR modifier = GER_trondheim_yes_op }
+		
+	}
+}
+
+# Norway disagrees
+
+country_event = {
+	id = gerfor.63
+	title = gerfor.63.t
+	desc = gerfor.63.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.63.a
+		ai_chance = { factor = 80 }
+		GER = {
+			country_event = { id = gerfor.64 days = 2 }
+		}
+		reverse_add_opinion_modifier = { target = NOR modifier = GER_trondheim_no_op }
+	}
+}
+

@@ -166,6 +166,7 @@ focus_tree = {
 		prerequisite = { focus = GER_easter_promises }
 		mutually_exclusive = { focus = GER_dcgb }
 		available = {
+			has_government = social_democrat
 			has_country_flag = FAUD_allow
 		}
 		x = 1
@@ -187,6 +188,9 @@ focus_tree = {
 		icon = GFX_goal_dcgb
 		prerequisite = { focus = GER_pathfinders focus = GER_easter_promises }
 		mutually_exclusive = { focus = GER_embrace_faud }
+		available = {
+			has_government = authoritarian_democrat
+		}
 		x = 5
 		y = 2
 		cost = 10
@@ -449,10 +453,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			reverse_add_opinion_modifier = { target = POL modifier = polish_deal_tp }
+			reverse_add_opinion_modifier = { target = POL modifier = polish_deal_op }
 			add_opinion_modifier = {
 				target = POL 
-				modifier = polish_deal_tp
+				modifier = polish_deal_op
 			}
 
 		}
@@ -464,12 +468,15 @@ focus_tree = {
 		id = GER_mitteleuropa
 		icon = GFX_goal_europamark
 		prerequisite = { focus = GER_schacht3 focus = GER_black_monday_finish }
+		available = {
+			has_idea = GER_Heinrich_von_Brentano_for_mli
+		}
 		x = 11
 		y = 5
 		cost = 10
 		
 		ai_will_do = {
-			factor = 100
+			factor = 25
 		}
 		
 		completion_reward = {
@@ -885,7 +892,7 @@ focus_tree = {
 		mutually_exclusive = { focus = GER_krupp }
 		x = 21
 		y = 1
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 1
@@ -1337,7 +1344,7 @@ focus_tree = {
 		mutually_exclusive = { focus = GER_krupp }
 		x = 27
 		y = 1
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 15
@@ -2412,6 +2419,23 @@ focus_tree = {
 		id = GER_north_sea3
 		icon = GFX_goal_generic_military_deal
 		prerequisite = { focus = GER_north_sea2 }
+		available = {
+			NOR = {
+				is_independent = yes
+				NOT = {
+					has_government = totalist
+					has_government = syndicalist
+					has_government = radical_socialist
+					has_war_with = GER
+				}
+				controls_state = 844
+			}
+		}
+		bypass = {
+			GER = {
+				controls_state = 844
+			}
+		}
 		x = 51
 		y = 3
 		cost = 10
@@ -2423,6 +2447,9 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			NOR = {
+				country_event = { id = gerfor.63 }
+			}
 		}
 	}
 
@@ -2430,6 +2457,21 @@ focus_tree = {
 		id = GER_north_sea4
 		icon = GFX_goal_generic_more_territorial_claims
 		prerequisite = { focus = GER_north_sea3 }
+		available = {
+			DEN = {
+				has_war_with = ENG
+				controls_state = 37
+				NOT = {
+					has_war_with = GER
+				}
+			}
+			has_country_flag = GER_DEN_neutralist_pigs
+		}
+		bypass = {
+			GER = {
+				controls_state = 37
+			}
+		}
 		x = 51
 		y = 4
 		cost = 10
@@ -2441,6 +2483,10 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+				create_wargoal = {
+				type = annex_everything
+				target = DEN
+			}
 		}
 	}
 	
@@ -2541,6 +2587,9 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = GER_mil_expansion_naval_1 }
 		mutually_exclusive = { focus = GER_doctrine_base_strike }
+		available = {
+			has_idea = GER_Karl_Doenitz_cnav_npo
+		}
 		x = 57
 		y = 1
 		cost = 10
@@ -2611,6 +2660,12 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = GER_mil_expansion_naval_1 }
 		mutually_exclusive = { focus = GER_doctrine_fleet_in_beeing }
+		available = {
+			OR = {
+				has_idea = GER_Conrad_Patzig_cnav_sde
+				has_idea = GER_Erich_Raeder_cnav_npo
+			}
+		}
 		x = 59
 		y = 1
 		cost = 10

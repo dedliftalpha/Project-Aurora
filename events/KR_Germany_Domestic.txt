@@ -740,6 +740,7 @@ country_event { # 1937 elections
 		NOT = {
 			has_war_with = FRA 
 			has_country_flag = GER_1937_elections_cancelled
+			has_completed_focus = GER_disband_reichstag
 		}
 	}
 	
@@ -1081,6 +1082,9 @@ country_event = { # Elections cancelled
 		tag = GER
 		date > 1937.3.8
 		has_war_with = FRA
+		NOT = {
+			has_completed_focus = GER_disband_reichstag
+		}
 	}
 
 	option = {
@@ -1090,215 +1094,155 @@ country_event = { # Elections cancelled
 	}
 }
 
-country_event { # 1942 Elections
+country_event { # 1942 elections
 	id = gerdom.33
 	title = gerdom.33.t
 	desc = gerdom.33.d
-	picture = reichstag2
+	picture = GFX_report_event_election_vote
 	fire_only_once = yes
+	
 	trigger = {
-		date > 1942.3.8
 		tag = GER
+		date > 1942.3.8
 		NOT = {
-			has_war_with = FRA
+			has_war_with = FRA 
+			has_country_flag = GER_1942_elections_cancelled
+			has_completed_focus = GER_disband_reichstag
 		}
 	}
-	option = { #left 
-		name = gerdom.27.a
+	
+	option = { # SPD-Realist FVP
+		name = gerdom.33.a
 		ai_chance = {
-			factor = 20
-		}
-		add_political_power = -40
-		set_politics = {
-			ruling_party = social_democrat elections_allowed = no
-		}
-
-
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = social_democrat_subtype
-			traits = {
-				#wilhelm
-			}
+			factor = 25
 		}
 		add_popularity = {
-			ideology = social_democrat popularity = 0.2
+			ideology = social_democrat popularity = 0.1
 		}
-		country_event = {
-			id = gerdom.34 days = 1
+		add_popularity = {
+			ideology = social_liberal popularity = 0.1
+		}
+		add_political_power = -20
+		if = {
+			limit = {
+				has_completed_focus = GER_parlamentsvertrauen
+			}
+			set_politics = {
+				ruling_party = social_democrat elections_allowed = no
+			}
+			add_ideas = GER_Hans_Vogel_hog_sde
+			add_ideas = GER_Erich_Ollenhauer_for_sde
+			add_ideas = GER_Elisabeth_Schwarzhaupt_sec_mli
+			add_ideas = GER_Gustav_Noske_int_sde
+			create_country_leader = {
+				name = "Wilhelm III"
+				desc = "POLITICS_WILHELM_DESC"
+				picture = "Portrait_Germany_Wilhelm_III.tga"
+				expire = "1965.1.1"
+				ideology = social_democrat_subtype
+				traits = {
+					# wilhelm
+				}
+			}
+			else = {
+				country_event = {
+					id = gerdom.34 days = 1
+				}
+			}
 		}
 	}
-	option = { #center-left 
-		name = gerdom.27.b
+	
+	option = { # Neue große Koalition 
+		name = gerdom.33.b
 		ai_chance = {
-			factor = 30
+			factor = 40
+		}
+		add_popularity = {
+			ideology = market_liberal popularity = 0.2
 		}
 		add_political_power = 40
-		set_politics = {
-			ruling_party = social_conservative elections_allowed = no
-		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Heinrich_Bruening_hog_ade
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = social_conservative_subtype
-			traits = {
-				#wilhelm
+		if = {
+			limit = {
+				has_completed_focus = GER_parlamentsvertrauen
 			}
-		}
-		add_popularity = {
-			ideology = social_conservative popularity = 0.2
+			set_politics = {
+				ruling_party = market_liberal elections_allowed = no
+			}
+			add_ideas = GER_Paul_von_Lettow_Vorbeck_hog_mli
+			add_ideas = GER_Heinrich_von_Brentano_for_mli
+			add_ideas = GER_Walther_von_Rathenau_eco_mli
+			add_ideas = GER_Helmuth_von_Moltke_sec_sco
+			create_country_leader = {
+				name = "Wilhelm III"
+				desc = "POLITICS_WILHELM_DESC"
+				picture = "Portrait_Germany_Wilhelm_III.tga"
+				expire = "1965.1.1"
+				ideology = market_liberal_subtype
+				traits = {
+					#wilhelm
+				}
+			}
+			else = {
+				country_event = {
+					id = gerdom.35 days = 1
+				}
+			}
 		}
 	}
-
-	option = { #center-right 
-		name = gerdom.27.c
+	
+	option = { # DKP-Zentrum
+		name = gerdom.33.c
 		ai_chance = {
-			factor = 30
+			factor = 35
 		}
-		add_political_power = 20
-		set_politics = {
-			ruling_party = authoritarian_democrat elections_allowed = no
+		add_political_power = 50
+		add_popularity = {
+			ideology = authoritarian_democrat popularity = 0.1
 		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Kurt_von_Schleicher_hog_pau
-
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = authoritarian_democrat_subtype
-			traits = {
-				#wilhelm
+		
+		if = {
+			limit = {
+				has_completed_focus = GER_parlamentsvertrauen
+			}
+			set_politics = {
+				ruling_party = authoritarian_democrat elections_allowed = no
+			}
+			create_country_leader = {
+				name = "Wilhelm III"
+				desc = "POLITICS_WILHELM_DESC"
+				picture = "Portrait_Germany_Wilhelm_III.tga"
+				expire = "1965.1.1"
+				ideology = authoritarian_democrat_subtype
+				traits = {
+					#wilhelm
+				}
+			}
+			else  ={
+				country_event = {
+					id = gerdom.36 days = 1
+				}
 			}
 		}
-		add_popularity = {
-			ideology = authoritarian_democrat popularity = 0.2
-		}
-		country_event = {
-			id = gerdom.30 days = 1
-		}
-	}
-	option = { #right 
-		name = gerdom.27.e
-		ai_chance = {
-			factor = 20
-		}
-		add_political_power = -60
-		set_politics = {
-			ruling_party = paternal_autocrat elections_allowed = no
-		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Franz_von_Papen_hog_ade
-
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = paternal_autocrat_subtype
-			traits = {
-				#wilhelm
-			}
-		}
-		add_popularity = {
-			ideology = paternal_autocrat popularity = 0.2
-		}
-
 	}
 }
 
-country_event = { #SPD HOG
+country_event = { # SPD-FVP Reichskanzler?
 	id = gerdom.34
 	title = gerdom.34.t
 	desc = gerdom.34.d
 	picture = reichstag
+	
 	is_triggered_only = yes
-	option = { #Hans Vogel 
+	
+	option = { # Hans Vogel
 		name = gerdom.34.a
 		ai_chance = {
-			factor = 60
+			factor = 65
 		}
 		add_political_power = 60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Hans_Vogel_hog_sde
-		add_popularity = {
-			ideology = social_democrat popularity = 0.2
-		}
-	}
-	option = { #Kurt von Schleicher
-		name = gerdom.28.b
-		ai_chance = {
-			factor = 30
-		}
-		add_political_power = -20
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Kurt_von_Schleicher_hog_pau
-		add_popularity = {
-			ideology = authoritarian_democrat popularity = 0.1
-		}
-	}
-	option = { #Walther von Rathenau
-		name = gerdom.34.c
-		ai_chance = {
-			factor = 20
-		}
-		add_political_power = 20
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Walther_von_Rathenau_hog_mli
-		add_popularity = {
-			ideology = social_liberal popularity = 0.1
-		}
-	}
-}
-country_event = { #elections canceled
-	id = gerdom.35
-	title = gerdom.32.t
-	desc = gerdom.32.d
-	picture = reichstag2
-	fire_only_once = yes
-	trigger = {
-		tag = GER
-		date > 1942.3.8
-		has_war_with = FRA
-	}
-
-	option = {
-		name = gerdom.32.a
-		add_political_power = -20
-	}
-}
-country_event { #1947 elections
-	id = gerdom.36
-	title = gerdom.36.t
-	desc = gerdom.36.d
-	picture = reichstag
-	fire_only_once = yes
-	trigger = {
-		date > 1947.3.8
-		tag = GER
-		NOT = {
-			has_war_with = FRA
-		}
-	}
-	option = { #left 
-		name = gerdom.36.a
-		ai_chance = {
-			factor = 35
-		}
-		add_political_power = 100
 		set_politics = {
 			ruling_party = social_democrat elections_allowed = no
 		}
-
-
 		create_country_leader = {
 			name = "Wilhelm III"
 			desc = "POLITICS_WILHELM_DESC"
@@ -1309,185 +1253,380 @@ country_event { #1947 elections
 				#wilhelm
 			}
 		}
-		add_popularity = {
-			ideology = social_democrat popularity = 0.2
-		}
-		country_event = {
-			id = gerdom.37 days = 1
-		}
+		add_ideas = GER_Hans_Vogel_hog_sde
+		add_ideas = GER_Erich_Ollenhauer_for_sde
+		add_ideas = GER_Elisabeth_Schwarzhaupt_sec_mli
+		add_ideas = GER_Gustav_Noske_int_sde
 	}
-	option = { #center-left 
-		name = gerdom.27.b
+	
+	option = { # Current one is fine
+		name = gerdom.34.b
 		ai_chance = {
 			factor = 35
 		}
-		add_political_power = 60
-		set_politics = {
-			ruling_party = social_conservative elections_allowed = no
-		}
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = social_conservative_subtype
-			traits = {
-				#wilhelm
+		trigger = {
+			NOT = {
+				has_idea = GER_Hans_Vogel_hog_sde
 			}
 		}
-		add_popularity = {
-			ideology = social_conservative popularity = 0.2
-		}
-	}
-
-	option = { #right 
-		name = gerdom.36.c
-		ai_chance = {
-			factor = 30
-		}
-		add_political_power = -60
-		set_politics = {
-			ruling_party = authoritarian_democrat elections_allowed = no
-		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Franz_von_Papen_hog_ade
-
-		create_country_leader = {
-			name = "Wilhelm III"
-			desc = "POLITICS_WILHELM_DESC"
-			picture = "Portrait_Germany_Wilhelm_III.tga"
-			expire = "1965.1.1"
-			ideology = authoritarian_democrat_subtype
-			traits = {
-				#wilhelm
-			}
-		}
-		add_popularity = {
-			ideology = authoritarian_democrat popularity = 0.2
-		}
-		country_event = {
-			id = gerdom.38 days = 1
-		}
+		add_political_power = -40
 	}
 }
-country_event = { #SPD HOG
-	id = gerdom.37
-	title = gerdom.37.t
-	desc = gerdom.37.d
+
+country_event = { # Neue grosse Koalition Reichskanzler?
+	id = gerdom.35
+	title = gerdom.35.t
+	desc = gerdom.35.d
 	picture = reichstag
 	is_triggered_only = yes
-	option = { #
-		name = gerdom.34.a
-		ai_chance = {
-			factor = 60
-		}
-		add_political_power = 60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Kurt_Schumacher_hog_sde
-		add_popularity = {
-			ideology = social_democrat popularity = 0.2
-		}
-	}
-	option = { #
-		name = gerdom.34.b
-		ai_chance = {
-			factor = 30
-		}
-		add_political_power = 100
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Paul_von_Lettow_Vorbeck_hog_mli
-		add_popularity = {
-			ideology = market_liberal popularity = 0.1
-		}
-	}
-	option = { #Walther von Rathenau
-		name = gerdom.34.c
-		ai_chance = {
-			factor = 10
-		}
-		add_political_power = 40
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Walther_von_Rathenau_hog_mli
-		add_popularity = {
-			ideology = market_liberal popularity = 0.1
-		}
-	}
-}
-
-country_event = { #AV HOG
-	id = gerdom.38
-	title = gerdom.38.t
-	desc = gerdom.38.d
-	picture = reichstag2
-	is_triggered_only = yes
-	option = { #Johann Schwerin von Krosigk
-		name = gerdom.38.a
+	
+	option = { # Paul von Lettow-Vorbeck
+		name = gerdom.35.a
 		ai_chance = {
 			factor = 40
 		}
 		add_political_power = 60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Johann_Schwerin_von_Krosigk_hog_ade
-		add_popularity = {
-			ideology = authoritarian_democrat popularity = 0.1
+		set_politics = {
+			ruling_party = market_liberal elections_allowed = no
 		}
+		create_country_leader = {
+			name = "Wilhelm III"
+			desc = "POLITICS_WILHELM_DESC"
+			picture = "Portrait_Germany_Wilhelm_III.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+				#wilhelm
+			}
+		}
+		add_ideas = GER_Paul_von_Lettow_Vorbeck_hog_mli
+		add_ideas = GER_Heinrich_von_Brentano_for_mli
+		add_ideas = GER_Walther_von_Rathenau_eco_mli
+		add_ideas = GER_Helmuth_von_Moltke_sec_sco
 	}
-	option = { #Carl Goerdeler
-		name = gerdom.38.b
+	
+	option = { # Paul von Lettow-Vorbeck, demand concessions
+		name = gerdom.35.b
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 20
+		set_politics = {
+			ruling_party = market_liberal elections_allowed = no
+		}
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Wilhelm III"
+			desc = "POLITICS_WILHELM_DESC"
+			picture = "Portrait_Germany_Wilhelm_III.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+				#wilhelm
+			}
+		}
+		add_ideas = GER_Paul_von_Lettow_Vorbeck_hog_mli
+		add_ideas = GER_Heinrich_von_Brentano_for_mli
+		add_ideas = GER_Hans_von_Blumenthal_eco_ade
+		add_ideas = GER_Helmuth_von_Moltke_sec_sco
+	}
+	
+	option = { # Current one is fine
+		name = gerdom.35.c
 		ai_chance = {
 			factor = 20
 		}
-		add_political_power = 60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Carl_Friedrich_Goerdeler_hog_ade
-		add_popularity = {
-			ideology = authoritarian_democrat popularity = 0.1
+		trigger = {
+			NOT = {
+				has_idea = GER_Paul_von_Lettow_Vorbeck_hog_mli
+			}
 		}
-	}
-	option = { #Heinrich Brüning
-		name = gerdom.38.c
-		ai_chance = {
-			factor = 20
-		}
-		add_political_power = 60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Heinrich_Bruening_hog_ade
-		add_popularity = {
-			ideology = social_conservative popularity = 0.1
-		}
-
-	}
-	option = { #Gregor Strasser
-		name = gerdom.38.e
-		ai_chance = {
-			factor = 10
-		}
-		add_political_power = -60
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Gregor_Strasser_hog_npo
-		add_popularity = {
-			ideology = national_populist popularity = 0.1
-		}
-
+		add_political_power = -40
 	}
 }
-country_event = { #elections canceled
-	id = gerdom.39
-	title = gerdom.32.t
-	desc = gerdom.32.d
+
+country_event = { # DKP-Zentrum Reichskanzler?
+	id = gerdom.36
+	title = gerdom.36.t
+	desc = gerdom.36.d
+	picture = reichstag
+	is_triggered_only = yes
+	
+	option = { # von Papen
+		name = gerdom.36.a
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 60
+		add_ideas = GER_Franz_von_Papen_hog_ade
+		add_ideas = GER_Friedrich_Werner_von_der_Schulenberg_for_ade
+		add_ideas = GER_Hjalmar_Schacht_eco_ade
+		add_ideas = GER_Johann_von_Bernstorff_sec_ade
+	}
+	
+	option = { # Brüning instead
+		name = gerdom.36.b
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 20
+		add_ideas = GER_Heinrich_Bruening_hog_sco
+		add_ideas = GER_Hjalmar_Schacht_eco_ade
+		add_ideas = GER_Kurt_von_Schleicher_sec_pau
+	}
+	
+	option = { # Current one is fine
+		name = gerdom.36.c
+		ai_chance = {
+			factor = 20
+		}
+		trigger = {
+			NOT = {
+				OR = {
+					has_idea = GER_Franz_von_Papen_hog_ade
+					has_idea = GER_Heinrich_Bruening_hog_sco
+				}
+			}
+		}
+		add_political_power = -40
+	}
+}
+
+country_event = { # Elections cancelled
+	id = gerdom.37
+	title = gerdom.37.t
+	desc = gerdom.37.d
 	picture = reichstag2
 	fire_only_once = yes
 	trigger = {
 		tag = GER
 		date > 1942.3.8
 		has_war_with = FRA
+		NOT = {
+			has_completed_focus = GER_disband_reichstag
+		}
 	}
 
 	option = {
-		name = gerdom.32.a
+		name = gerdom.37.a
 		add_political_power = -20
+		set_country_flag = GER_1942_elections_cancelled
 	}
 }
+
+# country_event { #1947 elections
+	# id = gerdom.36
+	# title = gerdom.36.t
+	# desc = gerdom.36.d
+	# picture = reichstag
+	# fire_only_once = yes
+	# trigger = {
+		# date > 1947.3.8
+		# tag = GER
+		# NOT = {
+			# has_war_with = FRA
+		# }
+	# }
+	# option = { #left 
+		# name = gerdom.36.a
+		# ai_chance = {
+			# factor = 35
+		# }
+		# add_political_power = 100
+		# set_politics = {
+			# ruling_party = social_democrat elections_allowed = no
+		# }
+
+
+		# create_country_leader = {
+			# name = "Wilhelm III"
+			# desc = "POLITICS_WILHELM_DESC"
+			# picture = "Portrait_Germany_Wilhelm_III.tga"
+			# expire = "1965.1.1"
+			# ideology = social_democrat_subtype
+			# traits = {
+				# #wilhelm
+			# }
+		# }
+		# add_popularity = {
+			# ideology = social_democrat popularity = 0.2
+		# }
+		# country_event = {
+			# id = gerdom.37 days = 1
+		# }
+	# }
+	# option = { #center-left 
+		# name = gerdom.27.b
+		# ai_chance = {
+			# factor = 35
+		# }
+		# add_political_power = 60
+		# set_politics = {
+			# ruling_party = social_conservative elections_allowed = no
+		# }
+		# create_country_leader = {
+			# name = "Wilhelm III"
+			# desc = "POLITICS_WILHELM_DESC"
+			# picture = "Portrait_Germany_Wilhelm_III.tga"
+			# expire = "1965.1.1"
+			# ideology = social_conservative_subtype
+			# traits = {
+				# #wilhelm
+			# }
+		# }
+		# add_popularity = {
+			# ideology = social_conservative popularity = 0.2
+		# }
+	# }
+
+	# option = { #right 
+		# name = gerdom.36.c
+		# ai_chance = {
+			# factor = 30
+		# }
+		# add_political_power = -60
+		# set_politics = {
+			# ruling_party = authoritarian_democrat elections_allowed = no
+		# }
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Franz_von_Papen_hog_ade
+
+		# create_country_leader = {
+			# name = "Wilhelm III"
+			# desc = "POLITICS_WILHELM_DESC"
+			# picture = "Portrait_Germany_Wilhelm_III.tga"
+			# expire = "1965.1.1"
+			# ideology = authoritarian_democrat_subtype
+			# traits = {
+				# #wilhelm
+			# }
+		# }
+		# add_popularity = {
+			# ideology = authoritarian_democrat popularity = 0.2
+		# }
+		# country_event = {
+			# id = gerdom.38 days = 1
+		# }
+	# }
+# }
+# country_event = { #SPD HOG
+	# id = gerdom.37
+	# title = gerdom.37.t
+	# desc = gerdom.37.d
+	# picture = reichstag
+	# is_triggered_only = yes
+	# option = { #
+		# name = gerdom.34.a
+		# ai_chance = {
+			# factor = 60
+		# }
+		# add_political_power = 60
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Kurt_Schumacher_hog_sde
+		# add_popularity = {
+			# ideology = social_democrat popularity = 0.2
+		# }
+	# }
+	# option = { #
+		# name = gerdom.34.b
+		# ai_chance = {
+			# factor = 30
+		# }
+		# add_political_power = 100
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Paul_von_Lettow_Vorbeck_hog_mli
+		# add_popularity = {
+			# ideology = market_liberal popularity = 0.1
+		# }
+	# }
+	# option = { #Walther von Rathenau
+		# name = gerdom.34.c
+		# ai_chance = {
+			# factor = 10
+		# }
+		# add_political_power = 40
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Walther_von_Rathenau_hog_mli
+		# add_popularity = {
+			# ideology = market_liberal popularity = 0.1
+		# }
+	# }
+# }
+
+# country_event = { #AV HOG
+	# id = gerdom.38
+	# title = gerdom.38.t
+	# desc = gerdom.38.d
+	# picture = reichstag2
+	# is_triggered_only = yes
+	# option = { #Johann Schwerin von Krosigk
+		# name = gerdom.38.a
+		# ai_chance = {
+			# factor = 40
+		# }
+		# add_political_power = 60
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Johann_Schwerin_von_Krosigk_hog_ade
+		# add_popularity = {
+			# ideology = authoritarian_democrat popularity = 0.1
+		# }
+	# }
+	# option = { #Carl Goerdeler
+		# name = gerdom.38.b
+		# ai_chance = {
+			# factor = 20
+		# }
+		# add_political_power = 60
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Carl_Friedrich_Goerdeler_hog_ade
+		# add_popularity = {
+			# ideology = authoritarian_democrat popularity = 0.1
+		# }
+	# }
+	# option = { #Heinrich Brüning
+		# name = gerdom.38.c
+		# ai_chance = {
+			# factor = 20
+		# }
+		# add_political_power = 60
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Heinrich_Bruening_hog_ade
+		# add_popularity = {
+			# ideology = social_conservative popularity = 0.1
+		# }
+
+	# }
+	# option = { #Gregor Strasser
+		# name = gerdom.38.e
+		# ai_chance = {
+			# factor = 10
+		# }
+		# add_political_power = -60
+		# remove_ideas_with_trait = head_of_government
+		# add_ideas = GER_Gregor_Strasser_hog_npo
+		# add_popularity = {
+			# ideology = national_populist popularity = 0.1
+		# }
+
+	# }
+# }
+# country_event = { #elections canceled
+	# id = gerdom.39
+	# title = gerdom.32.t
+	# desc = gerdom.32.d
+	# picture = reichstag2
+	# fire_only_once = yes
+	# trigger = {
+		# tag = GER
+		# date > 1942.3.8
+		# has_war_with = FRA
+	# }
+
+	# option = {
+		# name = gerdom.32.a
+		# add_political_power = -20
+	# }
+# }
 
 ### Reichskanzler events
 
@@ -1646,82 +1785,6 @@ country_event = { #relations with italy
 	}
 }
 
-country_event = { #Kurt von Schleicher and some individuals of the German Nation
-	id = gerdom.44
-	title = gerdom.44.t
-	desc = gerdom.44.d
-	picture = reichstag
-	fire_only_once = yes
-	trigger = {
-		tag = GER
-		has_idea = GER_Kurt_von_Schleicher_hog_pau
-		date > 1938.5.25
-	}
-	option = { #blind 
-		name = gerdom.44.a
-		ai_chance = {
-			factor = 35
-		}
-		add_political_power = 20
-	}
-	option = { #public 
-		name = gerdom.44.b
-		ai_chance = {
-			factor = 30
-		}
-		add_political_power = -60
-		load_oob = GDVP_militia
-	}
-	option = { #kaiser 
-		name = gerdom.44.c
-		ai_chance = {
-			factor = 35
-		}
-		country_event = {
-			id = gerdom.45 days = 1
-		}
-	}
-}
-country_event = { #Kurt von Schleicher and the GDVP
-	id = gerdom.45
-	title = gerdom.45.t
-	desc = gerdom.45.d
-	picture = reichstag
-	is_triggered_only = yes
-	option = { #von papen 
-		name = gerdom.45.a
-		ai_chance = {
-			factor = 25
-		}
-		add_political_power = -40
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Franz_von_Papen_hog_ade
-	}
-	option = { #hans vogel
-		name = gerdom.45.b
-		ai_chance = {
-			factor = 25
-		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Hans_Vogel_hog_sde
-	}
-	option = { #Heinrich Brüning
-		name = gerdom.45.c
-		ai_chance = {
-			factor = 30
-		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = GER_Heinrich_Bruening_hog_ade
-	}
-	option = { #keep
-		name = gerdom.45.e
-		ai_chance = {
-			factor = 20
-		}
-		add_political_power = -40
-	}
-}
-
 country_event = { #Death of Wilhelm II
 	id = gerdom.47
 	title = gerdom.47.t
@@ -1732,10 +1795,8 @@ country_event = { #Death of Wilhelm II
 	
 	trigger = {
 		tag = GER
-		NOT = {
-			has_war_with = FRA
-		}
 		date > 1941.7.4
+		has_country_leader = { name = "Wilhelm II" }
 	}
 	
 	fire_only_once = yes

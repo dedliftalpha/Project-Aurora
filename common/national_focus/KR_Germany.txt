@@ -74,7 +74,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 100
-			add_popularity = { ideology = social_democracy popularity = 0.1 }
+			add_popularity = { ideology = social_democrat popularity = 0.1 }
 			add_popularity = { ideology = social_liberal popularity = 0.05 }
 		}
 	}
@@ -266,8 +266,14 @@ focus_tree = {
 		id = GER_security_2
 		icon = GFX_goal_generic_political_pressure
 		prerequisite = { focus = GER_security }
-		available = { NOT = { has_war_with = FRA } controls_state = 779 NOT = { has_country_flag = security_backdown} }
-		x = 8
+		available = { 
+			NOT = { 
+				has_war_with = FRA 
+				has_country_flag = security_backdown
+			} 
+			controls_state = 779
+		}
+		x = 7
 		y = 2
 		cost = 10
 		ai_will_do = {
@@ -294,7 +300,7 @@ focus_tree = {
 		available = { 
 			has_idea = GER_Kurt_von_Schleicher_hog_pau 
 		}
-		x = 8
+		x = 7
 		y = 4
 		cost = 10
 		
@@ -339,7 +345,7 @@ focus_tree = {
 		available = { 
 			has_idea = GER_black_monday
 		}
-		x = 13
+		x = 12
 		y = 0
 		cost = 10
 		
@@ -358,7 +364,7 @@ focus_tree = {
 		id = GER_black_monday_radio
 		icon = GFX_goal_generic_propaganda
 		prerequisite = { focus = GER_black_monday_aftermath }
-		x = 13
+		x = 12
 		y = 3
 		cost = 10
 		
@@ -373,10 +379,10 @@ focus_tree = {
 
 	focus = {
 		id = GER_black_monday_finish
-		icon = GFX_focus_generic_support_the_left_right
+		icon = GFX_goal_generic_demand_territory
 		prerequisite = { focus = GER_black_monday_radio }
 		prerequisite = { focus = GER_schacht3 focus = GER_groener3 }
-		x = 13
+		x = 12
 		y = 4
 		cost = 10
 		
@@ -397,7 +403,7 @@ focus_tree = {
 		icon = GFX_goal_generic_consumer_goods
 		prerequisite = { focus = GER_black_monday_aftermath }
 		mutually_exclusive = { focus = GER_groener1 }
-		x = 12
+		x = 11
 		y = 1
 		cost = 10
 		
@@ -414,7 +420,7 @@ focus_tree = {
 		id = GER_schacht2
 		icon = GFX_goal_generic_construction
 		prerequisite = { focus = GER_schacht1 }
-		x = 11
+		x = 10
 		y = 2
 		cost = 10
 		
@@ -432,9 +438,9 @@ focus_tree = {
 	
 	focus = {
 		id = GER_schacht3
-		icon = GFX_goal_generic_positive_trade_relations
+		icon = GFX_focus_generic_polish_deal
 		prerequisite = { focus = GER_schacht2 }
-		x = 11
+		x = 10
 		y = 3
 		cost = 10
 		
@@ -443,6 +449,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			reverse_add_opinion_modifier = {
+				target = POL modifier = polish_deal_op
+			}
+			add_opinion_modifier = {
+				target = POL modifier = polish_deal_op
+			}
 		}
 	}
 	
@@ -450,9 +462,9 @@ focus_tree = {
 	
 	focus = {
 		id = GER_mitteleuropa
-		icon = GFX_goal_generic_production
+		icon = GFX_goal_europamark
 		prerequisite = { focus = GER_schacht3 focus = GER_black_monday_finish }
-		x = 12
+		x = 11
 		y = 5
 		cost = 10
 		
@@ -461,6 +473,21 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			BEL = {
+				country_event = { id = germit.1 }
+			}
+			BAT = {
+				country_event = { id = germit.1 }
+			}
+			LIT = {
+				country_event = { id = germit.1 }
+			}
+			WHR = {
+				country_event = { id = germit.1 }
+			}
+			UKR = {
+				country_event = { id = germit.1 }
+			}
 		}
 	}
 	
@@ -471,7 +498,7 @@ focus_tree = {
 		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = GER_black_monday_aftermath }
 		mutually_exclusive = { focus = GER_schacht1 }
-		x = 14
+		x = 13
 		y = 1
 		cost = 10
 		
@@ -493,7 +520,7 @@ focus_tree = {
 		id = GER_groener2
 		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = GER_groener1 }
-		x = 15
+		x = 14
 		y = 2
 		cost = 10
 		
@@ -513,7 +540,7 @@ focus_tree = {
 		id = GER_groener3
 		icon = GFX_goal_ceylon
 		prerequisite = { focus = GER_groener2 }
-		x = 15
+		x = 14
 		y = 3
 		cost = 10
 		
@@ -543,7 +570,7 @@ focus_tree = {
 		id = GER_kaiserbund
 		icon = GFX_goal_generic_national_unity
 		prerequisite = { focus = GER_groener3 focus = GER_black_monday_finish }
-		x = 14
+		x = 13
 		y = 5
 		cost = 20
 		
@@ -641,11 +668,167 @@ focus_tree = {
 	####################
 	### Economy
 	####################
+	
+	### Research
+
+	# Kaiser Wilhelm Society
+
+	focus = {
+		id = GER_kaiser_wilhelm_society
+		icon = GFX_focus_research
+		prerequisite = { focus = GER_economy }
+		x = 17
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {			
+			add_research_slot = 1			
+		}
+	}	
+
+	# IG Farben
+
+	focus = {
+		id = GER_ig_farben
+		icon = GFX_goal_generic_intelligence_exchange
+		prerequisite = { focus = GER_kaiser_wilhelm_society }
+		x = 16
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {		
+			custom_effect_tooltip = GER_ig_farben_unlock
+		}
+	}
+
+	focus = {
+		id = GER_synthetic
+		icon = GFX_goal_generic_oil_refinery
+		prerequisite = { focus = GER_ig_farben }
+		x = 16
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		completion_reward = {	
+			add_tech_bonus = {
+				name = synth_resources_bonus
+				bonus = 0.5
+				uses = 1
+				category = synth_resources
+			}		
+		}
+	}
+	
+	# Research expansion
+
+	focus = {
+		id = GER_research_expansion
+		icon = GFX_goal_generic_production2
+		prerequisite = { focus = GER_kaiser_wilhelm_society }
+		x = 18
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {					
+			add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}		
+		}
+	}
+	
+	# Experimental research
+
+	focus = {
+		id = GER_experimental_research
+		icon = GFX_goal_generic_scientific_exchange
+		prerequisite = { focus = GER_research_expansion }
+		x = 18
+		y = 3
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {						
+			add_tech_bonus = {
+				name = industry_bonus
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}	
+		}
+	}
+
+	# Konrad Zuse
+
+	focus = {
+		id = GER_zuse
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = GER_experimental_research }
+		x = 17
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {							
+			add_tech_bonus = {
+				name = electronics_bonus
+				bonus = 0.5
+				uses = 1
+				category = electronics
+			}
+		}
+	}	
+
+	focus = {
+		id = GER_hahn_meitner
+		icon = GFX_focus_wonderweapons
+		prerequisite = { focus = GER_experimental_research }
+		x = 19
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {				
+			add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear
+			}		
+		}
+	}
 
 	focus = {
 		id = GER_economy
 		icon = GFX_goal_generic_construct_mil_factory
-		x = 21
+		x = 20
 		y = 0
 		cost = 10
 		
@@ -664,6 +847,7 @@ focus_tree = {
 		id = GER_siemens
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = GER_economy }
+		mutually_exclusive = { focus = GER_krupp }
 		x = 21
 		y = 1
 		cost = 10
@@ -784,6 +968,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_artillery2
 		prerequisite = { focus = GER_economy }
 		prerequisite = { focus = GER_mil_expansion }
+		mutually_exclusive = { focus = GER_siemens focus = GER_Mauser_werke }
 		x = 24
 		y = 1
 		cost = 10
@@ -806,7 +991,7 @@ focus_tree = {
 	focus = {
 		id = GER_artillery_research
 		icon = GFX_goal_generic_army_artillery
-		prerequisite = { focus = GER_krupp }
+		prerequisite = { focus = GER_krupp focus = GER_Mauser_werke }
 		x = 25
 		y = 2
 		cost = 10
@@ -1065,165 +1250,20 @@ focus_tree = {
 		prerequisite = { focus = GER_civ_industry_3 }
 		prerequisite = { focus = GER_mil_industry_3 }
 		bypass = { has_country_flag = eco_reco }
+		
 		x = 24
 		y = 5
 		cost = 10
+		
 		ai_will_do = {
 			factor = 100
 		}
+		
 		completion_reward = {
 			add_timed_idea = { idea = german_eco_finished days = 365 }
 			country_event = { id = black.50 days = 15 }
 		}	
 	}	
-
-	# Kaiser Wilhelm Society
-
-	focus = {
-		id = GER_kaiser_wilhelm_society
-		icon = GFX_focus_research
-		prerequisite = { focus = GER_economy }
-		x = 18
-		y = 1
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {			
-			add_research_slot = 1			
-		}
-	}	
-
-	# IG Farben
-
-	focus = {
-		id = GER_ig_farben
-		icon = GFX_goal_generic_intelligence_exchange
-		prerequisite = { focus = GER_kaiser_wilhelm_society }
-		x = 17
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 1
-		}
-		
-		completion_reward = {		
-			custom_effect_tooltip = GER_ig_farben_unlock
-		}
-	}
-
-	focus = {
-		id = GER_synthetic
-		icon = GFX_goal_generic_oil_refinery
-		prerequisite = { focus = GER_ig_farben }
-		x = 17
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 1
-		}
-		
-		completion_reward = {	
-			add_tech_bonus = {
-				name = synth_resources_bonus
-				bonus = 0.5
-				uses = 1
-				category = synth_resources
-			}		
-		}
-	}
-	
-	# Research expansion
-
-	focus = {
-		id = GER_research_expansion
-		icon = GFX_goal_generic_production2
-		prerequisite = { focus = GER_kaiser_wilhelm_society }
-		x = 19
-		y = 2
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {					
-			add_tech_bonus = {
-				name = industry_bonus
-				bonus = 0.5
-				uses = 1
-				category = industry
-			}		
-		}
-	}
-	
-	# Experimental research
-
-	focus = {
-		id = GER_experimental_research
-		icon = GFX_goal_generic_scientific_exchange
-		prerequisite = { focus = GER_research_expansion }
-		x = 19
-		y = 3
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {						
-			add_tech_bonus = {
-				name = industry_bonus
-				bonus = 0.5
-				uses = 1
-				category = industry
-			}	
-		}
-	}
-
-	# Konrad Zuse
-
-	focus = {
-		id = GER_zuse
-		icon = GFX_goal_generic_radar
-		prerequisite = { focus = GER_experimental_research }
-		x = 18
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {							
-			add_tech_bonus = {
-				name = electronics_bonus
-				bonus = 0.5
-				uses = 1
-				category = electronics
-			}
-		}
-	}	
-
-	focus = {
-		id = GER_hahn_meitner
-		icon = GFX_focus_wonderweapons
-		prerequisite = { focus = GER_experimental_research }
-		x = 20
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {				
-			add_tech_bonus = {
-				name = nuclear_bonus
-				bonus = 0.5
-				uses = 1
-				category = nuclear
-			}		
-		}
-	}
 
 	###################	
 	### Military
@@ -1239,7 +1279,7 @@ focus_tree = {
 		cost = 10
 		
 		ai_will_do = {
-			factor = 100
+			factor = 25
 		}
 		
 		continue_if_invalid = yes
@@ -1259,16 +1299,15 @@ focus_tree = {
 		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = GER_economy }
 		prerequisite = { focus = GER_mil_expansion }
+		mutually_exclusive = { focus = GER_krupp }
 		x = 27
 		y = 1
 		cost = 10
+		
 		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 10
-				OR = { date > 1938.6.1 has_war = yes }
-			}
+			factor = 15
 		}
+		
 		completion_reward = {
 		custom_effect_tooltip = mauser_werke_desc
 		
@@ -1312,13 +1351,11 @@ focus_tree = {
 		x = 27
 		y = 2
 		cost = 10
+		
 		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 10
-				OR = { date > 1938.1.1 has_war = yes }
-			}
+			factor = 15
 		}
+		
 		completion_reward = {
 			add_tech_bonus = {
 				name = infantry_weapons_bonus
@@ -1336,6 +1373,7 @@ focus_tree = {
 		x = 27
 		y = 4
 		cost = 10
+		
 		ai_will_do = {
 			factor = 10
 		}
@@ -1351,6 +1389,13 @@ focus_tree = {
 		id = GER_linie1
 		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = GER_mil_expansion }
+		available = {
+			OR = {
+				has_completed_focus = GER_groener2
+				threat > 0.5
+				has_war = yes
+			}
+		}
 		x = 30
 		y = 1
 		cost = 10
@@ -1533,14 +1578,14 @@ focus_tree = {
 
 	### Army
 	
-	# Grand Battleplan
+	# Openers
 
 	focus = {
 		id = GER_doctrine_great_war_2
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = GER_mil_expansion }
 		mutually_exclusive = { focus = GER_doctrine_mobile_2 }
-		x = 33
+		x = 34
 		y = 1
 		cost = 10
 		
@@ -1557,6 +1602,37 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = GER_doctrine_mobile_2
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = GER_mil_expansion }
+		available = { 
+			OR = {
+				has_idea = GER_Heinz_Guderian_mhc_ade
+				has_idea = GER_Erich_von_Manstein_mhc_ade
+			}
+		}
+		mutually_exclusive = { focus = GER_doctrine_great_war_2 }
+		x = 36
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_mobile_warfare
+			}
+		}
+	}
+	
+	# Middle
 
 	focus = {
 		id = GER_doctrine_great_war
@@ -1580,42 +1656,11 @@ focus_tree = {
 			}
 		}
 	}
-	
-	# Mobile
-
-	focus = {
-		id = GER_doctrine_mobile_2
-		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = GER_mil_expansion }
-		available = { 
-			OR = {
-				has_idea = GER_Heinz_Guderian_mhc_ade
-				has_idea = GER_Erich_von_Manstein_mhc_ade
-			}
-		}
-		mutually_exclusive = { focus = GER_doctrine_great_war_2 }
-		x = 35
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = land_doc_bonus
-				bonus = 0.5
-				uses = 2
-				category = cat_mobile_warfare
-			}
-		}
-	}
 
 	focus = {
 		id = GER_doctrine_mobile
 		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = GER_doctrine_mobile_2 }
+		prerequisite = { focus = GER_doctrine_great_war_2 focus = GER_doctrine_mobile_2 }
 		x = 35
 		y = 2
 		cost = 10
@@ -1627,10 +1672,32 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = motorized_bonus
-				bonus = 0.25
-				category = motorized_equipment
-				ahead_reduction = 1
+				bonus = 0.5
 				category = cat_mechanized_equipment
+				ahead_reduction = 1
+			}
+		}
+	}
+
+	focus = {
+		id = GER_doctrine_armor
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = GER_doctrine_mobile_2 }
+		x = 37
+		y = 2
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 0.5
+				category = armor_equipment
+				ahead_reduction = 1
+				category = armor
 			}
 		}
 	}
@@ -1639,9 +1706,9 @@ focus_tree = {
 		
 	focus = {
 		id = GER_mil_expansion_land_1
-		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war }
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 33
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war focus = GER_doctrine_armor }
+		x = 34
 		y = 3
 		
 		cost = 10
@@ -1658,8 +1725,8 @@ focus_tree = {
 	focus = {
 		id = GER_doctrine_last
 		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war }
-		x = 35
+		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war focus = GER_doctrine_armor }
+		x = 36
 		y = 3
 		cost = 10
 		ai_will_do = {
@@ -1674,7 +1741,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_security_3
-		icon = GFX_goal_generic_army_tanks
+		icon = GFX_goal_RUS_Markov_plan
 		prerequisite = { focus = GER_doctrine_last focus = GER_mil_expansion_land_1 }
 		available = { 
 			has_country_flag = loth_armed 
@@ -1684,7 +1751,7 @@ focus_tree = {
 			controls_state = 779 
 			controls_state = 28 
 		}
-		x = 34
+		x = 35
 		y = 4
 		cost = 4
 		ai_will_do = {
@@ -1705,7 +1772,7 @@ focus_tree = {
 		id = GER_security_4
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = GER_security_3 }
-		x = 34
+		x = 35
 		y = 5
 		cost = 8
 		bypass = { 
@@ -1764,6 +1831,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cat_battlefield_support_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_battlefield_support
+			}
 		}
 	}
 		
@@ -1780,6 +1853,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = light_fighter_bonus
+				bonus = 0.5
+				uses = 2
+				category = light_fighter
+			}
 		}
 	}
 		
@@ -1796,6 +1875,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cas_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = cas_bomber_bonus
+			}
 		}
 	}
 	
@@ -1857,6 +1942,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_timed_idea = { id = GER_institut_idea days = 365 }
 		}
 	}
 	
@@ -1879,6 +1965,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cat_strategic_destruction_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_strategic_destruction
+			}
 		}
 	}
 
@@ -1895,6 +1987,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cat_strategic_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_strategic_bomber
+			}
 		}
 	}
 
@@ -1911,6 +2009,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = naval_bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
 		}
 	}
 
@@ -1951,6 +2055,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cat_heavy_fighter_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_heavy_fighter
+			}
 		}
 	}
 
@@ -1967,6 +2077,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			air_experience = 50
 		}
 	}
 
@@ -1983,6 +2094,8 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			custom_effect_tooltip = GER_cult_of_aviation_tp
+			add_ideas = GER_cult_of_aviation_idea
 		}
 	}
 		
@@ -1999,6 +2112,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = para_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = para_tech
+			}
 		}
 	}
 		
@@ -2040,6 +2159,60 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			58 = {
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3231
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3368
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 9347
+					instant_build = yes
+				}
+			}
+			59 = {
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 3326
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 6349
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 6325
+					instant_build = yes
+				}
+			}
+			56 = {
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 241
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 11360
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -2058,6 +2231,84 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			if = {
+				limit = {
+					controls_state = 116
+				}
+				116 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 12003
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 753
+				}
+				753 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 9947
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 704
+				}
+				704 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 13016
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 647
+				}
+				647 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 4357
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 744
+				}
+				744 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 10000
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 268
+				}
+				268 = {
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						province = 8124
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
 	
@@ -2078,6 +2329,20 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			56 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 2
+					province = 241
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -2097,6 +2362,15 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			6 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 6446
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -2153,6 +2427,7 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			add_equipment_to_stockpile = { type = convoy_1 amount = 100 producer = GER }
 		}
 	}
 
@@ -2172,6 +2447,20 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			336 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 2
+					province = 12299
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -2250,6 +2539,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = ss_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = ss_tech
+			}
 		}
 	}
 
@@ -2266,6 +2561,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = bb_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = bb_tech
+			}
 		}
 	}
 	
@@ -2309,10 +2610,10 @@ focus_tree = {
 		
 		completion_reward = {
 			add_tech_bonus = {
-				name = fleet_in_being_bonus
+				name = naval_bomber_bonus
 				bonus = 0.5
-				uses = 2
-				category = cat_base_strike
+				uses = 1
+				category = naval_bomber
 			}
 		}
 	}
@@ -2331,10 +2632,10 @@ focus_tree = {
 		
 		completion_reward = {
 			add_tech_bonus = {
-				name = fleet_in_being_bonus
+				name = ca_tech_bonus
 				bonus = 0.5
 				uses = 2
-				category = cat_base_strike
+				category = ca_tech
 			}
 		}
 	}
@@ -2355,6 +2656,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = marine_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}		
 		}
 	}
 
@@ -2371,6 +2678,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = tp_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = tp_tech
+			}		
 		}
 	}
 	
@@ -2390,6 +2703,13 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cl_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+				category = cv_tech
+			}		
 		}
 	}
 
@@ -2406,6 +2726,12 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = cl_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}		
 		}
 	}
 	
@@ -2427,7 +2753,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = GER_tirpitz_idea
+			add_timed_idea = { idea = GER_tirpitz_idea days = 365 }
 		}
 	}
 	
@@ -2445,7 +2771,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			
+			navy_experience = 100
 		}
 	}
 

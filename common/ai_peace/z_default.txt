@@ -4574,10 +4574,24 @@ default_peace = {
 		#CAL - California Republic
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = CAL
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = CAL
+						is_faction_leader = no
+						is_in_faction = yes	
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = CAL
+						has_war_with = USA
+					}
+					CSA = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
+			
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {

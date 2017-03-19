@@ -1988,7 +1988,7 @@ country_event = {# Integration of the Federal Officer Corps
 	}
 }
 ####################################
-# 	Foreign Policy Events 	#
+# 		Foreign Policy Events      # 
 ####################################
 country_event = {# The Strike Begins
 	id = combinedsyndicates.43
@@ -2454,7 +2454,7 @@ country_event = {# The Reed Doctrine
 	}
 }
 ####################################
-#		The Paris Summit		#
+#		The Paris Summit		   #
 ####################################
 country_event = {# Mexico gets the invite
 	id = combinedsyndicates.200
@@ -2742,4 +2742,97 @@ country_event = {# The Treaty is implemented
 		481 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
 		482 = { add_building_construction = { type = arms_factory level = 1 instant_build = yes } }
 	}
+}
+####################################
+#		Central America Help	   #
+####################################
+country_event = {# CentroAmerica vs United Provinces
+	id = combinedsyndicates.213 
+	title = combinedsyndicates.213.t
+	desc = combinedsyndicates.213.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CSA
+		has_global_flag = END_ACW
+		NOT = {
+			is_subject = yes
+			country_exists = TEX
+			country_exists = USA
+		}
+		GUA = { has_war_with = NIC } # United Provinces of Centroamerica
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = combinedsyndicates.13.a
+		ai_chance = {
+			factor = 90
+		}
+		add_manpower = -5000
+		send_equipment = {
+            target = GUA
+            type = infantry_equipment
+            amount = 1000
+        }
+		hidden_effect = { GUA = { country_event = { id = combinedsyndicates.14 days = 1 }}}
+	}	
+	option = { 
+		name = combinedsyndicates.13.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40
+	}
+}
+country_event = {# American Volunteers!
+	id = combinedsyndicates.214
+	title = combinedsyndicates.214.t
+	desc = combinedsyndicates.214.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes 
+
+	option = { 
+		name = combinedsyndicates.214.a
+
+		add_manpower = 5000
+
+		hidden_effect = {
+			set_global_flag = CSA_helps_gua
+		}
+	}	
+}
+country_event = {# Volunteers return to the CSA
+	id = combinedsyndicates.215
+	title = combinedsyndicates.215.t
+	desc = combinedsyndicates.215.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CSA
+		has_global_flag = CSA_helps_gua
+		NOT = {
+			GUA = {	has_war_with = NIC }
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = { 
+		name = combinedsyndicates.215.a
+		if = {
+			limit = { not = {	country_exists = NIC } }
+			add_opinion_modifier = { target = GUA modifier = WON_CAW } # +10
+		}
+		add_manpower = 5000
+		add_political_power = 20
+	}	
 }

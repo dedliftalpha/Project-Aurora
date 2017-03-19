@@ -171,7 +171,7 @@ focus = {
 	
 	completion_reward = {
 		# TODO - add tooltip might end corrupt bureaucracy
-		# TODO - add triggers to events that check for active focus
+		# TODO - add triggers to events that check for currently active focus
 		# TODO - remove effects from end-of-focus events and put them here
 	}
 
@@ -195,6 +195,8 @@ focus = {
 
 	completion_reward = {
 		# TODO - add tooltip might end military factions
+		remove_ideas = ott_decline_3
+		add_ideas = ott_decline_4
 	}
 
 }
@@ -216,7 +218,8 @@ focus = {
 	}
 
 	completion_reward = {
-		# TODO - add tooltip might end intelligence factions
+		# TODO - add tooltip might end paramilitary organisations
+		remove_ideas = ott_decline_4
 	}
 
 }
@@ -233,7 +236,7 @@ focus = {
 	
 	
 	completion_reward = {
-		add_political_power = 5
+		add_political_power = 50
 		set_country_flag = ott_reform_resistance
 	}
 
@@ -254,7 +257,7 @@ focus = {
 	continue_if_invalid = no
 	
 	completion_reward = {
-		add_political_power = 5
+		# TODO - add tooltip might fix stuff
 	}
 
 }
@@ -277,7 +280,19 @@ focus = {
 		country_event = { id = ott.106 days = 20 }
 	}
 	completion_reward = {
-		add_political_power = 5
+		# TODO - add tooltip might fix stuff
+		if = {
+			limit = {
+				has_idea = ott_decline_2
+			}
+			remove_ideas = ott_decline_2
+			add_ideas = ott_decline_3
+			
+			else = {
+				remove_ideas = ott_decline
+				add_ideas = ott_decline_1
+			}
+		}
 	}
 
 }
@@ -295,7 +310,8 @@ focus = {
 		country_event = { id = ott.107 days = 10 }
 	}
 	completion_reward = {
-		add_political_power = 5
+		# TODO - add tooltip might fix stuff
+		# TODO - required to take control of own economy
 	}
 
 }
@@ -310,7 +326,19 @@ focus = {
 	
 	
 	completion_reward = {
-		add_political_power = 5
+		# TODO - add tooltip might fix stuff
+		if = {
+			limit = {
+				has_idea = ott_decline_1
+			}
+			remove_ideas = ott_decline_1
+			add_ideas = ott_decline_3
+			
+			else = {
+				remove_ideas = ott_decline
+				add_ideas = ott_decline_2
+			}
+		}
 	}
 
 }
@@ -341,6 +369,7 @@ focus = {
 	
 	completion_reward = {
 		add_research_slot = 1
+		# TODO - enable theorists
 	}
 
 }
@@ -352,7 +381,11 @@ focus = {
 	x = 9
 	y = 4
 	cost = 10
-	
+	available = {
+		num_of_factories > 50
+		NOT = { has_country_flag = ott_opda_flag }
+	}
+	cancel_if_invalid = no
 	
 	completion_reward = {
 		add_research_slot = 1
@@ -446,6 +479,7 @@ focus = {
 	x = 12
 	y = 2
 	cost = 5
+	# TODO - bypass if free germany does not exist
 	
 	available = {
 		# WK2
@@ -470,6 +504,7 @@ focus = {
 	x = 14
 	y = 2
 	cost = 5
+	# TODO - bypass if free austria does not exist
 	
 	available = {
 		# WK2 entry
@@ -495,10 +530,10 @@ focus = {
 	x = 15
 	y = 1
 	cost = 10
-	
+	# TODO - require axis defeated & border with yemen
 	
 	completion_reward = {
-		country_event = { id = ott.163 days = 0 }
+		country_event = { id = ott.164 days = 0 }
 	}
 
 }
@@ -510,7 +545,10 @@ focus = {
 	x = 17
 	y = 1
 	cost = 10
-	
+	available = {
+		# TODO - axis beaten / year 1942
+		NOT = { has_country_flag = ott_opda_flag }
+	}
 	
 	completion_reward = {
 		add_political_power = 100
@@ -583,8 +621,10 @@ focus = {
 	x = 25
 	y = 0
 	cost = 10
-	
-	
+	available = {
+		NOT = { has_country_flag = ott_opda_flag }
+	}
+
 	completion_reward = {
 		add_tech_bonus = {
 			name = industrial_bonus
@@ -647,11 +687,11 @@ focus = {
 focus = {
 	id = OTT_mechanized_agriculture
 	prerequisite = { focus = OTT_land_reform }
-	# TODO - require Uzel
-	icon = GFX_focus_NZL_bob_semple_tank
+	icon = GFX_goal_generic_construct_civilian
 	x = 21
 	y = 4
 	cost = 10
+	# TODO - require Uzel
 	
 	completion_reward = {
 		add_ideas = ott_agricultural_revolution_idea
@@ -1059,7 +1099,7 @@ focus = {
 	
 	
 	completion_reward = {
-		add_political_power = 50
+		add_political_power = 100
 		add_national_unity = 0.05
 		add_tech_bonus = {
 			name = land_doc_bonus
@@ -1400,12 +1440,14 @@ focus = {
 	
 	
 	completion_reward = {
-		custom_effect_tooltip = OTT_camel_corpse_tooltip # TODO: write tooltip
+		custom_effect_tooltip = OTT_camel_corpse_tooltip # TODO - write tooltip
 		hidden_effect = {
 			load_oob = OTT_camels
 			set_technology = { camel_corpse = 1 }
 		}
+		# TODO - fix research icon
 		# TODO - add tooltip about rebel suppression
+		# TODO - mention Ottoman Desert Rangers
 	}
 
 }
@@ -1440,7 +1482,9 @@ focus = {
 	x = 48
 	y = 2
 	cost = 10
-	
+	available = {
+		NOT = { has_country_flag = ott_opda_flag }
+	}
 	
 	completion_reward = {
 		773 = {
@@ -1592,10 +1636,12 @@ focus = {
 	x = 55
 	y = 0
 	cost = 10
-	
+	available = {
+		NOT = { has_country_flag = ott_opda_flag }
+	}
 	
 	completion_reward = {
-		add_political_power = 25
+		add_political_power = 50
 		navy_experience = 25
 		add_tech_bonus = {
 			name = OTT_naval_doctrine_bonus
@@ -1837,7 +1883,7 @@ focus = {
 }
 
 focus = {
-	id = OTT_gulf_of_persia
+	id = OTT_gulf_of_basra
 	prerequisite = { focus = OTT_naval_supremacy }
 	icon = GFX_goal_generic_build_navy
 	x = 60

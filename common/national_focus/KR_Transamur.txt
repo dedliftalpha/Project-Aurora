@@ -841,7 +841,11 @@ focus = {
 
 	}
 	bypass = {
-	has_country_flag = TRM_coup
+		OR = {
+		has_country_flag = TRM_Kolchak_alive
+		has_country_flag = TRM_Mil_coup
+		has_country_flag = TRM_Dem_coup
+		}
 	}
 }
 
@@ -858,6 +862,12 @@ focus = {
 	}
 	completion_reward = {
 		add_political_power = 100
+	}
+	cancel = {
+		OR = {
+			has_country_flag = TRM_Mil_coup
+			has_country_flag = TRM_Dem_coup
+		}
 	}
 
 }
@@ -877,6 +887,12 @@ focus = {
 		add_timed_idea = {
 			idea = TRM_purge
 			days = 180
+		}
+	}
+	cancel = {
+		OR = {
+			has_country_flag = TRM_Mil_coup
+			has_country_flag = TRM_Dem_coup
 		}
 	}
 
@@ -902,6 +918,12 @@ focus = {
 				}
 			}
 	}
+	cancel = {
+		OR = {
+			has_country_flag = TRM_Mil_coup
+			has_country_flag = TRM_Dem_coup
+		}
+	}
 
 }
 
@@ -918,6 +940,12 @@ focus = {
 	completion_reward = {
 		
 	}
+	cancel = {
+		OR = {
+			has_country_flag = TRM_Mil_coup
+			has_country_flag = TRM_Dem_coup
+		}
+	}
 
 }
 
@@ -933,7 +961,11 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-		add_political_power = -200
+		add_political_power = 50
+		add_ideas = TRM_new_military
+	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Mil_coup}
 	}
 
 }
@@ -950,6 +982,9 @@ focus = {
 	}
 	completion_reward = {
 		add_ideas = TRM_mil_stuff
+	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Mil_coup}
 	}
 
 }
@@ -973,7 +1008,9 @@ focus = {
 				category = artillery
 		}
 	}
-
+	cancel = {
+		NOT = {has_country_flag = TRM_Mil_coup}
+	}
 }
 
 focus = {
@@ -987,9 +1024,11 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-	
+		
 	}
-
+	cancel = {
+		NOT = {has_country_flag = TRM_Mil_coup}
+	}
 }
 
 focus = {
@@ -1004,7 +1043,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-		add_political_power = -40
+		add_popularity = { ideology = authoritarian_democrat popularity = -0.1 }
+		add_popularity = { ideology = paternal_autocrat popularity = -0.1 }
+		add_popularity = { ideology = national_populist popularity = -0.1 }
+	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Dem_coup}
 	}
 
 }
@@ -1022,6 +1066,9 @@ focus = {
 	completion_reward = {
 		add_ideas = TRM_research
 	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Dem_coup}
+	}
 
 }
 
@@ -1038,6 +1085,9 @@ focus = {
 	completion_reward = {
 		add_ideas = TRM_factory
 	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Dem_coup}
+	}
 
 }
 
@@ -1053,6 +1103,9 @@ focus = {
 	}
 	completion_reward = {
 		add_ideas = TRM_goods
+	}
+	cancel = {
+		NOT = {has_country_flag = TRM_Dem_coup}
 	}
 
 }
@@ -1075,7 +1128,7 @@ focus = {
 		
 	}
 	bypass = {
-	has_country_flag = TRM_RCW
+	SOV = {exists = yes}
 	}
 }
 
@@ -1104,12 +1157,12 @@ focus = {
 	available = {SIB = {exists = yes} }
 	x = 13
 	y = 8
-	cost = 10
+	cost = 5
 	ai_will_do = {
 		factor = 100
 	}
 	completion_reward = {
-		SIB = { country_event = {id = tram.2 days = 1} }
+		TRM = { country_event = {id = tram.2 days = 1} }
 	}
 	
 }
@@ -1125,12 +1178,12 @@ focus = {
 	}
 	x = 16
 	y = 8
-	cost = 10
+	cost = 5
 	ai_will_do = {
 		factor = 100
 	}
 	completion_reward = {
-		RUS = { country_event = {id = tram.6 days = 1} }
+		TRM = { country_event = {id = tram.6 days = 1} }
 	}
 	
 }
@@ -1147,20 +1200,20 @@ focus = {
 	}
 	x = 19
 	y = 8
-	cost = 10
+	cost = 5
 	ai_will_do = {
 		factor = 100
 	}
 	completion_reward = {
 		custom_effect_tooltip = TRM_sov
-		SOV = { country_event = {id = tram.10 days = 1} }
+		TRM = { country_event = {id = tram.10 days = 1} }
 	}
 	
 }
 
 focus = {
 	id = TRM_Demand_Bai
-	available = {has_country_flag = TRM_control_FE}
+	available = {controls_state = 561}
 	icon = GFX_goal_generic_more_territorial_claims
 	prerequisite = {focus = TRM_FE_SIB focus = TRM_FE_RUS focus = TRM_FE_SOV}
 	x = 14
@@ -1205,7 +1258,7 @@ focus = {
 focus = {
 	id = TRM_Demand_Mon
 	icon = GFX_goal_generic_more_territorial_claims
-	available = {has_country_flag = TRM_control_FE}
+	available = {controls_state = 561}
 	prerequisite = {focus = TRM_FE_SIB focus = TRM_FE_RUS focus = TRM_FE_SOV}
 	x = 18
 	y = 9
@@ -1242,6 +1295,7 @@ focus = {
 		565 = {add_core_of = TRM}
 		566 = {add_core_of = TRM}
 		575 = {add_core_of = TRM}
+		set_cosmetic_tag = TRM_FE
 	}
 	
 }
@@ -1258,7 +1312,9 @@ focus = {
 	}
 	completion_reward = {
 	set_capital = 566
-	set_cosmetic_tag = TRM_FE
+	JAP = { set_autonomy = { target = TRM autonomy_state = autonomy_colony } }
+	add_political_power = 60
+	JAP = {country_event = {id = tram.67 days = 2} }
 	}
 
 	
@@ -1293,9 +1349,43 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-
+	567 = {add_claim_by = TRM}
+	516 = {add_claim_by = TRM}
+	576 = {add_claim_by = TRM}
+	568 = {add_claim_by = TRM}
+	577 = {add_claim_by = TRM}
+	578 = {add_claim_by = TRM}
+	569 = {add_claim_by = TRM}
+	570 = {add_claim_by = TRM}
+	579 = {add_claim_by = TRM}
+	580 = {add_claim_by = TRM}
+	573 = {add_claim_by = TRM}
+	582 = {add_claim_by = TRM}
+	40 = {add_claim_by = TRM}
+	588 = {add_claim_by = TRM}
+	571 = {add_claim_by = TRM}
+	590 = {add_claim_by = TRM}
+	403 = {add_claim_by = TRM}
+	580 = {add_claim_by = TRM}
+	653 = {add_claim_by = TRM}
+	572 = {add_claim_by = TRM}
+	583 = {add_claim_by = TRM}
+	581 = {add_claim_by = TRM}
+	hidden_effect = {
+		create_wargoal = {
+				type = annex_everything
+				target = SIB
+			}
+		create_wargoal = {
+				type = annex_everything
+				target = RUS
+			}
+		create_wargoal = {
+				type = annex_everything
+				target = SOV
+			}
 	}
-	
+	}	
 }
 
 focus = {
@@ -1309,14 +1399,60 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-
+	567 = {add_core_of = TRM}
+	516 = {add_core_of = TRM}
+	576 = {add_core_of = TRM}
+	568 = {add_core_of = TRM}
+	577 = {add_core_of = TRM}
+	578 = {add_core_of = TRM}
+	569 = {add_core_of = TRM}
+	570 = {add_core_of = TRM}
+	579 = {add_core_of = TRM}
+	580 = {add_core_of = TRM}
+	573 = {add_core_of = TRM}
+	582 = {add_core_of = TRM}
+	40 = {add_core_of = TRM}
+	588 = {add_core_of = TRM}
+	571 = {add_core_of = TRM}
+	590 = {add_core_of = TRM}
+	403 = {add_core_of = TRM}
+	580 = {add_core_of = TRM}
+	653 = {add_core_of = TRM}
+	572 = {add_core_of = TRM}
+	583 = {add_core_of = TRM}
+	581 = {add_core_of = TRM}
 	}
+	
+}
+
+focus = {
+	id = TRM_Cap_Novosibirsk
+	available = {controls_state = 570}
+	icon = GFX_goal_generic_more_territorial_claims
+	prerequisite = {focus = TRM_Claim_West_Sib}
+	x = 18
+	y = 12
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+	set_capital = 570
+	JAP = { set_autonomy = { target = TRM autonomy_state = autonomy_dominion } }
+	add_political_power = 100
+	JAP = {country_event = {id = tram.67 days = 2} }
+	}
+
 	
 }
 
 focus = {
 	id = TRM_Claim_Russia
 	icon = GFX_goal_generic_more_territorial_claims
+	available = {
+		controls_state = 572
+		controls_state = 653
+	}
 	prerequisite = {focus = TRM_Integrate_West_Sib }
 	x = 16
 	y = 13
@@ -1325,7 +1461,15 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-
+	set_cosmetic_tag = TRM_RUS
+	create_wargoal = {
+				type = annex_everything
+				target = RUS
+			}
+	create_wargoal = {
+				type = annex_everything
+				target = SOV
+			}
 	}
 	
 }
@@ -1333,6 +1477,12 @@ focus = {
 focus = {
 	id = TRM_Become_Russia
 	icon = GFX_goal_generic_more_territorial_claims
+	available = {
+		controls_state = 195
+		controls_state = 219
+		RUS = {exists = no}
+		SOV = {exists = no}
+	}
 	prerequisite = {focus = TRM_Claim_Russia }
 	x = 16
 	y = 14
@@ -1341,7 +1491,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-
+		change_tag_from = RUS
 	}
 	
 }

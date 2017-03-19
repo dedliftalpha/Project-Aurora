@@ -678,7 +678,6 @@ country_event = {
 	option = {
 		name = tram.30.a
 		annex_country = { target = SIB transfer_troops = yes }
-		set_country_flag = TRM_sib_war
 	}
 
 }
@@ -1497,7 +1496,7 @@ country_event = { #Demand Baikal From Soviet Russia
 			factor = 60
 		}
 		add_political_power = -200
-	RUS = { country_event = {id = tram.64 days = 2} }
+	SOV = { country_event = {id = tram.64 days = 2} }
 	if = {limit = {has_idea = TRM_anti_kolchak}
 	JAP = { country_event = {id = tram.44 days = 7} }
 	}
@@ -1617,129 +1616,370 @@ country_event = {
 	}
 
 }
+
+country_event = { #Japanese reaction on TRM expands - Trasamur at war
+	id = tram.66
+	title = tram.66.t
+	desc = tram.66.d
+	trigger = {
+		tag = JAP
+		TRM = {has_country_flag = TRM_sib_war}
+		TRM = {
+		controls_state = 562
+		controls_state = 637
+		}
+	}
+	mean_time_to_happen = {days = 4}
+	
+	option = {
+		ai_chance = { #Demand Okhotsk and Kamchatka
+			factor = 30
+		}
+		name = tram.66.a
+		TRM = {country_event = {id = tram.47 days = 1 } }
+	}
+	option = {
+		ai_chance = { # Do nothing
+			factor = 60
+		}
+		name = tram.66.b
+	
+	}
+}
+
+country_event = { #Japanese reaction on TRM moving it's capital
+	id = tram.67
+	title = tram.67.t
+	desc = tram.67.d
+	is_triggered_only = yes
+
+	
+	option = {
+		ai_chance = { #Do Nothing
+			factor = 70
+		}
+		name = tram.67.a
+	}
+	option = {
+		ai_chance = { # Try to subdue
+			factor = 30
+		}
+		name = tram.67.b
+		TRM = {country_event = {id = tram.68 days = 1}}
+	
+	}
+}
+
+country_event = { #Japanese trying to subdue TRM
+	id = tram.68
+	title = tram.68.t
+	desc = tram.68.d
+	is_triggered_only = yes
+
+	
+	option = {
+		ai_chance = { #Subdue
+			factor = 50
+		}
+		name = tram.68.a
+		add_political_power = -300
+		set_capital = 408
+		JAP = { set_autonomy = { target = TRM autonomy_state = autonomy_puppet } }
+	}
+	option = {
+		ai_chance = { # Break Away
+			factor = 50
+		}
+		name = tram.68.b
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id = tram.68 days = 1}}
+	
+	}
+}
 ####Political####
 
 ###Anti-Kolchak Coup###
-#country_event = {
-#	id = tram.555
-#	title = tram.51.t
-#	desc = tram.51.d
-#	trigger = {
-#		tag = TRM
-#		date > 1937.1.1
-#	}
-#	mean_time_to_happen = { days = 120}
-#	
-#	option = { #Kolchak survived
-#		name = tram.51.a
-#		add_political_power = -100
-#		set_country_flag = TRM_Kolchak_alive
-#		JAP = {country_event = {id = tram.53 days = 7} }
-#	}
-#
-#	option = { #Kolchak dead
-#		name = tram.51.b
-#		country_event = {id = tram.51 days = 1}
-#	}
-#
-#}
+country_event = {
+	id = tram.80
+	title = tram.80.t
+	desc = tram.80.d
+	trigger = {
+		tag = TRM
+		date > 1937.1.1
+		has_idea = TRM_anti_kolchak
+	}
+	mean_time_to_happen = { days = 120}
+	
+	option = { #Kolchak survived
+		name = tram.80.a
+		add_political_power = -100
+		set_country_flag = TRM_Kolchak_alive
+		JAP = {country_event = {id = tram.82 days = 7} }
+		remove_ideas = TRM_anti_kolchak
+	}
+
+	option = { #Kolchak dead
+		name = tram.80.b
+		country_event = {id = tram.81}
+		remove_ideas = TRM_kolchak
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Sergei Wojciechowski"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+	}
+
+}
 
 ###Kolchak dead, choose new ruler###
 country_event = {
-	id = tram.556
-	title = tram.52.t
-	desc = tram.52.d
+	id = tram.81
+	title = tram.81.t
+	desc = tram.81.d
 	is_triggered_only = yes
 	
 		option = { #New Dictator
-			name = tram.52.a
+			name = tram.81.a
 		add_political_power = -200
 		set_country_flag = TRM_Mil_coup
+		add_ideas = TRM_martial_law
+		remove_ideas = TRM_anti_kolchak
 		}
 
 	option = { #Republic
-			name = tram.52.b
+			name = tram.81.b
 		add_political_power = -40
+		add_popularity = { ideology = market_liberal popularity = 0.15 }
 		set_country_flag = TRM_Dem_coup
-		JAP = {country_event = {id = tram.55 days = 7} }
+		remove_ideas = TRM_anti_kolchak
+		JAP = {country_event = {id = tram.84 days = 7} }
+		set_politics = {
+		ruling_party = market_liberal
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Mihail_Akseimov_hog_mli
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Aleksei_Sidorenko_for_mli
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Gennadij_Selezhnev_eco_mli
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Victor_Krhistenko_sec_mli
 		}
 
 }
-
-###Kolchak survived, Japan gets a message###
-country_event = {
-	id = tram.557
-	title = tram.53.t
-	desc = tram.53.d
-	is_triggered_only = yes
-	
-	option = { #Remove Kolchak
-		name = tram.53.a
-		TRM = {country_event = {id = tram.54 days = 7} }
-	}
-
-	option = { #Do Nothing
-		name = tram.53.b
-	}
-
-}
-###Transamur gets a message about Kolchak resign###
-country_event = {
-	id = tram.558
-	title = tram.54.t
-	desc = tram.54.d
-	is_triggered_only = yes
-	
-	option = { #Remove Kolchak
-		name = tram.54.a
-		clr_country_flag = TRM_Kolchak_alive
-		set_country_flag = TRM_Mil_coup
-	}
-
-	option = { #Break Away
-		name = tram.54.b
-		JAP = {end_puppet = TRM}
-		JAP = {country_event = {id= tram.1 days = 1}}
-	}
-
-}
-
 ###Kolchak dead, Transamur become a republic, Japan gets a message###
 country_event = {
-	id = tram.559
-	title = tram.55.t
-	desc = tram.55.d
+	id = tram.84
+	title = tram.84.t
+	desc = tram.84.d
 	is_triggered_only = yes
 	
 	option = { #Demand new military dictator
-		name = tram.55.a
-		TRM = {country_event = {id = tram.56 days = 2} }
+		name = tram.84.a
+		TRM = {country_event = {id = tram.85 days = 2} }
 	}
 
 	option = { #Do Nothing
-		name = tram.55.b
+		name = tram.84.b
 	}
 
 }
 
 ###Dem Transamur responds###
 country_event = {
-	id = tram.5510
-	title = tram.56.t
-	desc = tram.56.d
+	id = tram.85
+	title = tram.85.t
+	desc = tram.85.d
 	is_triggered_only = yes
 	
 	option = { #Remove Republic
-		name = tram.55.a
+		name = tram.85.a
 		clr_country_flag = TRM_Dem_coup
 		set_country_flag = TRM_Mil_coup
+		set_politics = {
+		ruling_party = paternal_autocrat
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Boris_Bakhmetev_for_ade
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Dmitry_Lebedev_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Arkady_Udintsev_sec_pau
 	}
 
 	option = { #Break Away
-		name = tram.55.b
+		name = tram.85.b
 		JAP = {end_puppet = TRM}
 		JAP = {country_event = {id = tram.1 days = 1}}
 	}
 
+}
+
+###Elections - First Time###
+country_event = {
+	id = tram.86
+	title = tram.86.t
+	desc = tram.86.d
+	trigger = {
+		tag = TRM
+		has_government = market_liberal
+	}
+	mean_time_to_happen = {days = 50}
+	fire_only_once = yes
+	
+	option = { # PFER
+		name = tram.86.a
+		add_political_power = -40
+		set_politics = {
+		ruling_party = social_democrat
+		}
+		add_popularity = { ideology = social_democrat popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Pyotr_Nikiforov_hog_sde
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Genrich_Eiche_for_sde
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Gennadij_Selezhnev_eco_mli
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Victor_Krhistenko_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+
+	option = { # PPF
+		name = tram.86.b
+		set_politics = {
+		ruling_party = market_liberal
+		}
+		add_political_power = -20
+		add_popularity = { ideology = market_liberal popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Mihail_Akseimov_hog_mli
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Aleksei_Sidorenko_for_mli
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Gennadij_Selezhnev_eco_mli
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Victor_Krhistenko_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+	
+	option = { # ZKP
+		name = tram.86.c
+		set_politics = {
+		ruling_party = social_conservative
+		}
+		add_political_power = -40
+		add_popularity = { ideology = social_conservative popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Georgy_Stark_hog_sco
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Nikolai_Merkulov_for_sco
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Anatoly_Pepelyaev_eco_ade
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Vladimir_Kevorkov_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+	
+	option = { # Military Coup
+		name = tram.86.e
+		set_politics = {
+		ruling_party = paternal_autocrat
+		}
+		add_political_power = -400
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
+		clr_country_flag = TRM_Dem_coup
+		set_country_flag = TRM_Mil_coup
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Boris_Bakhmetev_for_ade
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Dmitry_Lebedev_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Arkady_Udintsev_sec_pau
+	}
+}
+
+###Elections###
+country_event = {
+	id = tram.87
+	title = tram.87.t
+	desc = tram.87.d
+	is_triggered_only = yes
+	
+	option = { # PFER
+		name = tram.87.a
+		set_politics = {
+		ruling_party = social_democrat
+		}
+		add_popularity = { ideology = social_democrat popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Pyotr_Nikiforov_hog_sde
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Genrich_Eiche_for_sde
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Gennadij_Selezhnev_eco_mli
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Victor_Krhistenko_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+
+	option = { # PPF
+		name = tram.87.b
+		set_politics = {
+		ruling_party = market_liberal
+		}
+		add_popularity = { ideology = market_liberal popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Mihail_Akseimov_hog_mli
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Aleksei_Sidorenko_for_mli
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Gennadij_Selezhnev_eco_mli
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Victor_Krhistenko_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+	
+	option = { # ZKP
+		name = tram.87.c
+		set_politics = {
+		ruling_party = social_conservative
+		}
+		add_popularity = { ideology = social_conservative popularity = 0.3 }
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Georgy_Stark_hog_sco
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Nikolai_Merkulov_for_sco
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Anatoly_Pepelyaev_eco_ade
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Vladimir_Kevorkov_sec_mli
+		country_event = {id = tram.87 days = 1460} #Will fire another election 4 years later
+	}
+	
+	option = { # Military Coup
+		name = tram.87.e
+		set_politics = {
+		ruling_party = paternal_autocrat
+		}
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
+		clr_country_flag = TRM_Dem_coup
+		set_country_flag = TRM_Mil_coup
+		remove_ideas_with_trait = head_of_government
+		add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = TRM_Boris_Bakhmetev_for_ade
+		remove_ideas_with_trait = economy_minister
+		add_ideas = TRM_Dmitry_Lebedev_eco_pau
+		remove_ideas_with_trait = security_minister
+		add_ideas = TRM_Arkady_Udintsev_sec_pau
+	}
 }
 

@@ -36,7 +36,7 @@ country_event = { #####  War in central Asia!
 		ai_chance = { factor = 60 }
 		load_oob = TRK_war_event
 		add_political_power = -160
-		every_owned_state = { 
+		every_state = { 
 			limit = {
 				is_core_of = ALO
 			}
@@ -56,6 +56,7 @@ country_event = { ######  Border incidents & international relations
 	title = turkestan.2.t
 	desc = turkestan.2.d
 #	picture = "Mountain1"
+	fire_only_once = yes
 
 	mean_time_to_happen = { 
         days = 100
@@ -89,47 +90,45 @@ country_event = { ######  Border incidents & international relations
 }
 
 
-#
-#event = {
-#id = 68002
-#random = no
-#country = TRK
-#style = 2
-#picture = "Mountain1"
-#
-#trigger = {
-#exists = ALO
-#NOT = { 
-#atwar= TRK
-#alliance = { country = TRK country = ALO }
-#ispuppet = TRK
-#}
-#}
-#
-#name = "Call for war"
-#desc = "An influential congress of clerics has issued a stern denouncement of our government's policy of co-existence with Alash Orda to the north.  They have stated that it is time for us to fight and establish Islamic rule over the whole of Central Asia."
-#
-#date = { day = 0 month = august year = 1938 }
-#offset = 100
-#deathdate = { day = 29 month = august year = 1948 }
-#
-#
-#action_a = {
-#ai_chance = 80
-#name = "We must move into Kazakhstan!"
-#command = { type = war which = ALO  }
-#}
-#
-#action_b = {
-#ai_chance = 20
-#name = "The time is not yet right"
-#command = { type = dissent value = 5 }
-#}
-#}
-#
-#
-#
-#
+
+country_event = {
+	id = turkestan.3
+	title = turkestan.3.t
+	desc = turkestan.3.d
+#	picture = "Mountain1"
+	fire_only_once = yes
+
+	mean_time_to_happen = { 
+        days = 100
+    }
+	
+	trigger = {
+		tag = TRK
+		ALO = { exists = yes }	
+		date > 1938.8.1
+		NOT = { 
+			has_war= yes
+			is_puppet = yes
+			date > 1948.8.1
+			is_in_faction_with = ALO
+			TRK = { has_country_flag = ALO_war }
+		}
+	}
+
+	option = {
+		name = turkestan.3.a
+		ai_chance = { factor = 80 }
+		declare_war_on = { target = ALO type = annex_everything }
+		set_country_flag = ALO_war
+	}
+
+	option = {
+		name = turkestan.3.b
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+	}
+}
+
 #event = {
 #id = 68003
 #random = no

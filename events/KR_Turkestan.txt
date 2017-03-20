@@ -89,9 +89,7 @@ country_event = { ######  Border incidents & international relations
 	}
 }
 
-
-
-country_event = {
+country_event = { #Call for war
 	id = turkestan.3
 	title = turkestan.3.t
 	desc = turkestan.3.d
@@ -112,6 +110,7 @@ country_event = {
 			date > 1948.8.1
 			is_in_faction_with = ALO
 			TRK = { has_country_flag = ALO_war }
+			ALO = { is_puppet = yes }
 		}
 	}
 
@@ -129,76 +128,91 @@ country_event = {
 	}
 }
 
-#event = {
-#id = 68003
-#random = no
-#country = PER
-#
-#trigger = {
-#war = { country = ALO country = TRK }
-#event = 68000
-#NOT = {
-#atwar = PER
-#ispuppet = PER
-#}
-#}
-#
-#name = "War in Central Asia!"
-#desc = "Our two giant neighbours, Turkestan and Alash Orda, are at war.  If Turkestan wins, they could turn on Persia next.  Should we send aid across the Caspian Sea to the Kazakhs?"
-#style = 2
-#picture = "SCW_French_Intervention"
-#
-#
-#action_a = {
-#name = "Help Alash Orda"
-#ai_chance = 48
-#command = { type = domestic which = interventionism value = 1 }
-#command = { type = relation which = TRK value = -50 }
-#command = { type = relation which = ALO value = 50 }
-#command = { type = money value = -50 }
-#command = { type = manpowerpool value = -50 }
-#command = { type = resource which = supplies value = -200 }
-#command = { type = trigger which = 68004 }
-#}
-#
-#action_b = {
-#ai_chance = 0
-#name = "Send aid, and intervene against Turkestan"
-#command = { type = domestic which = interventionism value = 2 }
-#command = { type = relation which = TRK  value = -90 }
-#command = { type = relation which = ALO value = 90 }
-#command = { type = money value = -50 }
-#command = { type = manpowerpool value = -50 }
-#command = { type = resource which = supplies value = -200 }
-#command = { type = trigger which = 68004 }
-#command = { type = war which = TRK }
-#}
-#
-#action_c = {
-#ai_chance = 50
-#name = "Do nothing"
-#command = { type = relation which = TRK value = 50 }
-#command = { type = relation which = ALO value = -50 }
-#}
-#}
-#
-#
-#event = {
-#id = 68004
-#random = no
-#country = ALO
-#
-#name = "Aid from Persia!"
-#desc = "The Persians send aid!"
-#style = 2
-#picture = "SCW_German Intervention"
-#
-#action_a = {
-#name = "OK" # Great!
-#command = { type = supplies value = 200 }
-#command = { type = add_division value = infantry when = 7 }
-#}
-#}
+country_event = {
+	id = turkestan.4
+	title = turkestan.4.t
+	desc = turkestan.4.d
+#	picture = "Mountain1"
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			TRK = { has_country_flag = ALO_war }
+			tag = PER
+			NOT = {
+				has_war = yes
+				is_puppet = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+        days = 5
+    }
+
+	option = {
+		name = turkestan.4.a
+		ai_chance = { factor = 48 }
+		add_opinion_modifier = { target = TRK modifier = medium_decrease }
+		add_opinion_modifier = { target = ALO modifier = offered_support }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = -1000 producer = PER
+		}
+		add_manpower = -10000
+		ALO = { country_event = { days = 3 id = turkestan.5 } }
+	}
+
+	option = {
+		ai_chance = { factor = 0 }
+		name = turkestan.4.b
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = -1000 producer = PER
+		}
+		add_opinion_modifier = { target = TRK modifier = large_decrease }
+		add_opinion_modifier = { target = ALO modifier = took_stand_for_us }
+		add_manpower = -10000
+		ALO = { country_event = { days = 3 id = turkestan.5 } }
+		add_to_war = { targeted_alliance = ALO enemy = TRK }
+	}
+
+	option = {
+		ai_chance = { factor = 50 }
+		name = turkestan.4.c
+		add_opinion_modifier = { target = TRK modifier = small_increase }
+		add_opinion_modifier = { target = ALO modifier = refused_help }
+	}
+}
+
+
+country_event = {
+	id = turkestan.5
+	title = turkestan.5.t
+	desc = {
+		text = event.5.d.supplies
+		trigger = { has_war_with = TRK }
+	}
+	desc = {
+		text = event.105.d.war
+		trigger = { PER = { has_war_with = TUR } }
+	}
+#	picture = kill me please
+
+	is_triggered_only = yes
+	
+	mean_time_to_happen = { 
+        days = 3
+    }
+
+	option = {
+		name = turkestan.5.a
+		load_oob = PER_ALO_VOLUNTEERS
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = 1000 producer = ALO
+		}
+		add_manpower = 10000
+	}
+}
+
 #
 #
 #

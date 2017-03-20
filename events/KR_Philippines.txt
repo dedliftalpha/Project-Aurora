@@ -45,12 +45,17 @@ country_event = {# Syndicalist uprising in Manilla
 			USA = { has_war_with = TEX }
 		}
 	}
+	
+	immediate = {
+		hidden_effect = {
+			PHL = { news_event = { id = phil.92 hours = 6 } }
+		}
+	}
 
 	option = {
 		name = phil.1.a # Rebel seize capital
 		ai_chance = { factor = 30 }
 		hidden_effect = {
-			news_event = { hours = 6 id = phil.92 }
 			PHL = { country_event = { id = phil.2 days = 1 } }
 		}
 	}
@@ -58,7 +63,6 @@ country_event = {# Syndicalist uprising in Manilla
 		name = phil.1.b # Military resist uprising
 		ai_chance = { factor = 70 }
 		hidden_effect = {
-			news_event = { hours = 6 id = phil.83 }
 			PHL = { news_event = { id = phil.5 days = 3 } }
 		}
 	}
@@ -174,6 +178,66 @@ country_event = {# The Revolution is Defeated
 				PHL_Benigno_Aquino_sr_sec_ade
 			}
 		}	
+	}
+}
+news_event = { # Democracy prevails - 37990005
+	id = phil.5
+	title = phil.5.t
+	desc = phil.5.d
+	picture = GFX_news_event_PHI_independence
+
+	is_triggered_only = yes
+	major = yes
+
+	immediate = { hidden_effect = {
+		set_global_flag = PHL_DEMOCRACY
+		PHL = {
+        			add_popularity = {
+            				ideology = social_democrat
+            				popularity = 0.02
+        			}
+        			add_popularity = {
+            				ideology = social_liberal
+            				popularity = 0.16
+        			}
+        			add_popularity = {
+            				ideology = market_liberal
+            				popularity = 0.08
+        			}
+        			add_popularity = {
+            				ideology = social_conservative
+            				popularity = 0.04
+        			}
+		}
+	} }
+
+	option = {
+		name = phil.5.a # Great!
+		trigger = { TAG = PHL }
+	}
+	option = {
+		name = phil.5.b # Another Victory of the Free World!
+		trigger = { 
+			NOT = { TAG = PHL }
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
+	}
+	option = {
+		name = phil.5.c # Such a pity....
+		trigger = { 
+			NOT = { TAG = PHL } 
+			OR = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = social_democrat
+				has_government = totalist
+			}
+		}
 	}
 }
 country_event = {# Economical crisis approaching 

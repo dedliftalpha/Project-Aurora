@@ -53,44 +53,45 @@ country_event = { #####  War in central Asia!
 
 
 ######  Border incidents & international relations
-#
-#event = {
-#id = 68001
-#random = no
-#country = TRK
-#style = 2
-#picture = "Mountain1"
-#
-#trigger = {
-#exists = ALO
-#NOT = {
-#atwar= TRK
-#ispuppet = TRK
-#alliance = { country = ALO country = TRK }
-#}
-#}
-#
-#name = "Skirmishes on the frontier"
-#desc = "There has been a small skirmish between one of our border patrols and Kazakh police.  Eight of our brave soldiers were killed, and many are saying that it is time to launch a war to avenge their deaths, and liberate the Muslims of the Orda from rule by apostates!"
-#
-#date = { day = 0 month = august year = 1937 }
-#offset = 200
-#deathdate = { day = 29 month = november year = 1939 }
-#
-#action_a = {
-#ai_chance = 60
-#name = "We must move into Kazakhstan!"
-#command = { type = war which = ALO  }
-#}
-#
-#action_b = {
-#ai_chance = 40
-#name = "The time is not yet right"
-#command = { type = dissent value = 3 }
-#}
-#}
-#
-#
+
+country_event = {
+	id = turkestan.2
+	title = turkestan.2.t
+	desc = turkestan.2.d
+#	picture = "Mountain1"
+
+	mean_time_to_happen = { 
+        days = 100
+    }
+	
+	trigger = {
+		tag = TRK
+		ALO = { exists = yes }	
+		date > 1937.6.1
+		NOT = {
+			has_war= yes
+			is_puppet = yes
+			date > 1939.10.1
+			is_in_faction_with = ALO
+			TUR = { has_country_flag = ALO_war }
+		}
+	}
+
+	option = {
+		name = turkestan.2.a
+		ai_chance = { factor = 60 }
+		declare_war_on = { target = ALO type = annex_everything }
+		set_country_flag = ALO_war
+	}
+
+	option = {
+		name = turkestan.2.b
+		ai_chance = { factor = 40 }
+		add_political_power = -60
+	}
+}
+
+
 #
 #event = {
 #id = 68002

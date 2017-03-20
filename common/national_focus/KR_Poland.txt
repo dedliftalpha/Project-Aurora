@@ -414,7 +414,7 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_political_power = 100
+					add_political_power = 150
 				}
 			available = {
 					has_global_flag = POL_CZA
@@ -491,6 +491,7 @@ focus_tree = {
 				}
 			completion_reward = {
 					add_political_power = 50
+					add_ideas = POL_peoples_king_idea
 				}
 			available = {
 					has_global_flag = POL_CZA
@@ -584,8 +585,8 @@ focus_tree = {
 
 	}
 	focus = {
-		id = POL_abolish_the_council
-		icon = GFX_goal_generic_forceful_treaty
+		id = POL_a_centralized_state
+		icon = GFX_goal_monarchism
 		cost = 10.00
 		prerequisite = {
 			focus = POL_absolutism
@@ -596,9 +597,7 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_political_power = 50
-					set_global_flag = SEJM_ABOLISHED
-					custom_effect_tooltip = pol_abolished_the_sejm
+					add_ideas = POL_centralized_state_idea
 				}
 			available = {
 					NOT = {
@@ -610,11 +609,11 @@ focus_tree = {
 
 	}
 	focus = {
-		id = POL_a_centralized_state
-		icon = GFX_goal_monarchism
+		id = POL_abolish_the_council
+		icon = GFX_goal_generic_forceful_treaty
 		cost = 10.00
 		prerequisite = {
-			focus = POL_abolish_the_council
+			focus = POL_a_centralized_state
 		}
 		x = 9
 		y = 4
@@ -622,7 +621,9 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_ideas = POL_centralized_state_idea
+					add_political_power = 50
+					set_global_flag = SEJM_ABOLISHED
+					custom_effect_tooltip = pol_abolished_the_sejm
 				}
 			available = {
 					NOT = {
@@ -996,7 +997,6 @@ focus_tree = {
 		}
 		x = 17
 		y = 5
-		
 			ai_will_do = {
 					factor = 10
 				}
@@ -1008,10 +1008,12 @@ focus_tree = {
 			available = {
 					has_war = no
 					OR = {
-						controls_state = 92
-						controls_state = 97
-					}
-					WHR = { controls_state = 94 }
+							controls_state = 92
+							controls_state = 97
+						}
+					WHR = {
+							controls_state = 94
+						}
 					has_global_flag = POL_WE
 				}
 			bypass = {
@@ -1021,6 +1023,7 @@ focus_tree = {
 						}
 				}
 			available_if_capitulated = no
+
 	}
 	focus = {
 		id = POL_lithuanian_shipbuilding
@@ -1520,28 +1523,43 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_state_core = 94
-					add_state_core = 95
-					create_wargoal = {
-							type = annex_everything
-							target = WHR
+				if = {
+					limit = {
+						AND = {
+							NOT = {controls_state = 94}
+							NOT = {controls_state = 95}
 						}
+					}
+					country_event = {
+						id = poland.184
+					}
 				}
-			available = {
-					WHR = {
-							OR = {
-									controls_state = 94
-									controls_state = 95
-								}
-						}
-					is_subject = no
-				}
-			bypass = {
-					AND = {
+				if = {
+					limit = {
+						OR = {
 							controls_state = 94
 							controls_state = 95
 						}
+					}			
+					94 = { add_core_of = POL } 
+					95 = { add_core_of = POL }
 				}
+			}
+			available = {
+					NOT = {
+						AND = {
+							94 = { is_core_of = POL }  
+							95 = { is_core_of = POL }
+						}
+					}
+					is_subject = no
+			}
+			bypass = {
+				AND = {
+					94 = { is_core_of = POL } 
+					95 = { is_core_of = POL }
+				}
+			}
 			available_if_capitulated = yes
 
 	}
@@ -1563,35 +1581,35 @@ focus_tree = {
 						}
 				}
 			available = {
-				country_exists = POL
-				country_exists = GER
-				has_war = no
-				controls_state = 10
-				GER = {
-					controls_state = 777
-					controls_state = 86
-					controls_state = 776
-					controls_state = 85
-					controls_state = 98
+					country_exists = POL
+					country_exists = GER
+					has_war = no
+					controls_state = 10
+					GER = {
+							controls_state = 777
+							controls_state = 86
+							controls_state = 776
+							controls_state = 85
+							controls_state = 98
+						}
+					GER = {
+							OR = {
+									has_war_with = FRA
+									has_war_with = RUS
+									has_war_with = AUS
+									has_war_with = ENG
+								}
+						}
+					NOT = {
+							is_subject_of = GER
+							is_subject_of = AUS
+							is_in_faction_with = GER
+							is_in_faction_with = AUS
+							has_global_flag = POL_WE
+							has_global_flag = POL_HA
+							has_global_flag = POL_RAD
+						}
 				}
-				GER = {
-					OR = {
-						has_war_with = FRA
-						has_war_with = RUS
-						has_war_with = AUS
-						has_war_with = ENG
-					}
-				}
-				NOT = {
-					is_subject_of = GER
-					is_subject_of = AUS
-					is_in_faction_with = GER
-					is_in_faction_with = AUS
-					has_global_flag = POL_WE
-					has_global_flag = POL_HA
-					has_global_flag = POL_RAD
-				}
-			}
 			available_if_capitulated = no
 
 	}
@@ -1608,39 +1626,58 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_state_core = 85
-					add_state_core = 86
-					add_state_core = 776
-					add_state_core = 777
-					if = {
-						limit = {
-							NOT = {POL = { has_war_with = GER }}
-						}
-					create_wargoal = {
-							type = annex_everything
-							target = GER
+				if = {
+					limit = {
+						AND = {
+							NOT = {controls_state = 777}
+							NOT = {controls_state = 776}
+							NOT = {controls_state = 85}
+							NOT = {controls_state = 86}
+							NOT = {controls_state = 98}
 						}
 					}
+					country_event = {
+						id = poland.188
+					}
 				}
-			available = {
-					GER = {
-							OR = {
-									controls_state = 85
-									controls_state = 86
-									controls_state = 776
-									controls_state = 777
-								}
-						}
-					is_subject = no
-				}
-			bypass = {
-					AND = {
+				if = {
+					limit = {
+						OR = {
+							controls_state = 777
+							controls_state = 776
 							controls_state = 85
 							controls_state = 86
-							controls_state = 776
-							controls_state = 777
+							controls_state = 98
 						}
+					}			
+					777 = { add_core_of = POL } 
+					776 = { add_core_of = POL } 
+					85 = { add_core_of = POL } 
+					86 = { add_core_of = POL } 
+					98 = { add_core_of = POL } 
 				}
+			}
+			available = {
+					NOT = {
+						AND = {
+							777 = { is_core_of = POL }  
+							776 = { is_core_of = POL }    
+							85 = { is_core_of = POL } 
+							86 = { is_core_of = POL }  
+							98 = { is_core_of = POL }  
+						}
+					}
+					is_subject = no
+			}
+			bypass = {
+				AND = {
+					777 = { is_core_of = POL } 
+					776 = { is_core_of = POL } 
+					85 = { is_core_of = POL } 
+					86 = { is_core_of = POL } 
+					98 = { is_core_of = POL } 
+				}
+			}
 			available_if_capitulated = yes
 
 	}
@@ -1713,21 +1750,30 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_state_core = 11
-					create_wargoal = {
-							type = annex_everything
-							target = LIT
-						}
+				if = {
+					limit = {
+							NOT = {controls_state = 11}
+					}
+					country_event = {
+						id = poland.180
+					}
 				}
-			available = {
-					LIT = {
+				if = {
+					limit = {
 							controls_state = 11
-						}
+					}			
+					11 = { add_core_of = POL } 
+				}
+			}
+			available = {
+					NOT = {
+							11 = { is_core_of = POL }
+					}
 					is_subject = no
-				}
+			}
 			bypass = {
-					controls_state = 11
-				}
+					11 = { is_core_of = POL } 
+			}
 			available_if_capitulated = yes
 
 	}
@@ -1865,8 +1911,8 @@ focus_tree = {
 		prerequisite = {
 			focus = POL_opportunism
 		}
-		x = 34
-		y = 4
+		x = 33
+		y = 5
 			ai_will_do = {
 					factor = 10
 				}
@@ -1876,47 +1922,61 @@ focus_tree = {
 						}
 				}
 			available = {
-				country_exists = UKR
-				country_exists = DKB
-				controls_state = 89
-				controls_state = 91
-				controls_state = 88
-				POL = { is_subject = no }
-				UKR = { is_subject = no }
-				DKB = { is_subject = no }
-				POL = { has_war = no }
-				UKR = { has_war = no }
-				DKB = { has_war = no }
-				has_global_flag = krushchev_criticizes_gov # ( Khrushchev Criticizes the Ukrainian government event in UKR events)
-				NOT = {
-					has_global_flag = UKR_RUSCOUP
-					has_global_flag = russ_gives_passports
-					has_government = totalist  
-					has_government = radical_socialist
-					has_government = syndicalist
+					country_exists = UKR
+					country_exists = DKB
+					controls_state = 89
+					controls_state = 91
+					controls_state = 88
 					POL = {
-						OR = {
-						is_in_faction_with = GER
-						is_in_faction_with = AUS
-						is_in_faction_with = AHE
-						is_in_faction_with = DNF
+							is_subject = no
 						}
-					}
 					UKR = {
-						OR = {
-						is_in_faction_with = GER
-						is_in_faction_with = AUS
-						is_in_faction_with = AHE
-						is_in_faction_with = DNF
-						is_in_faction_with = FRA
-						is_in_faction_with = POL
-						is_in_faction_with = DKB
-						is_in_faction_with = RUS
+							is_subject = no
 						}
-					}
-					DKB = { is_in_faction_with = RUS }
+					DKB = {
+							is_subject = no
+						}
+					POL = {
+							has_war = no
+						}
+					UKR = {
+							has_war = no
+						}
+					DKB = {
+							has_war = no
+						}
+					has_global_flag = krushchev_criticizes_gov
+					NOT = {
+							has_global_flag = UKR_RUSCOUP
+							has_global_flag = russ_gives_passports
+							has_government = totalist
+							has_government = radical_socialist
+							has_government = syndicalist
+							POL = {
+									OR = {
+											is_in_faction_with = GER
+											is_in_faction_with = AUS
+											is_in_faction_with = AHE
+											is_in_faction_with = DNF
+										}
+								}
+							UKR = {
+									OR = {
+											is_in_faction_with = GER
+											is_in_faction_with = AUS
+											is_in_faction_with = AHE
+											is_in_faction_with = DNF
+											is_in_faction_with = FRA
+											is_in_faction_with = POL
+											is_in_faction_with = DKB
+											is_in_faction_with = RUS
+										}
+								}
+							DKB = {
+									is_in_faction_with = RUS
+								}
+						}
 				}
-			}
 			bypass = {
 					OR = {
 							controls_state = 93
@@ -1935,8 +1995,8 @@ focus_tree = {
 		prerequisite = {
 			focus = POL_cossack_alliance
 		}
-		x = 34
-		y = 5
+		x = 33
+		y = 6
 			ai_will_do = {
 					factor = 10
 				}
@@ -1958,6 +2018,68 @@ focus_tree = {
 				}
 			available_if_capitulated = yes
 
+	}
+	focus = {
+		id = POL_sieze_galicia
+		icon = GFX_goal_generic_political_pressure
+		cost = 10.00
+		prerequisite = {
+			focus = POL_opportunism
+		}
+		x = 34
+		y = 4
+			ai_will_do = {
+				factor = 10
+			}
+			completion_reward = {
+				if = {
+					limit = {
+						AND = {
+							NOT = {controls_state = 88}
+							NOT = {controls_state = 91}
+							NOT = {controls_state = 89}
+							NOT = {controls_state = 80}
+						}
+					}
+					country_event = {
+						id = poland.176
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							controls_state = 88
+							controls_state = 91
+							controls_state = 89
+							controls_state = 80
+						}
+					}			
+					88 = { add_core_of = POL } 
+					80 = { add_core_of = POL } 
+					89 = { add_core_of = POL } 
+					91 = { add_core_of = POL } 
+				}
+			}
+			available = {
+					NOT = {
+						AND = {
+							88 = { is_core_of = POL }  
+							80 = { is_core_of = POL }  
+							89 = { is_core_of = POL }  
+							91 = { is_core_of = POL }  
+						}
+					}
+					is_subject = no
+			}
+			bypass = {
+				AND = {
+					88 = { is_core_of = POL } 
+					91 = { is_core_of = POL } 
+					89 = { is_core_of = POL } 
+					80 = { is_core_of = POL } 
+				}
+			}
+			available_if_capitulated = yes
 	}
 	focus = {
 		id = POL_victory_of_the_people
@@ -2005,7 +2127,7 @@ focus_tree = {
 			focus = POL_a_firm_hand
 			focus = POL_victory_of_the_people
 		}
-		x = 36
+		x = 37
 		y = 2
 			ai_will_do = {
 					factor = 30
@@ -2026,52 +2148,6 @@ focus_tree = {
 						}
 				}
 			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_ukranian_alliance
-		icon = GFX_goal_generic_dangerous_deal
-		cost = 10.00
-		prerequisite = {
-			focus = POL_victory_of_the_people
-		}
-		x = 38
-		y = 2
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					country_event = {
-							id = poland.54
-						}
-				}
-			available = {
-					is_subject = no
-					NOT = {
-							UKR = {
-									OR = {
-											has_war_with = RUS
-											is_in_faction_with = GER
-											is_in_faction_with = SOV
-											is_in_faction_with = POL
-											is_in_faction_with = RUS
-										}
-								}
-						}
-					OR = {
-							has_global_flag = UKR_Syndicalist
-							has_global_flag = UKR_Alone
-							OR = {
-									UKR = {
-											has_country_flag = UKR_Syndicalist
-											has_country_flag = UKR_Alone
-										}
-								}
-						}
-					has_global_flag = POL_SYNDIE
-					country_exists = UKR
-					has_war = no
-				}
 
 	}
 	focus = {
@@ -2104,7 +2180,7 @@ focus_tree = {
 			focus = POL_leninist_plan
 		}
 		x = 39
-		y = 3
+		y = 4
 			ai_will_do = {
 					factor = 10
 				}
@@ -2128,7 +2204,7 @@ focus_tree = {
 			focus = POL_radek_reforms
 		}
 		x = 38
-		y = 4
+		y = 5
 			ai_will_do = {
 					factor = 10
 				}
@@ -2150,13 +2226,13 @@ focus_tree = {
 			focus = POL_luxembourg_world_revolution
 		}
 		x = 41
-		y = 3
+		y = 4
 			ai_will_do = {
 					factor = 10
 				}
 			completion_reward = {
 					add_popularity = {
-							ideology = totalist
+							ideology = syndicalist
 							popularity = 0.20
 						}
 				}
@@ -2175,7 +2251,7 @@ focus_tree = {
 			focus = POL_radek_reforms
 		}
 		x = 40
-		y = 4
+		y = 5
 			ai_will_do = {
 					factor = 10
 				}
@@ -2237,7 +2313,7 @@ focus_tree = {
 			focus = POL_new_communes
 		}
 		x = 40
-		y = 5
+		y = 6
 			ai_will_do = {
 					factor = 10
 				}
@@ -2265,7 +2341,7 @@ focus_tree = {
 			focus = POL_leninist_plan
 		}
 		x = 43
-		y = 3
+		y = 4
 			ai_will_do = {
 					factor = 10
 				}
@@ -2290,7 +2366,7 @@ focus_tree = {
 			focus = POL_leninist_plan
 		}
 		x = 42
-		y = 4
+		y = 5
 			ai_will_do = {
 					factor = 10
 				}
@@ -2326,7 +2402,7 @@ focus_tree = {
 			focus = POL_attend_internationale
 		}
 		x = 42
-		y = 6
+		y = 7
 			ai_will_do = {
 					factor = 10
 				}
@@ -2366,7 +2442,7 @@ focus_tree = {
 			focus = POL_join_france
 		}
 		x = 41
-		y = 7
+		y = 8
 			ai_will_do = {
 					factor = 10
 				}
@@ -2399,6 +2475,52 @@ focus_tree = {
 
 	}
 	focus = {
+		id = POL_ukranian_alliance
+		icon = GFX_goal_generic_dangerous_deal
+		cost = 10.00
+		prerequisite = {
+			focus = POL_victory_of_the_people
+		}
+		x = 43
+		y = 2
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					country_event = {
+							id = poland.54
+						}
+				}
+			available = {
+					is_subject = no
+					NOT = {
+							UKR = {
+									OR = {
+											has_war_with = RUS
+											is_in_faction_with = GER
+											is_in_faction_with = SOV
+											is_in_faction_with = POL
+											is_in_faction_with = RUS
+										}
+								}
+						}
+					OR = {
+							has_global_flag = UKR_Syndicalist
+							has_global_flag = UKR_Alone
+							OR = {
+									UKR = {
+											has_country_flag = UKR_Syndicalist
+											has_country_flag = UKR_Alone
+										}
+								}
+						}
+					has_global_flag = POL_SYNDIE
+					country_exists = UKR
+					has_war = no
+				}
+
+	}
+	focus = {
 		id = POL_austrian_claims
 		icon = GFX_goal_generic_military_deal
 		cost = 10.00
@@ -2406,7 +2528,7 @@ focus_tree = {
 			focus = POL_join_france
 		}
 		x = 43
-		y = 7
+		y = 8
 			ai_will_do = {
 					factor = 10
 				}
@@ -2455,7 +2577,7 @@ focus_tree = {
 			focus = POL_luxembourg_world_revolution
 		}
 		x = 45
-		y = 4
+		y = 5
 			ai_will_do = {
 					factor = 10
 				}
@@ -2473,7 +2595,7 @@ focus_tree = {
 			focus = POL_minstry_of_public_security
 		}
 		x = 44
-		y = 5
+		y = 6
 			ai_will_do = {
 					factor = 10
 				}
@@ -2578,7 +2700,7 @@ focus_tree = {
 			focus = POL_minstry_of_public_security
 		}
 		x = 46
-		y = 5
+		y = 6
 			ai_will_do = {
 					factor = 10
 				}
@@ -3313,38 +3435,6 @@ focus_tree = {
 			available_if_capitulated = yes
 
 	}
-#	focus = {
-#		id = POL_warsaw_pact
-#		icon = GFX_goal_conscription
-#		cost = 10.00
-#		prerequisite = {
-#			focus = POL_skewer_ukraine
-#			focus = POL_polish_exceptionalism
-#		}
-#		x = 36
-#		y = 7
-#			ai_will_do = {
-#					factor = 5
-#				}
-#			completion_reward = {
-#					set_rule = {
-#							can_create_factions = yes
-#						}
-#					create_faction = "Warsaw Pact"
-#					set_global_flag = WARSAW_PACT
-#				}
-#			available = {
-#					is_subject = no
-#					GER = {
-#							is_faction_leader = no
-#						}
-#				}
-#			#bypass = {
-#			#		is_faction_leader = yes
-#			#	}
-#			available_if_capitulated = no
-#
-#	}
 	focus = {
 		id = POL_naval_interdiction
 		icon = GFX_goal_generic_navy_anti_submarine
@@ -3435,7 +3525,7 @@ focus_tree = {
 			focus = POL_all_under_one
 		}
 		x = 38
-		y = 5
+		y = 6
 			ai_will_do = {
 					factor = 10
 				}
@@ -3445,6 +3535,253 @@ focus_tree = {
 			available_if_capitulated = yes
 
 	}
+	focus = {
+		id = POL_military_desgin_bureaus
+		icon = GFX_focus_research
+		cost = 10.00
+		prerequisite = {
+			focus = POL_modern_military_thought
+		}
+		x = 60
+		y = 6
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					add_research_slot = 1
+				}
+			available_if_capitulated = yes
+
+	}
+	focus = {
+		id = POL_close_combat
+		icon = GFX_goal_generic_build_airforce
+		cost = 10.00
+		prerequisite = {
+			focus = POL_new_airforce
+		}
+		x = 66
+		y = 1
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					add_tech_bonus = {
+							name = POL_close_combat
+							bonus = 0.5
+							uses = 1
+							category = light_fighter
+						}
+				}
+			available_if_capitulated = yes
+
+	}
+	focus = {
+		id = POL_bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		cost = 10.00
+		prerequisite = {
+			focus = POL_air_radios
+			focus = POL_air_tactics
+		}
+		mutually_exclusive = {
+			focus = POL_support_focus
+		}
+		x = 66
+		y = 5
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					air_experience = 20
+					add_tech_bonus = {
+							name = POL_bomber_focus
+							bonus = 0.5
+							uses = 1
+							category = heavy_air
+						}
+				}
+			available_if_capitulated = yes
+
+	}
+	focus = {
+		id = POL_support_focus
+		icon = GFX_goal_generic_air_fighter2
+		cost = 10.00
+		prerequisite = {
+			focus = POL_air_tactics
+			focus = POL_air_radios
+		}
+		mutually_exclusive = {
+			focus = POL_bomber_focus
+		}
+		x = 64
+		y = 5
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					air_experience = 20
+					add_tech_bonus = {
+							name = POL_support_focus
+							uses = 1
+							bonus = 0.5
+							category = tactical_bomber
+						}
+				}
+			available_if_capitulated = yes
+
+	}
+	focus = {
+		id = POL_air_radios
+		icon = GFX_goal_continuous_def_against_influence
+		cost = 10.00
+		prerequisite = {
+			focus = POL_close_combat
+		}
+		x = 66
+		y = 2
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					add_ideas = POL_air_radios_idea
+				}
+			available_if_capitulated = yes
+
+	}
+	focus = {
+		id = POL_expand_airbase
+		icon = GFX_goal_generic_air_doctrine
+		cost = 10.00
+		prerequisite = {
+			focus = POL_air_radios
+			focus = POL_air_tactics
+		}
+		x = 65
+		y = 4
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+					if = {
+							limit = {
+									10 = {
+											is_controlled_by = POL
+										}
+								}
+							10 = {
+									add_building_construction = {
+											type = anti_air_building
+											level = 2
+											instant_build = yes
+										}
+								}
+						}
+					if = {
+							limit = {
+									92 = {
+											is_controlled_by = POL
+										}
+								}
+							92 = {
+									add_building_construction = {
+											type = anti_air_building
+											level = 1
+											instant_build = yes
+										}
+								}
+						}
+					if = {
+							limit = {
+									97 = {
+											is_controlled_by = POL
+										}
+								}
+							97 = {
+									add_building_construction = {
+											type = anti_air_building
+											level = 1
+											instant_build = yes
+										}
+								}
+						}
+				}
+			available = {
+					OR = {
+							10 = {
+									is_controlled_by = POL
+								}
+							92 = {
+									is_controlled_by = POL
+								}
+							97 = {
+									is_controlled_by = POL
+								}
+						}
+				}
+
+	}
+	focus = {
+		id = POL_radek_policy
+		icon = GFX_goal_generic_trade
+		cost = 10.00
+		prerequisite = {
+			focus = POL_polish_exceptionalism
+		}
+		x = 38
+		y = 7		
+			ai_will_do = {
+					factor = 10
+				}
+			completion_reward = {
+				every_country = {
+					limit = {
+						AND = {
+							NOT = {has_government = totalist}
+							NOT = {has_government = radical_socialist}
+							NOT = {has_government = syndicalist}
+						}
+					}
+					reverse_add_opinion_modifier = {
+						target = POL modifier = embargo
+					}
+				}
+			}
+			available_if_capitulated = yes
+	}
+#	focus = {
+#		id = POL_warsaw_pact
+#		icon = GFX_goal_conscription
+#		cost = 10.00
+#		prerequisite = {
+#			focus = POL_skewer_ukraine
+#			focus = POL_polish_exceptionalism
+#		}
+#		x = 36
+#		y = 7
+#			ai_will_do = {
+#					factor = 5
+#				}
+#			completion_reward = {
+#					set_rule = {
+#							can_create_factions = yes
+#						}
+#					create_faction = "Warsaw Pact"
+#					set_global_flag = WARSAW_PACT
+#				}
+#			available = {
+#					is_subject = no
+#					GER = {
+#							is_faction_leader = no
+#						}
+#				}
+#			#bypass = {
+#			#		is_faction_leader = yes
+#			#	}
+#			available_if_capitulated = no
+#
+#	}
 	#focus = {
 	#	id = POL_invite_romania
 	#	icon = GFX_goal_anschluss
@@ -3667,191 +4004,4 @@ focus_tree = {
 #			available_if_capitulated = no
 #
 #	}
-	focus = {
-		id = POL_military_desgin_bureaus
-		icon = GFX_focus_research
-		cost = 10.00
-		prerequisite = {
-			focus = POL_modern_military_thought
-		}
-		x = 60
-		y = 6
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					add_research_slot = 1
-				}
-			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_close_combat
-		icon = GFX_goal_generic_build_airforce
-		cost = 10.00
-		prerequisite = {
-			focus = POL_new_airforce
-		}
-		x = 66
-		y = 1
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					add_tech_bonus = {
-							name = POL_close_combat
-							bonus = 0.5
-							uses = 1
-							category = light_fighter
-						}
-				}
-			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_bomber_focus
-		icon = GFX_goal_generic_air_bomber
-		cost = 10.00
-		prerequisite = {
-			focus = POL_air_radios
-			focus = POL_air_tactics
-		}
-		mutually_exclusive = {
-			focus = POL_support_focus
-		}
-		x = 66
-		y = 5
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					air_experience = 20
-					add_tech_bonus = {
-							name = POL_bomber_focus
-							bonus = 0.5
-							uses = 1
-							category = heavy_air
-						}
-				}
-			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_support_focus
-		icon = GFX_goal_generic_air_fighter2
-		cost = 10.00
-		prerequisite = {
-			focus = POL_air_tactics
-			focus = POL_air_radios
-		}
-		mutually_exclusive = {
-			focus = POL_bomber_focus
-		}
-		x = 64
-		y = 5
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					air_experience = 20
-					add_tech_bonus = {
-							name = POL_support_focus
-							uses = 1
-							bonus = 0.5
-							category = tactical_bomber
-						}
-				}
-			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_air_radios
-		icon = GFX_goal_continuous_def_against_influence
-		cost = 10.00
-		prerequisite = {
-			focus = POL_close_combat
-		}
-		x = 66
-		y = 2
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					add_ideas = POL_air_radios_idea
-				}
-			available_if_capitulated = yes
-
-	}
-	focus = {
-		id = POL_expand_airbase
-		icon = GFX_goal_generic_air_doctrine
-		cost = 10.00
-		prerequisite = {
-			focus = POL_air_radios
-			focus = POL_air_tactics
-		}
-		x = 65
-		y = 4
-			ai_will_do = {
-					factor = 10
-				}
-			completion_reward = {
-					if = {
-							limit = {
-									10 = {
-											is_controlled_by = POL
-										}
-								}
-							10 = {
-									add_building_construction = {
-											type = anti_air_building
-											level = 2
-											instant_build = yes
-										}
-								}
-						}
-					if = {
-							limit = {
-									92 = {
-											is_controlled_by = POL
-										}
-								}
-							92 = {
-									add_building_construction = {
-											type = anti_air_building
-											level = 1
-											instant_build = yes
-										}
-								}
-						}
-					if = {
-							limit = {
-									97 = {
-											is_controlled_by = POL
-										}
-								}
-							97 = {
-									add_building_construction = {
-											type = anti_air_building
-											level = 1
-											instant_build = yes
-										}
-								}
-						}
-				}
-			available = {
-					OR = {
-							10 = {
-									is_controlled_by = POL
-								}
-							92 = {
-									is_controlled_by = POL
-								}
-							97 = {
-									is_controlled_by = POL
-								}
-						}
-				}
-
-	}
 }

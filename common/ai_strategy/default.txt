@@ -623,16 +623,28 @@ spanish_civil_war-kingdom_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		NOT = { tag = POR }
+		NOT = { tag = AUS }
+		NOT = { tag = ITA }
+		NOT = { tag = IRE }
+		NOT = { capital_scope = { is_on_continent = asia } }
 		OR = { #must have a democratically leaning government
 			has_government = social_democrat
 			has_government = social_liberal
 			has_government = market_liberal
 			has_government = social_conservative	
 			has_government = authoritarian_democrat	
+			tag = RUS
 		}
 		OR = { #Helper must be a major power or in a faction
 			is_major = yes
 			is_in_faction = yes
+			tag = AUS
+			tag = ITA
+			tag = MEX
+			tag = BRA
+			tag = POR
+			tag = IRE
 		}
 		SPR { #Spanish Kingdom must be at war
 			has_war = yes
@@ -646,14 +658,50 @@ spanish_civil_war-kingdom_support= {
 			}
 		}
 	}
-	abort = { #stop sending troops
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		OR = {
-		has_war = yes #If country is at war, cancel assistance
-		has_government = totalist
-		has_government = syndicalist
-		has_government = radical_socialist
-		has_government = paternal_autocrat
-		has_government = national_populist
+			is_subject = yes 
+			has_war = yes
+			tag = POR
+			tag = AUS
+			tag = ITA
+			tag = IRE
+			capital_scope = { is_on_continent = asia }
+			NOT = {
+				OR = {
+					has_government = social_democrat
+					has_government = social_liberal
+					has_government = market_liberal
+					has_government = social_conservative	
+					has_government = authoritarian_democrat	
+					tag = RUS
+				}
+			}
+			NOT = {
+				OR = { 
+					is_major = yes
+					is_in_faction = yes
+					tag = AUS
+					tag = ITA
+					tag = MEX
+					tag = BRA
+					tag = POR
+					tag = IRE
+				}
+			}
+			SPR { 
+				has_war = no
+			}
+			NOT = {
+				OR = {
+					CAR = { 
+						exists = yes
+					}
+					CNT = { 
+						exists = yes
+					}
+				}
+			}
 		}
 	}	
 	ai_strategy = {
@@ -671,13 +719,25 @@ spanish_civil_war-carlist_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		NOT = { tag = RUS }
+		NOT = { capital_scope = { is_on_continent = asia } }
 		OR = { #Must be absolute power leaning government
 			has_government = paternal_autocrat 
 			has_government = national_populist
+			tag = POR
+			tag = ITA
+			tag = AUS
+			tag = IRE
 		}
 		OR = { #Helper must be a major power or in a faction
 			is_major = yes
 			is_in_faction = yes
+			tag = AUS
+			tag = ITA
+			tag = MEX
+			tag = BRA
+			tag = POR
+			tag = IRE
 		}
 		CAR { #Carlists must be at war
 			has_war = yes
@@ -691,17 +751,47 @@ spanish_civil_war-carlist_support= {
 			}
 		}
 	}
-	abort = { #stop sending troops
-		OR = { 
-		has_war = yes #If country is at war, cancel assistance
-		has_government = totalist
-		has_government = syndicalist
-		has_government = radical_socialist
-		has_government = social_democrat
-		has_government = social_liberal
-		has_government = market_liberal
-		has_government = social_conservative	
-		has_government = authoritarian_democrat	
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			is_subject = yes
+			has_war = yes
+			tag = RUS
+			capital_scope = { is_on_continent = asia } 
+			NOT = {
+				OR = {
+					has_government = paternal_autocrat 
+					has_government = national_populist
+					tag = POR
+					tag = ITA
+					tag = AUS
+					tag = IRE
+				}
+			}
+			NOT = {
+				OR = {
+					is_major = yes
+					is_in_faction = yes
+					tag = AUS
+					tag = ITA
+					tag = MEX
+					tag = BRA
+					tag = POR
+					tag = IRE
+				}
+			}
+			CAR { #Carlists must be at war
+				has_war = no
+			}
+			NOT = {
+				OR = { #Either spanish revolter must exist
+					SPR = { #kingdom of spain exists
+						exists = yes
+					}
+					CNT = { #CNT Spain Exists
+						exists = yes
+					}
+				}
+			}
 		}
 	}	
 	ai_strategy = { #Send Troops
@@ -719,6 +809,7 @@ spanish_civil_war-cnt_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		NOT = { capital_scope = { is_on_continent = asia } }
 		OR = { #Must be syndiclist leaning countries
 			has_government = totalist
 			has_government = syndicalist
@@ -727,6 +818,11 @@ spanish_civil_war-cnt_support= {
 		OR = { #Helper must be a major power or in a faction
 			is_major = yes
 			is_in_faction = yes
+			tag = AUS
+			tag = ITA
+			tag = MEX
+			tag = BRA
+			tag = POR
 		}
 		CNT { #CNT Must be at war
 			has_war = yes
@@ -740,16 +836,42 @@ spanish_civil_war-cnt_support= {
 			}
 		}
 	}
-	abort = { #stop sending troops
-		OR = { 
-		has_war = yes #If country is at war, cancel assistance
-		has_government = social_democrat
-		has_government = social_liberal
-		has_government = market_liberal
-		has_government = social_conservative	
-		has_government = authoritarian_democrat	
-		has_government = paternal_autocrat 
-		has_government = national_populist
+	abort = {#stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+		is_subject = yes
+		has_war = yes
+		capital_scope = { is_on_continent = asia }
+		NOT = {
+			OR = {
+				has_government = totalist
+				has_government = syndicalist
+				has_government = radical_socialist
+			}
+		}
+		NOT = {
+			OR = {
+				is_major = yes
+				is_in_faction = yes
+				tag = AUS
+				tag = ITA
+				tag = MEX
+				tag = BRA
+				tag = POR
+			}
+		}
+		CNT { #CNT Must be at war
+			has_war = no
+		}
+		NOT = {
+			OR = { #Either spanish revolter must exist
+				SPR = { #kingdom of spain exists
+					exists = yes
+				}
+				CAR = { #Carlists exist
+					exists = yes
+				}
+			}
+		}
 		}
 	}	
 	ai_strategy = { #Send Troops

@@ -199,10 +199,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	mean_time_to_happen = {
-        days = 3
-    }
-
 	option = {
 		name = turkestan.5.a
 		load_oob = PER_ALO_VOLUNTEERS
@@ -213,121 +209,125 @@ country_event = {
 	}
 }
 
-#
-#
-#
-#event = {
-#id = 68005
-#random = no
-#country = AFG
-#
-#trigger = {
-#war = { country = ALO country = TRK }
-#event = 68000
-#NOT = {
-#atwar = AFG
-#ispuppet = AFG
-#}
-#}
-#
-#name = "War in Central Asia!"
-#desc = "Our two giant neighbours, Turkestan and Alash Orda, are at war.  If Turkestan wins, they could turn on Afghanistan next.  But we could only help the Kazakhs by declaring war on Turkestan ourselves - a very risky proposition!"
-#style = 2
-#picture = "SCW_French_Intervention"
-#
-#action_a = {
-#ai_chance = 0
-#name = "It is time to fight!"
-#command = { type = domestic which = interventionism value = 2 }
-#command = { type = relation which = TRK  value = -90 }
-#command = { type = relation which = ALO value = 90 }
-#command = { type = money value = -50 }
-#command = { type = war which = TRK }
-#}
-#
-#action_c = {
-#ai_chance = 97
-#name = "Do nothing"
-#command = { type = relation which = TRK value = 50 }
-#command = { type = relation which = ALO value = -50 }
-#}
-#}
-#
-#
-#event = {
-#id = 68006
-#random = no
-#country = CXB
-#
-#trigger = {
-#war = { country = ALO country = TRK }
-#event = 68000
-#NOT = {
-#atwar = CXB
-#ispuppet = CXB
-#}
-#}
-#
-#name = "War in Central Asia!"
-#desc = "Our two giant neighbours, Turkestan and the Kazakh Republic, are at war.  If Turkestan wins, they could turn on us next.  We have always been friends with the Kazakhs - should we help them?"
-#style = 2
-#picture = "SCW_French_Intervention"
-#
-#action_a = {
-#name = "Send aid to Kazakhstan"
-#ai_chance = 70
-#command = { type = domestic which = interventionism value = 1 }
-#command = { type = relation which = TRK value = -50 }
-#command = { type = relation which = ALO value = 50 }
-#command = { type = money value = -50 }
-#command = { type = manpowerpool value = -50 }
-#command = { type = resource which = supplies value = -200 }
-#command = { type = trigger which = 68007 }
-#}
-#
-#action_b = {
-#ai_chance = 0
-#name = "Help and Intervene"
-#command = { type = domestic which = interventionism value = 2 }
-#command = { type = leave_alliance } ## To avoid general chinese invasion!
-#command = { type = relation which = TRK  value = -90 }
-#command = { type = relation which = ALO value = 90 }
-#command = { type = money value = -50 }
-#command = { type = manpowerpool value = -50 }
-#command = { type = resource which = supplies value = -200 }
-#command = { type = trigger which = 68007 }
-#command = { type = war which = TRK }
-#}
-#
-#action_c = {
-#ai_chance = 20
-#name = "Do nothing"
-#command = { type = relation which = TRK value = 50 }
-#command = { type = relation which = ALO value = -50 }
-#}
-#}
-#
-#
-#event = {
-#id = 68007
-#random = no
-#country = ALO
-#
-#
-#name = "Aid from Xibei San Ma!"
-#desc = "The Western Warlords have sent aid!"
-#style = 2
-#picture = "SCW_German Intervention"
-#
-#action_a = {
-#name = "OK" # Great!
-#command = { type = supplies value = 200 }
-#command = { type = add_division value = infantry when = 7 }
-#command = { type = add_division value = militia when = 4 }
-#}
-#}
-#
-#
+country_event = {
+	id = turkestan.6
+	title = turkestan.6.t
+	desc = turkestan.6.d
+#	picture = "Mountain1"
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			TRK = { has_country_flag = ALO_war }
+			tag = AFG
+			NOT = {
+				has_war = yes
+				is_puppet = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+        days = 5
+    }
+
+	option = {
+		ai_chance = { factor = 0 }
+		name = turkestan.6.a
+		add_opinion_modifier = { target = TRK modifier = large_decrease }
+		add_opinion_modifier = { target = ALO modifier = took_stand_for_us }
+		add_to_war = { targeted_alliance = ALO enemy = TRK }
+	}
+
+	option = {
+		ai_chance = { factor = 97 }
+		name = turkestan.6.b
+		add_opinion_modifier = { target = TRK modifier = small_increase }
+		add_opinion_modifier = { target = ALO modifier = refused_help }
+	}
+}
+
+country_event = {
+	id = turkestan.7
+	title = turkestan.7.t
+	desc = turkestan.7.d
+#	picture = "Mountain1"
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			TRK = { has_country_flag = ALO_war }
+			tag = XSM
+			NOT = {
+				has_war = yes
+				is_puppet = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+        days = 5
+    }
+
+	option = {
+		name = turkestan.7.a
+		ai_chance = { factor = 48 }
+		add_opinion_modifier = { target = TRK modifier = medium_decrease }
+		add_opinion_modifier = { target = ALO modifier = offered_support }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = -1000 producer = XSM
+		}
+		add_manpower = -10000
+		ALO = { country_event = { days = 3 id = turkestan.8 } }
+	}
+
+	option = {
+		ai_chance = { factor = 0 }
+		name = turkestan.7.b
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = -1000 producer = XSM
+		}
+		add_opinion_modifier = { target = TRK modifier = large_decrease }
+		add_opinion_modifier = { target = ALO modifier = took_stand_for_us }
+		add_manpower = -10000
+		ALO = { country_event = { days = 3 id = turkestan.8 } }
+		add_to_war = { targeted_alliance = ALO enemy = TRK }
+	}
+
+	option = {
+		ai_chance = { factor = 50 }
+		name = turkestan.7.c
+		add_opinion_modifier = { target = TRK modifier = small_increase }
+		add_opinion_modifier = { target = ALO modifier = refused_help }
+	}
+}
+
+
+country_event = {
+	id = turkestan.8
+	title = turkestan.8.t
+	desc = {
+		text = event.8.d.supplies
+		trigger = { has_war_with = TRK }
+	}
+	desc = {
+		text = event.8.d.war
+		trigger = { XSM = { has_war_with = TUR } }
+	}
+#	picture = kill me please
+
+	is_triggered_only = yes
+
+	option = {
+		name = turkestan.8.a
+		load_oob = PER_ALO_VOLUNTEERS
+		add_equipment_to_stockpile = {
+			type = infantry_equipment amount = 1000 producer = ALO
+		}
+		add_manpower = 10000
+	}
+}
+
 #
 #event = {
 #id = 68008

@@ -885,6 +885,323 @@ spanish_civil_war-cnt_support= {
 		value = 100
 	}
 }
+#American Civil War#
+american_civil_war-csa= {
+	enable = {
+		is_subject = no #cannot be a subject
+		has_war = no #must be at peace
+		NOT = { tag = JAP }
+		OR = { #must have a syndiclist leaning government
+			has_government = totalist
+			has_government = syndicalist
+			has_government = radical_socialist
+		}
+		OR = { #Helper must be a major power or in a faction
+			is_major = yes
+			is_in_faction = yes
+			tag = MEX
+		}
+		CSA { #America at war must be at war
+			has_war = yes
+		}
+		OR = { #Either American revolter must exist
+			USA = { #United State spain exists
+				exists = yes
+			}
+			TEX = { #Union states Spain Exists
+				exists = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			tag = JAP
+			is_subject = yes
+			has_war = yes
+			NOT = {
+				OR = { 
+					has_government = totalist
+					has_government = syndicalist
+					has_government = radical_socialist
+				}
+			}
+			NOT = {
+				OR = { 
+					is_major = yes
+					is_in_faction = yes
+					tag = MEX
+				}
+			}
+			CSA { 
+				has_war = no
+			}
+			NOT = {
+				OR = { #Either American revolter must exist
+					USA = { #United State spain exists
+						exists = yes
+					}
+					TEX = { #Union states Spain Exists
+						exists = yes
+					}
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "CSA"
+		value = 200
+	}
+	ai_strategy = {
+		type = support
+		id = "CSA"
+		value = 100
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "TEX"
+		value = -200
+	}
+	ai_strategy = {
+		type = support
+		id = "TEX"
+		value = -100
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "USA"
+		value = -200
+	}
+	ai_strategy = {
+		type = support
+		id = "USA"
+		value = -100
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "PSA"
+		value = -200
+	}
+	ai_strategy = {
+		type = support
+		id = "PSA"
+		value = -100
+	}
+}
+american_civil_war-usa= {
+	enable = {
+		is_subject = no #cannot be a subject
+		has_war = no #must be at peace
+		NOT = { tag = JAP }
+		OR = { #must have a syndiclist leaning government
+			has_government = social_democrat
+			has_government = social_liberal
+			has_government = market_liberal
+			has_government = social_conservative	
+			has_government = authoritarian_democrat	
+		}
+		OR = { #Helper must be a major power or in a faction
+			is_major = yes
+			is_in_faction = yes
+			tag = ITA
+			tag = CUB
+		}
+		USA { #America at war must be at war
+			has_war = yes
+		}
+		OR = { #Either American revolter must exist
+			CSA = { #Syndiclist America exists
+				exists = yes
+			}
+			TEX = { #Union states Spain Exists
+				exists = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			is_subject = yes
+			has_war = yes
+			tag = JAP
+			NOT = {
+				OR = {
+					has_government = social_democrat
+					has_government = social_liberal
+					has_government = market_liberal
+					has_government = social_conservative	
+					has_government = authoritarian_democrat	
+				}
+			}
+			NOT = {
+				OR = { 
+					is_major = yes
+					is_in_faction = yes
+					tag = ITA
+					tag = CUB
+				}
+			}
+			USA {
+				has_war = no
+			}
+			NOT = {
+				OR = { 
+					CSA = { 
+						exists = yes
+					}
+					TEX = { 
+						exists = yes
+					}
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "USA"
+		value = 200
+	}
+	ai_strategy = {
+		type = support
+		id = "USA"
+		value = 100
+	}
+}
+american_civil_war-tex= {
+	enable = {
+		is_subject = no #cannot be a subject
+		has_war = no #must be at peace
+		NOT = { tag = JAP }
+		OR = { #must have a syndiclist leaning government
+			has_government = paternal_autocrat 
+			has_government = national_populist
+		}
+		OR = { #Helper must be a major power or in a faction
+			is_major = yes
+			is_in_faction = yes
+		}
+		TEX { #America at war must be at war
+			has_war = yes
+		}
+		OR = { #Either American revolter must exist
+			CSA = { #Syndiclist America exists
+				exists = yes
+			}
+			USA = { #Union states Spain Exists
+				exists = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		is_subject = yes
+		has_war = yes
+		tag = JAP
+		NOT = {
+			OR = {
+				has_government = paternal_autocrat 
+				has_government = national_populist
+			}
+		}
+		NOT = {
+			OR = { 
+				is_major = yes
+				is_in_faction = yes
+			}
+		}
+		TEX {
+			has_war = no
+		}
+		NOT = {
+		OR = {
+			CSA = { 
+				exists = yes
+			}
+			USA = {
+				exists = yes
+			}
+		}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "TEX"
+		value = 200
+	}
+	ai_strategy = {
+		type = support
+		id = "TEX"
+		value = 100
+	}
+}
+american_civil_war-pacific= {
+	enable = {
+		is_subject = no #cannot be a subject
+		has_war = no #must be at peace
+		OR = { #Those strategically invovled with the pacific states
+			tag = JAP
+		}
+		OR = { #Helper must be a major power or in a faction
+			is_major = yes
+			is_in_faction = yes
+		}
+		PSA { #America at war must be at war
+			has_war = yes
+		}
+		OR = { #Either American revolter must exist
+			CSA = { #Syndiclist America exists
+				exists = yes
+			}
+			TEX = { #Union states Spain Exists
+				exists = yes
+			}			
+			USA = { #Union states Spain Exists
+				exists = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			is_subject = yes
+			has_war = yes
+			NOT = {
+				OR = { #Those strategically invovled with the pacific states
+					tag = JAP
+				}
+			}
+			NOT = {
+				OR = { #Helper must be a major power or in a faction
+					is_major = yes
+					is_in_faction = yes
+				}
+			}
+			PSA { #America at war must be at war
+				has_war = no
+			}
+			NOT = {
+				OR = { #Either American revolter must exist
+					CSA = { #Syndiclist America exists
+						exists = yes
+					}
+					TEX = { #Union states Spain Exists
+						exists = yes
+					}			
+					USA = { #Union states Spain Exists
+						exists = yes
+					}
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "PSA"
+		value = 200
+	}
+	ai_strategy = {
+		type = support
+		id = "PSA"
+		value = 100
+	}
+}
 ###MILITARY AI###
 default_unit_production = {
 	enable = {

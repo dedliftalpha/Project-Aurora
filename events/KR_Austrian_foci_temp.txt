@@ -638,7 +638,7 @@ country_event = { #Slovakia - Hungary
 
 	option = {
 		name = aus.9001.a
-		ai_chance = 40
+		ai_chance = { factor = 40 }
 		SVK = {
 			transfer_state = 70
 			transfer_state = 71
@@ -654,7 +654,7 @@ country_event = { #Slovakia - Hungary
 
 	option = {
 		name = aus.9001.b
-		ai_chance = 60
+		ai_chance = { factor = 60 }
 		add_political_power = -200
 		AUS = {
 			end_puppet = HUN
@@ -692,6 +692,61 @@ country_event = { #Hungary declares war
 	option = {
 		name = aus.9003.a
 		add_political_power = -60
+		set_global_flag = AUS_HUN_pluralism_war
+	}
+}
+
+country_event = { #War over, Austria wins
+	id = aus.9004
+	title = aus.9004.t
+	desc = aus.9004.d
+	fire_only_once = yes
+
+	trigger = {
+		tag = AUS
+		has_global_flag = AUS_HUN_pluralism_war
+		has_war = no
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = {
+		name = aus.9004.a
+		add_political_power = 30
+		clr_global_flag = AUS_HUN_pluralism_war
+		
+		AUS = {
+			transfer_state = 784
+			add_state_core = 784
+			puppet = SVK
+			puppet = HUN
+		}
+		SVK = {
+			transfer_state = 70
+			transfer_state = 71
+			
+			add_state_core = 70
+			add_state_core = 71
+		}
+		GAL = {
+			transfer_state = 73
+			add_state_core = 73
+		}
+		ILL = {
+			transfer_state = 45
+			add_state_core = 45
+		}
+		HUN = {
+			transfer_state = 43
+			transfer_state = 154
+			transfer_state = 155
+			transfer_state = 664
+			
+			add_state_core = 43
+			add_state_core = 154
+			add_state_core = 155
+			add_state_core = 664
+		}
 	}
 }
 
@@ -723,7 +778,7 @@ country_event = { #Germans - Hungary
 
 	option = {
 		name = aus.9011.a
-		ai_chance = 40
+		ai_chance = { factor = 40 }
 		AUS = {
 			transfer_state = 784
 			add_state_core = 784
@@ -733,7 +788,7 @@ country_event = { #Germans - Hungary
 
 	option = {
 		name = aus.9011.b
-		ai_chance = 60
+		ai_chance = { factor = 60 }
 		add_political_power = -200
 		AUS = {
 			end_puppet = HUN

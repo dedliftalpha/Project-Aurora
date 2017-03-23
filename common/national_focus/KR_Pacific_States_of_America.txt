@@ -8,7 +8,6 @@ focus_tree = {
 		}
 	}
 	default = no
-	
 ##################################
 ### Beacon of Democracy 	   ###
 ##################################
@@ -28,9 +27,11 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_civil_war
 		}
-		x = 25
+		x = 28
 		y = 1
-
+		completion_reward = {
+			add_political_power = 150
+		}
 	}
 	focus = {# Encourage Free Thought
 		id = CAL_encourge_free_thought
@@ -39,7 +40,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_beacon_of_democracy
 		}
-		x = 24
+		x = 27
 		y = 2
 
 	}
@@ -50,9 +51,11 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_beacon_of_democracy
 		}
-		x = 26
+		x = 29
 		y = 2
-
+		completion_reward = {
+			add_political_power = 100
+		}
 	}
 	focus = {# Progressive Capitalism
 		id = CAL_progressive_capitalism
@@ -64,9 +67,14 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_seperation_powers
 		}
-		x = 25
+		x = 28
 		y = 3
-
+		completion_reward = {
+			add_political_power = 150
+			add_popularity = { ideology = syndicalist popularity = -0.05 }
+			add_popularity = { ideology = radical_socialist popularity = -0.05}
+			add_popularity = { ideology = totalist popularity = -0.5 }
+		}
 	}
 	focus = {# Initiatives and Referendum
 		id = CAL_initiative_referendum
@@ -75,8 +83,14 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_progressive_capitalism
 		}
-		x = 24
+		x = 27
 		y = 4
+		completion_reward = {
+			add_political_power = 80
+			add_popularity = { ideology = social_democrat popularity = 0.05 }
+			add_popularity = { ideology = social_liberal popularity = 0.05 }
+			
+		}
 	}
 	focus = {# Land of Immigrants
 		id = CAL_immigrant_land
@@ -85,8 +99,10 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_progressive_capitalism
 		}
-		x = 26
+		x = 29
 		y = 4
+		completion_reward = {
+		}		
 	}
 	focus = {# Defend Democracy
 		id = CAL_defend_democarcy
@@ -98,36 +114,93 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_immigrant_land
 		}
-		x = 25
+		x = 28
 		y = 5
+		completion_reward = {
+			add_political_power = 150
+			add_national_unity = 0.05
+		}		
 	}
-	focus = {# Restore the Union
-		id = CAL_restore_the_union
-		icon = GFX_goal_support_democracy
+	focus = {# Post War PSA
+		id = CAL_post_war_psa
+		icon = GFX_focus_generic_support_the_left_right
 		cost = 10.00
 		prerequisite = {
-			focus = CAL_defend_democarcy
-		}
-		mutually_exclusive = {
 			focus = CAL_new_california_republic
-		}
-		x = 26
-		y = 6
-
-	}
-	focus = {# New Californian Republic
-		id = CAL_new_california_republic
-		icon = GFX_goal_generic_demand_territory
-		cost = 10.00
-		prerequisite = {
-			focus = CAL_defend_democarcy
-		}
-		mutually_exclusive = {
 			focus = CAL_restore_the_union
 		}
-		x = 24
-		y = 6
-
+		x = 28
+		y = 7
+		completion_reward = {
+			if = {# CSA won
+				limit = {
+					NOT = {
+						country_exists = USA
+						country_exists = TEX						
+					}
+				}
+				country_event = { id = pacificstates.101 }
+			}
+			if = {# AUS won
+				limit = {
+					NOT = {
+						country_exists = USA
+						country_exists = CSA						
+					}				}
+				country_event = { id = pacificstates.102 }
+			}
+			if = {# MacArthur won
+				limit = {
+					NOT = {
+						country_exists = CSA
+						country_exists = TEX						
+					}
+					USA = { 
+						has_country_flag = USA_military_junta
+						has_country_flag = USA_macarthur_dictatorship 
+					}
+				}
+				country_event = { id = pacificstates.103 }
+			}
+			if = {# democratic USA
+				limit = {
+					NOT = {
+						country_exists = CSA
+						country_exists = TEX
+						USA = { 
+							has_country_flag = USA_military_junta
+							has_country_flag = reed_demands_some 
+						}
+					}				}
+				country_event = { id = pacificstates.104 }
+			}			
+		}
+	}
+	focus = {# The GI Bill
+		id = CAL_gi_bill
+		icon = GFX_goal_conscription
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_post_war_psa
+		}
+		x = 29
+		y = 8
+		completion_reward = {
+			add_ideas = CAL_soldiers_bill
+		}
+	}
+	focus = {# Fate of the Unions
+		id = CAL_fate_of_the_unions
+		icon = GFX_goal_UK_ban_unions
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_post_war_psa
+		}
+		x = 27
+		y = 8
+		completion_reward = {
+			country_event = { id = pacificstates.100 days = 3 }
+		}
 	}	
 ##################################
 ### economic policies	 	   ###
@@ -523,8 +596,111 @@ focus_tree = {
 		}
 	}
 ##################################
+#    New California Republic  	 #
+##################################
+	focus = {# New Californian Republic
+		id = CAL_new_california_republic
+		icon = GFX_goal_generic_demand_territory
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_defend_democarcy
+		}
+		mutually_exclusive = {
+			focus = CAL_restore_the_union
+		}
+		x = 24
+		y = 6
+
+	}	
+	focus = {# San Francisco Convention
+		id = CAL_san_fransico_convention
+		icon = GFX_goal_generic_forceful_treaty
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_new_california_republic
+		}
+		x = 24
+		y = 7
+
+	}	
+	focus = {# forming a new identity
+		id = CAL_pacifican_identity
+		icon = GFX_goal_generic_improve_relations
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_san_fransico_convention
+		}
+		x = 24
+		y = 8
+
+	}
+	focus = {# Californian Investments
+		id = CAL_building_up_california
+		icon = GFX_goal_generic_positive_trade_relations
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_pacifican_identity
+		}
+		x = 22
+		y = 9
+
+	}
+	focus = {# Oregon Investments
+		id = CAL_oregon_investment
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_pacifican_identity
+		}
+		x = 24
+		y = 9
+
+	}
+	focus = {# Washington Investments
+		id = CAL_washington_investment
+		icon = GFX_goal_tripartite_pact
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_pacifican_identity
+		}
+		x = 26
+		y = 9
+
+	}
+	focus = {# New Nationalism
+		id = CAL_new_nationalism
+		icon = GFX_goal_generic_national_unity
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_oregon_investment
+		}
+		prerequisite = {
+			focus = CAL_washington_investment
+		}
+		prerequisite = {
+			focus = CAL_building_up_california
+		}
+		x = 24
+		y = 10
+
+	}	
+##################################
 ### Reconstruction Policies    ###
 ##################################
+	focus = {# Restore the Union
+		id = CAL_restore_the_union
+		icon = GFX_goal_support_democracy
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_defend_democarcy
+		}
+		mutually_exclusive = {
+			focus = CAL_new_california_republic
+		}
+		x = 32
+		y = 6
+
+	}
 	focus = {# Begin Reconstruction
 		id = CAL_reconstruction
 		icon = GFX_goal_generic_construct_civ_factory
@@ -532,7 +708,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_restore_the_union
 		}
-		x = 26
+		x = 32
 		y = 7
 
 	}
@@ -543,7 +719,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_reconstruction
 		}
-		x = 25
+		x = 31
 		y = 8
 
 	}
@@ -554,7 +730,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_reconstruction
 		}
-		x = 27
+		x = 33
 		y = 8
 
 	}
@@ -565,7 +741,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_reconstruct_the_west
 		}
-		x = 25
+		x = 31
 		y = 9
 	}
 	focus = {# Rebuild New England
@@ -575,7 +751,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_reconstruct_the_south
 		}
-		x = 27
+		x = 33
 		y = 9
 
 	}
@@ -589,9 +765,9 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_reconstruct_the_steel_belt
 		}
-		x = 26
+		x = 32
 		y = 10
-
+		
 	}
 ##################################
 ### Military Policies		   ###
@@ -1268,46 +1444,9 @@ focus_tree = {
 			focus = CAL_civil_war
 		}
         available = { has_country_flag = END_ACW }		
-		x = 36
+		x = 38
 		y = 1
 
-	}
-	focus = {# Join the Russians
-		id = CAL_join_russia
-		icon = GFX_goal_generic_major_alliance
-		cost = 10.00
-		available = {
-			RUS = {	is_faction_leader = yes	}
-		}
-		prerequisite = {
-			focus = CAL_foreign_policy
-		}
-		mutually_exclusive = {
-			focus = CAL_join_entente
-			focus = CAL_join_mittle_europa
-			focus = CAL_join_japan
-			focus = CAL_american_autonomy
-		}
-		x = 29
-		y = 2
-		completion_reward = {
-			country_event = { id = pacificstates.51 }
-		}
-	}
-	focus = {# Russian Friendship
-		id = CAL_russian_freindship
-		icon = GFX_goal_generic_improve_relations
-		cost = 10.00
-		prerequisite = {
-			focus = CAL_join_russia
-		}
-		x = 29
-		y = 3
-		completion_reward = {
-            RUS = {
-				add_opinion_modifier = { target = CAL modifier = CAL_friendship } 
-			}			
-		}		
 	}
 	focus = {# Join the Entente
 		id = CAL_join_entente
@@ -1317,7 +1456,6 @@ focus_tree = {
 			focus = CAL_foreign_policy
 		}
 		mutually_exclusive = {
-			focus = CAL_join_russia
 			focus = CAL_join_mittle_europa
 			focus = CAL_join_japan
 			focus = CAL_american_autonomy
@@ -1338,9 +1476,8 @@ focus_tree = {
 		x = 31
 		y = 3
 		completion_reward = {
-            CAN = {
-				add_opinion_modifier = { target = CAL modifier = CAL_friendship } 
-			}			
+			add_opinion_modifier = { target = CAN modifier = CAL_friendship }
+			CAN = { add_opinion_modifier = { target = ROOT modifier = CAL_friendship } }			
 		}
 	}
 	focus = {# Canadian-Pacific Trade
@@ -1365,7 +1502,7 @@ focus_tree = {
 		prerequisite = {
 			focus = CAL_australasia_freindship
 		}		
-		x = 31
+		x = 32
 		y = 4
         completion_reward = {
 			add_to_tech_sharing_group = entente_research
@@ -1380,7 +1517,6 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = CAL_join_entente
-			focus = CAL_join_russia
 			focus = CAL_join_japan
 			focus = CAL_american_autonomy
 		}
@@ -1417,9 +1553,8 @@ focus_tree = {
 		x = 37
 		y = 3
 		completion_reward = {
-            GER = {
-				add_opinion_modifier = { target = CAL modifier = CAL_friendship } 
-			}			
+			add_opinion_modifier = { target = GER modifier = CAL_friendship }
+			GER = { add_opinion_modifier = { target = ROOT modifier = CAL_friendship } }			
 		}
 	}
 	focus = {# Join the Kaiser Wilhelm society
@@ -1443,7 +1578,11 @@ focus_tree = {
 		icon = GFX_goal_japanese_imperialism
 		cost = 10.00
 		available = {
-			JAP = {	is_faction_leader = yes	}
+			JAP = {
+				is_faction_leader = yes	
+				has_completed_focus = JAP_democratic_path
+			
+			}
 		}
 		prerequisite = {
 			focus = CAL_foreign_policy
@@ -1451,7 +1590,6 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CAL_join_mittle_europa
 			focus = CAL_join_entente
-			focus = CAL_join_russia
 			focus = CAL_american_autonomy
 		}
 		x = 40
@@ -1470,9 +1608,8 @@ focus_tree = {
 		x = 39
 		y = 3
 		completion_reward = {
-            JAP = {
-				add_opinion_modifier = { target = CAL modifier = CAL_friendship } 
-			}			
+			add_opinion_modifier = { target = JAP modifier = CAL_friendship }
+			JAP = { add_opinion_modifier = { target = ROOT modifier = CAL_friendship } }			
 		}
 	}
 	focus = {# Japanese Businesses
@@ -1518,12 +1655,40 @@ focus_tree = {
 			focus = CAL_join_japan
 			focus = CAL_join_mittle_europa
 			focus = CAL_join_entente
-			focus = CAL_join_russia
 		}
-		x = 42
+		x = 44
 		y = 2
 		completion_reward = {
 			country_event = { id = pacificstates.44 days = 3 }
+		}
+	}
+	focus = {# School of America
+		id = CAL_school_of_ameirca
+		icon = GFX_goal_tfv_generic_tech_sharing
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_american_autonomy
+		}
+		x = 43
+		y = 3
+		available = { has_global_flag = USA_free_world_university }
+        completion_reward = {
+			add_to_tech_sharing_group = us_research
+		}
+	}
+	focus = {# American business ties
+		id = CAL_american_business
+		icon = GFX_goal_generic_positive_trade_relations
+		cost = 10.00
+		prerequisite = {
+			focus = CAL_american_autonomy
+		}
+		x = 45
+		y = 3
+		completion_reward = {
+			add_ideas = CAL_american_businesses
+			add_opinion_modifier = { target = USA modifier = CAL_trade_relations }
+			USA = { add_opinion_modifier = { target = ROOT modifier = CAL_trade_relations } }
 		}
 	}
 }

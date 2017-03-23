@@ -1727,22 +1727,39 @@ focus_tree = {
 		prerequisite = { focus = DEH_unifyindia }
 		available = {
 			has_war = no
-			GER = {
-				has_war_with = FRA
-				owns_state = 422
-				owns_state = 281
-				owns_state = 733
+			GER = { has_war_with = FRA }
+			OR = {
+				GER = { owns_state = 422 } #Ceylon
+				GER = { owns_state = 281 } #Malediven
+				GER = { owns_state = 733 } #Andaman
+				CEY = {
+					is_subject_of = GER
+					owns_state = 422
+				}
 			}
 		}
 		cost = 10
 		x = 21
 		y = 5
 		
+		ai_will_do = {
+			factor = 5
+		}
+		
 		completion_reward = {
-			add_state_core = 422
-			add_state_core = 281
-			add_state_core = 733
+			add_state_core = 422 #Ceylon
+			add_state_core = 281 #Malediven
+			add_state_core = 733 #Andaman
 			
+			if = {
+				limit = {
+					CEY = {
+						is_subject_of = GER
+						owns_state = 422
+					}
+				}
+				transfer_state = 422
+			}
 			GER = {
 				if = {
 					limit = { owns_state = 422 }

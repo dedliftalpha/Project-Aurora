@@ -1994,18 +1994,23 @@ country_event = { # The decision of Mendog
 		ai_chance = { factor = 100 }
 
 		end_puppet = POL
-
+		LIT = { 
+			random_owned_controlled_state = {
+			PLC = { transfer_state = PREV }
+			}
+		} 
 		annex_country = { target = LIT transfer_troops = yes }
 		change_tag_from = LIT
 
-		PLC = { annex_country = { target = POL transfer_troops = yes } change_tag_from = POL }
+		PLC = {	change_tag_from = POL }
 
 		every_state = { 
 			limit = { OR = { is_core_of = POL is_core_of = LIT } } 
 
 			add_core_of = PLC
 		}
-
+		
+		PLC = { annex_country = { target = POL transfer_troops = yes } }
 		PLC = { country_event = { days = 1 id = plcommon.1 }}
 		PLC = { country_event = { days = 1 id = plcommon.2 }}
 	}
@@ -12503,7 +12508,7 @@ news_event = {
 	}
 }
 
-country_event = { # Death of Josef
+country_event = { # Death of Josef Pilsudski
 	id = poland.193
 	title = poland.193.t
 	desc = poland.193.d
@@ -12512,7 +12517,10 @@ country_event = { # Death of Josef
 	fire_only_once = yes
 	
 	trigger = {
-		tag = POL
+		OR = {
+			tag = POL
+			tag = PLC
+		}
 		date > 1937.2.1
 	}
 	
@@ -12523,6 +12531,32 @@ country_event = { # Death of Josef
 	option = {
 		name = poland.193.a
 		remove_unit_leader = 1010
+	}
+	
+}
+
+country_event = { # Marriage to the Sea
+	id = poland.194
+	title = poland.194.t
+	desc = poland.194.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		any_owned_state = {
+			is_coastal = yes
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 2
+	}
+	
+	option = {
+		name = poland.194.a
+		add_political_power = 5
 	}
 	
 }

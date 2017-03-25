@@ -3632,6 +3632,84 @@ default_peace = {
 				}
 			}
 		}
+		#DKB - Don Kuban
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = DKB
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = DKB
+						has_war_with = ALO
+					}	
+					OR = {
+						RUS = {
+							is_in_peace_conference = yes
+						}
+						SOV = {
+							is_in_peace_conference = yes
+						}
+						MON = {
+							is_in_peace_conference = yes
+						}
+						TRK = {
+							is_in_peace_conference = yes
+						}					
+					}
+					
+				
+				}
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+						region = 137 #Western Steppe	
+						region = 235 #Kuban	
+						region = 134 #Caucasus
+					}
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks if in faction with, and a faction leader
+				is_in_faction_with = DKB
+				is_faction_leader = yes
+				NOT = {
+					tag = DKB
+				}
+			}
+			DKB = {
+				is_subject = no
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State is apart of the following strategic regions
+				OR = {
+					region = 137 #Western Steppe	
+					region = 235 #Kuban	
+					region = 134 #Caucasus
+				}
+			}
+		}
 		#QIE - Qing
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	

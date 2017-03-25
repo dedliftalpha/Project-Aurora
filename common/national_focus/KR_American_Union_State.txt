@@ -2079,7 +2079,6 @@ focus_tree = {
 			MEX = {country_event = { id = mexico.64 } }
 		}
 	}	
-	
 	focus = {# Reclaiming Hawaii
 		id = TEX_reclaim_hawaii
 		icon = GFX_focus_generic_coastal_fort
@@ -2198,14 +2197,82 @@ focus_tree = {
 		prerequisite = {
 			focus = TEX_fate_of_the_philippines
 		}
-
+		prerequisite = {
+			focus = TEX_invade_canada
+		}
 		x = 46
 		y = 5
 
 	}
-	focus = {# Take a side
-		id = TEX_take_a_side
-		icon = GFX_goal_anschluss
+	focus = {# War Plan Red
+		id = TEX_war_plan_red
+		icon = GFX_goal_tfv_sever_ties_with_uk
+		cost = 10.00
+		prerequisite = {
+			focus = TEX_long_doctrine
+		}
+		x = 50
+		y = 1
+		completion_reward = {
+			add_political_power = 175
+		}
+	}
+	focus = {# Embargo the Entente
+		id = TEX_entente_embargo
+		icon = GFX_goal_generic_trade
+		cost = 10.00
+		prerequisite = {
+			focus = TEX_war_plan_red
+		}
+		x = 50
+		y = 2
+		completion_reward = {
+			add_opinion_modifier = { target = CAN modifier = TEX_entente_embargo }
+			CAN = { add_opinion_modifier = { target = ROOT modifier = TEX_entente_embargo } }	
+			add_opinion_modifier = { target = CAF modifier = TEX_entente_embargo }
+			CAF = { add_opinion_modifier = { target = ROOT modifier = TEX_entente_embargo } }		
+			add_opinion_modifier = { target = AST modifier = TEX_entente_embargo }
+			AST = { add_opinion_modifier = { target = ROOT modifier = TEX_entente_embargo } }	
+			add_opinion_modifier = { target = DEH modifier = TEX_entente_embargo }
+			DEH = { add_opinion_modifier = { target = ROOT modifier = TEX_entente_embargo } }
+			add_opinion_modifier = { target = NEE modifier = TEX_entente_embargo }
+			NEE = { add_opinion_modifier = { target = ROOT modifier = TEX_entente_embargo } }
+		}
+	}
+	focus = {# Invade Canada
+		id = TEX_invade_canada
+		icon = GFX_focus_AST_never_gallipoli
+		cost = 10.00
+		available = {
+			TEX = {
+				NOT = { is_in_faction_with = CAN }
+				is_subject = no
+			}
+		}		
+		bypass = {
+			OR = {
+				TEX = { has_war_with = CAN }
+				OR = {
+					CAN = { has_capitulated = yes }
+					NOT = { country_exists = CAN }
+				}
+			}
+		}		
+		
+		
+		prerequisite = {
+			focus = TEX_entente_embargo
+		}
+		x = 50
+		y = 4
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = CAN }
+			add_named_threat = { threat = 10 name = TEX_attack_CAN }
+		}
+	}
+	focus = {# Side with Germany
+		id = TEX_side_with_germany
+		icon = GFX_goal_generic_major_alliance
 		cost = 10.00
 		prerequisite = {
 			focus = TEX_long_doctrine
@@ -2215,64 +2282,8 @@ focus_tree = {
 		}
 		x = 57
 		y = 1
-
-	}
-	focus = {# Side with canada
-		id = TEX_side_with_canada
-		icon = GFX_goal_tfv_strengthen_commonwealth_ties
-		cost = 10.00
-		prerequisite = {
-			focus = TEX_take_a_side
-		}
-		mutually_exclusive = {
-			focus = TEX_side_with_germany
-		}
-		x = 55
-		y = 2
 		completion_reward = {
-			CAN = {country_event = { id = ustates.300 } }
-		}
-	}
-	focus = {# Entente Trade
-		id = TEX_entente_trade
-		icon = GFX_goal_generic_positive_trade_relations
-		cost = 10.00
-		prerequisite = {
-			focus = TEX_side_with_canada
-		}
-		x = 54
-		y = 3
-		completion_reward = {
-			add_ideas = TEX_entente_american_trade
-			add_opinion_modifier = { target = CAN modifier = TEX_american_trade }
-			CAN = { add_opinion_modifier = { target = ROOT modifier = TEX_american_trade } }
-		}
-	}
-	focus = {# Entente Research
-		id = TEX_entente_research
-		icon = GFX_goal_generic_scientific_exchange
-		cost = 10.00
-		prerequisite = {
-			focus = TEX_side_with_canada
-		}
-		x = 56
-		y = 3
-
-	}
-	focus = {# Side with Germany
-		id = TEX_side_with_germany
-		icon = GFX_goal_generic_major_alliance
-		cost = 10.00
-		prerequisite = {
-			focus = TEX_take_a_side
-		}
-		mutually_exclusive = {
-			focus = TEX_side_with_canada
-		}
-		x = 59
-		y = 2
-		completion_reward = {
-			GER = {country_event = { id = ustates.300 } }
+			GER = {country_event = { id = unionstate.200 } }
 		}
 	}
 	focus = {# German Trade
@@ -2282,8 +2293,8 @@ focus_tree = {
 		prerequisite = {
 			focus = TEX_side_with_germany
 		}
-		x = 58
-		y = 3
+		x = 56
+		y = 2
 		completion_reward = {
 			add_ideas = TEX_german_american_trade
 			add_opinion_modifier = { target = GER modifier = TEX_american_trade }
@@ -2297,8 +2308,8 @@ focus_tree = {
 		prerequisite = {
 			focus = TEX_side_with_germany
 		}
-		x = 60
-		y = 3
+		x = 58
+		y = 2
 
 	}
 	focus = {# Form the American Faction
@@ -2309,9 +2320,9 @@ focus_tree = {
 			focus = TEX_long_doctrine
 		}
 		mutually_exclusive = {
-			focus = TEX_take_a_side
+			focus = TEX_side_with_germany
 		}
-		x = 52
+		x = 54
 		y = 1
 		completion_reward = {	
 			create_faction = "american_states_league_of_nations"		
@@ -2324,7 +2335,7 @@ focus_tree = {
 		prerequisite = {
 			focus = TEX_league_of_nations
 		}
-		x = 52
+		x = 54
 		y = 2
 
 	}

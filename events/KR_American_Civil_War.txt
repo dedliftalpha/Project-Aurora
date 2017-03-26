@@ -500,7 +500,7 @@ country_event = {
 			add_state_core = 387
 	}
 }
-country_event = {# USA Junta under MacArthur
+country_event = { # USA Junta under MacArthur
 	id = amcivwar.7
 	title = amcivwar.7.t
 	desc = amcivwar.7.d
@@ -548,7 +548,7 @@ country_event = {# USA Junta under MacArthur
 		set_capital = 382
 	}
 }
-country_event = {# Long Barricades Himself in Washington
+country_event = { # Long Barricades Himself in Washington
 	id = amcivwar.8
 	title = amcivwar.8.t
 	desc = amcivwar.8.d
@@ -564,7 +564,7 @@ country_event = {# Long Barricades Himself in Washington
 		TEX = { transfer_state = 361 }
 	}
 }
-country_event = {# Rise of the AUS Military
+country_event = { # Rise of the AUS Military
 	id = amcivwar.9
 	title = amcivwar.9.t
 	desc = amcivwar.9.d
@@ -578,7 +578,7 @@ country_event = {# Rise of the AUS Military
 		load_oob = ACW_AUS_WASH
 	}
 }
-country_event = {# Minnesota joins the CSA
+country_event = { # Minnesota joins the CSA
 	id = amcivwar.9000
 	title = amcivwar.9000.t
 	desc = amcivwar.9000.d
@@ -592,7 +592,7 @@ country_event = {# Minnesota joins the CSA
 		set_global_flag = minnesota_fall_csa
 	}
 }
-country_event = {# Minnesota Falls to the CSA
+country_event = { #Minnesota Falls to the CSA
 	id = amcivwar.9001
 	title = amcivwar.9001.t
 	desc = amcivwar.9001.d
@@ -605,7 +605,7 @@ country_event = {# Minnesota Falls to the CSA
 		CSA = { transfer_state = 391 hidden_effect = { country_event = { id = amcivwar.9000 days = 1 } } }
 	}
 }
-country_event = {# Occupy Alaska
+country_event = { # Occupy Alaska
 	id = amcivwar.12
 	title = amcivwar.12.t
 	desc = amcivwar.12.d
@@ -660,7 +660,7 @@ country_event = {# Occupy Alaska
 		}
 	}
 }
-country_event = {# Canada seizes Alaska
+country_event = { # Canada seizes Alaska
 	id = amcivwar.13
 	title = amcivwar.13.t
 	desc = amcivwar.13.d
@@ -676,7 +676,7 @@ country_event = {# Canada seizes Alaska
 		add_opinion_modifier = { target = USA modifier = occupied_alaska_USA }
 	}
 }
-country_event = {# Japan seizes Guam
+country_event = { # Japan seizes Guam
 	id = amcivwar.14
 	title = amcivwar.14.t
 	desc = amcivwar.14.d
@@ -717,7 +717,7 @@ country_event = {# Japan seizes Guam
 		add_opinion_modifier = { target = USA modifier = no_occupaied_guam_USA }
 	}
 }
-country_event = {# Japan seizes Guam
+country_event = { # Japan seizes Guam
 	id = amcivwar.15
 	title = amcivwar.15.t
 	desc = amcivwar.15.d
@@ -733,13 +733,28 @@ remove_state_core = 638
 add_state_claim = 638
 	}
 }
-country_event = {# Seize the Panama Canal
+country_event = { # Seize the Panama Canal
 	id = amcivwar.16
 	title = amcivwar.16.t
 	desc = amcivwar.16.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAN
+		#CAN = { is_ai = yes } #REVIST Fires for ai until/unless it can be taught to manage focuses better
+		country_exists = CSA
+		USA = { controls_state = 685 }
+		NOT = {
+			has_war_with = USA
+			is_in_faction_with = USA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 5
+	}
 
 	option = {
 		name = amcivwar.16.a
@@ -763,7 +778,7 @@ country_event = {# Seize the Panama Canal
 		add_opinion_modifier = { target = USA modifier = no_occupaied_panama_USA }
 	}
 }
-country_event = {# Canada seizes Panama Canal
+country_event = { # Canada seizes Panama Canal
 	id = amcivwar.17
 	title = amcivwar.17.t
 	desc = amcivwar.17.d
@@ -784,69 +799,6 @@ country_event = {# Canada seizes Panama Canal
 		set_global_flag = CAN_SEIZES_PANAMA
 	}
 }
-country_event = {# Panama the Panama Canal
-	id = amcivwar.1600
-	title = amcivwar.16.t
-	desc = amcivwar.16.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = PNM
-		country_exists = CSA
-		USA = { controls_state = 685 }
-		NOT = {
-			has_war_with = USA
-			is_in_faction_with = USA
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 5
-	}
-
-	option = {
-		name = amcivwar.16.a
-		ai_chance = {
-			factor = 100
-		}
-
-		country_event = { id = amcivwar.1700 }
-	}
-
-	option = {
-		name = amcivwar.1600.b
-		ai_chance = {
-			factor = 0
-		}
-
-		add_political_power = -40
-		add_opinion_modifier = { target = USA modifier = no_occupaied_panama_USA }
-		CAN = { country_event = { id = amcivwar.16 days = 3 }}
-	}
-}
-country_event = {# Panama seizes Panama Canal
-	id = amcivwar.1700
-	title = amcivwar.1700.t
-	desc = amcivwar.1700.d
-	picture = GFX_report_event_spain_civil_war_soldiers
-
-	is_triggered_only = yes
-
-	option = {
-		name = amcivwar.1700.a
-
-		ai_chance = {
-			factor = 100
-		}
-
-		PNM = { transfer_state = 685 }
-		set_global_flag = PANAMA_SEIZES_PANAMA_CANALA
-	}
-}
-
-
 ####################### WAR EVENTS
 country_event = { # California has a chance to declare war.
 	id = amcivwar.18

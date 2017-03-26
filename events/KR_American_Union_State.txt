@@ -3010,9 +3010,540 @@ country_event = {# Mexico refuses our offer!
 #############################
 #	  UPCA Intervention		#
 #############################
+country_event = {# CentroAmerica vs United Provinces
+	id = unionstate.221
+	title = unionstate.213.t
+	desc = unionstate.213.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = TEX
+		has_global_flag = END_ACW
+		NOT = {
+			is_subject = yes
+			country_exists = CSA
+			country_exists = USA
+		}
+		NIC = { has_war_with = GUA } 
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = unionstate.221.a
+		ai_chance = {
+			factor = 90
+		}
+		add_manpower = -5000
+		send_equipment = {
+            target = NIC
+            type = infantry_equipment
+            amount = 1000
+        }
+		hidden_effect = { NIC = { country_event = { id = unionstate.222 days = 1 }}}
+	}
+	option = {
+		name = unionstate.221.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40
+	}
+}
+country_event = {# American Volunteers!
+	id = unionstate.222
+	title = unionstate.222.t
+	desc = unionstate.222.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.222.a
+
+		add_manpower = 5000
+
+		hidden_effect = {
+			set_global_flag = TEX_helps_united_provinces
+		}
+	}
+}
+country_event = {# Volunteers return to the AUS
+	id = unionstate.223
+	title = unionstate.223.t
+	desc = unionstate.223.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = TEX
+		has_global_flag = TEX_helps_united_provinces
+		NOT = {
+			NIC = {	has_war_with = GUA }
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+
+	option = {
+		name = unionstate.223.a
+		if = {
+			limit = { not = {	country_exists = NIC } }
+			add_opinion_modifier = { target = GUA modifier = WON_CAW } # +10
+		}
+		add_manpower = 5000
+		add_political_power = 20
+	}
+}
+country_event = {# Treaty with the United States?
+	id = unionstate.224
+	title = unionstate.224.t
+	desc = unionstate.224.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# join faction
+		name = unionstate.224.a
+		ai_chance = {
+			factor = 90
+		}
+		trigger = {
+			has_global_flag = USA_league_of_american_nations
+		}
+		TEX = { country_event = { id = unionstate.225 days = 3 }}
+	}
+	option = {# protection
+		name = unionstate.224.b
+		ai_chance = {
+			factor = 90
+		}
+		trigger = {
+			NOT = { has_global_flag = USA_league_of_american_nations }
+		}
+		TEX = { country_event = { id = unionstate.226 days = 3 }}
+	}
+	option = {# refuse!
+		name = unionstate.224.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		TEX = { country_event = { id = unionstate.227 days = 3 }}
+
+	}	
+}
+country_event = {# UPCA Joins League of American States
+	id = unionstate.225
+	title = unionstate.225.t
+	desc = unionstate.225.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# welcome!
+		name = unionstate.225.a
+		add_to_faction = NIC
+		add_political_power = 40
+	}
+}
+country_event = {# Friendly UPCA Government
+	id = unionstate.226
+	title = unionstate.226.t
+	desc = unionstate.226.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
 
+	is_triggered_only = yes
 
+	option = {
+		name = unionstate.226.a
+		give_guarantee = NIC
+		add_political_power = 25
+		diplomatic_relation = { country = NIC relation = non_aggression_pact }
+	}
+}
+country_event = {# UPCA refuses our offer!
+	id = unionstate.227
+	title = unionstate.220.t
+	desc = unionstate.220.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {# Peace
+		name = unionstate.227.a
+		add_opinion_modifier = { target = NIC modifier = TEX_treaty_refusal }
+		NIC = { add_opinion_modifier = { target = ROOT modifier = TEX_treaty_refusal } }
+	}
+}
+country_event = {# Fighting Centro America
+	id = unionstate.244
+	title = unionstate.244.t
+	desc = unionstate.244.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# WAR!
+		name = unionstate.244.a
+		declare_war_on = { target = GUA type = annex_everything }
+	}
+	option = {# Peace!
+		name = unionstate.244.b
+		add_political_power = -20
+	}	
+}
 #############################
 #	 Intervene in Panama	#
 #############################
+country_event = {# Treaty with the United States?
+	id = unionstate.228
+	title = unionstate.228.t
+	desc = unionstate.228.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# join faction
+		name = unionstate.228.a
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			has_global_flag = USA_league_of_american_nations
+		}
+		TEX = { country_event = { id = unionstate.229 days = 3 }}
+	}
+	option = {# protection
+		name = unionstate.228.b
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			NOT = { has_global_flag = USA_league_of_american_nations }
+		}
+		TEX = { country_event = { id = unionstate.230 days = 3 }}
+	}
+	option = {# refuse!
+		name = unionstate.228.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		TEX = { country_event = { id = unionstate.231 days = 3 }}
+
+	}	
+}
+country_event = {# Panama Joins League of American States
+	id = unionstate.229
+	title = unionstate.229.t
+	desc = unionstate.229.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# welcome!
+		name = unionstate.229.a
+		add_to_faction = PNM
+		add_political_power = 40
+	}
+}
+country_event = {# Friendly Panama Government
+	id = unionstate.230
+	title = unionstate.230.t
+	desc = unionstate.230.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.230.a
+		give_guarantee = PNM
+		add_political_power = 25
+		diplomatic_relation = { country = PNM relation = non_aggression_pact }
+	}
+}
+country_event = {# Panama refuses our offer!
+	id = unionstate.231
+	title = unionstate.231.t
+	desc = unionstate.231.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.231.a
+		add_opinion_modifier = { target = PNM modifier = TEX_treaty_refusal }
+		PNM = { add_opinion_modifier = { target = ROOT modifier = TEX_treaty_refusal } }
+	}
+}
+#############################
+#	 Intervene in Cuba		#
+#############################
+country_event = {# Treaty with the United States?
+	id = unionstate.232
+	title = unionstate.232.t
+	desc = unionstate.232.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# join faction
+		name = unionstate.232.a
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			has_global_flag = USA_league_of_american_nations
+		}
+		TEX = { country_event = { id = unionstate.233 days = 3 }}
+	}
+	option = {# protection
+		name = unionstate.232.b
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			NOT = { has_global_flag = USA_league_of_american_nations }
+		}
+		TEX = { country_event = { id = unionstate.234 days = 3 }}
+	}
+	option = {# refuse!
+		name = unionstate.232.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		TEX = { country_event = { id = unionstate.235 days = 3 }}
+
+	}	
+}
+country_event = {# Cuba Joins League of American States
+	id = unionstate.233
+	title = unionstate.233.t
+	desc = unionstate.233.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# welcome!
+		name = unionstate.233.a
+		add_to_faction = CUB
+		add_political_power = 40
+	}
+}
+country_event = {# Friendly Cuban Government
+	id = unionstate.234
+	title = unionstate.234.t
+	desc = unionstate.234.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.234.a
+		give_guarantee = CUB
+		add_political_power = 25
+		diplomatic_relation = { country = CUB relation = non_aggression_pact }
+	}
+}
+country_event = {# Cuba refuses our offer!
+	id = unionstate.235
+	title = unionstate.235.t
+	desc = unionstate.235.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.235.a
+		add_opinion_modifier = { target = CUB modifier = TEX_treaty_refusal }
+		CUB = { add_opinion_modifier = { target = ROOT modifier = TEX_treaty_refusal } }
+	}
+}
+#############################
+#	 Intervene in Haiti		#
+#############################
+country_event = {# Treaty with the United States?
+	id = unionstate.236
+	title = unionstate.236.t
+	desc = unionstate.236.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# join faction
+		name = unionstate.236.a
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			has_global_flag = USA_league_of_american_nations
+		}
+		TEX = { country_event = { id = unionstate.237 days = 3 }}
+	}
+	option = {# protection
+		name = unionstate.236.b
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			NOT = { has_global_flag = USA_league_of_american_nations }
+		}
+		TEX = { country_event = { id = unionstate.238 days = 3 }}
+	}
+	option = {# refuse!
+		name = unionstate.236.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		TEX = { country_event = { id = unionstate.239 days = 3 }}
+
+	}	
+}
+country_event = {# Haiti Joins League of American States
+	id = unionstate.237
+	title = unionstate.237.t
+	desc = unionstate.237.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# welcome!
+		name = unionstate.237.a
+		add_to_faction = HAI
+		add_political_power = 40
+	}
+}
+country_event = {# Friendly Haitian Government
+	id = unionstate.238
+	title = unionstate.238.t
+	desc = unionstate.238.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.238.a
+		give_guarantee = HAI
+		add_political_power = 25
+		diplomatic_relation = { country = HAI relation = non_aggression_pact }
+	}
+}
+country_event = {# Haiti refuses our offer!
+	id = unionstate.239
+	title = unionstate.239.t
+	desc = unionstate.239.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.239.a
+		add_opinion_modifier = { target = HAI modifier = TEX_treaty_refusal }
+		HAI = { add_opinion_modifier = { target = ROOT modifier = TEX_treaty_refusal } }
+	}
+}
+#############################
+#   Dominican Intervention	#
+#############################
+country_event = {# Treaty with the United States?
+	id = unionstate.240
+	title = unionstate.240.t
+	desc = unionstate.240.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# join faction
+		name = unionstate.240.a
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			has_global_flag = USA_league_of_american_nations
+		}
+		TEX = { country_event = { id = unionstate.241 days = 3 }}
+	}
+	option = {# protection
+		name = unionstate.240.b
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			NOT = { has_global_flag = USA_league_of_american_nations }
+		}
+		TEX = { country_event = { id = unionstate.242 days = 3 }}
+	}
+	option = {# refuse!
+		name = unionstate.240.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		TEX = { country_event = { id = unionstate.243 days = 3 }}
+
+	}	
+}
+country_event = {# Dominican Republic Joins League of American States
+	id = unionstate.241
+	title = unionstate.241.t
+	desc = unionstate.241.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# welcome!
+		name = unionstate.241.a
+		add_to_faction = DOM
+		add_political_power = 40
+	}
+}
+country_event = {# Friendly Dominican Government
+	id = unionstate.242
+	title = unionstate.242.t
+	desc = unionstate.242.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.242.a
+		give_guarantee = DOM
+		add_political_power = 25
+		diplomatic_relation = { country = DOM relation = non_aggression_pact }
+	}
+}
+country_event = {# Dominican refuses our offer!
+	id = unionstate.243
+	title = unionstate.243.t
+	desc = unionstate.243.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+
+	is_triggered_only = yes
+
+	option = {
+		name = unionstate.243.a
+		add_opinion_modifier = { target = DOM modifier = TEX_treaty_refusal }
+		DOM = { add_opinion_modifier = { target = ROOT modifier = TEX_treaty_refusal } }
+	}
+}
+
+
+

@@ -1165,6 +1165,7 @@ country_event = { #Replace Military
 			factor = 65
 		}
 		name = tram.49.a
+		remove_ideas = TRM_dream
 		retire_country_leader = yes
 		create_country_leader = {
 			name = "Yui Mitsuei"
@@ -1497,7 +1498,7 @@ country_event = { #Demand Baikal From Soviet Russia
 		}
 		add_political_power = -200
 	SOV = { country_event = {id = tram.64 days = 2} }
-	if = {limit = {has_idea = TRM_anti_kolchak}
+	if = {limit = {has_idea = TRM_kolchak}
 	JAP = { country_event = {id = tram.44 days = 7} }
 	}
 	if = {limit = {has_country_flag = TRM_Mil_coup}
@@ -1983,3 +1984,133 @@ country_event = {
 	}
 }
 
+###Yui Mitsuei is dead###
+country_event = {
+	id = tram.90
+	title = tram.90.t
+	desc = tram.90.d
+	trigger = {
+		tag = TRM
+		date > 1940.1.1
+		NOT = { has_idea = TRM_dream }
+	}
+	mean_time_to_happen = { days = 120}
+
+	option = { #Yui died
+		name = tram.90.a
+		JAP = {country_event = {id = tram.91 days = 1} }
+	}
+
+}
+
+###Japan annex TRM after Mitsuei die###
+country_event = {
+	id = tram.91
+	title = tram.91.t
+	desc = tram.91.d
+	is_triggered_only = yes
+
+	option = { #Annex them
+		name = tram.91.a
+		annex_country = { target = TRM transfer_troops = no }
+	}
+
+}
+
+###Non-Kolchak TRM try to find support from Russia in war of independence with Japan###
+country_event = {
+	id = tram.92
+	title = tram.92.t
+	desc = tram.92.d
+	trigger = {
+		AND = {
+			tag = TRM
+			has_defensive_war_with = JAP
+			NOT = { has_idea = TRM_kolchak }
+		}
+	}
+	fire_only_once = yes
+	
+	mean_time_to_happen = {days = 7}
+
+	option = { #Integrate in Russia
+		ai_chance = {
+			factor = 45
+		}
+		name = tram.92.a
+		RUS = { country_event = {id = tram.93 days = 1} }
+	}
+	
+	option = { #Fight 'till dead 
+		ai_chance = {
+			factor = 55
+		}
+		name = tram.92.b
+	}
+
+}
+
+###TRM wants to be part of Russia###
+country_event = {
+	id = tram.93
+	title = tram.93.t
+	desc = tram.93.d
+	is_triggered_only = yes
+
+	option = { #Welcome home
+		ai_chance = {
+			factor = 99
+		}
+		name = tram.93.a
+		JAP = {white_peace = TRM}
+		RUS = { annex_country = {target = TRM transfer_troops = yes} }
+		JAP = {country_event = {id = tram.94 days = 1} }
+	}
+	
+	option = { #Refuse deal
+		ai_chance = {
+			factor = 1
+		}
+		name = tram.93.b
+		TRM = {country_event = {id = tram.95 days = 1} }
+	}
+
+}
+
+###Japanese reaction on TRM annexation###
+country_event = {
+	id = tram.94
+	title = tram.94.t
+	desc = tram.94.d
+	is_triggered_only = yes
+
+	option = { #Declare War
+		ai_chance = {
+			factor = 40
+		}
+		name = tram.94.a
+		declare_war_on = {
+			target = RUS type = annex_everything
+		}
+	}
+	
+	option = { #Do Nothing
+		ai_chance = {
+			factor = 60
+		}
+		name = tram.94.b
+		add_political_power = -60
+	}
+}
+
+###TRM gets a message about RUS has refused their deal###
+country_event = {
+	id = tram.95
+	title = tram.95.t
+	desc = tram.95.d
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = tram.95.a
+	}
+}

@@ -94,8 +94,8 @@ focus = {
 
 focus = {
 	id = TRM_Navy_Jap
-	icon = GFX_goal_generic_scientific_exchange
-	x = 1
+	icon = GFX_goal_generic_positive_trade_relations
+	x = 0
 	y = 3
 	cost = 10
 	prerequisite = {focus = TRM_Navy_Vlad}
@@ -104,7 +104,41 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-		add_ideas = TRM_jap_advisors	
+	TRM = { add_opinion_modifier = { target = JAP modifier = trade_with_japan } }
+	}
+}
+
+focus = {
+	id = TRM_Navy_Jap_Inv1
+	icon = GFX_goal_generic_improve_relations
+	x = 0
+	y = 4
+	cost = 5
+	prerequisite = {focus = TRM_Navy_Jap}
+	available = {is_puppet_of = JAP}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_national_unity = -0.02
+		add_political_power = 140
+	}
+}
+
+focus = {
+	id = TRM_Navy_Jap_Inv2
+	icon = GFX_goal_generic_scientific_exchange
+	x = 0
+	y = 5
+	cost = 10
+	prerequisite = {focus = TRM_Navy_Jap_Inv1}
+	available = {is_puppet_of = JAP}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_national_unity = -0.03
+		add_ideas = TRM_jap_advisors
 	}
 }
 
@@ -140,7 +174,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-		TRM = {country_event = {id = tram.100 days = 2} }
+		add_ideas = TRM_ships
 	}
 }
 
@@ -180,9 +214,8 @@ focus = {
 }
 
 focus = {
-		id = TRM_Navy_Petr
-		icon = GFX_goal_generic_construct_naval_dockyard
-		available = {owns_state = 195 controls_state = 195}
+		id = TRM_Navy_Old_Ways
+		icon = GFX_goal_generic_navy_battleship
 		prerequisite = {focus = TRM_Navy_Start}
 		x = 8
 		y = 2
@@ -191,41 +224,87 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			195 = {
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 3151
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = naval_base
-					level = 1
-					province = 3151
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
+			add_tech_bonus = {
+				name = navdoctrine_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_fleet_in_being
 			}
 		}
-	}
+			
+}
+
+focus = {
+		id = TRM_Navy_Cruiser
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = {focus = TRM_Navy_Old_Ways}
+		x = 7
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cruiser_bonus
+				bonus = 0.5
+				uses = 2
+				category = ca_tech
+				category = cl_tech
+			}
+		}
+			
+}
+
+focus = {
+		id = TRM_Navy_DD
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = {focus = TRM_Navy_Old_Ways}
+		x = 9
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = destroyer_bonus
+				bonus = 0.5
+				uses = 1
+				category = dd_tech
+			}
+		}
+			
+}
+
+
+focus = {
+		id = TRM_Navy_New_Ways
+		icon = GFX_goal_generic_navy_carrier
+		prerequisite = {focus = TRM_Navy_Start}
+		x = 12
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = navdoctrine_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_trade_interdiction
+			}
+		}
+}
 
 focus = {
 	id = TRM_Navy_Sub
 	icon = GFX_goal_generic_navy_submarine
-	x = 7
+	x = 11
 	y = 3
 	cost = 10
-	prerequisite = {focus = TRM_Navy_Petr}
+	prerequisite = {focus = TRM_Navy_New_Ways}
 	ai_will_do = {
 		factor = 100
 	}
@@ -242,10 +321,10 @@ focus = {
 focus = {
 	id = TRM_Navy_Carrier
 	icon = GFX_goal_generic_navy_carrier
-	x = 9
+	x = 13
 	y = 3
 	cost = 10
-	prerequisite = {focus = TRM_Navy_Petr}
+	prerequisite = {focus = TRM_Navy_New_Ways}
 	ai_will_do = {
 		factor = 100
 	}
@@ -259,77 +338,6 @@ focus = {
 	}
 }
 
-focus = {
-		id = TRM_Navy_Seva
-		icon = GFX_goal_generic_construct_naval_dockyard
-		available = {owns_state = 137 controls_state = 137}
-		prerequisite = {focus = TRM_Navy_Start}
-		x = 12
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			137 = {
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 3686
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = naval_base
-					level = 1
-					province = 3686
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-focus = {
-	id = TRM_Navy_BS
-	icon = GFX_goal_generic_navy_battleship
-	x = 11
-	y = 3
-	cost = 10
-	prerequisite = {focus = TRM_Navy_Seva}
-	ai_will_do = {
-		factor = 100
-	}
-	completion_reward = {
-		TRM = {country_event = {id = tram.101 days = 2} }
-	}
-}
-
-focus = {
-	id = TRM_Navy_Straits
-	icon = GFX_goal_generic_more_territorial_claims
-	x = 13
-	y = 3
-	cost = 10
-	prerequisite = {focus = TRM_Navy_Seva}
-	ai_will_do = {
-		factor = 100
-	}
-	completion_reward = {
-		add_state_claim = 341
-		add_state_claim = 774
-		add_state_claim = 340
-	}
-}
 
 ###Industry###
 focus = {
@@ -874,7 +882,7 @@ focus = {
 
 focus = {
 	id = TRM_Kolchak_Purge
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_focus_generic_strike_at_democracy1
 	prerequisite = {focus = TRM_Kolchak}
 	x = 4
 	y = 9
@@ -900,7 +908,7 @@ focus = {
 
 focus = {
 	id = TRM_Kolchak_Mil
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_goal_generic_construct_mil_factory
 	prerequisite = {focus = TRM_Kolchak_Purge}
 	x = 4
 	y = 10
@@ -929,7 +937,7 @@ focus = {
 
 focus = {
 	id = TRM_Kolchak_Doc
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_goal_generic_propaganda
 	prerequisite = {focus = TRM_Kolchak_Mil}
 	x = 4
 	y = 11
@@ -972,7 +980,7 @@ focus = {
 
 focus = {
 	id = TRM_Mil_Doc
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_goal_generic_military_sphere
 	prerequisite = {focus = TRM_Mil}
 	x = 6
 	y = 9
@@ -991,7 +999,7 @@ focus = {
 
 focus = {
 	id = TRM_Mil_Inf
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_goal_panzerwaffe
 	prerequisite = {focus = TRM_Mil_Doc}
 	x = 6
 	y = 10
@@ -1015,7 +1023,7 @@ focus = {
 
 focus = {
 	id = TRM_Mil_ML_End
-	icon = GFX_goal_JAP_toseiha
+	icon = GFX_goal_generic_national_unity
 	prerequisite = {focus = TRM_Mil_Inf}
 	x = 6
 	y = 11
@@ -1033,7 +1041,7 @@ focus = {
 
 focus = {
 	id = TRM_Rep
-	icon = GFX_goal_generic_support_democracy
+	icon = GFX_goal_support_democracy
 	prerequisite = {focus = TRM_Crisis}
 	available = {has_country_flag = TRM_Dem_coup}
 	x = 8
@@ -1055,7 +1063,7 @@ focus = {
 
 focus = {
 	id = TRM_Rep_Res
-	icon = GFX_goal_generic_support_democracy
+	icon = GFX_focus_research
 	prerequisite = {focus = TRM_Rep}
 	x = 8
 	y = 9
@@ -1074,7 +1082,7 @@ focus = {
 
 focus = {
 	id = TRM_Rep_Fac
-	icon = GFX_goal_generic_support_democracy
+	icon = GFX_focus_generic_the_giant_wakes
 	prerequisite = {focus = TRM_Rep_Res}
 	x = 8
 	y = 10
@@ -1093,7 +1101,7 @@ focus = {
 
 focus = {
 	id = TRM_Rep_Goods
-	icon = GFX_goal_generic_support_democracy
+	icon = GFX_goal_reichsautobahn
 	prerequisite = {focus = TRM_Rep_Fac}
 	x = 8
 	y = 11

@@ -6,32 +6,1513 @@
 
 add_namespace = prf
 
+### FLAVOR EVENTS
+
 # Introduction Event
-country_event =
-{
+country_event = {
 	id = prf.0
 	title = prf.0.t
 	desc = prf.0.d
+	picture = GFX_report_event_PRF_palace
 
 	fire_only_once = yes
 
-	trigger =
-	{
+	trigger = {
 		tag = PRF
 	}
 
-
-	option =
-	{
+	option = {
 		name = prf.0.a
-
-		hidden_effect = #Puppeting Madras/Tamil through event because of a bug setting the wrong Gov. Form
-		{
+		# Puppeting Madras/Tamil through event because of a bug setting the wrong Gov. Form
+		hidden_effect = {
 			puppet = MAD
-			MAD =
-			{
+			MAD = {
 				set_politics = { ruling_party = social_liberal elections_allowed = no }
 			}
 		}
 	}
 }
+
+# Silver Jubilee
+country_event = {
+	id = prf.1
+	title = prf.1.t
+	desc = prf.1.d
+	picture = GFX_report_event_PRF_osman
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = PRF
+		has_government = authoritarian_democrat
+		date > 1936.2.11
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = prf.1.a
+		add_political_power = 50
+	}
+}
+
+# Temple Entry Proclamation
+country_event = {
+	id = prf.2
+	title = prf.2.t
+	desc = prf.2.d
+	picture = GFX_report_event_india_protests
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = PRF
+		owns_state = 867
+		date > 1936.11.10
+		totalist_allowed = no
+		NOT = { has_government = paternal_autocrat }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = prf.2.a
+		add_political_power = 50
+	}
+}
+	
+
+### POLITICAL FOCUS EVENTS
+
+# Osman meets with the Council of Princes
+country_event = {
+	id = prf.100
+	title = prf.100.t
+	desc = prf.100.d
+	picture = GFX_report_event_PRF_osman
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_100.a
+	}
+}
+
+# Osman refuses the council's proposed reforms
+country_event = {
+	id = prf.101
+	title = prf.101.t
+	desc = prf.101.d
+	picture = GFX_report_event_PRF_osman
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_101.a
+		add_political_power = -100
+		swap_ideas = {
+			remove_idea = PRF_rule_of_princes_1
+			add_idea = PRF_rule_of_princes_3
+		}
+	}
+}
+
+# The Council of Princes is dissolved
+country_event = {
+	id = prf.102
+	title = prf.102.t
+	desc = prf.102.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.102.a
+		hidden_effect = {
+			create_country_leader = {
+				name = "Osman Ali Khan"
+				desc = "POLITICS_OSMAN_ALI_KHAN_DESC"
+				picture = "Portrait_Princely_Osman_Ali_Khan.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocrat_subtype
+				traits = {}
+			}
+		}
+		set_country_flag = Council_of_Princes_dead
+		add_political_power = -100
+		add_ideas = PRF_Osman_Ali_Khan_hog_pau
+		set_politics = { ruling_party = paternal_autocrat }
+	}
+}
+
+# Osman appoints a new diwan
+country_event = {
+	id = prf.103
+	title = prf.103.t
+	desc = prf.103.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.103.a #Akbar Hydari, the Sadar-i-Azam of Hyderabad, shall head the government!
+		ai_chance = { factor = 45 }
+		add_political_power = -40
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+		add_ideas = PRF_Akbar_Hydari_hog_sco
+	}
+	option = {
+		name = prf.103.b #Krushna Chandra Gajapati shall enfore princely obedience!
+		ai_chance = { factor = 35 }
+		add_political_power = 20
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+		add_ideas = PRF_Krushna_Chandra_Gajapati_hog_ade
+	}
+	option = {
+		name = prf.103.c #I've no need for lapdogs, I shall rule alone!
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		if = {
+			limit = { NOT = { has_idea = PRF_Osman_Ali_Khan_hog_pau } }
+			hidden_effect = { remove_ideas_with_trait = head_of_government }
+			add_ideas = PRF_Osman_Ali_Khan_hog_pau
+		}
+	}
+}
+
+# Osman claims the title of Kaisar-i-Hind
+news_event = {
+	id = prf.104
+	title = prf.104.t
+	desc = prf.104.d
+	picture = GFX_news_event_PRF_nizam
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_104.a
+		trigger = { tag = DEH }
+		add_political_power = -100
+		add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+	}
+	option = {
+		name = prf_104.b
+		trigger = { tag = BHC }
+		add_political_power = -100
+		add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+	}
+}
+
+news_event = {
+	id = prf.105
+	title = prf.105.t
+	desc = prf.105.d
+	picture = GFX_news_event_PRF_nizam
+
+	major = yes
+
+	is_triggered_only = yes
+
+	show_major = {
+		NOT = { tag = DEH }
+		NOT = { tag = BHC }
+	}
+	
+	option = {
+		name = prf_105.a
+		trigger = { tag = PRF }
+	}
+	option = {
+		name = prf_105.b
+		trigger = { NOT = { tag = PRF } }
+	}
+}
+
+# News that Osman has dissolved the Council of Princes
+country_event = {
+	id = prf.106
+	title = prf.106.t
+	desc = prf.106.d
+	picture = GFX_report_event_PRF_osman
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_106.a
+	}
+}
+
+# Osman agrees to the council's proposed reforms
+country_event = {
+	id = prf.107
+	title = prf.107.t
+	desc = prf.107.d
+	picture = GFX_report_event_PRF_osman
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_107.a
+		add_political_power = 100
+	}
+}
+
+# Free elections for the national diwan
+country_event = {
+	id = prf.108
+	title = prf.108.t
+	desc = prf.108.d
+	picture = GFX_report_event_PRF_palace
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.108.a #Krishna Wadiyar IV of Mysore, the wise Hindu ruler!
+		trigger = { NOT = { has_country_flag = Krishna_Raja_Wadiyar_IV_dead } }
+		ai_chance = { factor = 20 }
+		add_political_power = 40
+		add_ideas = PRF_Krishna_Raja_Wadiyar_IV_hog_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.b #Chithira Varma of Travancore, the popular progressive!
+		trigger = { NOT = { has_country_flag = Chithira_Thirunal_Balarama_Varma_dead } }
+		ai_chance = { factor = 20 }
+		add_political_power = -40
+		add_ideas = PRF_Chithira_Thirunal_Balarama_Varma_hog_sco
+		hidden_effect = {
+			create_country_leader = {
+				name = "Osman Ali Khan"
+				desc = "POLITICS_OSMAN_ALI_KHAN_DESC"
+				picture = "Portrait_Princely_Osman_Ali_Khan.tga"
+				expire = "1965.1.1"
+				ideology = social_conservative_subtype
+				traits = {}
+			}
+		}
+		set_politics = { ruling_party = social_conservative }
+		add_popularity = { ideology = social_conservative popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.c #Rajaram II of Kolhapur is a martial giant!
+		trigger = { NOT = { has_country_flag = Rajaram_II_of_Kolhapur_dead } }
+		ai_chance = { factor = 20 }
+		add_political_power = -20
+		add_ideas = PRF_Rajaram_II_of_Kolhapur_hog_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.e #Akbar Hydari, the hardened public servant!
+		trigger = { NOT = { has_country_flag = Akbar_Hydari_dead } }
+		ai_chance = { factor = 50 }
+		add_political_power = -100
+		add_ideas = PRF_Akbar_Hydari_hog_sco
+		hidden_effect = {
+			create_country_leader = {
+				name = "Osman Ali Khan"
+				desc = "POLITICS_OSMAN_ALI_KHAN_DESC"
+				picture = "Portrait_Princely_Osman_Ali_Khan.tga"
+				expire = "1965.1.1"
+				ideology = social_conservative_subtype
+				traits = {}
+			}
+		}
+		set_politics = { ruling_party = social_conservative }
+		add_popularity = { ideology = social_conservative popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.f #The liberal Madapati Rao shall emancipate our people!
+		trigger = { NOT = { has_country_flag = Madapati_Hanumantha_Rao_dead } }
+		ai_chance = { factor = 30 }
+		add_political_power = 20
+		add_ideas = PRF_Madapati_Hanumantha_Rao_hog_mli
+		hidden_effect = {
+			create_country_leader = {
+				name = "Osman Ali Khan"
+				desc = "POLITICS_OSMAN_ALI_KHAN_DESC"
+				picture = "Portrait_Princely_Osman_Ali_Khan.tga"
+				expire = "1965.1.1"
+				ideology = market_liberal_subtype
+				traits = {}
+			}
+		}
+		set_politics = { ruling_party = market_liberal }
+		add_popularity = { ideology = market_liberal popularity = 0.3 }
+	}
+}
+
+# The princes elect their national diwan
+country_event = {
+	id = prf.109
+	title = prf.109.t
+	desc = prf.109.d
+	picture = GFX_report_event_PRF_palace
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.108.a #Krishna Wadiyar IV of Mysore, the wise Hindu ruler!
+		trigger = { NOT = { has_country_flag = Krishna_Raja_Wadiyar_IV_dead } }
+		ai_chance = { factor = 40 }
+		add_political_power = 40
+		add_ideas = PRF_Krishna_Raja_Wadiyar_IV_hog_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.b #Chithira Varma of Travancore, the popular progressive!
+		trigger = { NOT = { has_country_flag = Chithira_Thirunal_Balarama_Varma_dead } }
+		ai_chance = { factor = 20 }
+		add_political_power = -40
+		add_ideas = PRF_Chithira_Thirunal_Balarama_Varma_hog_sco
+		hidden_effect = {
+			create_country_leader = {
+				name = "Osman Ali Khan"
+				desc = "POLITICS_OSMAN_ALI_KHAN_DESC"
+				picture = "Portrait_Princely_Osman_Ali_Khan.tga"
+				expire = "1965.1.1"
+				ideology = social_conservative_subtype
+				traits = {}
+			}
+		}
+		set_politics = { ruling_party = social_conservative }
+		add_popularity = { ideology = social_conservative popularity = 0.3 }
+	}
+	option = {
+		name = prf.108.c #Rajaram II of Kolhapur is a martial giant!
+		trigger = { NOT = { has_country_flag = Rajaram_II_of_Kolhapur_dead } }
+		ai_chance = { factor = 20 }
+		add_political_power = -20
+		add_ideas = PRF_Rajaram_II_of_Kolhapur_hog_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.3 }
+	}
+}
+
+# Princes contribute more to the Federation's defense
+country_event = {
+	id = prf.110
+	title = prf.110.t
+	desc = prf.110.d
+	picture = GFX_report_event_indian_soldiers
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf_110.a
+		if = {
+			limit = { owns_state = 425 }
+			load_oob = MYS_WAR
+		}
+		if = {
+			limit = { owns_state = 867 }
+			load_oob = TRV_WAR
+		}
+	}
+}
+
+
+### CIVIL WAR EVENTS
+
+# Mysore begins the civil war
+country_event = {
+	id = prf.120
+	title = prf.120.t
+	desc = prf.120.d
+	picture = GFX_report_event_PRF_war
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PRF
+		has_war = no
+		owns_state = 425
+		has_government = paternal_autocrat
+		has_completed_focus = PRF_dissolve_council
+		NOT = { has_completed_focus = PRF_kaiser_i_hind }
+		NOT = { has_completed_focus = PRF_liberal_prince }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 0.5
+			focus_progress = { focus = PRF_appoint_diwan progress > 0.25 }
+		}
+		modifier = {
+			factor = 0.5
+			focus_progress = { focus = PRF_appoint_diwan progress > 0.5 }
+		}
+		modifier = {
+			factor = 0.5
+			has_completed_focus = PRF_appoint_diwan
+		}
+	}
+	
+	option = {
+		name = prf.120.a
+		set_country_flag = PRF_mysore_revolt
+		add_popularity = { ideology = paternal_autocrat popularity = -0.1 }
+		if = {
+			limit = { MAD = { is_subject_of = ROOT } }
+			end_puppet = MAD
+		}
+		if = {
+			limit = { has_idea = PRF_Krishna_Raja_Wadiyar_IV_hog_ade }
+			remove_ideas = PRF_Krishna_Raja_Wadiyar_IV_hog_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Krishna_Raja_Wadiyar_IV_int_ade }
+			remove_ideas = PRF_Krishna_Raja_Wadiyar_IV_int_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Jayachamarajendra_Wadiyar_hog_ade }
+			remove_ideas = PRF_Jayachamarajendra_Wadiyar_hog_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Mokshagundam_Visveswaraiah_eco_ade }
+			remove_ideas = PRF_Mokshagundam_Visveswaraiah_eco_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Albion_Rajkumar_Banerjee_sec_ade }
+			remove_ideas = PRF_Albion_Rajkumar_Banerjee_sec_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Mirza_Muhammad_Ismail_hog_sco }
+			remove_ideas = PRF_Mirza_Muhammad_Ismail_hog_sco
+		}
+		if = {
+			limit = { has_idea = PRF_Mirza_Muhammad_Ismail_for_ade }
+			remove_ideas = PRF_Mirza_Muhammad_Ismail_for_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Aspy_Merwan_Engineer_cair_ade }
+			remove_ideas = PRF_Aspy_Merwan_Engineer_cair_ade
+		}
+		set_country_flag = Krishna_Raja_Wadiyar_IV_dead
+		set_country_flag = Jayachamarajendra_Wadiyar_dead
+		set_country_flag = Mokshagundam_Visveswaraiah_dead
+		set_country_flag = Albion_Rajkumar_Banerjee_dead
+		set_country_flag = Mirza_Muhammad_Ismail_dead
+		set_country_flag = Aspy_Merwan_Engineer_dead
+		remove_unit_leader = 1507 #Raja Wadiyar IV
+		remove_unit_leader = 1500 #Jayachamarajendra Wadiyar
+		remove_unit_leader = 1501 #Tarapore
+		remove_unit_leader = 1502 #Singhji
+		remove_unit_leader = 1508 #Chaudhari
+		remove_state_core = 425
+		add_state_claim = 425
+		MYS = {
+			transfer_state = 425
+			add_state_core = 425
+			hidden_effect = {
+				transfer_technology = yes
+				country_event = { id = prf.121 }
+			}
+		}
+	}
+}
+
+# Mysore set-up event
+country_event = {
+	id = prf.121
+	
+	hidden = yes
+
+	is_triggered_only = yes
+	
+	immediate = {
+		add_political_power = 200
+		load_oob = MYS_WAR
+		FROM = {
+			country_event = { id = prf.122 days = 3 } #Travancore Revolt
+		}
+		if = {
+			limit = { country_exists = MAD }
+			MAD = { country_event = { id = prf.124 days = 5 } } #Madras Revolt
+		}
+		declare_war_on = {
+			target = FROM
+			type = annex_everything
+		}
+	}
+}
+
+# Travancore joins the Mysore revolt
+country_event = {
+	id = prf.122
+	title = prf.122.t
+	desc = prf.122.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		tag = PRF
+		has_war_with = MYS
+		owns_state = 867
+	}
+	
+	option = {
+		name = prf.122.a
+		hidden_effect = {
+			if = {
+				limit = { NOT = { controls_state = 867 } }
+				set_state_controller = 867
+			}
+		}
+		remove_state_core = 867
+		add_state_claim = 867
+		if = {
+			limit = { has_idea = PRF_Chithira_Thirunal_Balarama_Varma_hog_sco }
+			remove_ideas = PRF_Chithira_Thirunal_Balarama_Varma_hog_sco
+		}
+		if = {
+			limit = { has_idea = PRF_Chithira_Thirunal_Balarama_Varma_for_ade }
+			remove_ideas = PRF_Chithira_Thirunal_Balarama_Varma_for_ade
+		}
+		if = {
+			limit = { has_idea = PRF_Nawab_Muhammad_Habibullah_sec_ade }
+			remove_ideas = PRF_Nawab_Muhammad_Habibullah_sec_ade
+		}
+		set_country_flag = Chithira_Thirunal_Balarama_Varma_dead
+		set_country_flag = Nawab_Muhammad_Habibullah_dead
+		remove_unit_leader = 1506 #Balarama Varma of Travancore
+		remove_unit_leader = 1504 #Chandrasekharan Nair
+		remove_unit_leader = 1505 #Chacko
+		TRV = {
+			transfer_state = 867
+			add_state_core = 867
+			hidden_effect = {
+				transfer_technology = yes
+				country_event = { id = prf.123 }
+			}
+		}
+	}
+}
+	
+# Travancore set-up event
+country_event = {
+	id = prf.123
+	
+	hidden = yes
+
+	is_triggered_only = yes
+	
+	immediate = {
+		add_political_power = 200
+		load_oob = TRV_WAR
+		give_military_access = MYS
+		MYS = { give_military_access = TRV }
+		add_to_war = {
+			targeted_alliance = MYS
+			enemy = PRF
+		}
+		# Just in case
+		if = {
+			limit = { has_war = no }
+			declare_war_on = {
+				target = FROM
+				type = annex_everything
+			}
+		}
+	}
+}
+
+# Madras considers joining the revolt
+country_event = {
+	id = prf.124
+	title = prf.124.t
+	desc = prf.124.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		tag = MAD
+		PRF = { has_war_with = MYS }
+		has_war = no
+	}
+
+	option = {
+		name = prf.124.a #Let us claim all of the former Madras Presidency!
+		ai_chance = { factor = 65 }
+		add_political_power = 200
+		add_state_core = 423 #Madurai
+		add_state_core = 424 #Madras
+		load_oob = MAD_WAR1
+		load_oob = MAD_WAR2
+		add_to_war = {
+			targeted_alliance = MYS
+			enemy = PRF
+		}
+		hidden_effect = {
+			give_military_access = MYS
+			MYS = { give_military_access = MAD }
+			give_military_access = TRV
+			TRV = { give_military_access = MAD }
+			PRF = { country_event = { id = prf.125 hours = 3 } }
+		}
+	}
+	option = {
+		name = prf.124.b #Our Republic shall be anchored on Cape Comorin!
+		ai_chance = { factor = 34 }
+		add_political_power = 100
+		add_state_core = 423 #Madurai
+		load_oob = MAD_WAR1
+		add_to_war = {
+			targeted_alliance = MYS
+			enemy = PRF
+		}
+		hidden_effect = {
+			give_military_access = MYS
+			MYS = { give_military_access = MAD }
+			give_military_access = TRV
+			TRV = { give_military_access = MAD }
+			PRF = { country_event = { id = prf.125 hours = 3 } }
+		}
+	}
+	option = {
+		name = prf.124.c #We can't risk open war with the Federation...
+		ai_chance = { factor = 1 }
+		add_political_power = -200
+	}
+	option = {
+		name = prf.124.e #Proclaim the state of Dravidia Nadu! Unity for all Dravidians!
+		trigger = {
+			has_country_leader = { name = "Periyar Ramasavy" }
+		}
+		ai_chance = { factor = 80 }
+		add_political_power = 200
+		add_state_core = 423 #Madurai
+		add_state_core = 424 #Madras
+		add_state_core = 425 #Mysore
+		add_state_core = 867 #Trivancore
+		add_state_claim = 427 #Hyderabad
+		add_state_claim = 426 #Orissa
+		add_state_claim = 321 #Goa
+		load_oob = MAD_WAR1
+		load_oob = MAD_WAR2
+		load_oob = MAD_WAR3
+		set_cosmetic_tag = MAD_DRAV
+		declare_war_on = {
+			target = PRF
+			type = annex_everything
+		}
+		hidden_effect = {
+			PRF = { country_event = { id = prf.125 hours = 3 } }
+		}
+	}
+}
+
+# Madras has joined the revolt
+country_event = {
+	id = prf.125
+	title = prf.125.t
+	desc = prf.125.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.125.a
+		add_political_power = -100
+		add_state_claim = 320
+		if = {
+			limit = {
+				owns_state = 423
+				controls_state = 423
+			}
+			FROM = { set_state_controller = 423 }
+		}
+	}
+}
+
+# Post-war event for the Federation
+country_event = {
+	id = prf.126
+	title = prf.126.t
+	picture = GFX_report_event_PRF_war
+	
+	desc = {
+		text = prf.126.d.all
+		trigger = {
+			owns_state = 867 #Travancore
+			owns_state = 425 #Mysore
+		}
+	}
+	desc = {
+		text = prf.126.d.some
+		trigger = {
+			OR = {
+				owns_state = 867 #Travancore
+				owns_state = 425 #Mysore
+			}
+			OR = {
+				NOT = { owns_state = 867 } #Travancore
+				NOT = { owns_state = 425 } #Mysore
+			}
+		}
+	}
+	desc = {
+		text = prf.126.d.none
+		trigger = {
+			NOT = { owns_state = 867 } #Travancore
+			NOT = { owns_state = 425 } #Mysore
+		}
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PRF
+		has_country_flag = PRF_mysore_revolt
+		has_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = prf.126.a #Give the disaffected states autonomy within the Federation
+		trigger = {
+			OR = {
+				owns_state = 867 #Travancore
+				owns_state = 425 #Mysore
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 867
+				owns_state = 425
+				owns_state = 320
+			}
+			add_political_power = 200
+			else = { add_political_power = 100 }
+		}
+		if = {
+			limit = { owns_state = 867 }
+			hidden_effect = { remove_state_claim = 867 }
+			TRV = {
+				transfer_state = 867
+				set_politics = { ruling_party = paternal_autocrat }
+			}
+			puppet = TRV
+		}
+		if = {
+			limit = { owns_state = 425 }
+			hidden_effect = { remove_state_claim = 425 }
+			MYS = {
+				transfer_state = 425
+				set_politics = { ruling_party = paternal_autocrat }
+			}
+			puppet = MYS
+		}
+		if = {
+			limit = { owns_state = 320 }
+			hidden_effect = {
+				remove_state_claim = 320
+				remove_state_core = 423
+			}
+			MAD = {
+				if = {
+					limit = { has_cosmetic_tag = MAD_DRAV }
+					drop_cosmetic_tag = yes
+				}
+				hidden_effect = {
+					remove_state_core = 424 #Madras
+					remove_state_core = 425 #Mysore
+					remove_state_core = 867 #Trivancore
+					remove_state_claim = 427 #Hyderabad
+					remove_state_claim = 426 #Orissa
+					remove_state_claim = 321 #Goa
+				}
+				transfer_state = 320
+				if = {
+					limit = { PRF = { owns_state = 423 } }
+					transfer_state = 423
+				}
+			}
+			puppet = MAD
+		}
+	}
+	option = {
+		name = prf.126.b #Incorporate them fully under federal rule
+		trigger = {
+			OR = {
+				owns_state = 867 #Travancore
+				owns_state = 425 #Mysore
+			}
+		}
+		add_national_unity = -0.05
+		if = {
+			limit = {
+				owns_state = 867
+				owns_state = 425
+				owns_state = 320
+			}
+			add_political_power = 100
+			else = { add_political_power = 50 }
+		}
+		add_state_core = 867
+		add_state_core = 425
+		if = {
+			limit = { owns_state = 320 }
+			add_state_core = 320
+			MAD = {
+				hidden_effect = {
+					remove_state_core = 423 #Madurai
+					remove_state_core = 424 #Madras
+					remove_state_core = 425 #Mysore
+					remove_state_core = 867 #Trivancore
+					remove_state_claim = 427 #Hyderabad
+					remove_state_claim = 426 #Orissa
+					remove_state_claim = 321 #Goa
+				}
+			}
+		}
+	}
+	option = {
+		name = prf.126.c #India is undone, it seems
+		trigger = {
+			NOT = { owns_state = 867 } #Travancore
+			NOT = { owns_state = 425 } #Mysore
+		}
+		set_country_flag = PRF_forced_reforms
+		clr_country_flag = Council_of_Princes_dead
+		set_politics = { ruling_party = authoritarian_democrat }
+		if = {
+			limit = { has_idea = PRF_rule_of_princes_2 }
+			swap_ideas = {
+				remove_idea = PRF_rule_of_princes_2
+				add_idea = PRF_rule_of_princes_1
+			}
+		}
+		if = {
+			limit = { has_idea = PRF_rule_of_princes_3 }
+			swap_ideas = {
+				remove_idea = PRF_rule_of_princes_3
+				add_idea = PRF_rule_of_princes_1
+			}
+		}
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+		add_ideas = PRF_Council_of_Princes_hog_ade
+	}
+}
+
+
+### RAILROAD EVENTS
+
+# Hyderabad-Deccan Railroad - Part 1
+country_event = {
+	id = prf.140
+	title = prf.140.t
+	desc = prf.140.d
+	picture = railway_construction_2
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.140.a
+		add_political_power = 50
+	}
+}
+
+# Hyderabad-Deccan Railroad - Part 2
+country_event = {
+	id = prf.141
+	title = prf.141.t
+	desc = prf.141.d
+	picture = railway_construction_2
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.141.a
+		add_political_power = 50
+	}
+}
+
+# Hyderabad-Deccan Railroad - Part 3
+country_event = {
+	id = prf.142
+	title = prf.142.t
+	desc = prf.142.d
+	picture = railway_construction_2
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.142.a
+		add_political_power = 50
+	}
+}
+
+
+### WAR EVENTS
+
+# Scheming in the North
+country_event = {
+	id = prf.145
+	title = prf.145.t
+	picture = GFX_report_event_PRF_princes
+	
+	desc = {
+		text = prf.145.d
+		trigger = {
+			DEH = { controls_state = 428 }
+		}
+	}
+	desc = {
+		text = prf.145.d.kashmir.only
+		trigger = {
+			DEH = { NOT = { controls_state = 428 } }
+		}
+	}
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.145.a #Hari Singh of Kashmir is a good reactionary, court him!
+		ai_chance = { factor = 45 }
+		custom_effect_tooltip = PRF_kashmir_may_help
+		DEH = {
+			set_country_flag = PRF_kashmir
+			country_event = { id = prf.146 days = 7 }
+		}
+	}
+	option = {
+		name = prf.145.b #Court both the powerful princes of Baroda and Kashmir!
+		trigger = {
+			DEH = { controls_state = 428 }
+		}
+		ai_chance = { factor = 55 }
+		custom_effect_tooltip = PRF_kashmir_baroda_may_help
+		DEH = {
+			set_country_flag = PRF_kashmir_baroda
+			country_event = { id = prf.146 days = 7 }
+		}
+	}
+	option = {
+		name = prf.145.c #Abandon this scheming and declare war!
+		ai_chance = { factor = 0 }
+		reverse_add_opinion_modifier = { target = DEH modifier = condemn_aggression }
+		reverse_add_opinion_modifier = { target = CAN modifier = condemn_aggression }
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+	}
+}
+
+# Delhi has a chance of crushing rebellion before it begins
+country_event = {
+	id = prf.146
+	title = prf.146.t
+	picture = GFX_report_event_PRF_princes
+	
+	desc = {
+		text = prf.146.d.kashmir
+		trigger = { has_country_flag = PRF_kashmir }
+	}
+	desc = {
+		text = prf.146.d.baroda
+		trigger = { has_country_flag = PRF_kashmir_baroda }
+	}
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		country_exists = PRF
+		NOT = { has_war_with = PRF }
+	}
+	
+	option = {
+		name = prf.146.a #Rush troops to Kashmir and arrest the Maharaja!
+		add_opinion_modifier = { target = PRF modifier = condemn_aggression }
+		random_list = {
+			60 = {
+				add_political_power = -100
+				custom_effect_tooltip = PRF_kashmir_rises
+				PRF = { country_event = { id = prf.147 } }
+			}
+			40 = {
+				add_political_power = 100
+				PRF = { country_event = { id = prf.148 } }
+			}
+		}
+	}
+	option = {
+		name = prf.146.b #Declare martial law in Baroda and Kashmir and arrest the princes!
+		add_opinion_modifier = { target = PRF modifier = condemn_aggression }
+		if = {
+			limit = { has_idea = DEH_Muhammad_Zafarullah_Khan_for_sco }
+			remove_ideas = DEH_Muhammad_Zafarullah_Khan_for_sco
+		}
+		if = {
+			limit = { has_idea = DEH_Maharaja_Pratap_Singh_Gaekwad_sec_ade }
+			remove_ideas = DEH_Maharaja_Pratap_Singh_Gaekwad_sec_ade
+		}
+		if = {
+			limit = { has_idea = DEH_Sayajirao_Gaekwad_III_mhc_sli }
+			remove_ideas = DEH_Sayajirao_Gaekwad_III_mhc_sli
+		}
+		set_country_flag = Muhammad_Zafarullah_Khan_dead
+		set_country_flag = Maharaja_Pratap_Singh_Gaekwad_dead
+		set_country_flag = Sayajirao_Gaekwad_III_dead
+		random_list = {
+			40 = {
+				add_political_power = -200
+				custom_effect_tooltip = PRF_kashmir_baroda_rises
+				PRF = { country_event = { id = prf.147 } }
+			}
+			60 = {
+				add_political_power = 100
+				PRF = { country_event = { id = prf.148 } }
+			}
+		}
+	}
+}
+
+# The scheme succeeds - war begins
+country_event = {
+	id = prf.147
+	title = prf.147.t
+	picture = GFX_report_event_PRF_war
+	
+	desc = {
+		text = prf.147.d.kashmir
+		trigger = {
+			DEH = { has_country_flag = PRF_kashmir }
+		}
+	}
+	desc = {
+		text = prf.147.d.baroda
+		trigger = {
+			DEH = { has_country_flag = PRF_kashmir_baroda }
+		}
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.147.a
+		if = {
+			limit = { DEH = { has_country_flag = PRF_kashmir } }
+			DEH = { clr_country_flag = PRF_kashmir }
+			add_political_power = 100
+		}
+		if = {
+			limit = { DEH = { has_country_flag = PRF_kashmir_baroda } }
+			DEH = { clr_country_flag = PRF_kashmir_baroda }
+			add_political_power = 200
+		}
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+		set_state_controller = 441 #Kashmir
+		load_oob = PRF_KASHMIR
+		if = {
+			limit = { DEH = { has_country_flag = PRF_kashmir_baroda } }
+			set_state_controller = 428 #Gujarat
+			load_oob = PRF_BARODA
+		}
+	}
+}
+
+# The scheme fails - war begins
+country_event = {
+	id = prf.148
+	title = prf.148.t
+	desc = prf.148.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.147.a
+		DEH = {
+			clr_country_flag = PRF_kashmir
+			clr_country_flag = PRF_kashmir_baroda
+		}
+		add_political_power = -100
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+	}
+}
+
+# Toppling Indian Socialism
+country_event = {
+	id = prf.149
+	title = prf.149.t
+	desc = prf.149.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.149.a #Instigate unrest against the collective farms in Orissa!
+		ai_chance = { factor = 100 }
+		BHC = { country_event = { id = prf.150 days = 7 } }
+	}
+	option = {
+		name = prf.149.b #Enough with this scheming - begin the war!
+		ai_chance = { factor = 0 }
+		reverse_add_opinion_modifier = { target = BHC modifier = condemn_aggression }
+		declare_war_on = {
+			target = BHC
+			type = annex_everything
+		}
+	}
+}
+
+# The Commune has a chance of crushing rebellion before it begins
+country_event = {
+	id = prf.150
+	title = prf.150.t
+	desc = prf.150.d
+	picture = GFX_report_event_india_protests
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.150.a
+		add_opinion_modifier = { target = PRF modifier = condemn_aggression }
+		random_list = {
+			50 = {
+				add_political_power = -200
+				custom_effect_tooltip = PRF_orissa_rises
+				PRF = { country_event = { id = prf.151 } }
+			}
+			50 = {
+				add_political_power = 100
+				custom_effect_tooltip = PRF_orissa_crushed
+				PRF = { country_event = { id = prf.152 } }
+			}
+		}
+	}
+}
+
+# The scheme succeeds - war begins
+country_event = {
+	id = prf.151
+	title = prf.151.t
+	desc = prf.151.d
+	picture = GFX_report_event_india_protests
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.151.a
+		add_political_power = 200
+		declare_war_on = {
+			target = BHC
+			type = annex_everything
+		}
+		set_state_controller = 426 #Orissa
+		load_oob = PRF_ORISSA
+	}
+}
+
+# The scheme fails - war begins
+country_event = {
+	id = prf.152
+	title = prf.152.t
+	desc = prf.152.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.151.a
+		add_political_power = -100
+		declare_war_on = {
+			target = BHC
+			type = annex_everything
+		}
+	}
+}
+
+# The Princely Federation offers a deal to Delhi
+country_event = {
+	id = prf.153
+	title = prf.153.t
+	desc = prf.153.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.153.a #Respond positively to these overtures
+		ai_chance = { factor = 65 }
+		set_country_flag = PRF_unholy_deal_yes
+		custom_effect_tooltip = PRF_unholy_deal
+		add_opinion_modifier = { target = PRF modifier = unholy_alliance_opinion }
+		diplomatic_relation = { country = PRF relation = non_aggression_pact }
+		PRF = { country_event = { id = prf.154 days = 1 } }
+	}
+	option = {
+		name = prf.153.b #Make promises and hedge bets
+		ai_chance = { factor = 35 }
+		set_country_flag = PRF_unholy_deal_maybe
+		custom_effect_tooltip = PRF_unholy_deal
+		PRF = { country_event = { id = prf.154 days = 1 } }
+	}
+	option = {
+		name = prf.153.c #No deals with scheming princes!
+		ai_chance = { factor = 10 }
+		PRF = { country_event = { id = prf.155 days = 1 } }
+	}
+}
+
+# Delhi accepts the deal
+country_event = {
+	id = prf.154
+	title = prf.154.t
+	desc = prf.154.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+
+	option = {
+		name = prf.154.a
+		add_opinion_modifier = { target = DEH modifier = unholy_alliance_opinion }
+	}
+}
+
+# Does Delhi honour the pact once war begins?
+country_event = {
+	id = prf.155
+	title = prf.155.t
+	desc = prf.155.d
+	picture = GFX_report_event_PRF_palace
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DEH
+		has_war = no
+		PRF = { has_war_with = BHC }
+		OR = {
+			has_country_flag = PRF_unholy_deal_yes
+			has_country_flag = PRF_unholy_deal_maybe
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = prf.155.a #Honour the pact and attack the Bhartiya Commune!
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 1.5
+				has_country_flag = PRF_unholy_deal_yes
+			}
+			modifier = {
+				factor = 0.5
+				has_army_manpower = { size < 300000 }
+			}
+		}
+		clr_country_flag = PRF_unholy_deal_yes
+		clr_country_flag = PRF_unholy_deal_maybe
+		declare_war_on = {
+			target = BHC
+			type = annex_everything
+		}
+	}
+	option = {
+		name = prf.155.b #Strike the princes in the back!
+		trigger = { has_country_flag = PRF_unholy_deal_maybe }
+		ai_chance = {
+			factor = 39
+			modifier = {
+				factor = 0.5
+				has_army_manpower = { size < 300000 }
+			}
+		}
+		clr_country_flag = PRF_unholy_deal_maybe
+		declare_war_on = {
+			target = PRF
+			type = annex_everything
+		}
+	}
+	option = {
+		name = prf.155.c #Let them expend their strength on each other
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 20
+				has_army_manpower = { size < 300000 }
+			}
+		}
+		clr_country_flag = PRF_unholy_deal_yes
+		clr_country_flag = PRF_unholy_deal_maybe
+		reverse_add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+	}
+}
+
+# Peace event with the Entente
+country_event = {
+	id = prf.160
+	title = prf.160.t
+	desc = prf.160.d
+	picture = GFX_report_event_PRF_war
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PRF
+		is_in_faction = no
+		has_war_with = DEH
+		controls_state = 439 #Delhi
+		controls_state = 427 #Hyderabad
+		controls_state = 429 #Bombay
+		surrender_progress < 0.2
+		DEH = {
+			is_in_faction = yes
+			is_faction_leader = no
+			surrender_progress > 0.8
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = prf.160.a #Propose an armistice!
+		ai_chance = { factor = 100 }
+		random_country = {
+			limit = {
+				DEH = { is_in_faction_with = PREV }
+				is_faction_leader = yes
+			}
+			country_event = { id = prf.161 }
+		}
+	}
+	option = {
+		name = prf.160.b #We shall fight on!
+		ai_chance = { factor = 0 }
+		add_political_power = -300
+	}
+}
+
+# Faction leader considers armistice
+country_event = {
+	id = prf.161
+	title = prf.161.t
+	desc = prf.161.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.161.a #We have no choice but to accept
+		ai_chance = { factor = 80 }
+		add_political_power = -100
+		FROM = {
+			white_peace = ROOT
+			annex_country = { target = DEH }
+		}
+	}
+	option = {
+		name = prf.161.b #No! The Delhi Government shall be restored!
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				any_country = {
+					has_war_with = ROOT
+					is_major = yes
+				}
+			}
+		}
+	}
+}
+
+
+### POST-WAR EVENTS
+
+# Asks to join a faction
+country_event = {
+	id = prf.170
+	title = prf.170.t
+	picture = GFX_report_event_PRF_palace
+	
+	desc = {
+		text = prf.170.d.germany
+		trigger = { tag = GER }
+	}
+	desc = {
+		text = prf.170.d.japan
+		trigger = { tag = JAP }
+	}
+	desc = {
+		text = prf.170.d.russia
+		trigger = { tag = RUS }
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = prf.170.a #Of course we welcome their alliance!
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 1.25
+				tag = JAP
+			}
+		}
+		add_political_power = 50
+		add_to_faction = PRF
+		PRF = { country_event = { id = prf.171 days = 1 } }
+	}
+	option = {
+		name = prf.170.b #No, I think not
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0.2
+				tag = JAP
+			}
+		}
+	}
+}
+
+# Informed of acceptance
+country_event = {
+	id = prf.171
+	title = prf.171.t
+	picture = GFX_report_event_PRF_palace
+	
+	desc = {
+		text = prf.171.d.germany
+		trigger = { FROM = { tag = GER } }
+	}
+	desc = {
+		text = prf.171.d.japan
+		trigger = { FROM = { tag = JAP } }
+	}
+	desc = {
+		text = prf.171.d.russia
+		trigger = { FROM = { tag = RUS } }
+	}
+	
+	is_triggered_only = yes
+
+	option = {
+		name = prf.171.a
+		add_political_power = 50
+	}
+}
+
+

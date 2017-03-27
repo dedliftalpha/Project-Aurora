@@ -2822,6 +2822,23 @@ focus = {# Review Military Policy
 		y = 0
 		completion_reward = {
 			add_political_power = 125
+			if = {
+				limit = {
+					has_global_flag = END_ACW
+				}
+				country_event = { id = usforeign.2 }
+			}
+			if = {
+				limit = {
+					OR = {
+						CAN = { owns_state = 686 }
+						CAF = { owns_state = 686 }						
+					}
+				}
+				country_event = { id = usforeign.8 }
+			}		
+			
+			
 		}
 	}
 	focus = {# War Plan Gold
@@ -2901,7 +2918,20 @@ focus = {# Review Military Policy
 		}
 		x = 65
 		y = 1
-
+		completion_reward = {
+			if = {
+				limit = { 
+					CAN = {	controls_state = 685 }
+				}
+				country_event = { id = usforeign.14 days = 2 }	
+			}			
+			if = {
+				limit = { 
+					CUB = {	controls_state = 818 }
+				}
+				country_event = { id = usforeign.18 days = 2 }	
+			}		
+		}
 	}
 	focus = {# Mexican Intervention
 		id = USA_mexican_intervention
@@ -3071,7 +3101,31 @@ focus = {# Review Military Policy
 		x = 70
 		y = 1
 		completion_reward = {
-			add_political_power = 175
+			add_political_power = 150
+			if = {
+				limit = {
+					has_global_flag = ACW_CAN_SEIZE_ALASKA
+					OR = { 
+						has_completed_focus = USA_military_junta
+						has_completed_focus = USA_american_ceaser
+					}
+				}
+				country_event = { id = usforeign.3 }
+			}
+			if = {
+				limit = {
+					has_global_flag = ACW_CAN_SEIZE_ALASKA
+					NOT = { 
+						has_completed_focus = USA_military_junta
+						has_completed_focus = USA_american_ceaser
+					}
+				}
+				country_event = { id = usforeign.6 }
+			}			
+			
+			
+			
+			
 		}
 	}
 	focus = {# Reclaiming California
@@ -3112,8 +3166,7 @@ focus = {# Review Military Policy
 		completion_reward = {
 			MEX = {country_event = { id = mexico.64 } }
 		}
-	}	
-	
+	}
 	focus = {# Reclaim Hawaii
 		id = USA_reclaiming_hawaii
 		icon = GFX_goal_generic_improve_relations
@@ -3204,7 +3257,10 @@ focus = {# Review Military Policy
 		}
 		x = 65
 		y = 5
-
+		completion_reward = {
+			add_political_power = 150
+			add_national_unity = 0.05
+		}
 	}
 	focus = {# Arsenal of Democracy
 		id = USA_democracy_arsenal

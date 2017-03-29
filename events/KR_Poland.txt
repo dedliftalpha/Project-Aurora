@@ -51,6 +51,7 @@ country_event = { # The economy fails!
 		set_cosmetic_tag = POL_REPUBLIC
 		
 		set_politics = { ruling_party = social_conservative elections_allowed = no }
+		news_event = { id = poland.200 days = 1 }
 
 		add_political_power = -100
 		#country_event = { days = 0 id = poland.8 }
@@ -220,9 +221,9 @@ country_event = { # Solutions for our immense problems
             popularity = 0.2
         }
 		
-		set_cosmetic_tag = POL_REPUBLIC
 
 		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
+		news_event = { id = poland.201 days = 1 }
 
 		hidden_effect = {
 			remove_ideas_with_trait = head_of_government
@@ -270,7 +271,7 @@ country_event = { # Chaos in the Countryside (Previously: Time to Choose)
             ideology = syndicalist
             popularity = 0.1
         }   
-
+		news_event = { id = poland.198 days = 1 }
 		set_politics = { ruling_party = totalist elections_allowed = no }
 
 		hidden_effect = { kill_country_leader = yes }
@@ -322,6 +323,7 @@ country_event = { # Chaos in the Countryside (Previously: Time to Choose)
         }   
 
 		set_politics = { ruling_party = national_populist elections_allowed = no }
+		news_event = { id = poland.199 days = 1 }
 
 		hidden_effect = { kill_country_leader = yes }
 
@@ -12495,4 +12497,234 @@ country_event = { # Marriage to the Sea
 		add_political_power = 5
 	}
 	
+}
+
+country_event = { # Monarchist Sympathies
+	id = poland.195
+	title = poland.195.t
+	desc = poland.195.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		OR = {
+			has_global_flag = POL_SYNDIE
+			has_global_flag = POL_REPUBLIC
+			has_global_flag = POL_NATIONALISTS
+			has_country_flag = POL_SIKORSKI
+		}
+		NOT = {has_idea = POL_eternal_regency}
+	}
+	
+	mean_time_to_happen = { 
+		days = 20
+	}
+	
+	option = {
+		name = poland.195.a
+		add_ideas = POL_monarchist_sympathies_idea
+	}
+	
+}
+
+country_event = { # Sikorski in Control
+	id = poland.196
+	title = poland.196.t
+	desc = poland.196.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		has_completed_focus = POL_cleanse_monarchists
+		has_country_flag = POL_SIKORSKI
+	}
+	
+	mean_time_to_happen = { 
+		days = 20
+	}
+	
+	option = {
+		name = poland.196.a
+		add_political_power = -20
+		set_cosmetic_tag = POL_REPUBLIC
+	}
+	
+	option = {
+		name = poland.196.b
+		add_political_power = 20
+	}
+	
+}
+
+country_event = { # Monarchist Compromise
+	id = poland.197
+	title = poland.197.t
+	desc = poland.197.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		NOT = {has_completed_focus = POL_cleanse_monarchists}
+		has_country_flag = POL_SIKORSKI
+		has_idea = POL_monarchist_sympathies_idea
+	}
+	
+	mean_time_to_happen = { 
+		days = 70
+	}
+	
+	option = {
+		name = poland.197.a
+		add_political_power = -100
+		set_global_flag = POL_MON_COMPROMISE
+		remove_ideas = POL_monarchist_sympathies_idea
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = 0.20
+		}
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.10
+		}
+		add_popularity = {
+			ideology = social_conservative
+			popularity = 0.10
+		}
+	}
+	
+	option = {
+		name = poland.197.b
+		add_political_power = 10
+	}
+	
+}
+
+news_event = { # Syndies in power
+	id = poland.198
+	title = poland.198.t
+	desc = poland.198.d
+	picture = GFX_POL_election_event
+
+	major = yes
+
+	is_triggered_only = yes
+
+	#show_major = {
+	#	NOT = { tag = POL }
+	#}
+
+	option = {
+		name = poland.198.a
+		trigger = {
+			NOT = {
+					tag = POL
+					
+			}
+		}
+	}
+	option = {
+		name = poland.198.b
+		trigger = {
+			tag = POL
+		}
+	}
+}
+
+news_event = { # Nationalists in power
+	id = poland.199
+	title = poland.199.t
+	desc = poland.199.d
+	picture = GFX_POL_election_event
+
+	major = yes
+
+	is_triggered_only = yes
+
+	#show_major = {
+	#	NOT = { tag = POL }
+	#}
+
+	option = {
+		name = poland.199.a
+		trigger = {
+			NOT = {
+					tag = POL
+					
+			}
+		}
+	}
+	option = {
+		name = poland.199.b
+		trigger = {
+			tag = POL
+		}
+	}
+}
+
+news_event = { # Declared the Republic
+	id = poland.200
+	title = poland.200.t
+	desc = poland.200.d
+	picture = GFX_POL_election_event
+
+	major = yes
+
+	is_triggered_only = yes
+
+	#show_major = {
+	#	NOT = { tag = POL }
+	#}
+
+	option = {
+		name = poland.200.a
+		trigger = {
+			NOT = {
+					tag = POL
+					
+			}
+		}
+	}
+	option = {
+		name = poland.200.b
+		trigger = {
+			tag = POL
+		}
+	}
+}
+
+news_event = { # Military forms new government
+	id = poland.201
+	title = poland.201.t
+	desc = poland.201.d
+	picture = GFX_POL_election_event
+
+	major = yes
+
+	is_triggered_only = yes
+
+	#show_major = {
+	#	NOT = { tag = POL }
+	#}
+
+	option = {
+		name = poland.201.a
+		trigger = {
+			NOT = {
+					tag = POL
+					
+			}
+		}
+	}
+	option = {
+		name = poland.201.b
+		trigger = {
+			tag = POL
+		}
+	}
 }

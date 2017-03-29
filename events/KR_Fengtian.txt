@@ -4946,7 +4946,293 @@ country_event = { #Investment Shortage Ended
 		remove_ideas = FNG_Investment_Dearth
 	}
 }
+
+# The Hiroshima Proposal/Packages #
+
+country_event = { # Ishiwara makes the proposal in Fengtian
+	id = fengtian.new.34
+	title = fengtian.new.34.t
+	desc = fengtian.new.34.d
 	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = FNG
+		has_completed_focus = FNG_The_Hiroshima_Proposal
+	}
+	
+	option = { # Zhang Accepts the Proposal
+		name = fengtian.new.34.a
+		set_global_flag = hiroshima_proposal
+		add_popularity = { 
+			ideology = market_liberal popularity = 0.01
+		}
+	}
+	
+	option = { # Zhang Refuses the Proposal
+		name = fengtian.new.34.b
+	}	
+}
+
+country_event = { # Ishiwara makes the proposal in Japan
+	id = fengtian.new.35
+	title = fengtian.new.35.t
+	desc = fengtian.new.35.d
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 35
+	}
+	
+	trigger = { # More than enough equipment for 4 standard Fengtian infantry divisions
+		tag = JAP
+		has_global_flag = hiroshima_proposal
+		JAP = { 
+			has_tech = infantry_weapons1
+			has_tech = artillery1
+			has_equipment = {
+				infantry_weapons1 > 9000
+				artillery1 > 3000
+			}
+		}
+	}
+	
+	option = { # Japan Accepts the Proposal
+		name = fengtian.new.35.a
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.37
+				days = 2
+			}
+		}
+	}
+	
+	option = { # Japan Refuses the proposal
+		name = fengtian.new.35.b
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.36
+				days = 2
+			}
+		}
+	}
+}
+
+
+country_event = { # Fengtian Learns that the Hiroshima Proposal was refused
+	id = fengtian.new.36
+	title = fengtian.new.36.t
+	desc = fengtian.new.36.d
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = fengtian.new.36.a
+		clr_global_flag = hiroshima_proposal
+		add_political_power = -10
+	}
+}
+
+country_event = { # Fengtian receives the first Hiroshima Package
+	id = fengtian.new.37
+	title = fengtian.new.37.t
+	desc = fengtian.new.37.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { # The Package is received
+		name = fengtian.new.37.a
+		add_popularity = { 
+			ideology = market_liberal popularity = 0.03
+		}
+		JAP = {
+			send_equipment = {
+				target = FNG
+				type = infantry_weapons1
+				amount = 4000
+			}
+			send_equipment = {
+				target = FNG
+				type = artillery1
+				amount = 100
+			}
+		}
+	}
+}
+
+country_event = { # Japan Chooses whether to send the Second Hiroshima Package
+	id = fengtian.new.38
+	title = fengtian.new.38.t
+	desc = fengtian.new.38.d
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	trigger = { 
+		tag = JAP
+		has_global_flag = hiroshima_proposal
+		JAP = { 
+			has_tech = infantry_weapons2
+			has_tech = artillery2
+			has_equipment = {
+				infantry_weapons2 > 9000
+				artillery2 > 3000
+				support_equipment2 > 200
+			}
+		}
+	}
+	option = { # The Package is sent
+		name = fengtian.new.38.a
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.39
+				days = 2
+			}
+		}
+	}
+	option = { # The Package is not sent
+		name = fengtian.new.38.b
+		add_political_power = -30
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.36
+				days = 2
+			}
+		}
+	}
+}
+
+country_event = { # Fengtian Receives the Second Hiroshima Package
+	id = fengtian.new.39
+	title = fengtian.new.39.t
+	desc = fengtian.new.39.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.39.a
+		add_popularity = { 
+			ideology = market_liberal popularity = 0.02
+		}
+		JAP = {
+			send_equipment = {
+				target = FNG
+				type = infantry_weapons2
+				amount = 4000
+			}
+			send_equipment = {
+				target = FNG
+				type = artillery2
+				amount = 100
+			}
+			send_equipment = {
+				target = FNG
+				type = support_equipment2
+				amount = 100
+			}
+		}
+	}
+}
+
+country_event = { # Japan Chooses whether to send the Third Hiroshima Package
+	id = fengtian.new.40
+	title = fengtian.new.40.t
+	desc = fengtian.new.40.d
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	trigger = {
+		tag = JAP
+		has_global_flag = hiroshima_proposal
+		JAP = { 
+			has_tech = improved_infantry_weapons
+			has_tech = artillery3
+			has_equipment = {
+				improved_infantry_weapons > 9000
+				artillery3 > 3000
+				support_equipment > 200
+			}
+		}
+	}
+	
+	option = { # The second package is sent
+		name = fengtian.new.40.a
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.41
+				days = 2
+			}
+		}
+	}
+	
+	option = { # The Package is not sent
+		name = fengtian.new.40.b
+		FNG = {
+			country_event = {
+				id = fengtian.new.36
+			}
+		}
+	}
+}
+
+country_event = { # Fengtian Receives the Third Hiroshima Package
+	id = fengtian.new.41
+	title = fengtian.new.41.t
+	desc = fengtian.new.41.d
+		
+	fire_only_once = yes
+		
+	is_triggered_only = yes
+		
+	option = {
+		name = fengtian.new.41.a
+		add_popularity = { 
+			ideology = market_liberal popularity = 0.01
+		}
+		JAP = {
+			send_equipment = {
+				target = FNG
+				type = infantry_weapons3
+				amount = 4000
+			}
+			send_equipment = {
+				target = FNG
+				type = artillery2
+				amount = 100
+			}
+			send_equipment = {
+				target = FNG
+				type = cat_medium_armor
+				amount = 40
+			}
+		}
+	}
+}
+
 #########################################
 ### Fengtian Informal Empire Mechanic ###
 #########################################
@@ -4959,9 +5245,11 @@ country_event = {
 	desc = kr.informalempire.1.d
 
 	fire_only_once = no
+	
 	is_triggered_only = yes
 
-	immediate = {add_ideas = FNG_informal_empire_1
+	immediate = {
+		add_ideas = FNG_informal_empire_1
 		hidden_effect = {
 			remove_ideas = {
 			FNG_informal_empire_2

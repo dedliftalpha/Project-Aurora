@@ -3250,10 +3250,25 @@ focus_tree = {
 		
 		available = {
 			has_war = no
+			owns_state = 432 #Assam
+			432 = { is_core_of = PRF }
 		}
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 3
+				owns_state = 858 #Arunchal Pradesh
+			}
+			modifier = {
+				factor = 0
+				858 = {
+					owner = {
+						NOT = { tag = PRF }
+						strength_ratio = { tag = PRF ratio > 1.0 }
+					}
+				}
+			}
 		}
 		
 		bypass = {
@@ -3266,13 +3281,14 @@ focus_tree = {
 		completion_reward = {
 			add_state_core = 858
 			if = {
-				limit = { BHU = { owns_state = 858 } }
-				create_wargoal = {
-					type = take_core_state
-					target = BHU
+				limit = {
+					BHU = {
+						owns_state = 858
+						controls_state = 858
+					}
 				}
+				country_event = { id = prf.183 }
 			}
-			# TODO: add event
 		}
 	}
 	
@@ -3288,6 +3304,8 @@ focus_tree = {
 		
 		available = {
 			has_war = no
+			owns_state = 438 #Lucknow
+			438 = { is_core_of = PRF }
 		}
 		
 		ai_will_do = {
@@ -3295,8 +3313,8 @@ focus_tree = {
 		}
 		
 		bypass = {
-			owns_state = 814
-			owns_state = 815
+			owns_state = 814 #Uttarakhand
+			owns_state = 815 #Gorakhpur
 			814 = { is_core_of = PRF }
 			815 = { is_core_of = PRF }
 		}
@@ -3307,13 +3325,22 @@ focus_tree = {
 			add_state_core = 814
 			add_state_core = 815
 			if = {
-				limit = { NEP = { owns_state = 815 } }
-				create_wargoal = {
-					type = take_core_state
-					target = NEP
+				limit = {
+					NEP = {
+						OR = {
+							AND = {
+								owns_state = 814
+								controls_state = 814
+							}
+							AND = {
+								owns_state = 815
+								controls_state = 815
+							}
+						}
+					}
 				}
+				country_event = { id = prf.187 }
 			}
-			# TODO: add event
 		}
 	}
 	
@@ -3328,17 +3355,40 @@ focus_tree = {
 		y = 4
 		
 		available = {
-			always = no
+			has_war = no
+			owns_state = 427 #Hyderabad
+			OR = {
+				country_exists = MAD
+				country_exists = TRV
+				country_exists = MYS
+			}
 		}
 		
 		ai_will_do = {
 			factor = 1
 		}
 		
+		bypass = {
+			NOT = { country_exists = MAD }
+			NOT = { country_exists = TRV }
+			NOT = { country_exists = MYS }
+		}
+		
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			# TODO: add event
+			if = {
+				limit = { country_exists = MAD }
+				MAD = { country_event = { id = prf.191 days = 1 } }
+			}
+			if = {
+				limit = { country_exists = TRV }
+				TRV = { country_event = { id = prf.191 days = 1 } }
+			}
+			if = {
+				limit = { country_exists = MYS }
+				MYS = { country_event = { id = prf.191 days = 1 } }
+			}
 		}
 	}
 	
@@ -3359,7 +3409,8 @@ focus_tree = {
 		y = 5
 		
 		available = {
-			always = no
+			has_war = no
+			owns_state = 423 #Madurai
 		}
 		
 		ai_will_do = {
@@ -3369,7 +3420,49 @@ focus_tree = {
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			# TODO: add event
+			add_state_claim = 422 #Ceylon
+			add_state_claim = 733 #Andaman
+			add_state_claim = 281 #Maldiven
+			if = {
+				limit = {
+					OR = {
+						GER = { owns_state = 422 }
+						GER = { owns_state = 733 }
+						GER = { owns_state = 281 }
+						CEY = { is_subject_of = GER }
+					}
+					GER = {
+						has_war = yes
+						any_enemy_country = { is_major = yes }
+					}
+					NOT = { is_in_faction_with = PRF }
+				}
+				GER = { country_event = { id = prf.194 } }
+			}
+			if = {
+				limit = {
+					OR = {
+						GER = { owns_state = 422 }
+						GER = { owns_state = 733 }
+						GER = { owns_state = 281 }
+						CEY = { is_subject_of = GER }
+					}
+					GER = { is_in_faction_with = PRF }
+				}
+				GER = { country_event = { id = prf.195 } }
+			}
+			if = {
+				limit = {
+					CEY = {
+						owns_state = 422
+						NOT = { is_subject_of = GER }
+					}
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = CEY
+				}
+			}
 		}
 	}
 
@@ -3391,16 +3484,42 @@ focus_tree = {
 		
 		available = {
 			always = no
+			OR = {
+				owns_state = 425 #Mysore
+				owns_state = 868 #Kolhapur
+			}
 		}
 		
 		ai_will_do = {
 			factor = 1
 		}
 		
+		bypass = {
+			321 = { #Goa
+				is_owned_by = PRF
+				is_core_of = PRF
+			}
+		}
+		
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			# TODO: add event
+			add_state_core = 321 #Goa
+			random_country = {
+				limit = {
+					owns_state = 321
+					NOT = { tag = PRF }
+					NOT = { is_in_faction_with = PRF }
+					OR = {
+						is_major = no
+						AND = {
+							has_war = yes
+							any_enemy_country = { is_major = yes }
+						}
+					}
+				}
+				country_event = { id = prf.198 }
+			}
 		}
 	}	
 	
@@ -3422,12 +3541,53 @@ focus_tree = {
 		
 		available = {
 			has_war = no
-			owns_state = 432
+			owns_state = 430 #East Bengal
 			country_exists = BUR
+			BUR = { NOT = { is_subject_of = PRF } }
 		}
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 0
+				NOT = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = BUR
+				strength_ratio = { tag = BUR ratio < 3.0 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { country_exists = BUR }
+				any_neighbor_country = {
+					owns_state = 288
+					strength_ratio = { tag = PRF ratio > 1.0 }
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = BUR
+				BUR = { is_in_faction = yes }
+				is_in_faction = no
+			}
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { country_exists = BUR }
+				any_neighbor_country = {
+					owns_state = 288
+					is_in_faction = yes
+				}
+			}
+		}
+		
+		bypass = {
+			BUR = { is_subject_of = PRF }
 		}
 		
 		available_if_capitulated = yes
@@ -3438,16 +3598,27 @@ focus_tree = {
 				add_claim_by = PRF
 			}
 			if = {
-				limit = { BUR = { is_subject_of = PRF } }
-				annex_country = { target = BUR }
-				else = {
-					create_wargoal = {
-						type = annex_everything
-						target = BUR
+				limit = { country_exists = BUR }
+				create_wargoal = {
+					type = annex_everything
+					target = BUR
+				}
+			}
+			if = {
+				limit = {
+					NOT = { country_exists = BUR }
+					NOT = { owns_state = 288 }
+				}
+				random_country = {
+					limit = { owns_state = 288 }
+					PRF = {
+						create_wargoal = {
+							type = take_claimed_state
+							target = PREV
+						}
 					}
 				}
 			}
-			# TODO: add event
 		}
 	}	
 
@@ -3464,15 +3635,51 @@ focus_tree = {
 		available = {
 			has_war = no
 			country_exists = SIA
-			SIA = { is_subject = no }
+			NOT = { SIA = { is_subject_of = PRF } }
 			OR = {
-				owns_state = 288
+				owns_state = 288 #Burma
 				BUR = { is_subject_of = PRF }
 			}
 		}
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 0
+				NOT = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = SIA
+				strength_ratio = { tag = SIA ratio < 3.0 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { country_exists = SIA }
+				any_neighbor_country = {
+					owns_state = 289 #Siam
+					strength_ratio = { tag = PRF ratio > 1.0 }
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = SIA
+				SIA = { is_in_faction = yes }
+				is_in_faction = no
+			}
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { country_exists = SIA }
+				any_neighbor_country = {
+					owns_state = 289 #Siam
+					is_in_faction = yes
+				}
+			}
 		}
 		
 		available_if_capitulated = yes
@@ -3482,7 +3689,6 @@ focus_tree = {
 				type = annex_everything
 				target = SIA
 			}
-			# TODO: add event
 		}
 	}
 	

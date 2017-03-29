@@ -1684,7 +1684,10 @@ focus_tree = {
 		prerequisite = { focus = DEH_unifyindia }
 		available = {
 			has_war = no
-			POR = { owns_state = 321 }
+			OR = {
+				owns_state = 425 #Mysore
+				owns_state = 868 #Kolhapur
+			}
 		}
 		cost = 5
 		x = 20
@@ -1706,13 +1709,21 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			if = {
-				limit = { NOT = { owns_state = 321 } }
-				transfer_state = 321
-			}
-			add_state_core = 321
-			POR = {
-				#country_event = portugal.0 invalid event
+			add_state_core = 321 #Goa
+			random_country = {
+				limit = {
+					owns_state = 321
+					NOT = { tag = PRF }
+					NOT = { is_in_faction_with = PRF }
+					OR = {
+						is_major = no
+						AND = {
+							has_war = yes
+							any_enemy_country = { is_major = yes }
+						}
+					}
+				}
+				country_event = { id = prf.198 }
 			}
 		}
 	}
@@ -1723,16 +1734,7 @@ focus_tree = {
 		prerequisite = { focus = DEH_unifyindia }
 		available = {
 			has_war = no
-			GER = { has_war_with = FRA }
-			OR = {
-				GER = { owns_state = 422 } #Ceylon
-				GER = { owns_state = 281 } #Malediven
-				GER = { owns_state = 733 } #Andaman
-				CEY = {
-					is_subject_of = GER
-					owns_state = 422
-				}
-			}
+			owns_state = 423 #Madurai
 		}
 		cost = 10
 		x = 21
@@ -1743,33 +1745,48 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_state_core = 422 #Ceylon
-			add_state_core = 281 #Malediven
-			add_state_core = 733 #Andaman
-			
+			add_state_claim = 422 #Ceylon
+			add_state_claim = 733 #Andaman
+			add_state_claim = 281 #Maldiven
+			if = {
+				limit = {
+					OR = {
+						GER = { owns_state = 422 }
+						GER = { owns_state = 733 }
+						GER = { owns_state = 281 }
+						CEY = { is_subject_of = GER }
+					}
+					GER = {
+						has_war = yes
+						any_enemy_country = { is_major = yes }
+					}
+					NOT = { is_in_faction_with = PRF }
+				}
+				GER = { country_event = { id = prf.194 } }
+			}
+			if = {
+				limit = {
+					OR = {
+						GER = { owns_state = 422 }
+						GER = { owns_state = 733 }
+						GER = { owns_state = 281 }
+						CEY = { is_subject_of = GER }
+					}
+					GER = { is_in_faction_with = PRF }
+				}
+				GER = { country_event = { id = prf.195 } }
+			}
 			if = {
 				limit = {
 					CEY = {
-						is_subject_of = GER
 						owns_state = 422
+						NOT = { is_subject_of = GER }
 					}
 				}
-				transfer_state = 422
-			}
-			GER = {
-				if = {
-					limit = { owns_state = 422 }
-					DEH = { transfer_state = 422 }
+				create_wargoal = {
+					type = annex_everything
+					target = CEY
 				}
-				if = {
-					limit = { owns_state = 281 }
-					DEH = { transfer_state = 281 }
-				}
-				if = {
-					limit = { owns_state = 733 }
-					DEH = { transfer_state = 733 }
-				}
-				#country_event = GER.100 invalid event
 			}
 		}
 	}
@@ -1795,11 +1812,32 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_state_core = 288
-			add_state_core = 640
-			add_state_core = 72
-			add_state_core = 701
-			add_state_core = 790
+			every_state = {
+				limit = { is_core_of = BUR }
+				add_core_of = DEH
+			}
+			if = {
+				limit = { country_exists = BUR }
+				create_wargoal = {
+					type = annex_everything
+					target = BUR
+				}
+			}
+			if = {
+				limit = {
+					NOT = { country_exists = BUR }
+					NOT = { owns_state = 288 }
+				}
+				random_country = {
+					limit = { owns_state = 288 }
+					DEH = {
+						create_wargoal = {
+							type = take_core_state
+							target = PREV
+						}
+					}
+				}
+			}
 		}
 	}
 

@@ -1253,7 +1253,7 @@ focus_tree = {
 	focus = {# Entice the Bourgeois
 		id = CSA_intence_the_bourgise
 		icon = GFX_goal_syndicalism
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_war_syndicalism
 		}
@@ -1295,7 +1295,7 @@ focus_tree = {
 	focus = {# workers coops
 		id = CSA_workers_coops
 		icon = GFX_goal_autonomism
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_intence_the_bourgise
 		}
@@ -1308,7 +1308,7 @@ focus_tree = {
 	focus = {# build more military factories
 		id = CSA_military_build_up
 		icon = GFX_goal_generic_construct_civ_factory
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_intence_the_bourgise
 		}
@@ -1346,7 +1346,7 @@ focus_tree = {
 	focus = {# embrace Georgism
 		id = CSA_georgism
 		icon = GFX_goal_generic_construct_civilian
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_workers_coops
 		}
@@ -1362,7 +1362,7 @@ focus_tree = {
 	focus = {# Socialism with American characteristics
 		id = CSA_syndicalist_bonds
 		icon = GFX_goal_anarcho_communism
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_georgism
 		}
@@ -1400,7 +1400,7 @@ focus_tree = {
 	focus = {# Industrial Democracy
 		id = CSA_industrial_democracy
 		icon = GFX_goal_syndicalist_industry
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_georgism
 		}
@@ -1413,7 +1413,7 @@ focus_tree = {
 	focus = {# Market Socialism
 		id = CSA_market_socialism
 		icon = GFX_goal_generic_positive_trade_relations
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_syndicalist_bonds
 		}
@@ -2031,7 +2031,7 @@ focus_tree = {
 	focus = {# Reclaiming America
 		id = CSA_reclaiming_america
 		icon = GFX_goal_support_democracy
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_reed_doctrine
 		}
@@ -2127,7 +2127,9 @@ focus_tree = {
 		}
 		x = 57
 		y = 1
-
+		completion_reward = {
+			add_political_power = 150
+		}
 	}
 	focus = {# Intervene in Cuba
 		id = CSA_cuban_intervnetion
@@ -2138,7 +2140,33 @@ focus_tree = {
 		}
 		x = 59
 		y = 2
-
+		completion_reward = {	
+			if = {# syndie Cuba
+				limit = {
+					CUB = {
+						OR = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+			add_opinion_modifier = { target = CUB modifier = CSA_international_friendship }
+			CUB = { add_opinion_modifier = { target = ROOT modifier = CSA_international_friendship } }
+			}
+			if = {# Capitalist Cuba
+				limit = {
+					CUB = {
+						NOT = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+			country_event = { id = combinedsyndicates.217 days = 5 }
+			}
+		}
 	}
 	focus = {# Haitian Intervention
 		id = CSA_haitian_intervention
@@ -2149,7 +2177,33 @@ focus_tree = {
 		}
 		x = 59
 		y = 3
-
+		completion_reward = {	
+			if = {# syndie Haiti
+				limit = {
+					HAI = {
+						OR = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+			add_opinion_modifier = { target = HAI modifier = CSA_international_friendship }
+			HAI = { add_opinion_modifier = { target = ROOT modifier = CSA_international_friendship } }
+			}
+			if = {# Capitalist Haiti
+				limit = {
+					HAI = {
+						NOT = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+			country_event = { id = combinedsyndicates.222 days = 5 }
+			}
+		}
 	}
 	focus = {# Dominican Intervention
 		id = CSA_dominican_interventiom
@@ -2160,44 +2214,139 @@ focus_tree = {
 		}
 		x = 59
 		y = 4
-
+		completion_reward = {	
+			if = {# syndie Dominican Republic
+				limit = {
+					DOM = {
+						OR = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+			add_opinion_modifier = { target = DOM modifier = CSA_international_friendship }
+			DOM = { add_opinion_modifier = { target = ROOT modifier = CSA_international_friendship } }
+			}
+			if = {# Capitalist Dominican Republic
+				limit = {
+					DOM = {
+						NOT = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+				country_event = { id = combinedsyndicates.227 days = 5 }
+			}
+		}
 	}
 	focus = {# Help Central America
 		id = CSA_help_centro_america
 		icon = GFX_goal_generic_military_deal
-		cost = 10.00.00
+		cost = 10.00
 		prerequisite = {
 			focus = CSA_plan_purple
 		}
 		x = 56
 		y = 2
 		completion_reward = {
-			add_opinion_modifier = { target = NIC modifier = CSA_imperalist_embargo }
-			NIC = { add_opinion_modifier = { target = ROOT modifier = CSA_imperalist_embargo } }	
-			country_event = { id = combinedsyndicates.15 }			
+			IF = {
+				limit = {
+					NOT = { country_exists = GUA }
+					country_exists = NIC
+				}
+				country_event = { id = combinedsyndicates.216 }	
+			}
+			IF = {
+				limit = {
+					AND = {
+					country_exists = GUA 
+					country_exists = NIC
+					}
+				}
+				add_opinion_modifier = { target = NIC modifier = CSA_imperalist_embargo }
+				NIC = { add_opinion_modifier = { target = ROOT modifier = CSA_imperalist_embargo } }	
+			}		
+			IF = {
+				limit = {
+					NOT = { country_exists = NIC }
+					country_exists = GUA
+				}
+				add_opinion_modifier = { target = GUA modifier = CSA_international_trade }
+				GUA = { add_opinion_modifier = { target = ROOT modifier = CSA_international_trade } }	
+			}			
 		}
 	}
 	focus = {# Panama Crisis
 		id = CSA_panama_crisis
 		icon = GFX_goal_generic_war_with_comintern
 		cost = 10.00
+		bypass = { NOT = { country_exists = PNM } }		
 		prerequisite = {
 			focus = CSA_help_centro_america
 		}
 		x = 56
 		y = 3
-
+		completion_reward = {
+			if = {# Friendly Syndie Panama
+				limit = {
+					PNM = {
+						OR = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}
+				}
+			add_opinion_modifier = { target = PNM modifier = CSA_international_friendship }
+			PNM = { add_opinion_modifier = { target = ROOT modifier = CSA_international_friendship } }
+			}
+			if = {# Evil Capitalist Panama!
+				limit = {
+					PNM = {
+						NOT = {
+							has_government = radical_socialist
+							has_government = syndicalist
+							has_government = totalist
+						}
+					}			
+				}
+				country_event = { id = combinedsyndicates.232 days = 5 }
+			}
+		}
 	}
-	focus = {# Fate of Panama
+	focus = {# Fate of the Panama Canal
 		id = CSA_fate_of_panama
 		icon = GFX_goal_generic_forceful_treaty
-		cost = 10.00.00
+		cost = 10.00
+		available = {
+			OR = {
+				CSA = {controls_state = 685}
+			}	
+		}
+		bypass = {
+			or = {
+				GUA = {controls_state = 685}
+				PNM = {
+					or = {
+						has_government = radical_socialist
+						has_government = syndicalist
+						has_government = totalist
+					}
+					controls_state = 685
+				}			
+			}
+		}
 		prerequisite = {
 			focus = CSA_panama_crisis
 		}
 		x = 56
 		y = 4
-
+		completion_reward = {	
+			country_event = { id = combinedsyndicates.237 days = 2 }
+		}
 	}	
 ###Pax Americana###	
 	focus = {# Pax Americana
@@ -2222,7 +2371,9 @@ focus_tree = {
 		}
 		x = 50
 		y = 5
-
+		completion_reward = {
+			add_political_power = 150
+		}
 	}	
 #############################
 ### Reconstruction Policy ###
@@ -2236,7 +2387,7 @@ focus_tree = {
 			focus = CSA_syndicalism
 			focus = CSA_market_socialism
 		}
-		available = { has_country_flag = END_ACW }	
+		available = { has_global_flag = END_ACW }	
 		x = 27
 		y = 7
 		completion_reward = {

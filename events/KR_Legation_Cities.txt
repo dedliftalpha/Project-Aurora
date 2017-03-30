@@ -1384,6 +1384,9 @@ country_event = { # Seize foreign investments ?
 			NOT = {
 				is_in_faction_with = AST
 			}
+			NOT = {
+				is_in_faction_with = RUS
+			}			
 		}
 		date > 1936.5.21
 	}
@@ -1472,6 +1475,17 @@ country_event = { # Seize foreign investments ?
 			hidden_effect = { AST = { country_event = { id = legcities.34 days = 1 }}}
 			add_opinion_modifier = { target = AST modifier = INVEST_SEIZED } # -60
 		}
+		
+		if = {
+			limit = {
+				NOT = {
+					is_in_faction_with = RUS
+				}
+			}
+
+			hidden_effect = { RUS = { country_event = { id = legcities.43 days = 1 }}}
+			add_opinion_modifier = { target = RUS modifier = INVEST_SEIZED } # -60
+		}		
 
 		743 = {remove_building = { type = industrial_complex level = 1 state = 743 }}
 		746 = {remove_building = { type = industrial_complex level = 1 state = 746 }}
@@ -1653,6 +1667,17 @@ country_event = { # Seize foreign investments ?
 			hidden_effect = { AST = { country_event = { id = legcities.40 days = 1 }}}
 			add_opinion_modifier = { target = AST modifier = INVEST_SEIZED } # -60
 		}
+		
+		if = {
+			limit = {
+				NOT = {
+					is_in_faction_with = RUS
+				}
+			}
+
+			hidden_effect = { RUS = { country_event = { id = legcities.44 days = 1 }}}
+			add_opinion_modifier = { target = RUS modifier = INVEST_SEIZED } # -60
+		}		
 
 		add_timed_idea = { idea = INVEST_SEIZED_YOU_COMP days = 180 }
 		set_country_flag = INVEST_SEIZED
@@ -1734,6 +1759,16 @@ country_event = { # Seize foreign investments ?
 
 			add_opinion_modifier = { target = AST modifier = INVEST_NO_SEIZED } # 40
 		}
+		
+		if = {
+			limit = {
+				NOT = {
+					tag = RUS
+				}
+			}
+
+			add_opinion_modifier = { target = RUS modifier = INVEST_NO_SEIZED } # 40
+		}		
 
 		if = {
 			limit = {
@@ -2690,5 +2725,141 @@ country_event = { # Make sure no legation cities profits if they don't exist.
 		name = legcities.41.a
 
 		remove_ideas = PROFF_LEG_CITIES
+	}
+}
+
+country_event = { # Profits from Legation cities
+	id = legcities.42
+	title = legcities.42.t
+	desc = legcities.42.d
+	picture = profits
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = RUS
+		country_exists = LEC
+		owns_state = 408 
+		controls_state = 408 
+	NOT = {
+	country_exists = TRM
+	}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = {
+		name = legcities.22.a
+
+		add_ideas = PROFF_LEG_CITIES
+		add_political_power = 20
+	}
+}
+
+country_event = { # Profits from Legation cities no longer available
+	id = legcities.43
+	title = legcities.43.t
+	desc = legcities.43.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = legcities.32.a
+
+		ai_chance = { factor = 99 }
+
+		add_timed_idea = { idea = INVEST_SEIZED days = 180 }
+		add_political_power = -40
+
+		every_country = {
+			limit = {
+				owns_state = 743
+			}
+
+			add_opinion_modifier = { modifier = embargo }
+			add_opinion_modifier = { modifier = INVESTMENTS_SEIZED }
+		}
+	}
+
+	option = {
+		name = legcities.32.b
+
+		ai_chance = { factor = 1 }
+
+		trigger = {
+			is_subject = no
+			is_ai = no
+		}
+
+		add_timed_idea = { idea = INVEST_SEIZED days = 180 }
+		add_political_power = -40
+
+		every_country = {
+			limit = {
+				owns_state = 743
+			}
+
+			add_opinion_modifier = { modifier = embargo }
+			add_opinion_modifier = { modifier = INVESTMENTS_SEIZED }
+			declare_war_on = { type = annex_everything	}
+		}
+	}
+}
+
+country_event = { # Profits from Legation cities no longer available
+	id = legcities.44
+	title = legcities.44.t
+	desc = legcities.44.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = legcities.38.a
+
+		add_timed_idea = { idea = INVEST_SEIZED_COMP days = 180 }
+
+		if = {
+			limit = {
+				SQI = { owns_state = 743 }
+			}
+
+			add_opinion_modifier = { target = SQI modifier = INVESTMENTS_COMPENSATED } # -15
+		}
+
+		if = {
+			limit = {
+				CHI = { owns_state = 743 }
+			}
+
+			add_opinion_modifier = { target = CHI modifier = INVESTMENTS_COMPENSATED } # -15
+		}
+
+		if = {
+			limit = {
+				QIE = { owns_state = 743 }
+			}
+
+			add_opinion_modifier = { target = QIE modifier = INVESTMENTS_COMPENSATED } # -15
+		}
+
+		if = {
+			limit = {
+				FNG = { owns_state = 743 }
+			}
+
+			add_opinion_modifier = { target = FNG modifier = INVESTMENTS_COMPENSATED } # -15
+		}
+
+		if = {
+			limit = {
+				YUN = { owns_state = 743 }
+			}
+
+			add_opinion_modifier = { target = YUN modifier = INVESTMENTS_COMPENSATED } # -15
+		}
 	}
 }

@@ -623,6 +623,9 @@ spanish_civil_war-kingdom_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		} 
 		NOT = { tag = POR }
 		NOT = { tag = AUS }
 		NOT = { tag = ITA }
@@ -719,6 +722,9 @@ spanish_civil_war-carlist_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		NOT = { tag = RUS }
 		NOT = { capital_scope = { is_on_continent = asia } }
 		OR = { #Must be absolute power leaning government
@@ -809,6 +815,9 @@ spanish_civil_war-cnt_support= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		NOT = { capital_scope = { is_on_continent = asia } }
 		OR = { #Must be syndiclist leaning countries
 			has_government = totalist
@@ -890,6 +899,9 @@ american_civil_war-csa= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		NOT = { tag = JAP }
 		OR = { #must have a syndiclist leaning government
 			has_government = totalist
@@ -962,6 +974,9 @@ american_civil_war-usa= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		NOT = { tag = JAP }
 		OR = { #must have a syndiclist leaning government
 			has_government = social_democrat
@@ -1040,6 +1055,9 @@ american_civil_war-tex= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		NOT = { tag = JAP }
 		OR = { #must have a syndiclist leaning government
 			has_government = paternal_autocrat 
@@ -1106,14 +1124,29 @@ american_civil_war-pacific= {
 	enable = {
 		is_subject = no #cannot be a subject
 		has_war = no #must be at peace
+		any_owned_state = { #ensure that the country is not land locked
+			is_coastal = yes 
+		}
 		OR = { #Those strategically invovled with the pacific states
 			tag = JAP
+		}
+		AND = { #Japan will only assist an independent california
+			tag = JAP
+			CAL = {
+				OR = {
+					AND = {
+						is_in_faction = yes
+						is_in_faction_with = JAP
+					}
+					is_in_faction = no
+				}
+			}
 		}
 		OR = { #Helper must be a major power or in a faction
 			is_major = yes
 			is_in_faction = yes
 		}
-		PSA = { #America at war must be at war
+		CAL = { #America at war must be at war
 			has_war = yes
 		}
 		OR = { #Either American revolter must exist
@@ -1137,13 +1170,24 @@ american_civil_war-pacific= {
 					tag = JAP
 				}
 			}
+			AND = { #Japan will only assist an independent california
+				tag = JAP
+				CAL = {
+					AND = {
+						is_in_faction = yes
+						NOT = { 
+							is_in_faction_with = JAP 
+						}							
+					}
+				}
+			}
 			NOT = {
 				OR = { #Helper must be a major power or in a faction
 					is_major = yes
 					is_in_faction = yes
 				}
 			}
-			PSA = { #America at war must be at war
+			CAL = { #America at war must be at war
 				has_war = no
 			}
 			NOT = {
@@ -1163,12 +1207,12 @@ american_civil_war-pacific= {
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
-		id = "PSA"
+		id = "CAL"
 		value = 200
 	}
 	ai_strategy = {
 		type = support
-		id = "PSA"
+		id = "CAL"
 		value = 100
 	}
 }

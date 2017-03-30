@@ -29,11 +29,11 @@ default_peace = {
 
 	# ROOT = Taker, FROM = State
 	take_states = {
-		factor = 600 #Dylan, I know what you are thinking and do not lower this weight. REMEMBER SPAIN!
+		factor = 400 #Dylan, I know what you are thinking and do not lower this weight. REMEMBER SPAIN!
 		
 		####Priorities####
 		modifier = { #Priortize taking claimed or cored land
-			factor = 20 #Double the total of all other factors
+			factor = 10
 			FROM = {
 				OR = {
 					is_claimed_by = ROOT
@@ -3632,6 +3632,84 @@ default_peace = {
 				}
 			}
 		}
+		#DKB - Don Kuban
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = DKB
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = DKB
+						has_war_with = ALO
+					}	
+					OR = {
+						RUS = {
+							is_in_peace_conference = yes
+						}
+						SOV = {
+							is_in_peace_conference = yes
+						}
+						MON = {
+							is_in_peace_conference = yes
+						}
+						TRK = {
+							is_in_peace_conference = yes
+						}					
+					}
+					
+				
+				}
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+						region = 137 #Western Steppe	
+						region = 235 #Kuban	
+						region = 134 #Caucasus
+					}
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks if in faction with, and a faction leader
+				is_in_faction_with = DKB
+				is_faction_leader = yes
+				NOT = {
+					tag = DKB
+				}
+			}
+			DKB = {
+				is_subject = no
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State is apart of the following strategic regions
+				OR = {
+					region = 137 #Western Steppe	
+					region = 235 #Kuban	
+					region = 134 #Caucasus
+				}
+			}
+		}
 		#QIE - Qing
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
@@ -4628,6 +4706,137 @@ default_peace = {
 					region = 78 #Pacific
 					region = 84 #Pacific
 					region = 160 #Phillipines
+				}
+			}
+		}
+		#CSA-TEX Treaty - American civil War
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = CSA
+				has_war_with = USA
+			}
+			TEX = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+						region = 186 #North-East
+						region = 120 #Mid-West
+						region = 185 #NorthWest
+					}
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = TEX
+				has_war_with = USA
+			}
+			CSA = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				OR = {
+					region = 186 #North-East
+					region = 120 #Mid-West
+					region = 185 #NorthWest
+				}
+			}
+		}
+		#MittleAfrika Partition - NFA - POR - FRA
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = POR
+				has_war_with = MAF
+			}
+			OR = {
+				NFA = {
+					is_in_peace_conference = yes
+				}
+				FRA = {
+					is_in_peace_conference = yes
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				OR = {
+					region = 182
+					state = 660
+					state = 439
+					state = 538
+					state = 718
+					state = 546
+					state = 547
+					state = 548
+					state = 869
+					state = 870
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = NFA
+				has_war_with = MAF
+			}
+			POR = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				OR = {
+					state = 295
+					state = 813
+					state = 871
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = NFA
+				has_war_with = MAF
+			}
+			FRA = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				OR = {
+					region = 140 #Central Africa
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = FRA
+				has_war_with = MAF
+			}
+			NFA = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				OR = {
+					region = 182 #Western Africa
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = FRA
+				has_war_with = MAF
+			}
+			POR = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				OR = {
+					state = 295
+					state = 813
+					state = 871
 				}
 			}
 		}

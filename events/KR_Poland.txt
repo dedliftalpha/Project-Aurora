@@ -3006,17 +3006,17 @@ country_event = { # Appointing a Prime Minister
 		add_opinion_modifier = { target = CAN modifier = POL_NATI_CAN } # 300
 
 		hidden_effect = {
-			white_peace = CAN
-			white_peace = JAP
-			white_peace = FNG
-			white_peace = MAN
-			white_peace = TRM
-			white_peace = SQI
-			white_peace = FRA
-			white_peace = ENG
-			white_peace = CSA
-			white_peace = RUS
-			white_peace = SOV
+			CAN = { white_peace_with_ROOT = yes }
+			JAP = { white_peace_with_ROOT = yes }
+			FNG = { white_peace_with_ROOT = yes }
+			MAN = { white_peace_with_ROOT = yes }
+			TRM = { white_peace_with_ROOT = yes }
+			SQI = { white_peace_with_ROOT = yes }
+			FRA = { white_peace_with_ROOT = yes }
+			ENG = { white_peace_with_ROOT = yes }
+			CSA = { white_peace_with_ROOT = yes }
+			RUS = { white_peace_with_ROOT = yes }
+			SOV = { white_peace_with_ROOT = yes }
 		}
 	}
 
@@ -3079,17 +3079,17 @@ country_event = { # Appointing a Prime Minister
 		set_global_flag = POL_SYNDIE
 
 		hidden_effect = {
-			white_peace = CAN
-			white_peace = JAP
-			white_peace = FNG
-			white_peace = MAN
-			white_peace = TRM
-			white_peace = SQI
-			white_peace = FRA
-			white_peace = ENG
-			white_peace = CSA
-			white_peace = RUS
-			white_peace = SOV
+			CAN = { white_peace_with_ROOT = yes }
+			JAP = { white_peace_with_ROOT = yes }
+			FNG = { white_peace_with_ROOT = yes }
+			MAN = { white_peace_with_ROOT = yes }
+			TRM = { white_peace_with_ROOT = yes }
+			SQI = { white_peace_with_ROOT = yes }
+			FRA = { white_peace_with_ROOT = yes }
+			ENG = { white_peace_with_ROOT = yes }
+			CSA = { white_peace_with_ROOT = yes }
+			RUS = { white_peace_with_ROOT = yes }
+			SOV = { white_peace_with_ROOT = yes }
 		}
 	}
 }
@@ -7928,9 +7928,8 @@ country_event = { # Proposing Peace to Poland
 		name = poland.111.a
 		ai_chance = { factor = 100 }
 
-		white_peace = UKR
-
 		UKR = {
+			white_peace_with_ROOT = yes
 			transfer_state = 91
 			transfer_state = 89
 		}
@@ -12119,13 +12118,13 @@ country_event = { # Lithuanian Demands - Response
 	
 	option = {
 		name = poland.181.a
-		ai_chance = { factor = 15 }
+		ai_chance = { factor = 5 }
 		POL = { country_event = { days = 2 id = poland.182 }}
 	}
 	
 	option = {
 		name = poland.181.b
-		ai_chance = { factor = 85 }
+		ai_chance = { factor = 95 }
 		POL = { country_event = { days = 2 id = poland.183 }}
 	}	
 }
@@ -12592,7 +12591,7 @@ country_event = { # German Demands - No
 	}
 }
 
-news_event = {
+news_event = { # King Elected
 	id = poland.192
 	title = poland.192.t
 	desc = poland.192.d
@@ -12743,7 +12742,6 @@ country_event = { # Monarchist Sympathies
 		tag = POL
 		OR = {
 			has_global_flag = POL_SYNDIE
-			has_global_flag = POL_REPUBLIC
 			has_global_flag = POL_NATIONALISTS
 			has_country_flag = POL_SIKORSKI
 		}
@@ -12782,6 +12780,7 @@ country_event = { # Sikorski in Control
 	option = {
 		name = poland.196.a
 		add_political_power = -20
+		custom_effect_tooltip = POL_polish_state
 		set_cosmetic_tag = POL_REPUBLIC
 	}
 	
@@ -12858,10 +12857,27 @@ news_event = { # Syndies in power
 					tag = POL
 					
 			}
+			OR = {
+					has_government = totalist  
+					has_government = radical_socialist
+					has_government = syndicalist
+			}
 		}
 	}
 	option = {
 		name = poland.198.b
+		trigger = {
+			NOT = {
+					tag = POL
+			}
+			NOT = {has_government = totalist  }
+			NOT = {has_government = radical_socialist}
+			NOT = {has_government = syndicalist}
+		}
+	}
+
+	option = {
+		name = poland.198.c
 		trigger = {
 			tag = POL
 		}
@@ -13015,4 +13031,200 @@ country_event = { # Join Soviets - Nope
 		SOV = {add_opinion_modifier = { target = POL modifier = POL_ANNEX_GAL }} # -50
 		add_political_power = -25
 	}	
+}
+
+country_event = { # Monarchist Coup
+	id = poland.205
+	title = poland.205.t
+	desc = poland.205.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		NOT = {has_completed_focus = POL_cleanse_monarchists}
+		NOT = {has_global_flag = POL_MON_COMPROMISE}
+		has_idea = POL_monarchist_sympathies_idea
+		OR = {
+			date > 1940.1.1
+			AND = {
+				date > 1938.1.1
+				has_war = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 100
+	}
+	
+	option = {
+		name = poland.205.a
+		add_political_power = -300
+		remove_ideas = POL_monarchist_sympathies_idea
+		clr_global_flag = POL_NATIONALISTS
+		clr_country_flag = POL_SIKORSKI
+		clr_global_flag = POL_SYNDIE
+		set_global_flag = POL_CZA
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = 0.60
+		}
+		set_cosmetic_tag = POL
+		
+		set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+		create_country_leader = {
+			name = "J.K.W. Augustyn I Czartoryski"
+			desc = "augustyn_i_czartoryski_desc"
+			picture = "Portrait_Poland_Augustyn_I_Czartoryski.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+	}
+	
+}
+
+country_event = { # Augustyn Passes Away
+	id = poland.206
+	title = poland.206.t
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	desc = {
+		text = poland.206.bad
+		trigger = {
+			NOT = {
+				has_country_flag = POL_SUCCESSION			
+			}
+		}
+	}
+	desc = {
+		text = poland.206.good
+		trigger = {
+			has_country_flag = POL_SUCCESSION	
+		}
+	}
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		has_global_flag = POL_WE
+		date > 1942.1.1
+	}
+	
+	mean_time_to_happen = { 
+		days = 300
+	}
+	
+	option = {
+		name = poland.206.a
+		trigger = {
+			NOT = {
+				has_country_flag = POL_SUCCESSION			
+			}
+		}
+		add_political_power = -300
+		clr_global_flag = POL_CZA
+		
+		set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+		
+		hidden_effect = { kill_country_leader = yes }
+		
+		create_country_leader = {
+			name = "Regency Council"
+			desc = "POLITICS_POL_REGENCY_DESC"
+			picture = "Portrait_Poland_Regency_Council.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+	}
+	
+	option = {
+		name = poland.206.b
+		trigger = {
+			has_country_flag = POL_SUCCESSION	
+		}
+		add_political_power = 100
+		
+		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "J.K.W. Ludwik Piotr I Czartoryski"
+			desc = "augustyn_i_czartoryski_desc"
+			picture = "Portrait_Poland_Ludwik_I_Czartoryski.dds"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+	}
+	
+}
+
+country_event = { # Galician Intervention
+	id = poland.207
+	title = poland.207.t
+	desc = poland.207.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		NOT = {has_completed_focus = POL_sieze_galicia}
+		OR = {
+			has_global_flag = POL_SYNDIE
+			has_global_flag = POL_NATIONALISTS
+			has_country_flag = POL_SIKORSKI
+		}
+		GAL = {
+			is_subject = no
+			is_in_faction = no
+			has_war = yes
+		}
+		date < 1939.1.1
+	}
+	
+	mean_time_to_happen = { 
+		days = 10
+	}
+	
+	option = { 
+		name = poland.207.a
+		ai_chance = { factor = 10 }
+		every_country = { 
+			limit = {
+				controls_state = 88
+			} 
+		add_opinion_modifier = { target = POL modifier = POL_ANNEX_GAL } # -50
+		}
+		add_state_claim = 88
+		add_state_claim = 80 
+		add_state_claim = 89
+		add_state_claim = 91 
+		add_political_power = -25
+	}
+	
+	option = {
+		name = poland.207.b
+		ai_chance = { factor = 90 }
+		every_country = { 
+			limit = {
+				controls_state = 88
+			} 
+		add_opinion_modifier = { target = POL modifier = POL_ANNEX_GAL } # -50
+		}
+		add_state_claim = 88 
+		add_state_claim = 80 
+		add_state_claim = 89
+		add_state_claim = 91
+		declare_war_on = {
+			target = GAL
+			type = annex_everything 
+		}
+	}
 }

@@ -1599,7 +1599,7 @@ country_event = { #The Great Drought of 1939
 	}
 }
 
-country_event = {
+country_event = { # Drought Repeating Event
 	id = japdom.60
 	title = japdom.60.t
 	desc = japdom.60.d
@@ -1613,6 +1613,10 @@ country_event = {
 		has_country_flag = {
 			flag = great_drought
 			value < 10
+		}
+		NOT = {
+			date > 1940.9.1
+			has_global_flag = fengtian_provides_food
 		}
 	}
 	
@@ -1629,8 +1633,138 @@ country_event = {
 		}
 	}
 }
+
+country_event = { # Japan can ask for food from Fengtian
+	id = japdom.61
+	title = japdom.61.t
+	desc = {
+		text = japdom.61.d_pervasive #Mantetsu Influence is Pervasive or Dominant
+		trigger = {
+			FNG = {
+				OR = {
+					has_idea = FNG_informal_empire_4
+					has_idea = FNG_informal_empire_5
+				}
+			}
+		}
+	}
+	desc = {
+		text = japdom.61.d_normal # Mantetsu Influence is present or low
+		trigger = {
+			FNG = {
+				OR = {
+					has_idea = FNG_informal_empire_3
+					has_idea = FNG_informal_empire_2
+				}
+			}
+		}
+	}
 	
+	fire_only_once = yes
 	
+	trigger = {
+		tag = JAP
+		has_country_flag = {
+			flag = great_drought
+			value > 2
+		}
+		has_global_flag = soy_initiative_on
+	}
+	
+	option = { # Force Compliance
+		name = japdom.61.a
+		trigger = {
+			FNG = {
+				OR = {
+					has_idea = FNG_informal_empire_4
+					has_idea = FNG_informal_empire_5
+				}
+			}
+		}
+		FNG = {
+			country_event = {
+				id = fengtian.new.43
+				days = 2
+			}
+			set_global_flag = fengtian_forced
+		}
+	}
+	
+	option = { # Request
+		name = japdom.61.b
+		FNG = {
+			country_event = {
+				id = fengtian.new.43
+				days = 2
+			}
+		}
+		set_global_flag = fengtian_normal
+	}
+	
+	option = { # Do nothing
+		name = japdom.61.c
+	}
+}
+
+country_event = { # Fengtian refuses to provide food
+	id = japdom.62
+	title = japdom.62.t
+	desc = japdom.62.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_global_flag = fengtian_refuses_food
+	}
+	
+	option = { # Punish
+		name = japdom.62.a
+		set_global_flag = japan_punishes_fengtian
+	}
+	
+	option = { # Do not Punish
+		name = japdom.62.b
+	}
+}	
+
+country_event = { # The Drought Ends
+    id = japdom.63
+    title = japdom.63.t
+    desc = japdom.63.d
+
+    fire_only_once = yes
+
+    mean_time_to_happen = {
+        days = 7
+    }
+
+    immediate = { 
+		FNG = { 
+			country_event = { 
+				id = fengtian.new.46
+			}
+		}
+	}
+
+    trigger = {
+        OR = {
+            has_global_flag = {
+                flag = great_drought
+                value > 10
+            }
+                        has_global_flag = {
+                flag = fengtian_provides_food
+                value > 8
+            }
+            date > 1940.9.1
+        }
+    }
+
+    option = {
+        name = japdom.63.a
+    }
+}
+		
 #############################
 #1941 ~ 1963 - The Great Void
 #############################

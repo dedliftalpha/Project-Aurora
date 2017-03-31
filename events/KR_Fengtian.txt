@@ -4534,7 +4534,24 @@ country_event = { #Japanese Interruption
 country_event = { # Imperial Fury
 	id = fengtian.new.22
 	title = fengtian.new.22.t
-	desc = fengtian.22.d
+	desc = {
+		text = fengtian.new.22.d_influence_low
+		trigger = {
+			tag = FNG
+			market_liberal > 0.00
+			market_liberal < 0.05
+			NOT = {
+				has_idea = FNG_informal_empire_1
+			}
+		}
+	}
+	desc = {
+		text = fengtian.new.22.d_fengtian_refuses_food
+		trigger = {
+			has_global_flag = fengtian_refuses_food
+			has_global_flag = japan_punishes_fengtian
+		}
+	}
 	
 	fire_only_once = no
 	
@@ -4548,6 +4565,9 @@ country_event = { # Imperial Fury
 		market_liberal < 0.05
 		NOT = {
 			has_idea = FNG_informal_empire_1
+		}
+		OR = {
+			has_global_flag = fengtian_refuses_food
 		}
 	}
 	
@@ -5031,10 +5051,6 @@ country_event = { # Fengtian Learns that the Hiroshima Proposal was refused
 	
 	is_triggered_only = yes
 	
-	mean_time_to_happen = {
-		days = 7
-	}
-	
 	option = {
 		name = fengtian.new.36.a
 		clr_global_flag = hiroshima_proposal
@@ -5050,10 +5066,6 @@ country_event = { # Fengtian receives the first Hiroshima Package
 	fire_only_once = yes
 	
 	is_triggered_only = yes
-	
-	mean_time_to_happen = {
-		days = 7
-	}
 	
 	option = { # The Package is received
 		name = fengtian.new.37.a
@@ -5232,6 +5244,186 @@ country_event = { # Fengtian Receives the Third Hiroshima Package
 		}
 	}
 }
+
+# Soy Agricultural Initative #
+
+country_event = { # Fengtian chooses whether to back the initiative
+	id = fengtian.new.42
+	title = fengtian.new.42.t
+	desc = fengtian.new.42.d
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = FNG
+		has_completed_focus = FNG_The_Soy_Agricultural_Initiative
+	}
+	
+	option = { # Back the initiative
+		name = fengtian.new.42.a
+		add_popularity = { 
+			ideology = market_liberal 
+			popularity = 0.03
+		}
+		328 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		set_global_flag = soy_initiative_on
+	}
+	
+	option = {
+		name = fengtian.new.42.b
+		add_popularity = {
+			ideology = market_liberal 
+			popularity = -0.01
+		}
+		add_political_power = 50
+		set_global_flag = soy_initiative_off
+	}
+}
+
+country_event = { # Fengtian is asked to provide food
+	id = fengtian.new.43
+	title = fengtian.new.43.t
+	desc = {
+		text = fengtian.new.43.d_fengtian_forced
+		trigger = {
+			has_global_flag = fengtian_forced
+		}
+	}
+	desc = {
+		text = fengtian.new.43.d_fengtian_normal
+		trigger = {
+			has_global_flag = fengtian_normal
+		}
+	}	
+	
+	fire_only_once = yes
+	
+	option = { # Accept
+		name = fengtian.new.43.a
+		set_global_flag = {
+			flag = fengtian_provides_food
+			value = 1
+		}
+		add_political_power = -50
+		JAP = {
+			country_event = {
+				id = japdom.62
+				days = 2
+			}
+		}
+	}
+	
+	option = { # Refuse
+		name = fengtian.new.43.b
+		trigger = {
+			has_global_flag = fengtian_normal
+			NOT = {
+				has_global_flag = fengtian_forced
+			}
+		}
+		add_political_power = 50
+		set_global_flag = fengtian_refuses_food
+	}
+}
+
+country_event = { # Sending Food Repeating Event
+	id = fengtian.new.44
+	title = fengtian.new.44.t
+	desc = fengtian.new.44.d
+	
+	mean_time_to_happen = {
+		days = 35
+	}
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = {
+			flag = fengtian_provides_food
+			value > 8
+		}
+		NOT = {
+			date > 1940.9.1
+			has_global_flag = fengtian_refuses_food
+		}
+	}
+	
+	option = {
+		name = fengtian.new.44.a
+		modify_global_flag = {
+			flag = fengtian_provides_food
+			value = 1
+		}
+		add_political_power = -10
+	}
+}
+
+country_event = { # Industrial Soy Option
+	id = fengtian.new.45
+	title = fengtian.new.45.t
+	desc = fengtian.new.45.d
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 35
+	}
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = {
+			flag = fengtian_provides_food
+			value > 3
+		}
+	}
+	
+	option = { # Cut Industrial Soy
+		name = fengtian.new.45.a
+		set_global_flag = Industrial_Soy_Cut
+		add_ideas = FNG_Industrial_Soy_Shortage
+	}
+	
+	option = { # Do not cut Industrial Soy
+		name = fengtian.new.45.b
+	}
+}
+
+country_event = { # drought ends
+	id = fengtian.new.46
+	title = fengtian.new.46.t
+	desc = fengtian.new.46.d
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	trigger = {
+		OR = {
+			has_global_flag = {
+				flag = fengtian_provides_food
+				value > 8
+			}
+			date > 1940.9.1
+		}
+	}
+	
+	option = {
+		name = fengtian.new.46.a
+		clr_global_flag = fengtian_provides_food
+	}
+}
+
+
 
 #########################################
 ### Fengtian Informal Empire Mechanic ###

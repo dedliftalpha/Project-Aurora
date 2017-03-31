@@ -424,6 +424,7 @@ focus_tree = {
 							has_war = no
 						}
 					is_subject = no
+					is_in_faction = no
 				}
 			bypass = {
 					POL = {
@@ -900,6 +901,7 @@ focus_tree = {
 					is_subject = no
 					LIT = {
 							has_war = no
+							NOT = {is_in_faction_with = GER}
 						}
 					POL = {
 							has_war = no
@@ -940,6 +942,7 @@ focus_tree = {
 					country_exists = LIT
 					LIT = {
 							has_war = no
+							NOT = {is_in_faction_with = GER}
 						}
 					POL = {
 							has_war = no
@@ -1018,6 +1021,7 @@ focus_tree = {
 							has_global_flag = POL_NATIONALISTS
 							has_global_flag = POL_SYNDIE
 						}
+						is_in_faction = no
 				}
 			available_if_capitulated = yes
 
@@ -1446,6 +1450,7 @@ focus_tree = {
 							has_global_flag = POL_NATIONALISTS
 							has_global_flag = POL_SYNDIE
 						}
+					is_in_faction = no
 				}
 			bypass = {
 					POL = {
@@ -1490,6 +1495,7 @@ focus_tree = {
 							has_global_flag = POL_NATIONALISTS
 							has_global_flag = POL_SYNDIE
 						}
+					is_in_faction = no
 				}
 			bypass = {
 					POL = {
@@ -1821,9 +1827,6 @@ focus_tree = {
 							is_subject_of = AUS
 							is_in_faction_with = GER
 							is_in_faction_with = AUS
-							has_global_flag = POL_WE
-							has_global_flag = POL_HA
-							has_global_flag = POL_RAD
 						}
 				}
 			available_if_capitulated = no
@@ -1875,7 +1878,7 @@ focus_tree = {
 			}
 			available = {
 					NOT = {
-						AND = {
+						OR = {
 							777 = { is_core_of = POL }  
 							776 = { is_core_of = POL }    
 							85 = { is_core_of = POL } 
@@ -2140,14 +2143,10 @@ focus_tree = {
 			available = {
 					country_exists = UKR
 					country_exists = DKB
-					controls_state = 89
-					controls_state = 91
-					controls_state = 88
-					POL = {
-							is_subject = no
-						}
+					is_subject = no
 					UKR = {
 							is_subject = no
+							is_in_faction = no
 						}
 					DKB = {
 							is_subject = no
@@ -2155,39 +2154,16 @@ focus_tree = {
 					POL = {
 							has_war = no
 						}
-					UKR = {
-							has_war = no
-						}
 					DKB = {
 							has_war = no
 						}
-					has_global_flag = krushchev_criticizes_gov
+					#has_global_flag = krushchev_criticizes_gov
 					NOT = {
 							has_global_flag = UKR_RUSCOUP
 							has_global_flag = russ_gives_passports
 							has_government = totalist
 							has_government = radical_socialist
 							has_government = syndicalist
-							POL = {
-									OR = {
-											is_in_faction_with = GER
-											is_in_faction_with = AUS
-											is_in_faction_with = AHE
-											is_in_faction_with = DNF
-										}
-								}
-							UKR = {
-									OR = {
-											is_in_faction_with = GER
-											is_in_faction_with = AUS
-											is_in_faction_with = AHE
-											is_in_faction_with = DNF
-											is_in_faction_with = FRA
-											is_in_faction_with = POL
-											is_in_faction_with = DKB
-											is_in_faction_with = RUS
-										}
-								}
 							DKB = {
 									is_in_faction_with = RUS
 								}
@@ -2197,7 +2173,7 @@ focus_tree = {
 					OR = {
 							controls_state = 93
 							POL = {
-									is_in_faction_with = DKB
+									is_in_faction_with = UKR
 								}
 							NOT = {	country_exists = UKR}
 							NOT = {country_exists = DKB}
@@ -2413,7 +2389,7 @@ focus_tree = {
 	}
 	focus = {
 		id = POL_radek_reforms
-		icon = GFX_goal_anarcho_communism
+		icon = GFX_goal_totalism
 		cost = 10.00
 		prerequisite = {
 			focus = POL_redistribute_wealth
@@ -2608,6 +2584,7 @@ focus_tree = {
 							has_war = no
 						}
 					is_subject = no
+					is_in_faction = no
 				}
 			bypass = {
 					POL = {
@@ -2716,6 +2693,7 @@ focus_tree = {
 							has_war = no
 						}
 					is_subject = no
+					is_in_faction = no
 				}
 			bypass = {
 					POL = {
@@ -2785,30 +2763,20 @@ focus_tree = {
 				}
 			available = {
 					is_subject = no
-					NOT = {
-							UKR = {
-									OR = {
-											has_war_with = RUS
-											is_in_faction_with = GER
-											is_in_faction_with = SOV
-											is_in_faction_with = POL
-											is_in_faction_with = RUS
-										}
-								}
+					UKR = {
+						is_in_faction = no
+						is_subject = no
+						NOT = {has_war_with = RUS}
+						OR = {
+							has_government = totalist
+							has_government = radical_socialist
+							has_government = syndicalist
 						}
-					OR = {
-							has_global_flag = UKR_Syndicalist
-							has_global_flag = UKR_Alone
-							OR = {
-									UKR = {
-											has_country_flag = UKR_Syndicalist
-											has_country_flag = UKR_Alone
-										}
-								}
-						}
+					}
 					has_global_flag = POL_SYNDIE
 					country_exists = UKR
 					has_war = no
+					is_in_faction = no
 				}
 
 	}
@@ -4068,6 +4036,7 @@ focus_tree = {
 						target = POL modifier = embargo
 					}
 				}
+				add_ideas = closed_economy
 			}
 			available_if_capitulated = yes
 	}

@@ -1849,4 +1849,98 @@ focus = {
 			}
 		}
 	}
+
+	focus = {
+		id = SAF_1938_elections
+		icon = GFX_goal_generic_national_unity
+		x = 10
+		y = 8
+		cost = 10
+		available = { has_country_flag = SAF_1938_ELECTIONS }
+
+		bypass = { has_country_flag = SAF_1938_ELECTIONS }
+		prerequisite = { }
+		
+		ai_will_do = {
+			factor = 0
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = SAF_1938_elections_tt
+		}
+	}
+	
+	focus = {
+		id = SAF_nationalist_reform
+		icon = GFX_goal_tfv_saf_support_german_coup
+		x = -3
+		y = 1
+		relative_position_id = SAF_1938_elections
+		cost = 10
+		available = { has_country_flag = SAF_NAT_WIN }
+		mutually_exclusive = { focus = SAF_dominionist_reform }
+
+		bypass = { }
+		prerequisite = { focus = SAF_1938_elections }
+		
+		ai_will_do = {
+			factor = 100 # Can we do it ? Then we must, this is absolutely urgent once unlocked
+		}
+		
+		completion_reward = {
+			country_event = { id = SACW.3 }
+		}
+	}
+
+	focus = {
+		id = SAF_dominionist_reform
+		icon = GFX_goal_tfv_saf_secure_interests_in_africa
+		x = 3
+		y = 1
+		relative_position_id = SAF_1938_elections
+		cost = 10
+		available = { has_country_flag = SAF_DOM_WIN }
+		mutually_exclusive = { focus = SAF_nationalist_reform }
+
+		bypass = { }
+		prerequisite = { focus =  SAF_1938_elections }
+		
+		ai_will_do = {
+			factor = 100 # Can we do it ? Then we must, this is absolutely urgent once unlocked
+		}
+		
+		completion_reward = {
+			country_event = { id = SACW.4 }
+		}
+	}
+
+	focus = {
+		id = SAF_implement_apartheird
+		icon = GFX_goal_tfv_saf_support_ossebrandwag
+		x = -3
+		y = 2
+		relative_position_id = SAF_1938_elections
+		cost = 10
+		available = { has_country_flag = SAF_CALM_RETURNS }
+
+		bypass = { }
+		prerequisite = { focus = SAF_nationalist_reform }
+		
+		ai_will_do = {
+			factor = 100 # Can we do it ? Then we must, this is absolutely urgent once unlocked
+		}
+		
+		completion_reward = {
+			add_political_power = 100 # Total control of the country, people who are against it don't get to be angry
+			if = {
+				limit = { has_idea = racial_segregation }
+				swap_ideas = {
+					remove_idea = racial_segregation
+					add_idea = racial_segregation_apartheird
+				}
+			}			
+		}
+	}
+
+
 }

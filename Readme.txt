@@ -1,6 +1,6 @@
 Thank you for downloading Kaiserreich for Hearts of Iron 4!
-This is alpha version 0.4 - Pax Americana!
-This is NOT save game compatible!
+This is alpha version 0.4 - Pax Americana.
+It is NOT save game compatible with any prior versions.
 
 Manual Installation Instructions
 1) Download the mod

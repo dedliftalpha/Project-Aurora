@@ -258,7 +258,7 @@ white_peace_with_ROOT = {
 		if = {
 			limit = {
 				is_in_faction = no
-				any_country = { is_subject_of = PREV }
+				num_of_subjects > 0
 			}
 			set_country_flag = KR_temp_faction
 			save_event_target_as = white_peace_defender
@@ -272,8 +272,10 @@ white_peace_with_ROOT = {
 		# Then check if ROOT is in a faction
 		if = {
 			limit = {
-				ROOT = { is_in_faction = no }
-				any_country = { is_subject_of = ROOT }
+				ROOT = {
+					is_in_faction = no
+					num_of_subjects > 0
+				}
 			}
 			ROOT = {
 				set_country_flag = KR_temp_faction
@@ -288,6 +290,22 @@ white_peace_with_ROOT = {
 	
 	# Now white peace as per normal
 	white_peace = ROOT
+	
+	# Ensure all fellow members of the war peace out (just in case)
+	every_country = {
+		limit = {
+			has_war_together_with = PREV
+			has_war_with = ROOT
+		}
+		white_peace = ROOT
+	}
+	every_country = {
+		limit = {
+			has_war_together_with = ROOT
+			has_war_with = PREV
+		}
+		white_peace = PREV
+	}
 	
 	# Then dismantle factions if necessary
 	hidden_effect = {
@@ -321,7 +339,7 @@ white_peace_with_TARGET = {
 		if = {
 			limit = {
 				is_in_faction = no
-				any_country = { is_subject_of = PREV }
+				num_of_subjects > 0
 			}
 			set_country_flag = KR_temp_faction
 			save_event_target_as = white_peace_offer
@@ -335,8 +353,10 @@ white_peace_with_TARGET = {
 		# Then check if EVENT_TARGET is in a faction
 		if = {
 			limit = {
-				event_target:white_peace_receiver = { is_in_faction = no }
-				any_country = { is_subject_of = event_target:white_peace_receiver }
+				event_target:white_peace_receiver = {
+					is_in_faction = no
+					num_of_subjects > 0
+				}
 			}
 			event_target:white_peace_receiver = {
 				set_country_flag = KR_temp_faction
@@ -351,6 +371,22 @@ white_peace_with_TARGET = {
 	
 	# Now white peace as per normal
 	white_peace = PREV
+	
+	# Ensure all fellow members of the war peace out (just in case)
+	every_country = {
+		limit = {
+			has_war_together_with = PREV
+			has_war_with = event_target:white_peace_receiver
+		}
+		white_peace = event_target:white_peace_receiver
+	}
+	every_country = {
+		limit = {
+			has_war_together_with = event_target:white_peace_receiver
+			has_war_with = PREV
+		}
+		white_peace = PREV
+	}
 	
 	# Then dismantle factions if necessary
 	hidden_effect = {

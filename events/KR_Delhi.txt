@@ -823,100 +823,6 @@ country_event = {
 }
 
 ## FP ##
-country_event = { #bhutan
-	id = delhi.102
-	title = delhi.102.t
-	desc = delhi.102.d
-
-	is_triggered_only = yes
-	fire_only_once = yes
-
-	option = {
-		name = delhi.102.a
-		ai_chance = { factor = 25 }
-		DEH = {
-			declare_war_on = {
-				target = BHU
-				type = annex_everything
-			}
-			add_political_power = -50 #Now there is a real decision between annex and puppet
-		}
-	}
-	option = {
-		name = delhi.102.b
-		ai_chance = { factor = 74 }
-		DEH = {
-			puppet = BHU
-			#add_political_power = no point in spending pp while focusing to loose pp
-		}
-	}
-	option = {
-		name = delhi.102.c
-		ai_chance = { factor = 1 }
-		add_political_power = -150
-	}
-}
-
-country_event = { #madras
-	id = delhi.103
-	title = delhi.103.t
-	desc = delhi.103.d
-
-	is_triggered_only = yes
-	fire_only_once = yes
-
-	option = {
-		name = delhi.103.a
-		ai_chance = { factor = 75 }
-		DEH = {
-			declare_war_on = {
-				target = MAD
-				type = annex_everything
-			}
-			add_state_core = 320
-		}
-	}
-	option = {
-		name = delhi.103.b
-		ai_chance = { factor = 24 }
-		MAD = {
-			country_event = madras.0
-		}
-	}
-	option = {
-		name = delhi.103.c
-		ai_chance = { factor = 1 }
-		add_political_power = -150
-	}
-}
-
-country_event = { #madras submits
-	id = delhi.104
-	title = delhi.104.t
-	desc = delhi.104.d
-
-	is_triggered_only = yes
-
-	option = {
-		name = delhi.104.a
-		add_state_core = 320
-	}
-
-}
-
-country_event = { #Madras attacks
-	id = delhi.105
-	title = delhi.105.t
-	desc = delhi.105.d
-
-	is_triggered_only = yes
-
-	option = {
-		name = delhi.105.a
-		add_state_core = 320
-	}
-}
-
 country_event = { #siam
 	id = delhi.106
 	title = delhi.106.t
@@ -1338,6 +1244,38 @@ country_event = {
 		set_country_flag = Sir_Mian_Fazl_i_Husain_dead
 	}
 }
+
+# Death of Bhupinder Singh
+country_event = {
+	id = delhi.157
+	title = delhi.157.t
+	desc = delhi.157.d
+	picture = GFX_report_event_generic_funeral
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = DEH
+		NOT = { has_country_flag = Maharaja_Bhupinder_Singh_dead }
+		date > 1938.3.22
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = delhi.157.a
+		add_political_power = -20
+		remove_unit_leader = 514
+		if = {
+			limit = { has_idea = DEH_Maharaja_Bhupinder_Singh_mhc_ade }
+			remove_ideas = DEH_Maharaja_Bhupinder_Singh_mhc_ade
+		}
+		set_country_flag = Maharaja_Bhupinder_Singh_dead
+	}
+}
+
 
 ##############
 # Sale of Canadian Ships
@@ -1972,6 +1910,878 @@ country_event = {
 				flag = BHC_core_speed
 				value = -1
 			}
+		}
+	}
+}
+
+# Integrating Bombay Presidency
+country_event = {
+	id = delhi.302
+	title = delhi.302.t
+	desc = delhi.302.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		429 = { set_state_flag = DEH_may_gain_core } #Bombay
+		424 = { set_state_flag = DEH_may_gain_core } #Andhra
+		423 = { set_state_flag = DEH_may_gain_core } #Madurai
+	}
+	
+	option = {
+		name = delhi.302.a #Take a moderate approach to integration
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		custom_effect_tooltip = DEH_PRF_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = delhi.302.b #Commence integration immediately and harshly!
+		ai_chance = { factor = 30 }
+		add_political_power = -200
+		custom_effect_tooltip = DEH_PRF_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Integrating princely states
+country_event = {
+	id = delhi.303
+	title = delhi.303.t
+	desc = delhi.303.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_state = {
+			limit = {
+				is_core_of = PRF
+				is_claimed_by = DEH
+				NOT = { is_core_of = DEH }
+				NOT = { state = 429 } #Bombay
+				NOT = { state = 424 } #Andhra
+				NOT = { state = 423 } #Madurai
+			}
+			set_state_flag = DEH_may_gain_core
+		}
+	}
+	
+	option = {
+		name = delhi.303.a #Take a moderate approach to integration
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		custom_effect_tooltip = DEH_PRF_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = delhi.303.b #We must be firm with these southern princelings!
+		ai_chance = { factor = 30 }
+		add_political_power = -200
+		custom_effect_tooltip = DEH_PRF_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Gaining cores in formerly Princely Federation territory
+country_event = {
+	id = delhi.304
+	title = delhi.304.t
+	desc = delhi.304.d
+	picture = GFX_report_DEH_delhi
+	
+	trigger = {
+		tag = DEH
+		any_owned_state = {
+			has_state_flag = DEH_may_gain_core
+			is_core_of = PRF
+			is_controlled_by = DEH
+			NOT = { is_core_of = DEH }
+			any_neighbor_state = { is_core_of = DEH }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				has_state_flag = DEH_may_gain_core
+				is_core_of = PRF
+				NOT = { is_core_of = DEH }
+				any_neighbor_state = { is_core_of = DEH }
+			}
+			save_event_target_as = new_core
+		}
+	}
+	
+	option = {
+		name = delhi.304.a
+		event_target:new_core = {
+			clr_state_flag = DEH_may_gain_core
+			add_core_of = DEH
+		}
+	}
+}
+
+# Terrorism in former princely territory
+country_event = {
+	id = delhi.305
+	title = delhi.305.t
+	desc = delhi.305.d
+	picture = GFX_report_event_india_protests
+
+	trigger = {
+		tag = DEH
+		NOT = { country_exists = PRF }
+		any_owned_state = {
+			is_core_of = PRF
+			is_controlled_by = DEH
+			NOT = { is_core_of = DEH }
+			OR = {
+				industrial_complex > 1
+				arms_factory > 1
+				infrastructure > 3
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = PRF
+				NOT = { is_core_of = DEH }
+				OR = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+			}
+			save_event_target_as = damage_state
+		}
+	}
+	
+	option = {
+		name = delhi.305.a
+		event_target:damage_state = {
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = industrial_complex damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = arms_factory damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				damage_building = { type = infrastructure damage = 2 }
+			}
+		}
+	}
+}
+
+# Collectivized Industry in Bengal
+country_event = {
+	id = delhi.306
+	title = delhi.306.t
+	desc = delhi.306.d
+	picture = economic_policy
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_state = {
+			limit = {
+				is_core_of = BHC
+				is_claimed_by = DEH
+				NOT = { is_core_of = DEH }
+				NOT = { state = 432 } #Assam
+				NOT = { state = 434 } #Manipur
+				NOT = { state = 858 } #Tawang
+				NOT = { state = 426 } #Orissa
+				NOT = { state = 436 } #Jabalpur
+				NOT = { state = 889 } #Vizagapatnam
+			}
+			set_state_flag = DEH_may_gain_core
+		}
+	}
+	
+	option = {
+		name = delhi.306.a #The free market shall eradicate Syndicalism in the Bengal!
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = market_liberal
+					has_government = social_liberal
+				}
+			}
+		}
+		add_political_power = -200
+		if = {
+			limit = { has_government = social_liberal }
+			add_popularity = { ideology = social_liberal popularity = 0.1 }
+			else = { add_popularity = { ideology = market_liberal popularity = 0.1 } }
+		}
+		custom_effect_tooltip = DEH_BHC_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = 1
+			}
+		}
+		random_owned_state = {
+			prioritize = { 431 } #Calcutta
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 2 }
+		}
+		random_owned_state = {
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 2 }
+		}
+		random_owned_state = {
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 2 }
+		}
+	}
+	option = {
+		name = delhi.306.b #Initiate privatization, but guarantee workers' rights
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = social_conservative
+				}
+			}
+		}
+		add_political_power = -50
+		if = {
+			limit = { has_government = paternal_autocrat }
+			add_popularity = { ideology = paternal_autocrat popularity = 0.1 }
+		}
+		if = {
+			limit = { has_government = social_conservative }
+			add_popularity = { ideology = social_conservative popularity = 0.1 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_government = paternal_autocrat
+					has_government = social_conservative
+				}
+			}
+			add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
+		}
+		random_owned_state = {
+			prioritize = { 431 } #Calcutta
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_state = {
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_state = {
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+	option = {
+		name = delhi.306.c #Keep these factories open and working for India!
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = national_populist
+					has_government = social_democrat
+				}
+			}
+		}
+		add_political_power = -100
+		if = {
+			limit = { has_government = social_democrat }
+			add_popularity = { ideology = social_democrat popularity = 0.1 }
+			else = { add_popularity = { ideology = national_populist popularity = 0.1 } }
+		}
+		custom_effect_tooltip = PRF_BHC_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = -1
+			}
+		}
+		random_owned_state = {
+			prioritize = { 431 } #Calcutta
+			limit = {
+				is_core_of = BHC
+				industrial_complex > 1
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+}
+
+# Tea Plantations in Assam
+country_event = {
+	id = delhi.307
+	title = delhi.307.t
+	desc = delhi.307.d
+	picture = farming
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		432 = { set_state_flag = DEH_may_gain_core } #Assam
+		434 = { set_state_flag = DEH_may_gain_core } #Manipur
+		858 = { set_state_flag = DEH_may_gain_core } #Tawang
+	}
+	
+	option = {
+		name = delhi.307.a #Sell the plantations to the highest (private) bidder!
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = market_liberal
+					has_government = social_liberal
+				}
+			}
+		}
+		add_political_power = -200
+		if = {
+			limit = { has_government = social_liberal }
+			add_popularity = { ideology = social_liberal popularity = 0.1 }
+			else = { add_popularity = { ideology = market_liberal popularity = 0.1 } }
+		}
+		custom_effect_tooltip = DEH_BHC_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_core_speed
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = delhi.307.b #Initiate privatization, but guarantee workers' rights
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = social_conservative
+				}
+			}
+		}
+		add_political_power = -50
+		if = {
+			limit = { has_government = paternal_autocrat }
+			add_popularity = { ideology = paternal_autocrat popularity = 0.1 }
+		}
+		if = {
+			limit = { has_government = social_conservative }
+			add_popularity = { ideology = social_conservative popularity = 0.1 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_government = paternal_autocrat
+					has_government = social_conservative
+				}
+			}
+			add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
+		}
+		custom_effect_tooltip = DEH_BHC_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = delhi.307.c #Maintain state control, we need that tea!
+		ai_chance = {
+			factor = 45
+			modifier = {
+				factor = 3
+				OR = {
+					has_government = national_populist
+					has_government = social_democrat
+				}
+			}
+		}
+		add_political_power = -100
+		if = {
+			limit = { has_government = social_democrat }
+			add_popularity = { ideology = social_democrat popularity = 0.1 }
+			else = { add_popularity = { ideology = national_populist popularity = 0.1 } }
+		}
+	}
+}
+
+# Zamindar emigres in Orissa
+country_event = {
+	id = delhi.308
+	title = delhi.308.t
+	desc = delhi.308.d
+	picture = farming
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		426 = { set_state_flag = DEH_may_gain_core } #Orissa
+		436 = { set_state_flag = DEH_may_gain_core } #Jabalpur
+		889 = { set_state_flag = DEH_may_gain_core } #Vizagapatnam
+	}
+	
+	option = {
+		name = delhi.308.a #Disperse the squatters! Return the land to the zamindars
+		ai_chance = { factor = 65 }
+		add_political_power = -100
+		custom_effect_tooltip = DEH_BHC_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = delhi.308.b #Allow the ryats to retain the land and pay off the princes
+		ai_chance = { factor = 35 }
+		add_political_power = -200
+		custom_effect_tooltip = DEH_BHC_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Gaining cores in formerly BHC territory
+country_event = {
+	id = delhi.309
+	title = delhi.309.t
+	desc = delhi.309.d
+	picture = GFX_report_DEH_delhi
+	
+	trigger = {
+		tag = DEH
+		any_owned_state = {
+			has_state_flag = DEH_may_gain_core
+			is_core_of = BHC
+			is_controlled_by = DEH
+			NOT = { is_core_of = DEH }
+			any_neighbor_state = { is_core_of = DEH }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				has_state_flag = DEH_may_gain_core
+				is_core_of = BHC
+				NOT = { is_core_of = DEH }
+				any_neighbor_state = { is_core_of = DEH }
+			}
+			save_event_target_as = new_core
+		}
+	}
+	
+	option = {
+		name = delhi.309.a
+		event_target:new_core = {
+			clr_state_flag = DEH_may_gain_core
+			add_core_of = DEH
+		}
+	}
+}
+
+# Terrorism in former BHC territory
+country_event = {
+	id = delhi.310
+	title = delhi.310.t
+	desc = delhi.310.d
+	picture = GFX_report_event_india_protests
+
+	trigger = {
+		tag = DEH
+		NOT = { country_exists = BHC }
+		any_owned_state = {
+			is_core_of = BHC
+			is_controlled_by = DEH
+			NOT = { is_core_of = DEH }
+			OR = {
+				industrial_complex > 1
+				arms_factory > 1
+				infrastructure > 3
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = BHC_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = BHC_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = BHC
+				NOT = { is_core_of = DEH }
+				OR = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+			}
+			save_event_target_as = damage_state
+		}
+	}
+	
+	option = {
+		name = delhi.310.a
+		event_target:damage_state = {
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = industrial_complex damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = arms_factory damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				damage_building = { type = infrastructure damage = 2 }
+			}
+		}
+	}
+}
+
+# Status of former french colonies
+country_event = {
+	id = delhi.311
+	title = delhi.311.t
+	desc = delhi.311.d
+	picture = GFX_report_event_PRF_princes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DEH
+		has_war = no
+		owns_state = 320 #Chennai
+		OR = {
+			is_in_faction_with = NFA
+			is_in_faction_with = FRA
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = delhi.311.a #We can afford our French friends some special rights
+		ai_chance = { factor = 50 }
+		add_political_power = -50
+		random_country = {
+			limit = {
+				is_in_faction_with = DEH
+				OR = {
+					tag = NFA
+					tag = FRA
+				}
+			}
+			add_opinion_modifier = { tag = DEH modifier = ITA_likes_govt }
+		}
+	}
+	option = {
+		name = delhi.311.b #Merge the concessions into proper Indian states
+		ai_chance = { factor = 30 }
+		add_political_power = 20
+	}
+	option = {
+		name = delhi.311.c #Ban all French institutions and enforce Indian values!
+		ai_chance = { factor = 20 }
+		add_political_power = 60
+		random_country = {
+			limit = {
+				is_in_faction_with = DEH
+				OR = {
+					tag = NFA
+					tag = FRA
+				}
+			}
+			add_opinion_modifier = { tag = DEH modifier = ITA_hates_govt }
 		}
 	}
 }

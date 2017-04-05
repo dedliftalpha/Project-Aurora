@@ -2406,9 +2406,20 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
-		435 = { set_state_flag = PRF_may_gain_core } #Bihar
-		431 = { set_state_flag = PRF_may_gain_core } #Calcutta
-		430 = { set_state_flag = PRF_may_gain_core } #Bangladesh
+		every_state = {
+			limit = {
+				is_core_of = BHC
+				is_claimed_by = PRF
+				NOT = { is_core_of = PRF }
+				NOT = { state = 432 } #Assam
+				NOT = { state = 434 } #Manipur
+				NOT = { state = 858 } #Tawang
+				NOT = { state = 426 } #Orissa
+				NOT = { state = 436 } #Jabalpur
+				NOT = { state = 889 } #Vizagapatnam
+			}
+			set_state_flag = PRF_may_gain_core
+		}
 	}
 	
 	option = {
@@ -2560,7 +2571,8 @@ country_event = {
 	
 	immediate = {
 		432 = { set_state_flag = PRF_may_gain_core } #Assam
-		434 = { set_state_flag = PRF_may_gain_core } #Nagaland
+		434 = { set_state_flag = PRF_may_gain_core } #Manipur
+		858 = { set_state_flag = PRF_may_gain_core } #Tawang
 	}
 	
 	option = {
@@ -2661,6 +2673,7 @@ country_event = {
 	immediate = {
 		426 = { set_state_flag = PRF_may_gain_core } #Orissa
 		436 = { set_state_flag = PRF_may_gain_core } #Jabalpur
+		889 = { set_state_flag = PRF_may_gain_core } #Vizagapatnam
 	}
 	
 	option = {
@@ -3331,7 +3344,7 @@ country_event = {
 		ai_chance = { factor = 60 }
 		BHU = {
 			set_country_flag = PRF_demand_return
-			add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+			add_opinion_modifier = { target = ROOT modifier = ITA_outraged }
 			country_event = { id = prf.184 days = 3 }
 		}
 	}
@@ -3341,7 +3354,7 @@ country_event = {
 		add_political_power = -60
 		BHU = {
 			set_country_flag = PRF_demand_govt
-			add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+			add_opinion_modifier = { target = ROOT modifier = ITA_outraged }
 			country_event = { id = prf.184 days = 3 }
 		}
 	}
@@ -3365,7 +3378,7 @@ country_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		owns_state = 858 #Arunchal Pradesh
+		owns_state = 858 #Tawang
 		controls_state = 858
 		NOT = { has_war_with = FROM }
 	}

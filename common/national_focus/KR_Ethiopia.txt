@@ -142,46 +142,6 @@ focus_tree = {
 		}
 	}
 
-	### Ethiopia's German Land Grab
-	focus = {
-		id = ETH_Seize_Ger_Som
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = 6
-		y = 1
-		cost = 10
-		ai_will_do = { factor = 80 }
-		available = {
-			has_global_flag = GER_Capitulation
-			NOT = { OR = { is_in_faction_with = GER has_war_with = GER } }
-		}
-		prerequisite = { focus = ETH_reform }
-		bypass = { AND = { owns_state = 269 owns_state = 268 } }
-		completion_reward = {
-			transfer_state = 268
-			transfer_state = 269
-			GER = { country_event = { id = ethiopia.23 days = 1 } }
-		}
-	}
-
-	focus = {
-		id = ETH_Intergrate_Ger_Som
-		icon = GFX_goal_generic_demand_territory
-		x = 6
-		y = 2
-		cost = 10
-		ai_will_do = { factor = 100 }
-		available = {
-			NOT = { has_war_with = GER }
-		}
-		prerequisite = { focus = ETH_Seize_Ger_Som }
-		bypass = { owns_state = 753 }
-		completion_reward = {
-			add_state_core = 268
-			add_state_core = 269
-			add_political_power = 50
-		}
-	}
-
 	focus = {
 		id = ETH_Reform_Railways
 		icon = GFX_goal_generic_construct_infrastructure
@@ -814,70 +774,205 @@ focus_tree = {
 	}
 
 	### Build up to & War with the Dervish State
-	#focus = { # A Blindness over the Horn
-	#	id = ETH_Blindness_Horn
-	#	icon = ?
-	#	x = 21
-	#	y = 1
-	#	available = { Germany has Black Monday (date?) }
-	#	completion_reward = {
-	#		custom_event_tooltip = ETH_Germany_Not_Watching
-	#	}
-	#}
+	focus = { # A Blindness over the Horn
+		id = ETH_Blindness_Horn
+		icon = GFX_goal_state_economy
+		x = 21
+		y = 0
+		available = { date > 1936.2.14 }
+		completion_reward = {
+			custom_effect_tooltip = ETH_Germany_Not_Watching
+		}
+	}
 	
-	# Proposed Foci for conflict with the Dervish State will go HERE (but commented out for you to see TBW, and so it isn't live with 0.4 ;) )
-	# I would add some stuff but I can't remember exact layout off the top of my head
-	
-	#focus = { # A temporary solution to the issue - Ethiopia will gain cores on the Somaliland States without going through my proposed Dervish Integration Tree
-	#	id = ETH_Integrate_Dervish
-	#	icon = ?
-	#	x = 21
-	#	y = 7
-	#	prerequisite = { focus = ETH_Blindness_Horn } # Once again, temporary. Will be removed when integration tree added
-	#	completion_reward = { 
-	#		add_core = 559 # (Somaliland?)
-	#		add_core = 861 # (Eyl?)
-	#		custom_event_tooltip = ETH_Derv_Int
-	#	}
-	#}
+	focus = { # A temporary solution to the issue - Ethiopia will gain cores on the Somaliland States without going through my proposed Dervish Integration Tree
+		id = ETH_Integrate_Dervish
+		icon = GFX_goal_generic_demand_territory
+		x = 21
+		y = 8
+		prerequisite = { focus = ETH_Blindness_Horn } # Once again, temporary. Will be removed when integration tree added
+		completion_reward = { 
+			559 = { add_core_of = ETH }
+			861 = { add_core_of = ETH }
+			custom_effect_tooltip = ETH_Derv_Int
+		}
+	}
 
 	### Outwards Ambitions - Post-Dervish Defeat
-	#focus = {
-	#	id = ETH_Out_Amb
-	#	icon = GFX_goal_generic_position_armies
-	#	x = 21
-	#	y = 8
-	#	prerequisite = { focus = ETH_Derv_Def }
+	focus = {
+		id = ETH_Out_Amb
+		icon = GFX_goal_generic_position_armies
+		x = 21
+		y = 9
+		prerequisite = { focus = ETH_Integrate_Dervish }
 	#	available = { Do some stuff here }
-	#}
+		completion_reward = {
+			add_political_power = 50
+			custom_effect_tooltip = ETH_Otwards_Amb
+		}
+	}
 
-	# Land Stealing from Germany will move here after Dervish-Aimed Foci finished (one of which is a question to sever or strengthen ties with Germany), and ONLY be avaible if ETH chooses to sever ties with GER
 
 	## ISOLATION TREE
-	#focus = {
-	#	id = ETH_Iso_S
-	#	icon = GFX_goal_generic_construct_military
-	#	x = 15
-	#	y = 9
-	#	prerequisite = { focus = ETH_Out_Amb }
-	#}
+	focus = {
+		id = ETH_Iso_S
+		icon = GFX_goal_generic_construct_military
+		x = 15
+		y = 9
+		prerequisite = { focus = ETH_Out_Amb }
+	}
 
-	## PANAFRICA DREAM
-	#focus = {
-	#	id = ETH_PanAfrica
-	#	icon = GFX_goal_panafrica
-	#	x = 21
-	#	y = 9
-	#	prerequisite = { focus = ETH_Out_Amb }
-	#}
+	focus = {
+		id = ETH_Fort_Maj
+		icon = GFX_goal_generic_fortify_city
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Iso_S }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_North
+		icon = GFX_goal_generic_construct_military
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Fort_Maj }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_South
+		icon = GFX_goal_generic_construct_military
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Fort_North }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_North_C
+		icon = GFX_focus_generic_coastal_fort
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Iso_S }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_South_C
+		icon = GFX_focus_generic_coastal_fort
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Fort_North_C }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_Rem_C
+		icon = GFX_focus_generic_coastal_fort
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Fort_South_C }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Commit_Self
+		icon = GFX_goal_anschluss
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Fort_South }
+		prerequisite = { focus = ETH_Fort_South_C }
+	#	mutually_exclusive = {  }
+	#	completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Sleep
+		icon = GFX_goal_generic_neutrality_focus
+		x = 14
+		y = 10
+		prerequisite = { focus = ETH_Commit_Self }
+	#	completion_reward = {  }
+	}
+
+	## THE GERMAN QUESTION
+	focus = {
+		id = ETH_Ger_Q
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		x = 18
+		y = 11
+		prerequisite = { focus = ETH_Out_Amb }
+		available = { has_country_flag = ETH_Ger_Mil_Adv }
+		bypass = { AND = { owns_state = 269 owns_state = 268 } }
+		cost = 10
+		ai_will_do = { factor = 100 }
+		completion_reward = {
+		#	GER = { country_event = { id = ethiopia.26 days = 14 } # A Report from the Horn }
+			add_political_power = 20
+			set_country_flag = ETH_Ger_Ques
+		}
+	}
+
+	focus = {
+		id = ETH_Seize_Ger_Som
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		x = 18
+		y = 12
+		cost = 10
+		ai_will_do = { factor = 80 }
+		available = {
+			has_global_flag = GER_Capitulation
+			NOT = { OR = { is_in_faction_with = GER has_war_with = GER } }
+		}
+		prerequisite = { focus = ETH_reform }
+		bypass = { AND = { owns_state = 269 owns_state = 268 } }
+		completion_reward = {
+			transfer_state = 268
+			transfer_state = 269
+			GER = { country_event = { id = ethiopia.23 days = 1 } }
+		}
+	}
+
+	focus = {
+		id = ETH_Intergrate_Ger_Som
+		icon = GFX_goal_generic_demand_territory
+		x = 18
+		y = 13
+		cost = 10
+		ai_will_do = { factor = 100 }
+		available = {
+			NOT = { has_war_with = GER }
+		}
+		prerequisite = { focus = ETH_Seize_Ger_Som }
+		completion_reward = {
+			add_state_core = 268
+			add_state_core = 269
+			add_political_power = 50
+		}
+	}
+
+	focus = {
+		id = ETH_Pan_Dream
+		icon = goal_africa
+		x = 18
+		y = 14
+		cost = 10
+		ai_will_do = { factor = 100 }
+		prerequisite = { focus = ETH_Intergrate_Ger_Som }
+		available = { NOT = { has_war_with = GER } }
+		completion_reward = {
+			add_ideas = ETH_Pan_A_Dream
+		}
+	}
 	
 	## CLOSER MAJOR POWER BONDS TREE
-	#focus = {
-	#	id = ETH_MPB
-	#	icon = GFX_goal_generic_improve_relations
-	#	x = 27
-	#	y = 9
-	#	prerequisite = { focus = ETH_Out_Amb }
-	#}
+	focus = {
+		id = ETH_MPB
+		icon = GFX_goal_generic_improve_relations
+		x = 20
+		y = 9
+		prerequisite = { focus = ETH_Out_Amb }
+	}
 }
 

@@ -41,14 +41,14 @@ focus_tree = {
 		id = DEH_economyreform1
 		icon = GFX_goal_generic_positive_trade_relations
 		prerequisite = { focus = DEH_Industry1_focus }
-		x = 0
-		y = 1
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = DEH_1936_election
 				has_country_flag = DEH_1936_election_held
 			}
 		}
+		x = 0
+		y = 1
 		cost = 10
 		
 		ai_will_do = {
@@ -69,7 +69,7 @@ focus_tree = {
 		cost = 10
 		
 		ai_will_do = {
-			factor = 2
+			factor = 3
 		}
 		
 		completion_reward = {
@@ -573,7 +573,7 @@ focus_tree = {
 
 		completion_reward = {
 			random_owned_state = {
-				prioritize = { 443 } #Sindh
+				prioritize = { 428 } #Gujarat
 				limit = {
 					free_building_slots = {
 						building = arms_factory
@@ -644,6 +644,13 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 5
+		}
+		
+		bypass = {
+			OR = {
+				NOT = { is_in_faction_with = CAN }
+				date > 1937.6.1
+			}
 		}
 		
 		completion_reward = {
@@ -1169,6 +1176,9 @@ focus_tree = {
 		cost = 10
 		
 		available = {
+			owns_state = 443
+			controls_state = 443
+			has_political_power > 50
 			is_in_faction_with = CAN
 			any_state = {
 				is_coastal = yes
@@ -1181,11 +1191,15 @@ focus_tree = {
 		}
 		
 		bypass = {
-			NOT = { is_in_faction_with = CAN }
+			OR = {
+				NOT = { is_in_faction_with = CAN }
+				NOT = { owns_state = 443 }
+			}
 		}
 		
 		completion_reward = {
-			### TODO: add purchase of ships event
+			add_political_power = -50
+			country_event = { id = delhi.160 }
 		}
 	}
 	
@@ -1404,26 +1418,24 @@ focus_tree = {
 		prerequisite = { focus = DEH_capital_ships_effort }
 		prerequisite = { focus = DEH_destroyer_effort }
 		available = {
+			has_war = no
 			is_in_faction = yes
-			has_idea = DEH_unitedindia
+			controls_state = 429 #Bombay
+			429 = { is_core_of = DEH }
+			controls_state = 443 #Sindh
+			431 = { is_core_of = DEH } #West Bengal
+			427 = { is_core_of = DEH } #Hyderabad
 		}
 		x = 16
 		y = 5
 		cost = 10
-
-		available = {
-			any_state = {
-				is_coastal = yes
-				is_controlled_by = ROOT
-			}
-		}
 
 		ai_will_do = {
 			factor = 1
 		}
 		
 		completion_reward = {
-			### TODO: add event
+			country_event = { id = delhi.161 }
 		}
 	}
 
@@ -1443,19 +1455,20 @@ focus_tree = {
 
 		complete_tooltip = {
 			air_experience = 25
-			if = { limit = { has_country_flag = aviation_effort_AB }
+			if = {
+				limit = { has_country_flag = aviation_effort_AB }
 				add_building_construction = {
 					type = air_base
 					level = 2
 					instant_build = yes
 				}
-			}			
+			}
 			add_tech_bonus = {
 				name = air_doc_bonus
 				bonus = 0.5
 				uses = 1
 				category = air_doctrine
-			}			
+			}
 		}
 
 		completion_reward = {
@@ -1734,7 +1747,8 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			### TODO: add event
+			air_experience = 25
+			add_ideas = DEH_riaf
 		}
 	}
 	
@@ -1744,7 +1758,9 @@ focus_tree = {
 	focus = {
 		id = DEH_prepare1
 		icon = GFX_goal_generic_military_sphere
-		available = { date > 1937.1.1 }
+		available = {
+			date > 1937.1.1
+		}
 		x = 24
 		y = 0
 		cost = 10
@@ -1758,7 +1774,7 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #prepare to invade
+	focus = {
 		id = DEH_prepare2
 		icon = GFX_goal_generic_military_sphere
 		x = 24
@@ -1768,9 +1784,22 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 2
+			modifier = {
+				factor = 0
+				has_war = no
+				has_army_manpower = { size < 275000 }
+			}
+			modifier = {
+				factor = 3
+				OR = {
+					has_war_with = PRF
+					has_war_with = BHC
+				}
+			}		
 		}
 		
 		completion_reward = {
+			add_timed_idea = { idea = DEH_war_fever days = 365 }
 			add_national_unity = 0.10	
 		}
 	}
@@ -1897,8 +1926,13 @@ focus_tree = {
 
 	focus = {
 		id = DEH_invadeBHC
-		icon = GFX_goal_generic_war_with_comintern
-		available = { has_army_manpower = { size > 299999 } }
+		icon = GFX_goal_generic_major_war
+		available = {
+			has_war = no
+			is_subject = no
+			country_exists = BHC
+			has_army_manpower = { size > 299999 }
+		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_revoltBHC }
 		x = 21
@@ -1907,10 +1941,6 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 			modifier = {
 				factor = 0.5
 				OR = {
@@ -1921,21 +1951,42 @@ focus_tree = {
 		}
 		
 		bypass = {
-			has_war_with = BHC
+			OR = {
+				has_war_with = BHC
+				NOT = { country_exists = BHC }
+			}
 		}
 		
 		completion_reward = {
-			create_wargoal = { type = annex_everything target = BHC }
-			# delhi attacks BHC country_event = BHC.0
+			if = {
+				limit = { is_ai = no }
+				create_wargoal = {
+					type = annex_everything
+					target = BHC
+				}
+				else = {
+					declare_war_on = {
+						target = BHC
+						type = annex_everything
+					}
+				}
+			}
 		}
 	}
 	
 	focus = {
-		id = DEH_revoltBHC #invade with revolt
-		icon = GFX_goal_generic_dangerous_deal
+		id = DEH_revoltBHC
+		icon = GFX_goal_generic_attack_allies
 		available = {
+			has_war = no
+			is_subject = no
 			has_army_manpower = { size > 299999 }
-			BHC = { owns_state = 434 }
+			country_exists = BHC
+			BHC = {
+				totalist_allowed = yes
+				owns_state = 432 #Assam
+				controls_state = 432 #Assam
+			}
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_invadeBHC }
@@ -1959,13 +2010,17 @@ focus_tree = {
 		}
 		
 		bypass = {
-			has_war_with = BHC
+			OR = {
+				has_war_with = BHC
+				NOT = { country_exists = BHC }
+				BHC = { NOT = { owns_state = 432 } }
+			}
 		}
 			
 		completion_reward = {
 			declare_war_on = { target = BHC type = annex_everything }		
 			custom_effect_tooltip = DEH_BHC_revolters
-			set_state_controller = 434
+			set_state_controller = 432
 			hidden_effect= { load_oob = DEH_BHC_revolters }
 		}
 	}
@@ -1973,7 +2028,12 @@ focus_tree = {
 	focus = {
 		id = DEH_invadePRF
 		icon = GFX_goal_generic_major_war
-		available = { has_army_manpower = { size > 299999 } }
+		available = {
+			has_war = no
+			is_subject = no
+			country_exists = PRF
+			has_army_manpower = { size > 299999 }
+		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_revoltPRF }
 		x = 25
@@ -1996,21 +2056,41 @@ focus_tree = {
 		}
 		
 		bypass = {
-			has_war_with = PRF
+			OR = {
+				has_war_with = PRF
+				NOT = { country_exists = PRF }
+			}
 		}
 		
 		completion_reward = {
-			create_wargoal = { type = annex_everything target = PRF }
-			# dehli attacks PRF country_event = PRF.0
+			if = {
+				limit = { is_ai = no }
+				create_wargoal = {
+					type = annex_everything
+					target = PRF
+				}
+				else = {
+					declare_war_on = {
+						target = PRF
+						type = annex_everything
+					}
+				}
+			}
 		}			
 	}
 	
 	focus = {
-		id = DEH_revoltPRF #invade with revolt
+		id = DEH_revoltPRF
 		icon = GFX_goal_generic_attack_allies
 		available = {
+			has_war = no
+			is_subject = no
 			has_army_manpower = { size > 299999 }
-			PRF = { owns_state = 423 }
+			country_exists = PRF
+			PRF = {
+				owns_state = 867 #Trivancore
+				controls_state = 867
+			}
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_invadePRF }
@@ -2034,15 +2114,18 @@ focus_tree = {
 		}
 		
 		bypass = {
-			has_war_with = PRF
+			OR = {
+				has_war_with = PRF
+				NOT = { country_exists = PRF }
+				PRF = { NOT = { owns_state = 867 } }
+			}
 		}
 		
 		completion_reward = {
 			declare_war_on = { target = PRF type = annex_everything }			
 			custom_effect_tooltip = DEH_PRF_revolters
-			set_state_controller = 423
-			hidden_effect = { load_oob = DEH_PRF_revolters }			
-			# dehli country_event = princely.1
+			set_state_controller = 867
+			hidden_effect = { load_oob = DEH_PRF_revolters }
 		}
 	}
 	
@@ -2063,7 +2146,6 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			set_country_flag = DEH_unitedindia
 			add_ideas = DEH_unitedindia
 			add_political_power = 150
 			### TODO: add event
@@ -2408,7 +2490,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			### TODO: add event
+			country_event = { id = delhi.300 }
 		}
 	}	
 	
@@ -2468,7 +2550,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			### TODO: add event
+			country_event = { id = delhi.301 }
 		}
 	}
 	

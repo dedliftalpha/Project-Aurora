@@ -24,17 +24,17 @@ country_event = {
 		name = delhi.1.a
 		hidden_effect = {
 			# Deactive ministers who don't start in Delhi
-			set_country_flag = V_S_Subramanya_Iyer_dead
-			set_country_flag = Damodaran_Asan_AS_dead
-			set_country_flag = MA_Chacko_dead
-			set_country_flag = Shri_Krishna_Chandra_Welingkar_dead
-			set_country_flag = D_N_Mukerji_dead
-			set_country_flag = Adhar_Kumar_Chatterjee_dead
-			set_country_flag = Ram_Dass_Katari_dead
-			set_country_flag = Bhogaraju_Pattabhi_Sitaramayya_dead
-			set_country_flag = Rajkumari_Amrit_Kaur_dead
-			set_country_flag = Mahadev_Desai_dead
-			set_country_flag = Mohandas_Karamchand_Gandhi_dead
+			set_country_flag = V_S_Subramanya_Iyer_dead #TRV
+			set_country_flag = Damodaran_Asan_AS_dead #TRV
+			set_country_flag = MA_Chacko_dead #TRV
+			set_country_flag = Shri_Krishna_Chandra_Welingkar_dead #PRF
+			set_country_flag = D_N_Mukerji_dead #PRF
+			set_country_flag = Adhar_Kumar_Chatterjee_dead #PRF
+			set_country_flag = Ram_Dass_Katari_dead #MAD
+			set_country_flag = Bhogaraju_Pattabhi_Sitaramayya_dead #BHC
+			set_country_flag = Rajkumari_Amrit_Kaur_dead #BHC
+			set_country_flag = Mahadev_Desai_dead #BHC
+			set_country_flag = Mohandas_Karamchand_Gandhi_dead #BHC
 			
 			# Fire secondary startup event
 			country_event = { id = delhi.2 days = 1 }
@@ -315,6 +315,7 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
+		set_country_flag = DEH_1936_election_held
 		hidden_effect = {
 			retire_country_leader = yes
 			remove_ideas_with_trait = head_of_government
@@ -428,6 +429,7 @@ country_event = {
 	fire_only_once = yes
 	
 	immediate = {
+		set_country_flag = DEH_1936_election_held
 		hidden_effect = {
 			retire_country_leader = yes
 			remove_ideas_with_trait = head_of_government
@@ -532,9 +534,10 @@ country_event = {
 }
 
 ##############
-# Status of the Diarchy
+# Political Events
 ##############
 
+# Addressing the Diarchy (fired by focus)
 country_event = {
 	id = delhi.10
 	title = delhi.10.t
@@ -626,60 +629,150 @@ country_event = {
 	}
 }
 
+# Indian Economy Act (fired by focus)
 country_event = {
-	id = delhi.11 #economy act start
+	id = delhi.11
 	title = delhi.11.t
 	desc = delhi.11.d
+	picture = GFX_report_DEH_delhi
 
 	is_triggered_only = yes
 
 	option = {
 		name = delhi.11.a #free market
+		ai_chance = { factor = 50 }
 		add_political_power = 150
+		add_popularity = { ideology = market_liberal popularity = 0.1 }
+		if = {
+			limit = { NOT = { has_idea = free_trade } }
+			add_ideas = free_trade
+		}
 	}
 	option = {
 		name = delhi.11.b #moderate
+		ai_chance = { factor = 35 }
 		add_political_power = 50
-		add_ideas = partial_economic_mobilisation
-
+		add_popularity = { ideology = social_conservative popularity = 0.1 }
 	}
 	option = {
 		name = delhi.11.c #central planning
+		ai_chance = { factor = 15 }
 		add_political_power = -50
-		add_ideas = war_economy
+		add_popularity = { ideology = radical_socialist popularity = 0.1 }
+		if = {
+			limit = { NOT = { has_idea = low_economic_mobilisation } }
+			add_ideas = low_economic_mobilisation
+		}
 	}
 }
 
+# Status of Trade Unions in Delhi (fired by focus)
 country_event = {
 	id = delhi.12
 	title = delhi.12.t
-	desc = delhi.12.d
+	picture = GFX_report_DEH_delhi
+	
+	desc = {
+		text = delhi.12.d.liberal
+		trigger = { has_government = market_liberal }
+	}
+	desc = {
+		text = delhi.12.d.swaraj
+		trigger = { has_government = social_liberal }
+	}
+	desc = {
+		text = delhi.12.d.jinnah
+		trigger = { has_government = social_democrat }
+	}
+	desc = {
+		text = delhi.12.d.union
+		trigger = { has_government = social_conservative }
+	}
 
 	is_triggered_only = yes
-	fire_only_once = yes
 
 	option = {
-		name = delhi.12.a
+		name = delhi.12.a #Trade unionism is nothing short but Syndicalism, restrict it!
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0.5
+				has_government = market_liberal
+			}
+			modifier = {
+				factor = 0.4
+				has_government = social_liberal
+			}
+			modifier = {
+				factor = 0.2
+				has_government = social_democrat
+			}
+			modifier = {
+				factor = 0.6
+				has_government = social_conservative
+			}
+		}
+		add_political_power = -100
 		add_ideas = DEH_trade_unions_banned
-		add_political_power = -50
 	}
 	option = {
-		name = delhi.12.b
+		name = delhi.12.b #Let us enforce workers' rights moderately, but progressively!
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0.35
+				has_government = market_liberal
+			}
+			modifier = {
+				factor = 0.5
+				has_government = social_liberal
+			}
+			modifier = {
+				factor = 0.6
+				has_government = social_democrat
+			}
+			modifier = {
+				factor = 0.3
+				has_government = social_conservative
+			}
+		}
+		add_political_power = 20
 		add_ideas = DEH_workers_protected
 	}
 	option = {
-		name = delhi.12.c
+		name = delhi.12.c #The proletariat shall no longer suffer, support the trade unions!
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0.15
+				has_government = market_liberal
+			}
+			modifier = {
+				factor = 0.1
+				has_government = social_liberal
+			}
+			modifier = {
+				factor = 0.2
+				has_government = social_democrat
+			}
+			modifier = {
+				factor = 0.1
+				has_government = social_conservative
+			}
+		}
+		add_political_power = 100
 		add_ideas = DEH_support_unions
 	}
 }
 
-country_event = { #bombay plan
+# Bombay Plan (fired by focus)
+country_event = {
 	id = delhi.13
 	title = delhi.13.t
 	desc = delhi.13.d
+	picture = GFX_report_DEH_delhi
 
 	is_triggered_only = yes
-	fire_only_once = yes
 
 	option = {
 		name = delhi.13.a
@@ -695,14 +788,14 @@ country_event = { #bombay plan
 	}
 }
 
-#Reforming the Princely Armies
+#Reforming the Princely Armies (fired by focus)
 country_event = {
 	id = delhi.100
 	title = delhi.100.t
 	desc = delhi.100.d
+	picture = GFX_report_event_indian_soldiers
 
 	is_triggered_only = yes
-	fire_only_once = yes
 
 	option = {
 		name = delhi.100.a #assimilate princely troops
@@ -1246,6 +1339,169 @@ country_event = {
 	}
 }
 
+##############
+# Sale of Canadian Ships
+##############
+
+# Purchase of Canadian ships (fired from focus)
+country_event = {
+	id = delhi.160
+	title = delhi.160.t
+	desc = delhi.160.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.160.a
+		load_oob = DEH_CAN_ships
+		add_equipment_to_stockpile = { type = convoy_1 amount = 12 producer = CAN }
+	}
+}
+
+# Rearming the Royal Indian Navy (fired from focus)
+country_event = {
+	id = delhi.161
+	title = delhi.161.t
+	desc = delhi.161.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.161.a
+		add_political_power = 40
+		random_country = {
+			limit = {
+				is_in_faction_with = DEH
+				is_faction_leader = yes
+			}
+			country_event = { id = delhi.162 days = 10 }
+		}
+		if = {
+			limit = {
+				is_in_faction_with = AST
+				AST = { is_faction_leader = no }
+			}
+			AST = { country_event = { id = delhi.162 days = 6 } }
+		}
+	}
+}
+
+# Faction member asked to send naval assistance
+country_event = {
+	id = delhi.162
+	title = delhi.162.t
+	desc = delhi.162.d
+	picture = GFX_report_DEH_delhi
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		is_in_faction_with = FROM
+	}
+	
+	option = {
+		name = delhi.162.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0.25
+				has_political_power < 0
+			}
+		}
+		reverse_add_opinion_modifier = { target = FROM modifier = ITA_likes_govt }
+		add_political_power = -100
+		FROM = { country_event = { id = delhi.163 } }
+	}
+	option = {
+		name = delhi.162.b
+		ai_chance = { factor = 20 }
+		reverse_add_opinion_modifier = { target = FROM modifier = ITA_dislikes_govt }
+	}
+}
+
+# Faction member sends naval assistance
+country_event = {
+	id = delhi.163
+	title = delhi.163.t
+	picture = GFX_report_event_ast_navy
+	
+	desc = {
+		text = delhi.163.d
+		trigger = { FROM = { NOT = { tag = AST } } }
+	}
+	desc = {
+		text = delhi.163.d.aust
+		trigger = { FROM = { tag = AST } }
+	}
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			controls_state = 443
+			controls_state = 429
+		}
+	}
+	
+	option = {
+		name = delhi.163.a #Use them to expand the Karachi naval base!
+		trigger = {
+			FROM = { NOT = { tag = AST } }
+			controls_state = 443
+		}
+		navy_experience = 40
+		add_tech_bonus = {
+			name = ships_bonus
+			bonus = 0.5
+			uses = 2
+			category = naval_equipment
+		}
+		443 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+	option = {
+		name = delhi.163.b #Set them up in Bombay, the beating heart of Indian commerce!
+		trigger = {
+			FROM = { NOT = { tag = AST } }
+			controls_state = 429
+		}
+		navy_experience = 40
+		add_tech_bonus = {
+			name = ships_bonus
+			bonus = 0.5
+			uses = 2
+			category = naval_equipment
+		}
+		429 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+	option = {
+		name = delhi.163.c #We should name a ship HMIS Bruce!
+		trigger = { FROM = { tag = AST } }
+		navy_experience = 20
+		add_tech_bonus = {
+			name = ships_bonus
+			bonus = 0.5
+			uses = 1
+			category = naval_equipment
+		}
+	}
+}
+
 
 ##############
 # Atrocities in Nepal
@@ -1603,5 +1859,120 @@ news_event = {
 }
 
 
+##############
+# Post-Unification Events
+##############
 
+# What to do with the Princely officers?
+country_event = {
+	id = delhi.300
+	title = delhi.300.t
+	desc = delhi.300.d
+	picture = GFX_report_event_indian_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.300.a #We need all of them to make India mighty once again
+		add_political_power = -100
+		custom_effect_tooltip = DEH_PRF_convert_faster
+		create_corps_commander = { #Auto-Generated
+			name = "Hashim Nawaz Jung"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Hashim_Nawaz_Jung.tga"
+			traits = {}
+			skill = 4
+		}
+		create_corps_commander = { #Auto-Generated
+			name = "Thimmdyya"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Thimmdyya.tga"
+			traits = {
+				trickster
+				panzer_leader
+			}
+			skill = 2
+		}
+		clr_country_flag = V_S_Subramanya_Iyer_dead #TRV
+		clr_country_flag = Damodaran_Asan_AS_dead #TRV
+		clr_country_flag = MA_Chacko_dead #TRV
+		clr_country_flag = Shri_Krishna_Chandra_Welingkar_dead #PRF
+		clr_country_flag = D_N_Mukerji_dead #PRF
+		clr_country_flag = Adhar_Kumar_Chatterjee_dead #PRF		
+		hidden_effect = {
+			set_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = delhi.300.b #These men are beyond redemption, lock them away for ever!
+		add_political_power = 100
+		custom_effect_tooltip = DEH_PRF_convert_slower
+		hidden_effect = {
+			set_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+}
+
+# Dealing with the Commune's officers
+country_event = {
+	id = delhi.301
+	title = delhi.301.t
+	desc = delhi.301.d
+	picture = GFX_report_event_indian_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.301.a #Let the least politically tainted officers have a commission
+		add_political_power = -100
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		custom_effect_tooltip = DEH_BHC_convert_faster
+		create_corps_commander = {
+			name = "Naseem Haider"
+			portrait_path = "gfx/leaders/BHC/Portrait_BHC_Naseem_Haider.tga"
+			traits = { panzer_leader }
+			skill = 2
+		}
+		create_corps_commander = {
+			name = "Gurbachan Singh"
+			portrait_path = "gfx/leaders/BHC/Portrait_BHC_Gurbachan_Singh.tga"
+			traits = {
+				trickster
+				trait_engineer
+			}
+			skill = 3
+		}
+		create_navy_leader = {
+			name = "Janjuh Khan"
+			portrait_path = "gfx/leaders/BHC/Portrait_BHC_Janjuh_Khan.tga"
+			traits = {}
+			skill = 1
+		}
+		clr_country_flag = Bhogaraju_Pattabhi_Sitaramayya_dead #BHC
+		clr_country_flag = Rajkumari_Amrit_Kaur_dead #BHC
+		clr_country_flag = Mahadev_Desai_dead #BHC
+		clr_country_flag = Mohandas_Karamchand_Gandhi_dead #BHC
+		hidden_effect = {
+			set_country_flag = {
+				flag = BHC_core_speed
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = delhi.301.b #These men are beyond redemption, lock them away for ever!
+		add_political_power = 100
+		custom_effect_tooltip = DEH_BHC_convert_slower
+		hidden_effect = {
+			set_country_flag = {
+				flag = BHC_core_speed
+				value = -1
+			}
+		}
+	}
+}
 

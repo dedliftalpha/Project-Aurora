@@ -5412,7 +5412,227 @@ country_event = { # drought ends
 	}
 }
 
+#Hokkaido Farming#
+country_event = { # Mantetsu's Offer
+	id = fengtian.new.47
+	title = fengtian.new.47.t
+	desc = fengtian.new.47.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_completed_focus = FNG_The_Soy_Agricultural_Initiative
+		has_completed_focus = FNG_Rural_Reconstruction
+		FNG = {
+			is_subject_of = JAP
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 365
+	}
+	
+	option = { # Accept the offer
+		name = fengtian.new.47.a
+		set_country_flag = {
+			flag = hokkaido_farming
+			value = 1
+		}
+		add_popularity = {
+			market_liberal = 0.01
+		}
+	}
+	
+	option = { #Refuse the offer
+		name = fengtian.new.47.b
+		add_popularity = {
+			market_liberal = -0.01
+		}
+	}
+}
 
+country_event = { # Repeating Event
+	id = fengtian.new.48
+	title = fengtian.new.48.t
+	desc = fengtian.new.48.d
+	
+	trigger  = {
+		has_country_flag = {
+			flag = hokkaido_farming
+			value = < 3
+		}
+		FNG = {
+			is_subject_of = JAP
+		}
+		NOT = {
+		has_country_flag = rural_reconstruction
+			OR = {
+				has_country_flag = hokkaido_farming_discovered_jap
+				has_country_flag = hokkaido_farming_discovered_chi
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 600
+	}
+	
+	option = {
+		name = fengtian.new.48.a
+		modify_country_flag = {
+			flag = hokkaido_farming
+			value = 1
+		}
+		add_popularity = {
+			market_liberal = 0.01
+		}
+		random_list = {
+			60 = {}
+			20 = {
+				set_country_flag = hokkaido_farming_discovered_jap
+			}
+			20 = {
+				set_country_flag = hokkaido_farming_discovered_chi
+			}
+		}
+		random_list = {
+			60 = {
+				883 = {
+					add_extra_state_shared_building_slots = 2
+				}
+			40 = {
+				884 = {
+					add_extra_state_shared_building_slots = 2
+				}
+			}
+		}
+	}
+}
+
+country_event = { # The Kwantung Army Discovers the Plan
+	id = fengtian.new.49
+	title = fengtian.new.49.t
+	desc = fengtian.new.49.d
+	
+	trigger = {
+		has_country_flag = hokkaido_farming_discovered_jap
+		FNG = {
+			is_subject_of = JAP
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = fengtian.new.49.a
+		clr_country_flag = hokkaido_farming
+		add_political_power = -50
+		random_list = {
+			1 = {}
+			33 = {
+				add_timed_idea =  {
+					idea = FNG_Hidden_Kwantung_Doctrines
+					days = 60
+				}
+			}
+			
+			33 = {
+				add_timed_idea = {
+					idea = FNG_Hidden_Kwantung_Factories
+					days = 60
+				}
+			}
+			
+			33 = {
+				add_timed_idea = {
+					idea = FNG_Hidden_Kwantung_Organization
+					days = 60
+				}
+			}
+		}
+	}
+}
+
+country_event = { # The Plan is Discovered by the Chinese
+	id = fengtian.new.50
+	title = fengtian.new.50.t
+	desc = fengtian.new.50.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_flag = hokkaido_farming_discovered_chi
+		FNG = {
+			is_subject_of = JAP
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { #Accept the situation
+		name = fengtian.new.50.a
+		clr_country_flag = hokkaido_farming
+		add_political_power = -100
+	}
+	
+	option = { # Defend the plan
+		name = fengtian.new.50.b
+		add_political_power = -30
+		hidden_effect = {
+			random_list = {
+				40 = { 
+					FNG = {
+						country_event = {
+							id = fengtian.new.51
+							days = 5
+						}
+					}
+				}
+				60 = {
+					FNG = {
+						country_event = {
+							id = fengtian.new.52
+							days = 5
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { # Defense Successful
+	id = fengtian.new.51
+	title = fengtian.new.51.t
+	desc = fengtian.new.51.d
+	
+	fire_only_once = yes
+	
+	option = {
+		name = fengtian.new.51.a
+		add_political_power = 20
+	}
+}
+
+country_event = { # Defense Unsuccessful
+	id = fengtian.new.52
+	title = fengtian.new.52.t
+	desc = fengtian.new.52.d
+	
+	fire_only_once = yes
+	
+	option = {
+		name = fengtian.new.52.a
+		add_political_power = -70
+	}
+}
+	
+	
+	
 
 #########################################
 ### Fengtian Informal Empire Mechanic ###

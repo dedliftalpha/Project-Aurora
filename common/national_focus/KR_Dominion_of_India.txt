@@ -2154,8 +2154,13 @@ focus_tree = {
 
 	focus = {
 		id = DEH_bhutan
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = DEH_unifyindia }
+		available = {
+			has_war = no
+			owns_state = 432 #Assam
+			432 = { is_core_of = DEH }
+		}
 		cost = 10
 		x = 19
 		y = 4
@@ -2163,85 +2168,159 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
+				factor = 3
+				owns_state = 858 #Tawang
+			}
+			modifier = {
 				factor = 0
-				has_war = yes
+				858 = {
+					owner = {
+						NOT = { tag = DEH }
+						strength_ratio = { tag = DEH ratio > 1.0 }
+					}
+				}
 			}
 		}
 		
 		bypass = {
-			OR = {
-				BHU = { is_subject = yes }
-				NOT = { country_exists = BHU }
-			}
+			owns_state = 858
+			858 = { is_core_of = DEH }
 		}			
 		
 		completion_reward = {
-			BHU = {
-				country_event = delhi.102
+			add_state_core = 858
+			if = {
+				limit = {
+					BHU = {
+						owns_state = 858
+						controls_state = 858
+					}
+				}
+				country_event = { id = prf.183 }
 			}
 		}
 	}
 
 	focus = {
 		id = DEH_madras
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = DEH_unifyindia }
+		available = {
+			has_war = no
+			owns_state = 427 #Hyderabad
+			OR = {
+				320 = { NOT = { is_core_of = DEH } }
+				country_exists = MAD
+				country_exists = TRV
+				country_exists = MYS
+			}
+		}
 		cost = 10
 		x = 23
 		y = 4
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 		}
 		
 		bypass = {
-			OR = {
-				MAD = { is_subject = yes }
-				NOT = { country_exists = MAD }
-			}
+			320 = { is_core_of = DEH }
+			NOT = { country_exists = MAD }
+			NOT = { country_exists = TRV }
+			NOT = { country_exists = MYS }
 		}			
 		
 		completion_reward = {
-			country_event = delhi.103
+			add_state_core = 320
+			if = {
+				limit = { country_exists = MAD }
+				MAD = { country_event = { id = prf.191 days = 1 } }
+			}
+			if = {
+				limit = { country_exists = TRV }
+				TRV = { country_event = { id = prf.191 days = 1 } }
+			}
+			if = {
+				limit = { country_exists = MYS }
+				MYS = { country_event = { id = prf.191 days = 1 } }
+			}
 		}
 	}
 
 	focus = {
 		id = DEH_nepal
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = DEH_unifyindia }
+		available = {
+			has_war = no
+			owns_state = 438 #Lucknow
+		}
 		cost = 10
 		x = 21
 		y = 4
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-		}			
+		}
+		
+		bypass = {
+			owns_state = 814 #Uttarakhand
+			owns_state = 815 #Gorakhpur
+			owns_state = 887 #Muzaffarpur
+			owns_state = 888 #Sikkim
+			814 = { is_core_of = DEH }
+			815 = { is_core_of = DEH }
+			887 = { is_core_of = DEH }
+			888 = { is_core_of = DEH }
+		}
 		
 		completion_reward = {
-			### TODO: add event
+			add_state_core = 814
+			add_state_core = 815
+			add_state_core = 887
+			add_state_core = 888
+			if = {
+				limit = {
+					NEP = {
+						OR = {
+							AND = {
+								owns_state = 814
+								controls_state = 814
+							}
+							AND = {
+								owns_state = 815
+								controls_state = 815
+							}
+							AND = {
+								owns_state = 888
+								controls_state = 888
+							}
+							AND = {
+								owns_state = 887
+								controls_state = 887
+							}
+						}
+					}
+				}
+				country_event = { id = prf.187 }
+			}
 		}
 	}
 	
 	focus = {
 		id = DEH_siam
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = DEH_burma }
 		available = {
+			has_war = no
+			country_exists = SIA
+			NOT = { SIA = { is_subject_of = DEH } }
 			OR = {
+				owns_state = 288 #Burma
 				BUR = { is_subject_of = DEH }
-				any_neighbor_country = { tag = SIA }
 			}
 		}
-		cost = 5
+		cost = 10
 		x = 21
 		y = 6
 		
@@ -2249,20 +2328,47 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				has_war = yes
+				NOT = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = SIA
+				strength_ratio = { tag = SIA ratio < 3.0 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { country_exists = SIA }
+				any_neighbor_country = {
+					owns_state = 289 #Siam
+					strength_ratio = { tag = DEH ratio > 1.0 }
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = SIA
+				SIA = { is_in_faction = yes }
+				is_in_faction = no
+			}
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { country_exists = SIA }
+				any_neighbor_country = {
+					owns_state = 289 #Siam
+					is_in_faction = yes
+				}
 			}
 		}
 		
-		bypass = {
-			OR = {
-				SIA = { is_subject = yes }
-				NOT = { country_exists = SIA }
-			}
-		}
+		available_if_capitulated = no
 		
 		completion_reward = {
 			country_event = delhi.106
-		}	
+		}
 	}
 
 	focus = {
@@ -2284,10 +2390,6 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
 		}
 
 		bypass = {
@@ -2302,8 +2404,8 @@ focus_tree = {
 			random_country = {
 				limit = {
 					owns_state = 321
-					NOT = { tag = PRF }
-					NOT = { is_in_faction_with = PRF }
+					NOT = { tag = DEH }
+					NOT = { is_in_faction_with = DEH }
 					OR = {
 						is_major = no
 						AND = {
@@ -2332,7 +2434,7 @@ focus_tree = {
 		y = 5
 		
 		ai_will_do = {
-			factor = 2
+			factor = 1
 		}
 		
 		completion_reward = {
@@ -2351,7 +2453,7 @@ focus_tree = {
 						has_war = yes
 						any_enemy_country = { is_major = yes }
 					}
-					NOT = { is_in_faction_with = PRF }
+					NOT = { is_in_faction_with = DEH }
 				}
 				GER = { country_event = { id = prf.194 } }
 			}
@@ -2363,7 +2465,7 @@ focus_tree = {
 						GER = { owns_state = 281 }
 						CEY = { is_subject_of = GER }
 					}
-					GER = { is_in_faction_with = PRF }
+					GER = { is_in_faction_with = DEH }
 				}
 				GER = { country_event = { id = prf.195 } }
 			}
@@ -2382,12 +2484,17 @@ focus_tree = {
 		}
 	}
 
-	focus = { #integration - burma should be part of BHC or allied and therefore already annexed
+	focus = {
 		id = DEH_burma
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = DEH_bhutan }
 		prerequisite = { focus = DEH_nepal }
 		prerequisite = { focus = DEH_madras }
+		available = {
+			has_war = no
+			owns_state = 430 #East Bengal
+			BUR = { NOT = { is_subject_of = DEH } }
+		}
 		cost = 10
 		x = 21
 		y = 5
@@ -2396,7 +2503,39 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				has_war = yes
+				NOT = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+					has_government = national_populist
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = BUR
+				strength_ratio = { tag = BUR ratio < 3.0 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { country_exists = BUR }
+				any_neighbor_country = {
+					owns_state = 288
+					strength_ratio = { tag = DEH ratio > 1.0 }
+				}
+			}
+			modifier = {
+				factor = 0
+				country_exists = BUR
+				BUR = { is_in_faction = yes }
+				is_in_faction = no
+			}
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { country_exists = BUR }
+				any_neighbor_country = {
+					owns_state = 288
+					is_in_faction = yes
+				}
 			}
 		}
 		
@@ -2407,7 +2546,7 @@ focus_tree = {
 		completion_reward = {
 			every_state = {
 				limit = { is_core_of = BUR }
-				add_core_of = DEH
+				add_core_of = PRF
 			}
 			if = {
 				limit = { country_exists = BUR }
@@ -2423,7 +2562,7 @@ focus_tree = {
 				}
 				random_country = {
 					limit = { owns_state = 288 }
-					DEH = {
+					PRF = {
 						create_wargoal = {
 							type = take_core_state
 							target = PREV
@@ -2469,6 +2608,61 @@ focus_tree = {
 			add_national_unity = 0.05
 		}
 	}
+	
+	focus = {
+		id = DEH_unifyindia_2
+		icon = GFX_focus_RAJ_all_india_forward_bloc
+		prerequisite = { focus = DEH_movies }
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = DEH_all_india_owned
+				NOT = {
+					any_state = {
+						NOT = { is_owned_by = DEH }
+						OR = {
+							is_core_of = DEH
+							is_core_of = PRF
+							is_core_of = BHC
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = DEH_all_india_cored
+				NOT = {
+					any_state = {
+						NOT = { is_core_of = DEH }
+						OR = {
+							is_core_of = PRF
+							is_core_of = BHC
+						}
+					}
+				}
+			}
+		}
+		x = 25
+		y = 6
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			add_political_power = 150
+			set_cosmetic_tag = DEH_IND
+			every_state = {
+				limit = { is_core_of = PRF }
+				remove_core_of = PRF
+			}
+			every_state = {
+				limit = { is_core_of = BHC }
+				remove_core_of = BHC
+			}
+		}
+	}
 
 	focus = {
 		id = DEH_princely_officers
@@ -2501,14 +2695,22 @@ focus_tree = {
 		y = 5
 		cost = 10
 		prerequisite = { focus = DEH_princely_officers }
+		available = {
+			owns_state = 429 #Bombay
+			controls_state = 429
+		}
 		
 		ai_will_do = {
 			factor = 3
 		}
 		
+		bypass = {
+			429 = { is_core_of = DEH }
+		}
+		
 		completion_reward = {
 			custom_effect_tooltip = DEH_PRF_cores_1
-			###  TODO: add event
+			country_event = { id = delhi.302 }
 		}
 	}
 	
@@ -2519,14 +2721,22 @@ focus_tree = {
 		y = 6
 		cost = 10
 		prerequisite = { focus = DEH_PRFreform1 }
+		available = {
+			owns_state = 427 #Hyderabad
+			controls_state = 427
+		}
 		
 		ai_will_do = {
 			factor = 3
 		}
 		
+		bypass = {
+			427 = { is_core_of = DEH }
+		}
+		
 		completion_reward = {
 			custom_effect_tooltip = DEH_PRF_cores_2
-			###  TODO: add event
+			country_event = { id = delhi.303 }
 		}
 	}
 
@@ -2566,7 +2776,6 @@ focus_tree = {
 		
 		available = {
 			OR = {
-				owns_state = 435 #Bihar
 				owns_state = 431 #West Bengal
 				owns_state = 430 #East Bengal
 			}
@@ -2578,9 +2787,18 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
+		bypass = {
+			NOT = {
+				any_owned_state = {
+					is_core_of = BHC
+					NOT = { is_core_of = DEH }
+				}
+			}
+		}
+		
 		completion_reward = {
 			custom_effect_tooltip = DEH_BHC_cores_1
-			###  TODO: add event
+			country_event = { id = delhi.306 }
 		}
 	}
 	
@@ -2597,7 +2815,8 @@ focus_tree = {
 		available = {
 			OR = {
 				owns_state = 432 #Assam
-				owns_state = 434 #Nagaland
+				owns_state = 434 #Manipur
+				owns_state = 858 #Tawang
 			}
 		}
 		
@@ -2607,9 +2826,16 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
+		bypass = {
+			owns_state = 432
+			432 = { is_core_of = DEH }
+			owns_state = 434
+			434 = { is_core_of = DEH }
+		}
+		
 		completion_reward = {
 			custom_effect_tooltip = DEH_BHC_cores_2
-			###  TODO: add event
+			country_event = { id = delhi.307 }
 		}
 	}
 	
@@ -2627,6 +2853,7 @@ focus_tree = {
 			OR = {
 				owns_state = 426 #Orissa
 				owns_state = 436 #Jabalpur
+				owns_state = 889 #Vizagapatnam
 			}
 		}
 		
@@ -2636,9 +2863,16 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
+		bypass = {
+			owns_state = 426
+			426 = { is_core_of = DEH }
+			owns_state = 436
+			436 = { is_core_of = DEH }
+		}
+		
 		completion_reward = {
 			custom_effect_tooltip = DEH_BHC_cores_3
-			###  TODO: add event
+			country_event = { id = delhi.308 }
 		}
 	}
 

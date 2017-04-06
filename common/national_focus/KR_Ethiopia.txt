@@ -729,6 +729,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_bomber
 		x = 8
 		y = 11
+		cost = 10
 		prerequisite = { focus = ETH_Air }
 	}
 
@@ -737,6 +738,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_fighter2
 		x = 10
 		y = 11
+		cost = 10
 		prerequisite = { focus = ETH_Air }
 	}
 
@@ -745,6 +747,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_fighter
 		x = 12
 		y = 11
+		cost = 10
 		prerequisite = { focus = ETH_Air }
 	}
 
@@ -753,6 +756,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_production
 		x = 9
 		y = 12
+		cost = 10
 		prerequisite = { focus = ETH_Strat_Dest focus = ETH_Bat_Sup focus = ETH_Op_Int }
 	}
 
@@ -761,6 +765,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_production
 		x = 11
 		y = 12
+		cost = 10
 		prerequisite = { focus = ETH_Strat_Dest focus = ETH_Bat_Sup focus = ETH_Op_Int }
 	}
 
@@ -769,6 +774,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_doctrine
 		x = 10
 		y = 13
+		cost = 10
 		prerequisite = { focus = ETH_Air_N }
 		prerequisite = { focus = ETH_Air_S }
 	}
@@ -779,6 +785,7 @@ focus_tree = {
 		icon = GFX_goal_state_economy
 		x = 21
 		y = 0
+		cost = 10
 		available = { date > 1936.2.14 }
 		completion_reward = {
 			custom_effect_tooltip = ETH_Germany_Not_Watching
@@ -790,6 +797,7 @@ focus_tree = {
 		icon = GFX_goal_generic_demand_territory
 		x = 21
 		y = 2
+		cost = 10
 		prerequisite = { focus = ETH_Blindness_Horn } # Once again, temporary. Will be removed when integration tree added
 		completion_reward = { 
 			559 = { add_core_of = ETH }
@@ -798,12 +806,13 @@ focus_tree = {
 		}
 	}
 
-	### Outwards Ambitions - Post-Dervish Defeat
+	### Ethiopian Ambitions - Post-Dervish Defeat
 	focus = {
 		id = ETH_Out_Amb
 		icon = GFX_goal_generic_position_armies
 		x = 21
 		y = 3
+		cost = 10
 		prerequisite = { focus = ETH_Integrate_Dervish }
 	#	available = { Do some stuff here }
 		completion_reward = {
@@ -813,66 +822,72 @@ focus_tree = {
 	}
 
 
-	## ISOLATION TREE
+	## CONSOLODATION & FORTIFICATION TREE
 	focus = {
 		id = ETH_Iso_S
 		icon = GFX_goal_generic_construct_military
 		x = 15
 		y = 5
+		cost = 10
 		prerequisite = { focus = ETH_Out_Amb }
 	}
 
 	focus = {
-		id = ETH_Fort_Maj
+		id = ETH_Fort_Idea
+		icon = GFX_goal_generic_military_deal
+		x = 14
+		y = 6
+		cost = 10
+		prerequisite = { focus = ETH_Iso_S }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fort_City
 		icon = GFX_goal_generic_fortify_city
-		x = 14
-		y = 6
-		prerequisite = { focus = ETH_Iso_S }
-		completion_reward = {  }
-	}
-
-	focus = {
-		id = ETH_Fort_North
-		icon = GFX_goal_generic_construct_military
-		x = 14
+		x = 13
 		y = 7
-		prerequisite = { focus = ETH_Fort_Maj }
+		cost = 10
+		prerequisite = { focus = ETH_Fort_Idea }
 		completion_reward = {  }
 	}
 
 	focus = {
-		id = ETH_Fort_South
+		id = ETH_Fort_Borders
 		icon = GFX_goal_generic_construct_military
-		x = 14
+		x = 13
 		y = 8
-		prerequisite = { focus = ETH_Fort_North }
+		prerequisite = { focus = ETH_Fort_City }
 		completion_reward = {  }
 	}
 
 	focus = {
-		id = ETH_Fort_North_C
+		id = ETH_Sea_Forts
 		icon = GFX_focus_generic_coastal_fort
+		x = 15
+		y = 7
+		cost = 10
+		prerequisite = { focus = ETH_Fort_Idea }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Anti_Air
+		icon = GFX_goal_generic_air_bomber
+		x = 15
+		y = 8
+		cost = 10
+		prerequisite = { focus = ETH_Sea_Forts }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Radar_C
+		icon = GFX_goal_generic_radar
 		x = 16
 		y = 6
+		cost = 10
 		prerequisite = { focus = ETH_Iso_S }
-		completion_reward = {  }
-	}
-
-	focus = {
-		id = ETH_Fort_South_C
-		icon = GFX_focus_generic_coastal_fort
-		x = 16
-		y = 7
-		prerequisite = { focus = ETH_Fort_North_C }
-	#	completion_reward = {  }
-	}
-
-	focus = {
-		id = ETH_Fort_Rem_C
-		icon = GFX_focus_generic_coastal_fort
-		x = 16
-		y = 8
-		prerequisite = { focus = ETH_Fort_South_C }
 		completion_reward = {  }
 	}
 
@@ -881,18 +896,61 @@ focus_tree = {
 		icon = GFX_goal_anschluss
 		x = 15
 		y = 9
-		prerequisite = { focus = ETH_Fort_South }
-		prerequisite = { focus = ETH_Fort_Rem_C }
+		cost = 10
+		prerequisite = { focus = ETH_Fort_Borders }
+		prerequisite = { focus = ETH_Anti_Air }
+		prerequisite = { focus = ETH_Radar_C }
 	#	mutually_exclusive = {  }
 		completion_reward = {  }
 	}
 
 	focus = {
-		id = ETH_Sleep
+		id = ETH_Proj_Exc
+		icon = GFX_goal_generic_construction2
+		x = 14
+		y = 10
+		cost = 10
+		prerequisite = { focus = ETH_Commit_Self }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Fixed_Arty
+		icon = GFX_goal_generic_construct_military
+		x = 14
+		y = 11
+		cost = 10
+		prerequisite = { focus = ETH_Proj_Exc }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Proj_Alt
+		icon = GFX_goal_generic_position_armies
+		x = 16
+		y = 10
+		cost = 10
+		prerequisite = { focus = ETH_Commit_Self }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Proj_Wave
+		icon = GFX_focus_generic_coastal_fort
+		x = 16
+		y = 11
+		cost = 10
+		prerequisite = { focus = ETH_Proj_Alt }
+		completion_reward = {  }
+	}
+
+	focus = {
+		id = ETH_Non_Aggresion
 		icon = GFX_goal_generic_neutrality_focus
 		x = 15
-		y = 10
-		prerequisite = { focus = ETH_Commit_Self }
+		y = 12
+		cost = 10
+		prerequisite = { focus = ETH_Proj_Wave focus = ETH_Fixed_Arty }
 		completion_reward = {  }
 	}
 
@@ -900,7 +958,7 @@ focus_tree = {
 	focus = {
 		id = ETH_Ger_Q
 		icon = GFX_focus_generic_anti_fascist_diplomacy
-		x = 18
+		x = 19
 		y = 5
 		prerequisite = { focus = ETH_Out_Amb }
 		available = { has_country_flag = ETH_Ger_Mil_Adv }
@@ -917,7 +975,7 @@ focus_tree = {
 	focus = {
 		id = ETH_Seize_Ger_Som
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = 18
+		x = 19
 		y = 6
 		cost = 10
 		ai_will_do = { factor = 80 }
@@ -937,7 +995,7 @@ focus_tree = {
 	focus = {
 		id = ETH_Intergrate_Ger_Som
 		icon = GFX_goal_generic_demand_territory
-		x = 18
+		x = 19
 		y = 7
 		cost = 10
 		ai_will_do = { factor = 100 }
@@ -955,7 +1013,7 @@ focus_tree = {
 	focus = {
 		id = ETH_Pan_Dream
 		icon = goal_africa
-		x = 18
+		x = 19
 		y = 8
 		cost = 10
 		ai_will_do = { factor = 100 }
@@ -971,80 +1029,113 @@ focus_tree = {
 	focus = {
 		id = ETH_MPB
 		icon = GFX_goal_generic_improve_relations
-		x = 20
+		x = 21
 		y = 5
 		prerequisite = { focus = ETH_Out_Amb }
+		completion_reward = {
+			hidden_effect = { set_global_flag = ETH_Open_Int }
+		#	custom_event_tooltip = ETH_Maj_Pow
+		}
 	}
 
 	# JAPAN
-	#focus = {
-	#	id = ETH_JAP_Com
-	#	icon = GFX_goal_economic_control
-	#	x = 20
-	#	y = 11
-	#	prerequisite = { focus = ETH_MPB }
-	#	completion_reward = { 
-	#	#	add_opinion_modifier = { target = JAP modifier = ETH_JAP_C }
-	#	#	JAP = { add_opinion_modifier = { target = ETH modifier = ETH_JAP_C } }
-	#	#	add_ideas = ETH_JAP_Companies
-	#	}
-	#}
+	focus = {
+		id = ETH_JAP_Com
+		icon = GFX_goal_economic_control
+		x = 21
+		y = 7
+		prerequisite = { focus = ETH_MPB }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_JAP_Interest
+				has_global_flag = ETH_JAP_I
+			}
+		}
+		completion_reward = { 
+		#	add_opinion_modifier = { target = JAP modifier = ETH_JAP_C }
+		#	JAP = { add_opinion_modifier = { target = ETH modifier = ETH_JAP_C } }
+		#	add_ideas = ETH_JAP_Companies
+		}
+	}
 
 	# USA
-	#focus = {
-	#	id = ETH_USA_Int
-	#	icon = GFX_goal_rhineland
-	#	x = 22
-	#	y = 11
-	#	prerequisite = { focus = ETH_MPB }
-	#	completion_reward = { 
-	#	#	add_opinion_modifier = { target = USA modifier = ETH_USA_I }
-	#	#	USA = { add_opinion_modifier = { target = ETH modifier = ETH_USA_I } }
-	#	#	add_ideas = ETH_USA_Interest
-	#	}
-	#}
+	focus = {
+		id = ETH_USA_Int
+		icon = GFX_goal_rhineland
+		x = 23
+		y = 7
+		prerequisite = { focus = ETH_MPB }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_USA_Interest
+				has_global_flag = ETH_USA_I
+			}
+		}
+		completion_reward = { 
+		#	add_opinion_modifier = { target = USA modifier = ETH_USA_I }
+		#	USA = { add_opinion_modifier = { target = ETH modifier = ETH_USA_I } }
+		#	add_ideas = ETH_USA_Interest
+		}
+	}
 
 	# ENTENTE
-	#focus = {
-	#	id = ETH_ENT_Offer
-	#	icon = GFX_goal_generic_air_doctrine
-	#	x = 24
-	#	y = 11
-	#	prerequisite = focus = { ETH_MPB }
-	#	completion_reward = { 
-	#	#	add_opinion_modifier = { target = CAN modifier = ETH_ENT_Offer }
-	#	#	CAN = { add_opinion_modifier = { target = ETH modifier = ETH_ENT_Offer } }
-	#	#	add_ideas = ETH_ENT_Offer
-	#	}
-	#}
+	focus = {
+		id = ETH_ENT_Offer
+		icon = GFX_goal_generic_air_doctrine
+		x = 25
+		y = 7
+		prerequisite = { focus = ETH_MPB }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_ENT_Interest
+				has_global_flag = ETH_ENT_I
+			}
+		}
+		completion_reward = { 
+		#	add_opinion_modifier = { target = CAN modifier = ETH_ENT_Offer }
+		#	CAN = { add_opinion_modifier = { target = ETH modifier = ETH_ENT_Offer } }
+		#	add_ideas = ETH_ENT_Offer
+		}
+	}
 
 	# GERMANY
-	#focus = {
-	#	id = ETH_GER_Sphere
-	#	icon = GFX_goal_support_fascism
-	#	x = 26
-	#	y = 11
-	#	prerequisite = { focus = ETH_MPB }
-	#	completion_reward = { 
-	#	#	add_opinion_modifier = { target = GER modifier = ETH_GER_S }
-	#	#	GER = { add_opinion_modifier = { target = ETH modifier = ETH_GER_S } }
-	#	#	add_ideas = ETH_GER_Sphere
-	#	}
-	#}
+	focus = {
+		id = ETH_GER_Sphere
+		icon = GFX_goal_support_fascism
+		x = 27
+		y = 7
+		prerequisite = { focus = ETH_MPB }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_GER_Interest
+				has_global_flag = ETH_GER_I
+			}
+		}
+		completion_reward = { 
+		#	add_opinion_modifier = { target = GER modifier = ETH_GER_S }
+		#	GER = { add_opinion_modifier = { target = ETH modifier = ETH_GER_S } }
+		#	add_ideas = ETH_GER_Sphere
+		}
+	}
 
 	# OTTOBLOB
-	#focus = {
-	#	id = ETH_OTT_Rel
-	#	icon = GFX_goal_generic_demand_territory
-	#	x = 28
-	#	y = 11
-	#	prerequisite = { focus = ETH_MPB }
-	#	completion_reward = {
-	#	#	add_opinion_modifier = { target = OTT modifier = ETH_OTT_R }
-	#	#	OTT = { add_opinion_modifier = { target = ETH modifier = ETH_OTT_R } }
-	#	#	add_ideas = ETH_OTT_Relations
-	#	}
-	#}
-
+	focus = {
+		id = ETH_OTT_Rel
+		icon = GFX_goal_generic_demand_territory
+		x = 29
+		y = 7
+		prerequisite = { focus = ETH_MPB }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_OTT_Interest
+				has_global_flag = ETH_OTT_I
+			}
+		}
+		completion_reward = {
+		#	add_opinion_modifier = { target = OTT modifier = ETH_OTT_R }
+		#	OTT = { add_opinion_modifier = { target = ETH modifier = ETH_OTT_R } }
+		#	add_ideas = ETH_OTT_Relations
+		}
+	}
 }
 

@@ -2065,7 +2065,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_named_threat = { threat = 2 name = DEH_PRF_war }v
+			add_named_threat = { threat = 2 name = DEH_PRF_war }
 			if = {
 				limit = { is_ai = no }
 				create_wargoal = {
@@ -2317,8 +2317,12 @@ focus_tree = {
 		prerequisite = { focus = DEH_burma }
 		available = {
 			has_war = no
-			country_exists = SIA
-			NOT = { SIA = { is_subject_of = DEH } }
+			is_subject = no
+			SIA = {
+				NOT = { is_subject_of = DEH }
+				NOT = { is_in_faction_with = DEH }
+				any_owned_state = { is_core_of = BUR }
+			}
 			OR = {
 				owns_state = 288 #Burma
 				BUR = { is_subject_of = DEH }
@@ -2332,46 +2336,15 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				NOT = {
-					has_government = authoritarian_democrat
-					has_government = paternal_autocrat
-					has_government = national_populist
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
 				strength_ratio = { tag = SIA ratio < 3.0 }
-			}
-			modifier = {
-				factor = 0
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					strength_ratio = { tag = DEH ratio > 1.0 }
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
-				SIA = { is_in_faction = yes }
-				is_in_faction = no
-			}
-			modifier = {
-				factor = 0
-				is_in_faction = no
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					is_in_faction = yes
-				}
 			}
 		}
 		
 		available_if_capitulated = no
 		
 		completion_reward = {
-			country_event = delhi.106
+			add_political_power = 100
+			SIA = { country_event = { id = delhi.106 } }
 		}
 	}
 
@@ -2618,7 +2591,6 @@ focus_tree = {
 		icon = GFX_focus_RAJ_all_india_forward_bloc
 		prerequisite = { focus = DEH_movies }
 		available = {
-			has_war = no
 			is_subject = no
 			custom_trigger_tooltip = {
 				tooltip = DEH_all_india_owned

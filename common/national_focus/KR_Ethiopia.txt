@@ -100,7 +100,10 @@ focus_tree = {
 			has_civil_war = no
 			has_government = paternal_autocrat
 		}
-		completion_reward = { add_political_power = 200 }
+		completion_reward = {
+			add_political_power = 200
+			custom_effect_tooltip = ETH_Under_Dev
+		}
 	}
 	
 	### Ethiopian Railways (requires bought railways)
@@ -111,30 +114,35 @@ focus_tree = {
 		y = 1
 		cost = 10
 		ai_will_do = { factor = 90 }
-		available = { has_country_flag = bought_ethiopian_railway}
+		available = { 
+			AND = {
+				has_country_flag = bought_ethiopian_railway
+				has_civil_war = no
+			}
+		}
 		prerequisite = { focus = ETH_reform }
 		bypass = { has_country_flag = ethiopian_railway_bypass }
 		completion_reward = {
 			550 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			271 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			559 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			861 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
@@ -150,28 +158,29 @@ focus_tree = {
 		cost = 10
 		ai_will_do = { factor = 80 }
 		prerequisite = { focus = ETH_Repair_Railways }
+		available = { has_civil_war = no }
 		bypass = { has_country_flag = ethiopian_railway_bypass }
 		completion_reward = {
 			550 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			271 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			559 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
 			}
 			861 = { add_building_construction = {
-					type = infastructure
+					type = infrastructure
 					level = 1
 					instant_build = yes
 				}
@@ -1114,7 +1123,13 @@ focus_tree = {
 		y = 6
 		cost = 10
 		prerequisite = { focus = ETH_Iso_S }
-		completion_reward = {  }
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 2
+				catagory = radar_tech
+			}
+		}
 	}
 
 	focus = {
@@ -1126,8 +1141,10 @@ focus_tree = {
 		prerequisite = { focus = ETH_Fort_MIT }
 		prerequisite = { focus = ETH_Anti_Air }
 		prerequisite = { focus = ETH_Radar_C }
-	#	mutually_exclusive = {  }
-		completion_reward = {  }
+		mutually_exclusive = { focus = ETH_Pan_Dream }
+		completion_reward = {
+			add_ideas = ETH_Inwards_Focus
+		}
 	}
 
 	focus = {
@@ -1137,7 +1154,9 @@ focus_tree = {
 		y = 10
 		cost = 10
 		prerequisite = { focus = ETH_Commit_Self }
-		completion_reward = {  }
+		completion_reward = {
+
+		}
 	}
 
 	focus = {
@@ -1147,7 +1166,9 @@ focus_tree = {
 		y = 11
 		cost = 10
 		prerequisite = { focus = ETH_Proj_Exc }
-		completion_reward = {  }
+		completion_reward = {
+
+		}
 	}
 
 	focus = {
@@ -1157,7 +1178,9 @@ focus_tree = {
 		y = 10
 		cost = 10
 		prerequisite = { focus = ETH_Commit_Self }
-		completion_reward = {  }
+		completion_reward = {
+
+		}
 	}
 
 	focus = {
@@ -1167,7 +1190,9 @@ focus_tree = {
 		y = 11
 		cost = 10
 		prerequisite = { focus = ETH_Proj_Alt }
-		completion_reward = {  }
+		completion_reward = {
+
+		}
 	}
 
 	focus = {
@@ -1177,7 +1202,9 @@ focus_tree = {
 		y = 12
 		cost = 10
 		prerequisite = { focus = ETH_Proj_Wave focus = ETH_Fixed_Arty }
-		completion_reward = {  }
+		completion_reward = {
+
+		}
 	}
 
 	## THE GERMAN QUESTION
@@ -1187,13 +1214,19 @@ focus_tree = {
 		x = 19
 		y = 5
 		prerequisite = { focus = ETH_Out_Amb }
-		available = { has_country_flag = ETH_Ger_Mil_Adv }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_GER_Sp
+				NOT = { has_country_flag = ETH_GER_Sphere }
+			}
+		}
 		bypass = { AND = { owns_state = 269 owns_state = 268 } }
 		cost = 10
 		ai_will_do = { factor = 100 }
 		completion_reward = {
 		#	GER = { country_event = { id = ethiopia.26 days = 14 } # A Report from the Horn }
 			add_political_power = 20
+			custom_event_tooltip = ETH_Ger_Cut_Ties
 			set_country_flag = ETH_Ger_Ques
 		}
 	}
@@ -1287,6 +1320,7 @@ focus_tree = {
 		ai_will_do = { factor = 100 }
 		prerequisite = { focus = ETH_Ger_Som_Fort }
 		available = { NOT = { has_war_with = GER } }
+		mutually_exclusive = { focus = ETH_Commit_Self }
 		completion_reward = {
 			add_ideas = ETH_Pan_A_Dream
 		}
@@ -1297,7 +1331,7 @@ focus_tree = {
 	focus = {
 		id = ETH_MPB
 		icon = GFX_goal_generic_improve_relations
-		x = 21
+		x = 22
 		y = 5
 		prerequisite = { focus = ETH_Out_Amb }
 		completion_reward = {
@@ -1310,8 +1344,8 @@ focus_tree = {
 	focus = {
 		id = ETH_JAP_Com
 		icon = GFX_goal_economic_control
-		x = 21
-		y = 7
+		x = 22
+		y = 6
 		prerequisite = { focus = ETH_MPB }
 		available = {
 			custom_trigger_tooltip = {
@@ -1322,7 +1356,7 @@ focus_tree = {
 		completion_reward = { 
 			add_opinion_modifier = { target = JAP modifier = ETH_JAP_C }
 			JAP = { add_opinion_modifier = { target = ETH modifier = ETH_JAP_C } }
-		#	add_ideas = ETH_JAP_Companies
+			add_ideas = ETH_JAP_Companies
 		}
 	}
 
@@ -1331,7 +1365,7 @@ focus_tree = {
 		id = ETH_USA_Int
 		icon = GFX_goal_rhineland
 		x = 23
-		y = 7
+		y = 6
 		prerequisite = { focus = ETH_MPB }
 		available = {
 			custom_trigger_tooltip = {
@@ -1351,7 +1385,7 @@ focus_tree = {
 		id = ETH_ENT_Offer
 		icon = GFX_goal_generic_air_doctrine
 		x = 25
-		y = 7
+		y = 6
 		prerequisite = { focus = ETH_MPB }
 		available = {
 			custom_trigger_tooltip = {
@@ -1371,9 +1405,13 @@ focus_tree = {
 		id = ETH_GER_Sphere
 		icon = GFX_goal_support_fascism
 		x = 27
-		y = 7
+		y = 6
 		prerequisite = { focus = ETH_MPB }
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ETH_GER_Qu
+				NOT = { has_country_flag = ETH_GER_Q }
+			}
 			custom_trigger_tooltip = {
 				tooltip = ETH_GER_Interest
 				has_global_flag = ETH_GER_I
@@ -1382,6 +1420,8 @@ focus_tree = {
 		completion_reward = { 
 			add_opinion_modifier = { target = GER modifier = ETH_GER_S }
 			GER = { add_opinion_modifier = { target = ETH modifier = ETH_GER_S } }
+			custom_event_tooltip = ETH_GER_Strong_Ties
+			hidden_effect = { set_country_flag = ETH_GER_Sphere }
 		#	add_ideas = ETH_GER_Sphere
 		}
 	}
@@ -1391,7 +1431,7 @@ focus_tree = {
 		id = ETH_OTT_Rel
 		icon = GFX_goal_generic_demand_territory
 		x = 29
-		y = 7
+		y = 6
 		prerequisite = { focus = ETH_MPB }
 		available = {
 			custom_trigger_tooltip = {

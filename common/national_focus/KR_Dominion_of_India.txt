@@ -1,3 +1,7 @@
+###########################
+# India Focus Tree
+###########################
+
 focus_tree = {
 	id = delhi_focus
 	
@@ -1761,7 +1765,7 @@ focus_tree = {
 		available = {
 			date > 1937.1.1
 		}
-		x = 24
+		x = 26
 		y = 0
 		cost = 10
 		
@@ -1777,7 +1781,7 @@ focus_tree = {
 	focus = {
 		id = DEH_prepare2
 		icon = GFX_goal_generic_military_sphere
-		x = 24
+		x = 26
 		y = 1
 		cost = 10
 		prerequisite = { focus = DEH_prepare1 }
@@ -1809,7 +1813,7 @@ focus_tree = {
 		icon = GFX_goal_generic_fortify_city
 		cost = 15.00
 		prerequisite = { focus = DEH_prepare1 }
-		x = 26
+		x = 28
 		y = 1
 		
 		available = {
@@ -1871,7 +1875,7 @@ focus_tree = {
 		icon = GFX_goal_generic_fortify_city
 		cost = 15.00
 		prerequisite = { focus = DEH_prepare1 }
-		x = 22
+		x = 24
 		y = 1
 		
 		available = {
@@ -1935,12 +1939,16 @@ focus_tree = {
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_revoltBHC }
-		x = 21
+		x = 23
 		y = 2
 		cost = 10
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 5
+				BHC = { has_war_with = PRF }
+			}
 			modifier = {
 				factor = 0.5
 				OR = {
@@ -1958,6 +1966,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_named_threat = { threat = 2 name = DEH_BHC_war }
 			if = {
 				limit = { is_ai = no }
 				create_wargoal = {
@@ -1990,15 +1999,15 @@ focus_tree = {
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_invadeBHC }
-		x = 23
+		x = 25
 		y = 2
 		cost = 15
 		
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0
-				has_war = yes
+				factor = 5
+				BHC = { has_war_with = PRF }
 			}
 			modifier = {
 				factor = 0.5
@@ -2018,6 +2027,7 @@ focus_tree = {
 		}
 			
 		completion_reward = {
+			add_named_threat = { threat = 2 name = DEH_BHC_war }
 			declare_war_on = { target = BHC type = annex_everything }		
 			custom_effect_tooltip = DEH_BHC_revolters
 			set_state_controller = 432
@@ -2036,7 +2046,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_revoltPRF }
-		x = 25
+		x = 27
 		y = 2
 		cost = 10
 		
@@ -2063,6 +2073,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_named_threat = { threat = 2 name = DEH_PRF_war }
 			if = {
 				limit = { is_ai = no }
 				create_wargoal = {
@@ -2094,7 +2105,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = DEH_prepare2 }
 		mutually_exclusive = { focus = DEH_invadePRF }
-		x = 27
+		x = 29
 		y = 2
 		cost = 15
 		
@@ -2122,6 +2133,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_named_threat = { threat = 2 name = DEH_PRF_war }
 			declare_war_on = { target = PRF type = annex_everything }			
 			custom_effect_tooltip = DEH_PRF_revolters
 			set_state_controller = 867
@@ -2131,13 +2143,13 @@ focus_tree = {
 	
 	focus = {
 		id = DEH_unifyindia
-		icon = GFX_focus_RAJ_all_india_forward_bloc
+		icon = GFX_goal_india_united
 		available = {
 			has_war = no
 			PRF = { exists = no }
 			BHC = { exists = no }
 		}
-		x = 24
+		x = 26
 		y = 3
 		cost = 10
 		
@@ -2148,7 +2160,9 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = DEH_unitedindia
 			add_political_power = 150
-			### TODO: add event
+			hidden_effect = {
+				news_event = { id = delhi.299 }
+			}
 		}
 	}	
 
@@ -2313,8 +2327,12 @@ focus_tree = {
 		prerequisite = { focus = DEH_burma }
 		available = {
 			has_war = no
-			country_exists = SIA
-			NOT = { SIA = { is_subject_of = DEH } }
+			is_subject = no
+			SIA = {
+				NOT = { is_subject_of = DEH }
+				NOT = { is_in_faction_with = DEH }
+				any_owned_state = { is_core_of = BUR }
+			}
 			OR = {
 				owns_state = 288 #Burma
 				BUR = { is_subject_of = DEH }
@@ -2328,46 +2346,15 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				NOT = {
-					has_government = authoritarian_democrat
-					has_government = paternal_autocrat
-					has_government = national_populist
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
 				strength_ratio = { tag = SIA ratio < 3.0 }
-			}
-			modifier = {
-				factor = 0
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					strength_ratio = { tag = DEH ratio > 1.0 }
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
-				SIA = { is_in_faction = yes }
-				is_in_faction = no
-			}
-			modifier = {
-				factor = 0
-				is_in_faction = no
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					is_in_faction = yes
-				}
 			}
 		}
 		
 		available_if_capitulated = no
 		
 		completion_reward = {
-			country_event = delhi.106
+			add_political_power = 100
+			SIA = { country_event = { id = delhi.106 } }
 		}
 	}
 
@@ -2614,7 +2601,6 @@ focus_tree = {
 		icon = GFX_focus_RAJ_all_india_forward_bloc
 		prerequisite = { focus = DEH_movies }
 		available = {
-			has_war = no
 			is_subject = no
 			custom_trigger_tooltip = {
 				tooltip = DEH_all_india_owned
@@ -2652,6 +2638,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 150
+			custom_effect_tooltip = DEH_becomes_india
 			set_cosmetic_tag = DEH_IND
 			every_state = {
 				limit = { is_core_of = PRF }

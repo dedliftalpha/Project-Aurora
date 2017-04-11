@@ -4597,11 +4597,6 @@ country_event = { #The Fate of United Provinces
 			puppet = COS
 		}
 
-		PNM = {
-			transfer_state = 304
-		}
-		puppet = PNM
-
 		if = {
 			limit = {
 				controls_state = 312
@@ -15530,5 +15525,761 @@ country_event = {
 		ai_chance = {
 			factor = 0
 		}
+	}
+}
+
+country_event = { #Fate of Chile
+	id = annex.133
+	title = annex.133.t
+	desc = annex.133.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = CHL has_country_flag = CHL_CONQ
+		}
+		CHL = {
+			exists = no
+		}
+		controls_state = 279 #Santiago (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.133.a #Liberate Chile
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = CHL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			CHL = {
+				transfer_state = PREV
+			}
+		}
+		puppet = CHL
+		add_political_power = 50
+		if = {
+			limit = { 
+				CHL = { is_puppet_of = BOL }
+				872 = {
+					is_controlled_by = CHL
+				}
+			}
+			BOL = {
+				country_event = { id = annex.134 }
+			}
+		}
+	}
+	
+	option = { #Occupy Chile
+		name = annex.133.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = CHL_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #The Exclave of Arica (Bolivia)
+	id = annex.134
+	title = annex.134.t
+	desc = annex.134.d
+
+		is_triggered_only = yes
+
+	option = { 
+		name = annex.134.a #Cede to Peru
+		trigger = {
+			NOT = { has_war_with = PRU }
+		}
+		ai_chance = {
+			factor = 90
+		}
+
+		872 = {
+			PRU = {
+				transfer_state = PREV
+			}
+		}	
+
+		add_political_power = 25
+		# Add an opinion modifier some day
+	}
+	
+	option = { #Maintain to Chile ( Border Gore Enthusiasts )
+		name = annex.134.b
+		ai_chance = {
+			factor = 0 #The AI is above border gore, also will keep to cede to puppet Peru if at war
+		}
+
+		add_political_power = 50
+	}
+
+	option = { #Occupy
+		name = annex.134.c
+		ai_chance = {
+			factor = 10
+		}
+		872 = {
+			BOL = {
+				transfer_state = PREV
+			}
+		}	
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Bolivia
+	id = annex.135
+	title = annex.135.t
+	desc = annex.135.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = PRU #PRU has an event creating a Confederation with Bolivia on annexation, overriding this
+		}
+		NOT = {
+			tag = BOL has_country_flag = BOL_CONQ
+		}
+		BOL = {
+			exists = no
+		}
+		controls_state = 302 #La Paz (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.135.a #Liberate Bolivia
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = BOL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			BOL = {
+				transfer_state = PREV
+			}
+		}
+		puppet = BOL
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Bolivia
+		name = annex.135.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = BOL_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Peru
+	id = annex.136
+	title = annex.136.t
+	desc = annex.136.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = PRU has_country_flag = PRU_CONQ
+		}
+		PRU = {
+			exists = no
+		}
+		controls_state = 303 #Lima (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.136.a #Liberate Peru
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = PRU
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			PRU = {
+				transfer_state = PREV
+			}
+		}
+		puppet = PRU
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Peru
+		name = annex.136.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = PRU_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Ecuador
+	id = annex.137
+	title = annex.137.t
+	desc = annex.137.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = ECU has_country_flag = ECU_CONQ
+		}
+		ECU = {
+			exists = no
+		}
+		controls_state = 305 #Quito (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.137.a #Liberate Ecuador
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = ECU
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			ECU = {
+				transfer_state = PREV
+			}
+		}
+		puppet = ECU
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Ecuador
+		name = annex.137.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = ECU_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Colombia
+	id = annex.138
+	title = annex.138.t
+	desc = annex.138.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = COL has_country_flag = COL_CONQ
+		}
+		COL = {
+			exists = no
+		}
+		controls_state = 306 #Bogotá (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.138.a #Liberate Colombia
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = COL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			COL = {
+				transfer_state = PREV
+			}
+		}
+		puppet = COL
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Colombia
+		name = annex.138.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = COL_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Venezuela
+	id = annex.139
+	title = annex.139.t
+	desc = annex.139.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = VEN has_country_flag = VEN_CONQ
+		}
+		VEN = {
+			exists = no
+		}
+		controls_state = 849 #Caracas (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.139.a #Liberate Venezuela
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = COL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			VEN = {
+				transfer_state = PREV
+			}
+		}
+		puppet = VEN
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Venezuela
+		name = annex.139.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = VEN_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of the Caribbean Federation
+	id = annex.140
+	title = annex.140.t
+	desc = annex.140.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = CAF has_country_flag = CAF_CONQ
+		}
+		CAF = {
+			exists = no
+		}
+		controls_state = 687 #West Guyana (Capital) needed to decide. Doublecheck if capital moved or renamed
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.140.a #Liberate the Caribbean Federation
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = CAF
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			CAF = {
+				transfer_state = PREV
+			}
+		}
+		puppet = CAF
+		add_political_power = 50
+	}
+	
+	option = { #Occupy the Caribbean Federation
+		name = annex.140.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = CAF_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Panama
+	id = annex.141
+	title = annex.141.t
+	desc = annex.141.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = NIC #United Provinces get a free annexation by event ( or claim I guess )
+		}
+		NOT = {
+			tag = PNM has_country_flag = PNM_CONQ
+		}
+		PNM = {
+			exists = no
+		}
+		controls_state = 304 #Panamá City (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.141.a #Liberate Panama
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = PNM
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			PNM = {
+				transfer_state = PREV
+			}
+		}
+		puppet = PNM
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Panama
+		name = annex.141.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = PNM_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Haiti
+	id = annex.142
+	title = annex.142.t
+	desc = annex.142.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = DOM #Haitain-Dominican War is covered in its own file. This is a third party annexing the island there
+		}
+		NOT = {
+			tag = HAI has_country_flag = HAI_CONQ
+		}
+		HAI = {
+			exists = no
+		}
+		controls_state = 318 #Port-au-Prince (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.142.a #Liberate Haiti
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = HAI
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			HAI = {
+				transfer_state = PREV
+			}
+		}
+		puppet = HAI
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Haiti
+		name = annex.142.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = HAI_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of the Dominican Republic
+	id = annex.143
+	title = annex.143.t
+	desc = annex.143.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = HAI #Haitain-Dominican War is covered in its own file. This is a third party annexing the island there
+		}
+		NOT = {
+			tag = DOM has_country_flag = DOM_CONQ
+		}
+		DOM = {
+			exists = no
+		}
+		controls_state = 304 #Santo Dominigo (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.143.a #Liberate the Dominican Republic
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = DOM
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			DOM = {
+				transfer_state = PREV
+			}
+		}
+		puppet = DOM
+		add_political_power = 50
+	}
+	
+	option = { #Occupy the Dominican Republic
+		name = annex.143.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = DOM_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Cuba
+	id = annex.144
+	title = annex.144.t
+	desc = annex.144.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = CUB has_country_flag = CUB_CONQ
+		}
+		CUB = {
+			exists = no
+		}
+		controls_state = 315 #Havana (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.144.a #Liberate Cuba
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = CUB
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			CUB = {
+				transfer_state = PREV
+			}
+		}
+		puppet = CUB
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Cuba
+		name = annex.144.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = CUB_CONQ
+		add_political_power = -20
+	}
+}
+
+country_event = { #Fate of Mexico
+	id = annex.145
+	title = annex.145.t
+	desc = annex.145.d
+
+	fire_only_once = yes
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = MEX has_country_flag = MEX_CONQ
+		}
+		MEX = {
+			exists = no
+		}
+		controls_state = 277 #Mexico City (Capital) needed to decide
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	option = { 
+		name = annex.145.a #Liberate Mexico
+		ai_chance = {
+			factor = 67
+		}
+		every_state = {
+			limit = {
+				is_core_of = MEX
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			MEX = {
+				transfer_state = PREV
+			}
+		}
+		puppet = MEX
+		add_political_power = 50
+	}
+	
+	option = { #Occupy Mexico
+		name = annex.145.b
+		ai_chance = {
+			factor = 33
+		}
+		set_country_flag = MEX_CONQ
+		add_political_power = -20
 	}
 }

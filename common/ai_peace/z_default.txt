@@ -402,7 +402,7 @@ default_peace = {
 		}
 		modifier = { #Spanish Civil War incentive to take african states
 			factor = 10	
-			ROOT = { #Checks if canada and faction leader
+			ROOT = { 
 				TAG = CNT
 				has_war_with = SPR
 			}
@@ -417,7 +417,7 @@ default_peace = {
 		}
 		modifier = { #Spanish Civil War incentive to take african states
 			factor = 10	
-			ROOT = { #Checks if canada and faction leader
+			ROOT = { 
 				TAG = CNT
 				has_war_with = CAR
 			}
@@ -432,7 +432,7 @@ default_peace = {
 		}
 		modifier = { #Spanish Civil War incentive to take african states
 			factor = 10	
-			ROOT = { #Checks if canada and faction leader
+			ROOT = { 
 				TAG = CAR
 				has_war_with = SPR
 			}
@@ -447,7 +447,7 @@ default_peace = {
 		}
 		modifier = { #Spanish Civil War incentive to take african states
 			factor = 10	
-			ROOT = { #Checks if canada and faction leader
+			ROOT = { 
 				TAG = CAR
 				has_war_with = CNT
 			}
@@ -2530,6 +2530,70 @@ default_peace = {
 			FROM = { #State is apart of the following strategic regions
 				OR = {
 					region = 41 #Iberia
+				}
+			}
+		}
+		#CAN - CAN
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = CAN
+						is_faction_leader = no
+						is_in_faction = yes	
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = CAN
+						has_war_with = USA
+					}
+					OR = {
+						CSA = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+						TEX = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = CAN
+						has_war_with = CSA
+					}
+					OR = {
+						USA = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+						TEX = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+			
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+					region = 121 #Canada
+					region = 183 #Canada
+					region = 122 #Canada
+					region = 184 #Canada
+					region = 33 #Alaska
+					state = 685 #Panama Canal
+					state = 796 #New England
+					state = 357 #New England
+					}
 				}
 			}
 		}

@@ -1,5 +1,7 @@
 ﻿###########################
-# German Foreign Events - converted by Levi, Zankoas and Zarasophos, tidied up and expanded by Zarasophos
+# German Foreign Events
+###########################
+# By Levi, Zankoas and Zarasophos
 ###########################
 
 add_namespace = gerfor
@@ -1354,12 +1356,13 @@ country_event = { # Peace with Honour
 	desc = gerfor.32.d
 	trigger = {
 		tag = GER
+		is_subject = no
 		has_war_with = ENG
-		FRA = {
-			exists = no
-		}
 		ENG = {
 			controls_state = 126
+		}
+		FRA = { OR = { exists = no
+		has_capitulated = yes }
 		}
 		any_country = {
 			AND = {
@@ -1367,6 +1370,7 @@ country_event = { # Peace with Honour
 				controls_state = 16
 			}
 		}
+		NOT = { has_war_with = SOV has_war_with = RUS }
 	}
 
 	mean_time_to_happen = {
@@ -1378,21 +1382,22 @@ country_event = { # Peace with Honour
 	option = { # Offer Peace with Honour
 		name = gerfor.32.a
 		ai_chance = {
-			factor = 80
+			factor = 85
 		}
 		ENG = {
 			country_event = {
 				id = gerfor.33 days = 1
 			}
 		}
+		add_political_power = -40
 	}
 
 	option = { # No peace
 		name = gerfor.32.b
 		ai_chance = {
-			factor = 20
+			factor = 15
 		}
-		add_political_power = -20
+		add_political_power = -60
 	}
 }
 
@@ -1408,7 +1413,7 @@ country_event = { # Peace with Honour ENG
 		ai_chance = {
 			factor = 40
 		}
-		add_political_power = -200
+		add_political_power = 100
 		GER = { white_peace_with_ROOT = yes }
 		set_country_flag = PWH2
 		GER = {

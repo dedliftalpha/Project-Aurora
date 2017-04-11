@@ -201,7 +201,7 @@ country_event = {
 			target = DOM type = annex_everything
 		}
 		DOM = {
-		create_wargoal = {
+			create_wargoal = {
 				type = annex_everything
 				target = HAI
 			}
@@ -291,7 +291,7 @@ country_event = {
 			target = DOM type = annex_everything
 		}
 		DOM = {
-		create_wargoal = {
+			create_wargoal = {
 				type = annex_everything
 				target = HAI
 			}
@@ -394,7 +394,7 @@ country_event = {
 		}
 		name = dhw.15.a
 		add_political_power = 100
-		HAI = {country_event = {id = dhw.16 days = 1} }
+		DOM = {country_event = {id = dhw.16 days = 1} }
 	}
 	option = {
 		name = dhw.15.b
@@ -405,7 +405,7 @@ country_event = {
 			target = DOM type = annex_everything
 		}
 		DOM = {
-		create_wargoal = {
+			create_wargoal = {
 				type = annex_everything
 				target = HAI
 			}
@@ -455,10 +455,11 @@ country_event = {
 			factor = 60
 		}
 		declare_war_on = {
-			target = HAI type = annex_everything
+			target = HAI
+			type = annex_everything
 		}
 		HAI = {
-		create_wargoal = {
+			create_wargoal = {
 				type = annex_everything
 				target = DOM
 			}
@@ -493,7 +494,7 @@ country_event = {
 			target = DOM type = annex_everything
 		}
 		DOM = {
-		create_wargoal = {
+			create_wargoal = {
 				type = annex_everything
 				target = HAI
 			}
@@ -545,6 +546,8 @@ country_event = {
 		remove_ideas_with_trait = security_minister
 		add_ideas = HAI_Elie_Lescot_sec_ade
 		clr_country_flag = HAI_dissent
+		set_country_flag = HAI_dictatorship
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
 
 	}
 	option = { #Failure
@@ -624,5 +627,107 @@ country_event = {
 			factor = 70
 		}
 		319 = {add_core_of = HAI}
+	}
+}
+
+###Haitan Referendum###
+country_event = {
+	id = dhw.21
+	title = dhw.21.t
+	desc = dhw.21.d
+
+	fire_only_once = yes
+	trigger = {
+		tag = HAI
+		date > 1937.1.1
+		NOT = {has_country_flag = HAI_dictatorship}
+	}
+	mean_time_to_happen = {days = 5}
+
+	option = {
+		ai_chance = { #Keep Current President
+			factor = 40
+		}
+		name = dhw.21.a
+		add_political_power = -100
+
+	}
+	option = { # Hold an elections
+		name = dhw.21.b
+		ai_chance = {
+			factor = 60
+		}
+		add_political_power = 100
+		country_event = {id = dhw.22 days = 5}
+	}
+}
+
+###Elections 1937###
+country_event = {
+	id = dhw.22
+	title = dhw.22.t
+	desc = dhw.22.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { #National Party
+			factor = 50
+		}
+		name = dhw.22.a
+		add_political_power = -20
+
+	}
+	option = { # Patriotic Coalition
+		name = dhw.22.b
+		ai_chance = {
+			factor = 45
+		}
+		create_country_leader = {
+			name = "Élie Lescot"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		set_politics = {
+		ruling_party = paternal_autocrat
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = HAI_Elie_Lescot_hog_ade
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = HAI_Alfred_Auguste_Nemours_for_pau
+		remove_ideas_with_trait = economy_minister
+		add_ideas = HAI_Luc_Dominique_eco_sco
+		remove_ideas_with_trait = security_minister
+		add_ideas = HAI_Elie_Lescot_sec_ade
+		add_popularity = { ideology = paternal_autocrat popularity = 0.3 }
+	}
+	
+	option = { # Soc Dem Party
+		name = dhw.22.c
+		ai_chance = {
+			factor = 5
+		}
+		create_country_leader = {
+			name = "Démosthenes Pétrus Calixte"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = {
+		ruling_party = social_democrat
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = HAI_Demosthenes_Petrus_Calixte_hog_sde
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = HAI_Louis_Dantes_Bellegarde_for_sde
+		remove_ideas_with_trait = economy_minister
+		add_ideas = HAI_Charles_Terres_Weymann_eco_sde
+		remove_ideas_with_trait = security_minister
+		add_ideas = HAI_Demosthenes_Petrus_Calixte_sec_sde
+		add_popularity = { ideology = social_liberal popularity = 0.3 }
 	}
 }

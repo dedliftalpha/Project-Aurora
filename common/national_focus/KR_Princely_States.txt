@@ -1,3 +1,7 @@
+###########################
+# Princely States Focus Tree
+###########################
+
 focus_tree = {
 	id = KR_Princely_States
 	
@@ -2896,6 +2900,10 @@ focus_tree = {
 		ai_will_do = {
 			factor = 2
 			modifier = {
+				factor = 5
+				DEH = { has_war_with = BHC }
+			}
+			modifier = {
 				factor = 0
 				has_army_manpower = { size < 275000 }
 			}
@@ -2947,6 +2955,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 5
+				DEH = { has_war_with = BHC }
+			}
 		}
 		
 		bypass = {
@@ -2986,6 +2998,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 5
+				DEH = { has_war_with = BHC }
+			}
 		}
 		
 		bypass = {
@@ -3033,6 +3049,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 2
+			modifier = {
+				factor = 5
+				DEH = { has_war_with = BHC }
+			}
 			modifier = {
 				factor = 0
 				has_army_manpower = { size < 275000 }
@@ -3129,6 +3149,10 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 5
+				DEH = { has_war_with = BHC }
+			}
+			modifier = {
+				factor = 5
 				DEH = { has_country_flag = PRF_unholy_deal_yes }
 			}
 			modifier = {
@@ -3176,6 +3200,10 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 5
+				DEH = { has_war_with = BHC }
+			}
+			modifier = {
+				factor = 5
 				DEH = { has_country_flag = PRF_unholy_deal_yes }
 			}
 			modifier = {
@@ -3215,7 +3243,7 @@ focus_tree = {
 	
 	focus = {
 		id = PRF_india_united
-		icon = GFX_focus_RAJ_all_india_forward_bloc
+		icon = GFX_goal_india_united
 		cost = 10.00
 		x = 37
 		y = 3
@@ -3235,6 +3263,9 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 100
 			add_ideas = PRF_united_india
+			hidden_effect = {
+				news_event = { id = prf.21 }
+			}
 		}
 	}
 
@@ -3315,8 +3346,12 @@ focus_tree = {
 		bypass = {
 			owns_state = 814 #Uttarakhand
 			owns_state = 815 #Gorakhpur
+			owns_state = 887 #Muzaffarpur
+			owns_state = 888 #Sikkim
 			814 = { is_core_of = PRF }
 			815 = { is_core_of = PRF }
+			887 = { is_core_of = PRF }
+			888 = { is_core_of = PRF }
 		}
 		
 		available_if_capitulated = no
@@ -3324,6 +3359,8 @@ focus_tree = {
 		completion_reward = {
 			add_state_core = 814
 			add_state_core = 815
+			add_state_core = 887
+			add_state_core = 888
 			if = {
 				limit = {
 					NEP = {
@@ -3335,6 +3372,14 @@ focus_tree = {
 							AND = {
 								owns_state = 815
 								controls_state = 815
+							}
+							AND = {
+								owns_state = 888
+								controls_state = 888
+							}
+							AND = {
+								owns_state = 887
+								controls_state = 887
 							}
 						}
 					}
@@ -3358,6 +3403,7 @@ focus_tree = {
 			has_war = no
 			owns_state = 427 #Hyderabad
 			OR = {
+				320 = { NOT = { is_core_of = PRF } }
 				country_exists = MAD
 				country_exists = TRV
 				country_exists = MYS
@@ -3369,6 +3415,7 @@ focus_tree = {
 		}
 		
 		bypass = {
+			320 = { is_core_of = PRF }
 			NOT = { country_exists = MAD }
 			NOT = { country_exists = TRV }
 			NOT = { country_exists = MYS }
@@ -3377,6 +3424,7 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
+			add_state_core = 320
 			if = {
 				limit = { country_exists = MAD }
 				MAD = { country_event = { id = prf.191 days = 1 } }
@@ -3542,7 +3590,6 @@ focus_tree = {
 		available = {
 			has_war = no
 			owns_state = 430 #East Bengal
-			country_exists = BUR
 			BUR = { NOT = { is_subject_of = PRF } }
 		}
 		
@@ -3634,8 +3681,12 @@ focus_tree = {
 		
 		available = {
 			has_war = no
-			country_exists = SIA
-			NOT = { SIA = { is_subject_of = PRF } }
+			is_subject = no
+			SIA = {
+				NOT = { is_subject_of = PRF }
+				NOT = { is_in_faction_with = PRF }
+				any_owned_state = { is_core_of = BUR }
+			}
 			OR = {
 				owns_state = 288 #Burma
 				BUR = { is_subject_of = PRF }
@@ -3646,49 +3697,15 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				NOT = {
-					has_government = authoritarian_democrat
-					has_government = paternal_autocrat
-					has_government = national_populist
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
 				strength_ratio = { tag = SIA ratio < 3.0 }
-			}
-			modifier = {
-				factor = 0
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					strength_ratio = { tag = PRF ratio > 1.0 }
-				}
-			}
-			modifier = {
-				factor = 0
-				country_exists = SIA
-				SIA = { is_in_faction = yes }
-				is_in_faction = no
-			}
-			modifier = {
-				factor = 0
-				is_in_faction = no
-				NOT = { country_exists = SIA }
-				any_neighbor_country = {
-					owns_state = 289 #Siam
-					is_in_faction = yes
-				}
 			}
 		}
 		
 		available_if_capitulated = no
 		
 		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = SIA
-			}
+			add_political_power = 100
+			SIA = { country_event = { id = delhi.106 } }
 		}
 	}
 	

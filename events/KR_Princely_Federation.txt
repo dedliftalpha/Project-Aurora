@@ -39,10 +39,6 @@ country_event = {
 			set_country_flag = Maharaja_Pratap_Singh_Gaekwad_dead
 			set_country_flag = Umed_Singh_II_of_Kotah_dead
 			set_country_flag = Maharaja_K_S_Digvijaysinhji_dead
-			puppet = MAD
-			MAD = {
-				set_politics = { ruling_party = social_liberal elections_allowed = no }
-			}
 		}
 	}
 }
@@ -884,6 +880,36 @@ country_event = {
 	}
 }
 
+# News event: Princely Federation unites India
+news_event = {
+	id = prf.21
+	title = prf.21.t
+	desc = prf.21.d
+	picture = GFX_news_event_india_protests
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = prf.21.a
+		trigger = { tag = PRF }
+	}
+	option = {
+		name = prf.21.b
+		trigger = {
+			NOT = { tag = PRF }
+			is_in_faction_with = PRF
+		}
+	}
+	option = {
+		name = prf.21.c
+		trigger = {
+			NOT = { tag = PRF }
+			NOT = { is_in_faction_with = PRF }
+		}
+	}
+}
 	
 ### POLITICAL FOCUS EVENTS
 
@@ -1323,7 +1349,6 @@ country_event = {
 		remove_unit_leader = 1507 #Raja Wadiyar IV
 		remove_unit_leader = 1500 #Jayachamarajendra Wadiyar
 		remove_unit_leader = 1501 #Tarapore
-		remove_unit_leader = 1502 #Singhji
 		remove_unit_leader = 1508 #Chaudhari
 		MYS = {
 			transfer_state = 425
@@ -1460,6 +1485,7 @@ country_event = {
 		add_political_power = 200
 		add_state_core = 423 #Madurai
 		add_state_core = 424 #Madras
+		add_state_core = 889 #Vizagapatnam
 		load_oob = MAD_WAR1
 		load_oob = MAD_WAR2
 		add_to_war = {
@@ -1509,7 +1535,7 @@ country_event = {
 		add_state_core = 425 #Mysore
 		add_state_core = 867 #Trivancore
 		add_state_claim = 427 #Hyderabad
-		add_state_claim = 426 #Orissa
+		add_state_core = 889 #Vizagapatnam
 		add_state_claim = 321 #Goa
 		load_oob = MAD_WAR1
 		load_oob = MAD_WAR2
@@ -2406,9 +2432,20 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
-		435 = { set_state_flag = PRF_may_gain_core } #Bihar
-		431 = { set_state_flag = PRF_may_gain_core } #Calcutta
-		430 = { set_state_flag = PRF_may_gain_core } #Bangladesh
+		every_state = {
+			limit = {
+				is_core_of = BHC
+				is_claimed_by = PRF
+				NOT = { is_core_of = PRF }
+				NOT = { state = 432 } #Assam
+				NOT = { state = 434 } #Manipur
+				NOT = { state = 858 } #Tawang
+				NOT = { state = 426 } #Orissa
+				NOT = { state = 436 } #Jabalpur
+				NOT = { state = 889 } #Vizagapatnam
+			}
+			set_state_flag = PRF_may_gain_core
+		}
 	}
 	
 	option = {
@@ -2560,7 +2597,8 @@ country_event = {
 	
 	immediate = {
 		432 = { set_state_flag = PRF_may_gain_core } #Assam
-		434 = { set_state_flag = PRF_may_gain_core } #Nagaland
+		434 = { set_state_flag = PRF_may_gain_core } #Manipur
+		858 = { set_state_flag = PRF_may_gain_core } #Tawang
 	}
 	
 	option = {
@@ -2661,6 +2699,7 @@ country_event = {
 	immediate = {
 		426 = { set_state_flag = PRF_may_gain_core } #Orissa
 		436 = { set_state_flag = PRF_may_gain_core } #Jabalpur
+		889 = { set_state_flag = PRF_may_gain_core } #Vizagapatnam
 	}
 	
 	option = {
@@ -3331,7 +3370,7 @@ country_event = {
 		ai_chance = { factor = 60 }
 		BHU = {
 			set_country_flag = PRF_demand_return
-			add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+			add_opinion_modifier = { target = ROOT modifier = ITA_outraged }
 			country_event = { id = prf.184 days = 3 }
 		}
 	}
@@ -3341,7 +3380,7 @@ country_event = {
 		add_political_power = -60
 		BHU = {
 			set_country_flag = PRF_demand_govt
-			add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+			add_opinion_modifier = { target = ROOT modifier = ITA_outraged }
 			country_event = { id = prf.184 days = 3 }
 		}
 	}
@@ -3365,7 +3404,7 @@ country_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		owns_state = 858 #Arunchal Pradesh
+		owns_state = 858 #Tawang
 		controls_state = 858
 		NOT = { has_war_with = FROM }
 	}
@@ -3774,6 +3813,7 @@ country_event = {
 		if = {
 			limit = { CEY = { is_subject_of = ROOT } }
 			FROM = { puppet = CEY }
+			CEY = { drop_cosmetic_tag = yes }
 		}
 		add_opinion_modifier = { target = FROM modifier = ITA_outraged }
 	}
@@ -3867,6 +3907,7 @@ country_event = {
 			limit = { CEY = { is_subject_of = FROM } }
 			remove_state_claim = 422
 			puppet = CEY
+			CEY = { drop_cosmetic_tag = yes }
 		}
 	}
 	option = {
@@ -3882,6 +3923,7 @@ country_event = {
 			remove_state_claim = 422
 			CEY = { transfer_state = 422 }
 			puppet = CEY
+			CEY = { drop_cosmetic_tag = yes }
 		}
 		if = {
 			limit = { FROM = { owns_state = 733 } }
@@ -3926,6 +3968,48 @@ country_event = {
 		FROM = { transfer_state = 321 }
 		add_state_claim = 321
 		add_opinion_modifier = { target = FROM modifier = ITA_outraged }
+	}
+}
+
+# Ceylon Cosmetic Tags
+country_event = {
+	id = prf.199
+	
+	hidden = yes
+	
+	trigger = {
+		tag = CEY
+		NOT = { has_cosmetic_tag = CEY_GER }
+		is_subject_of = GER
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		drop_cosmetic_tag = yes
+		set_cosmetic_tag = CRE_GER
+	}
+}
+
+country_event = {
+	id = prf.200
+	
+	hidden = yes
+	
+	trigger = {
+		tag = CEY
+		has_cosmetic_tag = CEY_GER
+		NOT = { is_subject_of = GER }
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		drop_cosmetic_tag = yes
 	}
 }
 

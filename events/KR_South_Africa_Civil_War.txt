@@ -51,8 +51,8 @@ country_event = { # The 1938 Union of South Africa General Elections
 		name = SACW.2.a
 		ai_chance = { factor = 50 }
 
-		hidden_effect = { country_event = { id = SACW.3 days = 1 } }
-
+		set_country_flag = SAF_1938_ELECTIONS
+		
 		remove_ideas_with_trait = head_of_government
 		add_ideas = SAF_D_F_Malan_hog_pau
 		remove_ideas_with_trait = foreign_minister
@@ -99,14 +99,12 @@ country_event = { # The 1938 Union of South Africa General Elections
 			}
 		}
 		add_political_power = -50
-		set_country_flag = SAF_Nat_Win
+		set_country_flag = SAF_NAT_WIN
 	}
 
 	option = { # The Dominion Party Wins
 		name = SACW.2.b
 		ai_chance = { factor = 50 }
-
-		hidden_effect = { country_event = { id = SACW.4 days = 1 } }
 
 		remove_ideas_with_trait = head_of_government
 		add_ideas = SAF_Jan_Hendrik_Hofmeyr_hog_mli
@@ -154,7 +152,7 @@ country_event = { # The 1938 Union of South Africa General Elections
 			}
 		}
 		add_political_power = -50
-		set_country_flag = SAF_Dom_Win
+		set_country_flag = SAF_DOM_WIN
 	}
 
 }
@@ -175,10 +173,6 @@ country_event = { # Implementing the Apartheid
 		}
 	}
 
-	option = { # Now is not the time.
-		name = SACW.3.b
-	}
-
 }
 
 country_event = { # Implementing the Port Elizabeth Declaration
@@ -195,10 +189,6 @@ country_event = { # Implementing the Port Elizabeth Declaration
 		hidden_effect = {
 			SAF = { set_cosmetic_tag = SAF_federation }
 		}
-	}
-
-	option = { # Implement change gradually.
-		name = SACW.4.b
 	}
 
 }
@@ -239,7 +229,7 @@ country_event = { # Preperations for the Centenary Celebrations
 	trigger = {
 		tag = SAF
 		date > 1938.07.01
-		has_country_flag = SAF_Nat_Win
+		has_country_flag = SAF_NAT_WIN
 	}
 
 	mean_time_to_happen = {
@@ -494,7 +484,7 @@ country_event = { # Preperations for the Centenary Celebrations
 	trigger = {
 		tag = SAF
 		date > 1938.07.01
-		has_country_flag = SAF_Dom_Win
+		has_country_flag = SAF_DOM_WIN
 	}
 
 	mean_time_to_happen = {
@@ -1607,7 +1597,7 @@ country_event = { # Volunteers return
 
 # End of SACW
 
-country_event = { # Volunteers return
+country_event = { # SACW ends for South Africa
 	id = SACW.44
 	title = SACW.44.t
 	desc = SACW.44.d
@@ -1634,3 +1624,44 @@ country_event = { # Volunteers return
 
 	}
 }
+
+# Civil War officially dodged (January 1939)
+
+country_event = { # South Africa Stabilizes
+	id = SACW.45
+	title = SACW.45.t
+	desc = SACW.45.d
+
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = SAF
+		OR = { 
+			has_global_flag = SACW_END
+			date > 1939.01.01 # Reaching 1939 without dying is good enough for us
+		}
+		has_civil_war = no
+	}
+
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	immediate = {
+		set_country_flag = SAF_COUNTRY_STABLE
+	}
+
+	option = {
+		name = SACW.45.a
+
+	}
+}
+
+##########################################
+# Nationalist Reforms
+
+
+
+##########################################
+# Dominionist Reforms
+

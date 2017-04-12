@@ -9374,41 +9374,32 @@ country_event = {
 
 ### Syndicalist Ireland ###
 
-country_event = {
+	country_event = {
 	id = ire.216
 	title = ire.216.t
 	desc = ire.216.d
 	picture = partition_france
 
-	trigger = {
-		tag = IRE
-		is_puppet = no
-		country_exists = FRA
-		OR = {
-		has_government = radical_socialist
-		has_government = syndicalist
-		has_government = totalist
-		}
-	}
-
-	mean_time_to_happen = { days = 7 }
-
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	option = {
 		name = ire.216.a
-		ai_chance = { factor = 95 }
-		FRA = {
+		ai_chance = { factor = 100 }
+		add_to_faction = IRE
+		add_political_power = 50
+		IRE = {
 		country_event = { id = ire.217 days = 1 }
 		}
 	}
-
 	option = {
-	name = ire.216.b
-		ai_chance = { factor = 5 }
-		add_political_power = -25
+		name = ire.216.b
+		ai_chance = { factor = 0 }
+		IRE = {
+		country_event = { id = ire.218 days = 1 }
 				}
 	}
+	}
+
 
 	country_event = {
 	id = ire.217
@@ -9420,22 +9411,9 @@ country_event = {
 
 	option = {
 		name = ire.217.a
-		ai_chance = { factor = 100 }
-		add_to_faction = IRE
-		add_political_power = 50
-		IRE = {
-		country_event = { id = ire.218 days = 1 }
+		add_political_power = 20
 		}
 	}
-	option = {
-		name = ire.217.b
-		ai_chance = { factor = 0 }
-		IRE = {
-		country_event = { id = ire.219 days = 1 }
-				}
-	}
-	}
-
 
 	country_event = {
 	id = ire.218
@@ -9447,23 +9425,459 @@ country_event = {
 
 	option = {
 		name = ire.218.a
-		add_political_power = 20
-		}
-	}
-
-	country_event = {
-	id = ire.219
-	title = ire.219.t
-	desc = ire.219.d
-	picture = partition_france
-
-	is_triggered_only = yes
-
-	option = {
-		name = ire.219.a
 		add_political_power = -25
 		}
 	}
+	
+# Economic Policy
+country_event = {
+	id = ire.219
+	title = ire.219.t
+	desc = ire.219.d
+	picture = GFX_report_event_communists_cheer
+
+	trigger = {
+		tag = IRE
+		focus_progress = { focus = IRE_ACS progress > 0.1 }
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.219.a
+		ai_chance = { factor = 40 }
+		set_country_flag = IRE_acs_economy_rwg
+		if = {
+			limit = {
+				has_country_flag = IRE_acs_rwg
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.219.b
+		ai_chance = { factor = 30 }
+		set_country_flag = IRE_acs_economy_iwl
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_iwl
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_iwl value = 1 }
+			}
+		}
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.219.c
+		ai_chance = { factor = 30 }
+		set_country_flag = IRE_acs_economy_se
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_se
+			}
+			modify_country_flag = { flag = IRE_acs_se value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_se value = 1 }
+			}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+	}
+}
+
+# Language Policy
+
+country_event = {
+	id = ire.220
+	title = ire.220.t
+	desc = ire.220.d
+	picture = GFX_report_event_communists_cheer
+
+	trigger = {
+		tag = IRE
+		focus_progress = { focus = IRE_ACS progress > 0.3 }
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.220.a
+		ai_chance = { factor = 35 }
+		set_country_flag = IRE_acs_language_rwg
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_rwg
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.220.b
+		ai_chance = { factor = 30 }
+		set_country_flag = IRE_acs_language_iwl
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_iwl
+			}
+			modify_country_flag = { flag = IRE_acs_iwl value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_iwl value = 1 }
+			}
+		}
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.220.c
+		ai_chance = { factor = 35 }
+		set_country_flag = IRE_acs_language_se
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_se
+			}
+			modify_country_flag = { flag = IRE_acs_se value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_se value = 1 }
+			}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+	}
+}
+
+#Religious Policy
+
+country_event = {
+	id = ire.221
+	title = ire.221.t
+	desc = ire.221.d
+	picture = GFX_report_event_communists_cheer
+
+	trigger = {
+		tag = IRE
+		focus_progress = { focus = IRE_ACS progress > 0.5 }
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.221.a
+		ai_chance = { factor = 25 }
+		set_country_flag = IRE_acs_religion_rwg
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_rwg
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.221.b
+		ai_chance = { factor = 40 }
+		set_country_flag = IRE_acs_religion_iwl
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_iwl
+			}
+			modify_country_flag = { flag = IRE_acs_iwl value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_iwl value = 1 }
+			}
+		}
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.221.c
+		ai_chance = { factor = 35 }
+		set_country_flag = IRE_acs_religion_se
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_se
+			}
+			modify_country_flag = { flag = IRE_acs_se value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_se value = 1 }
+			}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+	}
+}
+
+# Foreign Policy
+
+country_event = {
+	id = ire.222
+	title = ire.222.t
+	desc = ire.222.d
+	picture = GFX_report_event_communists_cheer
+
+	trigger = {
+		tag = IRE
+		focus_progress = { focus = IRE_ACS progress > 0.7 }
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.222.a
+		ai_chance = { factor = 25 }
+		set_country_flag = IRE_acs_foreign_rwg
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_rwg
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		add_popularity = { ideology = totalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.222.b
+		ai_chance = { factor = 40 }
+		set_country_flag = IRE_acs_foreign_iwl
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_iwl
+			}
+			modify_country_flag = { flag = IRE_acs_iwl value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_iwl value = 1 }
+			}
+		}
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+	}
+	option = {
+		name = ire.222.c
+		ai_chance = { factor = 35 }
+		set_country_flag = IRE_acs_foreign_se
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_se
+			}
+			modify_country_flag = { flag = IRE_acs_se value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_se value = 1 }
+			}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+	}
+}
+
+# Military Policy
+
+country_event = {
+	id = ire.223
+	title = ire.223.t
+	desc = ire.223.d
+	picture = GFX_report_event_communists_cheer
+
+	trigger = {
+		tag = IRE
+		focus_progress = { focus = IRE_ACS progress > 0.9 }
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.223.a
+		ai_chance = { factor = 30 }
+		set_country_flag = IRE_acs_military_rwg
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_rwg
+			}
+			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		set_country_flag = IRE_congress_ends
+	}
+	option = {
+		name = ire.223.b
+		ai_chance = { factor = 40 }
+		set_country_flag = IRE_acs_military_iwl
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_iwl
+			}
+			modify_country_flag = { flag = IRE_acs_iwl value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_iwl value = 1 }
+			}
+		}
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		set_country_flag = IRE_congress_ends
+	}
+	option = {
+		name = ire.223.c
+		ai_chance = { factor = 30 }
+		set_country_flag = IRE_acs_military_se
+		if = {
+			limit = {
+			has_country_flag = IRE_acs_se
+			}
+			modify_country_flag = { flag = IRE_acs_se value = 1 }
+			else = {
+				set_country_flag = { flag = IRE_acs_se value = 1 }
+			}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		set_country_flag = IRE_congress_ends
+	}
+}
+
+# RWG Victory
+
+country_event = {
+	id = ire.224
+	title = ire.224.t
+	desc = ire.224.d
+	picture = GFX_report_event_election_vote
+
+	trigger = {
+		tag = IRE
+		has_country_flag = IRE_congress_ends
+		has_country_flag = { flag = IRE_acs_rwg value > 3 }
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	fire_only_once = yes
+
+		option = {
+		name = ire.224.a
+		create_country_leader = {
+			name = "Seán Murray"
+			desc = "POLITICS_SEAN_MURRAY_DESC"
+			picture = "Portrait_Ireland_Sean_Murray.tga"
+			expire = "1965.1.1"
+			ideology  = totalist_subtype
+			traits = { }
+		}
+	}
+}
+
+# SÉ Victory
+
+country_event = {
+	id = ire.225
+	title = ire.225.t
+	desc = ire.225.d
+	picture = GFX_report_event_election_vote
+
+	trigger = {
+		tag = IRE
+		has_country_flag = IRE_congress_ends
+		has_country_flag = { flag = IRE_acs_se value > 3 }
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.225.a
+		create_country_leader = {
+			name = "Betty Sinclair"
+			desc = "POLITICS_BETTY_SINCLAIR_DESC"
+			picture = "Portrait_Ireland_Betty_Sinclair.tga"
+			expire = "1965.1.1"
+			ideology  = radical_socialist_subtype
+			traits = { }
+		}
+	}
+}
+
+# IWL Victory
+
+country_event = {
+	id = ire.226
+	title = ire.226.t
+	desc = ire.226.d
+	picture = GFX_report_event_election_vote
+
+	trigger = {
+		tag = IRE
+		has_country_flag = IRE_congress_ends
+		has_country_flag = { flag = IRE_acs_iwl value > 3 }
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.226.a
+		create_country_leader = {
+			name = "Jim Larkin"
+			desc = "POLITICS_JIM_LARKIN_DESC"
+			picture = "Portrait_Ireland_Jim_Larkin.tga"
+			expire = "1965.1.1"
+			ideology  = syndicalist_subtype
+			traits = { }
+		}
+	}
+}
+
+# Draw
+
+country_event = {
+	id = ire.227
+	title = ire.227.t
+	desc = ire.227.d
+	picture = GFX_report_event_election_vote
+
+	trigger = {
+		tag = IRE
+		has_country_flag = IRE_congress_ends
+		AND = {
+			has_country_flag = { flag = IRE_acs_se value < 3 }
+			has_country_flag = { flag = IRE_acs_iwl value < 3 }
+			has_country_flag = { flag = IRE_acs_rwg value < 3 }
+		}
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	fire_only_once = yes
+
+	option = {
+		name = ire.227.a
+		create_country_leader = {
+			name = "Jim Larkin"
+			desc = "POLITICS_JIM_LARKIN_DESC"
+			picture = "Portrait_Ireland_Jim_Larkin.tga"
+			expire = "1965.1.1"
+			ideology  = syndicalist_subtype
+			traits = { }
+		}
+	}
+}
 
 
 

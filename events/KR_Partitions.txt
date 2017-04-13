@@ -420,8 +420,8 @@ country_event = { #fate of Germany Russia
 			}
 		}
 		NOT = { 
-		GER = { is_puppet_of = RUS }
-		GRU = { is_puppet_of = RUS }
+		GER = { is_subject_of = RUS }
+		GRU = { is_subject_of = RUS }
 		}
 			NOT = {
 				controls_state = 42
@@ -493,7 +493,7 @@ country_event = { #fate of Germany Russia
 		set_country_flag = RUS_0
 		add_political_power = -100
 		add_named_threat = {
-			threat = 20 name = occupy_ger
+			threat = 10 name = occupy_ger
 		}
 
 	}
@@ -1915,7 +1915,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -1928,6 +1927,7 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = RHI
 		every_country = {
 			limit = {
@@ -1936,7 +1936,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -1949,6 +1948,7 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = BAV
 		every_country = {
 			limit = {
@@ -1957,7 +1957,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -1970,6 +1969,7 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = NGF
 		every_country = {
 			limit = {
@@ -1978,7 +1978,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -1991,25 +1990,26 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = PSS
 		RHI = {
 			country_event = {
-				id = part.?
+				id = part.52
 			}
 		}
 		BAV = {
 			country_event = {
-				id = part.?
+				id = part.50
 			}
 		}
 		NGF = {
 			country_event = {
-				id = part.?
+				id = part.53
 			}
 		}
 		PSS = {
 			country_event = {
-				id = part.?
+				id = part.51
 			}
 		}
 	}
@@ -2043,7 +2043,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2056,6 +2055,7 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = RHI
 		every_country = {
 			limit = {
@@ -2064,7 +2064,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2077,6 +2076,7 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = BAV
 		every_country = {
 			limit = {
@@ -2085,7 +2085,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2098,20 +2097,21 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = NGF
 		RHI = {
 			country_event = {
-				id = part.?
+				id = part.52
 			}
 		}
 		BAV = {
 			country_event = {
-				id = part.?
+				id = part.50
 			}
 		}
 		NGF = {
 			country_event = {
-				id = part.?
+				id = part.53
 			}
 		}
 	}
@@ -2132,7 +2132,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2145,18 +2144,40 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = GRU
 		end_puppet = GRU
-		add_to_faction = GRU
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+			create_faction = "fourth_international"
+			add_to_faction = GRU
+		}
+		if = {
+			limit = {
+				AND = {
+					is_in_faction = yes is_faction_leader = yes
+				}
+			}
+			add_to_faction = GRU
+		}
+		if = {
+			limit = {
+				AND = {
+					is_in_faction = yes is_faction_leader = no
+				}
+			}
+			every_other_country = {
+				limit = {
+					is_faction_leader = yes is_in_faction_with = SOV
+				}
+				add_to_faction = GRU
+			}
+		}
 		GRU = {
 			country_event = {
-				id = part.?
-			}
-			country_event = {
-				id = part.?
-			}
-			country_event = {
-				id = part.?
+				id = part.49
 			}
 		}
 
@@ -2187,7 +2208,6 @@ country_event = { #fate of Germany Soviet
 					is_subject_of = SOV
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2200,33 +2220,17 @@ country_event = { #fate of Germany Soviet
 			}
 
 		}
+		}
 		puppet = PSS
 
 		PSS = {
 			country_event = {
-				id = part.?
+				id = part.51
 			}
 		}
 
 	}
-	#option = {#deal with germany
-	#trigger = {
-	#GER = {
-	#exists = yes
-	#is_subject = no
-	#					}
 
-	#controls_state = 64
-	#						}
-	#name = part.1.g
-	#ai_chance = { factor = 60 }
-
-
-	#GER = {
-	#country_event = { id = part.?  }
-	#					}
-
-	#									}
 	option = { #occupy
 
 		name = part.1.h
@@ -2234,16 +2238,153 @@ country_event = { #fate of Germany Soviet
 			factor = 0
 		}
 
-		set_country_flag = RUS_0
+		set_country_flag = SOV_0
 		add_political_power = -100
 		add_named_threat = {
-			threat = 20 name = occupy_ger
+			threat = 10 name = occupy_ger
 		}
 
 	}
 }
-######needs russian deals chains
 
+country_event = { #The Red Army Rises! GRU
+	id = part.49
+	title = part.49.t
+	desc = part.49.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.49.a
+		ai_chance = {
+			factor = 90
+		}
+		#German union events
+		load_oob = GRU_independent_SOV
+		if = { limit = { has_global_flag = partition_of_germany_france_event }
+		set_country_flag = RED_UNION
+		remove_state_core = 28
+		remove_state_core = 8
+		}
+		if = { limit = { has_global_flag = partition_of_germany_france_event controls_state = 28 } FRA = { transfer_state = 28 } }
+		if = { limit = { has_global_flag = partition_of_germany_france_event controls_state = 8 } FRA = { transfer_state = 8 } }
+        }
+}
+
+country_event = { #The Commune of Bavaria
+	id = part.50
+	title = part.50.t
+	desc = part.50.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.50.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = -300
+		load_oob = BAV_independent_SOV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = BAV_Kurt_Eisner_hog_syn
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = BAV_Hans_Vogel_for_syn
+		remove_ideas_with_trait = economy_minister
+		add_ideas = BAV_Bertolt_Brecht_eco_syn
+		remove_ideas_with_trait = security_minister
+		add_ideas = BAV_Gustav_Noske_sec_syn
+		
+		if = { limit = { is_subject_of = FRA }
+		FRA = { country_event = { id = part.54 }
+		}
+		}
+	}
+}
+
+country_event = { #The Commune of Prussia
+	id = part.51
+	title = part.51.t
+	desc = part.51.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.51.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = -400
+		load_oob = PSS_independent_SOV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = PSS_Helmut_Herzfeld_hog_rso
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = PSS_Gerhart_Eisler_for_syn
+		remove_ideas_with_trait = economy_minister
+		add_ideas = PSS_Jakob_Kaiser_eco_syn
+		remove_ideas_with_trait = security_minister
+		add_ideas = PSS_Willi_Muenzenberg_sec_syn
+		
+		if = { limit = { is_subject_of = FRA }
+		FRA = { country_event = { id = part.55 }
+		}
+		}
+	}
+}
+
+country_event = { #The Commune of Rhineland
+	id = part.52
+	title = part.52.t
+	desc = part.52.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.52.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = -200
+		load_oob = RHI_independent_SOV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = RHI_Ernst_Fraenkel_hog_sde
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = RHI_Maria_Terwiel_for_syn
+		remove_ideas_with_trait = economy_minister
+		add_ideas = RHI_Franz_Bluecher_eco_syn
+		remove_ideas_with_trait = security_minister
+		add_ideas = RHI_Fritz_Kraemer_sec_syn
+		
+		if = { limit = { is_subject_of = FRA }
+		FRA = { country_event = { id = part.56 }
+		}
+		}
+	}
+}
+
+country_event = { #The Commune of Northern Germany
+	id = part.53
+	title = part.53.t
+	desc = part.53.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.53.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = -300
+		load_oob = NGF_independent_SOV
+		remove_ideas_with_trait = head_of_government
+		add_ideas = NGF_Otto_Grotewohl_hog_syn
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = NGF_Karl_Korsch_for_syn
+		remove_ideas_with_trait = economy_minister
+		add_ideas = NGF_Eric_M_Warburg_eco_syn
+		remove_ideas_with_trait = security_minister
+		add_ideas = NGF_Hermann_Boese_sec_syn
+		
+		if = { limit = { is_subject_of = FRA }
+		FRA = { country_event = { id = part.57 }
+		}
+		}
+	}
+}
 
 country_event = { #The partitioning of Germany FRA
 	id = part.3
@@ -2252,6 +2393,7 @@ country_event = { #The partitioning of Germany FRA
 	fire_only_once = yes
 	trigger = {
 		tag = FRA
+		is_subject = no
 		OR = {
 			has_global_flag = GER_Capitulation
 			has_global_flag = GER_CON_Capitulation
@@ -2287,8 +2429,11 @@ country_event = { #The partitioning of Germany FRA
 	}
 
 	mean_time_to_happen = {
-		days = 15
+		days = 7
 	}
+	
+	immediate = { set_global_flag = partition_of_germany_france_event }
+	
 	option = { #all
 		trigger = {
 			any_country = {
@@ -2337,7 +2482,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2350,6 +2494,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = RHI
 		every_country = {
 			limit = {
@@ -2358,7 +2503,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2371,6 +2515,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = BAV
 		every_country = {
 			limit = {
@@ -2379,7 +2524,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2392,6 +2536,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = NGF
 		every_country = {
 			limit = {
@@ -2400,7 +2545,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2413,8 +2557,28 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = PSS
-		#here be going some events
+		RHI = {
+			country_event = {
+				id = part.52
+			}
+		}
+		BAV = {
+			country_event = {
+				id = part.50
+			}
+		}
+		NGF = {
+			country_event = {
+				id = part.53
+			}
+		}
+		PSS = {
+			country_event = {
+				id = part.51
+			}
+		}
 	}
 
 	option = { #occupy rhineland
@@ -2455,7 +2619,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2468,6 +2631,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = BAV
 		every_country = {
 			limit = {
@@ -2476,7 +2640,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2489,6 +2652,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = NGF
 		every_country = {
 			limit = {
@@ -2497,7 +2661,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2510,6 +2673,7 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = PSS
 		add_state_claim = 780
 		add_state_claim = 42
@@ -2517,9 +2681,23 @@ country_event = { #The partitioning of Germany FRA
 		add_state_claim = 51
 		add_state_claim = 55
 		add_state_claim = 57
-		#here be going some events
+		BAV = {
+			country_event = {
+				id = part.50
+			}
+		}
+		NGF = {
+			country_event = {
+				id = part.53
+			}
+		}
+		PSS = {
+			country_event = {
+				id = part.51
+			}
+		}
 		add_named_threat = {
-			threat = 10 name = occupy_rhine
+			threat = 5 name = occupy_rhine
 		}
 	}
 
@@ -2547,7 +2725,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2560,9 +2737,15 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = GRU
 		end_puppet = GRU
-		#event here
+		add_to_faction = GRU
+		GRU = {
+			country_event = {
+				id = part.49
+			}
+		}
 	}
 
 	option = { #Move border
@@ -2596,7 +2779,6 @@ country_event = { #The partitioning of Germany FRA
 					is_in_faction_with = FRA
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -2609,14 +2791,19 @@ country_event = { #The partitioning of Germany FRA
 			}
 
 		}
+		}
 		puppet = GRU
 		end_puppet = GRU
 		add_to_faction = GRU
+		GRU = {
+			country_event = {
+				id = part.49
+			}
+		}
 		add_state_claim = 780
 		add_state_claim = 42
 		add_state_claim = 781
 		add_state_claim = 778
-		#event
 	}
 
 	option = { #Occupy all
@@ -2626,13 +2813,154 @@ country_event = { #The partitioning of Germany FRA
 		}
 		set_country_flag = FRA_0
 		add_named_threat = {
-			threat = 20 name = occupy_ger
+			threat = 10 name = occupy_ger
 		}
+		add_state_claim = 780
+		add_state_claim = 42
+		add_state_claim = 781
+		add_state_claim = 778
 		add_political_power = -100
 	}
 
 }
 
+country_event = { #A loyal puppet in Munich
+	id = part.54
+	title = part.54.t
+	desc = part.54.d
+	is_triggered_only = yes
+
+	option = { #Vive l'Internationale! Vive la liberté!
+		name = part.54.a
+		ai_chance = {
+			factor = 90
+		}
+		add_to_faction = BAV
+	}
+}
+
+country_event = { #A loyal puppet in Prussia
+	id = part.55
+	title = part.55.t
+	desc = part.55.d
+	is_triggered_only = yes
+
+	option = { #Prussia shall threaten France no more!
+		name = part.55.a
+		ai_chance = {
+			factor = 90
+		}
+		add_to_faction = PSS
+	}
+}
+
+country_event = { #A loyal puppet in the Rhineland
+	id = part.56
+	title = part.56.t
+	desc = part.56.d
+	is_triggered_only = yes
+
+	option = { #A new stronghold of Syndicalism! Vive l'Internationale!
+		name = part.56.a
+		ai_chance = {
+			factor = 90
+		}
+		add_to_faction = RHI
+	}
+}
+
+country_event = { #A loyal puppet in the Northern Germany
+	id = part.57
+	title = part.57.t
+	desc = part.57.d
+	is_triggered_only = yes
+
+	option = { #A new stronghold of Syndicalism! Vive l'Internationale!
+		name = part.57.a
+		ai_chance = {
+			factor = 90
+		}
+		add_to_faction = NGF
+	}
+}
+
+country_event = { #Thuringia
+	id = part.58
+	title = part.58.t
+	desc = part.58.d
+	
+	fire_only_once = yes
+
+	trigger = { 
+	tag = RHI
+	is_subject_of = FRA
+	PSS = { is_subject_of = FRA 
+	controls_state = 60 }
+	}
+	
+	mean_time_to_happen = { days = 70 }
+	
+	option = { #Claim the State of Thuringia!
+		name = part.58.a
+		ai_chance = {
+			factor = 90
+		}
+		add_state_core = 60
+		FRA = { country_event = { id = part.59 } }
+	}
+	
+	option = { #Our resources are overstretched as it is.
+		name = part.58.b
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+country_event = { #Rhineland Claims Thuringia
+	id = part.59
+	title = part.59.t
+	desc = part.59.d
+	
+	is_triggered_only = yes
+	
+	option = { #Force Prussia to cede Thuringia to Rhineland.
+		name = part.59.a
+		ai_chance = {
+			factor = 90
+		}
+		PSS = { country_event = { id = part.60 } }
+	}
+	
+	option = { #Who is drawing the map here!?
+		name = part.59.b
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+country_event = { #The French support the Essen Government
+	id = part.60
+	title = part.60.t
+	desc = part.60.d
+	
+	is_triggered_only = yes
+	
+	option = { #We'll cede the territory, but only because we have no choice.
+		name = part.60.a
+		ai_chance = {
+			factor = 90
+		}
+		reverse_add_opinion_modifier = {
+			target = RHI modifier = PSS_forced_thuringia1
+		}
+		reverse_add_opinion_modifier = {
+			target = FRA modifier = PSS_forced_thuringia2
+		}
+		RHI = { transfer_state = 60 }
+	}
+}
 
 ############################
 #### The British Partition

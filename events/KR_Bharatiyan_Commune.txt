@@ -1,286 +1,2643 @@
 ﻿###########################
 # Bharatiyan Commune Events
 ###########################
-# By PPsyrius
-###########################
-# 182002 - 182009 are in the 00_Burma events instead
-####### These events are to be done by PPsyrius ####################################
-# 182047 - Invite Ho Chi Minh to Calcutta?
-# 182048 - Ho Chi Minh is Invited to Calcutta # FRA
-# 182049 - Ho Chi Minh Arrives in Calcutta
-# 182050 - Choosing the Sides
-# 182051 - India Wants to Join the Internationale # FRA
-################ The Below are unfinished yet but already claimed by PPsyrius ############
-# 182052 - 182057 : Dealing with Siam - Burma is integrated
-# 182058 - 182063 : Dealing with Siam - Burma isn't integrated
-# 182064 - Expanding the Revolution to Indochina # triggers events in the Indochina file
-###########################################################################
 
 add_namespace = beng
 
-country_event = { # 182047 - Invite Ho Chi Minh to Calcutta?
-	id = beng.47
-	title = beng.47.t
-	desc = beng.47.d
-	# picture = hochiminh_event
-
+### Intro
+country_event = {
+	id = beng.1
+	title = beng.1.t
+	desc = beng.1.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	fire_only_once = yes
+	
 	trigger = {
 		tag = BHC
-				date > 1937.01.01
-		431 = { is_controlled_by = BHC } #Calcutta
-		431 = { is_owned_by = BHC } #Calcutta
-		OR = {
-			NOT = { country_exists = INC }
-			AND = {
-				country_exists = INC
-				has_government = syndicalist
+	}
+	
+	option = {
+		name = beng.1.a
+		add_political_power = -80
+		hidden_effect = {
+			# Deactive ministers who don't start in BHC
+			set_country_flag = Ba_Cho_dead #BUR
+			set_country_flag = U_Nu_dead #BUR
+			set_country_flag = Aung_San_dead #BUR
+			set_country_flag = Ba_Win_dead #BUR
+			set_country_flag = Thakin_Mya_dead #BUR
+			set_country_flag = Thakin_Soe_dead #BUR
+			set_country_flag = Than_Tun_dead #BUR
+			set_country_flag = Chempakaraman_Pillai_dead #TRV
+			set_country_flag = P_Krishna_Pillai_dead #TRV
+			set_country_flag = Army_Reform_Committee_dead
+		}
+	}
+}
+
+### First INC Meeting
+
+# Meeting kicks off (activated by focus)
+country_event = {
+	id = beng.2
+	title = beng.2.t
+	desc = beng.2.d
+	picture = GFX_report_event_BHC_leaders
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.2.a
+		hidden_effect = {
+			set_country_flag = {
+				flag = BHC_maximist
+				value = 0
+			}
+			set_country_flag = {
+				flag = BHC_moderate
+				value = 0
+			}
+			set_country_flag = {
+				flag = BHC_agrarian
+				value = 0
+			}
+			country_event = { id = beng.3 days = 3 }
+		}
+	}
+}
+
+# Bose denounces landlordism
+country_event = {
+	id = beng.3
+	title = beng.3.t
+	desc = beng.3.d
+	picture = GFX_report_event_BHC_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.3.a #He is right, this feudal practice must be eradicated!
+		ai_chance = { factor = 50 }
+		add_political_power = -50
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.4 days = 4 }
+		}
+	}
+	option = {
+		name = beng.3.b #As per the moderates, let us only nationalize the grand estates
+		ai_chance = { factor = 25 }
+		add_political_power = -20
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.4 days = 4 }
+		}
+	}
+	option = {
+		name = beng.3.c #Heed the Mahatma and allow private property to exist
+		ai_chance = { factor = 25 }
+		add_political_power = -50
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.4 days = 4 }
+		}
+	}
+}
+
+# Jawaharlal Nehru laments the state of industry
+country_event = {
+	id = beng.4
+	title = beng.4.t
+	desc = beng.4.d
+	picture = GFX_report_event_BHC_nehru
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.4.a #Industry and agriculture must both must be expanded, no matter the cost
+		ai_chance = { factor = 45 }
+		add_political_power = -100
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.5 days = 4 }
+		}
+	}
+	option = {
+		name = beng.4.b #Nehru is right, industry must be our first priority
+		ai_chance = { factor = 30 }
+		add_political_power = -50
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.5 days = 4 }
+		}
+	}
+	option = {
+		name = beng.4.c #The soul of India is her villages - focus on agriculture!
+		ai_chance = { factor = 25 }
+		add_political_power = 50
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.5 days = 4 }
+		}
+	}
+}
+
+# The Mahatma Urges Unification
+country_event = {
+	id = beng.5
+	title = beng.5.t
+	desc = beng.5.d
+	picture = GFX_report_event_BHC_gandhi
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.5.a #Princes and lapdogs must be driven out at bayonet point!
+		ai_chance = { factor = 50 }
+		add_political_power = 100
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 1 } }
+				country_event = { id = beng.6 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 1 } }
+				country_event = { id = beng.7 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 1 } }
+				country_event = { id = beng.8 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 2 }
+					has_country_flag = { flag = BHC_moderate value < 2 }
+					has_country_flag = { flag = BHC_agrarian value < 2 }
+				}
+				country_event = { id = beng.9 days = 3 }
 			}
 		}
 	}
-
-	mean_time_to_happen = { days = 100 }
-
-	fire_only_once = yes
-
 	option = {
-		name = beng.47.a #Invite him here
-		ai_chance = { factor = 98 }
-		BHC = { add_opinion_modifier = { target = FRA modifier = BHC_invite_Ho } } # 50
-		hidden_effect = { FRA = { country_event = { id = beng.48 days = 5} } }
+		name = beng.5.b #Unification is paramount, the methods used are not!
+		ai_chance = { factor = 30 }
+		add_political_power = 50
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 1 } }
+				country_event = { id = beng.6 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 1 } }
+				country_event = { id = beng.7 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 1 } }
+				country_event = { id = beng.8 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 2 }
+					has_country_flag = { flag = BHC_moderate value < 2 }
+					has_country_flag = { flag = BHC_agrarian value < 2 }
+				}
+				country_event = { id = beng.9 days = 3 }
+			}
+		}
 	}
 	option = {
-		name = beng.47.b #Left him in Paris
-		ai_chance = { factor = 2 }
-		add_political_power = -60 # 3 dissent
-		BHC = { add_opinion_modifier = { target = FRA modifier = BHC_decline_Ho } } # -10
+		name = beng.5.c #Warfare is immoral, strive for a negotiated unification!
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 1 } }
+				country_event = { id = beng.6 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 1 } }
+				country_event = { id = beng.7 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 1 } }
+				country_event = { id = beng.8 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 2 }
+					has_country_flag = { flag = BHC_moderate value < 2 }
+					has_country_flag = { flag = BHC_agrarian value < 2 }
+				}
+				country_event = { id = beng.9 days = 3 }
+			}
+		}
 	}
 }
-country_event = { # 182048 - Ho Chi Minh is Invited to Calcutta # FRA
+
+# Totalists are victorious
+country_event = {
+	id = beng.6
+	title = beng.6.t
+	desc = beng.6.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		create_country_leader = {
+			name = "Mohandas Karamchand Gandhi"
+			picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+	}
+
+	option = {
+		name = beng.6.a
+		add_political_power = 60
+		set_politics = {
+			ruling_party = totalist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Hemanta_Kumar_Sarkar_hog_tot
+		add_ideas = BHC_A_C_N_Nambiar_for_tot
+		add_ideas = BHC_Leela_Roy_eco_tot
+		add_ideas = BHC_Chandrasekhar_Azad_sec_tot
+		every_country = {
+			limit = {
+				NOT = { tag = BHC }
+				has_government = totalist
+			}
+			add_opinion_modifier = { target = BHC modifier = BHC_approves_government }
+		}
+		hidden_effect = {
+			set_country_flag = BHC_INC_meeting_done
+			complete_national_focus = BHC_totalist_1
+		}
+	}
+}
+
+# Moderates are victorious
+country_event = {
+	id = beng.7
+	title = beng.7.t
+	desc = beng.7.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		create_country_leader = {
+			name = "Mohandas Karamchand Gandhi"
+			picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+	}
+
+	option = {
+		name = beng.7.a
+		add_political_power = 60
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Lal_Bahadur_Shastri_eco_syn
+		add_ideas = BHC_Sarojini_Naidu_sec_syn
+		every_country = {
+			limit = {
+				NOT = { tag = BHC }
+				has_government = syndicalist
+			}
+			add_opinion_modifier = { target = BHC modifier = BHC_approves_government }
+		}
+		hidden_effect = {
+			set_country_flag = BHC_INC_meeting_done
+			complete_national_focus = BHC_syndicalist_1
+		}
+	}
+}
+
+# Agrarians are victorious
+country_event = {
+	id = beng.8
+	title = beng.8.t
+	desc = beng.8.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+	}
+
+	option = {
+		name = beng.8.a
+		add_political_power = 100
+		create_country_leader = {
+			name = "Mohandas Karamchand Gandhi"
+			picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Rabindranath_Tagore_hog_rso
+		add_ideas = BHC_Mahadev_Desai_for_rso
+		add_ideas = BHC_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+		add_ideas = BHC_Rajkumari_Amrit_Kaur_sec_rso
+		reverse_add_opinion_modifier = { target = DEH modifier = BHC_cautious_support }
+		reverse_add_opinion_modifier = { target = PRF modifier = BHC_cautious_support }
+		hidden_effect = {
+			set_country_flag = BHC_INC_meeting_done
+			complete_national_focus = BHC_socialist_1
+		}
+	}
+}
+
+# Meeting is deadlocked
+country_event = {
+	id = beng.9
+	title = beng.9.t
+	desc = beng.9.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		create_country_leader = {
+			name = "Mohandas Karamchand Gandhi"
+			picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+	}
+
+	option = {
+		name = beng.9.a #Bose and Nehru agree on an electoral alliance!
+		ai_chance = { factor = 60 }
+		set_politics = {
+			ruling_party = totalist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Leela_Roy_eco_tot
+		add_ideas = BHC_Chandrasekhar_Azad_sec_tot
+		every_country = {
+			limit = {
+				NOT = { tag = BHC }
+				has_government = totalist
+			}
+			add_opinion_modifier = { target = BHC modifier = BHC_approves_government }
+		}
+		hidden_effect = {
+			set_country_flag = BHC_INC_meeting_done
+			complete_national_focus = BHC_totalist_1
+		}
+	}
+	option = {
+		name = beng.9.b #The Mahatma sways young Nehru to his side!
+		ai_chance = { factor = 40 }
+		effect_tooltip = {
+			create_country_leader = {
+				name = "Mohandas Karamchand Gandhi"
+				picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+				expire = "1965.1.1"
+				ideology = radical_socialist_subtype
+				traits = {}
+			}
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+		add_ideas = BHC_Rajkumari_Amrit_Kaur_sec_rso
+		reverse_add_opinion_modifier = { target = DEH modifier = BHC_cautious_support }
+		reverse_add_opinion_modifier = { target = PRF modifier = BHC_cautious_support }
+		hidden_effect = {
+			set_country_flag = BHC_INC_meeting_done
+			complete_national_focus = BHC_socialist_1
+		}
+	}
+}
+
+# Bose announces victory
+news_event = {
+	id = beng.10
+	title = beng.10.t
+	desc = beng.10.d
+	picture = GFX_news_event_BHC_bose
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = beng.10.a
+		trigger = {
+			tag = BHC
+		}
+	}
+	option = {
+		name = beng.10.b
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = yes
+		}
+	}
+	option = {
+		name = beng.10.c
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = no
+		}
+	}
+}
+
+# Huq announces victory
+news_event = {
+	id = beng.11
+	title = beng.11.t
+	desc = beng.11.d
+	picture = GFX_news_event_BHC_huq
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = beng.11.a
+		trigger = {
+			tag = BHC
+		}
+	}
+	option = {
+		name = beng.11.b
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = yes
+		}
+	}
+	option = {
+		name = beng.11.c
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = no
+		}
+	}
+}
+
+# Gandhi announces victory
+news_event = {
+	id = beng.12
+	title = beng.12.t
+	desc = beng.12.d
+	picture = GFX_news_event_BHC_gandhi
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = beng.12.a
+		trigger = {
+			tag = BHC
+		}
+	}
+	option = {
+		name = beng.12.b
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = yes
+		}
+	}
+	option = {
+		name = beng.12.c
+		trigger = {
+			NOT = { tag = BHC }
+			has_socialist_government = no
+		}
+	}
+}
+
+### National Focus Events
+
+# Question of the Elites (fired from focus)
+country_event = {
+	id = beng.15
+	title = beng.15.t
+	desc = beng.15.d
+	picture = GFX_report_event_BHC_crowd
+	
+	is_triggered_only = yes	
+
+	option = {
+		name = beng.15.a #Force them to comply - by force if necessary!
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 4
+				has_government = totalist
+			}
+			modifier = {
+				factor = 0.5
+				has_national_unity < 50
+			}
+		}
+		add_political_power = 100
+		add_ideas = BHC_elite_resistance
+	}
+	option = {
+		name = beng.15.b #Offer incentives to the elites to work with the new order
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				has_government = syndicalist
+			}
+		}
+		add_ideas = BHC_elite_incentive
+	}
+	option = {
+		name = beng.15.c #We need their resources - promote the willing to good positions
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 4
+				has_government = radical_socialist
+			}
+			modifier = {
+				factor = 0.5
+				has_political_power < 0
+			}
+		}
+		add_political_power = -100
+		add_ideas = BHC_elite_promotion
+	}
+}
+
+# Elites brought into line
+country_event = {
+	id = beng.16
+	title = beng.16.t
+	picture = GFX_report_event_BHC_crowd
+	
+	desc = {
+		text = beng.16.d.resistance
+		trigger = { has_idea = BHC_elite_resistance }
+	}
+	desc = {
+		text = beng.16.d.incentive
+		trigger = { has_idea = BHC_elite_incentive }
+	}
+	desc = {
+		text = beng.16.d.promotion
+		trigger = { has_idea = BHC_elite_promotion }
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BHC
+		has_completed_focus = BHC_indian_elites
+		has_idea = BHC_backwards_economy_1
+		OR = {
+			has_idea = BHC_elite_resistance
+			has_idea = BHC_elite_incentive
+			has_idea = BHC_elite_promotion
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+		modifier = {
+			factor = 2
+			has_idea = BHC_elite_resistance
+		}
+		modifier = {
+			factor = 0.5
+			has_idea = BHC_elite_promotion
+		}
+		modifier = {
+			factor = 0.5
+			has_war = yes
+		}
+	}
+	
+	option = {
+		name = beng.16.a
+		if = {
+			limit = { has_idea = BHC_elite_resistance }
+			remove_ideas = BHC_elite_resistance
+		}
+		if = {
+			limit = { has_idea = BHC_elite_incentive }
+			remove_ideas = BHC_elite_incentive
+		}
+		if = {
+			limit = { has_idea = BHC_elite_promotion }
+			remove_ideas = BHC_elite_promotion
+		}
+		swap_ideas = {
+			remove_idea = BHC_backwards_economy_1
+			add_idea = BHC_backwards_economy_2
+		}
+	}
+}
+
+### ANGLO-INDIAN EVENTS
+
+# BHC proposes trade agreement to ENG
+country_event = {
+	id = beng.40
+	title = beng.40.t
+	desc = beng.40.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_socialist_government = yes
+		FROM = { has_socialist_government = yes }
+	}
+	
+	option = {
+		name = beng.40.a #R.H. Tawney sails for Calcutta once more!
+		ai_chance = { factor = 99 }
+		BHC = { country_event = { id = beng.42 days = 7 } }
+	}
+	option = {
+		name = beng.40.b #No way! International trade is the harbringer of capitalism!
+		ai_chance = { factor = 1 }
+		add_political_power = 50
+		BHC = { country_event = { id = beng.41 } }
+	}
+}
+
+# ENG refuses the trade deal
+country_event = {
+	id = beng.41
+	title = beng.41.t
+	desc = beng.41.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.41.a
+		add_political_power = -50
+		clr_country_flag = BHC_industry_aid
+		clr_country_flag = BHC_airforce_aid
+		clr_country_flag = BHC_navy_aid
+		add_opinion_modifier = { target = FROM modifier = ITA_dislikes_govt }
+	}
+}
+
+# R.H Tawney arrives in Calcutta
+country_event = {
+	id = beng.42
+	title = beng.42.t
+	desc = beng.42.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_socialist_government = yes
+		FROM = { has_socialist_government = yes }
+	}
+	
+	option = {
+		name = beng.42.a #Let us request industrial and engineering aid
+		ai_chance = { factor = 30 }
+		set_country_flag = BHC_industry_aid
+		ENG = { country_event = { id = beng.43 } }
+	}
+	option = {
+		name = beng.42.b #Let us request aid to establish a People's Air Force
+		ai_chance = { factor = 30 }
+		set_country_flag = BHC_airforce_aid
+		ENG = { country_event = { id = beng.43 } }
+	}
+	option = {
+		name = beng.42.c #Let us ask for support in training a new People's Navy
+		ai_chance = { factor = 30 }
+		set_country_flag = BHC_navy_aid
+		ENG = { country_event = { id = beng.43 } }
+	}
+}
+
+# Calcutta presents its request
+country_event = {
+	id = beng.43
+	title = beng.43.t
+	picture = GFX_report_event_BHC_calcutta
+	
+	desc = {
+		text = beng.43.d.industry
+		trigger = { FROM = { has_country_flag = BHC_industry_aid } }
+	}
+	desc = {
+		text = beng.43.d.airforce
+		trigger = { FROM = { has_country_flag = BHC_airforce_aid } }
+	}
+	desc = {
+		text = beng.43.d.navy
+		trigger = { FROM = { has_country_flag = BHC_navy_aid } }
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_socialist_government = yes
+		FROM = { has_socialist_government = yes }
+	}
+	
+	option = {
+		name = beng.43.a #Of course, solidarity for ever!
+		ai_chance = { factor = 99 }
+		add_political_power = -100
+		add_ideas = BHC_anglo_indian_trade
+		add_opinion_modifier = { target = BHC modifier = ITA_likes_govt }
+		BHC = { country_event = { id = beng.44 days = 30 } }
+	}
+	option = {
+		name = beng.43.b #They really must be joking
+		ai_chance = { factor = 1 }
+		BHC = { country_event = { id = beng.41 } }
+	}
+}
+
+# Trade deal implemented
+country_event = {
+	id = beng.44
+	title = beng.44.t
+	desc = beng.44.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_socialist_government = yes
+		FROM = { has_socialist_government = yes }
+	}
+	
+	option = {
+		name = beng.44.a
+		add_ideas = BHC_anglo_indian_trade
+		add_opinion_modifier = { target = ENG modifier = ITA_likes_govt }
+		if = {
+			limit = { has_country_flag = BHC_industry_aid }
+			clr_country_flag = BHC_industry_aid
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.5
+				uses = 2
+				category = industry
+			}
+		}
+		if = {
+			limit = { has_country_flag = BHC_airforce_aid }
+			clr_country_flag = BHC_airforce_aid
+			add_equipment_to_stockpile = { type = fighter_equipment_0 amount = 20 producer = ENG }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_0 amount = 10 producer = ENG }
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+		if = {
+			limit = { has_country_flag = BHC_navy_aid }
+			clr_country_flag = BHC_navy_aid
+			load_oob = BHC_anglo
+			add_equipment_to_stockpile = { type = convoy_1 amount = 20 producer = ENG }
+			add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+		}
+	}
+}
+
+
+### INDOCHINA EVENTS
+
+# Ho Chi Minh invited to Calcutta
+country_event = {
 	id = beng.48
 	title = beng.48.t
 	desc = beng.48.d
-	# picture = hochiminh_event
+	picture = GFX_report_event_BHC_calcutta
 
 	is_triggered_only = yes
+	
+	trigger = {
+		has_socialist_government = yes
+		FROM = { has_socialist_government = yes }
+	}
 
 	option = {
-		name = beng.48.a #Wishes him good luck!
+		name = beng.48.a #Bon voyage, comrade Ho Chi Minh!
 		ai_chance = { factor = 99 }
-		FRA = { add_opinion_modifier = { target = BHC modifier = BHC_Ho_is_here_20 } } # 20
-		FRA = { add_opinion_modifier = { target = GER modifier = BHC_Ho_is_here_50 } } # -50
-		FRA = { add_opinion_modifier = { target = SIA modifier = BHC_Ho_is_here_50 } } # -50
-		set_global_flag = HoCalcuttaMinh
+		reverse_add_opinion_modifier = { target = BHC modifier = BHC_Ho_is_here_20 }
+		reverse_add_opinion_modifier = { target = GER modifier = BHC_Ho_is_here_50 }
+		reverse_add_opinion_modifier = { target = SIA modifier = BHC_Ho_is_here_50 }
+		BHC = { country_event = { id = beng.49 days = 1 } }
 	}
 	option = {
-		name = beng.48.b #Too Dangerous
+		name = beng.48.b #Can't risk the trip, frightfully sorry
 		ai_chance = { factor = 1 }
-		FRA = { add_opinion_modifier = { target = BHC modifier = BHC_Ho_isnt_here_50 } } # -50
-		FRA = { add_opinion_modifier = { target = GER modifier = BHC_Ho_isnt_here_30 } } # 30
-		FRA = { add_opinion_modifier = { target = SIA modifier = BHC_Ho_isnt_here_10 } } # 10
-		add_political_power = -100 # 5 dissent
+		add_political_power = -100
+		reverse_add_opinion_modifier = { target = BHC modifier = BHC_Ho_isnt_here_50 }
+		reverse_add_opinion_modifier = { target = GER modifier = BHC_Ho_isnt_here_30 }
+		reverse_add_opinion_modifier = { target = SIA modifier = BHC_Ho_isnt_here_10 }
+		BHC = { country_event = { id = beng.50 days = 1 } }
 	}
 }
-news_event = { # 182049 - Ho Chi Minh Arrives in Calcutta
+
+# France refuses to send Ho Chi Minh
+country_event = {
 	id = beng.49
 	title = beng.49.t
 	desc = beng.49.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.49.a
+		add_political_power = -50
+	}
+}
+
+# France agrees to send Ho Chi Minh
+country_event = {
+	id = beng.50
+	title = beng.50.t
+	desc = beng.50.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.50.a
+		add_political_power = 100
+		reverse_add_opinion_modifier = { target = FRA modifier = BHC_Ho_is_here_20 }
+		reverse_add_opinion_modifier = { target = GER modifier = BHC_Ho_is_here_50 }
+		reverse_add_opinion_modifier = { target = SIA modifier = BHC_Ho_is_here_50 }
+		hidden_effect = {
+			news_event = { id = beng.51 days = 29 }
+		}
+	}
+}
+
+# Ho Chi Minh arrives in Calcutta
+news_event = {
+	id = beng.51
+	title = beng.51.t
+	desc = beng.51.d
 	picture = GFX_news_event_HoChiMinh_Calcutta
 
-	trigger = {
-		tag = BHC
-		has_global_flag = HoCalcuttaMinh
-		has_global_flag = NEWS_ALL
-	}
-
-	mean_time_to_happen = { days = 30 }
-
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	major = yes
 
 	immediate = {
+		set_global_flag = HoChiMinh_Calcutta
+	}
+
+	option = {
+		name = beng.51.a #Wonderful!
+		trigger = { has_socialist_government = yes }
+	}
+	option = {
+		name = beng.51.b #That's Worrying!
+		trigger = { has_socialist_government = no }
+	}
+}
+
+
+### POST-UNIFICATION EVENTS
+
+# News event: Bharatiya Commune unites India
+news_event = {
+	id = bengal.99
+	title = bengal.99.t
+	desc = bengal.99.d
+	picture = GFX_news_event_india_protests
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = bengal.99.a
+		trigger = { tag = BHC }
+	}
+	option = {
+		name = bengal.99.b
+		trigger = {
+			NOT = { tag = BHC }
+			is_in_faction_with = BHC
+		}
+	}
+	option = {
+		name = bengal.99.c
+		trigger = {
+			NOT = { tag = BHC }
+			NOT = { is_in_faction_with = BHC }
+		}
+	}
+}
+
+# State-Reorganization Act
+country_event = {
+	id = beng.100
+	title = beng.100.t
+	desc = beng.100.d
+	picture = GFX_report_event_BHC_speech
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = {
+			flag = BHC_maximist
+			value = 0
+		}
+		set_country_flag = {
+			flag = BHC_moderate
+			value = 0
+		}
+		set_country_flag = {
+			flag = BHC_agrarian
+			value = 0
+		}
+		set_country_flag = {
+			flag = BHC_anarcho
+			value = 0
+		}
+	}
+	
+	option = {
+		name = beng.100.a #Large ethno-linguistic blocs shall centralize the state
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_government = totalist
+			}
+		}
+		add_political_power = -30
+		add_popularity = { ideology = totalist popularity = 0.05 }
 		hidden_effect = {
-			BHC = { add_opinion_modifier = { target = FRA modifier = BHC_Ho_is_here_20 } } # 20
-			BHC = { add_opinion_modifier = { target = GER modifier = BHC_Ho_is_here_50 } } # -50
-			BHC = { add_opinion_modifier = { target = SIA modifier = BHC_Ho_is_here_50 } } # -50
-			set_global_flag = HoChiMinh_Calcutta
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.101 days = 3 }
 		}
 	}
+	option = {
+		name = beng.100.b #Power shall be given the village communes
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = 20
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.101 days = 3 }
+		}
+	}
+	option = {
+		name = beng.100.c #Middle-sized traditional provinces shall secure transition
+		ai_chance = {
+			factor = 23
+			modifier = {
+				factor = 2
+				has_government = syndicalist
+			}
+		}
+		add_political_power = -20
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.101 days = 3 }
+		}
+	}
+	option = {
+		name = beng.100.e #Popular council-governments will bring emancipation
+		ai_chance = {
+			factor = 27
+			modifier = {
+				factor = 2
+				has_idea = BHC_Jawaharlal_Nehru_hog_syn
+			}
+		}
+		add_political_power = 50
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_anarcho
+				value = 1
+			}
+			country_event = { id = beng.101 days = 3 }
+		}
+	}
+}
+
+# The issue of landlordism
+country_event = {
+	id = beng.101
+	title = beng.101.t
+	desc = beng.101.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
 
 	option = {
-		name = beng.49.a #Wonderful!
-		trigger = {
-			OR = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
+		name = beng.101.a #Extend total state control over the estates and factories
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
 				has_government = totalist
+			}
+		}
+		add_political_power = 50
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.102 days = 3 }
+		}
+	}
+	option = {
+		name = beng.101.b #Let the local villages assume control of the farms
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = -60
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.102 days = 3 }
+		}
+	}
+	option = {
+		name = beng.101.c #Let the provinces organize collectivization individually
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				has_government = syndicalist
+			}
+		}
+		add_political_power = -50
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.102 days = 3 }
+		}
+	}
+	option = {
+		name = beng.101.e #Organize trade unions to run the collectivized farms
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_idea = BHC_Jawaharlal_Nehru_hog_syn
+			}
+		}
+		add_political_power = -40
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_anarcho
+				value = 1
+			}
+			country_event = { id = beng.102 days = 3 }
+		}
+	}
+}
+
+# Enforcing Economic Coherence
+country_event = {
+	id = beng.102
+	title = beng.102.t
+	desc = beng.102.d
+	picture = GFX_report_event_BHC_calcutta
+	
+	is_triggered_only = yes
+
+	option = {
+		name = beng.102.a #All layers of the economy must be centrally administered
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_government = totalist
+			}
+		}
+		add_political_power = -50
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.103 days = 3 }
+		}
+	}
+	option = {
+		name = beng.102.b #India must become completely self-sufficient
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = -20
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.103 days = 3 }
+		}
+	}
+	option = {
+		name = beng.102.c #Central planning and nationalization of vital industries
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_government = syndicalist
+			}
+		}
+		add_political_power = 50
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.103 days = 3 }
+		}
+	}
+	option = {
+		name = beng.102.e #Orthodox Syndicalism shall unite all Indians economically
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_idea = BHC_Jawaharlal_Nehru_hog_syn
+			}
+		}
+		add_political_power = -30
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_anarcho
+				value = 1
+			}
+			country_event = { id = beng.103 days = 3 }
+		}
+	}
+}
+
+# Maintaining Order in the New Provinces
+country_event = {
+	id = beng.103
+	title = beng.103.t
+	desc = beng.103.d
+	picture = GFX_report_event_BHC_crowd
+	
+	is_triggered_only = yes
+
+	option = {
+		name = beng.103.a #Martial law must be strictly enforced!
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_government = totalist
+			}
+		}
+		add_political_power = -80
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			country_event = { id = beng.104 days = 3 }
+		}
+	}
+	option = {
+		name = beng.103.b #The People's Police shall oversee integration
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = -30
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			country_event = { id = beng.104 days = 3 }
+		}
+	}
+	option = {
+		name = beng.103.c #Withdraw the army, but maintain garrisons in key cities
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_government = syndicalist
+			}
+		}
+		add_political_power = -30
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			country_event = { id = beng.104 days = 3 }
+		}
+	}
+	option = {
+		name = beng.103.e #Orthodox Syndicalism shall unite all Indians economically
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_idea = BHC_Jawaharlal_Nehru_hog_syn
+			}
+		}
+		add_political_power = 20
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_anarcho
+				value = 1
+			}
+			country_event = { id = beng.104 days = 3 }
+		}
+	}
+}
+
+# Status of Minority, Religious and Caste Rights
+country_event = {
+	id = beng.104
+	title = beng.104.t
+	desc = beng.104.d
+	picture = GFX_report_event_india_protests
+	
+	is_triggered_only = yes
+
+	option = {
+		name = beng.104.a #The army shall guard the rights of all the peoples of India!
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				has_government = totalist
+			}
+		}
+		add_political_power = 20
+		add_popularity = { ideology = totalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_maximist
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 2 } }
+				country_event = { id = beng.105 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 2 } }
+				country_event = { id = beng.106 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 2 } }
+				country_event = { id = beng.107 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_anarcho value > 2 } }
+				country_event = { id = beng.108 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 3 }
+					has_country_flag = { flag = BHC_moderate value < 3 }
+					has_country_flag = { flag = BHC_agrarian value < 3 }
+					has_country_flag = { flag = BHC_anarcho value < 3 }
+				}
+				country_event = { id = beng.109 days = 3 }
 			}
 		}
 	}
 	option = {
-		name = beng.49.b #That's Worrying!
-		trigger = {
-			NOT = {
+		name = beng.104.b #Untouchability is a sin. Let the people know it!
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 2
 				has_government = radical_socialist
+			}
+		}
+		add_political_power = -80
+		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_agrarian
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 2 } }
+				country_event = { id = beng.105 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 2 } }
+				country_event = { id = beng.106 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 2 } }
+				country_event = { id = beng.107 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_anarcho value > 2 } }
+				country_event = { id = beng.108 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 3 }
+					has_country_flag = { flag = BHC_moderate value < 3 }
+					has_country_flag = { flag = BHC_agrarian value < 3 }
+					has_country_flag = { flag = BHC_anarcho value < 3 }
+				}
+				country_event = { id = beng.109 days = 3 }
+			}
+		}
+	}
+	option = {
+		name = beng.104.c #A slow implementation of equal rights will secure stability
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
 				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
+			}
+		}
+		add_political_power = -20
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_moderate
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 2 } }
+				country_event = { id = beng.105 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 2 } }
+				country_event = { id = beng.106 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 2 } }
+				country_event = { id = beng.107 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_anarcho value > 2 } }
+				country_event = { id = beng.108 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 3 }
+					has_country_flag = { flag = BHC_moderate value < 3 }
+					has_country_flag = { flag = BHC_agrarian value < 3 }
+					has_country_flag = { flag = BHC_anarcho value < 3 }
+				}
+				country_event = { id = beng.109 days = 3 }
+			}
+		}
+	}
+	option = {
+		name = beng.104.e #Create workers' committees to ensure equality
+		ai_chance = {
+			factor = 15
+			modifier = {
+				factor = 2
+				has_idea = BHC_Jawaharlal_Nehru_hog_syn
+			}
+		}
+		add_political_power = -40
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		hidden_effect = {
+			modify_country_flag = {
+				flag = BHC_anarcho
+				value = 1
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_maximist value > 2 } }
+				country_event = { id = beng.105 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_moderate value > 2 } }
+				country_event = { id = beng.106 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_agrarian value > 2 } }
+				country_event = { id = beng.107 days = 3 }
+			}
+			if = {
+				limit = { has_country_flag = { flag = BHC_anarcho value > 2 } }
+				country_event = { id = beng.108 days = 3 }
+			}
+			if = {
+				limit = {
+					has_country_flag = { flag = BHC_maximist value < 3 }
+					has_country_flag = { flag = BHC_moderate value < 3 }
+					has_country_flag = { flag = BHC_agrarian value < 3 }
+					has_country_flag = { flag = BHC_anarcho value < 3 }
+				}
+				country_event = { id = beng.109 days = 3 }
 			}
 		}
 	}
 }
-country_event = { # # 182050 - Choosing the Sides
-	id = beng.50
-	title = beng.50.t
-	desc = beng.50.d
-	# picture = syndicalistindia
 
-	trigger = {
-		tag = BHC
-		has_global_flag = BHC_Second_congress_done
-		431 = { is_owned_by = BHC } #Calcutta
-		427 = { is_owned_by = BHC } #Hyderabad - PRF
-		439 = { is_owned_by = BHC } #Delhi - DEH
-		NOT = {
-			country_exists = DEH
-			country_exists = PRF
-			is_in_faction_with = FRA
-			is_in_faction_with = ENG
+# Bose controls Congress
+country_event = {
+	id = beng.105
+	title = beng.105.t
+	desc = beng.105.d
+	picture = GFX_report_event_BHC_soldiers
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		clr_country_flag = BHC_anarcho
+	}
+
+	option = {
+		name = beng.105.a
+		add_political_power = 100
+		set_politics = {
+			ruling_party = totalist
+			elections_allowed = no
 		}
-				date > 1936.01.01
-	}
-
-	mean_time_to_happen = { days = 3 }
-
-	fire_only_once = yes
-
-	option = {
-		name = beng.50.a # Join Internationale
-		ai_chance = { factor = 50 }
-		trigger = {
-			country_exists = FRA
-			BHC = {
-				NOT = { is_subject_of = FRA }
-				NOT = { has_war_with = FRA }
-			}
-		}
-		hidden_effect = { FRA = { country_event = { id = beng.51} } }
-		add_political_power = 40 # -2 dissent
-		BHC = { add_opinion_modifier = { target = FRA modifier = BHC_join_Internationale } } # 50
-	}
-	option = {
-		name = beng.50.b # Create own Bloc
-		ai_chance = { factor = 25 }
-		add_political_power = -100 # 5 dissent
-		set_global_flag = BHC_independent_foreign
-	}
-	option = {
-		name = beng.50.c # Isolation
-		ai_chance = { factor = 0 }
-		add_political_power = 200 # -10 dissent
-		set_global_flag = BHC_ISO
+		remove_all_ministers = yes
+		add_ideas = BHC_Hemanta_Kumar_Sarkar_hog_tot
+		add_ideas = BHC_A_C_N_Nambiar_for_tot
+		add_ideas = BHC_Leela_Roy_eco_tot
+		add_ideas = BHC_Chandrasekhar_Azad_sec_tot
 	}
 }
-country_event = { # 182051 - India Wants to Join the Internationale # FRA
-	id = beng.51
-	title = beng.51.t
-	desc = beng.51.d
-	# picture = syndicalistindia
+
+# Fazlul Huq controls Congress
+country_event = {
+	id = beng.106
+	title = beng.106.t
+	desc = beng.106.d
+	picture = GFX_report_event_BHC_nehru
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		clr_country_flag = BHC_anarcho
+	}
+
+	option = {
+		name = beng.106.a
+		add_political_power = 60
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Lal_Bahadur_Shastri_eco_syn
+		add_ideas = BHC_Sarojini_Naidu_sec_syn
+	}
+}
+
+# Agrarians controls Congress
+country_event = {
+	id = beng.107
+	title = beng.107.t
+	picture = GFX_report_event_BHC_gandhi
+	
+	desc = {
+		text = beng.107.d.gandhi
+		trigger = { NOT = { has_country_flag = Mohandas_Karamchand_Gandhi_dead } }
+	}
+	desc = {
+		text = beng.107.d.bose
+		trigger = { has_country_flag = Mohandas_Karamchand_Gandhi_dead }
+	}
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		clr_country_flag = BHC_anarcho
+	}
+
+	option = {
+		name = beng.107.a
+		add_political_power = 100
+		set_politics = {
+			ruling_party = radical_socialist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		if = {
+			limit = { has_country_flag = Rabindranath_Tagore_dead }
+			add_ideas = BHC_Panjabrao_Deshmukh_hog_rso
+			else = { add_ideas = BHC_Rabindranath_Tagore_hog_rso }
+		}
+		add_ideas = BHC_Mahadev_Desai_for_rso
+		add_ideas = BHC_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+		add_ideas = BHC_Rajkumari_Amrit_Kaur_sec_rso
+	}
+}
+
+# Dange controls Congress
+country_event = {
+	id = beng.108
+	title = beng.108.t
+	desc = beng.108.d
+	picture = GFX_report_event_BHC_leaders
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		clr_country_flag = BHC_anarcho
+	}
+
+	option = {
+		name = beng.108.a
+		add_political_power = 100
+		set_party_name = { ideology = syndicalist long_name = BHC_anarcho_syndicalist_party_long name = BHC_anarcho_syndicalist_party }
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		create_country_leader = {
+			name = "Shripad Amrit Dange"
+			picture = "Portrait_BHC_Shripad_Amrit_Dange.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = {}
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Manabendra_Nath_Roy_hog_syn
+		add_ideas = BHC_Jayaprakash_Narayan_for_syn
+		add_ideas = BHC_Surya_Sen_eco_syn
+		add_ideas = BHC_V_M_Tarkunde_sec_syn
+	}
+}
+
+# The Congress Ends in a Stalemate
+country_event = {
+	id = beng.109
+	title = beng.109.t
+	desc = beng.109.d
+	picture = GFX_report_event_BHC_leaders
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_country_flag = BHC_maximist
+		clr_country_flag = BHC_moderate
+		clr_country_flag = BHC_agrarian
+		clr_country_flag = BHC_anarcho
+	}
+	
+	option = {
+		name = beng.109.a #Bose and Nehru form a coalition!
+		ai_chance = { factor = 30 }
+		add_political_power = 50
+		set_politics = {
+			ruling_party = totalist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Leela_Roy_eco_tot
+		add_ideas = BHC_Chandrasekhar_Azad_sec_tot
+	}
+	option = {
+		name = beng.109.b #The Agrarians and Nehru combine to form a majority!
+		ai_chance = { factor = 30 }
+		add_political_power = 50
+		set_politics = {
+			ruling_party = radical_socialist
+			elections_allowed = no
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Jawaharlal_Nehru_hog_syn
+		add_ideas = BHC_Vallabhbhai_Jhaverbhai_Patel_for_syn
+		add_ideas = BHC_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+		add_ideas = BHC_Rajkumari_Amrit_Kaur_sec_rso
+	}
+	option = {
+		name = beng.109.c #Nehru utilizes Dange's union support to take the presidency!
+		ai_chance = { factor = 40 }
+		add_political_power = 50
+		set_politics = {
+			ruling_party = syndicalist
+			elections_allowed = no
+		}
+		create_country_leader = {
+			name = "Jawaharlal Nehru"
+			picture = "Portrait_BHC_Jawaharlal_Nehru.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = {}
+		}
+		remove_all_ministers = yes
+		add_ideas = BHC_Shripad_Amrit_Dange_hog_syn
+		add_ideas = BHC_Jayaprakash_Narayan_for_syn
+		add_ideas = BHC_Prasanta_C_Mahalanobis_eco_rso
+		add_ideas = BHC_V_M_Tarkunde_sec_syn
+	}
+}
+
+# Place of Red Raj in the world
+country_event = {
+	id = beng.110
+	title = beng.110.t
+	desc = beng.110.d
+	picture = GFX_report_event_BHC_calcutta
 
 	is_triggered_only = yes
 
 	option = {
-		name = beng.51.a #Accept them
+		name = beng.110.a #We shall be the Internationale's Sword in Asia!
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0
+				has_government = radical_socialist
+			}
+			modifier = {
+				factor = 0.5
+				has_government = totalist
+			}
+		}
+		trigger = {
+			FRA = {
+				has_socialist_government = yes
+				is_faction_leader = yes
+			}
+		}
+		add_political_power = 40
+		FRA = { country_event = { id = beng.111 } }
+	}
+	option = {
+		name = beng.110.b #On our own, Asia shall be painted RED!
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				has_government = radical_socialist
+			}
+			modifier = {
+				factor = 0.5
+				has_government = syndicalist
+			}
+		}
+		add_political_power = -100
+		if = {
+			limit = { is_faction_leader = no }
+			create_faction = "Indian Alliance"
+		}
+	}
+	option = {
+		name = beng.110.c #Let us rebuild India in splendid isolation
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				NOT = { has_government = radical_socialist }
+			}
+		}
+		add_political_power = 200
+		if = {
+			limit = { is_faction_leader = yes }
+			dismantle_faction = yes
+		}
+	}
+}
+
+# India asks to join the Internationale
+country_event = {
+	id = beng.111
+	title = beng.111.t
+	desc = beng.111.d
+	picture = GFX_report_event_BHC_calcutta
+
+	is_triggered_only = yes
+
+	option = {
+		name = beng.111.a #Accept them
 		ai_chance = { factor = 99 }
-		FRA = { add_opinion_modifier = { target = BHC modifier = BHC_accept_INT } } # 200
-		hidden_effect = { FRA = { country_event = { id = beng.501} } }
 		hidden_effect = {
 			if = {
-				limit = { PHL = { is_in_faction_with = BHC } }
-				FRA = { add_to_faction = PHL }
-			}
-			if = {
-				limit = { BUR = { is_in_faction_with = BHC } }
-				FRA = { add_to_faction = BUR }
-			}
-			if = {
-				limit = { INC = { is_in_faction_with = BHC } }
-				FRA = { add_to_faction = INC }
+				limit = { BHC = { is_faction_leader = yes } }
+				every_country = {
+					limit = {
+						is_in_faction_with = BHC
+						is_faction_leader = no
+					}
+					BHC = { remove_from_faction = PREV }
+					ROOT = { add_to_faction = PREV }
+				}
+				BHC = { dismantle_faction = yes }
 			}
 		}
+		add_to_faction = BHC
 	}
 	option = {
-		name = beng.51.b #Shoo them away!
+		name = beng.111.b #Shoo them away!
 		ai_chance = { factor = 1 }
-		FRA = { add_opinion_modifier = { target = BHC modifier = BHC_decline_INT } } # -150
-		add_political_power = -200 # 10 dissent
+		add_political_power = -100
+		reverse_add_opinion_modifier = { target = BHC modifier = ITA_outraged }
+		BHC = { country_event = { id = beng.112 days = 1 } }
 	}
 }
-country_event = { # XXXXXXXXX - Adding Bharatiyan Commune into the Internationale after all of its dependencies are added into the Internationale first
-	id = beng.501
-	hidden = yes
+
+# India is turned down
+country_event = {
+	id = beng.112
+	title = beng.112.t
+	desc = beng.112.d
+	picture = GFX_report_event_worried_french
 
 	is_triggered_only = yes
 
 	option = {
-		name = beng.50.a
-		FRA = { add_to_faction = BHC }
+		name = beng.112.a
+		add_political_power = -20
 	}
 }
-#################################################################################
-#Expanding the Revolution to Indochina
-#################################################################################
-country_event = { #  182064 - Fostering a Revolution in Indochina?
-	id = beng.64
-	title = beng.64.t
-	desc = beng.64.d
-	# picture = hochiminh_event
+
+# Dealing with the Delhi's officers
+country_event = {
+	id = beng.113
+	title = beng.113.t
+	desc = beng.113.d
+	picture = GFX_report_event_indian_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.113.a #The Nation needs every single man!
+		add_political_power = -100
+		custom_effect_tooltip = BHC_DEH_convert_faster
+		add_popularity = { ideology = social_conservative popularity = 0.05 }
+		create_field_marshal = { #Auto-Generated
+			name = "Bhupinder Singh"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Bhupinder_Singh.tga"
+			traits = { offensive_doctrine }
+			skill = 2
+		}
+		create_corps_commander = { #Auto-Generated
+			name = "Maharaja Sawai Man Singh II"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Maharaja_Sawai_Man_Singh_II.tga"
+			traits = {}
+			skill = 3
+		}
+		create_corps_commander = { #Auto-Generated
+			name = "Mir Dast"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Mir_Dast.tga"
+			traits = { trait_engineer }
+			skill = 1
+		}
+		hidden_effect = {
+			set_country_flag = {
+				flag = DEH_core_speed
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = beng.113.b #We have no need for British lapdogs!
+		add_political_power = 100
+		custom_effect_tooltip = BHC_DEH_convert_slower
+		hidden_effect = {
+			set_country_flag = {
+				flag = DEH_core_speed
+				value = -1
+			}
+		}
+	}
+}
+
+# Integration in the Gangetic Plain
+country_event = {
+	id = beng.114
+	title = beng.114.t
+	desc = beng.114.d
+	picture = economic_policy
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		438 = { set_state_flag = BHC_may_gain_core } #Lucknow
+		439 = { set_state_flag = BHC_may_gain_core } #Delhi
+		440 = { set_state_flag = BHC_may_gain_core } #Indore
+	}
+	
+	option = {
+		name = beng.114.a #Our policies have united the people in Socialist brotherhood
+		trigger = { has_country_leader = { name = "Mohandas Karamchand Gandhi" } }
+		add_political_power = -100
+		custom_effect_tooltip = BHC_DEH_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = 2
+			}
+		}
+	}
+	option = {
+		name = beng.114.b #Take a moderate approach to integration
+		trigger = { NOT = { has_country_leader = { name = "Mohandas Karamchand Gandhi" } } }
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = -200
+		custom_effect_tooltip = BHC_DEH_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = beng.114.c #We must be forceful in establishing socialist control!
+		trigger = { NOT = { has_country_leader = { name = "Mohandas Karamchand Gandhi" } } }
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 3
+				has_government = totalist
+			}
+		}
+		add_political_power = -100
+		if = {
+			limit = { has_government = social_liberal }
+			add_popularity = { ideology = social_liberal popularity = 0.1 }
+			else = { add_popularity = { ideology = market_liberal popularity = 0.1 } }
+		}
+		custom_effect_tooltip = BHC_DEH_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Integration in the North-West
+country_event = {
+	id = beng.115
+	title = beng.115.t
+	desc = beng.115.d
+	picture = economic_policy
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_owned_state = {
+			limit = {
+				is_core_of = DEH
+				is_claimed_by = BHC
+				NOT = { is_core_of = BHC }
+				NOT = { state = 438 } #Lucknow
+				NOT = { state = 439 } #Delhi
+				NOT = { state = 437 } #Indore
+			}
+			set_state_flag = BHC_may_gain_core
+		}
+	}
+	
+	option = {
+		name = beng.115.a #Take a moderate approach to integration
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 2
+				has_government = radical_socialist
+			}
+		}
+		add_political_power = -200
+		custom_effect_tooltip = BHC_DEH_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = beng.115.b #We must be forceful in establishing socialist control!
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 3
+				has_government = totalist
+			}
+		}
+		add_political_power = -100
+		if = {
+			limit = { has_government = social_liberal }
+			add_popularity = { ideology = social_liberal popularity = 0.1 }
+			else = { add_popularity = { ideology = market_liberal popularity = 0.1 } }
+		}
+		custom_effect_tooltip = BHC_DEH_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = DEH_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Gaining cores in formerly Delhi territory
+country_event = {
+	id = beng.116
+	title = beng.116.t
+	desc = beng.116.d
+	picture = GFX_report_event_PRF_palace
+	
+	trigger = {
+		tag = BHC
+		any_owned_state = {
+			has_state_flag = BHC_may_gain_core
+			is_core_of = DEH
+			is_controlled_by = BHC
+			NOT = { is_core_of = BHC }
+			any_neighbor_state = { is_core_of = BHC }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				has_state_flag = BHC_may_gain_core
+				is_core_of = DEH
+				NOT = { is_core_of = BHC }
+				any_neighbor_state = { is_core_of = BHC }
+			}
+			save_event_target_as = new_core
+		}
+	}
+	
+	option = {
+		name = beng.116.a
+		event_target:new_core = {
+			clr_state_flag = BHC_may_gain_core
+			add_core_of = BHC
+		}
+	}
+}
+
+# Terrorism in former Delhi territory
+country_event = {
+	id = beng.117
+	title = beng.117.t
+	desc = beng.117.d
+	picture = GFX_report_event_india_protests
 
 	trigger = {
 		tag = BHC
-		has_global_flag = BHC_Second_congress_done
-		is_subject = no
-		NOT = {
-			country_exists = INC #Pretty Obvious here :p
-			country_exists = PRF
-			country_exists = DEH
-			BHC = {
-				has_war_with = BUR
-				has_war_with = AFG
+		NOT = { country_exists = DEH }
+		any_owned_state = {
+			is_core_of = DEH
+			is_controlled_by = BHC
+			NOT = { is_core_of = BHC }
+			OR = {
+				industrial_complex > 1
+				arms_factory > 1
+				infrastructure > 3
 			}
 		}
-		286 = { is_controlled_by = GER } #Saigon
-		286 = { is_owned_by = GER }
-		671 = { is_controlled_by = GER } #Hanoi
-		671 = { is_owned_by = GER }
-			date > 1936.01.01
 	}
-
-	mean_time_to_happen = { days = 10 }
-
-	fire_only_once = yes
-
-	option = {
-		name = beng.64.a #Dispatch advisers, material and volunteers!
-		ai_chance = { factor = 95 }
-		trigger = { NOT = { has_global_flag = HoChiMinh_Calcutta } }
-		add_political_power = 20 # -1 dissent
-		BHC = { add_opinion_modifier = { target = GER modifier = BHC_Indochina } } # -100
-		hidden_effect = { GER = { country_event = { id = viet.0 days = 4 } } } #Volunteers pour into Indochina in Indochina file
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = DEH_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = DEH_core_speed value < -2 }
+		}
 	}
-	option = {
-		name = beng.64.b #Bring in Ho Chi Minh to spearhead a revolutionary insurgency!
-		ai_chance = { factor = 100 }
-		trigger = { has_global_flag = HoChiMinh_Calcutta }
-		add_political_power = 20 # -1 dissent
-		BHC = { add_opinion_modifier = { target = GER modifier = BHC_Indochina } } # -100
-		hidden_effect = { GER = { country_event = { id = viet.1 days = 4 } } } #Volunteers pour into Indochina in Indochina file
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = DEH
+				NOT = { is_core_of = BHC }
+				OR = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+			}
+			save_event_target_as = damage_state
+		}
 	}
+	
 	option = {
-		name = beng.64.c #We have no interests in expanding the revolution beyond India.
-		ai_chance = { factor = 5 }
-		add_political_power = -100 # 5 dissent
-		BHC = { add_opinion_modifier = { target = GER modifier = BHC_NoIndochina } } # 20
+		name = beng.117.a
+		event_target:damage_state = {
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = industrial_complex damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = arms_factory damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				damage_building = { type = infrastructure damage = 2 }
+			}
+		}
 	}
 }
+
+# What to do with the Princely officers?
+country_event = {
+	id = beng.118
+	title = beng.118.t
+	desc = beng.118.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.118.a #We will employ all who will fight for the revolution!
+		add_political_power = -100
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.05 }
+		custom_effect_tooltip = BHC_PRF_convert_faster
+		create_corps_commander = { #Auto-Generated
+			name = "Hashim Nawaz Jung"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Hashim_Nawaz_Jung.tga"
+			traits = {}
+			skill = 4
+		}
+		create_corps_commander = { #Auto-Generated
+			name = "Thimmdyya"
+			portrait_path = "gfx/leaders/PRF/Portrait_PRF_Thimmdyya.tga"
+			traits = {
+				trickster
+				panzer_leader
+			}
+			skill = 2
+		}
+		clr_country_flag = Chempakaraman_Pillai_dead
+		clr_country_flag = P_Krishna_Pillai_dead	
+		hidden_effect = {
+			set_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = beng.118.b #We cannot trust these reactionary maggots!
+		add_political_power = 100
+		custom_effect_tooltip = BHC_PRF_convert_slower
+		hidden_effect = {
+			set_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+}
+
+# Integrating Bombay Presidency
+country_event = {
+	id = beng.119
+	title = beng.119.t
+	desc = beng.119.d
+	picture = GFX_report_event_PRF_palace
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		429 = { set_state_flag = BHC_may_gain_core } #Bombay
+		424 = { set_state_flag = BHC_may_gain_core } #Andhra
+		423 = { set_state_flag = BHC_may_gain_core } #Madurai
+	}
+	
+	option = {
+		name = beng.119.a #Take a moderate approach to integration
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		custom_effect_tooltip = BHC_PRF_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = beng.119.b #We must be forceful in establishing socialist control!
+		ai_chance = { factor = 30 }
+		add_political_power = -200
+		custom_effect_tooltip = BHC_PRF_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Integrating princely states
+country_event = {
+	id = beng.120
+	title = beng.120.t
+	desc = beng.120.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_state = {
+			limit = {
+				is_core_of = PRF
+				is_claimed_by = BHC
+				NOT = { is_core_of = BHC }
+				NOT = { state = 429 } #Bombay
+				NOT = { state = 424 } #Andhra
+				NOT = { state = 423 } #Madurai
+			}
+			set_state_flag = BHC_may_gain_core
+		}
+	}
+	
+	option = {
+		name = beng.120.a #Take a moderate approach to integration
+		ai_chance = { factor = 70 }
+		add_political_power = -100
+		custom_effect_tooltip = BHC_PRF_convert_slower
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = -1
+			}
+		}
+	}
+	option = {
+		name = beng.120.b #We must be forceful in establishing socialist control!
+		ai_chance = { factor = 30 }
+		add_political_power = -200
+		custom_effect_tooltip = BHC_PRF_convert_faster
+		hidden_effect = {
+			modify_country_flag = {
+				flag = PRF_core_speed
+				value = 1
+			}
+		}
+	}
+}
+
+# Gaining cores in formerly Princely Federation territory
+country_event = {
+	id = beng.121
+	title = beng.121.t
+	desc = beng.121.d
+	picture = GFX_report_event_PRF_palace
+	
+	trigger = {
+		tag = BHC
+		any_owned_state = {
+			has_state_flag = BHC_may_gain_core
+			is_core_of = PRF
+			is_controlled_by = BHC
+			NOT = { is_core_of = BHC }
+			any_neighbor_state = { is_core_of = BHC }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 180
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				has_state_flag = BHC_may_gain_core
+				is_core_of = PRF
+				NOT = { is_core_of = BHC }
+				any_neighbor_state = { is_core_of = BHC }
+			}
+			save_event_target_as = new_core
+		}
+	}
+	
+	option = {
+		name = beng.121.a
+		event_target:new_core = {
+			clr_state_flag = BHC_may_gain_core
+			add_core_of = BHC
+		}
+	}
+}
+
+# Terrorism in former princely territory
+country_event = {
+	id = beng.122
+	title = beng.122.t
+	desc = beng.122.d
+	picture = GFX_report_event_india_protests
+
+	trigger = {
+		tag = BHC
+		NOT = { country_exists = PRF }
+		any_owned_state = {
+			is_core_of = PRF
+			is_controlled_by = BHC
+			NOT = { is_core_of = BHC }
+			OR = {
+				industrial_complex > 1
+				arms_factory > 1
+				infrastructure > 3
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 0 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 1 }
+		}
+		modifier = {
+			factor = 0.9
+			has_country_flag = { flag = PRF_core_speed value > 2 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < 0 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -1 }
+		}
+		modifier = {
+			factor = 1.2
+			has_country_flag = { flag = PRF_core_speed value < -2 }
+		}
+	}
+	
+	immediate = {
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = PRF
+				NOT = { is_core_of = BHC }
+				OR = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+			}
+			save_event_target_as = damage_state
+		}
+	}
+	
+	option = {
+		name = beng.122.a
+		event_target:damage_state = {
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				random_list = {
+					30 = { damage_building = { type = industrial_complex damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					infrastructure > 3
+				}
+				random_list = {
+					50 = { damage_building = { type = arms_factory damage = 1 } }
+					20 = { damage_building = { type = infrastructure damage = 2 } }
+				}
+			}
+			if = {
+				limit = {
+					industrial_complex > 1
+					NOT = { arms_factory > 1 }
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = industrial_complex damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					arms_factory > 1
+					NOT = { infrastructure > 3 }
+				}
+				damage_building = { type = arms_factory damage = 1 }
+			}
+			if = {
+				limit = {
+					NOT = { industrial_complex > 1 }
+					NOT = { arms_factory > 1 }
+					infrastructure > 3
+				}
+				damage_building = { type = infrastructure damage = 2 }
+			}
+		}
+	}
+}
+

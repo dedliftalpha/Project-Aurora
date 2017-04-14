@@ -2983,7 +2983,7 @@ country_event = { #Germany
 		}
 	}
 	mean_time_to_happen = {
-		days = 15
+		days = 7
 	}
 
 	option = { #divide all
@@ -2998,7 +2998,6 @@ country_event = { #Germany
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3011,6 +3010,7 @@ country_event = { #Germany
 			}
 
 		}
+		}
 		puppet = ENP
 		every_country = {
 			limit = {
@@ -3019,7 +3019,6 @@ country_event = { #Germany
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3032,6 +3031,7 @@ country_event = { #Germany
 			}
 
 		}
+		}
 		puppet = WAL
 		every_country = {
 			limit = {
@@ -3040,7 +3040,6 @@ country_event = { #Germany
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3053,8 +3052,11 @@ country_event = { #Germany
 			}
 
 		}
+		}
 		puppet = SCT
-		#events
+		SCT = { country_event = { id = part.65 } }
+		WAL = { country_event = { id = part.67 } }
+		ENP = { country_event = { id = part.69 } }
 	}
 
 	option = { #united britian
@@ -3069,7 +3071,6 @@ country_event = { #Germany
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3082,15 +3083,20 @@ country_event = { #Germany
 			}
 
 		}
+		}
 		puppet = GBR
-		#events
+		add_political_power = -100
+		reverse_add_opinion_modifier = {
+			target = CAN modifier = GER_liberated_UK
+		}
+		country_event = { id = part.61 }
+		GBR = { kill_country_leader = yes }
 	}
-
-
+	
 	option = { #Scotland and wales
-		name = part.4.e
+		name = part.4.c
 		ai_chance = {
-			factor = 8
+			factor = 7
 		}
 		every_country = {
 			limit = {
@@ -3113,6 +3119,14 @@ country_event = { #Germany
 
 		}
 		puppet = SCT
+		SCT = { country_event = { id = part.65 } }
+	}
+
+	option = { #Scotland and wales
+		name = part.4.e
+		ai_chance = {
+			factor = 8
+		}
 		every_country = {
 			limit = {
 				OR = {
@@ -3120,7 +3134,27 @@ country_event = { #Germany
 					is_in_faction_with = GER
 				}
 			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = SCT
+
+			}
+			SCT = {
+				transfer_state = PREV
+			}
+
 		}
+		}
+		puppet = SCT
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
+			}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3133,8 +3167,10 @@ country_event = { #Germany
 			}
 
 		}
+		}
 		puppet = WAL
-		#events
+		SCT = { country_event = { id = part.65 } }
+		WAL = { country_event = { id = part.67 } }
 	}
 
 	option = { #occupy all
@@ -3145,6 +3181,648 @@ country_event = { #Germany
 		add_political_power = -240
 	}
 
+}
+
+country_event = { #A loyal government in London
+	id = part.61
+	title = part.61.t
+	desc = part.61.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.61.a
+		ai_chance = {
+			factor = 90
+		}
+		add_to_faction = GBR
+		country_event = { id = part.62 }
+	}
+}
+
+country_event = { #Should Britain become a monarchy?
+	id = part.62
+	title = part.62.t
+	desc = part.62.d
+	
+	is_triggered_only = yes
+	
+	option = { #Recreate the United Kingdom!
+		name = part.62.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = 20
+		GBR = { country_event = { id = part.63 } }
+		reverse_add_opinion_modifier = {
+			target = GBR modifier = GER_liberated_UK
+		}
+	}
+	
+	option = { #Let Great Britain become a republic instead.
+		name = part.62.a
+		ai_chance = {
+			factor = 20
+		}
+		reverse_add_opinion_modifier = {
+			target = GBR modifier = GER_created_republic_GBR
+		}
+		add_political_power = -20
+		GBR = { country_event = { id = part.64 } }
+	}
+}
+
+country_event = { #Germany has imposed a King on us
+	id = part.63
+	title = part.63.t
+	desc = part.63.d
+	
+	is_triggered_only = yes
+	
+	option = { #Long live Charles III!
+		name = part.63.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Charles III of Saxe-Coburg Gotha"
+			desc = "GBR_CHARLES_III_DESC"
+			picture = "Portrait_Britain_Charles_III.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		add_ideas = GBR_Bernard_Montgomery_hog_ade
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = GBR_Edward_Heath_hog_ade
+		}
+		add_political_power = -300
+		load_oob = GBR_independent_GER
+	}
+}
+
+country_event = { #Germany let us choose our new President
+	id = part.64
+	title = part.64.t
+	desc = part.64.d
+	
+	is_triggered_only = yes
+	
+	option = { #All hail our new president!
+		name = part.64.a
+		ai_chance = {
+			factor = 80
+		}
+		set_cosmetic_tag = GBR_republic
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_ideas = GBR_Bernard_Montgomery_hog_ade
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_ideas = GBR_Edward_Heath_hog_ade
+		}
+		add_political_power = -200
+		load_oob = GBR_independent_GER
+	}
+}
+
+country_event = { #Scotland
+	id = part.65
+	title = part.65.t
+	desc = part.65.d
+	
+	is_triggered_only = yes
+	
+	option = { #Independence at Last!
+		name = part.65.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Nikolaus I von Oldenburg"
+			desc = "SCT_NIKOLAUS_OLDENBURG_DESC"
+			picture = "Portrait_Scotland_Nikolaus_I.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = SCT_James_Duke_of_Abercorn_hog_ade
+		add_ideas = SCT_Douglas_Duke_of_Hamilton_for_ade
+		add_ideas = SCT_Ian_Campbell_Gray_eco_ade
+		add_ideas = SCT_Charles_Earl_Breadalbane_sec_ade
+		GER = { country_event = { id = part.66 } }
+		add_political_power = -200
+		load_oob = SCT_independent_GER
+	}
+}
+
+country_event = { #A loyal puppet in Edinburgh
+	id = part.66
+	title = part.66.t
+	desc = part.66.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.66.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = SCT
+	}
+}
+
+country_event = { #Wales
+	id = part.67
+	title = part.67.t
+	desc = part.67.d
+	
+	is_triggered_only = yes
+	
+	option = { #And its all Thanks to the friendly Germans!
+		name = part.67.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Rupprecht I"
+			desc = "WAL_RUPPRECHT_I_DESC"
+			picture = "Portrait_Wales_Rupprecht_I.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = WAL_Saunders_Lewis_hog_ade
+		add_ideas = WAL_Idris_Cox_for_ade
+		add_ideas = WAL_Hugh_Dalton_eco_ade
+		add_ideas = WAL_Harry_Pollitt_sec_ade
+		GER = { country_event = { id = part.68 } }
+		load_oob = WAL_independent_GER
+	}
+}
+
+country_event = { #A loyal puppet in Cardiff
+	id = part.68
+	title = part.68.t
+	desc = part.68.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.68.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = WAL
+	}
+}
+
+country_event = { #England
+	id = part.69
+	title = part.69.t
+	desc = part.69.d
+	
+	is_triggered_only = yes
+	
+	option = { #Hurrah!
+		name = part.69.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. Louis Ferdinand von Preußen"
+			desc = "ENP_LOUIS_PREUSSEN_DESC"
+			picture = "Portrait_England_Louis_Von_Preussen.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = ENP_Enoch_Powell_hog_pau
+		add_ideas = ENP_Archibald_Ramsay_for_ade
+		add_ideas = ENP_Leslie_Hore_Belisha_eco_ade
+		add_ideas = ENP_Arnold_Leese_sec_ade
+		GER = { country_event = { id = part.70 } }
+		load_oob = ENP_independent_GER
+	}
+}
+
+country_event = { #A loyal puppet in London
+	id = part.70
+	title = part.70.t
+	desc = part.70.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.70.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = ENP
+	}
 }
 
 #########################################

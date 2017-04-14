@@ -705,6 +705,7 @@ country_event = {
 	}
 }
 
+
 ### ANGLO-INDIAN EVENTS
 
 # BHC proposes trade agreement to ENG
@@ -977,6 +978,291 @@ news_event = {
 	option = {
 		name = beng.51.b #That's Worrying!
 		trigger = { has_socialist_government = no }
+	}
+}
+
+
+### WAR FOR INDIA EVENTS
+
+# Attempt to cause an uprising in Shimla?
+country_event = {
+	id = beng.52
+	title = beng.52.t
+	desc = beng.52.d
+	picture = GFX_report_event_DEH_raj
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.52.a # Make the attempt, no matter the risk
+		ai_chance = { factor = 100 }
+		random_list = {
+			60 = {
+				custom_effect_tooltip = BHC_shimla_uprising_successful
+				effect_tooltip = {
+					declare_war_on = {
+						target = DEH
+						type = annex_everything
+					}
+				}
+				hidden_effect = {
+					country_event = { id = beng.54 days = 3 }
+				}
+			}
+			40 = {
+				effect_tooltip = { add_political_power = -200 }
+				DEH = { country_event = { id = beng.53 days = 3 } }
+			}
+		}
+	}
+	option = {
+		name = beng.52.b # Abandon this scheming and declare war!
+		ai_chance = { factor = 0 }
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+	}
+}
+
+# Delhi discovers the attempted uprising
+country_event = {
+	id = beng.53
+	title = beng.53.t
+	desc = beng.53.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = BHC }
+	}
+	
+	option = {
+		name = beng.53.a
+		add_political_power = 100
+		BHC = {
+			add_political_power = -200
+			declare_war_on = {
+				target = DEH
+				type = annex_everything
+			}
+		}
+	}
+}
+
+# The Shimla uprising is successful
+country_event = {
+	id = beng.54
+	title = beng.54.t
+	desc = beng.54.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = DEH }
+	}
+	
+	option = {
+		name = beng.54.a
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+		set_state_controller = 890 #Shimla
+		load_oob = BHC_shimla
+		DEH = { country_event = { id = beng.55 } }
+	}
+}
+
+# Delhi notified of the Shimla uprising
+country_event = {
+	id = beng.55
+	title = beng.55.t
+	desc = beng.55.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.55.a
+		add_political_power = -100
+	}
+}
+
+# Attempt to cause an uprising in Kolhapur?
+country_event = {
+	id = beng.56
+	title = beng.56.t
+	desc = beng.56.d
+	picture = GFX_report_event_PRF_princes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.56.a # Make the attempt, no matter the risk
+		ai_chance = { factor = 100 }
+		random_list = {
+			60 = {
+				custom_effect_tooltip = BHC_kolhapur_uprising_successful
+				effect_tooltip = {
+					declare_war_on = {
+						target = PRF
+						type = annex_everything
+					}
+				}
+				hidden_effect = {
+					country_event = { id = beng.58 days = 3 }
+				}
+			}
+			40 = {
+				effect_tooltip = { add_political_power = -200 }
+				DEH = { country_event = { id = beng.57 days = 3 } }
+			}
+		}
+	}
+	option = {
+		name = beng.56.b # Abandon this scheming and declare war!
+		ai_chance = { factor = 0 }
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+	}
+}
+
+# Princely Federation discovers the attempted uprising
+country_event = {
+	id = beng.57
+	title = beng.57.t
+	desc = beng.57.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = BHC }
+	}
+	
+	option = {
+		name = beng.57.a
+		add_political_power = 100
+		BHC = {
+			add_political_power = -200
+			declare_war_on = {
+				target = PRF
+				type = annex_everything
+			}
+		}
+	}
+}
+
+# The Kolhapur uprising is successful
+country_event = {
+	id = beng.58
+	title = beng.58.t
+	desc = beng.58.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = PRF }
+	}
+	
+	option = {
+		name = beng.58.a
+		declare_war_on = {
+			target = PRF
+			type = annex_everything
+		}
+		set_state_controller = 868 #Kolhapur
+		load_oob = BHC_kolhapur
+		PRF = { country_event = { id = beng.59 } }
+	}
+}
+
+# Princely Federation notified of the Kolhapur uprising
+country_event = {
+	id = beng.59
+	title = beng.59.t
+	desc = beng.59.d
+	picture = GFX_report_event_PRF_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = beng.59.a
+		add_political_power = -100
+	}
+}
+
+# Princely Federation in a civil war - do we invade?
+country_event = {
+	id = beng.60
+	title = beng.60.t
+	desc = beng.60.d
+	picture = GFX_report_event_PRF_war
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BHC
+		has_war = no
+		is_subject = no
+		PRF = {
+			has_war_with = MYS
+			OR = {
+				surrender_progress > 0.2
+				is_ai = yes
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = beng.60.a #We shall liberate the working people of the Deccan!
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = PRF ratio < 1.0 }
+			}
+		}
+		add_political_power = 200
+		declare_war_on = {
+			target = PRF
+			type = annex_everything
+		}
+		add_named_threat = { threat = 2 name = BHC_PRF_war }
+	}
+	option = {
+		name = beng.60.b #This is no business of ours...
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				PRF = { NOT = { has_war_with = MAD } }
+			}
+			modifier = {
+				factor = 0.5
+				PRF = { has_war_with = MAD }
+			}
+			modifier = {
+				factor = 0.5
+				PRF = { has_war_with = DEH }
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = PRF ratio > 2.0 }
+			}
+		}
+		add_political_power = -100
+		add_named_threat = { threat = -1 name = BHC_PRF_war_declined }
 	}
 }
 

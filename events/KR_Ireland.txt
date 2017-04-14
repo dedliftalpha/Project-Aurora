@@ -3243,7 +3243,7 @@ country_event = {
 	title = ire.76.t
 	desc = {
 		text = ire.76.d
-		trigger = { has_country_flag = ENG_IRE_business }
+		trigger = { has_country_flag = ENG_IRE_business NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		}
 
 	desc = {
@@ -3255,6 +3255,11 @@ country_event = {
 		text = ire.76.d2
 		trigger = { has_country_flag = ENG_IRE_said_no_war }
 		}
+		
+	desc = {
+		text = ire.76.d3
+		trigger = { has_country_flag = ENG_IRE_business OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		}
 
 	picture = GFX_report_event_generic_sign_treaty2
 
@@ -3263,7 +3268,7 @@ country_event = {
 	fire_only_once = yes
 
 	option = {
-		trigger = { has_country_flag = ENG_IRE_business }
+		trigger = { has_country_flag = ENG_IRE_business NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		ai_chance = { factor = 70 }
 		name = ire.76.a
 		add_political_power = -25
@@ -3295,9 +3300,20 @@ country_event = {
 	}
 
 	option = {
-		trigger = { has_country_flag = ENG_IRE_said_no_war }
+		trigger = { has_country_flag = ENG_IRE_business OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		ai_chance = { factor = 100 }
-		name = ire.76.b
+		name = ire.76.e
+		add_political_power = 25
+		increase_fic_success = yes
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+			113 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 	}
 }
 
@@ -3358,7 +3374,7 @@ country_event = {
 	title = ire.78.t
 	desc = {
 		text = ire.78.d
-		trigger = { has_country_flag = FRA_IRE_business }
+		trigger = { has_country_flag = FRA_IRE_business NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		}
 
 	desc = {
@@ -3370,6 +3386,11 @@ country_event = {
 		text = ire.78.d2
 		trigger = { has_country_flag = FRA_IRE_said_no_war }
 		}
+			
+	desc = {
+		text = ire.78.d3
+		trigger = { has_country_flag = FRA_IRE_business OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		}
 
 	picture = GFX_report_event_generic_sign_treaty2
 
@@ -3378,7 +3399,7 @@ country_event = {
 	fire_only_once = yes
 
 	option = {
-		trigger = { has_country_flag = FRA_IRE_business }
+		trigger = { has_country_flag = FRA_IRE_business NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		ai_chance = { factor = 70 }
 		name = ire.78.a
 		add_political_power = -25
@@ -3413,6 +3434,23 @@ country_event = {
 		trigger = { has_country_flag = FRA_IRE_said_no_war }
 		ai_chance = { factor = 100 }
 		name = ire.78.b
+	}
+	
+	option = {
+		trigger = { has_country_flag = FRA_IRE_business OR = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
+		ai_chance = { factor = 100 }
+		name = ire.78.e
+		add_political_power = 25
+		increase_fic_success = yes
+		add_popularity = { ideology = syndicalist popularity = 0.05 }
+			113 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 	}
 }
 
@@ -7615,6 +7653,7 @@ country_event = {
 
 	# Catholic
 	option = {
+	    trigger = { NOT = { has_government = radical_socialist has_government = syndicalist has_government = totalist } }
 		name = ire.129.b
 		ai_chance = { factor = 50 }
 		add_ideas = IRE_catholic
@@ -9452,7 +9491,7 @@ country_event = {
 
 	option = {
 		name = ire.219.a
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 30 }
 		set_country_flag = IRE_acs_economy_rwg
 		if = {
 			limit = {
@@ -9461,6 +9500,14 @@ country_event = {
 			modify_country_flag = { flag = IRE_acs_rwg value = 1 }
 			else = {
 				set_country_flag = { flag = IRE_acs_rwg value = 1 }
+			}
+		}
+		113 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction= {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
 			}
 		}
 		add_popularity = { ideology = totalist popularity = 0.05 }
@@ -9478,11 +9525,19 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_iwl value = 1 }
 			}
 		}
+		113 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}		
+			}
 		add_popularity = { ideology = syndicalist popularity = 0.05 }
 	}
 	option = {
 		name = ire.219.c
-		ai_chance = { factor = 30 }
+		ai_chance = { factor = 40 }
 		set_country_flag = IRE_acs_economy_se
 		if = {
 			limit = {
@@ -9493,6 +9548,20 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_se value = 1 }
 			}
 		}
+		134 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+	   135 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
 		add_popularity = { ideology = radical_socialist popularity = 0.05 }
 	}
 }
@@ -9527,6 +9596,9 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_rwg value = 1 }
 			}
 		}
+		add_political_power = 25
+		set_country_flag = ire_ulster_conflict
+		increase_unionist_tensions = yes
 		add_popularity = { ideology = totalist popularity = 0.05 }
 	}
 	option = {
@@ -9542,6 +9614,7 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_iwl value = 1 }
 			}
 		}
+		add_political_power = -25
 		add_popularity = { ideology = syndicalist popularity = 0.05 }
 	}
 	option = {
@@ -9557,6 +9630,10 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_se value = 1 }
 			}
 		}
+		add_ideas = IRE_GAELIC
+		add_political_power = -50
+		set_country_flag = ire_ulster_conflict
+		increase_unionist_tensions = yes
 		add_popularity = { ideology = radical_socialist popularity = 0.05 }
 	}
 }
@@ -9591,6 +9668,11 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_rwg value = 1 }
 			}
 		}
+		add_ideas = IRE_SECULAR
+		add_political_power = 50
+		set_country_flag = ire_ulster_conflict
+		increase_unionist_tensions = yes
+		increase_unionist_tensions = yes
 		add_popularity = { ideology = totalist popularity = 0.05 }
 	}
 	option = {
@@ -9606,6 +9688,7 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_iwl value = 1 }
 			}
 		}
+		add_ideas = IRE_SECULAR
 		add_popularity = { ideology = syndicalist popularity = 0.05 }
 	}
 	option = {
@@ -9621,6 +9704,7 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_se value = 1 }
 			}
 		}
+		add_political_power = 25
 		add_popularity = { ideology = radical_socialist popularity = 0.05 }
 	}
 }
@@ -9644,7 +9728,7 @@ country_event = {
 
 	option = {
 		name = ire.222.a
-		ai_chance = { factor = 25 }
+		ai_chance = { factor = 40 }
 		set_country_flag = IRE_acs_foreign_rwg
 		if = {
 			limit = {
@@ -9656,10 +9740,11 @@ country_event = {
 			}
 		}
 		add_popularity = { ideology = totalist popularity = 0.05 }
+		FRA = { add_opinion_modifier = { target = IRE modifier = IRE_befriend_FRA } }		
 	}
 	option = {
 		name = ire.222.b
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 25 }
 		set_country_flag = IRE_acs_foreign_iwl
 		if = {
 			limit = {
@@ -9671,6 +9756,7 @@ country_event = {
 			}
 		}
 		add_popularity = { ideology = syndicalist popularity = 0.05 }
+		ENG = { add_opinion_modifier = { target = IRE modifier = IRE_befriend_ENG } }		
 	}
 	option = {
 		name = ire.222.c
@@ -9685,7 +9771,10 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_se value = 1 }
 			}
 		}
+		add_political_power = -25
 		add_popularity = { ideology = radical_socialist popularity = 0.05 }
+		FRA = { add_opinion_modifier = { target = IRE modifier = IRE_befriend_FRA } }
+        ENG = { add_opinion_modifier = { target = IRE modifier = IRE_befriend_ENG } }				
 	}
 }
 
@@ -9719,6 +9808,12 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_rwg value = 1 }
 			}
 		}
+		add_tech_bonus = {
+		bonus = 0.5
+		uses = 1
+		category = dd_tech
+		category = cl_tech
+									}
 		add_popularity = { ideology = totalist popularity = 0.05 }
 		set_country_flag = IRE_congress_ends
 	}
@@ -9734,6 +9829,12 @@ country_event = {
 			else = {
 				set_country_flag = { flag = IRE_acs_iwl value = 1 }
 			}
+		}
+		add_tech_bonus = {
+				name = infantry_bonus
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
 		}
 		add_popularity = { ideology = syndicalist popularity = 0.05 }
 		set_country_flag = IRE_congress_ends
@@ -9751,6 +9852,15 @@ country_event = {
 				set_country_flag = { flag = IRE_acs_se value = 1 }
 			}
 		}
+		add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.5
+				uses = 1
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+			}
 		add_popularity = { ideology = radical_socialist popularity = 0.05 }
 		set_country_flag = IRE_congress_ends
 	}
@@ -9784,6 +9894,20 @@ country_event = {
 			ideology  = totalist_subtype
 			traits = { }
 		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			IRE_Jim_Gralton_hog_tot
+			IRE_Benjamin_Farrington_for_tot
+			IRE_Robert_N_Tweedy_eco_tot
+			IRE_James_Everett_sec_tot
+		}
+		set_politics = { ruling_party = totalist elections_allowed = no }
 	}
 }
 
@@ -9815,6 +9939,20 @@ country_event = {
 			ideology  = radical_socialist_subtype
 			traits = { }
 		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			IRE_Peadar_O'Donnell_hog_rso
+			IRE_Bill_Gannon_for_rso
+			IRE_Sighle_Humphreys_eco_rso
+			IRE_George_Gilmore_sec_rso
+		}
+		set_politics = { ruling_party = radical_socialist elections_allowed = no }
 	}
 }
 
@@ -9846,6 +9984,20 @@ country_event = {
 			ideology  = syndicalist_subtype
 			traits = { }
 		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			IRE_William_X_O'Brien_hog_syn
+			IRE_John_O'Leary_for_syn
+			IRE_Jim_Larkin_jr_eco_syn
+			IRE_Noel_Browne_sec_syn
+		}
+		set_politics = { ruling_party = syndicalist elections_allowed = no }
 	}
 }
 
@@ -9881,6 +10033,19 @@ country_event = {
 			ideology  = syndicalist_subtype
 			traits = { }
 		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			IRE_Peadar_O'Donnell_hog_rso
+			IRE_Bill_Gannon_for_rso
+			IRE_Robert_N_Tweedy_eco_tot
+			IRE_Noel_Browne_sec_syn
+		}
+		set_politics = { ruling_party = syndicalist elections_allowed = no }
 	}
 }
 

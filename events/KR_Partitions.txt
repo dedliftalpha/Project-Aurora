@@ -3856,11 +3856,12 @@ country_event = { #Germany defeats france
 	fire_only_once = yes
 	trigger = {
 		tag = GER
+		is_subject = no
 		controls_state = 16
+		OR = { FRA = { has_capitulated = yes }
+		FRA = { exists = no }
+		}
 		NOT = {
-			FRA = {
-				exists = yes
-			}
 			FRP = {
 				exists = yes
 			}
@@ -3875,15 +3876,10 @@ country_event = { #Germany defeats france
 		}
 	}
 	mean_time_to_happen = {
-		days = 15
+		days = 7
 	}
 
 	option = { #puppet france
-		trigger = {
-			NOT = {
-				is_in_faction_with = NFA
-			}
-		}
 		name = part.6.a
 		ai_chance = {
 			factor = 50
@@ -3895,7 +3891,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3908,11 +3903,10 @@ country_event = { #Germany defeats france
 			}
 
 		}
-		puppet = FRP
-		FRP = {
-			set_cosmetic_tag = FRP_GER
 		}
-		#events
+		puppet = FRP
+		FRP = { country_event = { id = part.79 } }
+		GER = { country_event = { id = part.71 } }
 	}
 
 	option = { #divide mainland
@@ -3932,9 +3926,6 @@ country_event = { #Germany defeats france
 			FRP = {
 				exists = no
 			}
-			NOT = {
-				is_in_faction_with = NFA
-			}
 		}
 		name = part.6.b
 		ai_chance = {
@@ -3947,7 +3938,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3960,6 +3950,7 @@ country_event = { #Germany defeats france
 			}
 
 		}
+		}
 		puppet = NRM
 		every_country = {
 			limit = {
@@ -3968,7 +3959,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -3981,6 +3971,7 @@ country_event = { #Germany defeats france
 			}
 
 		}
+		}
 		puppet = BRI
 		every_country = {
 			limit = {
@@ -3989,7 +3980,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -4002,32 +3992,9 @@ country_event = { #Germany defeats france
 			}
 
 		}
+		}
 		puppet = OCC
-		every_country = {
-			limit = {
-				OR = {
-					tag = GER
-					is_in_faction_with = GER
-				}
-			}
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = PREV
-
-				is_core_of = FRP
-
-			}
-			FRP = {
-				transfer_state = PREV
-			}
-
-		}
-		puppet = FRP
-		FRP = {
-			set_cosmetic_tag = FRP_GER
-		}
-		#events
+		GER = { country_event = { id = part.72 } }
 	}
 
 	option = { #Liberate Normandy, Bretagne and France.
@@ -4059,7 +4026,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -4072,6 +4038,7 @@ country_event = { #Germany defeats france
 			}
 
 		}
+		}
 		puppet = NRM
 		every_country = {
 			limit = {
@@ -4080,7 +4047,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -4093,6 +4059,7 @@ country_event = { #Germany defeats france
 			}
 
 		}
+		}
 		puppet = BRI
 		every_country = {
 			limit = {
@@ -4101,7 +4068,6 @@ country_event = { #Germany defeats france
 					is_in_faction_with = GER
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -4114,22 +4080,46 @@ country_event = { #Germany defeats france
 			}
 
 		}
-		puppet = FRP
-		FRP = {
-			set_cosmetic_tag = FRP_GER
 		}
-		#events
-
+		puppet = FRP
+		GER = { country_event = { id = part.72 } 
+		country_event = { id = part.73 } }
+        FRP = { country_event = { id = part.79 } }
 	}
 
-	#deal with nat france
+	option = { #National France can have that land, if they join us!
+		trigger = {
+			NFA = {
+				NOT = { is_in_faction_with = GER
+				is_subject_of = GER
+				has_war_with = GER
+				}
+				exists = yes
+			}
+			NOT = { country_exists = OCC 
+			has_global_flag = DEAL_WITH_NFA_ALLY }
+		}
+		name = part.6.g
+		ai_chance = {
+			factor = 5
+		}
+		if = { limit = { NFA = { OR = { is_in_faction_with = GBR is_in_faction_with = CAN } } }
+		NFA = { country_event = { id = part.82 days = 2 } }
+		}
+		if = { limit = { NFA = { NOT = { is_in_faction_with = GBR is_in_faction_with = CAN } } }
+		NFA = { country_event = { id = part.81 days = 2 } }
+		}
+		set_global_flag = DEAL_WITH_NFA_ALLY
+	}
 
 	option = { #give nat france
 		trigger = {
 			NFA = {
-				is_in_faction_with = GER
+				OR = { is_in_faction_with = GER is_subject_of = GER }
 				exists = yes
 			}
+			NOT = {
+			has_global_flag = DEAL_WITH_NFA_ALLY }
 		}
 		name = part.6.e
 		ai_chance = {
@@ -4147,6 +4137,901 @@ country_event = { #Germany defeats france
 			factor = 0
 		}
 		add_political_power = -400
+	}
+}
+
+country_event = { #Giving it to natfrance
+	id = part.8
+	title = part.8.t
+	desc = part.8.d
+	is_triggered_only = yes
+
+	option = {
+		name = part.8.a
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRA
+				
+				NOT = { is_core_of = GER }
+
+			}
+			NFA = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		add_political_power = -20
+	}
+
+}
+
+country_event = { #A loyal government in Paris
+	id = part.71
+	title = part.71.t
+	desc = part.71.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.71.a
+		add_to_faction = FRP
+		FRP = { country_event = { id = part.77 } }
+	}
+
+}
+
+country_event = { #Loyal governments in the new French states
+	id = part.72
+	title = part.72.t
+	desc = part.72.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.72.a
+		add_to_faction = NRM
+		add_to_faction = BRI
+		add_to_faction = OCC
+		NRM = { country_event = { id = part.89 } }
+		BRI = { country_event = { id = part.88 } }
+		OCC = { country_event = { id = part.90 } }
+		GER = { country_event = { id = part.75 days = 2 } }
+	}
+
+}
+
+country_event = { #Loyal governments in the new French states
+	id = part.73
+	title = part.73.t
+	desc = part.73.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.73.a
+		add_to_faction = NRM
+		add_to_faction = BRI
+		NRM = { country_event = { id = part.89 } }
+		BRI = { country_event = { id = part.88 } }
+	}
+
+}
+
+country_event = { #A loyal government in Paris
+	id = part.74
+	title = part.74.t
+	desc = part.74.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.74.a
+		add_to_faction =  FRP
+		FRP = { country_event = { id = part.78 } }
+	}
+
+}
+
+country_event = { #A loyal puppet in Paris?
+	id = part.75
+	title = part.75.t
+	desc = part.75.d
+	is_triggered_only = yes
+
+	option = { #Set up a friendly French Government.
+		name = part.75.a
+		ai_chance = {
+			factor = 80
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+					NOT = { tag = BRI tag = OCC tag = NRM }
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRP
+
+			}
+			FRP = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		puppet = FRP
+		GER = { country_event = { id = part.76 } }
+		FRP = { country_event = { id = part.79 } }
+	}
+	
+	option = { #Further divide the French lands between the new countries!
+		name = part.75.b
+		ai_chance = {
+			factor = 10
+		}
+		BRI = { transfer_state = 30
+		transfer_state = 23 }
+		NRM = { transfer_state = 24
+		transfer_state = 29
+        transfer_state = 16
+        transfer_state = 785
+        transfer_state = 18		
+		}
+		OCC = { transfer_state = 33
+		transfer_state = 20
+        transfer_state = 27
+        transfer_state = 17	
+		}
+	}
+	
+	option = { #Total conquest is preferable.
+		name = part.75.c
+		ai_chance = {
+			factor = 10
+		}
+		
+	}
+
+}
+
+country_event = { #A loyal government in Paris
+	id = part.76
+	title = part.76.t
+	desc = part.76.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.76.a
+		add_to_faction =  FRP
+		FRP = { country_event = { id = part.80 } }
+	}
+
+}
+
+country_event = { #France renounces her claims
+	id = part.77
+	title = part.77.t
+	desc = part.77.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.77.a
+		GER = { country_event = { id = part.85 } }
+	}
+
+}
+
+country_event = { #France renounces her claims
+	id = part.78
+	title = part.78.t
+	desc = part.78.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.78.a
+		add_political_power = -200
+		remove_state_core = 14
+		remove_state_core = 15
+		set_country_flag = Marcel_Cachin_dead
+		set_country_flag = Rene_Pleven_dead
+		set_country_flag = Pierre_Henri_Teitgen_dead
+		set_country_flag = Marie_Pierre_Koenig_dead
+		set_country_flag = Guy_Mollet_dead
+		set_country_flag = Andre_Marie_dead
+		set_country_flag = Robert_Lecourt_dead
+		set_country_flag = Philippe_Leclerc_de_Hauteclocque_dead
+		GER = { country_event = { id = part.85 } }
+	}
+
+}
+
+country_event = { #Forces armees francaises
+	id = part.79
+	title = part.79.t
+	desc = part.79.d
+	is_triggered_only = yes
+
+	option = { #Form Up the Troops!
+		name = part.79.a
+		load_oob = FRP_independent_GER
+	}
+
+}
+
+country_event = { #France renounces her claims
+	id = part.80
+	title = part.80.t
+	desc = part.80.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.80.a
+		add_political_power = -200
+		remove_state_core = 14
+		remove_state_core = 15
+		remove_state_core = 19
+		remove_state_core = 31
+		remove_state_core = 25
+		remove_state_core = 26
+		remove_state_core = 22
+		remove_state_core = 817
+		remove_state_core = 32
+		remove_state_core = 21
+		remove_state_core = 763
+		set_country_flag = Marcel_Cachin_dead
+		set_country_flag = Rene_Pleven_dead
+		set_country_flag = Pierre_Henri_Teitgen_dead
+		set_country_flag = Marie_Pierre_Koenig_dead
+		set_country_flag = Guy_Mollet_dead
+		set_country_flag = Andre_Marie_dead
+		set_country_flag = Robert_Lecourt_dead
+		set_country_flag = Philippe_Leclerc_de_Hauteclocque_dead
+		set_country_flag = Jea_Marie_Lattre_de_Tassigny_dead
+		set_country_flag = Martial_Valin_dead
+		set_country_flag = Jacques_Brunschwig_Bordier_dead
+		set_country_flag = Louis_Armand_dead
+		GER = { country_event = { id = part.85 } }
+	}
+
+}
+
+country_event = { #An alliance with Germany in exchange for our land
+	id = part.81
+	title = part.81.t
+	desc = part.81.d
+	is_triggered_only = yes
+
+	option = { #A great deal!
+		name = part.81.a
+		ai_chance = {
+			factor = 90
+		}
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = NFA }
+		remove_from_faction = NFA }
+		GER = { country_event = { id = part.83 } }
+	}
+	
+	option = { #We will never accept your proposal!
+		name = part.81.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -200
+		reverse_add_opinion_modifier = {
+			target = GER modifier = NFA_refused_deal_GER2
+		}
+		reverse_add_opinion_modifier = {
+			target = CAN modifier = NFA_refused_deal_GER1
+		}
+		GER = { country_event = { id = part.6 } }
+	}
+
+}
+
+country_event = { #An alliance with Germany in exchange for our land
+	id = part.82
+	title = part.82.t
+	desc = part.82.d
+	is_triggered_only = yes
+
+	option = { #A great deal!
+		name = part.82.a
+		ai_chance = {
+			factor = 40
+		}
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = NFA }
+		remove_from_faction = NFA }
+		GER = { country_event = { id = part.83 } }
+		reverse_add_opinion_modifier = {
+			target = CAN modifier = NFA_accepted_deal_GER
+		}
+	}
+	
+	option = { #We will never accept your proposal!
+		name = part.82.b
+		ai_chance = {
+			factor = 60
+		}
+		add_political_power = -200
+		reverse_add_opinion_modifier = {
+			target = GER modifier = NFA_refused_deal_GER2
+		}
+		reverse_add_opinion_modifier = {
+			target = CAN modifier = NFA_refused_deal_GER1
+		}
+		GER = { country_event = { id = part.6 } }
+	}
+
+}
+
+country_event = { #Honour the deal
+	id = part.83
+	title = part.83.t
+	desc = part.83.d
+	is_triggered_only = yes
+
+	option = { #Welcome to Mittel-Europa!
+		name = part.83.a
+		ai_chance = {
+			factor = 40
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRA
+				
+				NOT = { is_core_of = GER }
+
+			}
+			NFA = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		add_political_power = -40
+		NFA = { country_event = { id = part.84 } }
+		
+	}
+
+}
+
+country_event = { #Honour the deal
+	id = part.84
+	title = part.84.t
+	desc = part.84.d
+	is_triggered_only = yes
+
+	option = { #It's a good deal.
+		name = part.84.a
+		ai_chance = {
+			factor = 40
+		}
+		GER = { add_to_faction = NFA }
+	}
+
+}
+
+country_event = { #Choosing the new French Head of State
+	id = part.85
+	title = part.85.t
+	desc = part.85.d
+	is_triggered_only = yes
+
+	option = { #George of Hannover will be François III!
+		name = part.85.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 20
+		reverse_add_opinion_modifier = {
+			target = FRP modifier = chose_our_hos
+		}
+		FRP = { country_event = { id = part.86 } }
+	}
+	
+	option = { #Let the French decide, as long as they stay loyal.
+		name = part.85.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = FRP modifier = let_us_choose_our_hos
+		}
+		FRP = { country_event = { id = part.87 } }
+	}
+
+}
+
+country_event = { #A New King
+	id = part.86
+	title = part.86.t
+	desc = part.86.d
+	is_triggered_only = yes
+
+	option = { #Long live François III!
+		name = part.86.a
+		ai_chance = {
+			factor = 90
+		}
+		set_cosmetic_tag = FRP_GER
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.K.M. François III"
+			desc = "FRP_FRANCOIS_III_DESC"
+			picture = "Portrait_France_Francois_III.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = -100
+		if = { limit = { country_exists = NFA }
+		set_country_flag = Jean_Marie_Lattre_de_Tassigny_dead
+		set_country_flag = Edouard_Herriot_dead
+		set_country_flag = George_Bidault_dead
+		set_country_flag = Robert_Schumann_dead
+		set_country_flag = Rene_Pleven_dead
+		}
+	}
+}
+
+country_event = { #Germany lets us choose our new President
+	id = part.87
+	title = part.87.t
+	desc = part.87.d
+	is_triggered_only = yes
+
+	option = { #Albert Lebrun will guide our nation!
+		name = part.87.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Albert Lebrun"
+			desc = "FRP_ALBERT_LEBRUN_DESC"
+			picture = "Portrait_France_Albert_Lebrun.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = 40
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = FRP_Pierre_Laval_hog_sco
+		add_ideas = FRP_Pierre_Laval_for_sco
+		add_ideas = FRP_Jean_Fabry_eco_sco
+		add_ideas = FRP_Joseph_Paganon_sec_sco
+		if = { limit = { country_exists = NFA }
+		set_country_flag = Jean_Marie_Lattre_de_Tassigny_dead
+		set_country_flag = Edouard_Herriot_dead
+		set_country_flag = George_Bidault_dead
+		set_country_flag = Robert_Schumann_dead
+		set_country_flag = Rene_Pleven_dead
+		}
+	}
+}
+
+country_event = { #A new government BRI
+	id = part.88
+	title = part.88.t
+	desc = part.88.d
+	is_triggered_only = yes
+
+	option = { #A new beginning.
+		name = part.88.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis, Prince of Hesse"
+			desc = "BRI_LOUIS_HESSE_DESC"
+			picture = "Portrait_Britanny_Louis_Hesse.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = BRI_Francois_Taldir_Jaffrennou_hog_ade
+		add_ideas = BRI_Morvan_Lebesque_for_ade
+		add_ideas = BRI_Camille_Le_Mercier_dErm_eco_ade
+		add_ideas = BRI_Loeiz_Andouard_sec_pau
+		load_oob = BRI_independent_GER
+	}
+}
+
+country_event = { #A new government NRM
+	id = part.89
+	title = part.89.t
+	desc = part.89.d
+	is_triggered_only = yes
+
+	option = { #A new beginning.
+		name = part.89.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Franz Maria von Bayern"
+			desc = "NRM_FRANZ_BAYERN_DESC"
+			picture = "Portrait_Normandy_Franz_Bayern.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = NRM_Philippe_Auboyneau_hog_ade
+		add_ideas = NRM_Andre_Bettencourt_for_ade
+		add_ideas = NRM_Marie_Pierre_Koenig_eco_sco
+		add_ideas = NRM_Andre_Bettencourt_sec_ade
+		load_oob = NRM_independent_GER
+	}
+}
+
+country_event = { #A new government OCC
+	id = part.90
+	title = part.90.t
+	desc = part.90.d
+	is_triggered_only = yes
+
+	option = { #A new beginning.
+		name = part.90.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Louis de Grimaldi"
+			desc = "OCC_LOUIS_GRIMALDI_DESC"
+			picture = "Portrait_Occitany_Louis_Grimaldi.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = OCC_Pierre_de_Polignac_hog_ade
+		add_ideas = OCC_Charlotte_Grimaldi_for_mli
+		add_ideas = OCC_Irenee_Cros_eco_sco
+		add_ideas = OCC_Jacques_Baumel_sec_sco
+		load_oob = OCC_independent_GER
 	}
 }
 
@@ -4440,33 +5325,6 @@ country_event = { #Russia defeats france
 		}
 		add_political_power = -400
 	}
-}
-
-country_event = { #Giving it to natfrance
-	id = part.8
-	title = part.8.t
-	desc = part.8.d
-	is_triggered_only = yes
-
-	option = {
-		name = part.8.a
-		every_country = {
-			limit = {
-				is_in_faction_with = GER
-			}
-		}
-		every_state = {
-			limit = {
-				is_core_of = NFA
-				is_controlled_by = PREV
-			}
-		}
-		NFA = {
-			transfer_state = PREV
-		}
-		add_political_power = -20
-	}
-
 }
 
 #british partition russian

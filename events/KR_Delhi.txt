@@ -4154,3 +4154,322 @@ country_event = {
 	}
 }
 
+### UNION WITH BHARATIYA COMMUNE EVENTS
+
+# Election on the union
+country_event = {
+	id = delhi.325
+	title = delhi.325.t
+	desc = delhi.325.d
+	picture = GFX_report_event_BHC_crowd
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = PRF }
+	}
+	
+	option = {
+		name = delhi.325.a
+		random_list = {
+			15 = {
+				custom_effect_tooltip = DEH_unionist_wins
+				hidden_effect = {
+					set_country_flag = DEH_unionist_win
+					country_event = { id = delhi.326 days = 3 }
+				}
+			}
+			35 = {
+				custom_effect_tooltip = DEH_socialist_wins
+				hidden_effect = {
+					set_country_flag = DEH_socialist_win
+					country_event = { id = delhi.326 days = 3 }
+				}
+			}
+			50 = {
+				custom_effect_tooltip = DEH_jinnah_wins
+				hidden_effect = {
+					set_country_flag = DEH_jinnah_win
+					country_event = { id = delhi.327 days = 3 }
+				}
+			}
+		}
+	}
+}
+
+# The election platform is approved
+country_event = {
+	id = delhi.326
+	title = delhi.325.t
+	picture = GFX_report_event_BHC_crowd
+	
+	desc = {
+		text = delhi.326.d.unionist
+		trigger = { has_country_flag = DEH_unionist_win }
+	}
+	desc = {
+		text = delhi.326.d.socialist
+		trigger = { has_country_flag = DEH_socialist_win }
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.326.a
+		add_national_unity = 0.10
+		if = {
+			limit = { has_country_flag = DEH_unionist_win }
+			clr_country_flag = DEH_unionist_win
+			add_political_power = 100
+			DEH_election_unionist = yes
+			remove_all_ministers = yes
+			add_ideas = {
+				DEH_Sir_Chhotu_Ram_hog_sco
+				DEH_Malik_Khizar_Hayat_Tiwana_for_sco
+				DEH_Ghazanfar_Ali_Khan_sec_sco
+				DEH_Sir_C_D_Deshmukh_eco_sco
+			}
+		}
+		if = {
+			limit = { has_country_flag = DEH_socialist_win }
+			DEH_election_socialist = yes
+			remove_all_ministers = yes
+			add_ideas = {
+				#DEH_Panjabrao_Deshmukh_hog_rso
+				DEH_Mahadev_Desai_for_rso
+				DEH_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+				DEH_Rajkumari_Amrit_Kaur_sec_rso
+			}
+		}
+	}
+}
+
+# The election platform fails
+country_event = {
+	id = delhi.327
+	title = delhi.327.t
+	desc = delhi.327.d
+	picture = GFX_report_event_BHC_crowd
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.327.a
+		add_political_power = -200
+		remove_all_ministers = yes
+		DEH_election_jinnah = yes
+		if = {
+			limit = { has_country_flag = Muhammad_Ali_Jinnah_dead }
+			add_ideas = { DEH_V_K_Krishna_Menon_hog_sde }
+			else = { add_ideas = { DEH_Muhammad_Ali_Jinnah_hog_sde } }
+		}
+		add_ideas = {
+			DEH_Huseyn_Shaheed_Suhrawardy_for_sde
+			DEH_K_P_Kesava_Menon_sec_sde
+			DEH_Ghanshyam_Das_Birla_eco_sde
+		}
+		set_country_flag = {
+			flag = BHC_core_speed
+			value = -2
+		}
+	}
+}
+
+# Gujarat and Kashmir threaten to secede
+country_event = {
+	id = delhi.328
+	title = delhi.328.t
+	desc = delhi.328.d
+	picture = GFX_report_event_PRF_princes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DEH
+		is_subject = no
+		has_war = no
+		has_country_flag = DEH_united_BHC
+		owns_state = 428 #Gujarat
+		owns_state = 441 #Kashmir
+		PRF = {
+			owns_state = 429 #Bombay
+			has_war = no
+			is_subject = no
+		}
+		OR = {
+			has_country_flag = DEH_socialist_win
+			has_country_flag = DEH_jinnah_win
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+		modifier = {
+			factor = 3
+			has_country_flag = DEH_socialist_win
+		}
+	}
+	
+	option = {
+		name = delhi.328.a #It would be better to let them go, for now
+		ai_chance = {
+			factor = 60
+		}
+		add_political_power = -200
+		add_national_unity = 0.05
+		PRF = {
+			transfer_state = 428
+			transfer_state = 441
+			country_event = { id = delhi.329 }
+		}
+	}
+	option = {
+		name = delhi.328.b #Absolutely not!
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0.5
+				has_country_flag = DEH_socialist_win
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = DEH_jinnah_win
+			}
+		}
+		add_political_power = -400
+		PRF = { country_event = { id = delhi.330 days = 3 } }
+	}
+}
+
+# Gujarat and Kashmir secede to the Princely Federation
+country_event = {
+	id = delhi.329
+	title = delhi.329.t
+	desc = delhi.329.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = delhi.329.a
+		add_political_power = 100
+		428 = {
+			remove_core_of = DEH
+			add_claim_by = DEH
+			add_core_of = PRF
+		}
+		441 = {
+			remove_core_of = DEH
+			add_claim_by = DEH
+			add_core_of = PRF
+		}
+		load_oob = PRF_KASHMIR
+		load_oob = PRF_BARODA
+	}
+}
+
+# Princely Federation receives a call for help
+country_event = {
+	id = delhi.330
+	title = delhi.330.t
+	desc = delhi.330.d
+	picture = GFX_report_event_PRF_princes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_war = no
+	}
+
+	option = {
+		name = delhi.330.a #Rush to the aid of the princes!
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = DEH ratio < 1.0 }
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = DEH ratio < 0.5 }
+			}
+		}
+		add_political_power = 100
+		declare_war_on = {
+			target = DEH
+			type = annex_everything
+		}
+		set_state_controller = 441 #Kashmir
+		load_oob = PRF_KASHMIR
+		set_state_controller = 428 #Gujarat
+		load_oob = PRF_BARODA		
+		428 = {
+			remove_core_of = DEH
+			add_claim_by = DEH
+			add_core_of = PRF
+		}
+		441 = {
+			remove_core_of = DEH
+			add_claim_by = DEH
+			add_core_of = PRF
+		}
+	}
+	option = {
+		name = delhi.330.b #They are on their own - sorry
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = DEH ratio > 1.5 }
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = DEH ratio > 2.0 }
+			}
+		}
+		add_political_power = -200
+	}
+}
+
+# Nehru replaces Bose
+country_event = {
+	id = delhi.331
+	title = delhi.331.t
+	desc = delhi.331.d
+	picture = GFX_report_event_BHC_nehru
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DEH
+		has_country_flag = DEH_united_BHC
+		has_country_flag = Mohandas_Karamchand_Gandhi_dead
+		NOT = { has_country_flag = Nirmal_Kumar_Bose_dead }
+	}
+	
+	mean_time_to_happen = {
+		days = 120
+	}
+	
+	option = {
+		name = delhi.331.a
+		add_popularity = { ideology = radical_socialist popularity = -0.05 }
+		if = {
+			limit = { has_country_leader = { name = "Nirmal Kumar Bose" } }
+			add_political_power = -100
+			create_country_leader = {
+				name = "Jawaharlal Nehru"
+				picture = "Portrait_BHC_Jawaharlal_Nehru.tga"
+				expire = "1965.1.1"
+				ideology = radical_socialist_subtype
+				traits = {}
+			}
+		}
+		if = {
+			limit = { has_idea = DEH_Nirmal_Kumar_Bose_hog_rso }
+			add_ideas = DEH_Jawaharlal_Nehru_hog_rso
+		}
+		set_country_flag = Nirmal_Kumar_Bose_dead
+	}
+}
+

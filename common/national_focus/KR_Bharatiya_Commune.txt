@@ -724,9 +724,10 @@ focus_tree = {
 		mutually_exclusive = { focus = BHC_home_guard }
 		available = {
 			always = no
-			has_government = radical_socialist
+			has_country_leader = { name = "Mohandas Karamchand Gandhi" }
 			is_subject = no
 			has_war = no
+			country_exists = DEH
 			DEH = {
 				has_war = no
 				is_subject = no
@@ -743,7 +744,7 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
-			## TODO: add event
+			DEH = { country_event = { id = bengal.70 } }
 		}
 	}
 	
@@ -754,9 +755,13 @@ focus_tree = {
 		prerequisite = { focus = BHC_approach_enemy }
 		available = {
 			always = no
-			has_government = radical_socialist
+			has_country_leader = { name = "Mohandas Karamchand Gandhi" }
 			is_subject = no
 			has_war = no
+			custom_trigger_tooltip = {
+				tooltip = BHC_summit_agreed
+				has_country_flag = DEH_lucknow_agreed
+			}
 			DEH = {
 				has_war = no
 				is_subject = no
@@ -770,10 +775,24 @@ focus_tree = {
 			factor = 5
 		}
 		
+		bypass = {
+			OR = {
+				NOT = { country_exists = DEH }
+				has_war_with = DEH
+				DEH = { NOT = { has_government = social_democrat } }
+				NOT = { has_country_leader = { name = "Mohandas Karamchand Gandhi" } }
+				custom_trigger_tooltip = {
+					tooltip = BHC_summit_refused
+					has_country_flag = DEH_lucknow_denied
+				}
+			}
+		}
+		
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			## TODO: add event
+			country_event = { id = bengal.76 }
+			DEH = { country_event = { id = bengal.76 } }
 		}
 	}
 

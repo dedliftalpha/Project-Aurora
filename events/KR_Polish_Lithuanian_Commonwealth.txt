@@ -517,6 +517,7 @@ country_event = { # The Capital
 		ai_chance = { factor = 30 }
 
 		set_capital = 92
+		set_country_flag = cap_92
 	}
 
 	option = {
@@ -525,6 +526,7 @@ country_event = { # The Capital
 		ai_chance = { factor = 40 }
 
 		set_capital = 189
+		set_country_flag = cap_189
 	}
 
 	option = {
@@ -533,6 +535,7 @@ country_event = { # The Capital
 		ai_chance = { factor = 30 }
 
 		set_capital = 97
+		set_country_flag = cap_97
 	}
 }
 
@@ -2261,51 +2264,53 @@ country_event = { # Status of Galicia
 	picture = GFX_report_event_spain_civil_war_soldiers
 
 	fire_only_once = yes
+	
+	is_triggered_only = yes
 
-	trigger = {
-		tag = PLC
-		date > 1938.1.1
-		has_war = no
-		NOT = {
-			has_government = totalist
-			has_government = syndicalist
-			has_government = radical_socialist
-		}
-		OR = {
-			AND = {
-				GAL = {
-					controls_state = 88
-					controls_state = 91
-					is_subject_of = AUS
-				}
-			}
-			AND = {
-				AUS = {
-					controls_state = 88
-					controls_state = 91
-					NOT = { country_exists = GAL }
-				}
-			}
-			AND = {
-				AHE = {
-					controls_state = 88
-					controls_state = 91
-					NOT = { country_exists = GAL }
-				}
-			}
-			AND = {
-				DNF = {
-					controls_state = 88
-					controls_state = 91
-					NOT = { country_exists = GAL }
-				}
-			}
-		}
-	}
+#	trigger = {
+#		tag = PLC
+#		date > 1938.1.1
+#		has_war = no
+#		NOT = {
+#			has_government = totalist
+#			has_government = syndicalist
+#			has_government = radical_socialist
+#		}
+#		OR = {
+#			AND = {
+#				GAL = {
+#					controls_state = 88
+#					controls_state = 91
+#					is_subject_of = AUS
+#				}
+#			}
+#			AND = {
+#				AUS = {
+#					controls_state = 88
+#					controls_state = 91
+#					NOT = { country_exists = GAL }
+#				}
+#			}
+#			AND = {
+#				AHE = {
+#					controls_state = 88
+#					controls_state = 91
+#					NOT = { country_exists = GAL }
+#				}
+#			}
+#			AND = {
+#				DNF = {
+#					controls_state = 88
+#					controls_state = 91
+#					NOT = { country_exists = GAL }
+#				}
+#			}
+#		}
+#	}
 
-	mean_time_to_happen = {
-		days = 60
-	}
+#	mean_time_to_happen = {
+#		days = 60
+#	}
 
 	option = {
 		name = plcommon.19.a
@@ -4311,5 +4316,274 @@ country_event = { # Join France - Nope
 		name = plcommon.56.a
 		FRA = {add_opinion_modifier = { target = PLC modifier = POL_ANNEX_GAL }} # -50
 		add_political_power = -25
+	}	
+}
+
+country_event = { # Constitution - Focus Based
+	id = plcommon.57
+	title = plcommon.57.t
+	desc = plcommon.57.d
+	picture = GFX_POL_sejm
+
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.57.a
+
+		ai_chance = { factor = 25 }
+
+		add_tech_bonus = {
+				name = PLC_a_combined_constitution
+				bonus = 0.5
+				uses = 1
+				category = construction_tech
+		}
+	}
+
+	option = {
+		name = plcommon.57.c
+
+		ai_chance = { factor = 25 }
+
+		add_tech_bonus = {
+				name = PLC_a_combined_constitution
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+		}
+	}
+
+	option = {
+		name = plcommon.57.e
+
+		ai_chance = { factor = 25 }
+
+		add_political_power = 100
+	}
+
+	option = {
+		name = plcommon.57.f
+
+		ai_chance = { factor = 25 }
+
+		add_national_unity = 0.10
+	}
+}
+
+country_event = { # German Agreement - Response
+	id = plcommon.58
+	title = plcommon.58.t
+	desc = plcommon.58.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.58.a
+		ai_chance = { factor = 40 }
+		PLC = { country_event = { days = 2 id = plcommon.59 }}
+	}
+	
+	option = {
+		name = plcommon.58.a
+		ai_chance = { factor = 60 }
+		PLC = { country_event = { days = 2 id = plcommon.60 }}
+	}
+}
+
+country_event = { # German Agreement - Sure
+	id = plcommon.59
+	title = plcommon.59.t
+	desc = plcommon.59.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.59.a
+		GER = {PLC = { transfer_state = 98 }}
+	}	
+}
+
+country_event = { # German Agreement - Nope
+	id = plcommon.60
+	title = plcommon.60.t
+	desc = plcommon.60.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.60.a
+		GER = {add_opinion_modifier = { target = PLC modifier = POL_ANNEX_GAL }} # -50
+		add_political_power = -25
+	}	
+}
+
+country_event = { # Ruthenian Referendum - Starter
+	id = plcommon.61
+	title = plcommon.61.t
+	desc = plcommon.61.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.61.a
+		WHR = { country_event = { days = 2 id = plcommon.62 }}
+	}
+}
+
+country_event = { # Ruthenian Referendum - Response
+	id = plcommon.62
+	title = plcommon.62.t
+	desc = plcommon.62.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.62.a
+		ai_chance = { factor = 40 }
+		PLC = { country_event = { days = 2 id = plcommon.63 }}
+	}
+	
+	option = {
+		name = plcommon.62.b
+		ai_chance = { factor = 60 }
+		PLC = { country_event = { days = 2 id = plcommon.64 }}
+	}
+}
+
+country_event = { # Ruthenian Referendum - Sure
+	id = plcommon.63
+	title = plcommon.63.t
+	desc = plcommon.63.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.63.a
+		WHR = { country_event = { days = 30 id = plcommon.65 }}
+	}	
+}
+
+country_event = { # Ruthenian Referendum - Nope
+	id = plcommon.64
+	title = plcommon.64.t
+	desc = plcommon.64.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.64.a
+		GER = {add_opinion_modifier = { target = PLC modifier = POL_ANNEX_GAL }} # -50
+		add_political_power = -25
+	}	
+}
+
+country_event = { # Ruthenian Referendum - Begins
+	id = plcommon.65
+	title = plcommon.65.t
+	desc = plcommon.65.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.65.a
+		ai_chance = { factor = 90 }
+		random_country = {
+			limit = {
+				is_ai = yes
+			}
+			hidden_effect = {
+				country_event = { days = 2 id = plcommon.66 }
+			}
+		}
+		add_political_power = 25
+	}
+
+	option = {
+		name = plcommon.65.b
+		ai_chance = { factor = 10 }
+		PLC = { country_event = { days = 2 id = plcommon.68 }}
+		add_political_power = -250
+	}	
+}
+
+country_event = { # Ruthenian Referendum - AI CONTROLLED
+	id = plcommon.66
+	title = plcommon.66.t
+	desc = plcommon.66.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.66.a
+		ai_chance = { factor = 50 }
+		PLC = { country_event = { days = 2 id = plcommon.67 }}
+	}
+	
+	option = {
+		name = plcommon.66.a
+		ai_chance = { factor = 50 }
+		PLC = { country_event = { days = 2 id = plcommon.68 }}
+	}	
+}
+
+country_event = { # Ruthenian Referendum - Success!
+	id = plcommon.67
+	title = plcommon.67.t
+	desc = plcommon.67.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.67.a
+		WHR = {add_opinion_modifier = { target = PLC modifier = POL_ANNEX_GAL }} # -50
+		WHR = {PLC = { transfer_state = 94 }}
+		WHR = {PLC = { transfer_state = 95 }}
+	}	
+}
+
+country_event = { # Ruthenian Referendum - Fail!
+	id = plcommon.68
+	title = plcommon.68.t
+	desc = plcommon.68.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.68.a
+		WHR = {add_opinion_modifier = { target = PLC modifier = POL_ANNEX_GAL }} # -50
+		add_political_power = -50
 	}	
 }

@@ -730,74 +730,6 @@ country_event = {
 	}
 }
 
-# Princely Federation in a civil war - do we invade?
-country_event = {
-	id = delhi.20
-	title = delhi.20.t
-	desc = delhi.20.d
-	picture = GFX_report_event_PRF_war
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = DEH
-		has_war = no
-		is_subject = no
-		PRF = {
-			has_war_with = MYS
-			OR = {
-				surrender_progress > 0.2
-				is_ai = yes
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		name = delhi.20.a #This is our time, strike against the mad Nizam!
-		ai_chance = {
-			factor = 80
-			modifier = {
-				factor = 0.5
-				strength_ratio = { tag = PRF ratio < 1.0 }
-			}
-		}
-		add_political_power = 200
-		declare_war_on = {
-			target = PRF
-			type = annex_everything
-		}
-		add_named_threat = { threat = 2 name = DEH_PRF_war }
-	}
-	option = {
-		name = delhi.20.b #This is no business of ours...
-		ai_chance = {
-			factor = 20
-			modifier = {
-				factor = 2
-				PRF = { NOT = { has_war_with = MAD } }
-			}
-			modifier = {
-				factor = 0.5
-				PRF = { has_war_with = MAD }
-			}
-			modifier = {
-				factor = 0.5
-				PRF = { has_war_with = BHC }
-			}
-			modifier = {
-				factor = 0.5
-				strength_ratio = { tag = PRF ratio > 2.0 }
-			}
-		}
-		add_political_power = -100
-		add_named_threat = { threat = -1 name = DEH_PRF_war_declined }
-	}
-}
-
 # The Burmese Question
 country_event = {
 	id = delhi.21
@@ -906,6 +838,148 @@ country_event = {
 	}
 }
 
+# Princely Federation in a civil war - do we take Bombay?
+country_event = {
+	id = delhi.22
+	title = delhi.22.t
+	desc = delhi.22.d
+	picture = GFX_report_event_PRF_war
+	
+	fire_only_once = yes	
+
+	trigger = {
+		tag = DEH
+		has_war = no
+		is_subject = no
+		owns_state = 428 #Gujarat
+		PRF = {
+			owns_state = 429 #Bombay
+			controls_state = 429
+			has_war_with = MYS
+			surrender_progress > 0.05
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+		modifier = {
+			factor = 0.2
+			PRF = { has_war_with = BHC }
+		}
+	}
+	
+	option = {
+		name = delhi.22.a #Send forces in to occupy Bombay
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = PRF ratio < 1.0 }
+			}
+		}
+		add_political_power = 100
+		reverse_add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+		PRF = { country_event = { id = delhi.23 hours = 5 } }
+	}
+	option = {
+		name = delhi.22.b #No, this is no business of ours
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				PRF = { NOT = { has_war_with = MAD } }
+			}
+			modifier = {
+				factor = 0.5
+				PRF = { has_war_with = BHC }
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = PRF ratio > 2.0 }
+			}
+		}
+	}
+}
+
+# Delhi moves in forces to occupy Bombay
+country_event = {
+	id = delhi.23
+	title = delhi.23.t
+	desc = delhi.23.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = DEH }
+		owns_state = 429
+		controls_state = 429
+	}
+	
+	option = {
+		name = delhi.23.a #We have no choice but to let them have it
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_war_with = BHC
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { owns_state = 893 } #Nagpur
+			}
+			modifier = {
+				factor = 2
+				strength_ratio = { tag = DEH ratio < 2.0 }
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = DEH ratio < 3.0 }
+			}
+		}
+		political_power = -100
+		DEH = {
+			transfer_state = 429
+			country_event = { id = delhi.24 hours = 5 }
+		}
+	}
+	option = {
+		name = delhi.23.b #We must fight for our territorial integrity!
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				has_war_with = BHC
+			}
+		}
+		political_power = 100
+		DEH = {
+			declare_war_on = {
+				target = PRF
+				type = annex_everything
+			}
+			add_named_threat = { threat = 2 name = DEH_PRF_war }
+		}
+	}
+}
+
+# Delhi has seized Bombay
+country_event = {
+	id = delhi.24
+	title = delhi.24.t
+	desc = delhi.24.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = { owns_state = 429 }
+	
+	option = {
+		name = delhi.24.a
+		add_state_core = 429
+	}
+}
+
 # Reforming the Princely Armies (fired by focus)
 country_event = {
 	id = delhi.100
@@ -939,6 +1013,7 @@ country_event = {
 		add_political_power = 25
 	}
 }
+
 
 ##############
 # Siam Events

@@ -1490,59 +1490,56 @@ country_event = {
 	}
 }
 
-# Princely Federation in a civil war - do we invade?
+# Princely Federation in a civil war - do we take Nagpur?
 country_event = {
 	id = beng.60
 	title = beng.60.t
 	desc = beng.60.d
 	picture = GFX_report_event_PRF_war
 	
-	fire_only_once = yes
-	
+	fire_only_once = yes	
+
 	trigger = {
 		tag = BHC
 		has_war = no
 		is_subject = no
+		owns_state = 436 #Raipur
 		PRF = {
+			owns_state = 893 #Nagpur
+			controls_state = 893
 			has_war_with = MYS
-			OR = {
-				surrender_progress > 0.2
-				is_ai = yes
-			}
+			surrender_progress > 0.05
 		}
 	}
 	
 	mean_time_to_happen = {
-		days = 10
+		days = 30
+		modifier = {
+			factor = 0.2
+			PRF = { has_war_with = DEH }
+		}
 	}
 	
 	option = {
-		name = beng.60.a #We shall liberate the working people of the Deccan!
+		name = beng.60.a #Send forces in to occupy Nagpur
 		ai_chance = {
-			factor = 80
+			factor = 75
 			modifier = {
 				factor = 0.5
 				strength_ratio = { tag = PRF ratio < 1.0 }
 			}
 		}
-		add_political_power = 200
-		declare_war_on = {
-			target = PRF
-			type = annex_everything
-		}
-		add_named_threat = { threat = 2 name = BHC_PRF_war }
+		add_political_power = 100
+		reverse_add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+		PRF = { country_event = { id = beng.61 hours = 5 } }
 	}
 	option = {
-		name = beng.60.b #This is no business of ours...
+		name = beng.60.b #No, this is no business of ours
 		ai_chance = {
-			factor = 20
+			factor = 25
 			modifier = {
 				factor = 2
 				PRF = { NOT = { has_war_with = MAD } }
-			}
-			modifier = {
-				factor = 0.5
-				PRF = { has_war_with = MAD }
 			}
 			modifier = {
 				factor = 0.5
@@ -1553,8 +1550,85 @@ country_event = {
 				strength_ratio = { tag = PRF ratio > 2.0 }
 			}
 		}
-		add_political_power = -100
-		add_named_threat = { threat = -1 name = BHC_PRF_war_declined }
+	}
+}
+
+# Commune moves in forces to occupy Nagpur
+country_event = {
+	id = beng.61
+	title = beng.61.t
+	desc = beng.61.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = BHC }
+		owns_state = 893
+		controls_state = 893
+	}
+	
+	option = {
+		name = beng.61.a #We have no choice but to let them have it
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_war_with = DEH
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { owns_state = 429 } #Bombay
+			}
+			modifier = {
+				factor = 2
+				strength_ratio = { tag = BHC ratio < 2.0 }
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = BHC ratio < 3.0 }
+			}
+		}
+		political_power = -100
+		BHC = {
+			transfer_state = 893
+			country_event = { id = beng.62 hours = 5 }
+		}
+	}
+	option = {
+		name = beng.61.b #We must fight for our territorial integrity!
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				has_war_with = DEH
+			}
+		}
+		political_power = 100
+		BHC = {
+			declare_war_on = {
+				target = PRF
+				type = annex_everything
+			}
+			add_named_threat = { threat = 2 name = BHC_PRF_war }
+		}
+	}
+}
+
+# Commune has seized Nagpur
+country_event = {
+	id = beng.62
+	title = beng.62.t
+	desc = beng.62.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = { owns_state = 893 }
+	
+	option = {
+		name = beng.62.a
+		add_state_core = 893
 	}
 }
 

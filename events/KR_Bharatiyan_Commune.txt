@@ -318,7 +318,6 @@ country_event = {
 		}
 		hidden_effect = {
 			set_country_flag = BHC_INC_meeting_done
-			complete_national_focus = BHC_totalist_1
 		}
 	}
 }
@@ -366,7 +365,6 @@ country_event = {
 		}
 		hidden_effect = {
 			set_country_flag = BHC_INC_meeting_done
-			complete_national_focus = BHC_syndicalist_1
 		}
 	}
 }
@@ -405,7 +403,6 @@ country_event = {
 		reverse_add_opinion_modifier = { target = PRF modifier = BHC_cautious_support }
 		hidden_effect = {
 			set_country_flag = BHC_INC_meeting_done
-			complete_national_focus = BHC_socialist_1
 		}
 	}
 }
@@ -453,7 +450,6 @@ country_event = {
 		}
 		hidden_effect = {
 			set_country_flag = BHC_INC_meeting_done
-			complete_national_focus = BHC_totalist_1
 		}
 	}
 	option = {
@@ -477,7 +473,6 @@ country_event = {
 		reverse_add_opinion_modifier = { target = PRF modifier = BHC_cautious_support }
 		hidden_effect = {
 			set_country_flag = BHC_INC_meeting_done
-			complete_national_focus = BHC_socialist_1
 		}
 	}
 }
@@ -741,21 +736,21 @@ country_event = {
 		if = {
 			limit = { has_idea = BHC_Mohandas_Karamchand_Gandhi_hog_rso }
 			remove_ideas = BHC_Mohandas_Karamchand_Gandhi_hog_rso
-			#add_ideas = BHC_Nirmal_Kumar_Bose_hog_rso TODO
+			add_ideas = BHC_Nirmal_Kumar_Bose_hog_rso
 		}
-		#If = {
-			#limit = { has_idea = DEH_Mohandas_Karamchand_Gandhi_hog_rso }
-			#remove_ideas = DEH_Mohandas_Karamchand_Gandhi_hog_rso
-			#add_ideas = DEH_Nirmal_Kumar_Bose_hog_rso TODO
-		#}
+		if = {
+			limit = { has_idea = DEH_Mohandas_Karamchand_Gandhi_hog_rso }
+			remove_ideas = DEH_Mohandas_Karamchand_Gandhi_hog_rso
+			add_ideas = DEH_Nirmal_Kumar_Bose_hog_rso
+		}
 		if = {
 			limit = { has_idea = BHC_Mohandas_Karamchand_Gandhi_sec_rso }
 			remove_ideas = BHC_Mohandas_Karamchand_Gandhi_sec_rso
 		}
-		#If = {
-			#limit = { has_idea = DEH_Mohandas_Karamchand_Gandhi_sec_rso }
-			#remove_ideas = DEH_Mohandas_Karamchand_Gandhi_sec_rso
-		#}
+		if = {
+			limit = { has_idea = DEH_Mohandas_Karamchand_Gandhi_sec_rso }
+			remove_ideas = DEH_Mohandas_Karamchand_Gandhi_sec_rso
+		}
 		if = {
 			limit = { has_country_leader = { name = "Mohandas Karamchand Gandhi" } }
 			kill_country_leader = yes
@@ -1495,59 +1490,56 @@ country_event = {
 	}
 }
 
-# Princely Federation in a civil war - do we invade?
+# Princely Federation in a civil war - do we take Nagpur?
 country_event = {
 	id = beng.60
 	title = beng.60.t
 	desc = beng.60.d
 	picture = GFX_report_event_PRF_war
 	
-	fire_only_once = yes
-	
+	fire_only_once = yes	
+
 	trigger = {
 		tag = BHC
 		has_war = no
 		is_subject = no
+		owns_state = 436 #Raipur
 		PRF = {
+			owns_state = 893 #Nagpur
+			controls_state = 893
 			has_war_with = MYS
-			OR = {
-				surrender_progress > 0.2
-				is_ai = yes
-			}
+			surrender_progress > 0.05
 		}
 	}
 	
 	mean_time_to_happen = {
-		days = 10
+		days = 30
+		modifier = {
+			factor = 0.2
+			PRF = { has_war_with = DEH }
+		}
 	}
 	
 	option = {
-		name = beng.60.a #We shall liberate the working people of the Deccan!
+		name = beng.60.a #Send forces in to occupy Nagpur
 		ai_chance = {
-			factor = 80
+			factor = 75
 			modifier = {
 				factor = 0.5
 				strength_ratio = { tag = PRF ratio < 1.0 }
 			}
 		}
-		add_political_power = 200
-		declare_war_on = {
-			target = PRF
-			type = annex_everything
-		}
-		add_named_threat = { threat = 2 name = BHC_PRF_war }
+		add_political_power = 100
+		reverse_add_opinion_modifier = { target = PRF modifier = ITA_outraged }
+		PRF = { country_event = { id = beng.61 hours = 5 } }
 	}
 	option = {
-		name = beng.60.b #This is no business of ours...
+		name = beng.60.b #No, this is no business of ours
 		ai_chance = {
-			factor = 20
+			factor = 25
 			modifier = {
 				factor = 2
 				PRF = { NOT = { has_war_with = MAD } }
-			}
-			modifier = {
-				factor = 0.5
-				PRF = { has_war_with = MAD }
 			}
 			modifier = {
 				factor = 0.5
@@ -1558,8 +1550,85 @@ country_event = {
 				strength_ratio = { tag = PRF ratio > 2.0 }
 			}
 		}
+	}
+}
+
+# Commune moves in forces to occupy Nagpur
+country_event = {
+	id = beng.61
+	title = beng.61.t
+	desc = beng.61.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_war_with = BHC }
+		owns_state = 893
+		controls_state = 893
+	}
+	
+	option = {
+		name = beng.61.a #We have no choice but to let them have it
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_war_with = DEH
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { owns_state = 429 } #Bombay
+			}
+			modifier = {
+				factor = 2
+				strength_ratio = { tag = BHC ratio < 2.0 }
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = { tag = BHC ratio < 3.0 }
+			}
+		}
 		add_political_power = -100
-		add_named_threat = { threat = -1 name = BHC_PRF_war_declined }
+		BHC = {
+			transfer_state = 893
+			country_event = { id = beng.62 hours = 5 }
+		}
+	}
+	option = {
+		name = beng.61.b #We must fight for our territorial integrity!
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				has_war_with = DEH
+			}
+		}
+		add_political_power = 100
+		BHC = {
+			declare_war_on = {
+				target = PRF
+				type = annex_everything
+			}
+			add_named_threat = { threat = 2 name = BHC_PRF_war }
+		}
+	}
+}
+
+# Commune has seized Nagpur
+country_event = {
+	id = beng.62
+	title = beng.62.t
+	desc = beng.62.d
+	picture = GFX_report_event_PRF_war
+	
+	is_triggered_only = yes
+	
+	trigger = { owns_state = 893 }
+	
+	option = {
+		name = beng.62.a
+		add_state_core = 893
 	}
 }
 
@@ -2123,6 +2192,7 @@ country_event = {
 		custom_effect_tooltip = BHC_summit_called_off
 		add_popularity = { ideology = totalist popularity = 0.10 }
 		add_popularity = { ideology = radical_socialist popularity = -0.10 }
+		diplomatic_relation = { country = DEH relation = non_aggression_pact active = no }
 		add_political_power = -300
 		create_country_leader = {
 			name = "Nirmal Kumar Bose"
@@ -2190,12 +2260,29 @@ country_event = {
 			traits = {}
 		}
 		add_popularity = { ideology = totalist popularity = 0.10 }
+		diplomatic_relation = { country = DEH relation = non_aggression_pact active = no }
 		remove_all_ministers = yes
 		add_ideas = BHC_Hemanta_Kumar_Sarkar_hog_tot
 		add_ideas = BHC_A_C_N_Nambiar_for_tot
 		add_ideas = BHC_Leela_Roy_eco_tot
 		add_ideas = BHC_Chandrasekhar_Azad_sec_tot
-		set_country_flag = Mohandas_Karamchand_Gandhi_dead		
+		
+		# Remove ministers
+		set_country_flag = Mohandas_Karamchand_Gandhi_dead
+		set_country_flag = Narendra_Deva_dead
+		set_country_flag = Panjabrao_Deshmukh_dead
+		set_country_flag = Rabindranath_Tagore_dead
+		set_country_flag = Shri_Aurobindo_dead
+		set_country_flag = Ananthasayanam_Ayyangar_dead
+		set_country_flag = Mahadev_Desai_dead
+		set_country_flag = Bhogaraju_Pattabhi_Sitaramayya_dead
+		set_country_flag = Dr_John_Mathai_dead
+		set_country_flag = Jnananjan_Niyogi_dead
+		set_country_flag = Prafulla_Chandra_Roy_dead
+		set_country_flag = Prasanta_C_Mahalanobis_dead
+		set_country_flag = Maulana_Bhashani_dead
+		set_country_flag = Rafi_Ahmed_Kidwai_dead
+		set_country_flag = Rajkumari_Amrit_Kaur_dead
 	}
 }
 
@@ -2275,13 +2362,7 @@ country_event = {
 	trigger = {
 		tag = BHC
 		has_country_flag = BHC_totalist_war
-		NOT = {
-			any_country = {
-				original_tag = BHC
-				has_government = totalist
-				has_war_with = BHC
-			}
-		}
+		has_civil_war = no
 	}
 	
 	mean_time_to_happen = {
@@ -2294,10 +2375,23 @@ country_event = {
 		set_country_flag = BHC_maximists_outlawed
 		add_political_power = 200
 		add_national_unity = 0.10
+		
+		# Remove ministers & leaders
+		set_country_flag = Hemanta_Kumar_Sarkar_dead
+		set_country_flag = A_C_N_Nambiar_dead
+		set_country_flag = Alexandra_David_Neel_dead
+		set_country_flag = Sarat_Chandra_Bose_dead
+		set_country_flag = Sardul_Singh_Caveeshar_dead
+		set_country_flag = Subhas_Chandra_Bose_dead
+		set_country_flag = Leela_Roy_dead
+		set_country_flag = Nalini_Ranjan_Sarkar_dead
+		set_country_flag = Chandrasekhar_Azad_dead
+		set_country_flag = U_Muthuramalingam_Thevar_dead
+		remove_unit_leader = 550 #Bose
 	}
 }
 
-# Just in case: the Totalists annex BHC
+# Just in case: the Totalists/Agrarians annex BHC
 country_event = {
 	id = beng.87
 	title = beng.87
@@ -2341,6 +2435,270 @@ country_event = {
 			type = annex_everything
 			target = FROM
 		}
+	}
+}
+
+# Gandhi threatens civil war
+country_event = {
+	id = beng.89
+	title = beng.89
+	picture = GFX_news_event_BHC_gandhi
+	
+	desc = {
+		text = beng.89.d.purge
+		trigger = { has_completed_focus = BHC_rebuild_army }
+	}
+	desc = {
+		text = beng.89.d.war
+		trigger = { has_completed_focus = BHC_ready_people }
+	}
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BHC
+		has_war = no
+		has_government = totalist
+		NOT = { has_completed_focus = BHC_end_the_debate }
+		NOT = { has_country_flag = Mohandas_Karamchand_Gandhi_dead }
+		OR = {
+			has_completed_focus = BHC_ready_people
+			has_completed_focus = BHC_rebuild_army
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 50
+		modifier = {
+			factor = 1.2
+			has_completed_focus = BHC_rebuild_army
+		}
+	}
+	
+	option = {
+		name = beng.89.a #The time has come to eliminate the Agrarians altogether
+		ai_chance = { factor = 60 }
+		set_country_flag = BHC_agrarian_war
+		add_political_power = -100
+		start_civil_war = {
+			ideology = radical_socialist
+			size = 0.4
+		}
+		hidden_effect = {
+			random_other_country = {
+				limit = {
+					original_tag = BHC
+					has_government = radical_socialist
+				}
+				set_cosmetic_tag = BHC_AGR
+				set_equipment_fraction = 0.3
+				add_political_power = 200
+				set_national_unity = 0.75
+				add_popularity = { ideology = radical_socialist popularity = 0.25 }
+			}
+			set_equipment_fraction = 0.3
+		}
+	}
+	option = {
+		name = beng.89.b #Quietly eliminate Gandhi
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = BHC_gandhi_assassinated
+		add_popularity = { ideology = totalist popularity = -0.10 }
+		add_popularity = { ideology = radical_socialist popularity = 0.10 }
+		add_political_power = -300
+		hidden_effect = {
+			set_country_flag = Mohandas_Karamchand_Gandhi_dead
+			create_country_leader = {
+				name = "Nirmal Kumar Bose"
+				picture = "Portrait_BHC_Nirmal_Kumar_Bose.tga"
+				expire = "1965.1.1"
+				ideology = radical_socialist_subtype
+				traits = {}
+			}
+		}
+	}
+}
+
+# Agrarians take Calcutta
+country_event = {
+	id = beng.90
+	title = beng.90
+	desc = beng.90.d
+	picture = GFX_report_event_PRF_war
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BHC
+		has_war = yes
+		has_country_flag = BHC_agrarian_war
+		any_enemy_country = {
+			original_tag = BHC
+			has_government = radical_socialist
+			controls_state = 431 #Calcutta
+		}
+	}
+	
+	option = {
+		name = beng.90.a
+		clr_country_flag = BHC_agrarian_war
+		set_country_flag = BHC_maximists_outlawed
+		custom_effect_tooltip = BHC_surrender_to_agrarians
+		hidden_effect = {
+			random_other_country = {
+				limit = {
+					original_tag = BHC
+					has_government = radical_socialist
+					controls_state = 431
+				}
+				save_event_target_as = revolter
+			}
+			annex_country = { target = event_target:revolter transfer_troops = yes }
+		}
+		add_political_power = -200
+		set_politics = {
+			ruling_party = radical_socialist
+			elections_allowed = no
+		}
+		create_country_leader = {
+			name = "Mohandas Karamchand Gandhi"
+			picture = "Portrait_BHC_Mohandas_Karamchand_Gandhi.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {}
+		}
+		add_popularity = { ideology = radical_socialist popularity = 0.10 }
+		remove_all_ministers = yes
+		if = {
+			limit = { has_country_flag = Rabindranath_Tagore_dead }
+			add_ideas = BHC_Panjabrao_Deshmukh_hog_rso
+			else = { add_ideas = BHC_Rabindranath_Tagore_hog_rso }
+		}
+		add_ideas = BHC_Mahadev_Desai_for_rso
+		add_ideas = BHC_Bhogaraju_Pattabhi_Sitaramayya_eco_rso
+		add_ideas = BHC_Rajkumari_Amrit_Kaur_sec_rso
+		
+		# Remove ministers & leaders
+		set_country_flag = Hemanta_Kumar_Sarkar_dead
+		set_country_flag = A_C_N_Nambiar_dead
+		set_country_flag = Alexandra_David_Neel_dead
+		set_country_flag = Sarat_Chandra_Bose_dead
+		set_country_flag = Sardul_Singh_Caveeshar_dead
+		set_country_flag = Subhas_Chandra_Bose_dead
+		set_country_flag = Leela_Roy_dead
+		set_country_flag = Nalini_Ranjan_Sarkar_dead
+		set_country_flag = Chandrasekhar_Azad_dead
+		set_country_flag = U_Muthuramalingam_Thevar_dead
+		remove_unit_leader = 550 #Bose
+	}
+}
+
+# News - Civil War outbreak
+news_event = {
+	id = beng.91
+	title = beng.91
+	desc = beng.91.d
+	picture = GFX_news_event_BHC_gandhi
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = beng.91.a
+		trigger = { tag = BHC }
+	}
+	option = {
+		name = beng.91.b
+		trigger = { tag = DEH }
+	}
+	option = {
+		name = beng.91.c
+		trigger = { tag = PRF }
+	}
+	option = {
+		name = beng.91.e
+		trigger = {
+			NOT = { tag = BHC }
+			NOT = { tag = DEH }
+			NOT = { tag = PRF }
+		}
+	}
+}
+
+# News - Agrarians win civil war
+news_event = {
+	id = beng.92
+	title = beng.92
+	desc = beng.92.d
+	picture = GFX_news_event_BHC_gandhi
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = beng.92.a
+		trigger = { tag = BHC }
+	}
+	option = {
+		name = beng.92.b
+		trigger = { tag = DEH }
+	}
+	option = {
+		name = beng.92.c
+		trigger = { tag = PRF }
+	}
+	option = {
+		name = beng.92.e
+		trigger = {
+			NOT = { tag = BHC }
+			NOT = { tag = DEH }
+			NOT = { tag = PRF }
+		}
+	}
+}
+
+# Bose is victorious
+country_event = {
+	id = beng.93
+	title = beng.93
+	desc = beng.93.d
+	picture = GFX_report_event_PRF_war
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BHC
+		has_country_flag = BHC_agrarian_war
+		has_civil_war = no
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = beng.86.a
+		clr_country_flag = BHC_agrarian_war
+		set_country_flag = BHC_agrarians_outlawed
+		add_political_power = 200
+		add_national_unity = 0.10
+		
+		# Remove ministers
+		set_country_flag = Mohandas_Karamchand_Gandhi_dead
+		set_country_flag = Narendra_Deva_dead
+		set_country_flag = Panjabrao_Deshmukh_dead
+		set_country_flag = Rabindranath_Tagore_dead
+		set_country_flag = Shri_Aurobindo_dead
+		set_country_flag = Ananthasayanam_Ayyangar_dead
+		set_country_flag = Mahadev_Desai_dead
+		set_country_flag = Bhogaraju_Pattabhi_Sitaramayya_dead
+		set_country_flag = Dr_John_Mathai_dead
+		set_country_flag = Jnananjan_Niyogi_dead
+		set_country_flag = Prafulla_Chandra_Roy_dead
+		set_country_flag = Prasanta_C_Mahalanobis_dead
+		set_country_flag = Maulana_Bhashani_dead
+		set_country_flag = Rafi_Ahmed_Kidwai_dead
+		set_country_flag = Rajkumari_Amrit_Kaur_dead
 	}
 }
 

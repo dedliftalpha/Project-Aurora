@@ -1,7 +1,7 @@
 ﻿###########################
 # Ausgleich Events
 ###########################
-# By Kallar
+# By Kallar, ~mw~
 ###########################
 # TODO LIST:
 #
@@ -9,11 +9,14 @@
 # add informal event that hungary is supported by germany line 737
 # change government to federation event
 # event that spawns some troobs if asutrria decalres war on them 763 and 908 and 875
+#
+# Can all of Kallar's events and re-write this file from scratch
 ###################
 
 add_namespace = ausgleich
+add_namespace = ausgleich.new
 
-### Kickoff
+### Ausgleich of 1937
 country_event = {
 	id = ausgleich.1
 	title = ausgleich.1.t
@@ -26,21 +29,52 @@ country_event = {
 		set_country_flag = Ausgleich_1937
 	}
 
-	option = { # Centralize
-		name = ausgleich.1.a
-
+	option = { # Reform the Dual Monarchy - centralise Cisleithania
+		name = ausgleich.1.b
+		set_global_flag = austria_restores_dualism
 	}
 
-	option = { # Reform Dual Monarchy
-		name = ausgleich.1.b
-
+	option = { # Centralize
+		name = ausgleich.1.a
+		set_global_flag = austria_centralisation_plans
 	}
 
 	option = { # Propose Confederation
 		name = ausgleich.1.c
-
+		set_global_flag = austria_embraces_pluralism
 	}
 }
+
+### Dualism: 
+country_event = {
+	id = ausgleich.new.1
+	title = ausgleich.new.1.t
+	desc = ausgleich.new.1.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = Ausgleich_1937
+	}
+
+	option = { # Reform the Dual Monarchy - centralise Cisleithania
+		name = ausgleich.new.1.b
+		set_global_flag = austria_restores_dualism
+	}
+
+	option = { # Centralize
+		name = ausgleich.new.1.a
+		set_global_flag = austria_centralisation_plans
+	}
+
+	option = { # Propose Confederation
+		name = ausgleich.new.1.c
+		set_global_flag = austria_embraces_pluralism
+	}
+}
+
+### Old Kallar Events ###
 
 ### Centralize ###
 ### Hungarian Reaction ###
@@ -55,11 +89,7 @@ country_event = {
 	option = { # Accept
 		name = ausgleich.2.a
 		ai_chance = { factor = 10 }
-
-		hidden_effect = {
-			HUN = { end_puppet = ILL }
-			AUS = { puppet = ILL }
-		}
+		
 		AUS = { country_event = { id = ausgleich.3 days = 1 }}
 	}
 

@@ -559,6 +559,9 @@ country_event = { # The head of the Army
 
 		add_manpower = 326000
 		load_oob = PLC_HOA
+		hidden_effect = {
+			country_event = { days = 30 id = plcommon.4 }
+		}
 	}
 
 	option = {
@@ -573,6 +576,9 @@ country_event = { # The head of the Army
 
 		add_manpower = 326000
 		load_oob = PLC_HOA
+		hidden_effect = {
+			country_event = { days = 30 id = plcommon.4 }
+		}
 	}
 
 	option = {
@@ -587,6 +593,9 @@ country_event = { # The head of the Army
 
 		add_manpower = 326000
 		load_oob = PLC_HOA
+		hidden_effect = {
+			country_event = { days = 30 id = plcommon.4 }
+		}
 	}
 }
 
@@ -605,7 +614,7 @@ country_event = { # Language question
 
 		ai_chance = { factor = 60 }
 
-		PLC = { country_event = { days = 1 id = plcommon.5 }}
+		PLC = { country_event = { days = 1 id = plcommon.70 }}
 	}
 
 	option = {
@@ -613,7 +622,7 @@ country_event = { # Language question
 
 		ai_chance = { factor = 40 }
 
-		PLC = { country_event = { days = 1 id = plcommon.6 }}
+		PLC = { country_event = { days = 1 id = plcommon.71 }}
 	}
 }
 
@@ -816,7 +825,8 @@ country_event = { # March of the National-Radicals
 		ai_chance = { factor = 50 }
 
 		add_political_power = -100
-		set_country_flag = crush_national_radicals
+		add_manpower = -2000
+		set_country_flag = crush_national_radicals_pol
 	}
 }
 
@@ -862,7 +872,9 @@ country_event = { # Doboszynski's coup!
 
 		ai_chance = { factor = 50 }
 
-		add_political_power = -40
+		add_political_power = -300
+		add_manpower = -5000
+		set_country_flag = crush_national_radicals_pol
 	}
 }
 
@@ -3760,10 +3772,13 @@ country_event = { # Lithuania Rebels
 			every_state = { 
 				limit = { 
 					is_core_of = LIT
-					is_controlled_by = PLC
+					is_controlled_by = POL
 				} 
+					POL = { remove_state_core = PREV }
 					LIT = { transfer_state = PREV }
 			}
+
+			add_national_unity = 0.2
 
 			add_popularity = {
 				ideology = national_populist
@@ -3777,7 +3792,7 @@ country_event = { # Lithuania Rebels
 			create_country_leader = {
 				name = "Augustinas Voldemaras"
 				desc = "POLITICS_VOLDEMARAS_DESC"
-				picture = "Portrait_PLC_Augustinas_Voldemaras.tga"
+				picture = "Portrait_Lithuania_Augustinas_Voldemaras.tga"
 				#portrait_path = "gfx/leaders/LIT/Portrait_Lithuania_Augustinas_Voldemaras.tga"
 				expire = "1965.1.1"
 				ideology = national_populist_subtype
@@ -3833,10 +3848,13 @@ country_event = { # Poland Rebels
 			every_state = { 
 				limit = { 
 					is_core_of = POL
-					is_controlled_by = PLC
+					is_controlled_by = LIT
 				} 
+					LIT = { remove_state_core = PREV }
 					POL = { transfer_state = PREV }
 			}
+
+			add_national_unity = 0.2
 
 			add_popularity = {
 				ideology = national_populist
@@ -4039,7 +4057,8 @@ country_event = { # Voldemaras demands control
 		ai_chance = { factor = 50 }
 
 		add_political_power = -100
-		set_country_flag = crush_national_radicals
+		add_manpower = -2000
+		set_country_flag = crush_national_radicals_lit
 	}
 }
 
@@ -4085,7 +4104,9 @@ country_event = { # Voldemort's coup!
 
 		ai_chance = { factor = 50 }
 
-		add_political_power = -40
+		add_political_power = -300
+		add_manpower = -5000
+		set_country_flag = crush_national_radicals_lit
 	}
 }
 
@@ -4154,7 +4175,7 @@ country_event = { # Revenge on the Commonwealth!
 	}
 	
 	mean_time_to_happen = {
-		days = 10
+		days = 7
 	}
 
 	fire_only_once = yes
@@ -4643,9 +4664,249 @@ country_event = { # PLC - Starter Event
 		name = plcommon.69.a
 		hidden_effect = {
 			PLC = {add_ideas = very_low_stability}
-			PLC = {add_political_power = -300}
+			PLC = {add_political_power = -250}
 		}
 		PLC = { country_event = { days = 1 id = plcommon.1 }}
 	}	
 }
 
+country_event = { # Dmowski's speech - Language
+	id = plcommon.70
+	title = plcommon.70.t
+	desc = plcommon.70.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = plcommon.70.a
+
+		add_political_power = -40
+	}
+}
+
+country_event = { # Voldemaras's speech - Language
+	id = plcommon.71
+	title = plcommon.71.t
+	desc = plcommon.71.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = plcommon.71.a
+
+		add_political_power = -80
+	}
+}
+
+country_event = { # Lithuania Rebels - Coup Failed
+	id = plcommon.72
+	title = plcommon.72.t
+	desc = plcommon.72.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	trigger = {
+		tag = PLC
+		has_country_flag = crush_national_radicals_lit
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = plcommon.72.a
+
+		LIT = {
+			every_state = { 
+				limit = { 
+					is_core_of = LIT
+					is_controlled_by = PLC
+				} 
+					PLC = { remove_state_core = PREV }
+					LIT = { transfer_state = PREV }
+			}
+
+			add_national_unity = 0.2
+			
+			add_popularity = {
+				ideology = national_populist
+				popularity = 0.2
+			}
+
+			set_politics = { ruling_party = national_populist elections_allowed = no }
+
+			hidden_effect = { kill_country_leader = yes }
+
+			create_country_leader = {
+				name = "Augustinas Voldemaras"
+				desc = "POLITICS_VOLDEMARAS_DESC"
+				picture = "Portrait_Lithuania_Augustinas_Voldemaras.tga"
+				#portrait_path = "gfx/leaders/LIT/Portrait_Lithuania_Augustinas_Voldemaras.tga"
+				expire = "1965.1.1"
+				ideology = national_populist_subtype
+				traits = { }
+			}
+
+			hidden_effect = {
+				remove_ideas_with_trait = head_of_government
+				remove_ideas_with_trait = foreign_minister
+				remove_ideas_with_trait = economy_minister
+				remove_ideas_with_trait = security_minister
+				load_oob = LITRebellion
+				PLC = {
+					remove_unit_leader = 30001
+					remove_unit_leader = 30002
+					remove_unit_leader = 30003
+					remove_unit_leader = 30004
+					remove_unit_leader = 30005
+					remove_unit_leader = 30006
+					remove_unit_leader = 30007
+					remove_unit_leader = 30008
+				}
+			}
+
+			set_global_flag = voldemaras_coup_in_lithuania
+			set_global_flag = PLC_LIT_rebellion_2
+			add_political_power = 300
+		}
+	}
+}
+
+country_event = { # Poland Rebels - Coup Failed
+	id = plcommon.73
+	title = plcommon.73.t
+	desc = plcommon.73.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	trigger = {
+		tag = PLC
+		has_country_flag = crush_national_radicals_pol
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = plcommon.73.a
+
+		POL = {
+			every_state = { 
+				limit = { 
+					is_core_of = POL
+					is_controlled_by = PLC
+				} 
+					PLC = { remove_state_core = PREV }
+					POL = { transfer_state = PREV }
+			}
+
+			add_national_unity = 0.2
+
+			add_popularity = {
+				ideology = national_populist
+				popularity = 0.2
+			}
+
+			set_politics = { ruling_party = national_populist elections_allowed = no }
+
+			hidden_effect = { kill_country_leader = yes }
+
+			create_country_leader = {
+				name = "Roman Dmowski"
+				desc = "ROMAN_DMOWSKI_DESC"
+				picture = "Portrait_Poland_Roman_Dmowski.tga"
+				expire = "1965.1.1"
+				ideology = national_populist_subtype
+				traits = {}
+			}
+
+			hidden_effect = {
+				remove_ideas_with_trait = head_of_government
+				remove_ideas_with_trait = foreign_minister
+				remove_ideas_with_trait = economy_minister
+				remove_ideas_with_trait = security_minister
+				load_oob = POLRebellion
+				PLC = {
+					remove_unit_leader = 20001
+					remove_unit_leader = 9859
+					remove_unit_leader = 20002
+					remove_unit_leader = 20003
+					remove_unit_leader = 20004
+					remove_unit_leader = 20005
+					remove_unit_leader = 20006
+					remove_unit_leader = 20007
+					remove_unit_leader = 20008
+					remove_unit_leader = 20009
+					remove_unit_leader = 20010
+					remove_unit_leader = 20011
+					remove_unit_leader = 20012
+					remove_unit_leader = 20013
+				}
+			}
+
+			add_ideas = {
+				POL_Adam_Doboszynski_hog_npo
+				POL_Jedrzej_Giertych_for_npo
+				POL_Roman_Rybarski_eco_npo
+				POL_Tadeusz_Bielecki_sec_npo
+			}
+
+			add_political_power = 300
+			set_global_flag = POL_NATIONALISTS
+			set_global_flag = PLC_POL_rebellion_2
+			
+		}
+	}
+}
+
+country_event = { # Revenge on the Commonwealth! - Coup Failed
+	id = plcommon.74
+	title = plcommon.74.t
+	desc = plcommon.74.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	trigger = {
+		OR = {
+			AND = {
+			has_global_flag = PLC_POL_rebellion_2
+			tag = POL
+			}
+			AND = {
+			has_global_flag = PLC_LIT_rebellion_2
+			tag = LIT
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	fire_only_once = yes
+
+	option = {
+		name = plcommon.74.a
+		trigger = {
+			tag = POL
+		}
+		declare_war_on = { target = PLC type = annex_everything }
+	}
+	
+	option = {
+		name = plcommon.74.a
+		trigger = {
+			tag = LIT
+		}
+		declare_war_on = { target = PLC type = annex_everything }
+	}
+}

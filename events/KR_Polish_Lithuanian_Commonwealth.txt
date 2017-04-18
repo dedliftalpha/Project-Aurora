@@ -4245,7 +4245,7 @@ country_event = { # New government - LIT
 	}
 }
 
-country_event = { # New government - LIT
+country_event = { # Mitteleuropa Question
 	id = plcommon.50
 	title = plcommon.50.t
 	desc = plcommon.50.d
@@ -4264,6 +4264,7 @@ country_event = { # New government - LIT
 		add_political_power = 100
 		set_country_flag = PLC_chose_alone
 		GER = { remove_from_faction = PLC }
+		GER = { country_event = { days = 2 id = plcommon.75 }}
 	}
 }
 
@@ -4908,5 +4909,94 @@ country_event = { # Revenge on the Commonwealth! - Coup Failed
 			tag = LIT
 		}
 		declare_war_on = { target = PLC type = annex_everything }
+	}
+}
+
+country_event = { # PLC Attempting to leave Mitteleuropa
+	id = plcommon.75
+	title = plcommon.75.t
+	desc = plcommon.75.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = plcommon.75.a
+		ai_chance = { factor = 80 }
+		add_political_power = -20
+	}
+	
+	option = {
+		name = plcommon.75.b
+		ai_chance = { factor = 20 }
+		PLC = { country_event = { days = 2 id = plcommon.76 }}
+	}
+}
+
+country_event = { # PLC Attempting to leave Mitteleuropa - Germany says "No"
+	id = plcommon.76
+	title = plcommon.76.t
+	desc = plcommon.76.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.76.a
+		ai_chance = { factor = 30 }
+		add_political_power = -100
+		clr_country_flag = PLC_chose_alone
+		set_country_flag = PLC_chose_germany
+		GER = {add_to_faction = PLC}
+		GER = { country_event = { days = 2 id = plcommon.78 }}
+	}
+	
+	option = {
+		name = plcommon.76.b
+		ai_chance = { factor = 70 }
+		GER = { country_event = { days = 2 id = plcommon.77 }}
+	}	
+}
+
+country_event = { # PLC Attempting to leave Mitteleuropa - PLC Ignores us!
+	id = plcommon.77
+	title = plcommon.77.t
+	desc = plcommon.77.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.77.a
+		ai_chance = { factor = 80 }
+		declare_war_on = { target = PLC type = annex_everything }
+	}
+	
+	option = {
+		name = plcommon.77.b
+		ai_chance = { factor = 20 }
+		add_political_power = -60
+	}	
+}
+
+country_event = { # PLC Attempting to leave Mitteleuropa - PLC Gives In
+	id = plcommon.78
+	title = plcommon.78.t
+	desc = plcommon.78.d
+	picture = GFX_POL_sejm
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.78.a
+		add_political_power = 60
 	}
 }

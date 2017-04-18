@@ -3878,6 +3878,8 @@ country_event = { #Germany defeats france
 	mean_time_to_happen = {
 		days = 7
 	}
+	
+	immediate = { set_global_flag = GER_partition_of_france }
 
 	option = { #puppet france
 		name = part.6.a
@@ -5032,6 +5034,232 @@ country_event = { #A new government OCC
 		add_ideas = OCC_Irenee_Cros_eco_sco
 		add_ideas = OCC_Jacques_Baumel_sec_sco
 		load_oob = OCC_independent_GER
+	}
+}
+
+country_event = { #The fate of Geneva
+	id = part.91
+	title = part.91.t
+	desc = part.91.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+	country_exists = SWI
+	owns_state = 760
+	NOT = { country_exists = FRA has_war_with = SWI }
+	}
+	
+	mean_time_to_happen = { days = 1 }
+
+	option = { #Give it back to the Swiss.
+		name = part.91.a
+		ai_chance = {
+			factor = 99
+		}
+		SWI = { transfer_state = 760 }
+		reverse_add_opinion_modifier = {
+			target = SWI modifier = SWI_gave_back_romandie
+		}
+	}
+	
+	option = { #No, it's ours now!
+		name = part.91.b
+		ai_chance = {
+			factor = 1
+		}
+		reverse_add_opinion_modifier = {
+			target = SWI modifier = SWI_not_gave_back_romandie
+		}
+	}
+}
+
+country_event = { #Western Flandern-Wallonia
+	id = part.92
+	title = part.92.t
+	desc = part.92.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = BEL
+	has_global_flag = GER_partition_of_france
+	any_country = { is_in_faction_with = BEL 
+	NOT = { tag = NFA }
+	controls_state = 29
+	}
+	any_country = { is_in_faction_with = BEL 
+	controls_state = 16
+	}
+	any_country = { is_in_faction_with = BEL 
+	controls_state = 64
+	}
+	any_country = { is_in_faction_with = BEL 
+	controls_state = 51
+	}
+	controls_state = 6
+	is_in_faction_with = GER
+	GER = { is_subject = no }
+	}
+	
+	mean_time_to_happen = { days = 10 }
+
+	option = { #Claim the Western Flandern-Wallonia!
+		name = part.92.a
+		ai_chance = {
+			factor = 75
+		}
+		GER = { country_event = { id = part.93 days = 3 } }
+		add_state_claim = 29
+		add_political_power = -20
+	}
+	
+	option = { #Those claims are aburd
+		name = part.92.b
+		ai_chance = {
+			factor = 25
+		}
+		add_political_power = 20
+	}
+}
+
+country_event = { #Flanders-Wallonia claims the western Flanders-Wallonia
+	id = part.93
+	title = part.93.t
+	desc = part.93.d
+	
+	is_triggered_only = yes
+
+	option = { #Support their claim
+		name = part.93.a
+		ai_chance = {
+			factor = 50
+		}
+		trigger = { NOT = { controls_state = 29 } }
+		every_country = { limit = { controls_state = 29 }
+		add_opinion_modifier = {
+			target = GER modifier = GER_supported_flawa_claim
+		}
+		country_event = { id = part.94 }
+		}
+	}
+	
+	option = { #Cede Western Flanders-Wallonia
+		name = part.93.b
+		ai_chance = {
+			factor = 50
+		}
+		trigger = { controls_state = 29 }
+		BEL = { transfer_state = 29 
+		country_event = { id = part.95 }
+		add_opinion_modifier = {
+			target = GER modifier = GER_ceded_flawa_claim
+		}
+		}
+	}
+	
+	option = { #Who is drawing the map here!?
+		name = part.93.c
+		ai_chance = {
+			factor = 40
+		}
+		reverse_add_opinion_modifier = {
+			target = GER modifier = GER_refused_flawa_claim
+		}
+	}
+	
+	option = { #Let the people decide!
+		name = part.93.e
+		ai_chance = {
+			factor = 90
+		}
+		trigger = { OR = { has_government = social_democrat has_government = social_liberal has_government = market_liberal has_government = social_conservative } }
+		every_country = { limit = { controls_state = 29 }
+		country_event = { id = part.96 }
+		}
+	}
+}
+
+country_event = { #Germany support Flanders-Wallonia
+	id = part.94
+	title = part.94.t
+	desc = part.94.d
+	
+	is_triggered_only = yes
+
+	option = { #We'll cede the territory, but only because we have no choice.
+		name = part.94.a
+		ai_chance = {
+			factor = 50
+		}
+		BEL = { transfer_state = 29 
+		country_event = { id = part.95 }
+		}
+		reverse_add_opinion_modifier = {
+			target = GER modifier = BEL_ceded_flanders1
+		}
+		reverse_add_opinion_modifier = {
+			target = BEL modifier = BEL_ceded_flanders2
+		}
+	}
+}
+
+country_event = { #Western Flanders-Wallonia
+	id = part.95
+	title = part.95.t
+	desc = part.95.d
+	
+	is_triggered_only = yes
+
+	option = { #Excellent!
+		name = part.95.a
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = 60
+		add_state_core = 29
+	}
+}
+
+country_event = { #Plebiscite in western Flanders-Wallonia
+	id = part.96
+	title = part.96.t
+	desc = part.96.d
+	
+	is_triggered_only = yes
+
+	option = { #We shall await the results.
+		name = part.96.a
+		ai_chance = {
+			factor = 50
+		}
+		country_event = { id = part.97 days = 2 }
+	}
+}
+
+country_event = { #Plebiscite in western Flanders-Wallonia
+	id = part.97
+	title = part.97.t
+	desc = part.97.d
+	
+	is_triggered_only = yes
+
+	option = { #Western Flanders-Wallonia belongs to us!
+		name = part.97.a
+		ai_chance = {
+			factor = 70
+		}
+		add_political_power = 100
+	}
+	
+	option = { #Western Flanders-Wallonia belongs to Flanders-Wallonia!
+		name = part.97.b
+		ai_chance = {
+			factor = 30
+		}
+		add_political_power = -40
+		BEL = { transfer_state = 29 country_event = { id = part.95 } }
+		remove_state_core = 29
+		remove_state_claim = 29
 	}
 }
 

@@ -5,6 +5,8 @@
 ###########################
 
 add_namespace = sprd
+add_namespace = sprf
+add_namespace = sprc
 
 # For whoever will be doing spain the volunteer and seize spanish africa events for NFA are already handled in its focus trees
 # and we will have to agree on how to do the Med faction and KoS joining Entente
@@ -48,23 +50,36 @@ country_event = {
 }
 
 # Social breakdown
-# TODO: This makes the rebellion automatic - may need to revisit
 country_event = {
 	id = sprd.3
 	title = sprd.3.t
 	desc = sprd.3.d
+	picture = GFX_report_event_generic_riot
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_idea = spr_social_breakdown
+		has_idea = disaster
 		has_idea = spr_black_monday
+		NOT = { has_country_flag = aftermath_of_the_civil_war }
 	}
-	mean_time_to_happen = { days = 45 }
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+	
 	option = {
 		name = sprd.3.a
 		add_political_power = -200
-		set_country_flag = cnt-fai
-		set_country_flag = carlists
+		if = {
+			limit = { NOT = { has_global_flag = cntfai_risen } }
+			set_country_flag = SPR_cntfai_will_rise
+		}
+		if = {
+			limit = { NOT = { has_global_flag = carlists_risen } }
+			set_country_flag = SPR_carlists_will_rise
+		}
 	}
 }
 
@@ -181,30 +196,33 @@ country_event = {
 	}
 	
 	option = {
-		name = sprd.8.a
+		name = sprd.8.a #Time to ban his organisation
 		ai_chance = { factor = 25 }
+		custom_effect_tooltip = SPR_ban_carlists
 		add_political_power = -200
-		set_country_flag = carlists
-		set_country_flag = javier_banned
+		set_country_flag = SPR_carlists_will_rise
+		set_country_flag = SPR_javier_banned
 	}
 	option = {
-		name = sprd.8.b
+		name = sprd.8.b #Arrest Javier and his followers!
 		ai_chance = { factor = 25 }
+		custom_effect_tooltip = SPR_arrest_javier
 		add_political_power = -200
-		set_country_flag = carlists
-		set_country_flag = javier_arrested
+		set_country_flag = SPR_carlists_will_rise
+		set_country_flag = SPR_javier_arrested
 	}
 	option = {
-		name = sprd.8.c
+		name = sprd.8.c #Praise his efforts
 		ai_chance = { factor = 25 }
+		custom_effect_tooltip = SPR_encourage_javier
 		add_political_power = -20
-		set_country_flag = javier_praised
+		set_country_flag = SPR_javier_praised
 	}
 	option = {
-		name = sprd.8.e
+		name = sprd.8.e #Ignore the pretender
 		ai_chance = { factor = 25 }
 		add_political_power = -40
-		set_country_flag = javier_ignored
+		set_country_flag = SPR_javier_ignored
 	}
 }
 
@@ -218,9 +236,9 @@ country_event = {
 	trigger = {
 		tag = SPR
 		OR = {
-			has_country_flag = javier_banned
-			has_country_flag = javier_arrested
-			has_country_flag = javier_ignored
+			has_country_flag = SPR_javier_banned
+			has_country_flag = SPR_javier_arrested
+			has_country_flag = SPR_javier_ignored
 		}
 		NOT = {
 			has_country_flag = aftermath_of_the_civil_war
@@ -230,6 +248,10 @@ country_event = {
 	
 	mean_time_to_happen = {
 		days = 200
+		modifier = {
+			factor = 1.5
+			has_country_flag = SPR_javier_ignored
+		}
 	}
 	
 	option = {
@@ -248,8 +270,46 @@ country_event = {
 	trigger = {
 		tag = SPR
 		OR = {
-			has_country_flag = javier_banned
-			has_country_flag = javier_ignored
+			has_country_flag = SPR_javier_banned
+			has_country_flag = SPR_javier_ignored
+		}
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CAR
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+		modifier = {
+			factor = 1.5
+			has_country_flag = SPR_javier_ignored
+		}
+	}
+	
+	option = {
+		name = sprd.10.a
+		add_political_power = -60
+	}
+}
+
+# Assassination of Miguel Ponte Manso de Zuniga
+country_event = {
+	id = sprd.11
+	title = sprd.11.t
+	desc = sprd.11.d
+	picture = GFX_report_event_generic_funeral
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SPR
+		has_idea = SPR_Miguel_Ponte_Manso_de_Zuniga_sec_ade
+		OR = {
+			has_country_flag = SPR_javier_banned
+			has_country_flag = SPR_javier_arrested
+			has_country_flag = SPR_cntfai_disband
+			has_country_flag = SPR_cntfai_arrest
 		}
 		NOT = {
 			has_country_flag = aftermath_of_the_civil_war
@@ -262,30 +322,6 @@ country_event = {
 	}
 	
 	option = {
-		name = sprd.10.a
-		add_political_power = -60
-	}
-}
-
-###general assassinations
-
-country_event = { #miguel ponte manso de zuniga
-	id = sprd.11
-	title = sprd.11.t
-	desc = sprd.11.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_idea = SPR_Miguel_Ponte_Manso_de_Zuniga_sec_ade
-		OR = {
-			has_country_flag = javier_banned
-			has_country_flag = javier_arrested
-			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrest_order
-		}
-	}
-	mean_time_to_happen = { days = 200 }
-	option = {
 		name = sprd.11.a
 		add_political_power = -60
 		remove_ideas = SPR_Miguel_Ponte_Manso_de_Zuniga_sec_ade
@@ -293,22 +329,34 @@ country_event = { #miguel ponte manso de zuniga
 	}
 }
 
-country_event = { #jose ungria jimenez
+# Assassination of Jose Ungria Jimenez
+country_event = {
 	id = sprd.12
 	title = sprd.12.t
 	desc = sprd.12.d
+	picture = GFX_report_event_generic_funeral
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
 		has_idea = SPR_Jose_Ungria_Jimenez_int_ade
 		OR = {
-			has_country_flag = javier_banned
-			has_country_flag = javier_arrested
-			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrest_order
+			has_country_flag = SPR_javier_banned
+			has_country_flag = SPR_javier_arrested
+			has_country_flag = SPR_cntfai_disband
+			has_country_flag = SPR_cntfai_arrest
+		}
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CAR
 		}
 	}
-	mean_time_to_happen = { days = 200 }
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
 	option = {
 		name = sprd.12.a
 		add_political_power = -60
@@ -317,422 +365,574 @@ country_event = { #jose ungria jimenez
 	}
 }
 
-#cnt-fai
+### CNT-FAI event chains
 
-country_event = { #the cnt-fai
+# The CNT-FAI speech
+country_event = {
 	id = sprd.13
 	title = sprd.13.t
 	desc = sprd.13.d
 	picture = SPA_CNT_FAI
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		date > 1936.02.11
-		has_country_flag = cnt-fai
+		date > 1936.02.27
 		has_idea = SPR_black_monday
+		NOT = {
+			country_exists = CNT
+			has_country_flag = aftermath_of_the_civil_war
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
 	option = {
-		name = sprd.13.a
+		name = sprd.13.a #Ban the organisation of workers
+		custom_effect_tooltip = SPR_ban_cntfai
 		add_political_power = -100
-		set_country_flag = cntfai_banned
+		set_country_flag = SPR_cntfai_banned
 		add_popularity = { ideology = social_liberal popularity = -0.03 }
 	}
 	option = {
-		name = sprd.13.b
+		name = sprd.13.b #Arrest the leaders of the movement
+		custom_effect_tooltip = SPR_arrest_cntfai
 		add_political_power = -140
-		set_country_flag = cntfai_arrest_order
-		set_country_flag = SPA_CNT
+		set_country_flag = SPR_cntfai_arrest
+		set_country_flag = SPR_cntfai_will_rise
 		add_popularity = { ideology = social_conservative popularity = -0.03 }
 		add_popularity = { ideology = social_liberal popularity = -0.03 }
 		add_popularity = { ideology = radical_socialist popularity = -0.03 }
 		add_popularity = { ideology = syndicalist popularity = -0.03 }
 	}
 	option = {
-		name = sprd.13.c
+		name = sprd.13.c #Forcefully disband the movement
+		custom_effect_tooltip = SPR_force_cntfai
 		add_political_power = -200
-		set_country_flag = cntfai_banned
-		set_country_flag = SPA_CNT
+		set_country_flag = SPR_cntfai_disband
+		set_country_flag = SPR_cntfai_will_rise
 		add_popularity = { ideology = social_conservative popularity = -0.05 }
 		add_popularity = { ideology = social_liberal popularity = -0.05 }
 		add_popularity = { ideology = radical_socialist popularity = -0.03 }
 		add_popularity = { ideology = syndicalist popularity = -0.03 }
 	}
 	option = {
-		name = sprd.13.e
+		name = sprd.13.e #Allow this to happen
+		custom_effect_tooltip = SPR_allow_cntfai
 		add_political_power = -100
-		set_country_flag = cntfai_allowed
+		set_country_flag = SPR_cntfai_allowed
 		add_popularity = { ideology = social_conservative popularity = 0.03 }
 		add_popularity = { ideology = radical_socialist popularity = 0.03 }
 		add_popularity = { ideology = syndicalist popularity = 0.03 }
 	}
 }
 
-country_event = { #protests
+# CNT-FAI Protests
+country_event = {
 	id = sprd.14
 	title = sprd.14.t
 	desc = sprd.14.d
+	picture = GFX_report_event_gathering_protest
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
 		OR {
-			has_country_flag = cntfai_banned
-			has_country_flag = cntfai_arrest_order
+			has_country_flag = SPR_cntfai_banned
+			has_country_flag = SPR_cntfai_arrest
+		}
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
 		}
 	}
-	mean_time_to_happen = { days = 30 }
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
 	option = {
 		name = sprd.14.a
 		add_political_power = -60
 	}
 }
 
-country_event = { #national protests
+# National CNT-FAI Protests
+country_event = {
 	id = sprd.15
 	title = sprd.15.t
 	desc = sprd.15.d
+	picture = GFX_report_event_gathering_protest
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_banned
+		has_country_flag = SPR_cntfai_banned
+		date > 1936.3.10
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 30 }
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
 	option = {
-		name = sprd.15.a
+		name = sprd.15.a #Send out the police!
 		add_political_power = -100
-		#freedom = -1
 	}
 	option = {
-		name = sprd.15.b
-		set_country_flag = cntfai_allowed
-		#freedom, democratic, left = 1
+		name = sprd.15.b #Allow them to organise
+		custom_effect_tooltip = SPR_allow_cntfai
+		set_country_flag = SPR_cntfai_allowed
+		clr_country_flag = SPR_cntfai_banned
+		add_popularity = { ideology = social_conservative popularity = 0.03 }
+		add_popularity = { ideology = radical_socialist popularity = 0.03 }
+		add_popularity = { ideology = syndicalist popularity = 0.03 }
 	}
 }
 
-country_event = { #arresting CNT-FAI
+# Arresting the CNT-FAI
+country_event = {
 	id = sprd.16
 	title = sprd.16.t
 	desc = sprd.16.d
+	picture = HOL_zwolle_riots
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_arrest_order
+		has_country_flag = SPR_cntfai_arrest
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 30 }
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
 	option = {
-		name = sprd.16.a
-		add_political_power = -60
+		name = sprd.16.a #Find the rat and establish a secret police!
+		trigger = { NOT = { has_idea = SPR_Tomas__Conde_de_Redezno_sec_pau } }
+		ai_chance = { factor = 85 }
+		add_political_power = 60
 		remove_ideas_with_trait = security_minister
 		add_ideas = SPR_Tomas__Conde_de_Redezno_sec_pau
-		#freedom = -1
-		set_country_flag = cntfai_fled
-		ai_chance = { factor = 85 }
+		set_country_flag = SPR_cntfai_fled
 	}
 	option = {
-		name = sprd.16.b
-		add_political_power = -60
-		set_country_flag = cntfai_fled
+		name = sprd.16.b #We knew this would happen
 		ai_chance = { factor = 15 }
+		add_political_power = -60
+		set_country_flag = SPR_cntfai_fled
 	}
 }
 
-country_event = { #disbanding CNT-FAI
+# Forcefully Disbanding the CNT-FAI
+country_event = {
 	id = sprd.17
 	title = sprd.17.t
 	desc = sprd.17.d
+	picture = HOL_zwolle_riots
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_banned
+		has_country_flag = SPR_cntfai_disband
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 30 }
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
 	option = {
 		name = sprd.17.a
 		add_political_power = 60
-		set_global_flag = cntfai_fled
+		set_country_flag = SPR_cntfai_fled
 	}
 }
 
-#CNT-FAI organising the workers
-
-country_event = { #organising the workers
+# CNT-FAI organising the workers
+country_event = {
 	id = sprd.18
 	title = sprd.18.t
 	desc = sprd.18.d
 	picture = SPA_CNT_FAI
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_allowed
+		has_country_flag = SPR_cntfai_allowed
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
 		name = sprd.18.a
 		add_political_power = 20
-		set_country_flag = cntfai_organising_workers
+		set_country_flag = SPR_cntfai_organising
 	}
 }
 
-country_event = { #plan south commenced
+# CNT-FAI Plan South commenced
+country_event = {
 	id = sprd.19
 	title = sprd.19.t
 	desc = sprd.19.d
+	picture = economic_policy
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_allowed
-		has_country_flag = cntfai_organising_workers
+		has_country_flag = SPR_cntfai_allowed
+		has_country_flag = SPR_cntfai_organising
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
 		name = sprd.19.a
 		add_political_power = 60
-		#command = { type = peacetime_ic_mod value = 2 }
-		set_country_flag = cntfai_plan_south
+		set_country_flag = SPR_cntfai_plan_south
 	}
 }
 
-country_event = { #plan south completed
+# CNT-FAI Plan South completed
+country_event = {
 	id = sprd.20
 	title = sprd.20.t
 	desc = sprd.20.d
+	picture = economic_policy
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = cntfai_allowed
-		has_country_flag = cntfai_organising_workers
-		has_country_flag = cntfai_plan_south
+		OR = {
+			owns_state = 173
+			owns_state = 168
+		}
+		has_country_flag = SPR_cntfai_allowed
+		has_country_flag = SPR_cntfai_organising
+		has_country_flag = SPR_cntfai_plan_south
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
 		name = sprd.20.a
-		173 = {
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = infrastructure
-				level = 1
-				instant_build = yes
-			}
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-			add_resource = {
-				type = steel
-				amount = 4
+		if = {
+			limit = { owns_state = 173 }
+			173 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+				}
 			}
 		}
-		168 = {
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = infrastructure
-				level = 1
-				instant_build = yes
-			}
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
+		if = {
+			limit = { owns_state = 168 }
+			168 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
 }
 
-#elections
+### Election event chains
 
-country_event = { #alfonso has a stroke
+# King Alfonso has a stroke
+country_event = {
 	id = sprd.21
 	title = sprd.21.t
 	desc = sprd.21.d
+	picture = SPA_alfonso_xiii
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		date > 1937.1.15
-		OR {
-			has_country_flag = cnt-fai
-			has_country_flag = carlists
+		date > 1937.1.1
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CNT
+			country_exists = CAR
 		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 180
+		modifier = {
+			factor = 0.5
+			has_country_flag = SPR_cntfai_will_rise
+		}
+		modifier = {
+			factor = 0.5
+			has_country_flag = SPR_carlists_will_rise
+		}
+	}
+	
 	option = {
 		name = sprd.21.a
 		add_political_power = -100
-		set_country_flag = alfonso_coma
+		hidden_effect = {
+			country_event = { id = sprd.22 days = 10 }
+		}
 	}
 }
 
-country_event = { #alfonso in a coma
+# King Alfonso is in a coma
+country_event = {
 	id = sprd.22
 	title = sprd.22.t
 	desc = sprd.22.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_country_flag = alfonso_coma
-	}
-	mean_time_to_happen = { days = 2 }
+	picture = SPA_alfonso_xiii
+	
+	is_triggered_only = yes
+	
 	option = {
-		name = sprd.22.a
-		set_country_flag = spr_elections
-	}
-	option = {
-		name = sprd.22.b
-		set_country_flag = spr_rigged_elections
+		name = sprd.22.a #Call for open elections
+		ai_chance = { factor = 20 }
+		custom_effect_tooltip = SPR_free_elections
+		set_country_flag = SPR_elections
 	}
 	option = {
-		name = sprd.22.c
+		name = sprd.22.b #Call for elections, but with only selected parties
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = SPR_rig_elections
+		set_country_flag = SPR_rigged_elections
+	}
+	option = {
+		name = sprd.22.c #The King is not dead! Do nothing!
+		ai_chance = { factor = 40 }
 		add_political_power = -100
-		set_country_flag = cnt-fai
-		set_country_flag = carlists
+		set_country_flag = SPR_cntfai_will_rise
+		set_country_flag = SPR_carlists_will_rise
 	}
 }
 
-country_event = { #general elections
+# Free elections are held
+# TODO: add news events for faction wins
+country_event = {
 	id = sprd.23
 	title = sprd.23.t
 	desc = sprd.23.d
+	picture = GFX_report_event_election_vote
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = spr_elections
-		has_war = no
+		has_country_flag = SPR_elections
 		NOT = {
-			has_country_flag = cnt-fai
-			has_country_flag = carlists
+			has_war_with = CNT
+			has_war_with = CAR
 		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
-		name = sprd.23.a
+		name = sprd.23.a #The ruling party wins!
+		ai_chance = { factor = 40 }
 		add_political_power = 100
 		add_popularity = { ideology = social_conservative popularity = 0.2 }
 		remove_ideas = spr_social_breakdown
-		ai_chance = { factor = 60 }
 	}
 	option = {
-		name = sprd.23.b
-		CNT = {
-
+		name = sprd.23.b #A CNT-FAI Victory!
+		ai_chance = { factor = 30 }
+		hidden_effect = {
 			every_state = {
-				limit = {
-					is_core_of = SPR
-				}
+				limit = { is_core_of = SPR }
+				remove_core_of = SPR
 				add_core_of = CNT
 			}
-
-			every_state = {
-				limit = {
-					is_controlled_by = SPR
-				}
-				CNT= {
-					transfer_state = PREV
-				}
+			every_owned_state = {
+				CNT = { transfer_state = PREV }
 			}
-
-			add_political_power = 100
-			transfer_technology = yes
-			#load_oob = "CNT-FAI"
-			set_country_flag = election_success
-			change_tag_from = SPR
+			CNT = {
+				set_country_flag = election_success
+				add_political_power = 100
+				transfer_technology = yes
+				change_tag_from = SPR
+			}
 		}
-		ai_chance = { factor = 20 }
+		effect_tooltip = { add_political_power = 100 }
+		custom_effect_tooltip = SPR_become_CNT
 	}
 	option = {
-		name = sprd.23.c
-		CAR = {
-
+		name = sprd.23.c #The Carlists win!
+		ai_chance = { factor = 30 }
+		hidden_effect = {
 			every_state = {
-				limit = {
-					is_core_of = SPR
-				}
+				limit = { is_core_of = SPR }
+				remove_core_of = SPR
 				add_core_of = CAR
 			}
-
-			every_state = {
-				limit = {
-					is_controlled_by = SPR
-				}
-				CAR = {
-					transfer_state = PREV
-				}
+			every_owned_state = {
+				CAR = { transfer_state = PREV }
 			}
-
-			add_political_power = 100
-			transfer_technology = yes
-			#load_oob = "CAR"
-			set_country_flag = election_success
-			change_tag_from = SPR
+			CAR = {
+				set_country_flag = election_success
+				add_political_power = 100
+				transfer_technology = yes
+				change_tag_from = SPR
+			}
 		}
-		ai_chance = { factor = 20 }
+		effect_tooltip = { add_political_power = 100 }
+		custom_effect_tooltip = SPR_become_CAR
 	}
 }
 
-country_event = { #elections cancelled
+# Elections cancelled due to war
+country_event = {
 	id = sprd.25
 	title = sprd.25.t
 	desc = sprd.25.d
+	picture = GFX_report_event_election_vote
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = spr_elections
-		has_war = yes
+		has_country_flag = SPR_elections
+		OR = {
+			has_war_with = CAR
+			has_war_with = CNT
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
 	option = {
 		name = sprd.25.a
 		add_political_power = -100
 	}
 }
 
-country_event = { #election riots
+# Election riots
+country_event = {
 	id = sprd.26
 	title = sprd.26.t
 	desc = sprd.26.d
+	picture = GFX_report_event_gathering_protest
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		OR = {
-			has_country_flag = spr_rigged_elections
-			has_war = yes
+		has_country_flag = SPR_rigged_elections
+		NOT = {
+			has_war_with = CNT
+			has_war_with = CAR
 		}
 	}
+	
 	mean_time_to_happen = { days = 90 }
+	
 	option = {
-		name = sprd.26.a
+		name = sprd.26.a #Call off the election - Martial Law is declared
+		ai_chance = { factor = 75 }
+		custom_effect_tooltip = SPR_cancel_election
 		add_political_power = -200
-		#riots
-		set_country_flag = cnt-fai
-		set_country_flag = carlists
+		clr_country_flag = SPR_rigged_elections
+		set_country_flag = SPR_cntfai_will_rise
+		set_country_flag = SPR_carlists_will_rise
 	}
 	option = {
-		name = sprd.26.a
+		name = sprd.26.a #Nothing will stop this election
+		ai_chance = { factor = 25 }
 		add_political_power = -100
-		#riots
-		set_country_flag = election_riots
+		hidden_effect = {
+			country_event = { id = sprd.27 days = 1 }
+		}
 	}
 }
 
-country_event = { #election day disaster
+# Election day disaster
+country_event = {
 	id = sprd.27
 	title = sprd.27.t
 	desc = sprd.27.d
-	fire_only_once = yes
+	picture = GFX_report_event_generic_riot
+	
+	is_triggered_only = yes
+	
 	trigger = {
-		tag = SPR
-		has_country_flag = election_riots
-		has_war = yes
+		NOT = {
+			has_war_with = CNT
+			has_war_with = CAR
+		}
 	}
-	mean_time_to_happen = { days = 1 }
+
 	option = {
 		name = sprd.27.a
+		clr_country_flag = SPR_rigged_elections
 		add_political_power = -200
 		add_manpower = -10000
-		set_country_flag = cnt-fai
-		set_country_flag = carlists
-		set_country_flag = election_day_disaster
+		set_country_flag = SPR_cntfai_will_rise
+		set_country_flag = SPR_carlists_will_rise
 	}
 }
 
@@ -744,9 +944,7 @@ country_event = { #election day disaster
 #### Kingdom of Spain, Foreign Policy
 ########################################
 
-add_namespace = sprf
-
-### Mediterranean economic bloc
+### Mediterranean economic bloc events
 
 # Mediterranean economic bloc - PORTUGAL
 country_event = {
@@ -796,164 +994,234 @@ country_event = {
 	}
 }
 
+### Carlists and CNT-FAI fleeing events
 
-country_event = { #Carlists in ITALY
+# Carlists flee to ITALY
+country_event = {
 	id = sprf.3
 	title = sprf.3.t
 	desc = sprf.3.d
+	picture = GFX_report_event_SPR_javier
+	
 	trigger = {
 		tag = ITA
-		has_country_flag = spr_elections
+		country_exists = SPR
+		NOT = { country_exists = CAR }
+		SPR = {
+			NOT = { has_country_flag = aftermath_of_the_civil_war }
+			has_country_flag = SPR_javier_arrested
+		}
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
-		name = sprf.3.a
-		#command = { type = relation which = GER value = -50 }
-		#command = { type = relation which = SPA value = -150 }
-		#command = { type = relation which = AUS value = -50 }
-		#carlists, shit
+		name = sprf.3.a #Allow them to continue operating from Italy
+		ai_chance = { factor = 60 }
+		add_political_power = 50
+		reverse_add_opinion_modifier = { target = GER modifier = ITA_hates_govt }
+		reverse_add_opinion_modifier = { target = AUS modifier = ITA_hates_govt }
+		reverse_add_opinion_modifier = { target = SPR modifier = ITA_outraged }
 	}
 	option = {
-		name = sprf.3.b
-		#command = { type = relation which = SPA value = -100 }
+		name = sprf.3.b #Break off diplomatic relations with Spain
+		ai_chance = { factor = 25 }
+		reverse_add_opinion_modifier = { target = SPR modifier = ITA_outraged }
 	}
 	option = {
-		name = sprf.3.c
+		name = sprf.3.c #Wash our hands of the Carlists
+		ai_chance = { factor = 15 }
 		add_political_power = -100
 	}
 }
 
-country_event = { #CNT-FAI in FRANCE
+# CNT-FAI flees to FRANCE
+country_event = {
 	id = sprf.4
 	title = sprf.4.t
 	desc = sprf.4.d
 	picture = SPA_CNT_refugees
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = FRA
-		has_global_flag = cntfai_fled
-			has_country_flag = FRA_support_cnt
+		has_socialist_government = yes
+		NOT = { country_exists = CNT }
+		SPR = { has_country_flag = SPR_cntfai_fled }
 	}
-	mean_time_to_happen = { days = 15 }
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
 	option = {
-		name = sprf.4.a
-				ai_chance = { factor = 85 }
+		name = sprf.4.a #Give them what they ask
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 2.5
+				has_country_flag = FRA_support_cnt
+			}
+		}
+		set_global_flag = cntfai_support_from_france
 		add_political_power = 60
-		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
 		add_manpower = -20000
-		#add_equipment_to_stockpile = { type = supplies amount = -500 } what
 		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
-		set_global_flag = cntfai_support_from_frace
 	}
 	option = {
-		name = sprf.4.b
-				ai_chance = { factor = 10 }
+		name = sprf.4.b #Refuse, but give them refuge
+		ai_chance = {
+			factor = 45
+			modifier = {
+				factor = 0.2
+				has_country_flag = FRA_support_cnt
+			}
+		}
 		add_political_power = -20
-		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
 	}
 	option = {
-		name = sprf.4.c
-				ai_chance = { factor = 5 }
+		name = sprf.4.c #Kick them out
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_country_flag = FRA_support_cnt
+			}
+		}
 		add_political_power = -100
-		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
 	}
 }
 
-	country_event = { #CNT-FAI in ITALY
+# CNT-FAI flees to RSI
+country_event = {
 	id = sprf.5
 	title = sprf.4.t
 	desc = sprf.4.d
 	picture = SPA_CNT_refugees
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SRI
-		has_global_flag = cntfai_fled
+		has_socialist_government = yes
+		NOT = { country_exists = CNT }
+		SPR = { has_country_flag = SPR_cntfai_fled }
 	}
-	mean_time_to_happen = { days = 15 }
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
 	option = {
 		name = sprf.4.a
-				ai_chance = { factor = 75 }
-		add_political_power = 60
-		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
-		add_manpower = -20000
-		#add_equipment_to_stockpile = { type = supplies amount = -500 } what
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
+		ai_chance = { factor = 75 }
 		set_global_flag = cntfai_support_from_italy
+		add_political_power = 60
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		add_manpower = -20000
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
 	}
 	option = {
 		name = sprf.4.b
-				ai_chance = { factor = 20 }
+		ai_chance = { factor = 20 }
 		add_political_power = -20
-		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
 	}
 	option = {
 		name = sprf.4.c
-				ai_chance = { factor = 5 }
+		ai_chance = { factor = 5 }
 		add_political_power = -100
-		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
 	}
 }
 
-	country_event = { #CNT-FAI in ENGLAND
+# CNT-FAI flees to ENGLAND
+country_event = {
 	id = sprf.6
 	title = sprf.4.t
 	desc = sprf.4.d
 	picture = SPA_CNT_refugees
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = ENG
-		has_global_flag = cntfai_fled
-				has_country_flag = ENG_support_cnt
+		has_socialist_government = yes
+		NOT = { country_exists = CNT }
+		SPR = { has_country_flag = SPR_cntfai_fled }
 	}
-	mean_time_to_happen = { days = 15 }
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
 	option = {
 		name = sprf.6.a
-				ai_chance = { factor = 75 }
-		add_political_power = 60
-		add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
-		add_manpower = -20000
-		#add_equipment_to_stockpile = { type = supplies amount = -500 } what
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 15
+				has_country_flag = ENG_support_cnt
+			}
+		}
 		set_global_flag = cntfai_support_from_england
+		add_political_power = 60
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_supported }
+		add_manpower = -20000
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 }
 	}
 	option = {
 		name = sprf.4.b
-				ai_chance = { factor = 20 }
+		ai_chance = { factor = 20 }
 		add_political_power = -20
-		add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_given_refuge }
 	}
 	option = {
 		name = sprf.4.c
-				ai_chance = { factor = 5 }
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0.07
+				has_country_flag = ENG_support_cnt
+			}
+		}
 		add_political_power = -100
-		add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
+		reverse_add_opinion_modifier  = { target = SPR modifier = cntfai_kicked_out }
 	}
 }
-
 
 
 ########################################
 #### Spanish Civil War
 ########################################
 
-add_namespace = sprc
-
 ### UPRISINGS ###
 
-country_event = { #Carlist uprising
+# Carlist Uprising begins
+country_event = {
 	id = sprc.1
 	title = sprc.1.t
 	desc = sprc.1.d
+	picture = GFX_report_event_SPR_civwar
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		date > 1937.05.5
-		has_country_flag = carlists
+		date > 1937.05.15
+		has_country_flag = SPR_carlists_will_rise
 	}
-	mean_time_to_happen = { days = 10 }
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
 	option = {
 		name = sprc.1.a
 		ai_chance = { factor = 100 }
@@ -1032,7 +1300,7 @@ country_event = { #CNT-FAI uprising
 	trigger = {
 		tag = SPR
 		date > 1937.05.5
-		has_country_flag = cnt-fai
+		has_country_flag = SPR_cntfai_will_rise
 		has_global_flag = carlists_risen
 	}
 	mean_time_to_happen = { days = 2 }

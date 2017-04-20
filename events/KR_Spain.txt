@@ -11,42 +11,45 @@ add_namespace = sprd
 
 #Events affecting other countries are under 'Foreign Policy'
 
-country_event = { #Intro event
+# Introduction event
+country_event = {
 	id = sprd.1
 	title = sprd.1.t
 	desc = sprd.1.d
 	picture = SPA_alfonso_xiii
 
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		date > 1936.01.03
+		date > 1936.01.01
 	}
-	mean_time_to_happen = { days = 1 }
+	
 	option = {
 		name = sprd.1.a
 	}
 }
 
-country_event = { #Black Monday
+# Black Monday hits Spain
+# TODO: Spain needs a way to remove this
+country_event = {
 	id = sprd.2
 	title = sprd.2.t
 	desc = sprd.2.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		date > 1936.03.02
-		has_global_flag = black_monday
-	}
-	mean_time_to_happen = { days = 15 }
+	picture = norway_black_monday
+	
+	is_triggered_only = yes
+	
 	option = {
 		name = sprd.2.a
-		add_political_power = -200
+		add_political_power = -100
 		add_ideas = spr_black_monday
 	}
 }
 
-country_event = { #social breakdown
+# Social breakdown
+# TODO: This makes the rebellion automatic - may need to revisit
+country_event = {
 	id = sprd.3
 	title = sprd.3.t
 	desc = sprd.3.d
@@ -65,20 +68,27 @@ country_event = { #social breakdown
 	}
 }
 
-# carlist chain
+### Carlist Event Chains
 
-country_event = { #Alfonso Carlos de Borbon dies
+# Alfonso Carlos de Borbon dies
+country_event = {
 	id = sprd.4
 	title = sprd.4.t
 	desc = sprd.4.d
-	fire_only_once = yes
 	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
 
 	trigger = {
 		tag = SPR
 		date > 1936.01.10
+		NOT = { has_country_flag = alfonso_carlos_dead }
 	}
-	mean_time_to_happen = { days = 90 }
+	
+	mean_time_to_happen = {
+		days = 90
+	}
+	
 	option = {
 		name = sprd.4.a
 		add_political_power = -20
@@ -86,34 +96,44 @@ country_event = { #Alfonso Carlos de Borbon dies
 	}
 }
 
-country_event = { #Javier gives a speech
+# Javier gives a speech
+country_event = {
 	id = sprd.5
 	title = sprd.5.t
 	desc = sprd.5.d
+	picture = GFX_report_event_SPR_javier
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
 		has_country_flag = alfonso_carlos_dead
 		has_idea = SPR_black_monday
 	}
-	mean_time_to_happen = { days = 2 }
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
 	option = {
 		name = sprd.5.a
 		add_political_power = -40
-		set_global_flag = javiers_plan
+		hidden_effect = {
+			POR = { country_event = { id = sprf.1 days = 4 } }
+			ITA = { country_event = { id = sprf.2 days = 5 } }
+		}
 	}
 }
 
-country_event = { #Mediterranean economic block - Portugal agrees
+# Mediterranean economic bloc - Portugal agrees
+country_event = {
 	id = sprd.6
 	title = sprd.6.t
 	desc = sprd.6.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_global_flag = mediterranean_economic_block_por
-	}
-	mean_time_to_happen = { days = 2 }
+	picture = diplomacy3
+	
+	is_triggered_only = yes
+
 	option = {
 		name = sprd.6.a
 		add_ideas = spr_portuguese_economic_cooperation
@@ -121,16 +141,15 @@ country_event = { #Mediterranean economic block - Portugal agrees
 	}
 }
 
-country_event = { #Mediterranean economic block - Italy agrees
+# Mediterranean economic bloc - Italy agrees
+country_event = {
 	id = sprd.7
 	title = sprd.7.t
 	desc = sprd.7.d
-	fire_only_once = yes
-	trigger = {
-		tag = SPR
-		has_global_flag = mediterranean_economic_block_ita
-	}
-	mean_time_to_happen = { days = 2 }
+	picture = diplomacy3
+	
+	is_triggered_only = yes
+	
 	option = {
 		name = sprd.7.a
 		add_ideas = spr_italian_economic_cooperation
@@ -138,49 +157,64 @@ country_event = { #Mediterranean economic block - Italy agrees
 	}
 }
 
-country_event = { #Javier gives another speech
+# Javier gives another speech
+country_event = {
 	id = sprd.8
 	title = sprd.8.t
 	desc = sprd.8.d
+	picture = GFX_report_event_SPR_javier
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
+		NOT = { has_war_with = CAR }
+		NOT = { country_exists = CAR }
 		OR = {
 			has_idea = spr_portuguese_economic_cooperation
 			has_idea = spr_italian_economic_cooperation
 		}
-		has_country_flag = carlists
 	}
-	mean_time_to_happen = { days = 10 }
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
 	option = {
 		name = sprd.8.a
+		ai_chance = { factor = 25 }
 		add_political_power = -200
 		set_country_flag = carlists
 		set_country_flag = javier_banned
 	}
 	option = {
 		name = sprd.8.b
+		ai_chance = { factor = 25 }
 		add_political_power = -200
 		set_country_flag = carlists
 		set_country_flag = javier_arrested
 	}
 	option = {
 		name = sprd.8.c
+		ai_chance = { factor = 25 }
 		add_political_power = -20
 		set_country_flag = javier_praised
 	}
 	option = {
 		name = sprd.8.e
+		ai_chance = { factor = 25 }
 		add_political_power = -40
 		set_country_flag = javier_ignored
 	}
 }
 
-country_event = { #bombing
+# Carlist bombing
+country_event = {
 	id = sprd.9
 	title = sprd.9.t
 	desc = sprd.9.d
-	fire_only_once = no
+	picture = GFX_report_event_IRE_bombing
+	
 	trigger = {
 		tag = SPR
 		OR = {
@@ -188,39 +222,45 @@ country_event = { #bombing
 			has_country_flag = javier_arrested
 			has_country_flag = javier_ignored
 		}
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CAR
+		}
 	}
-	mean_time_to_happen = { days = 200 }
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
 	option = {
 		name = sprd.9.a
 		add_political_power = -40
-		#random_list = {
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#10 = { remove_unit_leader =  }
-		#}
 	}
 }
 
-country_event = { #demonstrations
+# Carlist Demonstrations
+country_event = {
 	id = sprd.10
 	title = sprd.10.t
 	desc = sprd.10.d
-	fire_only_once = no
+	picture = GFX_report_event_gathering_protest
+	
 	trigger = {
 		tag = SPR
 		OR = {
 			has_country_flag = javier_banned
 			has_country_flag = javier_ignored
 		}
+		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
+			country_exists = CAR
+		}
 	}
-	mean_time_to_happen = { days = 200 }
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
 	option = {
 		name = sprd.10.a
 		add_political_power = -60
@@ -706,57 +746,53 @@ country_event = { #election day disaster
 
 add_namespace = sprf
 
-#Mediterranean economic block
+### Mediterranean economic bloc
 
-country_event = { #Mediterranean economic block - PORTUGAL
+# Mediterranean economic bloc - PORTUGAL
+country_event = {
 	id = sprf.1
 	title = sprf.1.t
 	desc = sprf.1.d
-	fire_only_once = yes
-	trigger = {
-		tag = POR
-		date > 1936.04.17
-		has_global_flag = javiers_plan
-	}
-	mean_time_to_happen = { days = 5 }
+	picture = GFX_report_event_SPR_javier
+	
+	is_triggered_only = yes
+	
 	option = {
 		name = sprf.1.a
+		ai_chance = { factor = 75 }
 		add_political_power = 60
 		add_ideas = por_spanish_economic_cooperation
 		add_opinion_modifier  = { target = SPR modifier = mediterranean_economic_block }
-		set_global_flag = mediterranean_economic_block_por
-		ai_chance = { factor = 75 }
+		SPR = { country_event = { id = sprd.6 } }
 	}
 	option = {
 		name = sprf.1.b
-		add_political_power = -40
 		ai_chance = { factor = 25 }
+		add_political_power = -40
 	}
 }
 
-country_event = { #Mediterranean economic block - ITALY
+# Mediterranean economic bloc - ITALY
+country_event = {
 	id = sprf.2
 	title = sprf.2.t
 	desc = sprf.2.d
-	fire_only_once = yes
-	trigger = {
-		tag = ITA
-		date > 1936.04.17
-		has_global_flag = javiers_plan
-	}
-	mean_time_to_happen = { days = 5 }
+	picture = GFX_report_event_SPR_javier
+	
+	is_triggered_only = yes
+	
 	option = {
 		name = sprf.2.a
+		ai_chance = { factor = 85 }
 		add_political_power = 60
 		add_ideas = ita_spanish_economic_cooperation
 		add_opinion_modifier  = { target = SPR modifier = mediterranean_economic_block }
-		set_global_flag = mediterranean_economic_block_ita
-		ai_chance = { factor = 85 }
+		SPR = { country_event = { id = sprd.7 } }
 	}
 	option = {
 		name = sprf.2.b
-		add_political_power = -40
 		ai_chance = { factor = 15 }
+		add_political_power = -40
 	}
 }
 

@@ -1476,6 +1476,20 @@ focus = {
 
 }
 
+focus = {
+	id = TRM_Pol_Research
+	icon = GFX_focus_research
+	x = 24
+	y = 6
+	cost = 10
+	prerequisite = {focus = TRM_Kolchak_Doc focus = TRM_Mil_ML_End focus = TRM_Yui_End focus = TRM_Rep_Goods}
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_research_slot = 1
+	}
+}
 
 
 ###Expand###
@@ -1840,16 +1854,44 @@ focus = {
 }
 
 focus = {
+	id = TRM_Leave_Japan
+	icon = GFX_goal_anti_comintern_pact
+	available = {
+		is_subject_of = JAP
+		controls_state = 195
+		controls_state = 219
+	}
+	prerequisite = {focus = TRM_Claim_Russia }
+	x = 34
+	y = 8
+	cost = 10
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id = tram.97 days = 1 } }
+	}
+	bypass = {
+		NOT = { is_subject_of = JAP }
+	}
+	
+}
+
+focus = {
 	id = TRM_Become_Russia
 	icon = GFX_focus_generic_support_the_left_right
 	available = {
-		controls_state = 195
-		controls_state = 219
-		RUS = {exists = no}
-		SOV = {exists = no}
+		AND = {
+			controls_state = 195
+			controls_state = 219
+			RUS = {exists = no}
+			SOV = {exists = no}
+			NOT = {is_subject_of = JAP}
+		}
 	}
 	prerequisite = {focus = TRM_Claim_Russia }
-	x = 33
+	x = 32
 	y = 8
 	cost = 10
 	ai_will_do = {

@@ -1991,13 +1991,20 @@ country_event = {
 	mean_time_to_happen = { days = 120}
 
 	option = { #Kolchak survived
+		ai_chance = { 
+			factor = 40
+		}
 		name = tram.80.a
 		add_political_power = -100
 		set_country_flag = TRM_Kolchak_alive
 		remove_ideas = TRM_anti_kolchak
+		JAP = {country_event = {id = tram.98 days = 1} }
 	}
 
 	option = { #Kolchak dead
+		ai_chance = { 
+			factor = 60
+		}
 		name = tram.80.b
 		country_event = {id = tram.81}
 		remove_ideas = TRM_kolchak
@@ -2021,21 +2028,27 @@ country_event = {
 	is_triggered_only = yes
 
 		option = { #New Dictator
-			name = tram.81.a
+			ai_chance = { 
+				factor = 40
+			}
+		name = tram.81.a
 		add_political_power = -200
 		set_country_flag = TRM_Mil_coup
 		add_ideas = TRM_martial_law
 		remove_ideas = TRM_anti_kolchak
-		JAP = {country_event = {id = tram.49 days = 1} }
+		JAP = {country_event = {id = tram.100 days = 1} }
 		}
 
 	option = { #Republic
-			name = tram.81.b
+			ai_chance = { 
+				factor = 60
+			}
+		name = tram.81.b
 		add_political_power = -40
 		add_popularity = { ideology = market_liberal popularity = 0.15 }
 		set_country_flag = TRM_Dem_coup
 		remove_ideas = TRM_anti_kolchak
-		JAP = {country_event = {id = tram.84 days = 7} }
+		JAP = {country_event = {id = tram.84 days = 1} }
 		set_politics = {
 		ruling_party = market_liberal
 		}
@@ -2057,12 +2070,37 @@ country_event = {
 	desc = tram.84.d
 	is_triggered_only = yes
 
-	option = { #Demand new military dictator
-		name = tram.84.a
-		TRM = {country_event = {id = tram.85 days = 2} }
+	option = { #Wojciechowski
+		ai_chance = {
+			factor = 20
+		}
+		name = tram.98.a
+		TRM = {country_event = {id = tram.85 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Woj }
 	}
-
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 15
+		}
+		name = tram.98.b
+		TRM = {country_event = {id = tram.85 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Sem }
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 10
+		}
+		name = tram.98.c
+		TRM = {country_event = {id = tram.85 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Yui }
+	}
+	
 	option = { #Do Nothing
+		ai_chance = {
+			factor = 55
+		}
 		name = tram.84.b
 	}
 
@@ -2074,26 +2112,112 @@ country_event = {
 	title = tram.85.t
 	desc = tram.85.d
 	is_triggered_only = yes
-
-	option = { #Remove Republic
+	
+	option = { #Wojciechowski
+		ai_chance = {
+			factor = 25
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Woj
+		}
 		name = tram.85.a
 		clr_country_flag = TRM_Dem_coup
 		set_country_flag = TRM_Mil_coup
-		set_politics = {
-		ruling_party = paternal_autocrat
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Sergei Wojciechowski"
+			picture = "Portrait_Transamur_Sergey_Wojciechowski.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
 		}
-		remove_ideas_with_trait = head_of_government
-		add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
-		remove_ideas_with_trait = foreign_minister
-		add_ideas = TRM_Boris_Bakhmetev_for_ade
-		remove_ideas_with_trait = economy_minister
-		add_ideas = TRM_Dmitry_Lebedev_eco_pau
-		remove_ideas_with_trait = security_minister
-		add_ideas = TRM_Arkady_Udintsev_sec_pau
+		hidden_effect = {
+			set_politics = {
+			ruling_party = paternal_autocrat
+			}
+			remove_ideas_with_trait = head_of_government
+			add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+			remove_ideas_with_trait = foreign_minister
+			add_ideas = TRM_Boris_Bakhmetev_for_ade
+			remove_ideas_with_trait = economy_minister
+			add_ideas = TRM_Dmitry_Lebedev_eco_pau
+			remove_ideas_with_trait = security_minister
+			add_ideas = TRM_Arkady_Udintsev_sec_pau
+		}
+
+	}
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 15
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Sem
+		}
+		name = tram.85.b
+		clr_country_flag = TRM_Dem_coup
+		set_country_flag = TRM_Mil_coup
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Grigory Semyonov"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			set_politics = {
+			ruling_party = paternal_autocrat
+			}
+			remove_ideas_with_trait = head_of_government
+			add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+			remove_ideas_with_trait = foreign_minister
+			add_ideas = TRM_Boris_Bakhmetev_for_ade
+			remove_ideas_with_trait = economy_minister
+			add_ideas = TRM_Dmitry_Lebedev_eco_pau
+			remove_ideas_with_trait = security_minister
+			add_ideas = TRM_Arkady_Udintsev_sec_pau
+		}
+		
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 5
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Yui
+		}
+		name = tram.85.c
+		clr_country_flag = TRM_Dem_coup
+		set_country_flag = TRM_Yui
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Yui Mitsue"
+			picture = "Portrait_Transamur_Yui_Mitsue.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			set_politics = {
+			ruling_party = paternal_autocrat
+			}
+			remove_ideas_with_trait = head_of_government
+			add_ideas = TRM_Grigorij_M_Semyonov_hog_pau
+			remove_ideas_with_trait = foreign_minister
+			add_ideas = TRM_Boris_Bakhmetev_for_ade
+			remove_ideas_with_trait = economy_minister
+			add_ideas = TRM_Dmitry_Lebedev_eco_pau
+			remove_ideas_with_trait = security_minister
+			add_ideas = TRM_Arkady_Udintsev_sec_pau
+		}
 	}
 
 	option = { #Break Away
-		name = tram.85.b
+		name = tram.85.e
 		JAP = {end_puppet = TRM}
 		JAP = {country_event = {id = tram.1 days = 1}}
 	}
@@ -2410,6 +2534,279 @@ country_event = {
 			}
 		}
 		set_country_flag = TRM_sib_war
+	}
+
+}
+
+###Russian Republic(TRM) breaks away###
+
+country_event = { #Russian Republic(TRM) breaks away!
+	id = tram.97
+	title = tram.97.t
+	desc = tram.97.d
+	is_triggered_only = yes
+
+	option = { #war
+		name = tram.1.a
+		ai_chance = {
+			factor = 35
+		}
+		declare_war_on = {
+			target = TRM type = annex_everything
+		}
+		set_global_flag = PRI_breaksaway
+		hidden_effect = {
+			TRM = {
+			remove_ideas = TRM_jap_advisors
+			remove_ideas = TRM_jap_inv1
+			remove_ideas = TRM_jap_inv2
+			}
+		}
+		JAP = {remove_from_faction = TRM}
+	}
+
+	option = { #leave them
+		name = tram.1.b
+		ai_chance = {
+			factor = 65
+		}
+		set_global_flag = PRI_breaksaway
+		add_political_power = -200
+		hidden_effect = {
+			TRM = {
+			remove_ideas = TRM_jap_advisors
+			remove_ideas = TRM_jap_inv1
+			remove_ideas = TRM_jap_inv2
+			}
+		}
+		JAP = {remove_from_faction = TRM}
+	}
+}
+
+###Kolchak survived, Japan gets a message###
+country_event = {
+	id = tram.98
+	title = tram.98.t
+	desc = tram.98.d
+	is_triggered_only = yes
+
+	option = { #Wojciechowski
+		ai_chance = {
+			factor = 30
+		}
+		name = tram.98.a
+		TRM = {country_event = {id = tram.99 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Woj }
+	}
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 15
+		}
+		name = tram.98.b
+		TRM = {country_event = {id = tram.99 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Sem }
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 10
+		}
+		name = tram.98.c
+		TRM = {country_event = {id = tram.99 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Yui }
+	}
+	
+	option = { #Do Nothing
+		ai_chance = {
+			factor = 45
+		}
+		name = tram.98.e
+	}
+
+}
+
+###Kolchak gets a demand from JAP###
+country_event = {
+	id = tram.99
+	title = tram.99.t
+	desc = tram.99.d
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = { #Wojciechowski
+		ai_chance = {
+			factor = 25
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Woj
+		}
+		name = tram.99.a
+		remove_ideas = TRM_anti_kolchak
+		remove_ideas = TRM_kolchak
+		clr_country_flag = TRM_Kolchak_alive
+		set_country_flag = TRM_Mil_coup
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Sergei Wojciechowski"
+			picture = "Portrait_Transamur_Sergey_Wojciechowski.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+
+	}
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 15
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Sem
+		}
+		name = tram.99.b
+		remove_ideas = TRM_anti_kolchak
+		remove_ideas = TRM_kolchak
+		clr_country_flag = TRM_Kolchak_alive
+		set_country_flag = TRM_Mil_coup
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Grigory Semyonov"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 5
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Yui
+		}
+		name = tram.99.c
+		remove_ideas = TRM_anti_kolchak
+		remove_ideas = TRM_kolchak
+		clr_country_flag = TRM_Kolchak_alive
+		set_country_flag = TRM_Yui
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Yui Mitsue"
+			picture = "Portrait_Transamur_Yui_Mitsue.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+	}
+	
+	option = { #Breakaway
+		ai_chance = {
+			factor = 60
+		}
+		name = tram.99.e
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id = tram.1 days = 1}}
+	}
+
+}
+
+###Kolchak dead, Japan gets a message###
+country_event = {
+	id = tram.100
+	title = tram.100.t
+	desc = tram.100.d
+	is_triggered_only = yes
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 25
+		}
+		name = tram.98.b
+		TRM = {country_event = {id = tram.101 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Sem }
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 5
+		}
+		name = tram.98.c
+		TRM = {country_event = {id = tram.101 days = 1} }
+		TRM = { set_country_flag = TRM_pressure_Yui }
+	}
+	
+	option = { #Do Nothing
+		ai_chance = {
+			factor = 70
+		}
+		name = tram.100.a
+	}
+
+}
+
+###Wojciechowski gets a demand from JAP###
+country_event = {
+	id = tram.101
+	title = tram.101.t
+	desc = tram.101.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { #Semyonov
+		ai_chance = {
+			factor = 35
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Sem
+		}
+		remove_ideas = TRM_martial_law
+		name = tram.85.b
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Grigory Semyonov"
+			picture = ""
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+		
+	}
+	
+	option = { #Yui Mitsue
+		ai_chance = {
+			factor = 15
+		}
+		trigger = {
+			has_country_flag = TRM_pressure_Yui
+		}
+		name = tram.85.c
+		remove_ideas = TRM_martial_law
+		clr_country_flag = TRM_Mil_coup
+		set_country_flag = TRM_Yui
+		remove_ideas = TRM_dream
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Yui Mitsue"
+			picture = "Portrait_Transamur_Yui_Mitsue.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+	}
+	
+	option = { #Breakaway
+		ai_chance = {
+			factor = 45
+		}
+		name = tram.85.e
+		JAP = {end_puppet = TRM}
+		JAP = {country_event = {id = tram.1 days = 1}}
 	}
 
 }

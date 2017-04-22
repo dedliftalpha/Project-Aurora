@@ -29,7 +29,7 @@ country_event = {
 	
 	option = {
 		name = sprd.1.a
-		add_political_power = -100
+		add_political_power = -200
 	}
 }
 
@@ -1222,11 +1222,31 @@ country_event = {
 			}
 			CAR = { transfer_state = PREV }
 		}
+		if = {
+			limit = { ITA = { has_idea = ITA_spanish_economic_cooperation } }
+			remove_ideas = SPR_italian_economic_cooperation
+			CAR = { add_ideas = SPR_italian_economic_cooperation }
+		}
+		if = {
+			limit = { POR = { has_idea = POR_spanish_economic_cooperation } }
+			remove_ideas = SPR_portuguese_economic_cooperation
+			CAR = { add_ideas = SPR_portuguese_economic_cooperation }
+		}
+		if = {
+			limit = { has_idea = SPR_black_monday }
+			CAR = { add_ideas = CAR_black_monday }
+		}
 		CAR = { transfer_technology = yes }
 	}
 	
 	option = {
 		name = sprc.1.a #We shall fight them!
+		if = {
+			limit = { has_war_with = CNT }
+			remove_ideas = SPR_social_breakdown
+		}
+		custom_effect_tooltip = SPR_reinforce_madrid
+		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
 		CAR = {
 			country_event = { id = sprc.2 days = 1 }
 		}
@@ -1234,6 +1254,12 @@ country_event = {
 	option = {
 		name = sprc.1.b #Long live Javier I! (Play as the Carlists)
 		trigger = { is_ai = no }
+		if = {
+			limit = { has_war_with = CNT }
+			remove_ideas = SPR_social_breakdown
+		}
+		custom_effect_tooltip = SPR_reinforce_madrid
+		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
 		CAR = {
 			change_tag_from = SPR
 			country_event = { id = sprc.2 days = 1 }
@@ -1266,6 +1292,13 @@ country_event = {
 		declare_war_on = {
 			target = SPR
 			type = annex_everything
+		}
+		if = {
+			limit = { country_exists = CNT }
+			declare_war_on = {
+				target = CNT
+				type = annex_everything
+			}
 		}
 	}
 }
@@ -1315,12 +1348,22 @@ country_event = {
 			}
 			CNT = { transfer_state = PREV }
 		}
+		if = {
+			limit = { has_idea = SPR_black_monday }
+			CNT = { add_ideas = SPR_black_monday }
+		}
 		CNT = { transfer_technology = yes }
 	}
 	
 	option = {
 		name = sprc.3.a #We shall fight to stop this revolution!
 		set_global_flag = cntfai_risen
+		if = {
+			limit = { has_war_with = CAR }
+			remove_ideas = SPR_social_breakdown
+		}
+		custom_effect_tooltip = SPR_reinforce_madrid
+		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
 		CNT = {
 			country_event = { id = sprc.4 days = 1 }
 		}
@@ -1328,6 +1371,12 @@ country_event = {
 	option = {
 		name = sprc.3.b #Viva la Revolución! (Play as the CNT-FAI)
 		trigger = { is_ai = no }
+		if = {
+			limit = { has_war_with = CAR }
+			remove_ideas = SPR_social_breakdown
+		}
+		custom_effect_tooltip = SPR_reinforce_madrid
+		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
 		CNT = {
 			change_tag_from = SPR
 			country_event = { id = sprc.4 days = 1 }
@@ -1363,14 +1412,19 @@ country_event = {
 			target = SPR
 			type = annex_everything
 		}
+		if = {
+			limit = { country_exists = CAR }
+			declare_war_on = {
+				target = CAR
+				type = annex_everything
+			}
+		}
 	}
 }
 
-### SPANISH INTERVENTION EVENTS ###
+### KINGDOM OF SPAIN EVENTS ###
 
-### Russian Volunteers
-
-# Does Russia offer aid?
+# Country considers aiding Spain
 country_event = {
 	id = sprc.101
 	title = sprc.101.t
@@ -1380,7 +1434,10 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = RUS
+		OR = {
+			tag = RUS
+			tag = GER
+		}
 		country_exists = SPR
 		has_global_flag = spanish_civil_war
 		has_war = no
@@ -1393,10 +1450,17 @@ country_event = {
 	
 	option = {
 		name = sprc.101.a
-		ai_chance = { factor = 40 }
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 0.65
+				tag = RUS
+			}
+		}
 		set_country_flag = SPR_intervention
+		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = RUS }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
 		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
 		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
 		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
@@ -1404,12 +1468,17 @@ country_event = {
 	}
 	option = {
 		name = sprc.101.b
-		ai_chance = { factor = 60 }
-		add_political_power = -50
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 1.5
+				tag = RUS
+			}
+		}
 	}
 }
 
-# Help arrives from Russia
+# Help arrives in Spain
 country_event = {
 	id = sprc.102
 	title = sprc.102.t
@@ -1420,10 +1489,17 @@ country_event = {
 	
 	option = {
 		name = sprc.102.a
-		add_opinion_modifier = { target = RUS modifier = aided_us_civwar }
+		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
-		add_ideas = SPR_advisors_russia
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = RUS }
+		if = {
+			limit = { FROM = { tag = RUS } }
+			add_ideas = SPR_advisors_russia
+		}
+		if = {
+			limit = { FROM = { tag = GER } }
+			add_ideas = SPR_advisors_germany
+		}
 	}
 }
 
@@ -1434,141 +1510,35 @@ country_event = {
 	desc = sprc.103.d
 	picture = GFX_report_event_SPR_civwar2
 	
-	fire_only_once = yes
-	
 	trigger = {
-		tag = RUS
 		has_country_flag = SPR_intervention
 		NOT = { has_global_flag = spanish_civil_war }
 	}
 	
 	mean_time_to_happen = {
 		days = 5
+	}
+	
+	immediate = {
+		clr_country_flag = SPR_intervention
 	}
 	
 	option = {
 		name = sprc.103.a
-		clr_country_flag = SPR_intervention
 		army_experience = 20
 		add_political_power = 20
-		SPR = { remove_ideas = SPR_advisors_russia }
-	}
-}
-
-### German Volunteers
-
-# Does Germany offer aid?
-country_event = {
-	id = sprc.104
-	title = sprc.104.t
-	desc = sprc.104.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		country_exists = SPR
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = no
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		name = sprc.104.a
-		ai_chance = { factor = 60 }
-		set_country_flag = SPR_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = GER }
-		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
-		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
-		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
-		SPR = { country_event = { id = sprc.105 } }
-	}
-	option = {
-		name = sprc.104.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
-	}
-}
-
-# Help arrives from Germany
-country_event = {
-	id = sprc.105
-	title = sprc.105.t
-	desc = sprc.105.d
-	picture = GFX_report_event_SPR_civwar2
-
-	is_triggered_only = yes
-
-	option = {
-		name = sprc.105.a
-		add_opinion_modifier = { target = GER modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_ideas = SPR_advisors_germany
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = GER }
-	}
-}
-
-# Lessons of war
-country_event = {
-	id = sprc.106
-	title = sprc.106.t
-	desc = sprc.106.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GER
-		has_country_flag = SPR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.106.a
-		clr_country_flag = SPR_intervention
-		army_experience = 20
-		add_political_power = 20
-		SPR = { remove_ideas = SPR_advisors_germany }
-	}
-}
-
-### NFA Volunteers
-
-# Lessons of war
-country_event = {
-	id = sprc.115
-	title = sprc.115.t
-	desc = sprc.115.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = NFA
-		has_country_flag = SPR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.115.a
-		clr_country_flag = SPR_intervention
-		army_experience = 20
-		add_political_power = 20
-		SPR = { remove_ideas = SPR_advisors_natfrance }
+		if = {
+			limit = { tag = RUS }
+			SPR = { remove_ideas = SPR_advisors_russia }
+		}
+		if = {
+			limit = { tag = GER }
+			SPR = { remove_ideas = SPR_advisors_germany }
+		}
+		if = {
+			limit = { tag = NFA }
+			SPR = { remove_ideas = SPR_advisors_natfrance }
+		}
 	}
 }
 
@@ -1579,25 +1549,30 @@ country_event = {
 #118
 #119
 
-### Victory
-
+# Kingdom of Spain victory event
 country_event = {
 	id = sprc.120
 	title = sprc.120.t
 	desc = sprc.120.d
+	picture = GFX_report_event_SPR_civwar
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = SPR
-		has_country_flag = had_war
+
 		has_global_flag = spanish_civil_war
-		NOT = { has_war_with = CNT }
-		NOT = { has_war_with = CAR }
+		NOT = { country_exists = CNT }
+		NOT = { country_exists = CAR }
 	}
-	mean_time_to_happen = { days = 5 }
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
 	option = {
 		name = sprc.120.a
 		add_political_power = 200
-		remove_ideas = spr_social_breakdown
 		clr_global_flag = spanish_civil_war
 		set_country_flag = aftermath_of_the_civil_war
 		#and a bunch more stuff
@@ -1611,41 +1586,9 @@ country_event = {
 ### Terror
 
 
-### CNT INTERVENTION EVENTS ###
+### CNT-FAI EVENTS ###
 
-### French Volunteers
-
-# Lessons of war
-country_event = {
-	id = sprc.203
-	title = sprc.203.t
-	desc = sprc.203.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = FRA
-		has_country_flag = CNT_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.203.a
-		clr_country_flag = CNT_intervention
-		army_experience = 20
-		add_political_power = 20
-		CNT = { remove_ideas = CNT_advisors_france }
-	}
-}
-
-### British Volunteers
-
-# Does Britain send aid?
+# Country considers aiding the CNT
 country_event = {
 	id = sprc.204
 	title = sprc.204.t
@@ -1655,7 +1598,13 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = ENG
+		OR = {
+			tag = ENG
+			tag = SRI
+			tag = SOV
+			tag = MEX
+			tag = BRA
+		}
 		country_exists = CNT
 		has_global_flag = spanish_civil_war
 		has_war = no
@@ -1668,10 +1617,20 @@ country_event = {
 	
 	option = {
 		name = sprc.204.a
-		ai_chance = { factor = 40 }
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 1.5
+				OR = {
+					tag = FRA
+					tag = SRI
+				}
+			}
+		}
 		set_country_flag = CNT_intervention
+		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ENG }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
 		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
 		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
 		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
@@ -1679,12 +1638,20 @@ country_event = {
 	}
 	option = {
 		name = sprc.204.b
-		ai_chance = { factor = 60 }
-		add_political_power = -50
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 0.65
+				OR = {
+					tag = FRA
+					tag = SRI
+				}
+			}
+		}
 	}
 }
 
-# British aid arrives
+# Aid arrives at CNT
 country_event = {
 	id = sprc.205
 	title = sprc.205.t
@@ -1695,10 +1662,25 @@ country_event = {
 	
 	option = {
 		name = sprc.205.a
-		add_opinion_modifier = { target = ENG modifier = aided_us_civwar }
+		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
-		add_ideas = CNT_advisors_england
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = ENG }
+		if = {
+			limit = { FROM = { tag = ENG } }
+			add_ideas = CNT_advisors_england
+		}
+		if = {
+			limit = { FROM = { tag = SOV } }
+			add_ideas = SPR_advisors_soviet
+		}
+		if = {
+			limit = { FROM = { tag = FRA } }
+			add_ideas = SPR_advisors_france
+		}
+		if = {
+			limit = { FROM = { tag = SRI } }
+			add_ideas = CNT_advisors_italysoc
+		}
 	}
 }
 
@@ -1709,10 +1691,7 @@ country_event = {
 	desc = sprc.206.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
 	trigger = {
-		tag = ENG
 		has_country_flag = CNT_intervention
 		NOT = { has_global_flag = spanish_civil_war }
 	}
@@ -1721,18 +1700,34 @@ country_event = {
 		days = 5
 	}
 	
+	immediate = {
+		clr_country_flag = CNT_intervention
+	}
+	
 	option = {
 		name = sprc.206.a
-		clr_country_flag = CNT_intervention
 		army_experience = 20
-		add_political_power = 20
-		CNT = { remove_ideas = CNT_advisors_england }
+		add_political_power = 100
+		if = {
+			limit = { tag = ENG }
+			CNT = { remove_ideas = SPR_advisors_england }
+		}
+		if = {
+			limit = { tag = SOV }
+			CNT = { remove_ideas = SPR_advisors_soviet }
+		}
+		if = {
+			limit = { tag = FRA }
+			CNT = { remove_ideas = SPR_advisors_france }
+		}
+		if = {
+			limit = { tag = SRI }
+			CNT = { remove_ideas = CNT_advisors_italysoc }
+		}
 	}
 }
 
-### Italian Volunteers
-
-# Does SRI send aid?
+# Mine Workers rise up
 country_event = {
 	id = sprc.207
 	title = sprc.207.t
@@ -1742,343 +1737,27 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = SRI
-		country_exists = CNT
+		tag = CNT
+		controls_state = 165
+		has_war_with = SPR
+		SPR = { has_country_flag = SPR_cntfai_plan_south }
 		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = yes
 	}
 	
 	mean_time_to_happen = {
-		days = 10
+		days = 15
 	}
 	
 	option = {
 		name = sprc.207.a
-		ai_chance = { factor = 60 }
-		set_country_flag = CNT_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = SRI }
-		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
-		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
-		CNT = { country_event = { id = sprc.208 } }
-	}
-	option = {
-		name = sprc.207.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
-	}
-}
-
-# Italian aid arrives
-country_event = {
-	id = sprc.208
-	title = sprc.208.t
-	desc = sprc.208.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.208.a
-		add_opinion_modifier = { target = SRI modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_ideas = CNT_advisors_italysoc
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = SRI }
-	}
-}
-
-# Lessons of War
-country_event = {
-	id = sprc.209
-	title = sprc.209.t
-	desc = sprc.209.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SRI
-		has_country_flag = CNT_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.209.a
-		clr_country_flag = CNT_intervention
-		army_experience = 20
-		add_political_power = 20
-		CNT = { remove_ideas = CNT_advisors_italysoc }
-	}
-}
-
-### Soviet Volunteers
-
-# Does SOV send aid?
-country_event = {
-	id = sprc.210
-	title = sprc.210.t
-	desc = sprc.210.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SOV
-		country_exists = CNT
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = yes
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		name = sprc.210.a
-		ai_chance = { factor = 40 }
-		set_country_flag = CNT_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = SOV }
-		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
-		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
-		CNT = { country_event = { id = sprc.211 } }
-	}
-	option = {
-		name = sprc.210.b
-		ai_chance = { factor = 60 }
-		add_political_power = -50
-	}
-}
-
-# Soviet help arrives
-country_event = {
-	id = sprc.211
-	title = sprc.211.t
-	desc = sprc.211.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.211.a
-		add_opinion_modifier = { target = SOV modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_ideas = CNT_advisors_soviet
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = SOV }
-	}
-}
-
-# Lessons of War
-country_event = {
-	id = sprc.212
-	title = sprc.212.t
-	desc = sprc.212.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SOV
-		has_country_flag = CNT_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.212.a
-		clr_country_flag = CNT_intervention
-		army_experience = 20
-		add_political_power = 20
-		remove_ideas = CNT_advisors_soviet
-	}
-}
-
-### Mexican Volunteers
-
-# Does Mexico send aid?
-country_event = {
-	id = sprc.213
-	title = sprc.213.t
-	desc = sprc.213.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = MEX
-		country_exists = CNT
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = yes
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		name = sprc.213.a
-		ai_chance = { factor = 40 }
-		set_country_flag = CNT_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = MEX }
-		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
-		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
-		CNT = { country_event = { id = sprc.214 } }
-	}
-	option = {
-		name = sprc.213.b
-		ai_chance = { factor = 60 }
-		add_political_power = -50
-	}
-}
-
-# Mexican help arrives
-country_event = {
-	id = sprc.214
-	title = sprc.214.t
-	desc = sprc.214.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.214.a
-		add_opinion_modifier = { target = MEX modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = MEX }
-	}
-}
-
-# Lessons of War
-country_event = {
-	id = sprc.215
-	title = sprc.215.t
-	desc = sprc.215.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = MEX
-		has_country_flag = CNT_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.215.a
-		clr_country_flag = CNT_intervention
-		army_experience = 20
-		add_political_power = 20
-	}
-}
-
-### Brazilian Volunteers
-
-# Does Brazil send aid?
-country_event = {
-	id = sprc.216
-	title = sprc.216.t
-	desc = sprc.216.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BRA
-		country_exists = CNT
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = yes
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		name = sprc.216.a
-		ai_chance = { factor = 40 }
-		set_country_flag = CNT_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = BRA }
-		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
-		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
-		CNT = { country_event = { id = sprc.217 } }
-	}
-	option = {
-		name = sprc.216.b
-		ai_chance = { factor = 60 }
-		add_political_power = -50
-	}
-}
-
-# Brazilian aid arrives
-country_event = {
-	id = sprc.217
-	title = sprc.217.t
-	desc = sprc.217.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.217.a
-		add_opinion_modifier = { target = BRA modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = BRA }
-	}
-}
-
-# Lessons of war
-country_event = {
-	id = sprc.218
-	title = sprc.218.t
-	desc = sprc.218.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BRA
-		has_country_flag = CNT_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.218.a
-		clr_country_flag = CNT_intervention
-		army_experience = 20
-		add_political_power = 20
+		custom_effect_tooltip = SPR_workers_rise
+		hidden_effect = { load_oob = SCW_CNT_workers }
 	}
 }
 
 ### Morocco taken
 
 ### Expose Carlist Plot
-
-### Mine Workers
 
 ### Foreign Trained Troops
 
@@ -2088,21 +1767,24 @@ country_event = {
 
 ### Scavenge Madrid
 
-### Victory
-
+# CNT victory event
 country_event = {
 	id = sprc.220
 	title = sprc.220.t
 	desc = sprc.220.d
+	picture = GFX_report_event_SPR_civwar
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = CNT
-		has_country_flag = had_war
 		has_global_flag = spanish_civil_war
-		NOT = { has_war_with = SPR }
-		NOT = { has_war_with = CAR }
+		NOT = { country_exists = SPR }
+		NOT = { country_exists = CAR }
 	}
+	
 	mean_time_to_happen = { days = 5 }
+	
 	option = {
 		name = sprc.220.a
 		add_political_power = 200
@@ -2143,6 +1825,77 @@ country_event = {
 	}
 }
 
+# Maintenance event - in case enemy left with one state
+country_event = {
+	id = sprc.222
+	
+	hidden = yes
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CNT
+			tag = CAR
+			tag = SPR
+		}
+		has_global_flag = spanish_civil_war
+		num_of_controlled_states < 2
+		has_war = no
+		any_country = {
+			has_war = no
+			NOT = { tag = ROOT }
+			OR = {
+				tag = CNT
+				tag = CAR
+				tag = SPR
+			}
+			num_of_controlled_states > 1
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		if = {
+			limit = { is_ai = yes }
+			random_other_country = {
+				limit = {
+					has_war = no
+					NOT = { tag = ROOT }
+					OR = {
+						tag = CNT
+						tag = CAR
+						tag = SPR
+					}
+					num_of_controlled_states > 1
+				}
+				annex_country = { target = CNT }
+			}
+			else = {
+				random_other_country = {
+					limit = {
+						is_ai = no
+						has_war = no
+						NOT = { tag = ROOT }
+						OR = {
+							tag = CNT
+							tag = CAR
+							tag = SPR
+						}
+						num_of_controlled_states > 1
+					}
+					declare_war_on = {
+						target = ROOT
+						type = annex_everything
+					}
+				}
+			}
+		}
+	}
+}
+
 ### Arrest the Opposition
 
 ### Recovery
@@ -2152,9 +1905,7 @@ country_event = {
 
 ### CARLIST EVENTS ###
 
-### Italian Volunteers
-
-# Does ITA send aid?
+# Country considers sending aid to the Carlists
 country_event = {
 	id = sprc.301
 	title = sprc.301.t
@@ -2164,12 +1915,16 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = ITA
+		OR = {
+			tag = ITA
+			tag = POR
+			tag = AUS
+			tag = IRE
+		}
 		country_exists = CAR
 		has_global_flag = spanish_civil_war
 		has_war = no
 		has_socialist_government = no
-		NOT = { has_cosmetic_tag = ITA_republic }
 	}
 	
 	mean_time_to_happen = {
@@ -2177,11 +1932,22 @@ country_event = {
 	}
 	
 	option = {
-		ai_chance = { factor = 60 }
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 0.65
+				NOT = {
+					tag = ITA
+					tag = POR
+					tag = AUS
+				}
+			}
+		}
 		name = sprc.301.a
 		set_country_flag = CAR_intervention
+		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ITA }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
 		add_opinion_modifier = { target = CAR modifier = supports_carlist_1 }
 		reverse_add_opinion_modifier = { target = SPR modifier = aided_carlist }
 		reverse_add_opinion_modifier = { target = CNT modifier = aided_carlist }
@@ -2189,12 +1955,25 @@ country_event = {
 	}
 	option = {
 		name = sprc.301.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 3
+				has_cosmetic_tag = ITA_republic
+			}
+			modifier = {
+				factor = 1.5
+				NOT = {
+					tag = ITA
+					tag = POR
+					tag = AUS
+				}
+			}
+		}
 	}
 }
 
-# Italian aid arrives
+# Aid arrives at the Carlists
 country_event = {
 	id = sprc.302
 	title = sprc.302.t
@@ -2205,10 +1984,21 @@ country_event = {
 	
 	option = {
 		name = sprc.302.a
-		add_opinion_modifier = { target = ITA modifier = aided_us_civwar }
+		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
-		add_ideas = CAR_advisors_italianfed
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = ITA }
+		if = {
+			limit = { FROM = { tag = ITA } }
+			add_ideas = CAR_advisors_italianfed
+		}
+		if = {
+			limit = { FROM = { tag = POR } }
+			add_ideas = CAR_advisors_portugal
+		}
+		if = {
+			limit = { FROM = { tag = AUS } }
+			add_ideas = CAR_advisors_austria
+		}
 	}
 }
 
@@ -2219,313 +2009,39 @@ country_event = {
 	desc = sprc.303.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
 	trigger = {
-		tag = ITA
 		has_country_flag = CAR_intervention
 		NOT = { has_global_flag = spanish_civil_war }
 	}
 	
 	mean_time_to_happen = {
 		days = 5
+	}
+	
+	immediate = {
+		clr_country_flag = CAR_intervention
 	}
 	
 	option = {
 		name = sprc.303.a
-		clr_country_flag = CAR_intervention
 		army_experience = 20
 		add_political_power = 20
-		CAR = { remove_ideas = CAR_advisors_italianfed }
-	}
-}
-
-### Portuguese Volunteers
-
-# Does Portugal send aid?
-country_event = {
-	id = sprc.304
-	title = sprc.304.t
-	desc = sprc.304.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = POR
-		country_exists = CAR
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = no
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		ai_chance = { factor = 60 }
-		name = sprc.304.a
-		set_country_flag = CAR_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = POR }
-		add_opinion_modifier = { target = CAR modifier = supports_carlist_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_carlist }
-		reverse_add_opinion_modifier = { target = CNT modifier = aided_carlist }
-		CAR = { country_event = { id = sprc.305 } }
-	}
-	option = {
-		name = sprc.301.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
-	}
-}
-
-# Portuguese aid arrives
-country_event = {
-	id = sprc.305
-	title = sprc.305.t
-	desc = sprc.305.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.305.a
-		add_opinion_modifier = { target = POR modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_ideas = CAR_advisors_portugal
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = POR }
-	}
-}
-
-# Lessons of War
-country_event = {
-	id = sprc.306
-	title = sprc.306.t
-	desc = sprc.306.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = POR
-		has_country_flag = CAR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.306.a
-		clr_country_flag = CAR_intervention
-		army_experience = 20
-		add_political_power = 20
-		CAR = { remove_ideas = CAR_advisors_portugal }
-	}
-}
-
-### Austrian Volunteers
-
-# Does Austria send aid?
-country_event = {
-	id = sprc.307
-	title = sprc.307.t
-	desc = sprc.307.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = AUS
-		country_exists = CAR
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = no
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		ai_chance = { factor = 60 }
-		name = sprc.307.a
-		set_country_flag = CAR_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = AUS }
-		add_opinion_modifier = { target = CAR modifier = supports_carlist_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_carlist }
-		reverse_add_opinion_modifier = { target = CNT modifier = aided_carlist }
-		CAR = { country_event = { id = sprc.308 } }
-	}
-	option = {
-		name = sprc.307.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
-	}
-}
-
-# Austrian aid arrives
-country_event = {
-	id = sprc.308
-	title = sprc.308.t
-	desc = sprc.308.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.308.a
-		add_opinion_modifier = { target = AUS modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_ideas = CAR_advisors_austria
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = AUS }
-	}
-}
-
-# Lessons of war
-country_event = {
-	id = sprc.309
-	title = sprc.309.t
-	desc = sprc.309.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = AUS
-		has_country_flag = CAR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.309.a
-		clr_country_flag = CAR_intervention
-		army_experience = 20
-		add_political_power = 20
-		CAR = { remove_ideas = CAR_advisors_austria }
-	}
-}
-
-### Irish Volunteers
-
-# Does Ireland send aid?
-country_event = {
-	id = sprc.310
-	title = sprc.310.t
-	desc = sprc.310.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = IRE
-		country_exists = CAR
-		has_global_flag = spanish_civil_war
-		has_war = no
-		has_socialist_government = no
-	}
-	
-	mean_time_to_happen = {
-		days = 10
-	}
-	
-	option = {
-		ai_chance = { factor = 60 }
-		name = sprc.310.a
-		set_country_flag = CAR_intervention
-		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = IRE }
-		add_opinion_modifier = { target = CAR modifier = supports_carlist_1 }
-		reverse_add_opinion_modifier = { target = SPR modifier = aided_carlist }
-		reverse_add_opinion_modifier = { target = CNT modifier = aided_carlist }
-		CAR = { country_event = { id = sprc.311 } }
-	}
-	option = {
-		name = sprc.310.b
-		ai_chance = { factor = 40 }
-		add_political_power = -50
-	}
-}
-
-# Irish help arrives
-country_event = {
-	id = sprc.311
-	title = sprc.311.t
-	desc = sprc.311.d
-	picture = GFX_report_event_SPR_civwar2
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.311.a
-		add_opinion_modifier = { target = IRE modifier = aided_us_civwar }
-		add_manpower = 1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = IRE }
-	}
-}
-
-# Lessons of war
-country_event = {
-	id = sprc.312
-	title = sprc.312.t
-	desc = sprc.312.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = IRE
-		has_country_flag = CAR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.312.a
-		clr_country_flag = CAR_intervention
-		army_experience = 20
-		add_political_power = 20
-	}
-}
-
-### NFA Volunteers
-
-# Lessons of war
-country_event = {
-	id = sprc.315
-	title = sprc.315.t
-	desc = sprc.315.d
-	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = NFA
-		has_country_flag = CAR_intervention
-		NOT = { has_global_flag = spanish_civil_war }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
-	
-	option = {
-		name = sprc.315.a
-		clr_country_flag = CAR_intervention
-		army_experience = 20
-		add_political_power = 20
-		CAR = { remove_ideas = SPR_advisors_natfrance }
+		if = {
+			limit = { tag = ITA }
+			CAR = { remove_ideas = CAR_advisors_italianfed }
+		}
+		if = {
+			limit = { tag = POR }
+			CAR = { remove_ideas = CAR_advisors_portugal }
+		}
+		if = {
+			limit = { tag = AUS }
+			CAR = { remove_ideas = CAR_advisors_austria }
+		}
+		if = {
+			limit = { tag = NFA }
+			CAR = { remove_ideas = SPR_advisors_natfrance }
+		}
 	}
 }
 
@@ -2535,21 +2051,27 @@ country_event = {
 
 ### Scavenge Madrid
 
-### Victory
-
+# Carlist victory event
 country_event = {
 	id = sprc.320
 	title = sprc.320.t
 	desc = sprc.320.d
+	picture = GFX_report_event_SPR_civwar
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = CAR
 		has_country_flag = had_war
 		has_global_flag = spanish_civil_war
-		NOT = { has_war_with = SPR }
-		NOT = { has_war_with = CNT }
+		NOT = { country_exists = SPR }
+		NOT = { country_exists = CNT }
 	}
-	mean_time_to_happen = { days = 5 }
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
 	option = {
 		name = sprc.320.a
 		add_political_power = 200

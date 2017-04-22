@@ -4069,6 +4069,7 @@ country_event = { #Germany defeats france
 					tag = GER
 					is_in_faction_with = GER
 				}
+				NOT = { tag = BRI tag = NRM }
 			}
 		every_state = {
 			limit = {
@@ -4302,7 +4303,7 @@ country_event = { #A loyal puppet in Paris?
 		ai_chance = {
 			factor = 10
 		}
-		
+		add_political_power = -160
 	}
 
 }
@@ -5270,22 +5271,16 @@ country_event = { #Russia defeats france
 	fire_only_once = yes
 	trigger = {
 		tag = RUS
+		is_subject = no
 		controls_state = 16
+		OR = { 
+		FRA = { has_capitulated = yes }
+		FRA = { exists = no }
+		}
 		NOT = {
-			FRA = {
-				exists = yes
-			}
 			FRP = {
 				exists = yes
 			}
-			NFA = {
-				controls_state = 21
-			}
-			any_country = {
-				is_in_faction_with = NFA
-				controls_state = 21
-			}
-			has_war_with = NFA
 		}
 	}
 	mean_time_to_happen = {
@@ -5309,7 +5304,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5322,8 +5316,9 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = FRP
-		#events
+		RUS = { country_event = { id = part.98 } }
 	}
 
 	option = { #divide mainland
@@ -5358,7 +5353,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5371,6 +5365,7 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = NRM
 		every_country = {
 			limit = {
@@ -5379,7 +5374,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5392,6 +5386,7 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = BRI
 		every_country = {
 			limit = {
@@ -5400,7 +5395,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5413,29 +5407,9 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = OCC
-		every_country = {
-			limit = {
-				OR = {
-					tag = RUS
-					is_in_faction_with = RUS
-				}
-			}
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = PREV
-
-				is_core_of = FRP
-
-			}
-			FRP = {
-				transfer_state = PREV
-			}
-
-		}
-		puppet = FRP
-		#events
+		country_event = { id = part.? }
 	}
 
 	option = { #Liberate Normandy, Bretagne and France.
@@ -5467,7 +5441,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5480,6 +5453,7 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = NRM
 		every_country = {
 			limit = {
@@ -5488,7 +5462,6 @@ country_event = { #Russia defeats france
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5501,6 +5474,7 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = BRI
 		every_country = {
 			limit = {
@@ -5508,8 +5482,8 @@ country_event = { #Russia defeats france
 					tag = RUS
 					is_in_faction_with = RUS
 				}
+				NOT = { tag = BRI tag = NRM }
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5522,18 +5496,34 @@ country_event = { #Russia defeats france
 			}
 
 		}
+		}
 		puppet = FRP
-		#events
-
+		country_event = { id = part.? }
+		country_event = { id = part.? }
 	}
 
-	#deal with nat france
+	option = { #National France can have that land, if they join us!
+		trigger = {
+			country_exists = NFA
+			NOT = { is_in_faction_with = NFA NFA = { is_subject_of = RUS } has_war_with = NFA }
+			NOT = { country_exists = OCC }
+		}
+		name = part.6.g
+		ai_chance = {
+			factor = 5
+		}
+		NFA = {
+			country_event = {
+				id = part.?
+			}
+		}
+	}
 
 	option = { #give nat france
 		trigger = {
 			NFA = {
-				is_in_faction_with = RUS
-				exists = yes
+				OR = { is_in_faction_with = RUS
+				is_subject_of = RUS }
 			}
 		}
 		name = part.6.e
@@ -5546,6 +5536,7 @@ country_event = { #Russia defeats france
 			}
 		}
 	}
+	
 	option = { #occupy
 		name = part.6.f
 		ai_chance = {
@@ -5555,9 +5546,798 @@ country_event = { #Russia defeats france
 	}
 }
 
-#british partition russian
+country_event = { #A loyal government in Paris
+	id = part.98
+	title = part.98.t
+	desc = part.98.d
+	
+	is_triggered_only = yes
 
-country_event = { #russia
+	option = { #Pax Europa!
+		name = part.98.a
+		ai_chance = {
+			factor = 50
+		}
+		add_to_faction = FRP
+		if = { limit = { has_country_flag = rus_tsar } 
+		country_event = { id = part.99 }
+		}
+		set_global_flag = FRP_EXI
+	}
+}
+
+country_event = { #Choosing the new french Head of State
+	id = part.99
+	title = part.99.t
+	desc = part.99.d
+	
+	is_triggered_only = yes
+
+	option = { #Prince Ioann Konstantinovich will be Charles XI!
+		name = part.99.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 20
+		FRP = { country_event = { id = part.100 } }
+		reverse_add_opinion_modifier = {
+			target = FRP modifier = chose_our_hos
+		}
+	}
+	
+	option = { #Pax Europa!
+		name = part.99.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = FRP modifier = let_us_choose_our_hos
+		}
+	}
+}
+
+country_event = { #A New King
+	id = part.100
+	title = part.100.t
+	desc = part.100.d
+	is_triggered_only = yes
+
+	option = { #Long live Charles XI
+		name = part.100.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "S.M.R. Charles XI"
+			desc = "FRP_CHARLES_XI_DESC"
+			picture = "Portrait_France_Charles_XI.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Forces armees francaises
+	id = part.101
+	title = part.101.t
+	desc = part.101.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = FRP has_global_flag = FRP_EXI }
+
+	option = { #Form Up the Troops!
+		name = part.101.a
+		load_oob = FRP_independent_GER
+		if = { limit = { country_exists = NFA }
+		set_country_flag = Jean_Marie_Lattre_de_Tassigny_dead
+		set_country_flag = Edouard_Herriot_dead
+		set_country_flag = George_Bidault_dead
+		set_country_flag = Robert_Schumann_dead
+		set_country_flag = Rene_Pleven_dead
+		}
+		clr_global_flag = FRP_EXI
+	}
+
+}
+
+country_event = { #Loyal governments in the new French states
+	id = part.102
+	title = part.102.t
+	desc = part.102.d
+	
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.102.a
+		ai_chance = {
+			factor = 50
+		}
+		add_to_faction = NRM
+		add_to_faction = BRI
+		add_to_faction = OCC
+		if = { limit = { has_country_flag = rus_tsar }
+		country_event = { id = part.105 }
+		country_event = { id = part.107 }
+		country_event = { id = part.109 }
+		}
+		RUS = { country_event = { id = part.103 days = 2 } }
+	}
+}
+
+country_event = { #A loyal puppet in Paris?
+	id = part.103
+	title = part.103.t
+	desc = part.103.d
+	is_triggered_only = yes
+
+	option = { #Set up a friendly French Government.
+		name = part.103.a
+		ai_chance = {
+			factor = 80
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = RUS
+					is_in_faction_with = RUS
+					NOT = { tag = BRI tag = OCC tag = NRM }
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRP
+
+			}
+			FRP = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		puppet = FRP
+		RUS = { country_event = { id = part.98 } }
+		FRP = { country_event = { id = part.104 } }
+	}
+	
+	option = { #Further divide the French lands between the new countries!
+		name = part.103.b
+		ai_chance = {
+			factor = 10
+		}
+		BRI = { transfer_state = 30
+		transfer_state = 23 }
+		NRM = { transfer_state = 24
+		transfer_state = 29
+        transfer_state = 16
+        transfer_state = 785
+        transfer_state = 18		
+		}
+		OCC = { transfer_state = 33
+		transfer_state = 20
+        transfer_state = 27
+        transfer_state = 17	
+		}
+	}
+	
+	option = { #Total conquest is preferable.
+		name = part.103.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -160
+	}
+
+}
+
+country_event = { #France renounces her claims
+	id = part.104
+	title = part.104.t
+	desc = part.104.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.104.a
+		add_political_power = -200
+		remove_state_core = 14
+		remove_state_core = 15
+		remove_state_core = 19
+		remove_state_core = 31
+		remove_state_core = 25
+		remove_state_core = 26
+		remove_state_core = 22
+		remove_state_core = 817
+		remove_state_core = 32
+		remove_state_core = 21
+		remove_state_core = 763
+		set_country_flag = Marcel_Cachin_dead
+		set_country_flag = Rene_Pleven_dead
+		set_country_flag = Pierre_Henri_Teitgen_dead
+		set_country_flag = Marie_Pierre_Koenig_dead
+		set_country_flag = Guy_Mollet_dead
+		set_country_flag = Andre_Marie_dead
+		set_country_flag = Robert_Lecourt_dead
+		set_country_flag = Philippe_Leclerc_de_Hauteclocque_dead
+		set_country_flag = Jea_Marie_Lattre_de_Tassigny_dead
+		set_country_flag = Martial_Valin_dead
+		set_country_flag = Jacques_Brunschwig_Bordier_dead
+		set_country_flag = Louis_Armand_dead
+	}
+
+}
+
+country_event = { #Choosing the new Head of State of Bretagne
+	id = part.105
+	title = part.105.t
+	desc = part.105.d
+	
+	is_triggered_only = yes
+
+	option = { #Prince Gabriel Konstantinovich will be new Grand Duke!
+		name = part.105.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 20
+		BRI = { country_event = { id = part.106 } }
+		reverse_add_opinion_modifier = {
+			target = BRI modifier = chose_our_hos
+		}
+	}
+	
+	option = { #Let the Bretons decide, as long as they stay loyal.
+		name = part.105.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = BRI modifier = let_us_choose_our_hos
+		}
+	}
+}
+
+country_event = { #A new Grand Duke
+	id = part.106
+	title = part.106.t
+	desc = part.106.d
+	is_triggered_only = yes
+
+	option = { #Long live Grand Duke Gabriel!
+		name = part.106.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Gabriel I"
+			desc = "BRI_GABRIEL_I_DESC"
+			picture = "Portrait_Britanny_Gabriel_I.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Choosing the new Head of State of Normandy
+	id = part.107
+	title = part.107.t
+	desc = part.107.d
+	
+	is_triggered_only = yes
+
+	option = { #Princess Tatiana Konstantinovna will be new Grand Duchess!
+		name = part.107.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 20
+		NRM = { country_event = { id = part.108 } }
+		reverse_add_opinion_modifier = {
+			target = NRM modifier = chose_our_hos
+		}
+	}
+	
+	option = { #Let the Normans decide, as long as they stay loyal
+		name = part.107.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = NRM modifier = let_us_choose_our_hos
+		}
+	}
+}
+
+country_event = { #A new Grand Duchess
+	id = part.108
+	title = part.108.t
+	desc = part.108.d
+	is_triggered_only = yes
+
+	option = { #Long live Grand Duchess Tatiana!
+		name = part.108.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Anna I"
+			desc = "NRM_ANNA_I_DESC"
+			picture = "Portrait_Normandy_Anna_I.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Choosing the new Head of State of Occitania
+	id = part.109
+	title = part.109.t
+	desc = part.109.d
+	
+	is_triggered_only = yes
+
+	option = { #Prince Vladimir Pavlovich will be new Grand Duke!
+		name = part.109.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 20
+		OCC = { country_event = { id = part.110 } }
+		reverse_add_opinion_modifier = {
+			target = OCC modifier = chose_our_hos
+		}
+	}
+	
+	option = { #Let the Occitans decide, as long as they stay loyal.
+		name = part.109.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = OCC modifier = let_us_choose_our_hos
+		}
+	}
+}
+
+country_event = { #A new Grand Duke
+	id = part.110
+	title = part.110.t
+	desc = part.110.d
+	is_triggered_only = yes
+
+	option = { #Long live Bertran II!
+		name = part.110.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.H. Bertran II"
+			desc = "OCC_BERTRAN_II_DESC"
+			picture = "Portrait_Occitania_Bertran_II.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Loyal governments in the new French states
+	id = part.111
+	title = part.111.t
+	desc = part.111.d
+	
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.111.a
+		ai_chance = {
+			factor = 50
+		}
+		add_to_faction = NRM
+		add_to_faction = BRI
+		if = { limit = { has_country_flag = rus_tsar }
+		country_event = { id = part.105 }
+		country_event = { id = part.107 }
+		}
+	}
+}
+
+country_event = { #A loyal government in Paris
+	id = part.112
+	title = part.112.t
+	desc = part.112.d
+	
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.112.a
+		ai_chance = {
+			factor = 50
+		}
+		add_to_faction = FRP
+		if = { limit = { has_country_flag = rus_tsar } 
+		country_event = { id = part.99 }
+		}
+		set_global_flag = FRP_EXI
+		FRP = { country_event = { id = part.113 } }
+	}
+}
+
+country_event = { #France renounces her claims
+	id = part.113
+	title = part.113.t
+	desc = part.113.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.113.a
+		add_political_power = -100
+		remove_state_core = 14
+		remove_state_core = 15
+		set_country_flag = Marcel_Cachin_dead
+		set_country_flag = Rene_Pleven_dead
+		set_country_flag = Pierre_Henri_Teitgen_dead
+		set_country_flag = Marie_Pierre_Koenig_dead
+		set_country_flag = Guy_Mollet_dead
+		set_country_flag = Andre_Marie_dead
+		set_country_flag = Robert_Lecourt_dead
+		set_country_flag = Philippe_Leclerc_de_Hauteclocque_dead
+	}
+
+}
+
+country_event = { #An alliance with Russia in exchange for our land
+	id = part.114
+	title = part.114.t
+	desc = part.114.d
+	is_triggered_only = yes
+
+	option = { #A great deal!
+		name = part.114.a
+		ai_chance = {
+			factor = 90
+		}
+		every_country = { limit = { is_faction_leader = yes is_in_faction_with = NFA }
+		remove_from_faction = NFA }
+		RUS = { country_event = { id = part.115 } }
+	}
+	
+	option = { #We will never accept your proposal!
+		name = part.114.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -200
+		reverse_add_opinion_modifier = {
+			target = GER modifier = NFA_refused_deal_GER2
+		}
+		reverse_add_opinion_modifier = {
+			target = CAN modifier = NFA_refused_deal_GER1
+		}
+		RUS = { country_event = { id = part.7 } }
+	}
+
+}
+
+country_event = { #Honour the deal
+	id = part.115
+	title = part.115.t
+	desc = part.115.d
+	is_triggered_only = yes
+
+	option = { #We have to obey.
+		name = part.115.a
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = -20
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRA
+				
+				NOT = { is_core_of = GER }
+
+			}
+			NFA = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		NFA = { country_event = { id = part.116 } }
+		
+	}
+
+}
+
+country_event = { #Honour the deal
+	id = part.116
+	title = part.116.t
+	desc = part.116.d
+	is_triggered_only = yes
+
+	option = { #It's a good deal.
+		name = part.116.a
+		ai_chance = {
+			factor = 40
+		}
+		RUS = { add_to_faction = NFA }
+	}
+
+}
+
+#British Partition Russian
+
+country_event = { #The fate of Britain
 	id = part.10
 	title = part.10.t
 	desc = part.10.d
@@ -5578,83 +6358,17 @@ country_event = { #russia
 		WAL = {
 			exists = no
 		}
+		ENP = {
+			exists = no
+		}
 	}
+	
 	mean_time_to_happen = {
 		days = 15
 	}
 
-	option = { #divide all
+	option = { #Create a loyal Britain.
 		name = part.10.a
-		ai_chance = {
-			factor = 40
-		}
-		every_country = {
-			limit = {
-				OR = {
-					tag = RUS
-					is_in_faction_with = RUS
-				}
-			}
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = PREV
-
-				is_core_of = ENP
-
-			}
-			ENP = {
-				transfer_state = PREV
-			}
-
-		}
-		puppet = ENP
-		every_country = {
-			limit = {
-				OR = {
-					tag = RUS
-					is_in_faction_with = RUS
-				}
-			}
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = PREV
-
-				is_core_of = WAL
-
-			}
-			WAL = {
-				transfer_state = PREV
-			}
-
-		}
-		puppet = WAL
-		every_country = {
-			limit = {
-				OR = {
-					tag = RUS
-					is_in_faction_with = RUS
-				}
-			}
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = PREV
-
-				is_core_of = SCT
-			}
-			SCT = {
-				transfer_state = PREV
-			}
-
-		}
-		puppet = SCT
-		#events
-	}
-
-	option = { #united britian
-		name = part.10.b
 		ai_chance = {
 			factor = 60
 		}
@@ -5665,7 +6379,6 @@ country_event = { #russia
 					is_in_faction_with = RUS
 				}
 			}
-		}
 		every_state = {
 			limit = {
 				is_controlled_by = PREV
@@ -5678,12 +6391,14 @@ country_event = { #russia
 			}
 
 		}
+		}
 		puppet = GBR
-		#events
+		GBR = { kill_country_leader = yes }
+		country_event = { id = part.117 }
 	}
 
 
-	option = { #canada
+	option = { #Canada
 		trigger = {
 			is_in_faction_with = CAN
 		}
@@ -5691,23 +6406,1284 @@ country_event = { #russia
 		ai_chance = {
 			factor = 70
 		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = RUS
+					is_in_faction_with = RUS
+				}
+			}
 		every_state = {
 			limit = {
 				is_core_of = ENG
+				
 			}
 			CAN = {
 				transfer_state = PREV
 			}
 		}
-		#events
+		}
+	}
+	
+	option = { #Let us consider a partition.
+		name = part.10.c
+		ai_chance = {
+			factor = 40
+		}
+		country_event = { id = part.121 }
 	}
 
 	option = { #occupy all
 		name = part.10.e
 		ai_chance = {
-			factor = 1
+			factor = 0
 		}
 		add_political_power = -300
 	}
 
 }
+
+country_event = { #A loyal government in London
+	id = part.117
+	title = part.117.t
+	desc = part.117.d
+	is_triggered_only = yes
+
+	option = { #Pax Europa!
+		name = part.117.a
+		ai_chance = {
+			factor = 40
+		}
+		add_to_faction = GBR
+		if = { limit = { has_country_flag = rus_tsar }
+		country_event = { id = part.118 }
+		else = { country_event = { id = part.120 } }
+		}
+	}
+
+}
+
+country_event = { #Should Britain become a monarchy?
+	id = part.118
+	title = part.118.t
+	desc = part.118.d
+	is_triggered_only = yes
+
+	option = { #Recreate the United Kingdom!
+		name = part.118.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = 20
+		GBR = { country_event = { id = part.119 } }
+		reverse_add_opinion_modifier = {
+			target = GBR modifier = chose_our_hos
+		}
+	}
+	
+	option = { #Let Great Britain become a republic instead.
+		name = part.118.b
+		ai_chance = {
+			factor = 20
+		}
+		add_political_power = -20
+		reverse_add_opinion_modifier = {
+			target = GBR modifier = let_us_choose_our_hos
+		}
+		GBR = { country_event = { id = part.120 } }
+	}
+
+}
+
+country_event = { #Russia has imposed a King on us
+	id = part.119
+	title = part.119.t
+	desc = part.119.d
+	is_triggered_only = yes
+
+	option = { #Long live Wiliam IV!
+		name = part.119.a
+		ai_chance = {
+			factor = 90
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "GBR_WILLIAM_V_DESC"
+			picture = "Portrait_Britain_William_V.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		add_ideas = GBR_Lord_Beaverbrook_hog_sco
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = GBR_Edward_Heath_hog_ade
+		}
+		add_political_power = -200
+		load_oob = GBR_independent_GER
+		
+	}
+}
+
+country_event = { #Russia let us choose our new President
+	id = part.120
+	title = part.120.t
+	desc = part.120.d
+	is_triggered_only = yes
+
+	option = { #All hail our new president!
+		name = part.120.a
+		ai_chance = {
+			factor = 90
+		}
+		set_cosmetic_tag = GBR_republic
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Michael Foot"
+			desc = "GBR_MICHAEL_FOOT_DESC"
+			picture = "Portrait_Britain_Michael_Foot.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_ideas = GBR_Bernard_Montgomery_hog_ade
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "GBR_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		add_ideas = GBR_Edward_Heath_hog_ade
+		}
+		add_political_power = 40
+		load_oob = GBR_independent_GER
+	}
+}
+
+country_event = { #England
+	id = part.121
+	title = part.121.t
+	desc = part.121.d
+	is_triggered_only = yes
+
+	option = { #Establish a friendly England.
+		name = part.121.a
+		ai_chance = {
+			factor = 90
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = RUS
+					is_in_faction_with = RUS
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = ENP
+
+			}
+			ENP = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		if = { limit = { has_country_flag = rus_tsar }
+		country_event = { id = part.123 }
+		else = { country_event = { id = part.122 } }
+		}
+	}
+	
+	option = { #Total occupation of England!
+		name = part.121.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -140
+		country_event = { id = part.125 }
+	}
+}
+
+country_event = { #England
+	id = part.122
+	title = part.122.t
+	desc = part.122.d
+	
+	is_triggered_only = yes
+	
+	option = { #What happened to the Union of 1707?
+		name = part.122.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Bernard Montgomery"
+			desc = "ENP_BERNARD_MONTGOMERY_DESC"
+			picture = "Portrait_England_Bernard_Montgomery.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_democrat has_government = social_liberal has_government = market_liberal has_government = social_conservative } }
+		add_ideas = ENP_Clement_Attlee_hog_sli
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = ENP_Enoch_Powell_hog_pau
+		}
+		RUS = { country_event = { id = part.124 } }
+		load_oob = ENP_independent_GER
+	}
+}
+
+country_event = { #Freedom!
+	id = part.123
+	title = part.123.t
+	desc = part.123.d
+	
+	is_triggered_only = yes
+	
+	option = { #What happened to the Union of 1707?
+		name = part.123.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. William V"
+			desc = "ENP_WILLIAM_V_DESC"
+			picture = "Portrait_England_William_V.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_democrat has_government = social_liberal has_government = market_liberal has_government = social_conservative } }
+		add_ideas = ENP_Clement_Attlee_hog_sli
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = ENP_Enoch_Powell_hog_pau
+		}
+		RUS = { country_event = { id = part.124 } }
+		load_oob = ENP_independent_GER
+	}
+}
+
+country_event = { #A loyal puppet in London
+	id = part.124
+	title = part.124.t
+	desc = part.124.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.124.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = ENP
+		country_event = { id = part.125 }
+	}
+}
+
+country_event = { #Wales
+	id = part.125
+	title = part.125.t
+	desc = part.125.d
+	desc = {
+		text = part.125.d.england
+		trigger = {
+			ENP = { is_subject_of = RUS }
+		}
+	}
+	desc = {
+		text = part.125.d.no_england
+		trigger = {
+			NOT = { ENP = { is_subject_of = RUS } }
+		}
+	}
+	
+	is_triggered_only = yes
+	
+	option = { #Freedom for the Welsh!
+		name = part.125.a
+		ai_chance = {
+			factor = 50
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = RUS
+					is_in_faction_with = RUS
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = ENP
+
+			}
+			ENP = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		WAL = { country_event = { id = part.126 } }
+	}
+	
+	option = { #Return it to England.
+		name = part.125.b
+		ai_chance = {
+			factor = 35
+		}
+		trigger = { ENP = { is_subject_of = RUS } }
+		ENP = { transfer_state = 122 }
+		ENP = { country_event = { id = part.128 } }
+	}
+	
+	option = { #Total occupation of Wales!
+		name = part.125.c
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -40
+		country_event = { id = part.129 }
+	}
+}
+
+country_event = { #Freedom!
+	id = part.126
+	title = part.126.t
+	desc = part.126.d
+	is_triggered_only = yes
+
+	option = { #And it's all thanks to the Russians!
+		name = part.126.a
+		ai_chance = {
+			factor = 90
+		}
+		if = { limit = { has_country_flag = rus_tsar }
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Joan I"
+			desc = "WAL_JOAN_I_DESC"
+			picture = "Portrait_Wales_Joan_I.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		}
+		if = { limit = { NOT = { has_country_flag = rus_tsar } }
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "David Lloyd George"
+			desc = "WAL_DAVID_LLOYD_GEORGE_DESC"
+			picture = "Portrait_Wales_David_Lloyd_George.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		add_ideas = WAL_David_Lloyd_George_hog_sco
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = WAL_Saunders_Lewis_hog_ade
+		}
+		add_political_power = -200
+		load_oob = WAL_independent_GER
+		RUS = { country_event = { id = part.127 } }
+	}
+}
+
+country_event = { #A loyal puppet in Cardiff
+	id = part.127
+	title = part.127.t
+	desc = part.127.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.127.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = WAL
+		country_event = { id = part.129 }
+	}
+}
+
+country_event = { #The return of Wales
+	id = part.128
+	title = part.128.t
+	desc = part.128.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.128.a
+		ai_chance = {
+			factor = 80
+		}
+		add_state_core = 122
+		RUS = { country_event = { id = part.129 } }
+	}
+}
+
+country_event = { #Scotland
+	id = part.129
+	title = part.129.t
+	desc = part.129.d
+	
+	is_triggered_only = yes
+	
+	option = { #Establish a friendly Scotland.
+		name = part.129.a
+		ai_chance = {
+			factor = 100
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = RUS
+					is_in_faction_with = RUS
+				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = SCT
+
+			}
+			SCT = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		SCT = { country_event = { id = part.130 } }
+	}
+	
+	option = { #Total occupation of Scotland!
+		name = part.129.c
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Freedom!
+	id = part.130
+	title = part.130.t
+	desc = part.130.d
+	is_triggered_only = yes
+
+	option = { #We will never be the tools of the English again!
+		name = part.130.a
+		ai_chance = {
+			factor = 90
+		}
+		if = { limit = { has_country_flag = rus_tsar }
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "H.R.M. Seumas VIII"
+			desc = "SCO_SEUMAS_VIII_DESC"
+			picture = "Portrait_Scotland_Seumas_VIII.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		}
+		if = { limit = { OR = { has_government = social_conservative has_government = social_democrat has_government = market_liberal has_government = social_liberal } NOT = { has_country_flag = rus_tsar } }
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Harold Harington Balfour"
+			desc = "SCO_HAROLD_HARRINGTON_BALFOUR_DESC"
+			picture = "Portrait_Scotland_Harold_Harrington_Balfour.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		}
+		if = { limit = { OR = { has_government = paternal_autocrat has_government = authoritarian_democrat has_government = national_populist } NOT = { has_country_flag = rus_tsar } }
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+		    name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "James Duke of Abercorn"
+			desc = "SCO_JAMES_DUKE_DESC"
+			picture = "Portrait_Scotland_James_Duke.tga"
+			expire = "1965.1.1"
+			ideology = national_populist_subtype
+			traits = {
+
+			}
+		}
+		}
+		remove_ideas_with_trait = head_of_government
+		if = { limit = { OR = { has_government = social_conservative has_government = market_liberal has_government = social_liberal has_government = social_democrat } }
+		add_ideas = SCT_John_Stuart_Lord_Borthwick_hog_mli
+		}
+		if = { limit = { OR = { has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist } }
+		add_ideas = SCT_Ian_Campbell_Gray_hog_ade
+		}
+		add_political_power = -200
+		load_oob = SCT_independent_GER
+		RUS = { country_event = { id = part.131 } }
+	}
+}
+
+country_event = { #A loyal puppet in Edinburgh
+	id = part.131
+	title = part.131.t
+	desc = part.131.d
+	
+	is_triggered_only = yes
+	
+	option = { #Pax Europa!
+		name = part.131.a
+		ai_chance = {
+			factor = 80
+		}
+		add_to_faction = SCT
+	}
+}
+
+country_event = { #Language question
+	id = part.132
+	title = part.132.t
+	desc = part.132.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = WLL }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = { #The government will be bilingual!
+		name = part.132.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -140
+	}
+	
+	option = { #Use only Welsh for the government.
+		name = part.132.b
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -40
+	}
+}
+
+country_event = { #Language question
+	id = part.133
+	title = part.133.t
+	desc = part.133.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = BRI }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = { #The government will be bilingual!
+		name = part.133.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -140
+	}
+	
+	option = { #Use only Breton for the government.
+		name = part.133.b
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -40
+	}
+}
+
+country_event = { #Language question
+	id = part.134
+	title = part.134.t
+	desc = part.134.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = NRM }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = { #The government will be bilingual!
+		name = part.134.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -140
+	}
+	
+	option = { #Use only Norman for the government.
+		name = part.134.b
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -40
+	}
+}
+
+country_event = { #Language question
+	id = part.135
+	title = part.135.t
+	desc = part.135.d
+	
+	fire_only_once = yes
+	
+	trigger = { tag = OCC }
+	
+	mean_time_to_happen = { days = 15 }
+	
+	option = { #The government will be bilingual!
+		name = part.135.a
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -140
+	}
+	
+	option = { #Use only Occitan for the government.
+		name = part.135.b
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = -40
+	}
+}
+
+#### CAPITAL CHANGES BUT MEH NOBODY CARES NOT ENOUGH PROVINCES FUCK YOU

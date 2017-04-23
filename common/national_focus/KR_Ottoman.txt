@@ -61,13 +61,10 @@ focus = {
 	mutually_exclusive = { focus = OTT_support_parliament }
 	x = 0
 	y = 2
-	cost = 20
+	cost = 10
 	
-	select_effect = {
-		country_event = { id = ott.86 days = 15 }
-	}
 	completion_reward = {
-		custom_effect_tooltip = OTT_parliament_dissolved_tt
+		country_event = { id = ott.86 days = 0 }
 		add_ideas = ott_protests_idea
 	}
 
@@ -79,9 +76,17 @@ focus = {
 	icon = GFX_goal_generic_propaganda
 	x = 0
 	y = 3
-	cost = 10
+	cost = 20
+	available = {
+		NOT = { has_country_flag = ott_new_reformers }
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
-	
+	select_effect = {
+		country_event = { id = ott.87 days = 15 }
+	}
+
 	completion_reward = {
 		custom_effect_tooltip = OTT_opposition_tt
 		remove_ideas = ott_protests_idea
@@ -168,9 +173,10 @@ focus = {
 	
 	available = {
 		has_country_flag = ott_investigation
+		has_war = no
 	}
-	cancel_if_invalid = yes
-	continue_if_invalid = no
+	cancel_if_invalid = no
+	continue_if_invalid = yes
 
 	select_effect = {
 		country_event = { id = ott.113 days = 50 }
@@ -178,8 +184,6 @@ focus = {
 	
 	completion_reward = {
 		custom_effect_tooltip = OTT_corruption1_tt
-		# TODO - add triggers to events that check for currently active focus
-		# TODO - remove effects from end-of-focus events and put them here
 	}
 
 }
@@ -209,7 +213,7 @@ focus = {
 }
 
 focus = {
-	id = OTT_end_paramilitary
+	id = OTT_end_paramilitary # Rebuild Ottoman Intelligence
 	prerequisite = { focus = OTT_eliminate_military_factions  }
 	icon = GFX_goal_generic_major_war
 	x = 1
@@ -221,7 +225,7 @@ focus = {
 	}
 
 	select_effect = {
-		country_event = { id = ott.141 days = 5 }
+		country_event = { id = ott.141 days = 60 }
 	}
 
 	completion_reward = {
@@ -468,6 +472,8 @@ focus = {
 	
 	completion_reward = {
 		custom_effect_tooltip = OTT_opda_focus_tt
+		remove_ideas = ott_opda_idea
+		add_ideas = ott_opda_idea_1
 		reverse_add_opinion_modifier = { target = NFA modifier = ott_r_opda }
 		reverse_add_opinion_modifier = { target = CAN modifier = ott_r_opda }
 		reverse_add_opinion_modifier = { target = HOL modifier = ott_r_opda }
@@ -483,15 +489,29 @@ focus = {
 	x = 12
 	y = 2
 	cost = 5
-	# TODO - bypass if free germany does not exist
 	
 	available = {
-		# WK2
-		# GER capitulation
-		# GER CON capitulation
-		# 1944
+		has_global_flag = GER_capitulation
+		has_global_flag = GER_CON_capitulation
+		GER = {
+			OR = {
+				has_war_with = FRA
+				has_war_with = RUS
+				has_war_with = CAN
+				has_war_with = USA
+				has_war_with = AUS
+			}
+		}
+		date > 1942.1.1
 	}
 	
+	bypass = {
+		OR = {
+			GER = { exists = no }
+			GER = { is_subject = yes }
+		}
+	}
+
 	completion_reward = {
 		custom_effect_tooltip = OTT_opda_focus_tt
 		reverse_add_opinion_modifier = { target = GER modifier = ott_r_opda }
@@ -508,16 +528,32 @@ focus = {
 	x = 14
 	y = 2
 	cost = 5
-	# TODO - bypass if free austria does not exist
 	
 	available = {
-		# WK2 entry
-		# Crisis on the Danube
-		# Italo-Austrian War
-		# 1944
+		AUS = {
+			OR = {
+				has_war_with = HUN
+				has_war_with = FRA
+				has_war_with = RUS
+				has_war_with = CAN
+				has_war_with = USA
+				has_war_with = ITA
+				has_war_with = SRI
+				has_war_with = GER
+				HUN = { NOT = { is_subject_of = AUS } }
+			}
+		}
+		date > 1942.1.1
 	}
 	
 	
+	bypass = {
+		OR = {
+			AUS = { exists = no }
+			AUS = { is_subject = yes }
+		}
+	}
+
 	completion_reward = {
 		custom_effect_tooltip = OTT_opda_focus_tt
 		reverse_add_opinion_modifier = { target = AUS modifier = ott_r_opda }
@@ -1666,8 +1702,9 @@ focus = {
 	y = 5
 	cost = 10
 	available = {
-		# TODO - check for german capitulation
 		NOT = { has_global_flag = GER_capitulation }
+		NOT = { has_global_flag = GER_CON_capitulation }
+		NOT = { has_country_flag = ott_german_embargo }
 	}
 	
 	completion_reward = {

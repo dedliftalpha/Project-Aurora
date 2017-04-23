@@ -1931,6 +1931,7 @@ country_event = {		# EGY intervention
 		add_political_power = 150
 		add_to_war = { targeted_alliance = SAU enemy = OTT }
 		load_oob = EGY_1
+		set_global_flag = egy_axis_attack
 		reverse_add_opinion_modifier = { target = SAU modifier = ott_egy_intervention } # 20
 		reverse_add_opinion_modifier = { target = SAU modifier = ott_egy_intervention }
 		reverse_add_opinion_modifier = { target = LYB modifier = ott_egy_intervention }
@@ -4789,7 +4790,17 @@ country_event = {
 	option = {			# send some outdated aircraft blueprints
 		name = ott.79.a
 
-		ai_chance = { factor = 100 } # TODO - factor in relations, embargo
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				has_opinion = { target = OTT value < -50 }
+			}
+			modifier = {
+				factor = 0
+				OTT = { has_country_flag = ott_german_embargo }
+			}
+		}
 		reverse_add_opinion_modifier = { target = OTT modifier = ott_air_designs } #+50
 		OTT = { country_event = { id = ott.80 days = 3 } }
 	}
@@ -4797,7 +4808,17 @@ country_event = {
 	option = {			# no, why would I give away industrial secrets?
 		name = ott.79.b
 
-		ai_chance = { factor = 0 }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				has_opinion = { target = OTT value < -50 }
+			}
+			modifier = {
+				add = 100
+				OTT = { has_country_flag = ott_german_embargo }
+			}
+		}
 		reverse_add_opinion_modifier = { target = OTT modifier = ott_air_designs_rejected } #-20
 		OTT = { country_event = { id = ott.81 days = 3 } }
 	}
@@ -5136,19 +5157,26 @@ country_event = {
 
 		if = {
 			limit = {
-				has_political_power > 50
+				has_political_power > 200
 			}
-			set_political_power = 0 # TODO - debug
-
-			else = {
-				add_political_power = -50
-			}
+			add_political_power = -200
 		}
-		set_country_flag = OTT_parliament_dissolved
-		country_event = { id = ott.87 days = 5 }
-		# TODO - use OTT_parliament_dissolved flag
-		# TODO - remove Huseyin Avni Pasha
-		# TODO - mass resignations
+		if = {
+			limit = {
+				has_political_power > 100
+				has_political_power < 200
+			}
+			add_political_power = -100
+		}
+		if = {
+			limit = {
+				has_political_power < 100
+			}
+			add_political_power = -50
+		}
+		remove_ideas = OTT_Hueseyin_Avni_Pasa_hog_pau
+		set_country_flag = Hueseyin_Avni_Pasa_dead
+		add_ideas = OTT_Hueseyin_Selahattin_Pasa_hog_pau
 	}
 
 }
@@ -5167,7 +5195,25 @@ country_event = {
 
 		ai_chance = { factor = 90 }
 		add_political_power = -200
-		# TODO - disable ministers or something?
+		custom_effect_tooltip = ott_politicians_arrested_tt
+		show_ideas_tooltip = OTT_Sefik_Huesnue_Bey_hog_syn
+		show_ideas_tooltip = OTT_Prens_Sabahaddin_Efendi_hog_sli
+		show_ideas_tooltip = OTT_Ali_Suekrue_Pasa_hog_sco
+		show_ideas_tooltip = OTT_Tevfik_Ruestue_Bey_for_sde
+		show_ideas_tooltip = OTT_Osman_Kemal_Bey_for_sli
+		show_ideas_tooltip = OTT_Riza_Nur_Pasa_for_pau
+		show_ideas_tooltip = OTT_Zeki_Velidi_Pasa_for_npo
+		remove_ideas = OTT_Tevfik_Ruestue_Bey_for_sde
+		remove_ideas = OTT_Osman_Kemal_Bey_for_sli
+		remove_ideas = OTT_Riza_Nur_Pasa_for_pau
+		remove_ideas = OTT_Zeki_Velidi_Pasa_for_npo
+		set_country_flag = Sefik_Huesnue_Bey_dead
+		set_country_flag = Prens_Sabahaddin_Efendi_dead
+		set_country_flag = Ali_Suekrue_Pasa_dead
+		set_country_flag = Tevfik_Ruestue_Bey_dead
+		set_country_flag = Osman_Kemal_Bey_dead
+		set_country_flag = Riza_Nur_Pasa_dead
+		set_country_flag = Zeki_Velidi_Pasa_dead
 		country_event = { id = ott.88 days = 5 }
 	}
 
@@ -5208,7 +5254,7 @@ country_event = {
 
 }
 
-# The Beşiktaş Massacre
+# The Galata Massacre
 
 country_event = {
 	id = ott.89
@@ -5240,9 +5286,31 @@ country_event = {
 
 		ai_chance = { factor = 80 }
 		add_political_power = 120
-		# TODO - appoint TF government
-		# TODO - fail and lock focus forever
-		# TODO - add broken monarchy idea
+		create_country_leader = {
+			name = "Abdülmecid II"
+			desc = "POLITICS_ABDULMECID_DESC"
+			picture = "Portrait_Ottoman_Abdulmecid.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			ruling_party = authoritarian_democrat
+			elections_allowed = no
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = OTT_Mehmed_Cavid_Bey_hog_ade
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = OTT_Koeprueluezade_Mehmed_Fuad_Pasa_for_mli
+		remove_ideas_with_trait = economy_minister
+		add_ideas = OTT_Mahmud_Celal_Pasa_eco_ade
+		remove_ideas_with_trait = security_minister
+		add_ideas = OTT_Yusuf_Kemal_Pasa_sec_pau
+		add_popularity = { ideology = paternal_autocrat popularity = -0.1 }
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.2 }
+		remove_ideas = ott_protests_idea
+		set_country_flag = ott_new_reformers
 	}
 
 	option = {			# Keep shooting people
@@ -5250,7 +5318,7 @@ country_event = {
 
 		ai_chance = { factor = 20 }
 		add_political_power = -250	# stability goes down to 'disaster'
-		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+		add_popularity = { ideology = paternal_autocrat popularity = -0.10 }
 		if = {
 			limit = { tag = OTT }
 			set_country_flag = ott_broken		#Ottomans broken, coup soon
@@ -5293,8 +5361,7 @@ country_event = {
 		ai_chance = { factor = 70 }
 		add_political_power = -50
 		country_event = { id = ott.93 days = 20 }
-		set_country_flag = sabahaddin_exiled
-		# TODO - sleepminister sabahaddin
+		set_country_flag = Prens_Sabahaddin_Efendi_dead
 	}
 
 	option = {				# Let him agitate
@@ -5321,15 +5388,15 @@ country_event = {
 
 		if = {
 			limit = {
-				has_country_flag = sabahaddin_exiled
+				has_country_flag = Prens_Sabahaddin_Efendi_dead
 			}
-				add_political_power = -150
+				add_political_power = -100
 
 			else = {
-				add_political_power = -100
+				add_political_power = -150
 			}
 		}
-		add_popularity = { ideology = paternal_autocrat popularity = -0.05 } # TODO - check if negative value actually works
+		add_popularity = { ideology = paternal_autocrat popularity = -0.05 }
 		country_event = { id = ott.88 days = 5 }
 	}
 
@@ -5346,9 +5413,9 @@ country_event = {
 
 	trigger = {
 		tag = OTT
-		NOT = { has_completed_focus = OTT_dissolve_parliament }
+		NOT = { has_completed_focus = OTT_eliminate_opposition }
 		focus_progress = {
-			focus = OTT_dissolve_parliament
+			focus = OTT_eliminate_opposition
 			progress > 0.90
 		}
 	}
@@ -5614,8 +5681,27 @@ country_event = {	# The new constitution is declared!
 		name = ott.105.a
 
 		add_political_power = 50
-		complete_national_focus = OTT_write_constitution
-		# TODO - add solid / compromise constitution
+		if = {
+			limit = {
+				focus_progress = {
+					focus = OTT_write_constitution
+					progress > 0.1
+				}
+			}
+			complete_national_focus = OTT_write_constitution
+		}
+		if = {
+			limit = {
+				has_country_flag = ott_constitution_1
+				has_country_flag = ott_constitution_2
+				has_country_flag = ott_constitution_3
+			}
+				add_ideas = ott_solid_constitution
+
+			else = {
+				add_ideas = ott_compromise_constitution
+			}
+		}
 	}
 
 }
@@ -5633,7 +5719,7 @@ country_event = {	# appointment of judges
 		name = ott.106.a
 
 		ai_chance = {
-			factor = 20
+			factor = 25
 
 			modifier = {
 				factor = 100
@@ -5647,17 +5733,17 @@ country_event = {	# appointment of judges
 	option = {			# they shall have oversight
 		name = ott.106.b
 
-		ai_chance = { factor = 60 }
+		ai_chance = { factor = 75 }
 	}
 
 	option = {			# I AM THE LAW
 		name = ott.106.c
 
 		ai_chance = {
-			factor = 20
+			factor = 1
 
 			modifier = {
-				factor = 100
+				factor = 1000
 
 				has_completed_focus = OTT_dissolve_parliament
 			}
@@ -5834,8 +5920,6 @@ country_event = {	# corrupt bureaucracy
 # Ottoman Corruption Events
 ###############################################################################
 
-# TODO - ensure none of these happen during a war
-
 ### Report on corruption
 
 country_event = {
@@ -5859,6 +5943,7 @@ country_event = {
 			has_completed_focus = OTT_enforce_autocracy
 			has_completed_focus = OTT_enforce_rule_of_law
 		}
+		date > 1940.1.1
 		has_country_flag = ott_reform_resistance
 		has_country_flag = ott_reform_resistance_1
 		has_country_flag = ott_reform_resistance_2
@@ -5875,8 +5960,8 @@ country_event = {
 
 		ai_chance = { factor = 40 }
 		set_country_flag = ott_investigation
-		# TODO - tooltip about unlocked focus
-		# TODO - investigation idea
+		add_ideas = ott_investigation_idea
+		custom_effect_tooltip = OTT_corruption_unlocked_tt
 	}
 
 	option = {		# Let it slide, this is too dangerous
@@ -5904,8 +5989,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	# TODO - actually remove head of security
-
 	option = {		# issue arrests
 		name = ott.113.a
 		trigger = { has_completed_focus = OTT_enforce_autocracy }
@@ -5929,6 +6012,7 @@ country_event = {
 
 		ai_chance = { factor = 1 }
 		add_political_power = -100
+		remove_ideas = ott_investigation_idea
 		clr_country_flag = ott_investigation
 	}
 
@@ -5963,6 +6047,7 @@ country_event = {
 
 		ai_chance = { factor = 10 }
 		add_political_power = -100
+		remove_ideas = ott_investigation_idea
 		clr_country_flag = ott_investigation
 	}
 
@@ -5997,6 +6082,7 @@ country_event = {
 
 		ai_chance = { factor = 20 }
 		add_political_power = -100
+		remove_ideas = ott_investigation_idea
 		clr_country_flag = ott_investigation
 	}
 
@@ -6064,7 +6150,6 @@ country_event = {
 	id = ott.118
 	title = ott.118.t
 	desc = ott.118.d
-	# TODO - write post-1944 alternative where ahmed nihad gets murdered
 
 	is_triggered_only = yes
 
@@ -6072,38 +6157,82 @@ country_event = {
 		name = ott.118.a
 
 		ai_chance = { factor = 90 }
-		kill_country_leader = yes
-		create_country_leader = {
-			name = "Ahmed IV"
-			desc = "POLITICS_AHMED_NIHAD_DESC"
-			picture = "Portrait_Ottoman_AhmedNihad.tga"
-			expire = "1965.1.1"
-			ideology = paternal_autocrat_subtype
-			traits = {
+		if = {
+			limit = {
+				has_country_leader = { ruling_only = yes name = "Ahmed IV" } 
+			}
 
+			kill_country_leader = yes
+			create_country_leader = {
+				name = "Ömer I"
+				desc = "POLITICS_OMER_FARUK_DESC"
+				picture = "Portrait_Ottoman_OmerFaruk.tga"
+				expire = "1965.1.1"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}
+
+			else = {
+				kill_country_leader = yes
+				create_country_leader = {
+					name = "Ahmed IV"
+					desc = "POLITICS_AHMED_NIHAD_DESC"
+					picture = "Portrait_Ottoman_AhmedNihad.tga"
+					expire = "1965.1.1"
+					ideology = authoritarian_democrat_subtype
+					traits = {}
+				}
 			}
 		}
 		add_political_power = -50
+		set_politics = {
+			ruling_party = authoritarian_democrat
+			elections_allowed = no
+		}
+		remove_ideas_with_trait = head_of_government
+		add_ideas = OTT_Mehmed_Cavid_Bey_hog_ade
+		remove_ideas_with_trait = foreign_minister
+		add_ideas = OTT_Filibeli_Hilmi_Bey_for_ade
+		remove_ideas_with_trait = economy_minister
+		add_ideas = OTT_Kara_Kemal_Bey_eco_ade
+		remove_ideas_with_trait = security_minister
+		add_ideas = OTT_Abduelkadir_Pasa_sec_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
+		set_country_flag = Hueseyin_Avni_Pasa_dead
+		remove_ideas = ott_investigation_idea
 		clr_country_flag = ott_investigation
-		# TODO - appoint TF government
-		# TODO - remove investigation idea
-		# TODO - add broken monarchy idea
-
+		
 	}
 
 	option = {	# this ends here! - starts Osman Fuad event chain
 		name = ott.118.b
 
 		ai_chance = { factor = 10 }
-		kill_country_leader = yes
-		create_country_leader = {
-			name = "Ahmed IV"
-			desc = "POLITICS_AHMED_NIHAD_DESC"
-			picture = "Portrait_Ottoman_AhmedNihad.tga"
-			expire = "1965.1.1"
-			ideology = paternal_autocrat_subtype
-			traits = {
+		if = {
+			limit = {
+				has_country_leader = { ruling_only = yes name = "Ahmed IV" } 
+			}
 
+			kill_country_leader = yes
+			create_country_leader = {
+				name = "Ömer I"
+				desc = "POLITICS_OMER_FARUK_DESC"
+				picture = "Portrait_Ottoman_OmerFaruk.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocrat_subtype
+				traits = {}
+			}
+
+			else = {
+				kill_country_leader = yes
+				create_country_leader = {
+					name = "Ahmed IV"
+					desc = "POLITICS_AHMED_NIHAD_DESC"
+					picture = "Portrait_Ottoman_AhmedNihad.tga"
+					expire = "1965.1.1"
+					ideology = paternal_autocrat_subtype
+					traits = {}
+				}
 			}
 		}
 		add_political_power = -50
@@ -6193,11 +6322,10 @@ country_event = {
 
 	is_triggered_only = yes
 
-	# TODO - genc_osman.ogg?
 	option = {
 		name = ott.123.a
 
-		country_event = { id = ott.124 hours = 1 }
+		country_event = { id = ott.124 hours = 0 }
 	}
 
 }
@@ -6453,7 +6581,6 @@ country_event = {
 		name = ott.135.a
 
 		country_event = { id = ott.136 days = 1 }
-		# TODO - firing_squad.ogg?
 	}
 
 }
@@ -6515,7 +6642,7 @@ country_event = {
 				set_country_flag = normal_stability
 			}
 		}
-		# TODO - remove investigation idea
+		remove_ideas = ott_investigation_idea
 		country_event = { id = ott.138 days = 7 }
 	}
 
@@ -6545,7 +6672,15 @@ country_event = {
 
 			}
 		}
-		complete_national_focus = OTT_fight_corruption
+		if = {
+			limit = {
+				focus_progress = {
+					focus = OTT_fight_corruption
+					progress > 0.1
+				}
+			}
+			complete_national_focus = OTT_fight_corruption
+		}
 	}
 
 }
@@ -6563,9 +6698,15 @@ country_event = {
 		name = ott.139.a
 
 		add_political_power = -50
-		# TODO - remove TF military leaders
-		# TODO - remove TF ministers
-		# TODO - end TF party, replace with something else
+		remove_ideas = OTT_Mustafa_Ismet_Pasa_hog_ade
+		remove_ideas = OTT_Mustafa_Ismet_Pasa_for_ade
+		remove_ideas = OTT_Mustafa_Ismet_Pasa_carm_ade
+		remove_ideas = OTT_Suekrue_Pasa_cnav_ade
+		remove_unit_leader = 675
+		remove_unit_leader = 676
+		remove_unit_leader = 677
+		set_party_name = { ideology = authoritarian_democrat long_name = "Terakkiperver Fırka" name = "TF" }
+		set_country_flag = TF_mil_purged
 		country_event = { id = ott.140 days = 3 }
 	}
 
@@ -6590,14 +6731,20 @@ country_event = {
 		name = ott.140.b
 
 		ai_chance = { factor = 20 }
-		add_political_power = -80
-		# TODO - remove Halaskar military leaders
-		# TODO - remove Halaskar ministers
+		add_political_power = -60
+		remove_ideas = OTT_Ahmed_Kemal_Pasa_carm_sli
+		remove_ideas = OTT_Ibrahim_Pasa_cnav_sli
+		remove_unit_leader = 671
+		remove_unit_leader = 673
+		remove_unit_leader = 674
+		set_country_flag = HZ_mil_purged
 	}
 
 }
 
-### End paramilitary organizations - the state of Ottoman Intelligence
+### Rebuild Ottoman Intelligence
+
+# Who shall lead the new Intelligence Agency
 
 country_event = {
 	id = ott.141
@@ -6606,15 +6753,39 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {
+
+	option = {			# The efe of all efes
 		name = ott.141.a
 
-		country_event = { id = ott.142 days = 7 }
+		ai_chance = { factor = 9 }
+		remove_ideas_with_trait = intel_minister
+		add_ideas = OTT_Yoeruek_Ali_Efe_int_pau
 	}
 
+	option = {			# A military man
+		name = ott.141.b
+
+		ai_chance = { factor = 1 }
+		remove_ideas_with_trait = intel_minister
+		add_ideas = OTT_Ali_Said_Pasa_int_ade
+	}
+
+	option = {			# Sultan's sworn aide
+		name = ott.141.c
+		trigger = { has_completed_focus = OTT_enforce_autocracy }
+
+		ai_chance = { factor = 90 }
+		add_political_power = -20
+		remove_ideas_with_trait = intel_minister
+		add_ideas = OTT_Aziz_Vefa_int_pau
+	}
 }
 
-# Clear out Teskilat-i Mahsusa
+###############################################################################
+# Ottoman Foreign Focus Events
+###############################################################################
+
+# TODO - EMPTY
 
 country_event = {
 	id = ott.142
@@ -6626,70 +6797,88 @@ country_event = {
 	option = {
 		name = ott.142.a
 
-		# TODO - remove CUP ministers
-		country_event = { id = ott.143 days = 7 }
 	}
 
 }
 
-# Clear out remnants of Yildiz Intelligence
+### OPDA bypass events
 
 country_event = {
 	id = ott.143
 	title = ott.143.t
 	desc = ott.143.d
 
-	is_triggered_only = yes
-
-	option = {			# remove these circassians
-		name = ott.143.a
-
-		ai_chance = { factor = 40 }
-		add_political_power = -20
-		# TODO - remove ministers
-		country_event = { id = ott.144 days = 3 }
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_completed_focus = OTT_opda
+		OR = {
+			GER = { exists = no }
+			GER = { is_subject = yes }
+		}
 	}
-
-	option = {			# we shall keep these true patriots
-		name = ott.143.b
-
-		ai_chance = { factor = 60 }
-		country_event = { id = ott.144 days = 3 }
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	option = {
+		name = ott.143.a
+		
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_3
+			}
+			remove_ideas = ott_opda_idea_3
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_2
+			}
+		}
 	}
 
 }
-
-# Establish new Intelligence Agency
 
 country_event = {
 	id = ott.144
 	title = ott.144.t
 	desc = ott.144.d
 
-	is_triggered_only = yes
-
-	option = {			# Under the Sultan
-		name = ott.144.a
-		trigger = { has_completed_focus = OTT_enforce_autocracy }
-
-		ai_chance = { factor = 99 }
-		add_political_power = -20
-		# TODO - appoint Aziz Vefa
+	fire_only_once = yes
+	
+	trigger = {
+		tag = OTT
+		has_completed_focus = OTT_opda
+		OR = {
+			AUS = { exists = no }
+			AUS = { is_subject = yes }
+		}
 	}
-
-	option = {			# Under the Parliament
-		name = ott.144.b
-
-		ai_chance = { factor = 1 }
-		# TODO - appoint Yoruk Ali Efe
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	option = {
+		name = ott.144.a
+		
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_2
+			}
+			remove_ideas = ott_opda_idea_2
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_3
+			}
+		}
 	}
 
 }
 
-
-###############################################################################
-# Ottoman Foreign Focus Events
-###############################################################################
 
 ### Negotiate German Debt
 
@@ -6702,7 +6891,7 @@ country_event = {
 
 	option = {			# offer weapons & materiel
 		name = ott.145.a
-		# TODO - check weapons trigger = { }
+		trigger = { has_equipment = { infantry_equipment > 5000 } }
 
 		ai_chance = { factor = 50 }
 		GER = { country_event = { id = ott.146 days = 1 } }
@@ -6710,7 +6899,6 @@ country_event = {
 
 	option = {			# offer consumer goods
 		name = ott.145.b
-		# TODO - add trigger = { }
 
 		ai_chance = { factor = 40 }
 		GER = { country_event = { id = ott.147 days = 1 } }
@@ -6728,7 +6916,17 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 		GER = { country_event = { id = ott.153 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_3
+			}
+			remove_ideas = ott_opda_idea_3
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_2
+			}
+		}
 	}
 
 }
@@ -6746,7 +6944,13 @@ country_event = {
 		name = ott.146.a
 
 		ai_chance = { factor = 90 }
-		# TODO - weapons & supplies
+		OTT = {
+			send_equipment = {
+				target = GER
+				type = infantry_equipment
+				amount = 5000
+			}
+		}
 		OTT = { country_event = { id = ott.149 days = 1 } }
 	}
 
@@ -6770,7 +6974,8 @@ country_event = {
 		name = ott.147.a
 
 		ai_chance = { factor = 50 }
-		# TODO - even more consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 60 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 60 } # payments
 		OTT = { country_event = { id = ott.149 days = 1 } }
 	}
 
@@ -6794,7 +6999,8 @@ country_event = {
 		name = ott.148.a
 
 		ai_chance = { factor = 40 }
-		# TODO - huge consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 40 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 40 } # payments
 		OTT = { country_event = { id = ott.149 days = 1 } }
 	}
 
@@ -6820,7 +7026,17 @@ country_event = {
 		name = ott.149.a
 
 		add_political_power = 20
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_3
+			}
+			remove_ideas = ott_opda_idea_3
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_2
+			}
+		}
 	}
 
 }
@@ -6846,7 +7062,17 @@ country_event = {
 
 		ai_chance = { factor = 10 }
 		GER = { country_event = { id = ott.153 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_3
+			}
+			remove_ideas = ott_opda_idea_3
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_2
+			}
+		}
 	}
 
 }
@@ -6864,7 +7090,8 @@ country_event = {
 		name = ott.151.a
 
 		ai_chance = { factor = 80 }
-		# TODO - huge consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 40 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 40 } # payments
 		OTT = { country_event = { id = ott.149 days = 1 } }
 	}
 
@@ -6890,7 +7117,17 @@ country_event = {
 		name = ott.152.a
 
 		GER = { country_event = { id = ott.153 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_3
+			}
+			remove_ideas = ott_opda_idea_3
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_2
+			}
+		}
 	}
 
 }
@@ -6909,7 +7146,17 @@ country_event = {
 
 		ai_chance = { factor = 100 }
 		add_political_power = -20
-		# TODO - add Ottoman default penalties
+		add_opinion_modifier = { target = OTT modifier = embargo }
+		reverse_add_opinion_modifier = { target = OTT modifier = embargo }
+		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		OTT = { set_country_flag = ott_german_embargo }
+		remove_ideas = deutsch_osmanisches
+		remove_ideas = mauser_osmanen
+		remove_ideas = opel_osmanen
+		remove_ideas = tomtas
+		remove_ideas = germaniawerft_osmanen
+
 	}
 
 	option = {			# This means war!
@@ -6917,8 +7164,17 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 		add_political_power = -100
-		# TODO - add Ottoman default penalties
-		# TODO - add German-Ottoman war
+		add_opinion_modifier = { target = OTT modifier = embargo }
+		reverse_add_opinion_modifier = { target = OTT modifier = embargo }
+		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		OTT = { set_country_flag = ott_german_embargo }
+		remove_ideas = deutsch_osmanisches
+		remove_ideas = mauser_osmanen
+		remove_ideas = opel_osmanen
+		remove_ideas = tomtas
+		remove_ideas = germaniawerft_osmanen
+		declare_war_on = { target = OTT type = annex_everything	}
 	}
 
 }
@@ -6935,7 +7191,7 @@ country_event = {
 
 	option = {			# offer weapons & materiel
 		name = ott.154.a
-		# TODO - check WK2 trigger = { }
+		trigger = { has_equipment = { infantry_equipment > 2000 } }
 
 		ai_chance = { factor = 50 }
 		AUS = { country_event = { id = ott.155 days = 1 } }
@@ -6943,7 +7199,6 @@ country_event = {
 
 	option = {			# offer consumer goods
 		name = ott.154.b
-		# TODO - check WK2 trigger = { }
 
 		ai_chance = { factor = 40 }
 		AUS = { country_event = { id = ott.156 days = 1 } }
@@ -6961,7 +7216,17 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 		AUS = { country_event = { id = ott.162 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_2
+			}
+			remove_ideas = ott_opda_idea_2
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_3
+			}
+		}
 	}
 
 }
@@ -6979,7 +7244,13 @@ country_event = {
 		name = ott.155.a
 
 		ai_chance = { factor = 90 }
-		# TODO - weapons & supplies
+		OTT = {
+			send_equipment = {
+				target = AUS
+				type = infantry_equipment
+				amount = 2000
+			}
+		}
 		OTT = { country_event = { id = ott.158 days = 1 } }
 	}
 
@@ -7003,7 +7274,8 @@ country_event = {
 		name = ott.156.a
 
 		ai_chance = { factor = 50 }
-		# TODO - even more consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 60 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 60 } # payments
 		OTT = { country_event = { id = ott.158 days = 1 } }
 	}
 
@@ -7027,7 +7299,8 @@ country_event = {
 		name = ott.157.a
 
 		ai_chance = { factor = 40 }
-		# TODO - huge consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 40 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 40 } # payments
 		OTT = { country_event = { id = ott.158 days = 1 } }
 	}
 
@@ -7053,7 +7326,17 @@ country_event = {
 		name = ott.158.a
 
 		add_political_power = 20
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_2
+			}
+			remove_ideas = ott_opda_idea_2
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_3
+			}
+		}
 	}
 
 }
@@ -7079,7 +7362,17 @@ country_event = {
 
 		ai_chance = { factor = 10 }
 		AUS = { country_event = { id = ott.162 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_2
+			}
+			remove_ideas = ott_opda_idea_2
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_3
+			}
+		}
 	}
 
 }
@@ -7097,7 +7390,8 @@ country_event = {
 		name = ott.160.a
 
 		ai_chance = { factor = 80 }
-		# TODO - huge consumer goods
+		OTT = { add_timed_idea = { idea = ott_denbts_huge days = 40 } }
+		add_timed_idea = { idea = ott_denbts_huge_ger days = 40 } # payments
 		OTT = { country_event = { id = ott.158 days = 1 } }
 	}
 
@@ -7123,7 +7417,17 @@ country_event = {
 		name = ott.161.a
 
 		AUS = { country_event = { id = ott.162 days = 1 } }
-		# TODO - remove OPDA ideas accordingly
+		if = {
+			limit = {
+				has_idea = ott_opda_idea_2
+			}
+			remove_ideas = ott_opda_idea_2
+			
+			else = {
+				remove_ideas = ott_opda_idea_1
+				add_ideas = ott_opda_idea_3
+			}
+		}
 	}
 
 }
@@ -7142,7 +7446,10 @@ country_event = {
 
 		ai_chance = { factor = 100 }
 		add_political_power = -20
-		# TODO - add Ottoman default penalties
+		add_opinion_modifier = { target = OTT modifier = embargo }
+		reverse_add_opinion_modifier = { target = OTT modifier = embargo }
+		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
 	}
 
 	option = {			# This means war!
@@ -7150,8 +7457,11 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 		add_political_power = -100
-		# TODO - add Ottoman default penalties
-		# TODO - add Austrian-Ottoman war
+		add_opinion_modifier = { target = OTT modifier = embargo }
+		reverse_add_opinion_modifier = { target = OTT modifier = embargo }
+		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
+		declare_war_on = { target = OTT type = annex_everything	}
 	}
 
 }

@@ -1842,6 +1842,43 @@ country_event = {
 	}
 }
 
+# Madrid is taken by CNT
+country_event = {
+	id = sprc.211
+	title = sprc.211.t
+	desc = sprc.211.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CNT
+		controls_state = 41 #Madrid
+		NOT = { owns_state = 41 }
+		has_global_flag = spanish_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = sprc.211.a #We must scavenge what we can!
+		ai_chance = { factor = 65 }
+		add_political_power = -50
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = SPR }
+		41 = {
+			damage_building = { type = industrial_complex damage = 1 }
+			damage_building = { type = arms_factory damage = 1 }
+		}
+	}
+	option = {
+		name = sprc.211.b #Leave the city as it stands
+		ai_chance = { factor = 35 }
+		add_political_power = 50
+	}
+}
+
 ### Morocco taken
 
 ### Expose Carlist Plot
@@ -1849,8 +1886,6 @@ country_event = {
 ### Refugees to France
 
 ### Gibraltar
-
-### Scavenge Madrid
 
 # CNT victory event
 country_event = {
@@ -2365,6 +2400,7 @@ country_event = {
 	
 	immediate = {
 		clr_country_flag = CAR_assassination_plot
+		set_country_flag = SPR_Juan_III_killed
 	}
 	
 	option = {
@@ -2381,6 +2417,8 @@ country_event = {
 			ideology = paternal_autocrat_subtype
 			traits = {}
 		}
+		set_politics = { ruling_party = paternal_autocrat }
+		add_popularity = { ideology = paternal_autocrat popularity = 0.1 }
 		hidden_effect = {
 			CAR = { country_event = { id = sprc.316 days = 1} }
 		}
@@ -2423,7 +2461,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = sprc.313.d #We must give in to Xavier
+		name = sprc.313.e #We must give in to Xavier
 		trigger = { has_country_flag = SPR_javier_praised }
 		ai_chance = {
 			factor = 40
@@ -2487,7 +2525,42 @@ country_event = {
 	}
 }
 
-### Scavenge Madrid
+# Madrid is taken by Carlists
+country_event = {
+	id = sprc.317
+	title = sprc.211.t
+	desc = sprc.211.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAR
+		controls_state = 41 #Madrid
+		NOT = { owns_state = 41 }
+		has_global_flag = spanish_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = sprc.211.a #We must scavenge what we can!
+		ai_chance = { factor = 65 }
+		add_political_power = -50
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = SPR }
+		41 = {
+			damage_building = { type = industrial_complex damage = 1 }
+			damage_building = { type = arms_factory damage = 1 }
+		}
+	}
+	option = {
+		name = sprc.211.b #Leave the city as it stands
+		ai_chance = { factor = 35 }
+		add_political_power = 50
+	}
+}
 
 # Carlist victory event
 country_event = {

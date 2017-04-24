@@ -436,6 +436,31 @@ country_event = { # The Fate of the Ukrainian Monarchy
 
 		set_cosmetic_tag = UKR_communist
 		set_country_flag = UKR_Kruschev_won
+		set_global_flag = UKR_Alone
+
+		every_country = { 
+		limit = { is_faction_leader = yes 
+				  is_in_faction_with = UKR 
+				  }
+		remove_from_faction = UKR 
+		}
+
+		hidden_effect = {
+			white_peace = JAP
+			white_peace = FNG
+			white_peace = TRM
+			white_peace = KOR
+			white_peace = SQI
+			white_peace = POR
+			white_peace = FRA
+			white_peace = ENG
+			white_peace = SRI
+			white_peace = CSA
+			white_peace = LIT
+			white_peace = WHR
+		}
+		
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.34 }}}	
 	}
 }
 
@@ -848,5 +873,157 @@ country_event = { # Industrialization of Eastern Ukraine Complete
 			add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
 			add_extra_state_shared_building_slots = 2
 		}
+	}
+}
+
+country_event = { # Revolution in the Breadbasket of Mitteleuropa!
+	id = ukraine.34
+	title = ukraine.34.t
+	desc = ukraine.34.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.34.a
+		ai_chance = { factor = 20 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		hidden_effect = { UKR = { country_event = { days = 2 id = ukraine.35 }}}
+	}
+
+	option = {
+		name = ukraine.34.b
+		ai_chance = { factor = 80 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		hidden_effect = { UKR = { country_event = { days = 1 id = ukraine.39 }}}
+	}
+
+	option = {
+		name = ukraine.34.c
+		ai_chance = { factor = 0 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		declare_war_on = { target = UKR type = annex_everything }
+		hidden_effect = { UKR = { country_event = { days = 0 id = ukraine.35 }}}
+	}
+}
+
+country_event = { # German Military Mission Leaves the Ukraine
+	id = ukraine.35
+	title = ukraine.35.t
+	desc = ukraine.35.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.35.a
+
+		remove_ideas = german_military_advisors
+	}
+}
+
+country_event = { # Attempt at a Military Coup
+	id = ukraine.39
+	title = ukraine.39.t
+	desc = ukraine.39.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.39.a
+		ai_chance = { factor = 35 }
+
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.40 }}}
+
+		add_popularity = {
+			ideology = paternal_autocrat
+			popularity = 0.4
+		}
+
+		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "Vasyl I Vyshyvanyi von Habsburg"
+			desc = "POLITICS_VASYL_DESC"
+			picture = "Portrait_Ukraine_Vasyl.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		add_ideas = {
+			UKR_Pavlo_Skoropadsky_hog_pau
+		}
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_coup_succeds } # 150
+		add_opinion_modifier = { target = AUS modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = HUN modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = WHR modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = LIT modifier = UKR_OTHER_coup_succeds } # 100
+
+		give_military_access = GER
+
+		set_cosmetic_tag = UKR
+
+		add_political_power = -300
+	}
+
+	option = {
+		name = ukraine.39.b
+		ai_chance = { factor = 65 }
+
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.41 }}}
+
+		add_political_power = -200
+	}
+}
+
+country_event = { # Military Coup in the Ukraine
+	id = ukraine.40
+	title = ukraine.40.t
+	desc = ukraine.40.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.40.a
+
+		add_political_power = 60
+		add_opinion_modifier = { target = UKR modifier = UKR_GER_puppet } # 400
+		puppet = UKR
+		add_political_power = 100
+		add_to_faction = UKR
+	}
+}
+
+country_event = { # Military Coup in the Ukraine Failed
+	id = ukraine.41
+	title = ukraine.41.t
+	desc = ukraine.41.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.41.a
+		ai_chance = { factor = 80 }
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_coup_failed } # -400
+		hidden_effect = { UKR = { country_event = { days = 2 id = ukraine.35 }}}
+	}
+
+	option = {
+		name = ukraine.41.b
+		ai_chance = { factor = 20 }
+
+		declare_war_on = { target = UKR type = annex_everything }
+		hidden_effect = { UKR = { country_event = { days = 0 id = ukraine.35 }}}
 	}
 }

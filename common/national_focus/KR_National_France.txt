@@ -2078,12 +2078,42 @@ focus = {
 	}
 	
 	focus = {
+	id = NFA_strike_france
+	icon = GFX_goal_generic_major_war
+	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { is_subject = no
+	NOT = { is_in_faction_with = FRA }
+	NOT = { has_idea = NFA_political_unrest }
+	OR = { FRA = { has_war_with = GER }
+	date > 1939.6.1
+	}
+	}
+	bypass = { OR = { has_war_with = FRA 
+	NOT = { country_exists = FRA }
+	FRA = { is_subject_of = GER }
+	}
+	}
+	
+	x = 50
+	y = 1
+	cost = 10
+	completion_reward = {
+	if = { limit = { is_ai = no }
+			create_wargoal = { type = annex_everything target = FRA }
+			}
+			if = { limit = { is_ai = yes }
+			declare_war_on = { target = FRA type = annex_everything }
+			}
+		}
+	}
+	
+	focus = {
 	id = NFA_return_to_paris
 	icon = GFX_goal_generic_demand_territory
-	prerequisite = { focus = NFA_homeland_reconquest }
+	prerequisite = { focus = NFA_strike_france }
 	available = { FRA = { exists = no } owns_state = 16 owns_state = 21 }
 	x = 49
-	y = 1
+	y = 2
 	cost = 10
 	completion_reward = {
 	country_event = { id = nfa.67 }
@@ -2103,7 +2133,7 @@ focus = {
 	focus = {
 	id = NFA_return_to_marseille
 	icon = GFX_goal_generic_demand_territory
-	prerequisite = { focus = NFA_homeland_reconquest }
+	prerequisite = { focus = NFA_strike_france }
 	available = { owns_state = 21
 	NOT = { has_completed_focus = NFA_return_to_paris has_war_with = GER has_war_with = FRP has_war_with = OCC
 	country_exists = FRA controls_state = 16 16 = { is_core_of = NFA } } }
@@ -2111,7 +2141,7 @@ focus = {
 			factor = 10
 		}
 	x = 51
-	y = 1
+	y = 2
 	cost = 10
 	completion_reward = {
 	country_event = { id = nfa.68 }
@@ -2140,7 +2170,7 @@ focus = {
 			factor = 10
 		}
 	x = 53
-	y = 2
+	y = 3
 	cost = 10
 	completion_reward = {
 	add_political_power = 20
@@ -2158,7 +2188,7 @@ focus = {
 	bypass = { has_country_flag = NFA_demo }
 	available = { NOT = { has_country_flag = NFA_demo } }
 	x = 49
-	y = 2
+	y = 3
 	cost = 10
 	ai_will_do = {
 			factor = 100
@@ -2188,7 +2218,7 @@ focus = {
 			factor = 0
 		}
 	x = 51
-	y = 2
+	y = 3
 	cost = 10
 	completion_reward = {
 	add_political_power = -280	
@@ -2204,7 +2234,7 @@ focus = {
 			factor = 10
 		}
 	x = 53
-	y = 3
+	y = 4
 	cost = 10
 	completion_reward = {
 	add_research_slot = 1
@@ -2216,7 +2246,7 @@ focus = {
 	icon = GFX_focus_wonderweapons
 	prerequisite = { focus = NFA_amnistia }
 	x = 52
-	y = 4
+	y = 5
 	cost = 10
 	completion_reward = {
 	add_tech_bonus = {
@@ -2233,7 +2263,7 @@ focus = {
 	icon = GFX_focus_rocketry
 	prerequisite = { focus = NFA_amnistia }
 	x = 54
-	y = 4
+	y = 5
 	cost = 10
 	completion_reward = {
 	add_tech_bonus = {
@@ -2250,7 +2280,7 @@ focus = {
 	icon = GFX_goal_generic_allies_build_infantry
 	prerequisite = { focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
 	x = 51
-	y = 3
+	y = 4
 	cost = 10
 	ai_will_do = {
 			factor = 10
@@ -2275,7 +2305,7 @@ focus = {
 			factor = 10
 		}
 	x = 49
-	y = 3
+	y = 4
 	cost = 10
 	completion_reward = {
 	add_state_claim = 694

@@ -1460,7 +1460,7 @@ country_event = {
 		set_country_flag = SPR_intervention
 		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
+		send_equipment = { target = SPR type = infantry_equipment amount = 500 }
 		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
 		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
 		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
@@ -1490,7 +1490,6 @@ country_event = {
 	option = {
 		name = sprc.102.a
 		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
 		if = {
 			limit = { FROM = { tag = RUS } }
@@ -1630,7 +1629,7 @@ country_event = {
 		set_country_flag = CNT_intervention
 		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
+		send_equipment = { target = CNT type = infantry_equipment amount = 500 }
 		add_opinion_modifier = { target = CNT modifier = supports_cntfai_1 }
 		reverse_add_opinion_modifier = { target = SPR modifier = aided_cntfai }
 		reverse_add_opinion_modifier = { target = CAR modifier = aided_cntfai }
@@ -1663,7 +1662,6 @@ country_event = {
 	option = {
 		name = sprc.205.a
 		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
 		if = {
 			limit = { FROM = { tag = ENG } }
@@ -1671,11 +1669,11 @@ country_event = {
 		}
 		if = {
 			limit = { FROM = { tag = SOV } }
-			add_ideas = SPR_advisors_soviet
+			add_ideas = CNT_advisors_soviet
 		}
 		if = {
 			limit = { FROM = { tag = FRA } }
-			add_ideas = SPR_advisors_france
+			add_ideas = CNT_advisors_france
 		}
 		if = {
 			limit = { FROM = { tag = SRI } }
@@ -1710,15 +1708,15 @@ country_event = {
 		add_political_power = 100
 		if = {
 			limit = { tag = ENG }
-			CNT = { remove_ideas = SPR_advisors_england }
+			CNT = { remove_ideas = CNT_advisors_england }
 		}
 		if = {
 			limit = { tag = SOV }
-			CNT = { remove_ideas = SPR_advisors_soviet }
+			CNT = { remove_ideas = CNT_advisors_soviet }
 		}
 		if = {
 			limit = { tag = FRA }
-			CNT = { remove_ideas = SPR_advisors_france }
+			CNT = { remove_ideas = CNT_advisors_france }
 		}
 		if = {
 			limit = { tag = SRI }
@@ -1842,6 +1840,43 @@ country_event = {
 	}
 }
 
+# Madrid is taken by CNT
+country_event = {
+	id = sprc.211
+	title = sprc.211.t
+	desc = sprc.211.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CNT
+		controls_state = 41 #Madrid
+		NOT = { owns_state = 41 }
+		has_global_flag = spanish_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = sprc.211.a #We must scavenge what we can!
+		ai_chance = { factor = 65 }
+		add_political_power = -50
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = SPR }
+		41 = {
+			damage_building = { type = industrial_complex damage = 1 }
+			damage_building = { type = arms_factory damage = 1 }
+		}
+	}
+	option = {
+		name = sprc.211.b #Leave the city as it stands
+		ai_chance = { factor = 35 }
+		add_political_power = 50
+	}
+}
+
 ### Morocco taken
 
 ### Expose Carlist Plot
@@ -1849,8 +1884,6 @@ country_event = {
 ### Refugees to France
 
 ### Gibraltar
-
-### Scavenge Madrid
 
 # CNT victory event
 country_event = {
@@ -2032,7 +2065,7 @@ country_event = {
 		set_country_flag = CAR_intervention
 		add_political_power = -50
 		add_manpower = -1000
-		add_equipment_to_stockpile = { type = infantry_equipment amount = -500 producer = ROOT }
+		send_equipment = { target = CAR type = infantry_equipment amount = 500 }
 		add_opinion_modifier = { target = CAR modifier = supports_carlist_1 }
 		reverse_add_opinion_modifier = { target = SPR modifier = aided_carlist }
 		reverse_add_opinion_modifier = { target = CNT modifier = aided_carlist }
@@ -2070,7 +2103,6 @@ country_event = {
 	option = {
 		name = sprc.302.a
 		add_opinion_modifier = { target = FROM modifier = aided_us_civwar }
-		add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = FROM }
 		add_manpower = 1000
 		if = {
 			limit = { FROM = { tag = ITA } }
@@ -2365,6 +2397,7 @@ country_event = {
 	
 	immediate = {
 		clr_country_flag = CAR_assassination_plot
+		set_country_flag = SPR_Juan_III_killed
 	}
 	
 	option = {
@@ -2381,6 +2414,8 @@ country_event = {
 			ideology = paternal_autocrat_subtype
 			traits = {}
 		}
+		set_politics = { ruling_party = paternal_autocrat }
+		add_popularity = { ideology = paternal_autocrat popularity = 0.1 }
 		hidden_effect = {
 			CAR = { country_event = { id = sprc.316 days = 1} }
 		}
@@ -2423,7 +2458,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = sprc.313.d #We must give in to Xavier
+		name = sprc.313.e #We must give in to Xavier
 		trigger = { has_country_flag = SPR_javier_praised }
 		ai_chance = {
 			factor = 40
@@ -2487,7 +2522,42 @@ country_event = {
 	}
 }
 
-### Scavenge Madrid
+# Madrid is taken by Carlists
+country_event = {
+	id = sprc.317
+	title = sprc.211.t
+	desc = sprc.211.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CAR
+		controls_state = 41 #Madrid
+		NOT = { owns_state = 41 }
+		has_global_flag = spanish_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = sprc.211.a #We must scavenge what we can!
+		ai_chance = { factor = 65 }
+		add_political_power = -50
+		add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = SPR }
+		41 = {
+			damage_building = { type = industrial_complex damage = 1 }
+			damage_building = { type = arms_factory damage = 1 }
+		}
+	}
+	option = {
+		name = sprc.211.b #Leave the city as it stands
+		ai_chance = { factor = 35 }
+		add_political_power = 50
+	}
+}
 
 # Carlist victory event
 country_event = {

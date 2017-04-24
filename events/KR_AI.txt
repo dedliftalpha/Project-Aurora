@@ -1,0 +1,348 @@
+﻿##############################################
+################KAISERREICH AI################
+##############################################
+#This file will allow more specific control over the AI that cannot be achieved through other means
+
+########Civil War Intervention########
+#This only deals with countries more generally and, hopefully, dynamically. Specific countries already being used in the other relveant event files will not be effecting. For example germany has an event for civil war intervention in the Spain event file so it will not be effected here.
+####Spanish Civil War####
+##Spainish Republic##
+country_event = {
+	id = ai.civilwar.001
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			OR = {
+				has_country_flag = SPR_intervention
+				has_country_flag = no_SPR_intervention
+				has_country_flag = CAR_intervention
+				has_country_flag = no_CAR_intervention
+				has_country_flag = CNT_intervention
+				has_country_flag = no_CNT_intervention
+			}
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
+			}		
+		}
+		country_exists = SPR #Spain must exists
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_state = { 
+				OR = {
+					is_owned_by = SPR
+					is_owned_by = CAR
+					is_owned_by = CNT				
+				}
+			} 
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = SPR_intervention
+				}			
+			}
+		}
+		OR = { #must have a democratic leaning government
+			has_government = social_democrat
+			has_government = social_liberal
+			has_government = market_liberal
+			has_government = social_conservative	
+			has_government = authoritarian_democrat	
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = SPR_intervention
+					}	
+			}
+		}
+		set_country_flag = SPR_intervention
+		add_political_power = -50
+		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
+		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
+		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_SPR_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_SPR_intervention
+				}	
+			}
+			modifier = { #In asia
+			factor = 3
+				capital_scope = { 
+					is_on_continent = asia
+				} 
+			}
+		}
+	}
+}
+##Carlist Spain##
+country_event = {
+	id = ai.civilwar.002
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			OR = {
+				has_country_flag = CAR_intervention
+				has_country_flag = no_CAR_intervention
+				has_country_flag = SPR_intervention
+				has_country_flag = no_SPR_intervention
+				has_country_flag = CNT_intervention
+				has_country_flag = no_CNT_intervention
+			}
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
+			}		
+		}
+		country_exists = CAR #Spain must exists
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_state = { 
+				OR = {
+					is_owned_by = SPR
+					is_owned_by = CAR
+					is_owned_by = CNT				
+				}
+			} 
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = CAR_intervention
+				}			
+			}
+		}
+		OR = { #must have an authoritan leaning government
+			has_government = paternal_autocrat 
+			has_government = national_populist
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = CAR_intervention
+					}	
+			}
+		}
+		set_country_flag = CAR_intervention
+		add_political_power = -50
+		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
+		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
+		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_CAR_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_CAR_intervention
+				}	
+			}
+			modifier = { #In asia
+			factor = 3
+				capital_scope = { 
+					is_on_continent = asia
+				} 
+			}
+		}
+	}
+}
+##CNT Spain##
+country_event = {
+	id = ai.civilwar.003
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			OR = {
+				has_country_flag = CAR_intervention
+				has_country_flag = no_CAR_intervention
+				has_country_flag = SPR_intervention
+				has_country_flag = no_SPR_intervention
+				has_country_flag = CNT_intervention
+				has_country_flag = no_CNT_intervention
+			}
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
+			}		
+		}
+		country_exists = CNT #Spain must exists
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_state = { 
+				OR = {
+					is_owned_by = SPR
+					is_owned_by = CAR
+					is_owned_by = CNT				
+				}
+			} 
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = CNT_intervention
+				}			
+			}
+		}
+		OR = { #must have a syndiclist leaning government
+			has_government = totalist
+			has_government = syndicalist
+			has_government = radical_socialist
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = CNT_intervention
+					}	
+			}
+		}
+		set_country_flag = CNT_intervention
+		add_political_power = -50
+		add_opinion_modifier = { target = SPR modifier = supports_spain_1 }
+		reverse_add_opinion_modifier = { target = CNT modifier = aided_spain }
+		reverse_add_opinion_modifier = { target = CAR modifier = aided_spain }
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_CNT_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_CNT_intervention
+				}	
+			}
+			modifier = { #In asia
+			factor = 3
+				capital_scope = { 
+					is_on_continent = asia
+				} 
+			}
+		}
+	}
+}

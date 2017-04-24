@@ -1580,10 +1580,53 @@ country_event = {
 
 ### Arrest the Opposition
 
-### Recovery
+# Main Terror check event
+country_event = {
+	id = sprc.121
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = CAR
+			tag = CNT
+			tag = SPR
+		}
+		has_global_flag = spanish_civil_war
+		any_state = {
+			is_core_of = ROOT
+			is_controlled_by = ROOT
+			NOT = { is_owned_by = ROOT }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 22
+	}
+	
+	immediate = {
+		random_list = {
+			8 = { country_event = { id = sprc.122 } } #Terror event
+			92 = {}
+		}
+	}
+}
 
-### Terror
-
+# Terror event
+country_event = {
+	id = sprc.122
+	title = sprc.122.t
+	desc = sprc.122.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.122.a
+		add_political_power = -20
+	}
+}
+	
 
 ### CNT-FAI EVENTS ###
 
@@ -1948,7 +1991,6 @@ country_event = {
 	id = sprc.222
 	
 	hidden = yes
-	fire_only_once = yes
 	
 	trigger = {
 		OR = {
@@ -2014,12 +2056,235 @@ country_event = {
 	}
 }
 
+# Maintenance event - if peace before war is over
+country_event = {
+	id = sprc.222
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = CNT
+			tag = CAR
+			tag = SPR
+		}
+		is_ai = yes
+		has_war = no
+		has_global_flag = spanish_civil_war
+		num_of_controlled_states > 1
+		any_country = {
+			has_war = no
+			NOT = { tag = ROOT }
+			num_of_controlled_states > 1
+			OR = {
+				tag = CNT
+				tag = CAR
+				tag = SPR
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		random_other_country = {
+			limit = {
+				has_war = no
+				NOT = { tag = ROOT }
+				num_of_controlled_states > 1
+				OR = {
+					tag = CNT
+					tag = CAR
+					tag = SPR
+				}
+			}
+			ROOT = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+		}
+	}
+}
+	
+# Gibraltar occupied by CNT
+country_event = {
+	id = sprc.225
+	title = sprc.225.t
+	desc = sprc.225.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		has_war = no
+		has_global_flag = spanish_civil_war
+		118 = { is_controlled_by = CNT } #Gibraltar
+	}
+	
+	mean_time_to_happen = {
+		days = 25
+	}
+	
+	option = {
+		name = sprc.225.a #Launch an incursion to secure Gibraltar
+		reverse_add_opinion_modifier = { target = CNT modifier = ITA_outraged }
+		reverse_add_opinion_modifier = { target = CAR modifier = ITA_hates_govt }
+		reverse_add_opinion_modifier = { target = SPR modifier = ITA_hates_govt }
+		CNT = { country_event = { id = sprc.226 days = 20 } }
+	}
+	option = {
+		name = sprc.225.b #Do not get involved
+	}
+}
+
+# German forces are nearing Gibraltar
+country_event = {
+	id = sprc.226
+	title = sprc.226.t
+	desc = sprc.226.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		controls_state = 118
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.226.a #Ask for French protection
+		trigger = {
+			country_exists = FRA
+			FRA = { has_socialist_government = yes } 
+		}
+		add_political_power = -50
+		FRA = { country_event = { id = 227 days = 2 } }
+	}
+	option = {
+		name = sprc.226.b #We will hold Gibraltar ourselves
+	}
+}
+
+# Commune of France is asked to help hold Gibraltar
+country_event = {
+	id = sprc.227
+	title = sprc.227.t
+	desc = sprc.227.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		CNT = { controls_state = 118 }
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.227.a #Protect Gibraltar at all costs
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		add_state_claim = 118
+		transfer_state = 118
+		load_oob = FRA_gibraltar
+		hidden_effect = {
+			SPR = { country_event = { id = sprc.228 hours = 5 } }
+			CNT = { country_event = { id = sprc.228 hours = 5 } }
+			CAR = { country_event = { id = sprc.228 hours = 5 } }
+		}
+	}
+	option = {
+		name = sprc.227.b #Establish a naval presence to deter the Germans
+		ai_chance = {
+			factor = 45
+		}
+		CNT = { country_event = { id = sprc.230 hours = 5 } }
+	}
+	option = {
+		name = sprc.227.c #We do not wish to create an incident
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+		}
+		CNT = { country_event = { id = sprc.229 hours = 5 } }
+	}
+}
+
+# France has taken over Gibraltar
+country_event = {
+	id = sprc.228
+	title = sprc.228.t
+	desc = sprc.228.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.228.a
+		trigger = { tag = CNT }
+		add_opinion_modifier = { target = FRA modifier = aided_us_civwar }
+	}
+	option = {
+		name = sprc.228.b
+		trigger = { NOT = { tag = CNT } }
+		add_opinion_modifier = { target = FRA modifier = ITA_hates_govt }
+	}
+}
+
+# France refuses to help
+country_event = {
+	id = sprc.229
+	title = sprc.229.t
+	desc = sprc.229.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		controls_state = 118
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.229.a
+		add_opinion_modifier = { target = FRA modifier = ITA_dislikes_govt }
+	}
+}
+
+# France offers naval power to help
+country_event = {
+	id = sprc.230
+	title = sprc.230.t
+	desc = sprc.230.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.230.a
+	}
+}
+
+# Spain is protecting Gibraltar on its own
+
+
+
 ### Arrest the Opposition
-
-### Recovery
-
-### Terror
-
 
 ### CARLIST EVENTS ###
 
@@ -2620,8 +2885,88 @@ country_event = {
 	}
 }
 
+# The Troubles Continue
+country_event = {
+	id = sprc.322
+	title = sprc.322.t
+	desc = sprc.322.d
+	picture = GFX_report_event_generic_ruins
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CAR
+			tag = CNT
+			tag = SPR
+		}
+		has_country_flag = aftermath_of_the_civil_war
+		NOT = { has_global_flag = spanish_civil_war }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = -200
+		hidden_effect = {
+			country_event = { id = sprc.323 days = 180 }
+		}
+	}
+}
+	
+# Recovery event #1
+country_event = {
+	id = sprc.323
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+		hidden_effect = {
+			set_country_flag = spanish_postwar
+			country_event = { id = sprc.324 days = 180 }
+		}
+	}
+}
+
+# Recovery event #2
+country_event = {
+	id = sprc.324
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+		hidden_effect = {
+			country_event = { id = sprc.325 days = 180 }
+		}
+	}
+}
+
+# Recovery event #3
+country_event = {
+	id = sprc.325
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+	}
+}
+
 ### Arrest the Opposition
-
-### Recovery
-
-### Terror

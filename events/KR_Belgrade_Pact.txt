@@ -17,7 +17,37 @@ country_event = {
 	desc = pact.1.d
 	picture = GFX_report_event_soviet_finnish_pact
 
-	is_triggered_only = yes
+	trigger = {
+		tag = SER
+		date > 1937.5.1
+		is_in_faction = no
+		is_subject = no
+		has_war = no
+
+		# Bulgaria and one of the potential partners need to exist
+		AND = {
+			country_exists = BUL
+
+			OR = {
+				country_exists = GRE
+
+				AND = {
+					country_exists = ROM
+					NOT = { country_exists = RRM}
+				}
+				AND = {
+					country_exists = RRM
+					NOT = { country_exists = ROM }
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	fire_only_once = yes
 
 	option = {
 		name = pact.1.a  # Open the Congress
@@ -544,7 +574,26 @@ country_event = {
 	title = pact.16.t
 	desc = pact.16.d
 
-	is_triggered_only = yes
+	trigger = {
+		tag = SER
+		is_faction_leader = yes
+		has_country_flag = founded_belgradepact
+		has_war = no
+
+		# At least one needs to have joined for Serbia to make a chance
+		OR = {
+			ROM = { has_country_flag = joined_belgradepact }
+			RRM = { has_country_flag = joined_belgradepact }
+			GRE = { has_country_flag = joined_belgradepact }
+			OTT = { has_country_flag = joined_belgradepact }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	fire_only_once = yes
 
 	option = {
 		name = pact.16.a # Send the ultimatum

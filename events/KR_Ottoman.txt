@@ -2004,8 +2004,10 @@ country_event = {
 
 	trigger = {
 		tag = EGY
-		has_global_flag = GER_capitulation
-		has_global_flag = GER_CON_Capitulation
+		OR = {
+			has_global_flag = GER_capitulation
+			has_global_flag = GER_CON_Capitulation
+		}
 		GER = { controls_state = 753} # the canal
 		EGY = {
 			NOT = {
@@ -2535,8 +2537,10 @@ country_event = {
 
 	trigger = {
 		tag = YEM
-		has_global_flag = GER_capitulation
-		has_global_flag = GER_CON_Capitulation
+		OR = {
+			has_global_flag = GER_capitulation
+			has_global_flag = GER_CON_Capitulation
+		}
 		GER = { controls_state = 659} # aden
 		YEM = {
 			NOT = {
@@ -4402,8 +4406,10 @@ country_event = {
 
 	trigger = {
 		tag = OTT
-		has_global_flag = GER_capitulation
-		has_global_flag = GER_CON_Capitulation
+		OR = {
+			has_global_flag = GER_capitulation
+			has_global_flag = GER_CON_Capitulation
+		}
 		GER = { controls_state = 753} # the canal
 		OTT = {
 			NOT = {
@@ -5952,7 +5958,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 60
+		days = 120
 	}
 
 	option = {		# I want action on this!
@@ -6254,7 +6260,7 @@ country_event = {
 
 	option = {
 		name = ott.119.a
-		country_event = { id = ott.120 hours = 1 }
+		country_event = { id = ott.120 hours = 0 }
 	}
 
 }
@@ -6291,7 +6297,7 @@ country_event = {
 	option = {
 		name = ott.121.a
 
-		country_event = { id = ott.122 hours = 2 }
+		country_event = { id = ott.122 hours = 1 }
 	}
 
 }
@@ -6308,7 +6314,7 @@ country_event = {
 	option = {
 		name = ott.122.a
 
-		country_event = { id = ott.123 hours = 3 }
+		country_event = { id = ott.123 hours = 1 }
 	}
 
 }
@@ -6362,7 +6368,7 @@ country_event = {
 	option = {
 		name = ott.125.a
 
-		country_event = { id = ott.126 hours = 2 }
+		country_event = { id = ott.126 hours = 0 }
 	}
 
 }
@@ -6384,7 +6390,7 @@ country_event = {
 
 }
 
-# Osman sends radio and telegraph orders to Constantinople Corps
+# Osman sends radio orders to Constantinople Corps
 
 country_event = {
 	id = ott.127
@@ -6396,7 +6402,7 @@ country_event = {
 	option = {
 		name = ott.127.a
 
-		country_event = { id = ott.128 hours = 6 }
+		country_event = { id = ott.128 hours = 2 }
 	}
 
 }
@@ -6465,8 +6471,8 @@ country_event = {
 		name = ott.131.a
 
 		country_event = { id = ott.132 days = 1 }
-		# TODO - figure out how to fight the rebels in Constantinople
-
+		load_oob = OTT_ertugrul
+		set_capital = 341
 	}
 
 }
@@ -6484,30 +6490,37 @@ country_event = {
 		name = ott.132.a
 
 		add_political_power = -20
-#	TODO - civil war
-#			set_capital = 341
-#			load_oob = "OTT_ertugrul"
-#			start_civil_war = {
-#				ruling_party = paternal_autocrat
-#				ideology = authoritarian_democrat
-#				size = 0.01 # TODO - fix as necessary
-#				capital = 773
-#				states = { 773 }
-#			}
-#			random_other_country = {
-#				limit = {
-#					original_tag = OTT
-#					has_government = authoritarian_democrat
-#				}
-#				set_cosmetic_tag = OTT_TF_authoritarian_democrat
-#				load_oob = "OTT_tf"
-#				set_national_unity = 0.5
-#				add_popularity = {
-#					ideology = authoritarian_democrat
-#					popularity = 0.35
-#				}
-#			}
-#		country_event = { id = ott.134 days = 60 }
+		remove_unit_leader = 672
+		TUR = {
+			create_country_leader = {
+				name = "Mehmed Cavid Gerçel"
+				desc = "POLITICS_MEHMED_CAVID_DESC"
+				picture = "Portrait_Mehmed_Cavid.tga"
+				expire = "1965.1.1"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}
+			transfer_state = 773
+			set_capital = 773
+			transfer_technology = yes
+			add_political_power = 50
+			load_oob = OTT_tf
+			random_list = {
+				50 = { load_oob = OTT_tf1 }
+				50 = { add_political_power = -10 }
+			} 
+			random_list = {
+				30 = { load_oob = OTT_tf2 }
+				70 = { add_political_power = -10 }
+			} 
+			random_list = {
+				30 = { load_oob = OTT_tf3 }
+				70 = { add_political_power = -10 }
+			} 
+			set_cosmetic_tag = TUR_TF
+			declare_war_on = { target = OTT type = annex_everything	}
+		}
+		country_event = { id = ott.134 days = 300 }
 		set_global_flag = OTT_civil_war
 	}
 
@@ -6526,6 +6539,7 @@ country_event = {
 		tag = OTT
 		has_global_flag = OTT_civil_war
 		controls_state = 341
+		owns_state = 773
 		controls_state = 773
 	}
 
@@ -6537,6 +6551,11 @@ country_event = {
 		name = ott.133.a
 
 		add_political_power = 20
+		set_capital = 773
+		TUR = {
+			drop_cosmetic_tag = yes
+			retire_country_leader = yes
+		}
 		country_event = { id = ott.128 days = 1 }
 		clr_global_flag = OTT_civil_war
 	}
@@ -6556,12 +6575,14 @@ country_event = {
 		tag = OTT
 		has_global_flag = OTT_civil_war
 		NOT = { controls_state = 773 }
+		TUR = { controls_state = 773 }
 	}
 
 	option = {
 		name = ott.134.a
 
 		add_political_power = -100
+		TUR = { drop_cosmetic_tag = yes }
 		country_event = { id = turkey.1 days = 1 }
 		clr_global_flag = OTT_civil_war
 	}
@@ -6581,6 +6602,9 @@ country_event = {
 		name = ott.135.a
 
 		country_event = { id = ott.136 days = 1 }
+		custom_effect_tooltip = OTT_executions1_tt
+		set_country_flag = Ali_Ihsan_Pasa_dead
+		remove_ideas = OTT_Ali_Ihsan_Pasa_carm_ade
 	}
 
 }
@@ -6598,6 +6622,20 @@ country_event = {
 		name = ott.136.a
 
 		add_political_power = 50
+		custom_effect_tooltip = OTT_executions2_tt
+		set_country_flag = Mehmed_Cavid_Bey_dead
+		set_country_flag = Filibeli_Hilmi_Bey_dead
+		set_country_flag = Kara_Kemal_Bey_dead
+		set_country_flag = Abduelkadir_Pasa_dead
+		set_country_flag = Yenibahceli_Nail_Bey_dead
+		set_country_flag = Doktor_Nazim_Bey_dead
+		remove_ideas = OTT_Mehmed_Cavid_Bey_hog_ade
+		remove_ideas = OTT_Filibeli_Hilmi_Bey_for_ade
+		remove_ideas = OTT_Kara_Kemal_Bey_eco_ade
+		remove_ideas = OTT_Abduelkadir_Pasa_sec_ade
+		remove_ideas = OTT_Yenibahceli_Nail_Bey_int_ade
+		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
 		country_event = { id = ott.137 days = 1 }
 	}
 
@@ -6605,6 +6643,20 @@ country_event = {
 		name = ott.136.b
 
 		add_political_power = 50
+		custom_effect_tooltip = OTT_executions2_tt
+		set_country_flag = Mehmed_Cavid_Bey_dead
+		set_country_flag = Filibeli_Hilmi_Bey_dead
+		set_country_flag = Kara_Kemal_Bey_dead
+		set_country_flag = Abduelkadir_Pasa_dead
+		set_country_flag = Yenibahceli_Nail_Bey_dead
+		set_country_flag = Doktor_Nazim_Bey_dead
+		remove_ideas = OTT_Mehmed_Cavid_Bey_hog_ade
+		remove_ideas = OTT_Filibeli_Hilmi_Bey_for_ade
+		remove_ideas = OTT_Kara_Kemal_Bey_eco_ade
+		remove_ideas = OTT_Abduelkadir_Pasa_sec_ade
+		remove_ideas = OTT_Yenibahceli_Nail_Bey_int_ade
+		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
+		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
 		country_event = { id = ott.137 days = 1 }
 	}
 
@@ -6624,22 +6676,12 @@ country_event = {
 
 		if = {
 			limit = {
-				has_political_power > -50
+				has_political_power > -100
 			}
 			add_political_power = 50
 
 			else = {
-				set_political_power = 0
-				hidden_effect = {
-					remove_ideas = very_good_stability
-					remove_ideas = good_stability
-					remove_ideas = normal_stability
-					remove_ideas = low_stability
-					remove_ideas = very_low_stability
-					remove_ideas = disaster
-				}
-				add_ideas = normal_stability
-				set_country_flag = normal_stability
+				add_political_power = 100
 			}
 		}
 		remove_ideas = ott_investigation_idea
@@ -6770,7 +6812,7 @@ country_event = {
 		add_ideas = OTT_Ali_Said_Pasa_int_ade
 	}
 
-	option = {			# Sultan's sworn aide
+	option = {			# Sultan's sworn guard
 		name = ott.141.c
 		trigger = { has_completed_focus = OTT_enforce_autocracy }
 
@@ -6780,10 +6822,6 @@ country_event = {
 		add_ideas = OTT_Aziz_Vefa_int_pau
 	}
 }
-
-###############################################################################
-# Ottoman Foreign Focus Events
-###############################################################################
 
 # TODO - EMPTY
 
@@ -6800,6 +6838,10 @@ country_event = {
 	}
 
 }
+
+###############################################################################
+# Ottoman Foreign Focus Events
+###############################################################################
 
 ### OPDA bypass events
 
@@ -7508,6 +7550,14 @@ country_event = {	# Ottoman course of action
 	desc = ott.164.d
 
 	is_triggered_only = yes
+	
+	trigger = {
+		YEM = {
+			is_subject = no
+			has_war = no
+			is_in_faction = no
+		}
+	}
 
 	option = {			# Demand that Yemen acknowledge the 1911 treaty
 		name = ott.164.a
@@ -7619,6 +7669,11 @@ country_event = {	# Should we send a gift to the Emir of Bukhara?
 		NOT = {
 			has_war = yes
 			has_war_with = TRK
+		}
+		TRK = {
+			exists = yes
+			is_subject = no
+			has_war = no
 		}
 	}
 

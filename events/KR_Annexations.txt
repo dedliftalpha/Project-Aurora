@@ -296,6 +296,7 @@ country_event = { #Serbian liberation
 			tag = SER
 		}
 		controls_state = 107
+		NOT = { controls_state = 109 controls_state = 102 }
 		SER = {
 			exists = no
 		}
@@ -690,7 +691,7 @@ country_event = { #greater germany
 
 
 
-country_event = { #North Italy liberation
+country_event = { #Austrian Italy liberation
 	id = annex.17
 	title = annex.17.t
 	desc = annex.17.d
@@ -712,6 +713,7 @@ country_event = { #North Italy liberation
 		}
 		controls_state = 759
 		NOT = { controls_state = 2 }
+		NOT = { controls_state = 4 }
 		NOT = {
 			has_country_flag = NTA_CONQ
 		}
@@ -727,7 +729,7 @@ country_event = { #North Italy liberation
 	}
 
 	option = { #Give Italy
-		name = annex.16.a
+		name = annex.17.a
 		trigger = {
 			NOT = {
 				tag = EMP
@@ -785,7 +787,7 @@ country_event = { #North Italy liberation
 				has_government = radical_socialist has_government = syndicalist has_government = totalist
 			}
 		}
-		name = annex.16.b
+		name = annex.17.b
 		ai_chance = {
 			factor = 9
 		}
@@ -803,6 +805,68 @@ country_event = { #North Italy liberation
 		}
 		puppet = ITA
 
+	}
+	
+	option = { #Give Austria
+		name = annex.17.c
+		trigger = {
+			NOT = {
+			tag = EMP
+			tag = REB
+			}
+			OR = {
+				is_in_faction_with = AUS
+				AUS = { is_subject_of = ROOT }
+			}
+		}
+		ai_chance = {
+			factor = 90
+		}
+		AUS = {
+		transfer_state = 783
+		transfer_state = 759
+		transfer_state = 736
+		transfer_state = 795
+		add_state_core = 783
+		add_state_core = 759
+		add_state_core = 736
+		add_state_core = 795
+		}
+	}
+	
+	option = { #Give Austria and give istria to slovenia
+		name = annex.17.e
+		trigger = {
+			NOT = {
+			tag = EMP
+			tag = REB
+			}
+			AND = {
+			OR = {
+				is_in_faction_with = AUS
+				AUS = { is_subject_of = ROOT }
+			}
+			OR = {
+				is_in_faction_with = SLO
+				SLO = { is_subject_of = ROOT }
+			}
+			}
+		}
+		ai_chance = {
+			factor = 40
+		}
+		AUS = {
+		transfer_state = 783
+		transfer_state = 759
+		transfer_state = 795
+		add_state_core = 783
+		add_state_core = 759
+		add_state_core = 795
+		}
+		SLO = {
+		transfer_state = 736
+		add_state_core = 736
+		}
 	}
 }
 
@@ -1967,6 +2031,8 @@ country_event = { #Fate of the Southern Italy
 			has_country_flag = ITAOCC_CONQ
 			has_war_with = ITA
 		}
+		
+		NOT = { controls_state = 2 }
 
 		OR = {
 			owns_state = 117
@@ -2129,6 +2195,19 @@ country_event = { #Fate of the Southern Italy
 			}
 
 		}
+		every_state = {
+			limit = {
+				is_core_of = ITA
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+			ITA = {
+				transfer_state = PREV
+			}
+
+		}
 		puppet = ITA
 	}
 
@@ -2205,7 +2284,7 @@ country_event = { #Fate of the Southern Italy
 
 			}
 		}
-		name = annex.43.e
+		name = annex.43.f
 		ai_chance = {
 			factor = 25
 		}
@@ -2249,7 +2328,7 @@ country_event = { #Fate of the Southern Italy
 				exists = yes
 			}
 		}
-		name = annex.43.f
+		name = annex.43.g
 		ai_chance = {
 			factor = 80
 		}
@@ -2285,7 +2364,7 @@ country_event = { #Fate of the Southern Italy
 	}
 
 	option = { #occupy
-		name = annex.43.g
+		name = annex.2.b
 		ai_chance = {
 			factor = 0
 		}
@@ -3306,7 +3385,7 @@ country_event = { #The destiny of Italy
 
 		NOT = {
 
-			has_country_flag = ITA_CONQ
+			has_country_flag = GER_ITA_CONQ
 
 		}
 	}
@@ -3350,7 +3429,7 @@ country_event = { #The destiny of Italy
 			factor = 5
 		}
 		add_political_power = -60
-		set_country_flag = ITA_CONQ
+		set_country_flag = GER_ITA_CONQ
 	}
 }
 
@@ -3508,7 +3587,6 @@ country_event = { #The rebirth of the Italian Federation AUS
 country_event = { #Fate of Portugal leftist
 	id = annex.59
 	title = annex.59.t
-	desc = annex.59.d
 	desc = {
 		text = annex.59.d_spanish_friend
 		trigger = {
@@ -4779,7 +4857,7 @@ country_event = { #The Fate of Spain POR
 	}
 
 	mean_time_to_happen = {
-		days = 100
+		days = 7
 	}
 
 	option = { #give to carlists
@@ -5996,7 +6074,7 @@ country_event = { #Releasing Spain (if not POR)
 	}
 
 	mean_time_to_happen = {
-		days = 100
+		days = 7
 	}
 
 	option = { #Give to Carlists
@@ -6736,7 +6814,6 @@ country_event = { #fate of Germany
 	mean_time_to_happen = {
 		days = 7
 	}
-
 
 
 	option = { #Divide
@@ -9688,8 +9765,6 @@ country_event = { #Fate of the Hashemite Arabia
 		ai_chance = {
 			factor = 95
 		}
-		
-		add_state_core = 675
 
 		every_state = {
 
@@ -9699,6 +9774,7 @@ country_event = { #Fate of the Hashemite Arabia
 				is_controlled_by = ROOT
 				NOT = {
 					is_core_of = ROOT
+					is_claimed_by = ROOT
 				}
 
 			}
@@ -9707,8 +9783,7 @@ country_event = { #Fate of the Hashemite Arabia
 				transfer_state = PREV
 			}
 		}
-
-		remove_state_core = 675
+		
 		puppet = SAU
 
 		SAU = {
@@ -10399,6 +10474,7 @@ country_event = { #The Annexation of Egypt
 		if = { 
 			limit = { tag = OTT }
 			add_state_core = 455
+			add_state_core = 453
 		}
 
 		every_state = {
@@ -10422,6 +10498,7 @@ country_event = { #The Annexation of Egypt
 		if = { 
 			limit = { tag = OTT }
 			remove_state_core = 455
+			remove_state_core = 453
 		}
 
 
@@ -10458,6 +10535,7 @@ country_event = { #The Annexation of Egypt
 		if = { 
 			limit = { tag = OTT }
 			add_state_core = 455
+			add_state_core = 453
 		}
 
 		every_state = {
@@ -10481,6 +10559,7 @@ country_event = { #The Annexation of Egypt
 		if = { 
 			limit = { tag = OTT }
 			remove_state_core = 455
+			remove_state_core = 453
 		}
 
 		puppet = EGY
@@ -17050,7 +17129,495 @@ country_event = { #Albania Liberation
 		ai_chance = {
 			factor = 0
 		}
-		set_country_flag = MTN_CONQ
+		set_country_flag = ALB_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #The destiny of North Italy Everyone
+	id = annex.153
+	title = annex.153.t
+	desc = annex.153.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = AUS
+			tag = GER
+			tag = ITA
+			tag = SRI
+			AND = {
+			OR = { tag = FRA is_in_faction_with = FRA }
+			is_in_faction_with = SRI
+			}
+		}
+
+		controls_state = 2
+
+		ITA = {
+			exists = no
+		}
+		NOT = {
+			has_country_flag = ITA_CONQ
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = annex.153.a
+		ai_chance = {
+			factor = 95
+			modifier = { factor = 0.5
+			country_exists = SRI
+			OR = { has_government = totalist has_government = syndicalist has_government = radical_socialist }
+			}
+		}
+		trigger = { AND = { NOT = { is_in_faction_with = SRI SRI = { is_subject_of = ROOT } } NOT = { AND = { NOT = { country_exists = SRI } OR = { has_government = totalist has_government = syndicalist has_government = radical_socialist } } } } }
+
+		add_political_power = 40
+		
+		if = { limit = { OR = { controls_state = 759 controls_state = 783 controls_state = 795 controls_state = 736 } }
+		ITA = { add_state_core = 759
+		add_state_core = 783
+		add_state_core = 795
+		add_state_core = 736
+		}
+		}
+		
+		if = { limit = { tag = NFA }
+		add_state_core = 1
+		add_state_core = 762
+		add_state_core = 735
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = ITA
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			ITA = {
+				transfer_state = PREV
+			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = SRI
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			ITA = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = ITA
+	}
+	
+	option = {
+		name = annex.153.b
+		ai_chance = {
+			factor = 95
+		}
+		trigger = { NOT = { country_exists = SRI } OR = { has_government = syndicalist has_government = totalist has_government = radical_socialist } }
+
+		add_political_power = 40
+		
+		if = { limit = { OR = { controls_state = 759 controls_state = 783 controls_state = 795 controls_state = 736 } }
+		SRI = { add_state_core = 759
+		add_state_core = 783
+		add_state_core = 795
+		add_state_core = 736
+		}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = SRI
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			SRI = {
+				transfer_state = PREV
+			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = ITA
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			SRI = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = SRI
+	}
+	
+	option = {
+		name = annex.153.c
+		ai_chance = {
+			factor = 95
+		}
+		trigger = { country_exists = SRI OR = { has_government = syndicalist has_government = totalist has_government = radical_socialist } }
+
+		add_political_power = 40
+		
+		if = { limit = { OR = { controls_state = 759 controls_state = 783 controls_state = 795 controls_state = 736 } }
+		SRI = { add_state_core = 759
+		add_state_core = 783
+		add_state_core = 795
+		add_state_core = 736
+		}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = SRI
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			SRI = {
+				transfer_state = PREV
+			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = ITA
+
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			SRI = {
+				transfer_state = PREV
+			}
+		}
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+		set_country_flag = ITA_CONQ
+	}
+}
+
+country_event = { #Netherlands Liberation
+	id = annex.154
+	title = annex.154.t
+	desc = annex.154.d
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = HOL
+		}
+		controls_state = 7
+		NOT = { country_exists = HOL }
+		NOT = {
+			has_country_flag = HOL_CONQ
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #liberate
+		name = annex.2.a
+		ai_chance = {
+			factor = 100
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = HOL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			HOL = {
+				transfer_state = PREV
+			}
+		}
+		puppet = HOL
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = HOL_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #Denmark Liberation
+	id = annex.155
+	title = annex.155.t
+	desc = annex.155.d
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = DEN
+			tag = ICE
+		}
+		controls_state = 37
+		NOT = { country_exists = DEN }
+		NOT = {
+			has_country_flag = DEN_CONQ
+		}
+		NOT = { has_war_with = GER
+		has_war_with = SWE 
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #liberate all
+		name = annex.155.a
+		ai_chance = {
+			factor = 30
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = DEN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			DEN = {
+				transfer_state = PREV
+			}
+		}
+		puppet = DEN
+
+	}
+	
+	option = { #take the islands
+		name = annex.155.b
+		ai_chance = {
+			factor = 15
+		}
+		trigger = { OR = { controls_state = 100 controls_state = 101 } }
+		
+		DEN = { remove_state_core = 100
+		remove_state_core = 101 }
+
+		every_state = {
+			limit = {
+				is_core_of = DEN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			DEN = {
+				transfer_state = PREV
+			}
+		}
+		puppet = DEN
+	}
+	
+	option = { #only take greenland, liberate iceland
+		name = annex.155.c
+		ai_chance = {
+			factor = 15
+		}
+		trigger = { AND = { controls_state = 100 controls_state = 101 } }
+		
+		DEN = { remove_state_core = 100
+		remove_state_core = 101 }
+		
+		every_state = {
+			limit = {
+				is_core_of = ICE
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			ICE = {
+				transfer_state = PREV
+			}
+		}
+		puppet = ICE
+
+		every_state = {
+			limit = {
+				is_core_of = DEN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			DEN = {
+				transfer_state = PREV
+			}
+		}
+		puppet = DEN
+	}
+	
+	option = { #liberate iceland only
+		name = annex.155.e
+		ai_chance = {
+			factor = 40
+		}
+		trigger = { AND = { controls_state = 100 controls_state = 101 } }
+		
+		DEN = { remove_state_core = 100 }
+		
+		every_state = {
+			limit = {
+				is_core_of = ICE
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			ICE = {
+				transfer_state = PREV
+			}
+		}
+		puppet = ICE
+
+		every_state = {
+			limit = {
+				is_core_of = DEN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			DEN = {
+				transfer_state = PREV
+			}
+		}
+		puppet = DEN
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = DEN_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #Fate of Portugal non-leftist
+	id = annex.156
+	title = annex.156.t
+	desc = annex.156.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			has_government = radical_socialist
+			has_government = syndicalist
+			has_government = totalist
+		}
+		POR = {
+			exists = no
+		}
+		NOT = {
+			tag = POR
+			has_country_flag = POR_CONQ
+		}
+		controls_state = 112
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet portugal
+		name = annex.2.a
+		ai_chance = {
+			factor = 50
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = POR
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			POR = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = POR
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = POR_CONQ
 		add_political_power = -60
 	}
 }

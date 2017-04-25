@@ -45,6 +45,7 @@ has_same_government_as_ROOT = {
 	}
 }
 
+# checks for these three government types for the country in scope
 has_socialist_government = {
 	OR = {
 		has_government = totalist
@@ -53,6 +54,7 @@ has_socialist_government = {
 	}
 }
 
+# checks for these five government types for the country in scope
 has_democratic_government = {
 	OR = {
 		has_government = social_democrat
@@ -63,6 +65,7 @@ has_democratic_government = {
 	}
 }
 
+# checks for these two government types for the country in scope
 has_dictatorship_government = {
 	OR = {
 		has_government = paternal_autocrat
@@ -71,6 +74,7 @@ has_dictatorship_government = {
 }
 
 # checks whether the country in scope has the same government type as ROOT (the country running the event/focus)
+# note that it's not the exact same government - just the general type, as above
 same_government_type_as_ROOT = {
 	OR = {
 		AND = {
@@ -88,6 +92,8 @@ same_government_type_as_ROOT = {
 	}
 }
 
+# the following triggers will check if the country in scope is on a particular continent
+# note that these are continents as per the game - asia and middle-east are considered separate continents
 is_in_asia = {
 	capital_scope = {
 		is_on_continent = asia
@@ -130,6 +136,7 @@ is_in_australia = {
 	}
 }
 
+# checks whether the country in scope is in the same continent as ROOT (the country running the event)
 same_continent_as_ROOT = {
 	OR = {
 		AND = {
@@ -162,3 +169,38 @@ same_continent_as_ROOT = {
 		}
 	}
 }
+
+# checks whether the state in scope is on the same continent as ROOT (the country running the event)
+state_same_continent_as_ROOT = {
+	OR = {
+		AND = {
+			is_on_continent = asia
+			ROOT = { is_in_asia = yes }
+		}
+		AND = {
+			is_on_continent = europe
+			ROOT = { is_in_europe = yes }
+		}
+		AND = {
+			is_on_continent = africa
+			ROOT = { is_in_africa = yes }
+		}
+		AND = {
+			is_on_continent = north_america
+			ROOT = { is_in_north_america = yes }
+		}
+		AND = {
+			is_on_continent = south_america
+			ROOT = { is_in_south_america = yes }
+		}
+		AND = {
+			is_on_continent = middle_east
+			ROOT = { is_in_middle_east = yes }
+		}
+		AND = {
+			is_on_continent = australia
+			ROOT = { is_in_australia = yes }
+		}
+	}
+}
+

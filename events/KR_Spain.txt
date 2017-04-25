@@ -29,7 +29,7 @@ country_event = {
 	
 	option = {
 		name = sprd.1.a
-		add_political_power = -200
+		add_political_power = -300
 	}
 }
 
@@ -682,7 +682,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 180
+		days = 140
 		modifier = {
 			factor = 0.5
 			has_country_flag = SPR_cntfai_will_rise
@@ -745,6 +745,7 @@ country_event = {
 		tag = SPR
 		has_country_flag = SPR_elections
 		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
 			has_war_with = CNT
 			has_war_with = CAR
 		}
@@ -760,6 +761,9 @@ country_event = {
 		add_political_power = 100
 		add_popularity = { ideology = social_conservative popularity = 0.2 }
 		remove_ideas = spr_social_breakdown
+		hidden_effect = {
+			news_event = { id = sprd.29 days = 1 }
+		}
 	}
 	option = {
 		name = sprd.23.b #A CNT-FAI Victory!
@@ -781,6 +785,9 @@ country_event = {
 				add_political_power = 100
 				transfer_technology = yes
 				change_tag_from = SPR
+				hidden_effect = {
+					news_event = { id = sprd.29 days = 1 }
+				}
 			}
 		}
 		effect_tooltip = { add_political_power = 100 }
@@ -806,6 +813,9 @@ country_event = {
 				add_political_power = 100
 				transfer_technology = yes
 				change_tag_from = SPR
+				hidden_effect = {
+					news_event = { id = sprd.29 days = 1 }
+				}
 			}
 		}
 		effect_tooltip = { add_political_power = 100 }
@@ -837,6 +847,7 @@ country_event = {
 	
 	option = {
 		name = sprd.24.a
+		clr_country_flag = SPR_elections
 		add_political_power = -100
 	}
 }
@@ -854,6 +865,7 @@ country_event = {
 		tag = SPR
 		has_country_flag = SPR_rigged_elections
 		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
 			has_war_with = CNT
 			has_war_with = CAR
 		}
@@ -1350,7 +1362,7 @@ country_event = {
 		set_country_flag = SPR_cntfai_will_rise
 		every_state = {
 			limit = { is_core_of = SPR }
-			add_core_of = CAR
+			add_claim_by = CAR
 		}
 		every_owned_state = {
 			limit = {
@@ -1363,6 +1375,7 @@ country_event = {
 					state = 793 #Asturias
 				}
 			}
+			add_core_of = CAR
 			CAR = { transfer_state = PREV }
 		}
 		if = {
@@ -1477,7 +1490,7 @@ country_event = {
 		set_country_flag = SPR_carlists_will_rise
 		every_state = {
 			limit = { is_core_of = SPR }
-			add_core_of = CNT
+			add_claim_by = CNT
 		}
 		every_owned_state = {
 			limit = {
@@ -1489,6 +1502,7 @@ country_event = {
 					state = 168 #Murcia
 				}
 			}
+			add_core_of = CNT
 			CNT = { transfer_state = PREV }
 		}
 		if = {
@@ -3265,26 +3279,14 @@ country_event = {
 	}
 }
 
-# Carlist victory event
+# Carlist victory event (triggered by focus)
 country_event = {
 	id = sprc.320
 	title = sprc.320.t
 	desc = sprc.320.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CAR
-		has_country_flag = had_war
-		has_global_flag = spanish_civil_war
-		NOT = { country_exists = SPR }
-		NOT = { country_exists = CNT }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = sprc.320.a

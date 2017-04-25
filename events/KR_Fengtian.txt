@@ -4654,6 +4654,275 @@ country_event = { #chahar Peace Event
 		add_political_power = -200
 	}	
 }
+
+country_event = { #Doihara's Plan
+	id = fengtian.new.82
+	title = fengtian.new.82.t
+	desc = fengtian.new.82.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		date > 1936.9.22
+	}
+	mean_time_to_happen = {
+		days = 150
+	}
+	
+	option = {
+		name = fengtian.new.82.a
+		unlock_national_focus = FNG_Golden_Dragon_Cigarettes
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.01
+		}
+	}
+	
+	option = {
+		name = fengtian.new.82.b
+		add_political_power = 10
+		add_popularity = {
+			ideology = market_liberal
+			popularity = -0.01
+		}
+	}
+}
+
+country_event = { #Golden Dragon Cigarettes
+	id = fengtian.new.83
+	title = fengtian.new.83.t
+	desc = fengtian.new.83.d
+		
+	fire_only_once = yes
+		
+	is_triggered_only = yes
+		
+	option = {
+		name = fengtian.new.83.a
+		set_global_flag = golden_dragon_cigarettes
+		hidden_effect = {
+			random_list = {
+				15 = {
+					set_global_flag = golden_dragon_cigarettes_success
+				}
+				70 = { 
+					set_global_flag = golden_dragon_cigarettes_delay_1
+				}
+				15 = { 
+					set_global_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Golden Dragon Cigarettes Delay
+	id = fengtian.new.84
+	title = fengtian.new.84.t
+	desc = fengtian.new.84.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_delay_1
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = { #Continue 1
+		name = fengtian.new.84.a
+		hidden_effect = {
+			random_list = {
+				60 = {
+					set_global_flag = golden_dragon_cigarettes_delay_2
+				}
+				30 = {
+					set_global_flag = golden_dragon_cigarettes_success
+				}
+				10 = {
+					set_global_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+	
+	option = { #We've had enough
+		name = fengtian.new.84.b
+		add_political_power = -20
+		clr_global_flag = golden_dragon_cigarettes_delay
+	}
+}
+
+country_event = { #continue 2
+	id = fengtian.new.85
+	title = fengtian.new.85.t
+	desc = fengtian.new.85.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_delay_1
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = { #Continue
+		name = fengtian.new.85.a
+		hidden_effect = {
+			random_list = {
+				70 = {
+					set_country_flag = golden_dragon_cigarettes_success
+				}
+				30 = {
+					set_country_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+	
+	option = { #We've had enough
+		name = fengtian.new.86.b
+		add_political_power = -40
+		clr_global_flag = golden_dragon_cigarettes_delay_1
+		clr_global_flag = golden_dragon_cigarettes_delay_2
+	}
+}
+
+country_event = { #Success
+	id = fengtian.new.86
+	title = fengtian.new.86.t
+	desc = fengtian.new.86.d
+		
+	fire_only_once = yes
+		
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_success
+	}
+		
+	mean_time_to_happen = {
+		days = 450
+	}
+
+	option = {
+		name = fengtian.new.86.a
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_ideas = FNG_golden_dragon_1
+		QIE = {
+			add_ideas = QIE_golden_dragon_1
+			country_event = qing.157
+		}
+	}
+}
+
+country_event = { # Failure
+	id = fengtian.new.87
+	title = fengtian.new.87.t
+	desc = fengtian.new.87.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_failure
+		NOT = {
+			has_global_flag = golden_dragon_cigarettes_success
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = {
+		name = fengtian.new.87.a
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_success
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_political_power = -30
+	}
+}
+
+country_event = { #Repeating potential Doihara death event trigger
+	id = fengtian.new.88
+	title = fengtian.new.88.t
+	desc = fengtian.new.88.d
+	
+	hidden = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes
+	}
+	
+	mean_time_to_happen = {
+		days = 150
+	}
+	
+	immediate = {
+		random_list = {
+			70 = {}
+			30 = {
+				country_event = fengtian.new.89
+				clr_global_flag = golden_dragon_cigarettes
+			}
+		}
+	}
+	
+	option = {
+		name = fengtian.new.88.a
+	}
+}
+
+country_event = { #Doihara death event
+	id = fengtian.new.89
+	title = fengtian.new.89.t
+	desc = fengtian.new.89.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.89
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_success
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_political_power = -30
+	}
+}
+
+country_event = { #Opium successful
+	id = fengtian.new.90
+	title = fengtian.new.90.t
+	desc = fengtian.new.90.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_success
+	}
+	option = {
+		name = fengtian.new.90
+		QIE = {
+			remove_ideas = QIE_golden_dragon_1
+			add_ideas  = QIE_golden_dragon_2
+		}
+	}
+}
+	
 #########################################
 ### Fengtian Informal Empire Mechanic ###
 #########################################

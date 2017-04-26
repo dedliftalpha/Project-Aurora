@@ -17621,3 +17621,406 @@ country_event = { #Fate of Portugal non-leftist
 		add_political_power = -60
 	}
 }
+
+country_event = { #Fate of France
+	id = annex.157
+	title = annex.157.t
+	desc = annex.157.d
+
+	trigger = {
+		NOT = { 
+		tag = GER
+		tag = FRA
+		tag = RUS
+		tag = OCC
+		tag = NRM
+		tag = FRP
+		tag = BRI
+		tag = NFA
+		tag = CAR
+		is_in_faction_with = NFA
+		}
+		is_subject = no
+		controls_state = 16
+		OR = { FRA = { has_capitulated = yes }
+		FRA = { exists = no }
+		}
+		NOT = {
+			FRP = {
+				exists = yes
+			}
+			has_country_flag = FRA_CONQ
+		}
+	}
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet france
+		name = annex.157.a
+		ai_chance = {
+			factor = 50
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRP
+
+			}
+			FRP = {
+				transfer_state = PREV
+			}
+
+		}
+		
+		puppet = FRP
+	}
+
+	option = { #divide mainland
+		trigger = {
+			controls_state = 14
+			controls_state = 21
+			controls_state = 15
+			NRM = {
+				exists = no
+			}
+			BRI = {
+				exists = no
+			}
+			OCC = {
+				exists = no
+			}
+			FRP = {
+				exists = no
+			}
+		}
+		name = annex.157.b
+		ai_chance = {
+			factor = 15
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = NRM
+
+			}
+			NRM = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = NRM
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = BRI
+
+			}
+			BRI = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = BRI
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = OCC
+
+			}
+			OCC = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = OCC
+	}
+
+	option = { #Liberate Normandy, Bretagne and France.
+		trigger = {
+			controls_state = 15
+			controls_state = 14
+			FRP = {
+				exists = no
+			}
+			NRM = {
+				exists = no
+			}
+			BRI = {
+				exists = no
+			}
+		}
+
+		name = annex.157.c
+		ai_chance = {
+			factor = 50
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = NRM
+
+			}
+			NRM = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = NRM
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = BRI
+
+			}
+			BRI = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = BRI
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRP
+
+			}
+			FRP = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = FRP
+	}
+
+	option = { #Occupy
+		name = annex.157.e
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -400
+		set_country_flag = FRA_CONQ
+	}
+}
+
+country_event = { #Fate of Southern France
+	id = annex.158
+	title = annex.158.t
+	desc = annex.158.d
+
+	trigger = {
+		NOT = { 
+		tag = GER
+		tag = FRA
+		tag = RUS
+		tag = OCC
+		tag = NRM
+		tag = FRP
+		tag = BRI
+		tag = NFA
+		tag = CAR
+		is_in_faction_with = NFA
+		}
+		is_subject = no
+		controls_state = 21
+		NOT = { controls_state = 16 }
+		OR = { FRA = { has_capitulated = yes }
+		FRA = { exists = no }
+		}
+		NOT = {
+			OCC = {
+				exists = yes
+			}
+			has_country_flag = OCC_CONQ
+		}
+	}
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet france
+		name = annex.158.a
+		ai_chance = {
+			factor = 25
+		}
+		trigger = { 
+		NOT = {
+		any_country = { NOT = { tag = FRA tag = FRP tag = NRM tag = NFA } controls_state = 16 }
+		FRP = { exists = yes }
+		}
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = FRP
+
+			}
+			FRP = {
+				transfer_state = PREV
+			}
+
+		}
+		
+		puppet = FRP
+	}
+
+	option = { #Liberate occitania
+		name = annex.158.b
+		ai_chance = {
+			factor = 75
+		}
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = OCC
+
+			}
+			OCC = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = OCC
+	}
+
+	option = { #Occupy
+		name = annex.158.c
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -200
+		set_country_flag = OCC_CONQ
+	}
+}
+
+country_event = { #Fate of Britain
+	id = annex.159
+	title = annex.159.t
+	desc = annex.159.d
+
+	trigger = {
+		NOT = {
+		tag = GER
+		tag = RUS
+		tag = ENP
+		tag = SCT
+		tag = WAL
+		tag = CAR
+		tag = ENG
+		tag = GBR
+		tag = CAN
+		tag = IRE
+        is_in_faction_with = CAN
+		has_country_flag = ENG_CONQ
+        }		
+		controls_state = 126
+		controls_state = 122
+		controls_state = 136
+		ENG = {
+			exists = no
+		}
+	}
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #divide all
+		name = annex.159.a
+		ai_chance = {
+			factor = 84
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = ENP
+
+			}
+			ENP = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = ENP
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = WAL
+
+			}
+			WAL = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = WAL
+		
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = SCT
+
+			}
+			SCT = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = SCT
+	}
+
+	option = { #united britian
+		name = annex.159.b
+		ai_chance = {
+			factor = 4
+		}
+
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = GBR
+
+			}
+			GBR = {
+				transfer_state = PREV
+			}
+
+		}
+		puppet = GBR
+		add_political_power = -100
+		GBR = { kill_country_leader = yes }
+	}
+
+	option = { #occupy all
+		name = annex.159.c
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = ENG_CONQ
+		add_political_power = -240
+	}
+
+}

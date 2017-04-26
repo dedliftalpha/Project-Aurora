@@ -13,7 +13,7 @@ default_peace = {
 	
 	# ROOT = Taker, FROM = Giver
 	annex = {
-		factor = 100
+		factor = 10
 	}
 
 	# ROOT = Taker, FROM = Liberated
@@ -29,7 +29,7 @@ default_peace = {
 
 	# ROOT = Taker, FROM = State
 	take_states = {
-		factor = 100 #Dylan, I know what you are thinking and do not lower this weight. REMEMBER SPAIN!
+		factor = 10 
 		
 		####Priorities####
 		modifier = { #Priortize taking claimed or cored land
@@ -752,10 +752,26 @@ default_peace = {
 		#ROM - Romania
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = ROM
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR ={
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = ROM
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = ROM
+						OR = {
+							has_war_with = BUL
+							has_war_with = OTT	
+						}
+						
+						
+					}
+					SER = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -769,10 +785,26 @@ default_peace = {
 		#GRE - Greece
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = GRE
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = GRE
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = GRE
+						OR = {
+							has_war_with = BUL
+							has_war_with = OTT	
+						}
+						
+						
+					}
+					SER = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {

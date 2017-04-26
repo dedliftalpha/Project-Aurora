@@ -436,6 +436,31 @@ country_event = { # The Fate of the Ukrainian Monarchy
 
 		set_cosmetic_tag = UKR_communist
 		set_country_flag = UKR_Kruschev_won
+		set_global_flag = UKR_Alone
+
+		every_country = { 
+		limit = { is_faction_leader = yes 
+				  is_in_faction_with = UKR 
+				  }
+		remove_from_faction = UKR 
+		}
+
+		hidden_effect = {
+			white_peace = JAP
+			white_peace = FNG
+			white_peace = TRM
+			white_peace = KOR
+			white_peace = SQI
+			white_peace = POR
+			white_peace = FRA
+			white_peace = ENG
+			white_peace = SRI
+			white_peace = CSA
+			white_peace = LIT
+			white_peace = WHR
+		}
+		
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.34 }}}	
 	}
 }
 
@@ -850,3 +875,492 @@ country_event = { # Industrialization of Eastern Ukraine Complete
 		}
 	}
 }
+
+country_event = { # Should we help Ukraine?
+	id = ukraine.33
+	title = ukraine.33.t
+	desc = ukraine.33.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.33.a
+		ai_chance = { factor = 45 }
+
+		UKR = { country_event = { days = 4 id = ukraine.36 }}
+		add_political_power = -60
+	}
+
+	option = {
+		name = ukraine.33.b
+		ai_chance = { factor = 45 }
+		add_political_power = -40
+		UKR = { country_event = { days = 4 id = ukraine.42 }}
+	}
+	
+	option = {
+		name = ukraine.33.c
+		ai_chance = { factor = 10 }
+		add_political_power = -20
+		UKR = { country_event = { days = 4 id = ukraine.43 }}		
+	}	
+	
+}
+
+country_event = { # Revolution in the Breadbasket of Mitteleuropa!
+	id = ukraine.34
+	title = ukraine.34.t
+	desc = ukraine.34.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.34.a
+		ai_chance = { factor = 20 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		hidden_effect = { UKR = { country_event = { days = 2 id = ukraine.35 }}}
+	}
+
+	option = {
+		name = ukraine.34.b
+		ai_chance = { factor = 80 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		hidden_effect = { UKR = { country_event = { days = 1 id = ukraine.39 }}}
+	}
+
+	option = {
+		name = ukraine.34.c
+		ai_chance = { factor = 0 }
+
+		end_puppet = UKR
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		declare_war_on = { target = UKR type = annex_everything }
+		hidden_effect = { UKR = { country_event = { days = 0 id = ukraine.35 }}}
+	}
+}
+
+country_event = { # German Military Mission Leaves the Ukraine
+	id = ukraine.35
+	title = ukraine.35.t
+	desc = ukraine.35.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.35.a
+
+		remove_ideas = german_military_advisors
+	}
+}
+
+country_event = { # Arsenal
+	id = ukraine.36
+	title = ukraine.36.t
+	desc = ukraine.36.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.36.a
+
+		add_political_power = 60
+
+		202 = {
+			add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			add_extra_state_shared_building_slots = 1
+		}
+	}
+}
+
+country_event = { # Ukraine Wants to Join the International
+	id = ukraine.37
+	title = ukraine.37.t
+	desc = ukraine.37.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.37.a
+		ai_chance = { factor = 100 }
+
+		add_to_faction = UKR
+		hidden_effect = { UKR = { country_event = { days = 1 id = ukraine.38 }}}
+		add_opinion_modifier = { target = UKR modifier = UKR_FRA_accepted_us } # 100
+		add_political_power = 140
+	}
+
+	option = {
+		name = ukraine.37.b
+		ai_chance = { factor = 0 }
+
+		add_political_power = -20
+		add_opinion_modifier = { target = UKR modifier = UKR_FRA_refused_us } # -100
+	}
+}
+
+country_event = { # Ukraine Join the International
+	id = ukraine.38
+	title = ukraine.38.t
+	desc = ukraine.38.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.38.a
+
+		add_political_power = 60
+		add_opinion_modifier = { target = GER modifier = UKR_GER_CAN_joined_inter } # -150
+		add_opinion_modifier = { target = CAN modifier = UKR_GER_CAN_joined_inter } # -150
+		add_opinion_modifier = { target = GER modifier = embargo } # End Trades
+		add_opinion_modifier = { target = CAN modifier = embargo } # End Trades
+	}
+}
+
+country_event = { # Attempt at a Military Coup
+	id = ukraine.39
+	title = ukraine.39.t
+	desc = ukraine.39.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.39.a
+		ai_chance = { factor = 35 }
+
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.40 }}}
+
+		add_popularity = {
+			ideology = paternal_autocrat
+			popularity = 0.4
+		}
+
+		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "Vasyl I Vyshyvanyi von Habsburg"
+			desc = "POLITICS_VASYL_DESC"
+			picture = "Portrait_Ukraine_Vasyl.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		add_ideas = {
+			UKR_Pavlo_Skoropadsky_hog_pau
+		}
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_coup_succeds } # 150
+		add_opinion_modifier = { target = AUS modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = HUN modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = WHR modifier = UKR_OTHER_coup_succeds } # 100
+		add_opinion_modifier = { target = LIT modifier = UKR_OTHER_coup_succeds } # 100
+
+		give_military_access = GER
+
+		set_cosmetic_tag = UKR
+
+		add_political_power = -300
+	}
+
+	option = {
+		name = ukraine.39.b
+		ai_chance = { factor = 65 }
+
+		hidden_effect = { GER = { country_event = { days = 1 id = ukraine.41 }}}
+
+		add_political_power = -200
+	}
+}
+
+country_event = { # Military Coup in the Ukraine
+	id = ukraine.40
+	title = ukraine.40.t
+	desc = ukraine.40.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.40.a
+
+		add_political_power = 60
+		add_opinion_modifier = { target = UKR modifier = UKR_GER_puppet } # 400
+		puppet = UKR
+		add_political_power = 100
+		add_to_faction = UKR
+	}
+}
+
+country_event = { # Military Coup in the Ukraine Failed
+	id = ukraine.41
+	title = ukraine.41.t
+	desc = ukraine.41.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.41.a
+		ai_chance = { factor = 80 }
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_coup_failed } # -400
+		hidden_effect = { UKR = { country_event = { days = 2 id = ukraine.35 }}}
+	}
+
+	option = {
+		name = ukraine.41.b
+		ai_chance = { factor = 20 }
+
+		declare_war_on = { target = UKR type = annex_everything }
+		hidden_effect = { UKR = { country_event = { days = 0 id = ukraine.35 }}}
+	}
+}
+
+country_event = { # Obolon
+	id = ukraine.42
+	title = ukraine.42.t
+	desc = ukraine.42.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.42.a
+
+		add_political_power = 40
+
+		202 = {
+			add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+			add_extra_state_shared_building_slots = 1
+		}
+	}
+}
+
+country_event = { # Nothing
+	id = ukraine.43
+	title = ukraine.42.t
+	desc = ukraine.42.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.43.a
+
+		add_political_power = -20
+	}
+}
+
+country_event = { #Claiming Bessarabia
+	id = ukraine.44
+	title = ukraine.44.t
+	desc = ukraine.44.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.44.a #Insist on returning of Bessarabia
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			country_exists = ROM 
+			NOT = {
+				country_exists = RRM
+			}
+		}
+		ROM = {
+			country_event = {
+				id = ukraine.45
+			}
+		}
+	}
+
+	option = {
+		name = ukraine.44.b #Insist on returning of Bessarabia
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			country_exists = RRM 
+			NOT = {
+				country_exists = ROM
+			}
+		}
+		RRM = {
+			country_event = {
+				id = ukraine.47
+			}
+		}
+	}
+	}
+	
+country_event = { #Ukraine demands ROM
+	id = ukraine.45
+	title = ukraine.45.t
+	desc = ukraine.45.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.45.a #accept
+		ai_chance = {
+			factor = 70
+		}
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		UKR = {
+			transfer_state = 78
+			}
+		if = {
+			limit = {
+				owns_state = 192
+			}
+		UKR = {
+			transfer_state = 192
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 791
+			}
+		UKR = {
+			transfer_state = 791
+			}
+		}
+	}
+
+	option = {
+		name = ukraine.45.b #Never !
+		ai_chance = {
+			factor = 30
+		}
+		trigger = {
+			NOT = {
+				is_subject_of = UKR
+			}
+		}
+		add_political_power = 40
+		UKR = {
+			country_event = {
+				id = ukraine.46
+			}
+		}
+	}
+}
+
+country_event = { #Iron Guard Romania refuses!
+	id = ukraine.46
+	title = ukraine.46.t
+	desc = ukraine.46.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.46.a #Then it is war
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 40
+		declare_war_on = {
+			target = ROM type = annex_everything
+		}
+	}
+
+	option = {
+		name = ukraine.46.b #we don't need bessarabia
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40		
+	}
+}
+
+country_event = { #Ukraine demands RRM
+	id = ukraine.47
+	title = ukraine.47.t
+	desc = ukraine.47.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.47.a #accept
+		ai_chance = {
+			factor = 70
+		}
+		add_political_power = -200
+		remove_state_core = 192
+		remove_state_core = 791
+		remove_state_core = 78
+		UKR = {
+			transfer_state = 78
+			}
+		if = {
+			limit = {
+				owns_state = 192
+			}
+		UKR = {
+			transfer_state = 192
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 791
+			}
+		UKR = {
+			transfer_state = 791
+			}
+		}
+	}
+
+	option = {
+		name = ukraine.47.b #Never !
+		ai_chance = {
+			factor = 30
+		}
+		trigger = {
+			NOT = {
+				is_subject_of = UKR
+			}
+		}
+		add_political_power = 40
+		UKR = {
+			country_event = {
+				id = ukraine.48
+			}
+		}
+	}
+}
+
+country_event = { #Kingdom of Romania refuses!
+	id = ukraine.48
+	title = ukraine.48.t
+	desc = ukraine.48.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.48.a #Then it is war
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 40
+		declare_war_on = {
+			target = RRM type = annex_everything
+		}
+	}
+
+	option = {
+		name = ukraine.48.b #we don't need bessarabia
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40		
+	}
+}		

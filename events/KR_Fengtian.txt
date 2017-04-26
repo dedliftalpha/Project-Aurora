@@ -2826,7 +2826,7 @@ country_event = { #Japanese Investment in Steel (Anshan Iron & Steel)
 		}
         716 = {
             add_resource = { 
-				type = iron 
+				type = steel
 				amount = 20
 			}
         }
@@ -3004,7 +3004,7 @@ country_event = { #Investment Shortage Ended
 
 # The Hiroshima Proposal/Packages #
 
-country_event = { # Ishiwara makes the proposal in Fengtian
+country_event = { # The proposal is made in Fengtian
 	id = fengtian.new.34
 	title = fengtian.new.34.t
 	desc = fengtian.new.34.d
@@ -3033,7 +3033,7 @@ country_event = { # Ishiwara makes the proposal in Fengtian
 	}	
 }
 
-country_event = { # Ishiwara makes the proposal in Japan
+country_event = { # The Proposal is made in Japan
 	id = fengtian.new.35
 	title = fengtian.new.35.t
 	desc = fengtian.new.35.d
@@ -3051,8 +3051,8 @@ country_event = { # Ishiwara makes the proposal in Japan
 			has_tech = infantry_weapons1
 			has_tech = artillery1
 			has_equipment = {
-				infantry_weapons1 > 9000
-				artillery1 > 3000
+				improved_infantry_weapons_2 > 9000
+				artillery2 > 3000
 			}
 		}
 	}
@@ -3110,12 +3110,12 @@ country_event = { # Fengtian receives the first Hiroshima Package
 		JAP = {
 			send_equipment = {
 				target = FNG
-				type = infantry_weapons1
+				type = infantry_weapons_2
 				amount = 4000
 			}
 			send_equipment = {
 				target = FNG
-				type = artillery1
+				type = artillery2
 				amount = 100
 			}
 		}
@@ -3137,7 +3137,7 @@ country_event = { # Japan Chooses whether to send the Second Hiroshima Package
 		tag = JAP
 		has_global_flag = hiroshima_proposal
 		JAP = { 
-			has_tech = infantry_weapons2
+			has_tech = improved_infantry_weapons_2
 			has_tech = artillery2
 			has_equipment = {
 				infantry_weapons2 > 9000
@@ -3184,7 +3184,7 @@ country_event = { # Fengtian Receives the Second Hiroshima Package
 		JAP = {
 			send_equipment = {
 				target = FNG
-				type = infantry_weapons2
+				type = improved_infantry_weapons_2
 				amount = 4000
 			}
 			send_equipment = {
@@ -3216,10 +3216,10 @@ country_event = { # Japan Chooses whether to send the Third Hiroshima Package
 		tag = JAP
 		has_global_flag = hiroshima_proposal
 		JAP = { 
-			has_tech = improved_infantry_weapons
+			has_tech = advanced_infantry_weapons
 			has_tech = artillery3
 			has_equipment = {
-				improved_infantry_weapons > 9000
+				advanced_infantry_weapons > 9000
 				artillery3 > 3000
 				support_equipment > 200
 			}
@@ -3263,7 +3263,7 @@ country_event = { # Fengtian Receives the Third Hiroshima Package
 		JAP = {
 			send_equipment = {
 				target = FNG
-				type = infantry_weapons3
+				type = advanced_infantry_weapons
 				amount = 4000
 			}
 			send_equipment = {
@@ -4518,11 +4518,11 @@ country_event = { #Expel Japanese Officers
 		}
 		add_popularity = {
 			ideology = market_liberal
-			popularity = -0.10
+			popularity = -0.5
 		}
 		add_popularity = {
 			ideology = paternal_autocrat
-			popularity = 0.10
+			popularity = 0.5
 		}
 	}
 }
@@ -4588,6 +4588,381 @@ country_event = { #Fengtian is forced/ultimatum
 		declare_war_on = { 
 			target = JAP 
 			type = annex_everything
+		}
+	}
+}
+
+country_event = { #Wu Wang Zai Ju
+	id = fengtian.new.79
+	title = fengtian.new.79.t
+	desc = fengtian.new.79.d
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = { #Southern Reclamation is Inevitable!
+		name = fengtian.new.79.a
+		add_political_power = 100
+		set_global_flag = wu_wang_zai_ju
+	}
+}
+
+country_event = { #Retaking Chahar
+	id = fengtian.new.80
+	title = fengtian.new.80.t
+	desc = fengtian.new.80.d
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = { #Our cause is righteous!
+		name = fengtian.new.80.a
+		create_wargoal = { 
+			type = take_state
+			target = MON
+		}
+		declare_war_on = {
+			target = MON
+			type = take_state
+		}
+	}
+}
+
+country_event = { #chahar Peace Event
+	id = fengtian.new.81
+	title = fengtian.new.81.t
+	desc = fengtian.new.81.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #We have achieved our goals
+		name = fengtian.new.81.a
+		FNG = {
+			white_peace_with_ROOT = yes
+		}
+		MON = {
+			transfer_state = 612
+		}
+	}
+	
+	option = { #No peace
+		name = fengtian.new.81.b
+		add_political_power = -200
+	}	
+}
+
+country_event = { #Doihara's Plan
+	id = fengtian.new.82
+	title = fengtian.new.82.t
+	desc = fengtian.new.82.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		date > 1936.9.22
+	}
+	mean_time_to_happen = {
+		days = 150
+	}
+	
+	option = {
+		name = fengtian.new.82.a
+		set_country_flag = doihara_cigarettes
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.01
+		}
+	}
+	
+	option = {
+		name = fengtian.new.82.b
+		add_political_power = 10
+		add_popularity = {
+			ideology = market_liberal
+			popularity = -0.01
+		}
+	}
+}
+
+country_event = { #Golden Dragon Cigarettes
+	id = fengtian.new.83
+	title = fengtian.new.83.t
+	desc = fengtian.new.83.d
+		
+	fire_only_once = yes
+		
+	is_triggered_only = yes
+		
+	option = {
+		name = fengtian.new.83.a
+		set_global_flag = golden_dragon_cigarettes
+		hidden_effect = {
+			random_list = {
+				15 = {
+					set_global_flag = golden_dragon_cigarettes_success
+				}
+				70 = { 
+					set_global_flag = golden_dragon_cigarettes_delay_1
+				}
+				15 = { 
+					set_global_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Golden Dragon Cigarettes Delay
+	id = fengtian.new.84
+	title = fengtian.new.84.t
+	desc = fengtian.new.84.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_delay_1
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = { #Continue 1
+		name = fengtian.new.84.a
+		hidden_effect = {
+			random_list = {
+				60 = {
+					set_global_flag = golden_dragon_cigarettes_delay_2
+				}
+				30 = {
+					set_global_flag = golden_dragon_cigarettes_success
+				}
+				10 = {
+					set_global_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+	
+	option = { #We've had enough
+		name = fengtian.new.84.b
+		add_political_power = -20
+		clr_global_flag = golden_dragon_cigarettes_delay_1
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_failure
+		clr_global_flag = golden_dragon_cigarettes_success
+	}
+}
+
+country_event = { #continue 2
+	id = fengtian.new.85
+	title = fengtian.new.85.t
+	desc = fengtian.new.85.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_delay_2
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = { #Continue
+		name = fengtian.new.85.a
+		hidden_effect = {
+			random_list = {
+				70 = {
+					set_country_flag = golden_dragon_cigarettes_success
+				}
+				30 = {
+					set_country_flag = golden_dragon_cigarettes_failure
+				}
+			}
+		}
+	}
+	
+	option = { #We've had enough
+		name = fengtian.new.86.b
+		add_political_power = -40
+		clr_global_flag = golden_dragon_cigarettes_delay_1
+		clr_global_flag = golden_dragon_cigarettes_delay_2
+	}
+}
+
+country_event = { #Success
+	id = fengtian.new.86
+	title = fengtian.new.86.t
+	desc = fengtian.new.86.d
+		
+	fire_only_once = yes
+		
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_success
+	}
+		
+	mean_time_to_happen = {
+		days = 450
+	}
+
+	option = {
+		name = fengtian.new.86.a
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_ideas = FNG_golden_dragon_1
+		QIE = {
+			add_ideas = QIE_golden_dragon_1
+			country_event = qing.157
+		}
+	}
+}
+
+country_event = { # Failure
+	id = fengtian.new.87
+	title = fengtian.new.87.t
+	desc = fengtian.new.87.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_failure
+		NOT = {
+			has_global_flag = golden_dragon_cigarettes_success
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 450
+	}
+	
+	option = {
+		name = fengtian.new.87.a
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_success
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_political_power = -30
+	}
+}
+
+country_event = { #Repeating potential Doihara death event trigger
+	id = fengtian.new.88
+	title = fengtian.new.88.t
+	desc = fengtian.new.88.d
+	
+	hidden = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes
+	}
+	
+	mean_time_to_happen = {
+		days = 150
+	}
+	
+	immediate = {
+		random_list = {
+			70 = {}
+			30 = {
+				country_event = fengtian.new.89
+				clr_global_flag = golden_dragon_cigarettes
+			}
+		}
+	}
+	
+	option = {
+		name = fengtian.new.88.a
+	}
+}
+
+country_event = { #Doihara death event
+	id = fengtian.new.89
+	title = fengtian.new.89.t
+	desc = fengtian.new.89.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.89
+		clr_global_flag = golden_dragon_cigarettes
+		clr_global_flag = golden_dragon_cigarettes_delay
+		clr_global_flag = golden_dragon_cigarettes_success
+		clr_global_flag = golden_dragon_cigarettes_failure
+		add_political_power = -30
+	}
+}
+
+country_event = { #Opium successful
+	id = fengtian.new.90
+	title = fengtian.new.90.t
+	desc = fengtian.new.90.d
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = FNG
+		has_global_flag = golden_dragon_cigarettes_success
+	}
+	option = {
+		name = fengtian.new.90
+		QIE = {
+			remove_ideas = QIE_golden_dragon_1
+			add_ideas  = QIE_golden_dragon_2
+		}
+	}
+}
+
+country_event = { #Escalate the Propaganda War
+	id = fengtian.new.91
+	title = fengtian.new.91.t
+	desc = fengtian.new.91.d
+	desc = {
+		text = fengtian.new.91.d_mantetsu
+	}
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.91.a
+		if = {
+			limit = {
+				has_idea = FNG_informal_empire_2
+			}
+			add_political_power = 50
+		}
+		if = {
+			limit = {
+				has_idea = FNG_informal_empire_3
+			}
+			add_political_power = 30
+		}
+		if = {
+			limit = {
+				has_idea = FNG_informal_empire_4
+			}
+			add_political_power = 10
+		}
+		if = {
+			limit = {
+				has_idea = FNG_informal_empire_5
+			}
+			add_political_power = -50
 		}
 	}
 }

@@ -991,8 +991,8 @@ country_event = {
 		name = egy.24.a
 
 		ai_chance = { factor = 60 }
-		reverse_add_opinion_modifier = {target = EGY modifier = egy_ger_disrespect } # -50
-		reverse_add_opinion_modifier = {target = SAU modifier = egy_ger_disrespect } # -50
+		reverse_add_opinion_modifier = {target = GER modifier = egy_ger_disrespect } # -50
+		SAU = { reverse_add_opinion_modifier = {target = GER modifier = egy_ger_disrespect } } # -50
 		if = {
 			limit = {
 				OR = {
@@ -1003,7 +1003,7 @@ country_event = {
 					819 = { is_claimed_by = PER }
 				}
 			}
-			reverse_add_opinion_modifier = {target = PER modifier = egy_ger_disrespect } # -50
+			PER = { reverse_add_opinion_modifier = {target = GER modifier = egy_ger_disrespect } } # -50
 		}
 		GER = { country_event = { id = egy.25 days = 1 } } # German reaction
 	}
@@ -1043,10 +1043,15 @@ country_event = {
 		name = egy.25.a
 
 		ai_chance = { factor = 40 }
-		# TODO - mitteleuropa axis embargo
 		add_political_power = -30
-		EGY = { country_event = { id = egy.26 days = 1 } } # German embargo
-		SAU = { country_event = { id = egy.26 days = 1 } } # German embargo
+		add_opinion_modifier = { target = EGY modifier = embargo }
+		reverse_add_opinion_modifier = { target = EGY modifier = embargo }
+		add_opinion_modifier = { target = EGY modifier = egy_embargo }
+		reverse_add_opinion_modifier = { target = EGY modifier = egy_embargo }
+		add_opinion_modifier = { target = SAU modifier = embargo }
+		reverse_add_opinion_modifier = { target = SAU modifier = embargo }
+		add_opinion_modifier = { target = SAU modifier = egy_embargo }
+		reverse_add_opinion_modifier = { target = SAU modifier = egy_embargo }
 		if = {
 			limit = {
 				OR = {
@@ -1057,9 +1062,15 @@ country_event = {
 					819 = { is_claimed_by = PER }
 				}
 			}
+			add_opinion_modifier = { target = PER modifier = embargo }
+			reverse_add_opinion_modifier = { target = PER modifier = embargo }
+			add_opinion_modifier = { target = PER modifier = egy_embargo }
+			reverse_add_opinion_modifier = { target = PER modifier = egy_embargo }
 			PER = { country_event = { id = egy.26 days = 1 } } # German embargo
 		}
-		OTT = { country_event = { id = egy.27 days = 1 } } # German aid
+		EGY = { country_event = { id = egy.26 days = 1 } } # German embargo
+		SAU = { country_event = { id = egy.26 days = 1 } } # German embargo
+		OTT = { country_event = { id = egy.27 days = 3 } } # German aid
 		set_global_flag = ger_axis_embargo # TODO - link persian oil events
 	}
 
@@ -1068,6 +1079,30 @@ country_event = {
 
 		ai_chance = { factor = 0 }
 		add_political_power = -100
+		add_opinion_modifier = { target = EGY modifier = embargo }
+		reverse_add_opinion_modifier = { target = EGY modifier = embargo }
+		add_opinion_modifier = { target = EGY modifier = egy_embargo }
+		reverse_add_opinion_modifier = { target = EGY modifier = egy_embargo }
+		add_opinion_modifier = { target = SAU modifier = embargo }
+		reverse_add_opinion_modifier = { target = SAU modifier = embargo }
+		add_opinion_modifier = { target = SAU modifier = egy_embargo }
+		reverse_add_opinion_modifier = { target = SAU modifier = egy_embargo }
+		if = {
+			limit = {
+				OR = {
+					EGY = {
+						is_faction_leader = yes
+						is_in_faction_with = PER
+					}
+					819 = { is_claimed_by = PER }
+				}
+			}
+			add_opinion_modifier = { target = PER modifier = embargo }
+			reverse_add_opinion_modifier = { target = PER modifier = embargo }
+			add_opinion_modifier = { target = PER modifier = egy_embargo }
+			reverse_add_opinion_modifier = { target = PER modifier = egy_embargo }
+			PER = { country_event = { id = egy.26 days = 1 } } # German embargo
+		}
 		OTT = { country_event = { id = egy.27 days = 1 } } # German aid
 		set_global_flag = ger_axis_embargo # TODO - link persian oil events
 		declare_war_on = { target = EGY type = annex_everything	}
@@ -1101,8 +1136,6 @@ country_event = {
 	option = {
 		name = egy.26.a
 
-		add_opinion_modifier = {target = GER modifier = egy_embargo } # -40
-		# TODO - Embargo ideas
 		add_political_power = -100
 	}
 
@@ -1187,10 +1220,10 @@ country_event = {
 			target = OTT
 			type = annex_everything
 		}
+		SAU = { add_to_war = { targeted_alliance = EGY enemy = OTT } }
 		reverse_add_opinion_modifier = {target = KUR modifier = egy_kurds } #70
 		add_manpower = 25000
 		load_oob = EGY_2
-		# TODO - make sure SAU and PER join
 		OTT = { country_event = { id = egy.30 days = 0 } } # Axis attacks!
 		set_global_flag = egy_axis_attack
 	}
@@ -1259,9 +1292,9 @@ country_event = {
 			target = OTT
 			type = annex_everything
 		}
+		SAU = { add_to_war = { targeted_alliance = EGY enemy = OTT } }
 		add_manpower = 25000
 		load_oob = EGY_2
-		# TODO - make sure SAU and PER join
 		OTT = { country_event = { id = egy.30 days = 0 } } # Axis strikes!
 		set_global_flag = egy_axis_attack
 	}
@@ -1276,6 +1309,7 @@ country_event = {
 }
 
 ### OTT - Axis Declares War on Us
+# This whole file is a mess, this belongs in its respective country's file
 
 country_event = {
 	id = egy.30
@@ -1286,7 +1320,9 @@ country_event = {
 
 	option = {
 		name = egy.30.a
-
+		hidden_effect = {
+			news_event = { id = worldnews.50 days = 3 }
+		}
 		add_political_power = -200
 		add_national_unity = -0.05
 		SAU = {

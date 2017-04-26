@@ -1181,17 +1181,17 @@ focus_tree = {
 #####################################
 # 		Reconquest planning			#
 #####################################	
-	focus = {# Secure the North Atlantic
+	focus = { # Secure the North Atlantic
 		id = CAN_north_atlantic
 		icon = GFX_goal_generic_political_pressure
 		available = {
-			NOT = { has_idea = CAN_divided_nation }
+			has_completed_focus = CAN_C7
 		}
 		x = 26
 		y = 0
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 50
 			modifier = {
 				factor = 100
 				ENG = { has_war_with = GER }
@@ -1243,7 +1243,8 @@ focus_tree = {
 			}	
 		}
 	}
-	focus = {# Treaty With Ireland
+	
+	focus = { # Treaty With Ireland
 		id = CAN_ireland_treaty
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = CAN_north_atlantic }
@@ -1275,7 +1276,8 @@ focus_tree = {
 			IRE = { country_event = { id = canada.54 days = 1 } }
 		}
 	}
-	focus = {# Alliance for Aid - Ireland
+	
+	focus = { # Alliance for Aid - Ireland
 		id = CAN_ireland_ally
 		icon = GFX_goal_generic_alliance
 		prerequisite = { focus = CAN_ireland_treaty }
@@ -1306,7 +1308,8 @@ focus_tree = {
 			IRE = { country_event = { id = canada.57 days = 1 } }
 		}
 	}
-	focus = {# Claim the Danish Colonies
+	
+	focus = { # Claim the Danish Colonies
 		id = CAN_claim_greenland
 		icon = GFX_goal_generic_occupy_states_coastal
 		prerequisite = { focus = CAN_north_atlantic }
@@ -1344,7 +1347,8 @@ focus_tree = {
 			DEN = { country_event = { id = canada.66 } }
 		}
 	}
-	focus = {# War with the UoB
+	
+	focus = { # War with the UoB
 		id = CAN_war_uob
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = CAN_north_atlantic }
@@ -1404,11 +1408,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = { limit = { is_ai = no }
 			create_wargoal = { type = annex_everything target = ENG }
+			}
+			if = { limit = { is_ai = yes }
+			declare_war_on = { target = ENG type = annex_everything }
+			}
 			add_named_threat = { threat = 8 name = CAN_attack_ENG }
 		}
 	}
-	focus = {# War with Germany
+	
+	focus = { # War with Germany
 		id = CAN_war_ger
 		icon = GFX_goal_generic_major_war
 		prerequisite = { focus = CAN_north_atlantic }
@@ -1468,7 +1478,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = { limit = { is_ai = no }
 			create_wargoal = { type = annex_everything target = GER }
+			}
+			if = { limit = { is_ai = yes }
+			declare_war_on = { target = GER type = annex_everything }
+			}
 			add_named_threat = { threat = 10 name = CAN_attack_GER }
 		}
 	}

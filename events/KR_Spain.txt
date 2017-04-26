@@ -29,7 +29,7 @@ country_event = {
 	
 	option = {
 		name = sprd.1.a
-		add_political_power = -200
+		add_political_power = -300
 	}
 }
 
@@ -682,7 +682,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 180
+		days = 140
 		modifier = {
 			factor = 0.5
 			has_country_flag = SPR_cntfai_will_rise
@@ -733,7 +733,6 @@ country_event = {
 }
 
 # Free elections are held
-# TODO: add news events for faction wins
 country_event = {
 	id = sprd.23
 	title = sprd.23.t
@@ -746,6 +745,7 @@ country_event = {
 		tag = SPR
 		has_country_flag = SPR_elections
 		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
 			has_war_with = CNT
 			has_war_with = CAR
 		}
@@ -761,6 +761,9 @@ country_event = {
 		add_political_power = 100
 		add_popularity = { ideology = social_conservative popularity = 0.2 }
 		remove_ideas = spr_social_breakdown
+		hidden_effect = {
+			news_event = { id = sprd.29 days = 1 }
+		}
 	}
 	option = {
 		name = sprd.23.b #A CNT-FAI Victory!
@@ -782,6 +785,9 @@ country_event = {
 				add_political_power = 100
 				transfer_technology = yes
 				change_tag_from = SPR
+				hidden_effect = {
+					news_event = { id = sprd.29 days = 1 }
+				}
 			}
 		}
 		effect_tooltip = { add_political_power = 100 }
@@ -807,6 +813,9 @@ country_event = {
 				add_political_power = 100
 				transfer_technology = yes
 				change_tag_from = SPR
+				hidden_effect = {
+					news_event = { id = sprd.29 days = 1 }
+				}
 			}
 		}
 		effect_tooltip = { add_political_power = 100 }
@@ -816,9 +825,9 @@ country_event = {
 
 # Elections cancelled due to war
 country_event = {
-	id = sprd.25
-	title = sprd.25.t
-	desc = sprd.25.d
+	id = sprd.24
+	title = sprd.24.t
+	desc = sprd.24.d
 	picture = GFX_report_event_election_vote
 	
 	fire_only_once = yes
@@ -837,16 +846,17 @@ country_event = {
 	}
 	
 	option = {
-		name = sprd.25.a
+		name = sprd.24.a
+		clr_country_flag = SPR_elections
 		add_political_power = -100
 	}
 }
 
 # Election riots
 country_event = {
-	id = sprd.26
-	title = sprd.26.t
-	desc = sprd.26.d
+	id = sprd.25
+	title = sprd.25.t
+	desc = sprd.25.d
 	picture = GFX_report_event_gathering_protest
 	
 	fire_only_once = yes
@@ -855,6 +865,7 @@ country_event = {
 		tag = SPR
 		has_country_flag = SPR_rigged_elections
 		NOT = {
+			has_country_flag = aftermath_of_the_civil_war
 			has_war_with = CNT
 			has_war_with = CAR
 		}
@@ -863,7 +874,7 @@ country_event = {
 	mean_time_to_happen = { days = 90 }
 	
 	option = {
-		name = sprd.26.a #Call off the election - Martial Law is declared
+		name = sprd.25.a #Call off the election - Martial Law is declared
 		ai_chance = { factor = 75 }
 		custom_effect_tooltip = SPR_cancel_election
 		add_political_power = -200
@@ -872,7 +883,7 @@ country_event = {
 		set_country_flag = SPR_carlists_will_rise
 	}
 	option = {
-		name = sprd.26.a #Nothing will stop this election
+		name = sprd.25.a #Nothing will stop this election
 		ai_chance = { factor = 25 }
 		add_political_power = -100
 		hidden_effect = {
@@ -883,9 +894,9 @@ country_event = {
 
 # Election day disaster
 country_event = {
-	id = sprd.27
-	title = sprd.27.t
-	desc = sprd.27.d
+	id = sprd.26
+	title = sprd.26.t
+	desc = sprd.26.d
 	picture = GFX_report_event_generic_riot
 	
 	is_triggered_only = yes
@@ -898,7 +909,7 @@ country_event = {
 	}
 
 	option = {
-		name = sprd.27.a
+		name = sprd.26.a
 		clr_country_flag = SPR_rigged_elections
 		add_political_power = -200
 		add_manpower = -10000
@@ -907,9 +918,153 @@ country_event = {
 	}
 }
 
-#post-war
+### POST-WAR EVENTS
 
-#wip
+# Replacing the king - Juan not assassinated
+country_event = {
+	id = sprd.27
+	title = sprd.27.t
+	desc = sprd.27.d
+	picture = SPA_alfonso_xiii
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SPR
+		has_war = no
+		has_country_leader = { name = "Alfonso XIII de Bourbon" }
+		has_country_flag = aftermath_of_the_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {
+		name = sprd.27.a #Name him as Alfonso's successor
+		ai_chance = { factor = 80 }
+		add_political_power = 40
+		create_country_leader = {
+			name = "S.C.M. Juan III"
+			picture = "Portrait_SPR_Juan_III.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
+	}
+	option = {
+		name = sprd.27.b #No, the time of the kingdom is over
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+		create_country_leader = {
+			name = "Francisco Franco Bahamonde"
+			picture = "Portrait_SPR_Franco_Bahamonde.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		custom_effect_tooltip = SPR_become_republic
+		set_cosmetic_tag = SPR_republic
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+		add_ideas = SPR_Francisco_Franco_Bahamonde_hog_ade
+	}
+}
+
+# Replacing the king - Juan assassinated
+country_event = {
+	id = sprd.28
+	title = sprd.28.t
+	desc = sprd.28.d
+	picture = SPA_alfonso_xiii
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SPR
+		has_war = no
+		has_country_flag = SPR_Juan_III_killed
+		has_country_flag = aftermath_of_the_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {
+		name = sprd.27.a #Name him as Alfonso's successor
+		ai_chance = { factor = 60 }
+		add_political_power = 40
+		create_country_leader = {
+			name = "S.C.M. Jaime I"
+			picture = "Portrait_SPR_Jaime_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
+	}
+	option = {
+		name = sprd.27.b #No, the time of the kingdom is over
+		ai_chance = { factor = 40 }
+		add_political_power = -100
+		create_country_leader = {
+			name = "Francisco Franco Bahamonde"
+			picture = "Portrait_SPR_Franco_Bahamonde.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		custom_effect_tooltip = SPR_become_republic
+		set_cosmetic_tag = SPR_republic
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+		add_ideas = SPR_Francisco_Franco_Bahamonde_hog_ade
+	}
+}
+
+# NEWS EVENT - Spanish elections
+news_event = {
+	id = sprd.29
+	title = sprd.29.t
+	picture = GFX_news_event_SPR_victory
+	
+	desc = {
+		text = sprd.29.d.spr
+		trigger = { FROM = { tag = SPR } }
+	}
+	desc = {
+		text = sprd.29.d.cnt
+		trigger = { FROM = { tag = CNT } }
+	}
+	desc = {
+		text = sprd.29.d.car
+		trigger = { FROM = { tag = CAR } }
+	}
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = sprd.29.a
+		trigger = {
+			OR = {
+				tag = SPR
+				tag = CNT
+				tag = CAR
+			}
+		}
+	}
+	option = {
+		name = sprd.29.b
+		trigger = {
+			NOT = {
+				tag = SPR
+				tag = CNT
+				tag = CAR
+			}
+		}
+	}
+}
 
 ########################################
 #### Kingdom of Spain, Foreign Policy
@@ -1207,7 +1362,7 @@ country_event = {
 		set_country_flag = SPR_cntfai_will_rise
 		every_state = {
 			limit = { is_core_of = SPR }
-			add_core_of = CAR
+			add_claim_by = CAR
 		}
 		every_owned_state = {
 			limit = {
@@ -1220,6 +1375,7 @@ country_event = {
 					state = 793 #Asturias
 				}
 			}
+			add_core_of = CAR
 			CAR = { transfer_state = PREV }
 		}
 		if = {
@@ -1334,7 +1490,7 @@ country_event = {
 		set_country_flag = SPR_carlists_will_rise
 		every_state = {
 			limit = { is_core_of = SPR }
-			add_core_of = CNT
+			add_claim_by = CNT
 		}
 		every_owned_state = {
 			limit = {
@@ -1346,13 +1502,17 @@ country_event = {
 					state = 168 #Murcia
 				}
 			}
+			add_core_of = CNT
 			CNT = { transfer_state = PREV }
 		}
 		if = {
 			limit = { has_idea = SPR_black_monday }
 			CNT = { add_ideas = SPR_black_monday }
 		}
-		CNT = { transfer_technology = yes }
+		CNT = {
+			set_cosmetic_tag = CNT_FAI
+			transfer_technology = yes
+		}
 	}
 	
 	option = {
@@ -1431,8 +1591,6 @@ country_event = {
 	desc = sprc.101.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
 	trigger = {
 		OR = {
 			tag = RUS
@@ -1442,10 +1600,15 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		has_socialist_government = no
+		NOT = { has_country_flag = SPR_considered_int }
 	}
 	
 	mean_time_to_happen = {
 		days = 10
+	}
+	
+	immediate = {
+		set_country_flag = SPR_considered_int
 	}
 	
 	option = {
@@ -1520,6 +1683,7 @@ country_event = {
 	
 	immediate = {
 		clr_country_flag = SPR_intervention
+		clr_country_flag = SPR_considered_int
 	}
 	
 	option = {
@@ -1541,13 +1705,6 @@ country_event = {
 	}
 }
 
-#117
-
-### MAF takes province
-
-#118
-#119
-
 # Kingdom of Spain victory event
 country_event = {
 	id = sprc.120
@@ -1559,7 +1716,6 @@ country_event = {
 	
 	trigger = {
 		tag = SPR
-
 		has_global_flag = spanish_civil_war
 		NOT = { country_exists = CNT }
 		NOT = { country_exists = CAR }
@@ -1580,10 +1736,83 @@ country_event = {
 
 ### Arrest the Opposition
 
-### Recovery
+# Main Terror check event
+country_event = {
+	id = sprc.121
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = CAR
+			tag = CNT
+			tag = SPR
+		}
+		has_global_flag = spanish_civil_war
+		any_state = {
+			is_core_of = ROOT
+			is_controlled_by = ROOT
+			NOT = { is_owned_by = ROOT }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 22
+	}
+	
+	immediate = {
+		random_list = {
+			8 = { country_event = { id = sprc.122 } } #Terror event
+			92 = {}
+		}
+	}
+}
 
-### Terror
+# Terror event
+country_event = {
+	id = sprc.122
+	title = sprc.122.t
+	desc = sprc.122.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.122.a
+		add_political_power = -20
+	}
+}
 
+# NEWS EVENT: SPR wins civil war
+news_event = {
+	id = sprc.123
+	title = sprc.123.t
+	desc = sprc.123.d
+	picture = GFX_news_event_SPR_victory
+	
+	fire_only_once = yes
+	major = yes
+	
+	trigger = {
+		tag = SPR
+		has_war = no
+		has_country_flag = aftermath_of_the_civil_war
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+	
+	option = {
+		name = sprc.123.a
+		trigger = { tag = SPR }
+	}
+	option = {
+		name = sprc.123.b
+		trigger = { NOT = { tag = SPR } }
+	}
+}
+	
 
 ### CNT-FAI EVENTS ###
 
@@ -1593,8 +1822,6 @@ country_event = {
 	title = sprc.204.t
 	desc = sprc.204.d
 	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
 	
 	trigger = {
 		OR = {
@@ -1608,10 +1835,15 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		has_socialist_government = yes
+		NOT = { has_country_flag = CNT_considered_int }
 	}
 	
 	mean_time_to_happen = {
 		days = 10
+	}
+	
+	immediate = {
+		set_country_flag = CNT_considered_int
 	}
 	
 	option = {
@@ -1700,6 +1932,7 @@ country_event = {
 	
 	immediate = {
 		clr_country_flag = CNT_intervention
+		clr_country_flag = CNT_considered_int
 	}
 	
 	option = {
@@ -1879,12 +2112,6 @@ country_event = {
 
 ### Morocco taken
 
-### Expose Carlist Plot
-
-### Refugees to France
-
-### Gibraltar
-
 # CNT victory event
 country_event = {
 	id = sprc.220
@@ -1905,6 +2132,7 @@ country_event = {
 	
 	option = {
 		name = sprc.220.a
+		drop_cosmetic_tag = yes
 		add_political_power = 200
 		clr_global_flag = spanish_civil_war
 		set_country_flag = aftermath_of_the_civil_war
@@ -1948,7 +2176,6 @@ country_event = {
 	id = sprc.222
 	
 	hidden = yes
-	fire_only_once = yes
 	
 	trigger = {
 		OR = {
@@ -2014,12 +2241,501 @@ country_event = {
 	}
 }
 
+# Maintenance event - if peace before war is over
+country_event = {
+	id = sprc.223
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = CNT
+			tag = CAR
+			tag = SPR
+		}
+		is_ai = yes
+		has_war = no
+		has_global_flag = spanish_civil_war
+		num_of_controlled_states > 1
+		any_country = {
+			has_war = no
+			NOT = { tag = ROOT }
+			num_of_controlled_states > 1
+			OR = {
+				tag = CNT
+				tag = CAR
+				tag = SPR
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		random_other_country = {
+			limit = {
+				has_war = no
+				NOT = { tag = ROOT }
+				num_of_controlled_states > 1
+				OR = {
+					tag = CNT
+					tag = CAR
+					tag = SPR
+				}
+			}
+			ROOT = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+		}
+	}
+}
+
+# NEWS EVENT: CNT wins civil war
+news_event = {
+	id = sprc.224
+	title = sprc.123.t
+	desc = sprc.224.d
+	picture = GFX_news_event_SPR_victory
+	
+	fire_only_once = yes
+	major = yes
+	
+	trigger = {
+		tag = CNT
+		has_war = no
+		has_country_flag = aftermath_of_the_civil_war
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+	
+	option = {
+		name = sprc.224.a
+		trigger = { tag = CNT }
+	}
+	option = {
+		name = sprc.224.b
+		trigger = { NOT = { tag = CNT } }
+	}
+}
+	
+# Gibraltar occupied by CNT
+country_event = {
+	id = sprc.225
+	title = sprc.225.t
+	desc = sprc.225.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GER
+		has_war = no
+		has_global_flag = spanish_civil_war
+		118 = { is_controlled_by = CNT } #Gibraltar
+	}
+	
+	mean_time_to_happen = {
+		days = 25
+	}
+	
+	option = {
+		name = sprc.225.a #Launch an incursion to secure Gibraltar
+		reverse_add_opinion_modifier = { target = CNT modifier = ITA_outraged }
+		reverse_add_opinion_modifier = { target = CAR modifier = ITA_hates_govt }
+		reverse_add_opinion_modifier = { target = SPR modifier = ITA_hates_govt }
+		CNT = { country_event = { id = sprc.226 days = 20 } }
+	}
+	option = {
+		name = sprc.225.b #Do not get involved
+	}
+}
+
+# German forces are nearing Gibraltar
+country_event = {
+	id = sprc.226
+	title = sprc.226.t
+	desc = sprc.226.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		controls_state = 118
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.226.a #Ask for French protection
+		trigger = {
+			country_exists = FRA
+			FRA = { has_socialist_government = yes } 
+		}
+		add_political_power = -50
+		FRA = { country_event = { id = sprc.227 days = 2 } }
+	}
+	option = {
+		name = sprc.226.b #We will hold Gibraltar ourselves
+		GER = { country_event = { id = sprc.231 days = 2 } }
+	}
+}
+
+# Commune of France is asked to help hold Gibraltar
+country_event = {
+	id = sprc.227
+	title = sprc.227.t
+	desc = sprc.227.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		CNT = { controls_state = 118 }
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.227.a #Protect Gibraltar at all costs
+		ai_chance = {
+			factor = 35
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		add_state_claim = 118
+		transfer_state = 118
+		load_oob = FRA_gibraltar
+		hidden_effect = {
+			SPR = { country_event = { id = sprc.228 hours = 5 } }
+			CNT = { country_event = { id = sprc.228 hours = 5 } }
+			CAR = { country_event = { id = sprc.228 hours = 5 } }
+			GER = { country_event = { id = sprc.236 days = 2 } }
+		}
+	}
+	option = {
+		name = sprc.227.b #Establish a naval presence to deter the Germans
+		ai_chance = {
+			factor = 45
+		}
+		CNT = {
+			set_country_flag = CNT_french_navy_gibraltar
+			country_event = { id = sprc.230 hours = 5 }
+		}
+	}
+	option = {
+		name = sprc.227.c #We do not wish to create an incident
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+		}
+		CNT = { country_event = { id = sprc.229 hours = 5 } }
+	}
+}
+
+# France has taken over Gibraltar
+country_event = {
+	id = sprc.228
+	title = sprc.228.t
+	desc = sprc.228.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.228.a
+		trigger = { tag = CNT }
+		add_opinion_modifier = { target = FRA modifier = aided_us_civwar }
+	}
+	option = {
+		name = sprc.228.b
+		trigger = { NOT = { tag = CNT } }
+		add_opinion_modifier = { target = FRA modifier = ITA_hates_govt }
+	}
+}
+
+# France refuses to help
+country_event = {
+	id = sprc.229
+	title = sprc.229.t
+	desc = sprc.229.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		controls_state = 118
+		has_global_flag = spanish_civil_war
+		GER = { has_war = no }
+	}
+	
+	option = {
+		name = sprc.229.a
+		set_country_flag = CNT_france_refuses_help
+		add_opinion_modifier = { target = FRA modifier = ITA_dislikes_govt }
+		GER = { country_event = { id = sprc.231 days = 2 } }
+	}
+}
+
+# France offers naval power to help
+country_event = {
+	id = sprc.230
+	title = sprc.230.t
+	desc = sprc.230.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.230.a
+		GER = { country_event = { id = sprc.235 days = 2 } }
+	}
+}
+
+# Spain is protecting Gibraltar on its own
+country_event = {
+	id = sprc.231
+	title = sprc.231.t
+	desc = sprc.231.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		CNT = { controls_state = 118 }
+		has_global_flag = spanish_civil_war
+		has_war = no
+	}
+	
+	option = {
+		name = sprc.231.a #Launch the operation
+		ai_chance = { factor = 70 }
+		random_list = {
+			70 = {
+				country_event = { id = sprc.233 }
+			}
+			30 = {
+				country_event = { id = sprc.234 }
+			}
+		}
+	}
+	option = {
+		name = sprc.231.b #Back down. We don't want a war
+		ai_chance = { factor = 30 }
+		CNT = { country_event = { id = sprc.232 } }
+	}
+}
+
+# Germany backs down
+country_event = {
+	id = sprc.232
+	title = sprc.232.t
+	desc = sprc.232.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.232.a
+	}
+}
+
+# Germany takes Gibraltar
+country_event = {
+	id = sprc.233
+	title = sprc.233.t
+	desc = sprc.233.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.233.a
+		add_political_power = 100
+		add_state_claim = 118
+		transfer_state = 118
+		load_oob = GER_gibraltar
+		CNT = { country_event = { id = sprc.238 hours = 5 } }
+		if = {
+			limit = { CNT = { NOT = { has_country_flag = CNT_france_refuses_help } } }
+			FRA = { country_event = { id = sprc.238 hours = 5 } }
+		}
+	}
+}
+
+# Germany fails to take Gibraltar
+country_event = {
+	id = sprc.234
+	title = sprc.234.t
+	desc = sprc.234.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.234.a
+		add_political_power = -100
+		CNT = { country_event = { id = sprc.237 hours = 5 } }
+		if = {
+			limit = { CNT = { NOT = { has_country_flag = CNT_france_refuses_help } } }
+			FRA = { country_event = { id = sprc.237 hours = 5 } }
+		}
+	}
+}
+
+# Spain is protecting Gibraltar with the French fleet in place
+country_event = {
+	id = sprc.235
+	title = sprc.235.t
+	desc = sprc.235.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		CNT = { controls_state = 118 }
+		has_global_flag = spanish_civil_war
+		has_war = no
+	}
+	
+	option = {
+		name = sprc.231.a #Launch the operation
+		ai_chance = { factor = 15 }
+		random_list = {
+			20 = {
+				country_event = { id = sprc.233 }
+			}
+			80 = {
+				country_event = { id = sprc.234 }
+			}
+		}
+	}
+	option = {
+		name = sprc.231.b #Back down. We don't want a war
+		ai_chance = { factor = 85 }
+		CNT = { country_event = { id = sprc.232 } }
+		FRA = { country_event = { id = sprc.232 } }
+	}
+}
+
+# France has taken over Gibraltar
+country_event = {
+	id = sprc.236
+	title = sprc.235.t
+	desc = sprc.236.d
+	picture = GFX_report_event_ast_navy
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		FRA = { controls_state = 118 }
+		country_exists = CNT
+		has_global_flag = spanish_civil_war
+		has_war = no
+	}
+	
+	option = {
+		name = sprc.236.a #Who cares - attack!
+		ai_chance = { factor = 5 }
+		random_list = {
+			10 = {
+				country_event = { id = sprc.233 }
+			}
+			90 = {
+				country_event = { id = sprc.234 }
+			}
+		}
+	}
+	option = {
+		name = sprc.236.b #Back down - we are not ready for a full-scale war
+		ai_chance = { factor = 95 }
+		CNT = { country_event = { id = sprc.232 } }
+		FRA = { country_event = { id = sprc.232 } }
+	}
+}
+
+# Inform defenders that Gibraltar was defended
+country_event = {
+	id = sprc.237
+	title = sprc.237.t
+	desc = sprc.237.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.237.a
+		add_political_power = 100
+	}
+}
+
+# Inform defenders that Gibraltar was taken
+country_event = {
+	id = sprc.238
+	title = sprc.238.t
+	desc = sprc.238.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.238.a
+		trigger = { tag = CNT }
+		add_political_power = -100
+	}
+	option = {
+		name = sprc.238.b #They have gone too far - to war!
+		trigger = {
+			tag = FRA
+			has_war = no
+		}
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0.5
+				CNT = { has_country_flag = CNT_french_navy_gibraltar }
+			}
+		}
+		if = {
+			limit = { CNT = { has_country_flag = CNT_french_navy_gibraltar } }
+			add_political_power = -50
+			else = { add_political_power = -100 }
+		}
+		declare_war_on = {
+			target = GER
+			type = annex_everything
+		}
+	}
+	option = {
+		name = sprc.238.c #We will not push this further
+		trigger = { tag = FRA }
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 1.5
+				CNT = { has_country_flag = CNT_french_navy_gibraltar }
+			}
+		}
+		if = {
+			limit = { CNT = { has_country_flag = CNT_french_navy_gibraltar } }
+			add_political_power = -50
+			else = { add_political_power = -100 }
+		}
+	}
+}
+
 ### Arrest the Opposition
-
-### Recovery
-
-### Terror
-
 
 ### CARLIST EVENTS ###
 
@@ -2029,8 +2745,6 @@ country_event = {
 	title = sprc.301.t
 	desc = sprc.301.d
 	picture = GFX_report_event_SPR_civwar
-	
-	fire_only_once = yes
 	
 	trigger = {
 		OR = {
@@ -2043,10 +2757,15 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		has_socialist_government = no
+		NOT = { has_country_flag = CAR_considered_int }
 	}
 	
 	mean_time_to_happen = {
 		days = 10
+	}
+	
+	immediate = {
+		set_country_flag = CAR_considered_int
 	}
 	
 	option = {
@@ -2137,6 +2856,7 @@ country_event = {
 	
 	immediate = {
 		clr_country_flag = CAR_intervention
+		clr_country_flag = CAR_considered_int
 	}
 	
 	option = {
@@ -2559,26 +3279,14 @@ country_event = {
 	}
 }
 
-# Carlist victory event
+# Carlist victory event (triggered by focus)
 country_event = {
 	id = sprc.320
 	title = sprc.320.t
 	desc = sprc.320.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = CAR
-		has_country_flag = had_war
-		has_global_flag = spanish_civil_war
-		NOT = { country_exists = SPR }
-		NOT = { country_exists = CNT }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = sprc.320.a
@@ -2620,8 +3328,119 @@ country_event = {
 	}
 }
 
+# The Troubles Continue
+country_event = {
+	id = sprc.322
+	title = sprc.322.t
+	desc = sprc.322.d
+	picture = GFX_report_event_generic_ruins
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CAR
+			tag = CNT
+			tag = SPR
+		}
+		has_country_flag = aftermath_of_the_civil_war
+		NOT = { has_global_flag = spanish_civil_war }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = -200
+		hidden_effect = {
+			country_event = { id = sprc.323 days = 180 }
+		}
+	}
+}
+	
+# Recovery event #1
+country_event = {
+	id = sprc.323
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+		hidden_effect = {
+			set_country_flag = spanish_postwar
+			country_event = { id = sprc.324 days = 180 }
+		}
+	}
+}
+
+# Recovery event #2
+country_event = {
+	id = sprc.324
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+		hidden_effect = {
+			country_event = { id = sprc.325 days = 180 }
+		}
+	}
+}
+
+# Recovery event #3
+country_event = {
+	id = sprc.325
+	title = sprc.323.t
+	desc = sprc.323.d
+	picture = GFX_report_event_SPR_civwar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.322.a
+		add_political_power = 50
+	}
+}
+
+# NEWS EVENT: Carlists win civil war
+news_event = {
+	id = sprc.326
+	title = sprc.123.t
+	desc = sprc.326.d
+	picture = GFX_news_event_SPR_victory
+	
+	fire_only_once = yes
+	major = yes
+	
+	trigger = {
+		tag = CAR
+		has_war = no
+		has_country_flag = aftermath_of_the_civil_war
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+	
+	option = {
+		name = sprc.326.a
+		trigger = { tag = CAR }
+	}
+	option = {
+		name = sprc.326.b
+		trigger = { NOT = { tag = CAR } }
+	}
+}
+
+
 ### Arrest the Opposition
-
-### Recovery
-
-### Terror

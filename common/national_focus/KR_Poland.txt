@@ -262,7 +262,8 @@ focus_tree = {
 						limit = {
 						has_dlc = "Together for Victory"
 						}
-					add_to_tech_sharing_group = austrian_research
+					#add_to_tech_sharing_group = austrian_research <-- Fix eventually
+					add_ideas = POL_tech_sharing_idea
 					}
 					if = {
 						limit = {
@@ -422,6 +423,7 @@ focus_tree = {
 						}
 					is_subject = no
 					is_in_faction = no
+					has_global_flag = federate_austria_hungary
 				}
 			bypass = {
 					POL = {
@@ -564,7 +566,7 @@ focus_tree = {
 	}
 	focus = {
 		id = POL_the_peoples_king
-		icon = GFX_goal_POL_polish_king
+		icon = GFX_goal_poland
 		cost = 10.00
 		prerequisite = {
 			focus = POL_renewed_nationalism
@@ -920,7 +922,7 @@ focus_tree = {
 	}
 	focus = {
 		id = POL_reincorporate_lithuania
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_goal_lithuania
 		cost = 10.00
 		prerequisite = {
 			focus = POL_vilinus_accord
@@ -2135,11 +2137,7 @@ focus_tree = {
 					UKR = {
 							is_subject = no
 							is_in_faction = no
-							OR = {
-								has_government = totalist
-								has_government = radical_socialist
-								has_government = syndicalist
-							}
+							has_socialist_government = yes
 						}
 					DKB = {
 							is_subject = no
@@ -2153,7 +2151,7 @@ focus_tree = {
 					#has_global_flag = krushchev_criticizes_gov
 					NOT = {
 							has_global_flag = UKR_RUSCOUP
-							has_global_flag = russ_gives_passports
+							has_global_flag = russ_gives_passports 
 							has_government = totalist
 							has_government = radical_socialist
 							has_government = syndicalist
@@ -2760,11 +2758,7 @@ focus_tree = {
 						is_in_faction = no
 						is_subject = no
 						NOT = {has_war_with = RUS}
-						OR = {
-							has_government = totalist
-							has_government = radical_socialist
-							has_government = syndicalist
-						}
+						has_socialist_government = yes
 					}
 					has_global_flag = POL_SYNDIE
 					country_exists = UKR
@@ -3396,6 +3390,7 @@ focus_tree = {
 							bonus = 0.50
 							uses = 1
 							category = motorized_equipment
+							category = cat_mechanized_equipment
 						}
 				}
 			available_if_capitulated = yes
@@ -3499,12 +3494,7 @@ focus_tree = {
 					factor = 10
 				}
 			completion_reward = {
-					add_tech_bonus = {
-							name = POL_a_modern_panzer
-							bonus = 0.5
-							uses = 1
-							category = armor
-						}
+				country_event = { days = 2 id = poland.208}
 				}
 			available_if_capitulated = yes
 
@@ -3549,8 +3539,10 @@ focus_tree = {
 					add_tech_bonus = {
 							name = POL_a_new_rifle
 							bonus = 0.5
+							ahead_reduction = 1
 							uses = 1
-							category = infantry_weapons
+							technology = improved_infantry_weapons
+							technology = advanced_infantry_weapons
 						}
 				}
 			available_if_capitulated = yes
@@ -3667,6 +3659,15 @@ focus_tree = {
 							technology = basic_submarine
 							technology = improved_submarine
 							technology = advanced_submarine
+						}
+						every_country = {
+							limit = {
+									has_war_with = POL
+								}
+							add_opinion_modifier = {
+									target = POL
+									modifier = POL_SUBMARINE_WARFARE
+								}
 						}
 				}
 			available_if_capitulated = yes
@@ -4018,7 +4019,7 @@ focus_tree = {
 				}
 			completion_reward = {
 				every_country = {
-					limit = {
+					limit = { 
 						AND = {
 							NOT = {has_government = totalist}
 							NOT = {has_government = radical_socialist}
@@ -4033,258 +4034,4 @@ focus_tree = {
 			}
 			available_if_capitulated = yes
 	}
-#	focus = {
-#		id = POL_warsaw_pact
-#		icon = GFX_goal_conscription
-#		cost = 10.00
-#		prerequisite = {
-#			focus = POL_skewer_ukraine
-#			focus = POL_polish_exceptionalism
-#		}
-#		x = 36
-#		y = 7
-#			ai_will_do = {
-#					factor = 5
-#				}
-#			completion_reward = {
-#					set_rule = {
-#							can_create_factions = yes
-#						}
-#					create_faction = "Warsaw Pact"
-#					set_global_flag = WARSAW_PACT
-#				}
-#			available = {
-#					is_subject = no
-#					GER = {
-#							is_faction_leader = no
-#						}
-#				}
-#			#bypass = {
-#			#		is_faction_leader = yes
-#			#	}
-#			available_if_capitulated = no
-#
-#	}
-	#focus = {
-	#	id = POL_invite_romania
-	#	icon = GFX_goal_anschluss
-	#	cost = 10.00
-	#	prerequisite = {
-	#		focus = POL_warsaw_pact
-	#	}
-	#	x = 34
-	#	y = 8
-	#		ai_will_do = {
-	#				factor = 10
-	#			}
-	#		completion_reward = {
-	#				ROM = {
-	#						country_event = {
-	#								id = poland.152
-	#							}
-	#					}
-	#			}
-	#		available = {
-	#				country_exists = ROM
-	#				ROM = {
-	#						has_war = no
-	#					}
-	#				ROM = {
-	#						is_subject = no
-	#					}
-	#				POL = {
-	#						has_war = no
-	#					}
-	#				OR = {
-	#					AND = {
-	#						POL = {
-	#							OR = {
-	#								has_government = totalist  
-	#								has_government = radical_socialist
-	#								has_government = syndicalist
-	#							}
-	#						}
-	#						ROM = {
-	#							OR = {
-	#								has_government = totalist  
-	#								has_government = radical_socialist
-	#								has_government = syndicalist
-	#							}
-	#						}
-	#					}
-	#					AND = {
-	#						POL = {
-	#							AND = {
-	#								NOT = {has_government = totalist  }
-	#								NOT = {has_government = radical_socialist}
-	#								NOT = {has_government = syndicalist}
-	#							}
-	#						}
-	#						ROM = {
-	#							AND = {
-	#								NOT = {has_government = totalist  }
-	#								NOT = {has_government = radical_socialist}
-	#								NOT = {has_government = syndicalist}
-	#							}
-	#						}
-	#					}
-	#				}
-	#				is_subject = no
-	#			}
-	#		bypass = {
-	#				POL = {
-	#						is_in_faction_with = ROM
-	#					}
-	#			}
-	#		available_if_capitulated = no
-#
-#	}
-#	focus = {
-#		id = POL_invite_hungary
-#		icon = GFX_goal_anschluss
-#		cost = 10.00
-#		prerequisite = {
-#			focus = POL_warsaw_pact
-#		}
-#		x = 36
-#		y = 8
-#			ai_will_do = {
-#					factor = 10
-#				}
-#			completion_reward = {
-#					HUN = {
-#							country_event = {
-#									id = poland.155
-#								}
-#						}
-#				}
-#			available = {
-#					country_exists = HUN
-#					HUN = {
-#							has_war = no
-#						}
-#					HUN = {
-#							is_subject = no
-#						}
-#					POL = {
-#							has_war = no
-#						}
-#										OR = {
-#						AND = {
-#							POL = {
-#								OR = {
-#									has_government = totalist  
-#									has_government = radical_socialist
-#									has_government = syndicalist
-#								}
-#							}
-#							HUN = {
-#								OR = {
-#									has_government = totalist  
-#									has_government = radical_socialist
-#									has_government = syndicalist
-#								}
-#							}
-#						}
-#						AND = {
-#							POL = {
-#								AND = {
-#									NOT = {has_government = totalist  }
-##									NOT = {has_government = radical_socialist}
-#									NOT = {has_government = syndicalist}
-#								}
-#							}
-#							HUN = {
-#								AND = {
-#									NOT = {has_government = totalist  }
-#									NOT = {has_government = radical_socialist}
-#									NOT = {has_government = syndicalist}
-#								}
-#							}
-#						}
-#					}
-#					is_subject = no
-#				}
-#			bypass = {
-#					POL = {
-#							is_in_faction_with = HUN
-#						}
-#				}
-#			available_if_capitulated = no
-#
-#	}
-#	focus = {
-#		id = POL_invite_georgia
-#		icon = GFX_goal_anschluss
-#		cost = 10.00
-#		prerequisite = {
-#			focus = POL_warsaw_pact
-#		}
-#		x = 38
-#		y = 8
-#			ai_will_do = {
-#					factor = 10
-#				}
-#			completion_reward = {
-#					GEO = {
-#							country_event = {
-#									id = poland.158
-#								}
-#						}
-##				}
-#		available = {
-#					country_exists = GEO
-#					GEO = {
-#							has_war = no
-#						}
-#					GEO = {
-#							is_subject = no
-#						}
-#					POL = {
-#							has_war = no
-#						}
-#										OR = {
-#						AND = {
-#							POL = {
-#								OR = {
-#									has_government = totalist  
-#									has_government = radical_socialist
-#									has_government = syndicalist
-#								}
-#							}
-#							GEO = {
-#								OR = {
-#									has_government = totalist  
-#									has_government = radical_socialist
-#									has_government = syndicalist
-#								}
-#							}
-##						}
-#						AND = {
-#							POL = {
-#								AND = {
-#									NOT = {has_government = totalist  }
-#									NOT = {has_government = radical_socialist}
-#									NOT = {has_government = syndicalist}
-#								}
-#							}
-#							GEO = {
-#								AND = {
-#									NOT = {has_government = totalist  }
-#									NOT = {has_government = radical_socialist}
-#									NOT = {has_government = syndicalist}
-#								}
-#							}
-#						}
-#					}
-#					is_subject = no
-#				}
-#			bypass = {
-#					POL = {
-#							is_in_faction_with = GEO
-#						}
-#				}
-#			available_if_capitulated = no
-#
-#	}
 }

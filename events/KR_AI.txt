@@ -51,7 +51,7 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		is_subject = no
-		OR = { #Country must either not be landlocked or border conflict
+		OR = { #Country must either not be landlocked or border the conflict
 			any_owned_state = { 
 				is_coastal = yes 
 			}
@@ -159,7 +159,7 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		is_subject = no
-		OR = { #Country must either not be landlocked or border conflict
+		OR = { #Country must either not be landlocked or border the conflict
 			any_owned_state = { 
 				is_coastal = yes 
 			}
@@ -265,7 +265,7 @@ country_event = {
 		has_global_flag = spanish_civil_war
 		has_war = no
 		is_subject = no
-		OR = { #Country must either not be landlocked or border conflict
+		OR = { #Country must either not be landlocked or border the conflict
 			any_owned_state = { 
 				is_coastal = yes 
 			}
@@ -323,6 +323,407 @@ country_event = {
 				is_in_faction = yes
 				any_allied_country = {
 					has_country_flag = no_CNT_intervention
+				}	
+			}
+		}
+	}
+}
+####USA Civil War####
+##United States of America##
+country_event = {
+	id = ai.civilwar.004
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = CSA_intervention
+			has_country_flag = no_CSA_intervention
+			has_country_flag = USA_intervention
+			has_country_flag = no_USA_intervention
+			has_country_flag = TEX_intervention
+			has_country_flag = no_TEX_intervention
+			has_country_flag = CAL_intervention
+			has_country_flag = no_CAL_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = FRA		
+			tag = ENG		
+			tag = MEX		
+			tag = SRI		
+			tag = CAN		
+			tag = NFA		
+			tag = ITA		
+			tag = CUB		
+			tag = GER		
+			tag = RUS		
+			tag = SOV		
+			tag = JAP		
+		}
+		country_exists = USA #USA must exists
+		OR = { #CSA or TEX must still exist
+			country_exists = CSA
+			country_exists = TEX
+		}
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = USA_intervention
+				}			
+			}
+		}
+		has_democratic_government = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = USA_intervention
+					}	
+			}
+		}
+		set_country_flag = USA_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_USA_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_USA_intervention
+				}	
+			}
+		}
+	}
+}
+##CSA##
+country_event = {
+	id = ai.civilwar.005
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = CSA_intervention
+			has_country_flag = no_CSA_intervention
+			has_country_flag = USA_intervention
+			has_country_flag = no_USA_intervention
+			has_country_flag = TEX_intervention
+			has_country_flag = no_TEX_intervention
+			has_country_flag = CAL_intervention
+			has_country_flag = no_CAL_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = FRA		
+			tag = ENG		
+			tag = MEX		
+			tag = SRI		
+			tag = CAN		
+			tag = NFA		
+			tag = ITA		
+			tag = CUB		
+			tag = GER		
+			tag = RUS		
+			tag = SOV		
+			tag = JAP		
+		}
+		country_exists = CSA #CSA must exists
+		OR = { #USA or TEX must still exist
+			country_exists = USA
+			country_exists = TEX
+		}
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = CSA_intervention
+				}			
+			}
+		}
+		has_socialist_government = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = CSA_intervention
+					}	
+			}
+		}
+		set_country_flag = CSA_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_CSA_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_CSA_intervention
+				}	
+			}
+		}
+	}
+}
+##Union##
+country_event = {
+	id = ai.civilwar.006
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = CSA_intervention
+			has_country_flag = no_CSA_intervention
+			has_country_flag = USA_intervention
+			has_country_flag = no_USA_intervention
+			has_country_flag = TEX_intervention
+			has_country_flag = no_TEX_intervention
+			has_country_flag = CAL_intervention
+			has_country_flag = no_CAL_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = FRA		
+			tag = ENG		
+			tag = MEX		
+			tag = SRI		
+			tag = CAN		
+			tag = NFA		
+			tag = ITA		
+			tag = CUB		
+			tag = GER		
+			tag = RUS		
+			tag = SOV		
+			tag = JAP		
+		}
+		country_exists = TEX #TEX must exists
+		OR = { #USA or CSA must still exist
+			country_exists = USA
+			country_exists = CSA
+		}
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = TEX_intervention
+				}			
+			}
+		}
+		has_dictatorship_government = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = TEX_intervention
+					}	
+			}
+		}
+		set_country_flag = TEX_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_TEX_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_TEX_intervention
+				}	
+			}
+		}
+	}
+}
+##California##
+country_event = {
+	id = ai.civilwar.006
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = CSA_intervention
+			has_country_flag = no_CSA_intervention
+			has_country_flag = USA_intervention
+			has_country_flag = no_USA_intervention
+			has_country_flag = TEX_intervention
+			has_country_flag = no_TEX_intervention
+			has_country_flag = CAL_intervention
+			has_country_flag = no_CAL_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = FRA		
+			tag = ENG		
+			tag = MEX		
+			tag = SRI		
+			tag = CAN		
+			tag = NFA		
+			tag = ITA		
+			tag = CUB		
+			tag = GER		
+			tag = RUS		
+			tag = SOV		
+			tag = JAP		
+		}
+		country_exists = CAL #CAL must exists
+		CAL = {
+			OR = { #Either at war with the USA, CSA or TEX
+				has_war_with = USA
+				has_war_with = CSA
+				has_war_with = TEX
+			}
+		}
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
+		}
+		is_in_faction = yes #is in a faction
+		any_allied_country = { #Faction leader supports california
+			is_faction_leader = yes
+			has_country_flag = CAL_intervention
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = CAL_intervention
+					}	
+			}
+		}
+		set_country_flag = CAL_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_CAL_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_CAL_intervention
 				}	
 			}
 		}

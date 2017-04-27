@@ -46,27 +46,43 @@ country_event = {# Syndicalist uprising in Manilla
 		}
 	}
 
-	immediate = {
-		hidden_effect = {
-			PHL = { news_event = { id = phil.92 hours = 6 } }
-		}
-	}
-
-	option = {
-		name = phil.1.a # Rebel seize capital
+	option = { # Rebels seize the capital and prepare to establish a Syndicalist regime
+		name = phil.1.a
 		ai_chance = { factor = 30 }
 		hidden_effect = {
 			PHL = { country_event = { id = phil.2 days = 1 } }
 		}
 	}
-	option = {
-		name = phil.1.b # Military resist uprising
+	option = { # Order our forces to resist the uprising
+		name = phil.1.b
 		ai_chance = { factor = 70 }
 		hidden_effect = {
-			PHL = { news_event = { id = phil.5 days = 3 } }
+			#This immediately causes a Democratic victory
+			PHL = { news_event = { id = worldnews.58 days = 1 } }
+			set_global_flag = PHL_DEMOCRACY
+			PHL = {
+				add_popularity = {
+					ideology = social_democrat
+					popularity = 0.02
+				}
+				add_popularity = {
+					ideology = social_liberal
+					popularity = 0.16
+				}
+				add_popularity = {
+					ideology = market_liberal
+					popularity = 0.08
+				}
+				add_popularity = {
+					ideology = social_conservative
+					popularity = 0.04
+				}
+			}
 		}
 	}
 }
+
+# The Army Counter-Coup
 country_event = {# A counter-coup? - 37990002
 	id = phil.2
 	title = phil.2.t
@@ -75,16 +91,59 @@ country_event = {# A counter-coup? - 37990002
 
 	is_triggered_only = yes
 
-	option = {
-		name = phil.2.a # Army join rebel, government toppled
+	option = { # The army joins the rebels and the government is toppled
+		name = phil.2.a
 		ai_chance = { factor = 50 }
 		PHL = { add_political_power = -100 } # 5 dissent
 		hidden_effect = {
-			PHL = { news_event = { id = phil.3 days = 2 } }
+			#This immediately causes a Syndicalist victory
+			PHL = { country_event = { id = worldnews.60 days = 1 } }
+			set_global_flag = PHL_SOCIALIST
+			PHL = {
+				set_politics = {
+					ruling_party = syndicalist
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = totalist
+					popularity = 0.08
+				}
+				add_popularity = {
+					ideology = radical_socialist
+					popularity = 0.16
+				}
+				add_popularity = {
+					ideology = syndicalist
+					popularity = 0.29
+				}
+				add_popularity = {
+					ideology = social_democrat
+					popularity = 0.11
+				}
+				remove_ideas_with_trait = head_of_government
+				remove_ideas_with_trait = foreign_minister
+				remove_ideas_with_trait = economy_minister
+				remove_ideas_with_trait = security_minister
+				create_country_leader = {
+					name = "Crisanto Evangelista"
+					desc = "POLITICS_CRISTIANO_EVANGELISTA_DESC"
+					picture = "gfx/leaders/PHL/Portrait_Philippines_Crisanto_Evangelista.tga"
+					expire = "1943.6.2"
+					ideology = syndicalist_subtype
+					traits = { }
+				}
+				add_ideas = {
+					PHL_Pedro_Abad_Santos_hog_syn
+					PHL_Casto_Alejandrino_for_syn
+					PHL_Herminegildo_Cruz_eco_syn
+					PHL_Guillermo_Capadocia_sec_syn
+				}
+			}
 		}
 	}
-	option = {
-		name = phil.2.b # Evict the syndies
+
+	option = { # Loyal units storm the capital and evict the Syndicalists
+		name = phil.2.b
 		ai_chance = { factor = 50 }
 		PHL = { add_political_power = -200 } # 10 dissent
 		hidden_effect = {
@@ -92,7 +151,8 @@ country_event = {# A counter-coup? - 37990002
 		}
 	}
 }
-country_event = {# The Revolution is Defeated
+
+country_event = { # The Revolution is Defeated
 	id = phil.4
 	title = phil.4.t
 	desc = phil.4.d
@@ -105,141 +165,88 @@ country_event = {# The Revolution is Defeated
 		ai_chance = { factor = 20 }
 		PHL = { add_political_power = 100 } # -5 dissent
 		set_global_flag = PHL_DEMOCRACY
-		hidden_effect = { PHL = { news_event = { id = phil.91 days = 1 } } }
-		PHL = {
-					add_popularity = {
-							ideology = social_democrat
-							popularity = 0.02
-					}
-					add_popularity = {
-							ideology = social_liberal
-							popularity = 0.16
-					}
-					add_popularity = {
-							ideology = market_liberal
-							popularity = 0.08
-					}
-					add_popularity = {
-							ideology = social_conservative
-							popularity = 0.04
-					}
+		hidden_effect = { 
+			PHL = { news_event = { id = worldnews.58 days = 1 } }
+			PHL = {
+				add_popularity = {
+					ideology = social_democrat
+					popularity = 0.02
+				}
+				add_popularity = {
+					ideology = social_liberal
+					popularity = 0.16
+				}
+				add_popularity = {
+					ideology = market_liberal
+					popularity = 0.08
+				}
+				add_popularity = {
+					ideology = social_conservative
+					popularity = 0.04
+				}
+			}
 		}
 	}
+
 	option = {
+		#This ends in a military coup
 		name = phil.4.b # Military Junta
 		ai_chance = { factor = 80 }
 		PHL = { add_political_power = -100 } # 5 dissent
 		set_global_flag = PHL_DICTATOR
-		hidden_effect = { PHL = { news_event = { id = phil.93 days = 1 } } }
-		PHL = {
-			set_politics = {
-				ruling_party = authoritarian_democrat
-				elections_allowed = no
-			}
-			set_party_name = { # KTP
-				ideology = authoritarian_democrat
-				long_name = PHL_authoritarian_democrat_party_KTP_long
-				name = PHL_authoritarian_democrat_party_KTP
-			}
-					add_popularity = {
-							ideology = social_conservative
-							popularity = 0.02
-					}
-					add_popularity = {
-							ideology = authoritarian_democrat
-							popularity = 0.27
-					}
-					add_popularity = {
-							ideology = paternal_autocrat
-							popularity = 0.11
-					}
-					add_popularity = {
-							ideology = national_populist
-							popularity = 0.09
-					}
-			create_country_leader = {
-				name = "Basilio J. Valdes"
-				desc = "POLITICS_BASILIO_J_VALDEZ_DESC"
-				picture = "gfx/leaders/PHL/Portrait_Philippines_Basilio_J_Valdez.tga"
-				expire = "1970.1.26"
-				ideology = authoritarian_democrat_subtype
-				traits = { }
-			}
-			hidden_effect = {
-				remove_ideas_with_trait = head_of_government
-						remove_ideas_with_trait = foreign_minister
-						remove_ideas_with_trait = economy_minister
-						remove_ideas_with_trait = security_minister
-			}
+		hidden_effect = { 
+			PHL = { news_event = { id = worldnews.59 days = 1 } }
+			PHL = {
+				set_politics = {
+					ruling_party = authoritarian_democrat
+					elections_allowed = no
+				}
+				set_party_name = { # KTP
+					ideology = authoritarian_democrat
+					long_name = PHL_authoritarian_democrat_party_KTP_long
+					name = PHL_authoritarian_democrat_party_KTP
+				}
+				add_popularity = {
+					ideology = social_conservative
+					popularity = 0.02
+				}
+				add_popularity = {
+					ideology = authoritarian_democrat
+					popularity = 0.27
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.11
+				}
+				add_popularity = {
+					ideology = national_populist
+					popularity = 0.09
+				}
+				create_country_leader = {
+					name = "Basilio J. Valdes"
+					desc = "POLITICS_BASILIO_J_VALDEZ_DESC"
+					picture = "gfx/leaders/PHL/Portrait_Philippines_Basilio_J_Valdez.tga"
+					expire = "1970.1.26"
+					ideology = authoritarian_democrat_subtype
+					traits = { }
+				}
+				hidden_effect = {
+					remove_ideas_with_trait = head_of_government
+					remove_ideas_with_trait = foreign_minister
+					remove_ideas_with_trait = economy_minister
+					remove_ideas_with_trait = security_minister
+				}
 				add_ideas = {
-				PHL_Basilio_J_Valdez_hog_ade
-				PHL_Ferdinand_Marcos_for_sco
-				PHL_Ramon_Magsaysay_eco_sco
-				PHL_Benigno_Aquino_sr_sec_ade
+					PHL_Basilio_J_Valdez_hog_ade
+					PHL_Ferdinand_Marcos_for_sco
+					PHL_Ramon_Magsaysay_eco_sco
+					PHL_Benigno_Aquino_sr_sec_ade
+				}
 			}
 		}
 	}
 }
-news_event = { # Democracy prevails - 37990005
-	id = phil.5
-	title = phil.5.t
-	desc = phil.5.d
-	picture = GFX_news_event_PHI_independence
 
-	is_triggered_only = yes
-	major = yes
-
-	immediate = { hidden_effect = {
-		set_global_flag = PHL_DEMOCRACY
-		PHL = {
-			add_popularity = {
-				ideology = social_democrat
-				popularity = 0.02
-			}
-			add_popularity = {
-				ideology = social_liberal
-				popularity = 0.16
-			}
-			add_popularity = {
-				ideology = market_liberal
-				popularity = 0.08
-			}
-			add_popularity = {
-				ideology = social_conservative
-				popularity = 0.04
-			}
-		}
-	} }
-
-	option = {
-		name = phil.5.a # Great!
-		trigger = { TAG = PHL }
-	}
-	option = {
-		name = phil.5.b # Another Victory of the Free World!
-		trigger = {
-			NOT = { TAG = PHL }
-			NOT = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-	option = {
-		name = phil.5.c # Such a pity....
-		trigger = {
-			NOT = { TAG = PHL }
-			OR = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-}
 country_event = {# Economical crisis approaching
 	id = phil.6
 	title = phil.6.t
@@ -2402,181 +2409,7 @@ country_event = {# The Americans say No!
 
 
 ###################### International News & Miscellaneous Events (83++) ###################
-news_event = {# II Himagsikang Pilipino - 37990003
-	id = phil.3
-	title = phil.3.t
-	desc = phil.3.d
-	picture = GFX_news_event_PHL_manila_uprising2
 
-	is_triggered_only = yes
-	major = yes
-
-	immediate = { hidden_effect = {
-		set_global_flag = PHL_SOCIALIST
-		PHL = {
-			set_politics = {
-				ruling_party = syndicalist
-				elections_allowed = no
-			}
-					add_popularity = {
-							ideology = totalist
-							popularity = 0.08
-					}
-					add_popularity = {
-							ideology = radical_socialist
-							popularity = 0.16
-					}
-					add_popularity = {
-							ideology = syndicalist
-							popularity = 0.29
-					}
-					add_popularity = {
-							ideology = social_democrat
-							popularity = 0.11
-					}
-
-			hidden_effect = {
-				remove_ideas_with_trait = head_of_government
-						remove_ideas_with_trait = foreign_minister
-						remove_ideas_with_trait = economy_minister
-						remove_ideas_with_trait = security_minister
-			}
-			create_country_leader = {
-				name = "Crisanto Evangelista"
-				desc = "POLITICS_CRISTIANO_EVANGELISTA_DESC"
-				picture = "gfx/leaders/PHL/Portrait_Philippines_Crisanto_Evangelista.tga"
-				expire = "1943.6.2"
-				ideology = syndicalist_subtype
-				traits = { }
-			}
-				add_ideas = {
-				PHL_Pedro_Abad_Santos_hog_syn
-				PHL_Casto_Alejandrino_for_syn
-				PHL_Herminegildo_Cruz_eco_syn
-				PHL_Guillermo_Capadocia_sec_syn
-			}
-		}
-	}}
-
-	option = {
-		name = phil.3.a # Viva Rebolusyon!
-		trigger = { TAG = PHL }
-	}
-	option = {
-		name = phil.3.b # That's Worrying!
-		trigger = {
-			NOT = { TAG = PHL }
-			NOT = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-	option = {
-		name = phil.3.c # Viva Rebolusyon!
-		trigger = {
-			NOT = { TAG = PHL }
-			OR = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-}
-news_event = {# Syndicalist Uprising in Manilla (International News)
-	id = phil.92
-	title = phil.92.t
-	desc = phil.92.d
-	picture = GFX_news_event_PHL_manila_uprising
-
-	major = yes
-	is_triggered_only = yes
-
-	option = {
-		name = phil.92.a
-		trigger = { NOT = { TAG = PHL } }
-	}
-}
-news_event = {# Democracy prevails (Coup) - xxxxxxxxxx International News
-	id = phil.91
-	title = phil.4.t
-	desc = phil.5.d
-	picture = GFX_news_event_PHI_independence
-
-	is_triggered_only = yes
-	major = yes
-
-	option = {
-		name = phil.5.a # Great!
-		trigger = { TAG = PHL }
-	}
-	option = {
-		name = phil.5.b # Another Victory of the Free World!
-		trigger = {
-			NOT = { TAG = PHL }
-			NOT = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-	option = {
-		name = phil.5.c # Such a pity....
-		trigger = {
-			NOT = { TAG = PHL }
-			OR = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-}
-news_event = {# Military Takeover (Coup) - xxxxxxxxxx International News
-	id = phil.93
-	title = phil.93.t
-	desc = phil.93.d
-	picture = GFX_news_event_PHL_manila_uprising2
-
-	is_triggered_only = yes
-	major = yes
-
-	option = {
-		name = phil.93.a # Great!
-		trigger = { TAG = PHL }
-	}
-	option = {
-		name = phil.93.b # Another Victory of the Free World!
-		trigger = {
-			NOT = { TAG = PHL }
-			NOT = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-	option = {
-		name = phil.93.c # Such a pity....
-		trigger = {
-			NOT = { TAG = PHL }
-			OR = {
-				has_government = radical_socialist
-				has_government = syndicalist
-				has_government = social_democrat
-				has_government = totalist
-			}
-		}
-	}
-}
 country_event = { #Enact Warflag (Normal flag upside down) - hidden
 	id = phil.95
 	hidden = yes

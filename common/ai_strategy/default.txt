@@ -672,40 +672,123 @@ mittleeuropa_britain = {
 #Spanish Civil War#
 spanish_civil_war-kingdom_support= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace 
 		has_country_flag = SPR_intervention
-		SPR = { #Spanish Kingdom must be at war
-			has_war = yes
-		}
-		OR = { #Either spanish revolter must exist
-			CAR = { #Cartlist spain exists
-				exists = yes
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = {
+			OR = { #Already Has an Event
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE		
 			}
-			CNT = { #CNT Spain Exists
-				exists = yes
+			AND = {
+				NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+					is_in_asia = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						is_in_asia = yes
+					}
+				}
+				country_exists = SPR #Spain must exists
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = SPR
+							tag = CAR
+							tag = CNT
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = SPR_intervention
+						}			
+					}
+				}
+				has_democratic_government = yes
 			}
 		}
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			is_subject = yes 
-			has_war = yes
-			NOT = { has_country_flag = SPR_intervention }
-			SPR = { 
-				has_war = no
+		NOT = {
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
 			}
-			NOT = {
-				OR = {
-					CAR = { 
-						exists = yes
-					}
-					CNT = { 
-						exists = yes
+			has_country_flag = SPR_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no			
+		}
+		NOT = {
+			has_country_flag = SPR_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no
+			NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+				is_in_asia = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					is_in_asia = yes
+				}
+			}
+			country_exists = SPR #Spain must exists
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = SPR
+						tag = CAR
+						tag = CNT
 					}
 				}
 			}
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
+					is_in_faction = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = SPR_intervention
+					}			
+				}
+			}
+			has_democratic_government = yes
 		}
+		
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
@@ -730,41 +813,124 @@ spanish_civil_war-kingdom_support= {
 }
 spanish_civil_war-carlist_support= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
 		has_country_flag = CAR_intervention
-		CAR = { #Carlists must be at war
-			has_war = yes
-		}
-		OR = { #Either spanish revolter must exist
-			SPR = { #kingdom of spain exists
-				exists = yes
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = {
+			OR = { #Already Has an Event
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE		
 			}
-			CNT = { #CNT Spain Exists
-				exists = yes
+			AND = {
+				NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+					is_in_asia = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						is_in_asia = yes
+					}
+				}
+				country_exists = CAR #Spain must exists
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = SPR
+							tag = CAR
+							tag = CNT
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = CAR_intervention
+						}			
+					}
+				}
+				has_dictatorship_government = yes
 			}
 		}
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			is_subject = yes
-			has_war = yes
-			NOT = { has_country_flag = CAR_intervention }
-			CAR = { #Carlists must be at war
-				has_war = no
+		NOT = {
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
 			}
-			NOT = {
-				OR = { #Either spanish revolter must exist
-					SPR = { #kingdom of spain exists
-						exists = yes
-					}
-					CNT = { #CNT Spain Exists
-						exists = yes
+			has_country_flag = CAR_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no			
+		}
+		NOT = {
+			has_country_flag = CAR_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no
+			NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+				is_in_asia = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					is_in_asia = yes
+				}
+			}
+			country_exists = CAR #Spain must exists
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = SPR
+						tag = CAR
+						tag = CNT
 					}
 				}
 			}
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
+					is_in_faction = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = CAR_intervention
+					}			
+				}
+			}
+			has_dictatorship_government = yes
 		}
-	}	
+		
+	}
 	ai_strategy = { #Send Troops
 		type = send_volunteers_desire
 		id = "CAR"
@@ -788,42 +954,123 @@ spanish_civil_war-carlist_support= {
 }
 spanish_civil_war-cnt_support= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
-		has_socialist_government = yes
 		has_country_flag = CNT_intervention
-		CNT = { #CNT Must be at war
-			has_war = yes
-		}
-		OR = { #Either spanish revolter must exist
-			SPR = { #kingdom of spain exists
-				exists = yes
+		has_global_flag = spanish_civil_war
+		has_war = no
+		is_subject = no
+		OR = {
+			OR = { #Already Has an Event
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE		
 			}
-			CAR = { #Carlists exist
-				exists = yes
+			AND = {
+				NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+					is_in_asia = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						is_in_asia = yes
+					}
+				}
+				country_exists = CNT #Spain must exists
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = SPR
+							tag = CAR
+							tag = CNT
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = CNT_intervention
+						}			
+					}
+				}
+				has_socialist_government = yes
 			}
 		}
 	}
-	abort = {#stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			is_subject = yes
-			has_war = yes
-			has_socialist_government = no
-			NOT = { has_country_flag = CNT_intervention }
-			CNT = { #CNT Must be at war
-				has_war = no
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		NOT = {
+			OR = {
+				tag = RUS
+				tag = GER
+				tag = NFA
+				tag = FRA
+				tag = ENG
+				tag = SRI
+				tag = SOV
+				tag = MEX
+				tag = BRA
+				tag = ITA
+				tag = POR
+				tag = AUS
+				tag = IRE
 			}
-			NOT = {
-				OR = { #Either spanish revolter must exist
-					SPR = { #kingdom of spain exists
-						exists = yes
-					}
-					CAR = { #Carlists exist
-						exists = yes
+			has_country_flag = CNT_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no			
+		}
+		NOT = {
+			has_country_flag = CNT_intervention
+			has_global_flag = spanish_civil_war
+			has_war = no
+			is_subject = no
+			NOT = { #Must not be asian or in a faction where the faction leader is not in asia
+				is_in_asia = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					is_in_asia = yes
+				}
+			}
+			country_exists = CNT #Spain must exists
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = SPR
+						tag = CAR
+						tag = CNT
 					}
 				}
 			}
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
+					is_in_faction = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = CNT_intervention
+					}			
+				}
+			}
+			has_socialist_government = yes
 		}
+		
 	}	
 	ai_strategy = { #Send Troops
 		type = send_volunteers_desire
@@ -850,50 +1097,86 @@ spanish_civil_war-cnt_support= {
 american_civil_war-csa= {
 	enable = {
 		has_country_flag = CSA_intervention
+		has_war = no
+		is_subject = no
 		country_exists = CSA #CSA must exists
 		OR = { #USA or TEX must still exist
 			country_exists = USA
 			country_exists = TEX
 		}
-		has_war = no
-		is_subject = no
-		OR = { #Country must either not be landlocked or border the conflict
-			any_owned_state = { 
-				is_coastal = yes 
+		OR = {
+
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
 			}
-			any_neighbor_country = {
-				OR = {
-					tag = USA
-					tag = CSA
-					tag = TEX
-					tag = CAL
-				}
-			}
-		}
-		OR = { #Either be a major power, a faction leader, or your faction leader supports CSA
-			is_major = yes
-			is_faction_leader = yes
 			AND = {
-				is_in_faction = yes
-				any_allied_country = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = USA
+							tag = CSA
+							tag = TEX
+							tag = CAL
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
 					is_faction_leader = yes
-					has_country_flag = CSA_intervention
-				}			
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = CSA_intervention
+						}			
+					}
+				}
+				has_socialist_government = yes
 			}
 		}
-		has_socialist_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			NOT = { has_country_flag = CSA_intervention }
-			NOT = { country_exists = CSA } #CSA must exists 
-			NOT = { #USA or TEX must still exist
+
+		NOT = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
+			}
+			has_country_flag = CSA_intervention
+			has_war = no
+			is_subject = no
+			country_exists = CSA #CSA must exists
+			OR = { #USA or TEX must still exist
 				country_exists = USA
 				country_exists = TEX
 			}
-			has_war = yes
-			is_subject = yes
-			NOT = { #Country must either not be landlocked or border the conflict
+		}
+		NOT = {
+			OR = { #Country must either not be landlocked or border the conflict
 				any_owned_state = { 
 					is_coastal = yes 
 				}
@@ -906,7 +1189,7 @@ american_civil_war-csa= {
 					}
 				}
 			}
-			NOT = { #Either be a major power, a faction leader, or your faction leader supports CSA
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
 				is_major = yes
 				is_faction_leader = yes
 				AND = {
@@ -917,7 +1200,15 @@ american_civil_war-csa= {
 					}			
 				}
 			}
-			has_socialist_government = no
+			has_socialist_government = yes
+			has_country_flag = CSA_intervention
+			has_war = no
+			is_subject = no
+			country_exists = CSA #CSA must exists
+			OR = { #USA or TEX must still exist
+				country_exists = USA
+				country_exists = TEX
+			}
 		}
 	}	
 	ai_strategy = {
@@ -949,49 +1240,83 @@ american_civil_war-csa= {
 american_civil_war-usa= {
 	enable = {
 		has_country_flag = USA_intervention
-		country_exists = USA #USA must exists
-		OR = { #CSA or TEX must still exist
+		has_war = no
+		is_subject = no
+		country_exists = USA #CSA must exists
+		OR = { #USA or TEX must still exist
 			country_exists = CSA
 			country_exists = TEX
 		}
-		has_war = no
-		is_subject = no
-		OR = { #Country must either not be landlocked or border the conflict
-			any_owned_state = { 
-				is_coastal = yes 
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
 			}
-			any_neighbor_country = {
-				OR = {
-					tag = USA
-					tag = CSA
-					tag = TEX
-					tag = CAL
-				}
-			}
-		}
-		OR = { #Either be a major power, a faction leader, or your faction leader supports USA
-			is_major = yes
-			is_faction_leader = yes
 			AND = {
-				is_in_faction = yes
-				any_allied_country = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = USA
+							tag = CSA
+							tag = TEX
+							tag = CAL
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
 					is_faction_leader = yes
-					has_country_flag = USA_intervention
-				}			
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = USA_intervention
+						}			
+					}
+				}
+				has_democratic_government = yes
 			}
 		}
-		has_democratic_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		NOT = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
+			}
 			has_country_flag = USA_intervention
-			country_exists = USA #USA must exists
-			OR = { #CSA or TEX must still exist
+			has_war = no
+			is_subject = no
+			country_exists = USA #CSA must exists
+			OR = { #USA or TEX must still exist
 				country_exists = CSA
 				country_exists = TEX
 			}
-			has_war = no
-			is_subject = no
+		}
+		NOT = {
 			OR = { #Country must either not be landlocked or border the conflict
 				any_owned_state = { 
 					is_coastal = yes 
@@ -1005,7 +1330,7 @@ american_civil_war-usa= {
 					}
 				}
 			}
-			OR = { #Either be a major power, a faction leader, or your faction leader supports USA
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
 				is_major = yes
 				is_faction_leader = yes
 				AND = {
@@ -1017,6 +1342,14 @@ american_civil_war-usa= {
 				}
 			}
 			has_democratic_government = yes
+			has_country_flag = USA_intervention
+			has_war = no
+			is_subject = no
+			country_exists = USA #CSA must exists
+			OR = { #USA or TEX must still exist
+				country_exists = CSA
+				country_exists = TEX
+			}
 		}
 	}	
 	ai_strategy = {
@@ -1048,49 +1381,83 @@ american_civil_war-usa= {
 american_civil_war-tex= {
 	enable = {
 		has_country_flag = TEX_intervention
-		country_exists = TEX #TEX must exists
-		OR = { #USA or CSA must still exist
-			country_exists = USA
-			country_exists = CSA
-		}
 		has_war = no
 		is_subject = no
-		OR = { #Country must either not be landlocked or border the conflict
-			any_owned_state = { 
-				is_coastal = yes 
-			}
-			any_neighbor_country = {
-				OR = {
-					tag = USA
-					tag = CSA
-					tag = TEX
-					tag = CAL
-				}
-			}
+		country_exists = TEX #CSA must exists
+		OR = { #USA or TEX must still exist
+			country_exists = CSA
+			country_exists = USA
 		}
-		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
-			is_major = yes
-			is_faction_leader = yes
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
+			}
 			AND = {
-				is_in_faction = yes
-				any_allied_country = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = USA
+							tag = CSA
+							tag = TEX
+							tag = CAL
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
 					is_faction_leader = yes
-					has_country_flag = TEX_intervention
-				}			
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = TEX_intervention
+						}			
+					}
+				}
+				has_dictatorship_government = yes
 			}
 		}
-		has_dictatorship_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		NOT = {
-			has_country_flag = TEX_intervention
-			country_exists = TEX #TEX must exists
-			OR = { #USA or CSA must still exist
-				country_exists = USA
-				country_exists = CSA
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
 			}
+			has_country_flag = TEX_intervention
 			has_war = no
 			is_subject = no
+			country_exists = TEX #CSA must exists
+			OR = { #USA or TEX must still exist
+				country_exists = CSA
+				country_exists = USA
+			}
+		}
+		NOT = {
 			OR = { #Country must either not be landlocked or border the conflict
 				any_owned_state = { 
 					is_coastal = yes 
@@ -1115,7 +1482,15 @@ american_civil_war-tex= {
 					}			
 				}
 			}
-			has_dictatorship_government = yes
+			has_democratic_government = yes
+			has_country_flag = TEX_intervention
+			has_war = no
+			is_subject = no
+			country_exists = TEX #CSA must exists
+			OR = { #USA or TEX must still exist
+				country_exists = CSA
+				country_exists = USA
+			}
 		}
 	}	
 	ai_strategy = {
@@ -1147,7 +1522,6 @@ american_civil_war-tex= {
 american_civil_war-pacific= {
 	enable = {
 		has_country_flag = CAL_intervention
-		country_exists = CAL #CAL must exists
 		CAL = {
 			OR = { #Either at war with the USA, CSA or TEX
 				has_war_with = USA
@@ -1157,29 +1531,61 @@ american_civil_war-pacific= {
 		}
 		has_war = no
 		is_subject = no
-		OR = { #Country must either not be landlocked or border the conflict
-			any_owned_state = { 
-				is_coastal = yes 
+		country_exists = CAL #CAL must exists
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
 			}
-			any_neighbor_country = {
-				OR = {
-					tag = USA
-					tag = CSA
-					tag = TEX
-					tag = CAL
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = USA
+							tag = CSA
+							tag = TEX
+							tag = CAL
+						}
+					}
+				}
+				is_in_faction = yes #is in a faction
+				any_allied_country = { #Faction leader supports california
+					is_faction_leader = yes
+					has_country_flag = CAL_intervention
 				}
 			}
-		}
-		is_in_faction = yes #is in a faction
-		any_allied_country = { #Faction leader supports california
-			is_faction_leader = yes
-			has_country_flag = CAL_intervention
 		}
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		NOT = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = MEX		
+				tag = SRI		
+				tag = CAN		
+				tag = NFA		
+				tag = ITA		
+				tag = CUB		
+				tag = GER		
+				tag = RUS		
+				tag = SOV		
+				tag = JAP		
+			}
 			has_country_flag = CAL_intervention
-			country_exists = CAL #CAL must exists
 			CAL = {
 				OR = { #Either at war with the USA, CSA or TEX
 					has_war_with = USA
@@ -1189,6 +1595,9 @@ american_civil_war-pacific= {
 			}
 			has_war = no
 			is_subject = no
+			country_exists = CAL #CAL must exists
+		}
+		NOT = {
 			OR = { #Country must either not be landlocked or border the conflict
 				any_owned_state = { 
 					is_coastal = yes 
@@ -1207,6 +1616,17 @@ american_civil_war-pacific= {
 				is_faction_leader = yes
 				has_country_flag = CAL_intervention
 			}
+			has_country_flag = CAL_intervention
+			CAL = {
+				OR = { #Either at war with the USA, CSA or TEX
+					has_war_with = USA
+					has_war_with = CSA
+					has_war_with = TEX
+				}
+			}
+			has_war = no
+			is_subject = no
+			country_exists = CAL #CAL must exists
 		}
 	}	
 	ai_strategy = {

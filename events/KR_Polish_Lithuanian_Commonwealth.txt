@@ -4820,7 +4820,7 @@ country_event = { # PLC Attempting to leave Mitteleuropa
 	id = plcommon.75
 	title = plcommon.75.t
 	desc = plcommon.75.d
-	picture = GFX_POL_resistance
+	picture = GFX_POL_german_officer
 	
 	fire_only_once = yes
 
@@ -4843,7 +4843,7 @@ country_event = { # PLC Attempting to leave Mitteleuropa - Germany says "No"
 	id = plcommon.76
 	title = plcommon.76.t
 	desc = plcommon.76.d
-	picture = GFX_POL_sejm
+	picture = GFX_POL_german_officer
 
 	fire_only_once = yes
 	
@@ -4870,7 +4870,7 @@ country_event = { # PLC Attempting to leave Mitteleuropa - PLC Ignores us!
 	id = plcommon.77
 	title = plcommon.77.t
 	desc = plcommon.77.d
-	picture = GFX_POL_sejm
+	picture = GFX_POL_german_officer
 
 	fire_only_once = yes
 	
@@ -4893,7 +4893,7 @@ country_event = { # PLC Attempting to leave Mitteleuropa - PLC Gives In
 	id = plcommon.78
 	title = plcommon.78.t
 	desc = plcommon.78.d
-	picture = GFX_POL_sejm
+	picture = GFX_POL_german_officer
 
 	fire_only_once = yes
 	
@@ -5030,5 +5030,204 @@ country_event = { # PLC Democracy or No?
 
 			set_global_flag = Galizia_Annexed
 		}
+	}
+}
+
+country_event = { # Fort Vasa - Begin
+	id = plcommon.80
+	title = plcommon.80.t
+	desc = plcommon.80.d
+	picture = GFX_POL_fortress
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = plcommon.80.a
+		add_political_power = 60
+		hidden_effect = { 
+			PLC = { country_event = { days = 30 id = plcommon.81 }}
+		}
+	}
+}
+
+country_event = { # Fort Vasa - Deaths
+	id = plcommon.81
+	title = plcommon.81.t
+	desc = plcommon.81.d
+	picture = GFX_POL_fortress
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		11 = {
+			if = {
+				limit = {
+					is_controlled_by = ROOT
+				}
+				hidden_effect = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 233
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	option = { # Onwards!
+		name = plcommon.81.a
+		trigger = {
+			controls_state = 11
+			has_manpower > 2000 
+		}
+		add_manpower = -2000
+		custom_effect_tooltip = PLC_russian_forts_continue
+		hidden_effect = { 
+			PLC = { country_event = { days = 30 id = plcommon.82 }}
+		}
+	}
+	
+		option = { # Stop!
+		name = plcommon.81.b
+		add_political_power = 10
+		custom_effect_tooltip = PLC_russian_forts_stop_1
+	}
+}
+
+country_event = { # Fort Vasa - Hard Work
+	id = plcommon.82
+	title = plcommon.82.t
+	desc = plcommon.82.d
+	picture = GFX_POL_fortress
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		11 = {
+			if = {
+				limit = {
+					is_controlled_by = ROOT
+				}
+				hidden_effect = {
+					add_building_construction = {
+						type = bunker
+						level = 3
+						province = 233
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	option = { # Onwards!
+		name = plcommon.82.a
+		trigger = {
+			controls_state = 11
+			has_manpower > 3000 
+		}
+		add_manpower = -3000
+		custom_effect_tooltip = PLC_russian_forts_continue
+		hidden_effect = { 
+			PLC = { country_event = { days = 30 id = plcommon.83 }}
+		}
+	}
+	
+		option = { # Stop!
+		name = plcommon.82.b
+		add_political_power = 10
+		custom_effect_tooltip = PLC_russian_forts_stop_4
+	}
+}
+
+country_event = { # Fort Vasa - Done?
+	id = plcommon.83
+	title = plcommon.83.t
+	desc = plcommon.83.d
+	picture = GFX_POL_fortress
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		11 = {
+			if = {
+				limit = {
+					is_controlled_by = ROOT
+				}
+				hidden_effect = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 233
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	option = { # Stop!
+		name = plcommon.83.a
+		add_political_power = 30
+		custom_effect_tooltip = PLC_russian_forts_stop_6
+	}
+	
+	option = { # Onwards!
+		name = plcommon.83.b
+		trigger = {
+			controls_state = 11
+			has_manpower > 5000 
+		}
+		add_manpower = -5000
+		add_political_power = -20
+		custom_effect_tooltip = PLC_russian_forts_continue
+		hidden_effect = { 
+			PLC = { country_event = { days = 30 id = plcommon.84 }}
+		}
+	}
+}
+
+country_event = { # Fort Vasa - Done!
+	id = plcommon.84
+	title = plcommon.84.t
+	desc = plcommon.84.d
+	picture = GFX_POL_fortress
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		11 = {
+			if = {
+				limit = {
+					is_controlled_by = ROOT
+				}
+				hidden_effect = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 233
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	option = { # Well Done!
+		name = plcommon.84.a
+		add_political_power = 20
+		custom_effect_tooltip = PLC_russian_forts_stop_7
 	}
 }

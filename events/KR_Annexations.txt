@@ -1506,6 +1506,9 @@ country_event = { #The Annexation of Flanders-Wallonia 2
 			}
 		}
 	}
+	
+	mean_time_to_happen = { days = 7 }
+	
 	option = { #release belgium
 		ai_chance = {
 			factor = 50
@@ -1516,7 +1519,7 @@ country_event = { #The Annexation of Flanders-Wallonia 2
 			transfer_state = 34
 			transfer_state = 741
 			transfer_state = 778
-			#ministers needed
+			country_event = { id = annex.160 }
 		}
 		puppet = BEL
 		add_political_power = 20
@@ -1723,7 +1726,6 @@ country_event = { #The destiny of Luxembourg
 			transfer_state = 8
 		}
 		puppet = LUX
-		#needs LUX ministers
 		add_political_power = 20
 	}
 
@@ -2605,6 +2607,105 @@ country_event = { #The Fate of Russia
 		ai_chance = {
 			factor = 99
 		}
+
+		every_state = {
+
+			limit = {
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+				is_core_of = RUS
+			}
+
+			RUS = {
+				transfer_state = PREV
+			}
+
+		}
+
+		puppet = RUS
+
+		add_political_power = 100
+
+		if = {
+
+			limit = {
+				tag = GER
+			}
+			country_event = {
+				id = annex.49
+			}
+		}
+	}
+	option = { #liberate Russia and Siberia
+		trigger = {
+			NOT = {
+			tag = EMP
+			tag = REB
+			}
+			NOT = {
+				has_government = radical_socialist
+				has_government = syndicalist
+				has_government = totalist
+				country_exists = SIB
+			}
+			controls_state = 570
+		}
+		name = annex.48.e
+		ai_chance = {
+			factor = 25
+		}
+		
+		SIB = {
+		add_state_core = 583
+			add_state_core = 572
+			add_state_core = 653
+			add_state_core = 580
+			add_state_core = 579
+			add_state_core = 590
+			add_state_core = 588
+			add_state_core = 403
+			add_state_core = 571
+			add_state_core = 570
+			add_state_core = 578
+			add_state_core = 40
+			add_state_core = 569
+			add_state_core = 568
+			add_state_core = 567
+			add_state_core = 566
+			add_state_core = 577
+			add_state_core = 516
+			add_state_core = 576
+			add_state_core = 575
+
+			add_state_core = 565
+			add_state_core = 561
+			add_state_core = 657
+			add_state_core = 560
+			add_state_core = 574
+			add_state_core = 644
+			add_state_core = 562
+			add_state_core = 637
+		}
+		
+		every_state = {
+
+			limit = {
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+				is_core_of = SIB
+			}
+
+			SIB = {
+				transfer_state = PREV
+			}
+
+		}
+
+		puppet = SIB
 
 		every_state = {
 
@@ -6067,7 +6168,6 @@ country_event = { #Releasing Spain (if not POR)
 			controls_state = 168
 			controls_state = 173
 			controls_state = 169
-			controls_state = 118
 			controls_state = 177
 			controls_state = 793
 		}
@@ -18023,4 +18123,558 @@ country_event = { #Fate of Britain
 		add_political_power = -240
 	}
 
+}
+
+country_event = { #A syndicalist Flanders-Wallonia
+	id = annex.160
+	title = annex.160.t
+	desc = annex.160.d
+	
+	is_triggered_only = yes
+	
+	option = { #Hurrah!
+		name = annex.160.a
+		ai_chance = {
+			factor = 80
+		}
+		create_country_leader = {
+			name = "Joseph Jacquemotte"
+			desc = "BEL_JOSEPH_JACQUEMOTTE_DESC"
+			picture = "Portrait_Belgium_Joseph_Jacquemotte.tga"
+			expire = "1965.1.1"
+			ideology = totalist_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Joseph Jacquemotte"
+			desc = "BEL_JOSEPH_JACQUEMOTTE_DESC"
+			picture = "Portrait_Belgium_Joseph_Jacquemotte.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = {
+
+			}
+		}
+		create_country_leader = {
+			name = "Joseph Jacquemotte"
+			desc = "BEL_JOSEPH_JACQUEMOTTE_DESC"
+			picture = "Portrait_Belgium_Joseph_Jacquemotte.tga"
+			expire = "1965.1.1"
+			ideology = radical_socialist_subtype
+			traits = {
+
+			}
+		}
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		add_ideas = BEL_Joseph_Jacquemotte_hog_syn
+		add_ideas = BEL_War_van_Overstraeten_for_rso
+		add_ideas = BEL_Abraham_Leon_eco_syn
+		add_ideas = BEL_Adhemar_Henneaut_sec_rso
+	}
+}
+
+country_event = { #Fate of Belgium
+	id = annex.161
+	title = annex.161.t
+	desc = annex.161.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		BEL = {
+			exists = no
+		}
+		NOT = {
+			tag = BEL
+			tag = FLN
+			tag = WLL
+			tag = FRA
+			tag = GER
+			tag = LUX
+			has_country_flag = BEL_CONQ
+		}
+		controls_state = 6
+		NOT = { 
+		has_war_with = FRA
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet Belgium
+		name = annex.161.a
+		ai_chance = {
+			factor = 50
+		}
+		
+		BEL = { add_state_core = 741 }
+
+		every_state = {
+			limit = {
+				is_core_of = BEL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			BEL = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = BEL
+
+	}
+	
+	option = { #Divide Belgium
+		name = annex.161.b
+		ai_chance = {
+			factor = 50
+		}
+		trigger = { NOT = { country_exists = FLN country_exists = WLL }
+		controls_state = 34 }
+
+		every_state = {
+			limit = {
+				is_core_of = FLN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			FLN = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = FLN
+		
+		every_state = {
+			limit = {
+				is_core_of = WLL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			WLL = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = WLL
+
+	}
+	
+	option = { #Release Flanders
+		name = annex.161.c
+		ai_chance = {
+			factor = 50
+		}
+		trigger = { NOT = { country_exists = FLN
+		controls_state = 34 } }
+
+		every_state = {
+			limit = {
+				is_core_of = FLN
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			FLN = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = FLN
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = BEL_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #Fate of Southern Wallonia
+	id = annex.162
+	title = annex.162.t
+	desc = annex.162.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		WLL = {
+			exists = no
+		}
+		NOT = {
+			tag = BEL
+			tag = FLN
+			tag = WLL
+			tag = FRA
+			tag = GER
+			tag = LUX
+			has_country_flag = WLL_CONQ
+		}
+		owns_state = 741
+		NOT = { controls_state = 6 }
+		NOT = { 
+		has_war_with = FRA
+		has_war_with = BEL
+		has_war_with = FLN
+		has_war_with = WLL
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet Wallonia
+		name = annex.162.a
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 0
+			OR = { is_in_faction_with = BEL BEL = { is_subject_of = ROOT }
+			}
+			}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = WLL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			WLL = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = WLL
+
+	}
+	
+	option = { #Release Belgium
+		name = annex.162.b
+		ai_chance = {
+			factor = 10
+		}
+		trigger = { NOT = { country_exists = BEL } }
+
+		every_state = {
+			limit = {
+				is_core_of = BEL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			BEL = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = BEL
+
+	}
+	
+	option = { #Return to Belgium
+		name = annex.162.c
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 10
+			OR = { is_in_faction_with = BEL BEL = { is_subject_of = ROOT }
+			}
+			}
+		}
+		trigger = { country_exists = BEL }
+
+		BEL = { transfer_state = 741 }
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 30
+			modifier = { factor = 0
+			OR = { is_in_faction_with = BEL BEL = { is_subject_of = ROOT }
+			}
+			}
+		}
+		set_country_flag = WLL_CONQ
+		add_political_power = -40
+	}
+}
+
+country_event = { #Fate of Luxembourg
+	id = annex.163
+	title = annex.163.t
+	desc = annex.163.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		LUX = {
+			exists = no
+		}
+		NOT = {
+			tag = LUX
+			tag = GER
+			tag = FRA
+			tag = RUS
+			tag = RHI
+			tag = GRU
+			has_country_flag = LUX_CONQ
+		}
+		owns_state = 8
+		NOT = { 
+		owns_state = 64
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet Luxembourg
+		name = annex.163.a
+		ai_chance = {
+			factor = 80
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = LUX
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			LUX = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = LUX
+
+	}
+	
+	option = { #Annex Luxembourg to Belgium
+		name = annex.163.b
+		ai_chance = {
+			factor = 20
+		}
+		trigger = { OR = { tag = BEL tag = WLL } }
+
+		set_country_flag = BEL_CONQ
+		add_state_claim = 8
+		add_political_power = 20
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		trigger = { NOT = { tag = BEL tag = WLL } }
+		set_country_flag = BEL_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #Fate of Lithuania
+	id = annex.164
+	title = annex.164.t
+	desc = {
+		text = annex.164.d_revolt
+		trigger = {
+			has_global_flag = voldemaras_coup_in_lithuania
+		}
+	}
+	desc = {
+		text = annex.164.d_norevolt
+		trigger = {
+			NOT = {	
+			 has_global_flag = voldemaras_coup_in_lithuania
+			}
+		}
+	}
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		LIT = {
+			exists = no
+		}
+		tag = GER
+		NOT = {
+			has_country_flag = LIT_CONQ
+		}
+		controls_state = 11
+		NOT = { 
+		controls_state = 12
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Release Lithuania
+		name = annex.164.a
+		ai_chance = {
+			factor = 100
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = LIT
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			LIT = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = LIT
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = LIT_CONQ
+		add_political_power = -60
+	}
+}
+
+country_event = { #Fate of Thessaloniki
+	id = annex.165
+	title = annex.165.t
+	desc = annex.165.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+		NOT = {
+			tag = GRE
+			tag = BUL
+			tag = OTT
+			tag = CRE
+			has_country_flag = THE_CONQ
+		}
+		owns_state = 731
+		NOT = { controls_state = 48
+        controls_state = 47 }
+		NOT = { 
+		has_war_with = GRE
+		has_war_with = BUL
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Transfer to Bulgaria
+		name = annex.165.a
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 2
+			OR = { BUL = { is_subject_of = ROOT } is_in_faction_with = BUL }
+			}
+		}
+		trigger = { country_exists = BUL }
+
+		BUL = { transfer_state = 731 }
+
+	}
+	
+	option = { #Transfer to Greece
+		name = annex.165.b
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 2
+			OR = { GRE = { is_subject_of = ROOT } is_in_faction_with = GRE }
+			}
+		}
+		trigger = { country_exists = GRE }
+
+		GRE = { transfer_state = 731 }
+
+	}
+	
+	option = { #Release Greece
+		name = annex.165.c
+		ai_chance = {
+			factor = 10
+		}
+		trigger = { NOT = { country_exists = GRE } }
+
+		every_state = {
+			limit = {
+				is_core_of = GRE
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			GRE = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = GRE
+
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = THE_CONQ
+		add_political_power = -60
+	}
 }

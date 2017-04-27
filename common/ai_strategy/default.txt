@@ -18,7 +18,8 @@
 
 
 ###DIPLOMACY AI###
-##Factioal Containment##
+##Factional Relations## 
+#WIP; Needs to be reworked but should be fine in game for now
 #Entente#
 entente_france = { 
 	enable = {
@@ -99,17 +100,17 @@ entente_france = {
 	ai_strategy = {
 		type = contain
 		id = "FRA"			
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = conquer
 		id = "FRA"			
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = antagonize
 		id = "FRA"			
-		value = 200
+		value = 100
 	}
 }
 entente_britain = { 
@@ -191,17 +192,17 @@ entente_britain = {
 	ai_strategy = {
 		type = contain
 		id = "ENG"			
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = conquer
 		id = "ENG"			
-		value = 200
+		value = 100
 	}	
 	ai_strategy = {
 		type = antagonize
 		id = "ENG"			
-		value = 200
+		value = 100
 	}
 }
 #Internationale#
@@ -284,7 +285,17 @@ international_canada = {
 	ai_strategy = {
 		type = contain
 		id = "CAN"			
-		value = 200
+		value = 100
+	}
+	ai_strategy = {
+		type = conquer
+		id = "CAN"			
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "CAN"			
+		value = 100
 	}
 }
 international_natfrance = { 
@@ -366,7 +377,17 @@ international_natfrance = {
 	ai_strategy = {
 		type = contain
 		id = "NFA"			
-		value = 200
+		value = 100
+	}
+	ai_strategy = {
+		type = conquer
+		id = "NFA"			
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "NFA"			
+		value = 100
 	}
 }
 international_dehli = { 
@@ -448,7 +469,17 @@ international_dehli = {
 	ai_strategy = {
 		type = contain
 		id = "DEH"			
-		value = 200
+		value = 100
+	}
+	ai_strategy = {
+		type = conquer
+		id = "DEH"			
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "DEH"			
+		value = 100
 	}
 }
 #MittleEuropa#
@@ -531,7 +562,17 @@ mittleeuropa_france = {
 	ai_strategy = {
 		type = contain
 		id = "FRA"			
-		value = 200
+		value = 100
+	}
+	ai_strategy = {
+		type = conquer
+		id = "FRA"			
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "FRA"			
+		value = 100
 	}
 }
 mittleeuropa_britain = { 
@@ -613,11 +654,21 @@ mittleeuropa_britain = {
 	ai_strategy = {
 		type = contain
 		id = "ENG"			
-		value = 200
+		value = 100
+	}
+	ai_strategy = {
+		type = conquer
+		id = "ENG"		
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "ENG"			
+		value = 100
 	}
 }
 
-##Send Volunteers##
+##Send Volunteers and Lend Lease##
 #Spanish Civil War#
 spanish_civil_war-kingdom_support= {
 	enable = {
@@ -659,11 +710,21 @@ spanish_civil_war-kingdom_support= {
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "SPR"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "SPR"
+		value = 100
+	}
+	ai_strategy = {
+		type = ignore
+		id = "CAR"
+		value = 100
+	}
+	ai_strategy = {
+		type = ignore
+		id = "CNT"
 		value = 100
 	}
 }
@@ -707,11 +768,21 @@ spanish_civil_war-carlist_support= {
 	ai_strategy = { #Send Troops
 		type = send_volunteers_desire
 		id = "CAR"
-		value = 200
+		value = 100
 	}
 	ai_strategy = { #Use Lend Lease
 		type = support
 		id = "CAR"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CNT"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "SPR"
 		value = 100
 	}
 }
@@ -757,333 +828,410 @@ spanish_civil_war-cnt_support= {
 	ai_strategy = { #Send Troops
 		type = send_volunteers_desire
 		id = "CNT"
-		value = 200
+		value = 100
 	}
 	ai_strategy = { #Use Lend Lease
 		type = support
 		id = "CNT"
 		value = 100
 	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CAR"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "SPR"
+		value = 100
+	}
 }
 #American Civil War#
 american_civil_war-csa= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
-		any_owned_state = { #ensure that the country is not land locked
-			is_coastal = yes 
+		has_country_flag = CSA_intervention
+		country_exists = CSA #CSA must exists
+		OR = { #USA or TEX must still exist
+			country_exists = USA
+			country_exists = TEX
 		}
-		NOT = { tag = JAP }
-		OR = { #must have a syndiclist leaning government
-			has_government = totalist
-			has_government = syndicalist
-			has_government = radical_socialist
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
 		}
-		OR = { #Helper must be a major power or in a faction
+		OR = { #Either be a major power, a faction leader, or your faction leader supports CSA
 			is_major = yes
-			is_in_faction = yes
-			tag = MEX
-		}
-		CSA = { #America at war must be at war
-			has_war = yes
-		}
-		OR = { #Either American revolter must exist
-			USA = { #United State spain exists
-				exists = yes
-			}
-			TEX = { #Union states Spain Exists
-				exists = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = CSA_intervention
+				}			
 			}
 		}
+		has_socialist_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		OR = {
-			tag = JAP
-			is_subject = yes
+			NOT = { has_country_flag = CSA_intervention }
+			NOT = { country_exists = CSA } #CSA must exists 
+			NOT = { #USA or TEX must still exist
+				country_exists = USA
+				country_exists = TEX
+			}
 			has_war = yes
-			NOT = {
-				OR = { 
-					has_government = totalist
-					has_government = syndicalist
-					has_government = radical_socialist
+			is_subject = yes
+			NOT = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = USA
+						tag = CSA
+						tag = TEX
+						tag = CAL
+					}
 				}
 			}
-			NOT = {
-				OR = { 
-					is_major = yes
+			NOT = { #Either be a major power, a faction leader, or your faction leader supports CSA
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
 					is_in_faction = yes
-					tag = MEX
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = CSA_intervention
+					}			
 				}
 			}
-			CSA = { 
-				has_war = no
-			}
-			NOT = {
-				OR = { #Either American revolter must exist
-					USA = { #United State spain exists
-						exists = yes
-					}
-					TEX = { #Union states Spain Exists
-						exists = yes
-					}
-				}
-			}
+			has_socialist_government = no
 		}
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "CSA"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "CSA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "TEX"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "USA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CAL"
 		value = 100
 	}
 }
 american_civil_war-usa= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
-		any_owned_state = { #ensure that the country is not land locked
-			is_coastal = yes 
+		has_country_flag = USA_intervention
+		country_exists = USA #USA must exists
+		OR = { #CSA or TEX must still exist
+			country_exists = CSA
+			country_exists = TEX
 		}
-		NOT = { tag = JAP }
-		OR = { #must have a syndiclist leaning government
-			has_government = social_democrat
-			has_government = social_liberal
-			has_government = market_liberal
-			has_government = social_conservative	
-			has_government = authoritarian_democrat	
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
 		}
-		OR = { #Helper must be a major power or in a faction
+		OR = { #Either be a major power, a faction leader, or your faction leader supports USA
 			is_major = yes
-			is_in_faction = yes
-			tag = ITA
-			tag = CUB
-		}
-		USA = { #America at war must be at war
-			has_war = yes
-		}
-		OR = { #Either American revolter must exist
-			CSA = { #Syndiclist America exists
-				exists = yes
-			}
-			TEX = { #Union states Spain Exists
-				exists = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = USA_intervention
+				}			
 			}
 		}
+		has_democratic_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			is_subject = yes
-			has_war = yes
-			tag = JAP
-			NOT = {
-				OR = {
-					has_government = social_democrat
-					has_government = social_liberal
-					has_government = market_liberal
-					has_government = social_conservative	
-					has_government = authoritarian_democrat	
+		NOT = {
+			has_country_flag = USA_intervention
+			country_exists = USA #USA must exists
+			OR = { #CSA or TEX must still exist
+				country_exists = CSA
+				country_exists = TEX
+			}
+			has_war = no
+			is_subject = no
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = USA
+						tag = CSA
+						tag = TEX
+						tag = CAL
+					}
 				}
 			}
-			NOT = {
-				OR = { 
-					is_major = yes
+			OR = { #Either be a major power, a faction leader, or your faction leader supports USA
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
 					is_in_faction = yes
-					tag = ITA
-					tag = CUB
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = USA_intervention
+					}			
 				}
 			}
-			USA = {
-				has_war = no
-			}
-			NOT = {
-				OR = { 
-					CSA = { 
-						exists = yes
-					}
-					TEX = { 
-						exists = yes
-					}
-				}
-			}
+			has_democratic_government = yes
 		}
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "USA"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "USA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "TEX"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CSA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CAL"
 		value = 100
 	}
 }
 american_civil_war-tex= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
-		any_owned_state = { #ensure that the country is not land locked
-			is_coastal = yes 
+		has_country_flag = TEX_intervention
+		country_exists = TEX #TEX must exists
+		OR = { #USA or CSA must still exist
+			country_exists = USA
+			country_exists = CSA
 		}
-		NOT = { tag = JAP }
-		OR = { #must have a syndiclist leaning government
-			has_government = paternal_autocrat 
-			has_government = national_populist
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
+				}
+			}
 		}
-		OR = { #Helper must be a major power or in a faction
+		OR = { #Either be a major power, a faction leader, or your faction leader supports spain
 			is_major = yes
-			is_in_faction = yes
-		}
-		TEX = { #America at war must be at war
-			has_war = yes
-		}
-		OR = { #Either American revolter must exist
-			CSA = { #Syndiclist America exists
-				exists = yes
-			}
-			USA = { #Union states Spain Exists
-				exists = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = TEX_intervention
+				}			
 			}
 		}
+		has_dictatorship_government = yes
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		is_subject = yes
-		has_war = yes
-		tag = JAP
 		NOT = {
-			OR = {
-				has_government = paternal_autocrat 
-				has_government = national_populist
+			has_country_flag = TEX_intervention
+			country_exists = TEX #TEX must exists
+			OR = { #USA or CSA must still exist
+				country_exists = USA
+				country_exists = CSA
 			}
-		}
-		NOT = {
-			OR = { 
-				is_major = yes
-				is_in_faction = yes
-			}
-		}
-		TEX = {
 			has_war = no
-		}
-		NOT = {
-		OR = {
-			CSA = { 
-				exists = yes
+			is_subject = no
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = USA
+						tag = CSA
+						tag = TEX
+						tag = CAL
+					}
+				}
 			}
-			USA = {
-				exists = yes
+			OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+				is_major = yes
+				is_faction_leader = yes
+				AND = {
+					is_in_faction = yes
+					any_allied_country = {
+						is_faction_leader = yes
+						has_country_flag = TEX_intervention
+					}			
+				}
 			}
-		}
+			has_dictatorship_government = yes
 		}
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "TEX"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "TEX"
 		value = 100
 	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CSA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "USA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CAL"
+		value = 100
+	}
 }
 american_civil_war-pacific= {
 	enable = {
-		is_subject = no #cannot be a subject
-		has_war = no #must be at peace
-		any_owned_state = { #ensure that the country is not land locked
-			is_coastal = yes 
+		has_country_flag = CAL_intervention
+		country_exists = CAL #CAL must exists
+		CAL = {
+			OR = { #Either at war with the USA, CSA or TEX
+				has_war_with = USA
+				has_war_with = CSA
+				has_war_with = TEX
+			}
 		}
-		OR = { #Those strategically invovled with the pacific states
-			tag = JAP
-		}
-		AND = { #Japan will only assist an independent california
-			tag = JAP
-			CAL = {
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
 				OR = {
-					AND = {
-						is_in_faction = yes
-						is_in_faction_with = JAP
-					}
-					is_in_faction = no
+					tag = USA
+					tag = CSA
+					tag = TEX
+					tag = CAL
 				}
 			}
 		}
-		OR = { #Helper must be a major power or in a faction
-			is_major = yes
-			is_in_faction = yes
-		}
-		CAL = { #America at war must be at war
-			has_war = yes
-		}
-		OR = { #Either American revolter must exist
-			CSA = { #Syndiclist America exists
-				exists = yes
-			}
-			TEX = { #Union states Spain Exists
-				exists = yes
-			}			
-			USA = { #Union states Spain Exists
-				exists = yes
-			}
+		is_in_faction = yes #is in a faction
+		any_allied_country = { #Faction leader supports california
+			is_faction_leader = yes
+			has_country_flag = CAL_intervention
 		}
 	}
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
-		OR = {
-			is_subject = yes
-			has_war = yes
-			NOT = {
-				OR = { #Those strategically invovled with the pacific states
-					tag = JAP
+		NOT = {
+			has_country_flag = CAL_intervention
+			country_exists = CAL #CAL must exists
+			CAL = {
+				OR = { #Either at war with the USA, CSA or TEX
+					has_war_with = USA
+					has_war_with = CSA
+					has_war_with = TEX
 				}
 			}
-			AND = { #Japan will only assist an independent california
-				tag = JAP
-				CAL = {
-					AND = {
-						is_in_faction = yes
-						NOT = { 
-							is_in_faction_with = JAP 
-						}							
+			has_war = no
+			is_subject = no
+			OR = { #Country must either not be landlocked or border the conflict
+				any_owned_state = { 
+					is_coastal = yes 
+				}
+				any_neighbor_country = {
+					OR = {
+						tag = USA
+						tag = CSA
+						tag = TEX
+						tag = CAL
 					}
 				}
 			}
-			NOT = {
-				OR = { #Helper must be a major power or in a faction
-					is_major = yes
-					is_in_faction = yes
-				}
-			}
-			CAL = { #America at war must be at war
-				has_war = no
-			}
-			NOT = {
-				OR = { #Either American revolter must exist
-					CSA = { #Syndiclist America exists
-						exists = yes
-					}
-					TEX = { #Union states Spain Exists
-						exists = yes
-					}			
-					USA = { #Union states Spain Exists
-						exists = yes
-					}
-				}
+			is_in_faction = yes #is in a faction
+			any_allied_country = { #Faction leader supports california
+				is_faction_leader = yes
+				has_country_flag = CAL_intervention
 			}
 		}
 	}	
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "CAL"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "CAL"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "TEX"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "USA"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "CSA"
 		value = 100
 	}
 }

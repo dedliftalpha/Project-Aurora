@@ -2350,10 +2350,33 @@ default_peace = {
 		#AUS - Austria
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = AUS
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = AUS
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = AUS
+					OR = {
+						has_war_with = 	FRA
+						has_war_with = 	ENG
+						has_war_with = 	SRI					
+					}
+					OR = {
+						CAN = {
+							is_in_peace_conference = yes
+						}
+						ENG = {
+							is_in_peace_conference = yes
+						}
+						NFA = {
+							is_in_peace_conference = yes
+						}
+					
+					}
+				}
+			
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -2364,6 +2387,7 @@ default_peace = {
 				}
 			}
 			FROM = { #State not apart of the following strategic regions
+				
 				NOT = {
 					OR = {
 					region = 21 #Alpine
@@ -2374,6 +2398,7 @@ default_peace = {
 					region = 27 #Carpathia
 					region = 22 #Bohemia
 					region = 38 #Poland
+					region = 169 
 					}
 				}
 			}
@@ -2674,7 +2699,12 @@ default_peace = {
 				AND = { 
 					ROOT = { #Checks Country tag and in a war with austria
 						tag = GER
-						has_war_with = SER
+						OR = {
+							has_war_with = SER
+							has_war_with = BUL
+							has_war_with = ROM
+							has_war_with = GRE
+						}
 					}
 					OR = {
 						AUS = { #checks if hungary is in peace conference
@@ -2700,6 +2730,53 @@ default_peace = {
 					region = 21
 					region = 22
 					region = 8
+					}
+				}
+			}
+		}
+		#GER - German Empire - WK2 
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = GER
+						OR = {
+							has_war_with = FRA
+							has_war_with = ENG
+							has_war_with = SRI
+						}
+					}
+					OR = {
+						CAN = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+						NFA = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+			
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+					region = 7
+					region = 6
+					region = 21
+					region = 22
+					region = 8
+					region = 5
+					region = 19
+					region = 20
 					}
 				}
 			}

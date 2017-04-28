@@ -466,6 +466,12 @@ country_event = { #HUN liberation
 		ai_chance = {
 			factor = 5
 		}
+		
+		if = { limit = { controls_state = 4 }
+		remove_state_core = 784 }
+		
+		if = { limit = { OR = { controls_state = 4 AUS = { is_subject_of = ROOT } } }
+		remove_state_core = 784 }
 
 		every_state = {
 			limit = {
@@ -512,6 +518,8 @@ country_event = { #HUN liberation
 		if = { limit = { OR = { controls_state = 91 GAL = { is_subject_of = ROOT } } }
 		HUN = { remove_state_core = 73 }
 		}
+		if = { limit = { OR = { controls_state = 4 AUS = { is_subject_of = ROOT } } }
+		remove_state_core = 784 }
 		set_country_flag = liberated_national_hungary
 		every_state = {
 			limit = {
@@ -604,6 +612,7 @@ country_event = { #AUS liberation
 			add_state_core = 152
 			add_state_core = 835
 			add_state_core = 39
+			add_state_core = 784
 
 		}
 
@@ -636,6 +645,12 @@ country_event = { #AUS liberation
 			transfer_state = 759
 			transfer_state = 736
 			transfer_state = 795
+		}
+		if = {
+			limit = {
+				any_country = { is_subject_of = ROOT controls_state = 784 }
+			}
+			AUS = { transfer_state = 784 }
 		}
 		puppet = AUS
 		add_political_power = 100
@@ -684,7 +699,16 @@ country_event = { #greater germany
 		add_state_core = 152
 		add_state_core = 4
 		add_state_core = 153
-		add_manpower = 200000
+		add_state_core = 836
+		add_state_core = 835
+		add_state_core = 784
+		add_state_core = 39
+		add_state_core = 783
+		add_state_core = 736
+		add_state_core = 795
+		add_state_core = 102
+		add_state_claim = 759
+		add_manpower = 100000
 
 	}
 }
@@ -986,7 +1010,9 @@ country_event = { #SLO liberation
 			tag = ILL
 		}
 		controls_state = 102
-		NOT = { AND = { controls_state = 109 controls_state = 107 } }
+		NOT = { AND = { controls_state = 109 controls_state = 107 } 
+		102 = { is_core_of = ROOT }
+		}
 		SLO = {
 			exists = no
 		}

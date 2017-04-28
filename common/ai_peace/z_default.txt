@@ -651,11 +651,21 @@ default_peace = {
 		#ILL - Illyria
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = ILL
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = ILL
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = ILL
+					has_war_with = AUS
+					HUN = {
+						is_in_peace_conference = yes
+					}
+				}
 			}
+			
 			FROM = { #State is not a Claim or core
 				NOT = {
 					OR = {

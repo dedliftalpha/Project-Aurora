@@ -5400,7 +5400,7 @@ country_event = { #Fate of the Northern China
 	}
 
 	mean_time_to_happen = {
-		days = 10
+		days = 7
 	}
 
 	option = { #occupy
@@ -5466,8 +5466,13 @@ country_event = { #Fate of the Northern China
 				tag = EMP
 			tag = REB
 			}
+			OR = {
 			CHI = {
 				exists = no
+			}
+			CHI = {
+				is_subject_of = ROOT
+			}
 			}
 
 			NOT = {
@@ -11768,6 +11773,28 @@ country_event = { #The Annexation of Siam
 		name = annex.118.a
 		ai_chance = {
 			factor = 99
+		}
+		
+		if = { limit = { controls_state = 827 }
+		SIA = { remove_state_core = 750
+		remove_state_core = 825
+		}
+		}
+		
+		if = { limit = { CAM = { is_subject_of = ROOT } }
+		SIA = { remove_state_core = 750
+		remove_state_core = 825
+		}
+		CAM = { transfer_state = 750
+		transfer_state = 825 }
+		}
+		
+		if = { limit = { INC = { is_subject_of = ROOT } }
+		SIA = { remove_state_core = 750
+		remove_state_core = 825
+		}
+		INC = { transfer_state = 750
+		transfer_state = 825 }
 		}
 
 		every_state = {
@@ -18702,5 +18729,517 @@ country_event = { #Fate of Thessaloniki
 		}
 		set_country_flag = THE_CONQ
 		add_political_power = -60
+	}
+}
+
+country_event = { #The Annexation of Algeria
+
+	id = annex.166
+	title = annex.166.t
+	desc = annex.166.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+
+			tag = ALG
+			tag = NFA
+
+			has_country_flag = ALG_CONQ
+
+		}
+
+		controls_state = 459
+
+		ALG = {
+			exists = no
+		}
+		NFA = {
+			exists = no
+		}
+
+
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #occupy
+
+		name = annex.166.a
+		ai_chance = {
+			factor = 1
+		}
+
+		add_political_power = -60
+
+		set_country_flag = ALG_CONQ
+
+	}
+
+	option = { #puppet
+
+		name = annex.166.b
+		ai_chance = {
+			factor = 99
+		}
+
+		every_state = {
+
+			limit = {
+
+				is_core_of = ALG
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+
+			ALG = {
+				transfer_state = PREV
+			}
+
+		}
+
+		puppet = ALG
+
+		add_political_power = 40
+
+	}
+}
+
+country_event = { #Fate of Morroco non-leftist
+	id = annex.167
+	title = annex.167.t
+	desc = annex.167.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			has_government = radical_socialist
+			has_government = syndicalist
+			has_government = totalist
+		}
+
+		NOT = {
+			tag = MOR
+			tag = GER
+			has_war_with = MOR
+			has_country_flag = MOR_CONQ
+			AND = { NFA = { owns_state = 461 }
+			country_exists = NFA
+			}
+		}
+
+		controls_state = 461
+		controls_state = 462
+		MOR = {
+			exists = no
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet
+		name = annex.167.a
+		ai_chance = {
+			factor = 99
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = MOR
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			MOR = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = MOR
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 1
+		}
+		add_political_power = -60
+		set_country_flag = MOR_CONQ
+	}
+}
+
+country_event = { #Fate of Don Kuban Union
+	id = annex.168
+	title = annex.168.t
+	desc = annex.168.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = DKB
+			tag = RUS
+			tag = GEO
+			has_war_with = RUS
+			has_country_flag = DKB_CONQ
+			country_exists = DKB
+			AND = { RUS = { owns_state = 234 }
+			country_exists = RUS
+			}
+		}
+
+		controls_state = 234
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet
+		name = annex.168.a
+		ai_chance = {
+			factor = 90
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = DKB
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			DKB = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = DKB
+	}
+	
+	option = { #Give to Russia
+		name = annex.168.b
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 100
+			OR = { is_in_faction_with = RUS RUS = { is_subject_of = ROOT } }
+			}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = DKB
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			RUS = {
+				transfer_state = PREV
+			}
+		}
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 1
+		}
+		add_political_power = -60
+		set_country_flag = DKB_CONQ
+	}
+}
+
+country_event = { #Fate of Nepal
+	id = annex.169
+	title = annex.169.t
+	desc = annex.169.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = NEP
+			tag = BHC
+			tag = DEH
+			tag = PRF
+			has_war_with = DEH
+			has_war_with = BHC
+			has_war_with = PRF
+			has_country_flag = NEP_CONQ
+			country_exists = NEP
+		}
+
+		controls_state = 234
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #puppet
+		name = annex.169.a
+		ai_chance = {
+			factor = 90
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = NEP
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			NEP = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = NEP
+	}
+	
+	option = { #Give to India and release
+		name = annex.169.b
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 100
+			OR = { DEH = { controls_state = 438 OR = { is_in_faction_with = RUS RUS = { is_subject_of = ROOT } } }
+			PRF = { controls_state = 438 OR = { is_in_faction_with = RUS RUS = { is_subject_of = ROOT } } }
+			}
+			}
+		}
+		trigger = { 
+		OR = { DEH = { controls_state = 438 }
+		PRF = { controls_state = 438 }
+		}
+		controls_state = 815
+		NOT = { has_government = syndicalist has_government = radical_socialist has_government = totalist }
+		}
+
+		if = { limit = { DEH = { controls_state = 438 } }
+		DEH = { transfer_state = 815
+		transfer_state = 887
+		transfer_state = 814
+		}
+		}
+		
+		if = { limit = { PRF = { controls_state = 438 } }
+		PRF = { transfer_state = 815
+		transfer_state = 887
+		transfer_state = 814
+		}
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = NEP
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			NEP = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = NEP
+	}
+	
+	option = { #Give to Commune and release
+		name = annex.169.c
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 100
+			BHC = { OR = { is_in_faction_with = RUS RUS = { is_subject_of = ROOT } } }
+			}
+		}
+		trigger = { 
+		BHC = { controls_state = 438 }
+		controls_state = 815
+		OR = { has_government = syndicalist has_government = radical_socialist has_government = totalist }
+		}
+
+		BHC = { transfer_state = 815
+		transfer_state = 887
+		transfer_state = 814
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = NEP
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			NEP = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = NEP
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -60
+		set_country_flag = NEP_CONQ
+	}
+}
+
+country_event = { #Fate of Indochina
+	id = annex.170
+	title = annex.170.t
+	desc = annex.170.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = INC
+			tag = VIE
+			tag = CAM
+			tag = LAO
+			tag = GER
+			tag = JAP
+			tag = SIA
+			has_war_with = SIA
+			has_country_flag = INC_CONQ
+			country_exists = INC
+		}
+
+		owns_state = 827
+		controls_state = 827
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Puppet Indochina
+		name = annex.170.a
+		ai_chance = {
+			factor = 40
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = INC
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			INC = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = INC
+	}
+	
+	option = { #Partition Indochina
+		name = annex.170.b
+		ai_chance = {
+			factor = 60
+		}
+		trigger = { controls_state = 670
+		controls_state = 826
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = VIE
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			VIE = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = VIE
+		
+		every_state = {
+			limit = {
+				is_core_of = LAO
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			LAO = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = LAO
+		
+		every_state = {
+			limit = {
+				is_core_of = CAM
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			CAM = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = CAM
+		
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 1
+		}
+		add_political_power = -60
+		set_country_flag = INC_CONQ
 	}
 }

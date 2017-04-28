@@ -387,6 +387,12 @@ country_event = { # Natal Covenant
 				capital = 681
 				states = { 681 719 545 }
 			}
+			ZIM = {
+				transfer_state = 545
+				set_cosmetic_tag = ZIM_RHO_ENG
+				load_oob = "RHO_Civil_War"
+				country_event = { id = SACW.1300 }
+			}
 			random_country = {
 				limit = {
 					original_tag = SAF
@@ -406,8 +412,15 @@ country_event = { # Natal Covenant
 					limit = { has_idea = askari_kommando }
 					load_oob = "SAF_askari"
 				}
+				puppet = ZIM
+				ZIM = {
+					declare_war_on = {
+						target = SAF type = annex_everything
+					}
+				}
 				set_country_flag = SAF_CIVIL_WAR_SIDE
 				set_cosmetic_tag = SAF_federation
+				
 			}
 			load_oob = "ZAR_Civil_War"
 			set_equipment_fraction = 0.3
@@ -637,6 +650,7 @@ country_event = { # Restoration of the Z.A.R.
 		hidden_effect = {
 			set_global_flag = Fourth_Boer_War
 			set_capital = 681
+			set_cosmetic_tag = SAF_federation #If not done already
 			start_civil_war = {
 				ruling_party = social_conservative
 				ideology = paternal_autocrat
@@ -644,6 +658,13 @@ country_event = { # Restoration of the Z.A.R.
 				capital = 275
 				states = { 275 542 }
 			}
+			ZIM = {
+				transfer_state = 545
+				set_cosmetic_tag = ZIM_RHO_ENG
+				load_oob = "RHO_Civil_War"
+				country_event = { id = SACW.1300 }
+			}
+			puppet = ZIM
 			random_country = {
 				limit = {
 					original_tag = SAF
@@ -658,6 +679,9 @@ country_event = { # Restoration of the Z.A.R.
 				if = {
 					limit = { has_idea = askari_kommando }
 					load_oob = "ZAR_askari"
+				}
+				declare_war_on = {
+					target = ZIM type = annex_everything
 				}
 				set_country_flag = ZAR_CIVIL_WAR_SIDE
 				set_cosmetic_tag = SAF_republic
@@ -709,7 +733,13 @@ country_event = { # Natal Covenant
 				ideology = social_conservative
 				size = 0.5
 				capital = 681
-				states = { 681 719 545 }
+				states = { 681 719 }
+			}
+			ZIM = {
+				transfer_state = 545
+				set_cosmetic_tag = ZIM_RHO_ENG
+				load_oob = "RHO_Civil_War"
+				country_event = { id = SACW.1300 }
 			}
 			random_country = {
 				limit = {
@@ -730,6 +760,12 @@ country_event = { # Natal Covenant
 					limit = { has_idea = askari_kommando }
 					load_oob = "SAF_askari"
 				}
+				puppet = ZIM
+				ZIM = {
+					declare_war_on = {
+						target = SAF type = annex_everything
+					}
+				}
 				set_country_flag = SAF_CIVIL_WAR_SIDE
 				set_cosmetic_tag = SAF_federation
 			}
@@ -745,7 +781,6 @@ country_event = { # Natal Covenant
 		custom_effect_tooltip = SAF_choose_national
 		set_country_flag = ZAR_CIVIL_WAR_SIDE
 	}
-
 }
 
 country_event = { # End of the Union?
@@ -829,6 +864,7 @@ country_event = { # Nationalist Coup
 	option = { #
 		name = SACW.25.a
 		hidden_effect = {
+			set_cosmetic_tag = SAF_federation #If not done already
 			set_global_flag = Fourth_Boer_War
 			set_capital = 681
 			start_civil_war = {
@@ -838,6 +874,13 @@ country_event = { # Nationalist Coup
 				capital = 275
 				states = { 275 542 }
 			}
+			ZIM = {
+				transfer_state = 545
+				set_cosmetic_tag = ZIM_RHO_ENG
+				load_oob = "RHO_Civil_War"
+				country_event = { id = SACW.1300 }
+			}
+			puppet = ZIM
 			random_country = {
 				limit = {
 					original_tag = SAF
@@ -852,6 +895,9 @@ country_event = { # Nationalist Coup
 				if = {
 					limit = { has_idea = askari_kommando }
 					load_oob = "ZAR_askari"
+				}
+				declare_war_on = {
+					target = ZIM type = annex_everything
 				}
 				set_country_flag = ZAR_CIVIL_WAR_SIDE
 				set_cosmetic_tag = SAF_republic
@@ -1661,6 +1707,7 @@ country_event = { # South Africa Stabilizes
 	immediate = {
 		hidden_effect = {
 			set_country_flag = SAF_CALM_RETURNS
+			country_event = { id = SACW.46 days = 1 }
 			random_country = {
 				limit = {
 					original_tag = SAF
@@ -1687,7 +1734,93 @@ country_event = { # South Africa Stabilizes
 
 	option = {
 		name = SACW.45.a
+	}
+}
 
+# The Status of Rhodesia
+country_event = {
+	id = SACW.46
+	title = SACW.46.t
+	desc = SACW.46.d
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = { #The Civil War is over. Strip their autonomy.
+		name = SACW.46.a
+		annex_country = {
+			target = ZIM
+			transfer_troops = yes
+		}
+		add_political_power = -50
+	}
+
+	option = { #They deserve limited autonomy.
+		name = SACW.46.b
+		add_political_power = 25
+	}
+}
+
+# The South Rhodesian Government
+country_event = {
+	id = SACW.1300
+	title = SACW.1300.t
+	desc = SACW.1300.d
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = { #For Rhodesia!
+		name = SACW.1300.a
+		create_country_leader = {
+			name = "Sir Herbert J. Stanley"
+			desc = "POLITICS_HERTZOG_DESC"
+			picture = "S._H._J._Stanley.tga"
+			expire = "1965.1.1"
+			ideology = social_conservative_subtype
+			traits = {
+			}
+		}
+		set_politics = {
+			#Yeah, this is a copy of the 1938 Dom. Supposed to be same ideology
+			parties = {
+				totalist = {
+					popularity = 1
+				}
+				radical_socialist = {
+					popularity = 4
+				}
+				syndicalist = {
+					popularity = 9
+				}
+				social_democrat = {
+					popularity = 10
+				}
+				social_liberal = {
+					popularity = 12
+				}
+				market_liberal = {
+					popularity = 15
+				}
+				social_conservative = {
+					popularity = 34
+				}
+				authoritarian_democrat = {
+					popularity = 13
+				}
+				paternal_autocrat = {
+					popularity = 2
+				}
+				national_populist = {
+					popularity = 0
+				}
+			}
+			ruling_party = social_conservative
+			last_election = "1888.15.6"
+			elections_allowed = no
+		}
 	}
 }
 

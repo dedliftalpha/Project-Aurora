@@ -695,6 +695,7 @@ country_event = {
 	
 	option = {
 		name = sprd.21.a
+		set_country_flag = SPR_alfonso_coma
 		add_political_power = -100
 		hidden_effect = {
 			country_event = { id = sprd.22 days = 10 }
@@ -927,18 +928,7 @@ country_event = {
 	desc = sprd.27.d
 	picture = SPA_alfonso_xiii
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SPR
-		has_war = no
-		has_country_leader = { name = "Alfonso XIII de Bourbon" }
-		has_country_flag = aftermath_of_the_civil_war
-	}
-	
-	mean_time_to_happen = {
-		days = 20
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = sprd.27.a #Name him as Alfonso's successor
@@ -978,18 +968,7 @@ country_event = {
 	desc = sprd.28.d
 	picture = SPA_alfonso_xiii
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SPR
-		has_war = no
-		has_country_flag = SPR_Juan_III_killed
-		has_country_flag = aftermath_of_the_civil_war
-	}
-	
-	mean_time_to_happen = {
-		days = 20
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = sprd.27.a #Name him as Alfonso's successor
@@ -1065,6 +1044,86 @@ news_event = {
 		}
 	}
 }
+
+# Spain asks to join Mitteleuropa
+country_event = {
+	id = sprd.30
+	title = sprd.30.t
+	desc = sprd.30.d
+	picture = diplomacy4
+
+	is_triggered_only = yes
+	
+	option = {
+		name = sprd.30.a #Absolutely, they are welcome
+		ai_chance = { factor = 95 }
+		add_political_power = 140
+		effect_tooltip = { add_to_faction = SPR }
+		SPR = { country_event = { id = sprd.32 hours = 5 } }
+	}
+	option = {
+		name = sprd.30.b #It's not a good idea
+		ai_chance = { factor = 5 }
+		add_political_power = -20
+		SPR = { country_event = { id = sprd.33 hours = 5 } }
+	}
+}
+
+# Spain asks to join the Entente
+country_event = {
+	id = sprd.31
+	title = sprd.31.t
+	desc = sprd.31.d
+	picture = diplomacy4
+
+	is_triggered_only = yes
+	
+	option = {
+		name = sprd.30.a #Absolutely, they are welcome
+		ai_chance = { factor = 80 }
+		add_political_power = 140
+		effect_tooltip = { add_to_faction = SPR }
+		SPR = { country_event = { id = sprd.32 hours = 5 } }
+	}
+	option = {
+		name = sprd.30.b #It's not a good idea
+		ai_chance = { factor = 20 }
+		add_political_power = -20
+		SPR = { country_event = { id = sprd.33 hours = 5 } }
+	}
+}
+
+# Spain admitted to faction
+country_event = {
+	id = sprd.32
+	title = sprd.32.t
+	desc = sprd.32.d
+	picture = diplomacy3
+
+	is_triggered_only = yes
+
+	option = {
+		name = sprd.32.a
+		add_political_power = 60
+		FROM = { add_to_faction = ROOT }
+	}
+}
+
+# Spain is turned down
+country_event = {
+	id = sprd.33
+	title = sprd.33.t
+	desc = sprd.33.d
+	picture = GFX_report_event_worried_french
+
+	is_triggered_only = yes
+
+	option = {
+		name = sprd.33.a
+		add_political_power = -20
+	}
+}
+
 
 ########################################
 #### Kingdom of Spain, Foreign Policy
@@ -1675,6 +1734,7 @@ country_event = {
 		if = {
 			limit = { FROM = { tag = GER } }
 			add_ideas = SPR_advisors_germany
+			set_country_flag = SPR_help_from_germany
 		}
 	}
 }

@@ -52,19 +52,26 @@ country_event = { # The 1938 Union of South Africa General Elections
 		ai_chance = { factor = 50 }
 
 		set_country_flag = SAF_1938_ELECTIONS
-		
-		remove_ideas_with_trait = head_of_government
-		add_ideas = SAF_D_F_Malan_hog_pau
-		remove_ideas_with_trait = foreign_minister
-		add_ideas = SAF_Eric_H_Louw_for_ade
-		remove_ideas_with_trait = economy_minister
-		add_ideas = SAF_J_G_Strijdom_eco_pau
-		remove_ideas_with_trait = security_minister
-		add_ideas = SAF_C_R_Swart_sec_ade
 
+		create_country_leader = {
+			name = "James Hertzog"
+			desc = "POLITICS_HERTZOG_DESC"
+			picture = "J._B._M._Hertzog_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+			}
+		}
+		remove_all_ministers = yes
+		add_ideas = SAF_D_F_Malan_hog_pau
+		add_ideas = SAF_Eric_H_Louw_for_ade
+		add_ideas = SAF_J_G_Strijdom_eco_pau
+		add_ideas = SAF_C_R_Swart_sec_ade
+		#No matter who wins, Hertzog leads the NP coalition from now on
+		
 		set_politics = {
-		ruling_party = authoritarian_democrat
-		elections_allowed = no
+			ruling_party = authoritarian_democrat
+			elections_allowed = no
 			parties = {
 				totalist = {
 					popularity = 1
@@ -106,18 +113,25 @@ country_event = { # The 1938 Union of South Africa General Elections
 		name = SACW.2.b
 		ai_chance = { factor = 50 }
 
-		remove_ideas_with_trait = head_of_government
+		create_country_leader = {
+			name = "James Hertzog"
+			desc = "POLITICS_HERTZOG_DESC"
+			picture = "J._B._M._Hertzog_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {
+			}
+		}
+		remove_all_ministers = yes
 		add_ideas = SAF_Jan_Hendrik_Hofmeyr_hog_mli
-		remove_ideas_with_trait = foreign_minister
 		add_ideas = SAF_Graham_Botha_for_mli
-		remove_ideas_with_trait = economy_minister
 		add_ideas = SAF_Robert_J_Hudson_eco_mli
-		remove_ideas_with_trait = security_minister
 		add_ideas = SAF_C_F_Stallard_sec_mli
-
+		#No matter who wins, Hertzog leads the NP coalition from now on
+		
 		set_politics = {
-		ruling_party = social_conservative
-		elections_allowed = no
+			ruling_party = social_conservative
+			elections_allowed = no
 			parties = {
 				totalist = {
 					popularity = 1
@@ -404,8 +418,8 @@ country_event = { # Natal Covenant
 			country_event = { id = SACW.14 days = 1 }
 			set_country_flag = ZAR_CIVIL_WAR_SIDE
 		}
+		#custom_effect_tooltip = SAF_choose_national
 		add_political_power = -50
-		custom_effect_tooltip = SAF_choose_national
 	}
 
 }
@@ -423,6 +437,7 @@ country_event = { # End of the Union?
 
 	option = { # Restore the Zuid-Afrikaansche Republiek!
 		name = SACW.14.b
+		#I'm not sure if this accurate. Ask GP93 if Hertzog should be HoS of the Z.A.R.
 		remove_ideas_with_trait = head_of_government
 		add_ideas = SAF_James_Hertzog_hog_ade
 
@@ -465,7 +480,6 @@ country_event = { # End of the Union?
 		add_political_power = 100
 		set_cosmetic_tag = SAF_republic
 	}
-
 }
 
 # End of Nationalist version
@@ -659,10 +673,9 @@ country_event = { # Restoration of the Z.A.R.
 				load_oob = "SAF_askari"
 			}
 		}
+		#custom_effect_tooltip = SAF_choose_dominionist
 		add_political_power = -50
-		custom_effect_tooltip = SAF_choose_dominionist
 		set_country_flag = SAF_CIVIL_WAR_SIDE
-		set_cosmetic_tag = SAF_federation
 	}
 
 }
@@ -857,7 +870,6 @@ country_event = { # Nationalist Coup
 		add_political_power = -50
 		custom_effect_tooltip = SAF_choose_dominionist
 		set_country_flag = SAF_CIVIL_WAR_SIDE
-		set_cosmetic_tag = SAF_federation
 	}
 
 }
@@ -1621,7 +1633,6 @@ country_event = { # SACW ends for South Africa
 
 	option = {
 		name = SACW.44.a
-
 	}
 }
 
@@ -1644,11 +1655,34 @@ country_event = { # South Africa Stabilizes
 	}
 
 	mean_time_to_happen = {
-		days = 15
+		days = 10 #A bit of delay for the CW end scenario.
 	}
 
 	immediate = {
-		set_country_flag = SAF_COUNTRY_STABLE
+		hidden_effect = {
+			set_country_flag = SAF_CALM_RETURNS
+			random_country = {
+				limit = {
+					original_tag = SAF
+					#SAF
+					has_government = social_conservative
+					exists = yes
+				}
+				set_country_flag = SAF_DOM_SACW_WON
+			}
+			random_country = {
+				limit = {
+					original_tag = SAF
+					#ZAR
+					OR = {
+						has_government = authoritarian_democrat
+						has_government = paternal_autocrat
+					}
+					exists = yes
+				}
+				set_country_flag = SAF_NAT_SACW_WON
+			}
+		}
 	}
 
 	option = {

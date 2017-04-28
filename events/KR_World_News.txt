@@ -3791,7 +3791,7 @@ news_event = {
 		name = worldnews.56.a
 
 		trigger = { 
-			tag = ROM 
+			TAG = ROM 
 		}
 	}
 
@@ -3800,7 +3800,7 @@ news_event = {
 
 		trigger = {
 			OR = {
-				tag = BUL
+				TAG = BUL
 				is_in_faction_with = GER
 			}
 		}
@@ -3810,9 +3810,9 @@ news_event = {
 		name = worldnews.56.c
 
 		trigger = { 
-			tag = AUS
+			TAG = AUS
 			is_puppet_of = AUS
-			tag = HUN #If no longer a puppet
+			TAG = HUN #If no longer a puppet
 		}
 	}
 
@@ -3821,15 +3821,15 @@ news_event = {
 
 		trigger = {
 			NOT = {
-				tag = ROM
-				tag = BUL
+				TAG = ROM
+				TAG = BUL
 				is_in_faction_with = GER
-				tag = AUS
+				TAG = AUS
 				is_puppet_of = AUS
-				tag = HUN
-				tag = ALB
-				tag = SER
-				tag = GRE
+				TAG = HUN
+				TAG = ALB
+				TAG = SER
+				TAG = GRE
 			}
 		}
 	}
@@ -3839,9 +3839,9 @@ news_event = {
 
 		trigger = {
 			OR = {
-				tag = ALB
-				tag = SER
-				tag = GRE
+				TAG = ALB
+				TAG = SER
+				TAG = GRE
 			}
 		}
 	}
@@ -3859,8 +3859,8 @@ news_event = {
 	is_triggered_only = yes
 	
     show_major = {
-		NOT = { tag = BHC }
-		NOT = { tag = BUR }
+		NOT = { TAG = BHC }
+		NOT = { TAG = BUR }
 	}
 
 	trigger = {
@@ -4025,6 +4025,192 @@ news_event = {
 		trigger = {
 			NOT = { TAG = BUR }
 			has_socialist_government = yes
+		}
+	}
+}
+
+# The South African Civil War
+news_event = {
+	id = worldnews.62
+	title = worldnews.62.t
+	desc = worldnews.62.d
+	picture = GFX_news_event_soldiers_marching
+
+	major = yes
+
+	trigger = {
+		has_global_flag = Fourth_Boer_War
+		NOT = { has_global_flag = SA_elections_are_hard }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME }
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	immediate = { set_global_flag = SA_elections_are_hard }
+	
+	option = { #The stakes for those elections were high. Perhaps too high even.
+		name = worldnews.62.a
+		trigger = { 
+			NOT = {
+				is_in_faction_with = CAN
+				TAG = MAF
+				TAG = ZIM
+				TAG = SAF
+				original_tag = SAF
+			}
+		}
+	}
+
+	option = { #The Entente must not step a foot back in Africa. The lands we seized from them are ours.
+		name = worldnews.62.b
+		trigger = {
+			TAG = MAF
+		}
+	}
+
+	option = { #A victory of the Dominionists is in our direct interest. We need South Africa back.
+		name = worldnews.62.c
+		trigger = {
+			is_in_faction_with = CAN
+		}
+	}
+
+	option = { #The Afrikaners stop deciding for South Africa now. We will safeguard the Federation!
+		name = worldnews.62.e
+		trigger = {
+			OR = {
+				TAG = ZIM
+				AND = {
+					original_tag = SAF
+					has_government = social_conservative
+				}
+			}
+		}
+	}
+
+	option = { #The Dominionists show their true intentions. We will safeguard the Republic!
+		name = worldnews.62.f
+		trigger = {
+			AND = {
+				original_tag = SAF
+				OR = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+				}
+			}
+		}
+	}
+}
+
+# Dominionists Win in South Africa
+news_event = {
+	id = worldnews.63
+	title = worldnews.63.t
+	desc = worldnews.63.d
+	picture = GFX_news_event_soldiers_marching
+
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = { #It looks like the British and the Entente are back in business in the Cape.
+		name = worldnews.63.a
+		trigger = { 
+			NOT = {
+				is_in_faction_with = CAN
+				TAG = MAF
+				TAG = ZIM
+				TAG = SAF
+				original_tag = SAF
+			}
+		}
+	}
+
+	option = { #This is very troublesome. We must see to protecting Vorbecksland now.
+		name = worldnews.63.b
+		trigger = {
+			TAG = MAF
+		}
+	}
+
+	option = { #A great victory for Africans and the Entente, now they just need to formally join.
+		name = worldnews.63.c
+		trigger = {
+			is_in_faction_with = CAN
+		}
+	}
+
+	option = { #We can finally undo the mistakes of those two past decades with our Federation.
+		name = worldnews.63.e
+		trigger = {
+			OR = {
+				TAG = ZIM
+				AND = {
+					original_tag = SAF
+					has_government = social_conservative
+				}
+			}
+		}
+	}
+}
+
+# Nationalists Win in South Africa
+news_event = {
+	id = worldnews.64
+	title = worldnews.64.t
+	desc = worldnews.64.d
+	picture = GFX_news_event_soldiers_marching
+
+	major = yes
+
+	is_triggered_only = yes
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	immediate = { set_global_flag = SA_real_elections_are_over }
+	
+	option = { #The Afrikaners called off the Dominionists' challenge, permanently.
+		name = worldnews.64.a
+		trigger = { 
+			NOT = {
+				is_in_faction_with = CAN
+				TAG = MAF
+				TAG = SAF
+				original_tag = SAF
+			}
+		}
+	}
+
+	option = { #Let us hope their isolation makes them less of a threat to us.
+		name = worldnews.64.b
+		trigger = {
+			TAG = MAF
+		}
+	}
+
+	option = { #Another opportunity missed. We need every opportunity we can get!
+		name = worldnews.64.c
+		trigger = {
+			is_in_faction_with = CAN
+		}
+	}
+
+	option = { #We finally rule unchallenged. It is time for the Apartheid and the Republic.
+		name = worldnews.64.e
+		trigger = {
+			AND = {
+				original_tag = SAF
+				OR = {
+					has_government = authoritarian_democrat
+					has_government = paternal_autocrat
+				}
+			}
 		}
 	}
 }

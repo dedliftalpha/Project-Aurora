@@ -1375,7 +1375,10 @@ country_event = {
 					state = 793 #Asturias
 				}
 			}
+			remove_claim_by = CAR
 			add_core_of = CAR
+			remove_core_of = SPR
+			add_claim_by = SPR
 			CAR = { transfer_state = PREV }
 		}
 		if = {
@@ -1392,15 +1395,23 @@ country_event = {
 			limit = { has_idea = SPR_black_monday }
 			CAR = { add_ideas = CAR_black_monday }
 		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown }
+			CAR = { add_ideas = SPR_social_breakdown }
+		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown_2 }
+			CAR = { add_ideas = SPR_social_breakdown_2 }
+		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown_3 }
+			CAR = { add_ideas = SPR_social_breakdown_3 }
+		}
 		CAR = { transfer_technology = yes }
 	}
 	
 	option = {
 		name = sprc.1.a #We shall fight them!
-		if = {
-			limit = { has_war_with = CNT }
-			remove_ideas = SPR_social_breakdown
-		}
 		custom_effect_tooltip = SPR_reinforce_madrid
 		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
 		CAR = {
@@ -1410,10 +1421,6 @@ country_event = {
 	option = {
 		name = sprc.1.b #Long live Javier I! (Play as the Carlists)
 		trigger = { is_ai = no }
-		if = {
-			limit = { has_war_with = CNT }
-			remove_ideas = SPR_social_breakdown
-		}
 		custom_effect_tooltip = SPR_reinforce_madrid
 		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
 		CAR = {
@@ -1502,12 +1509,27 @@ country_event = {
 					state = 168 #Murcia
 				}
 			}
+			remove_claim_by = CNT
 			add_core_of = CNT
+			remove_core_of = SPR
+			add_claim_by = SPR
 			CNT = { transfer_state = PREV }
 		}
 		if = {
 			limit = { has_idea = SPR_black_monday }
 			CNT = { add_ideas = SPR_black_monday }
+		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown }
+			CNT = { add_ideas = SPR_social_breakdown }
+		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown_2 }
+			CNT = { add_ideas = SPR_social_breakdown_2 }
+		}
+		if = {
+			limit = { has_idea = SPR_social_breakdown_3 }
+			CNT = { add_ideas = SPR_social_breakdown_3 }
 		}
 		CNT = {
 			set_cosmetic_tag = CNT_FAI
@@ -1518,10 +1540,6 @@ country_event = {
 	option = {
 		name = sprc.3.a #We shall fight to stop this revolution!
 		set_global_flag = cntfai_risen
-		if = {
-			limit = { has_war_with = CAR }
-			remove_ideas = SPR_social_breakdown
-		}
 		custom_effect_tooltip = SPR_reinforce_madrid
 		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
 		CNT = {
@@ -1531,10 +1549,6 @@ country_event = {
 	option = {
 		name = sprc.3.b #Viva la Revolución! (Play as the CNT-FAI)
 		trigger = { is_ai = no }
-		if = {
-			limit = { has_war_with = CAR }
-			remove_ideas = SPR_social_breakdown
-		}
 		custom_effect_tooltip = SPR_reinforce_madrid
 		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
 		CNT = {
@@ -1705,25 +1719,14 @@ country_event = {
 	}
 }
 
-# Kingdom of Spain victory event
+# Kingdom of Spain victory event (fired by focus)
 country_event = {
 	id = sprc.120
 	title = sprc.120.t
 	desc = sprc.120.d
 	picture = GFX_report_event_SPR_civwar
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SPR
-		has_global_flag = spanish_civil_war
-		NOT = { country_exists = CNT }
-		NOT = { country_exists = CAR }
-	}
-	
-	mean_time_to_happen = {
-		days = 5
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = sprc.120.a

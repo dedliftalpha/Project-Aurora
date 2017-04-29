@@ -1869,7 +1869,67 @@ news_event = {
 		trigger = { NOT = { tag = SPR } }
 	}
 }
+
+# Maintenance event - if SPR left only with states not in mainland SPain
+country_event = {
+	id = sprc.124
+	title = sprc.124.t
+	desc = sprc.124.d
+	picture = GFX_report_event_SPR_civwar3
 	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SPR
+		has_war = yes
+		has_global_flag = spanish_civil_war
+		OR = {
+			CNT = { controls_state = 41 }
+			CAR = { controls_state = 41 }
+		}
+		NOT = {
+			any_state = {
+				is_controlled_by = SPR
+				OR = {
+					state = 118 #Gibraltar
+					state = 165 #Catalonia
+					state = 166 #Aragon
+					state = 167 #Valencia
+					state = 168 #Murcia
+					state = 169 #Andalusia
+					state = 170 #Extramadura
+					state = 171 #Galicia
+					state = 172 #Navarre
+					state = 173 #Asturias
+					state = 174 #Leon
+					state = 175 #La Mancha
+					state = 176 #Castille
+					state = 793 #Asturias
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		random_other_country = {
+			limit = { controls_state = 41 }
+			save_event_target_as = surrender_to
+		}
+	}
+	
+	option = {
+		name = sprc.124.a
+		every_state = {
+			limit = { is_controlled_by = SPR }
+			event_target:surrender_to = { set_state_controller = PREV }
+		}
+	}			
+}	
+
 
 ### CNT-FAI EVENTS ###
 

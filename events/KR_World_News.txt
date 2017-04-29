@@ -4277,6 +4277,33 @@ news_event {
 
 }
 
+news_event = { # Ethiopian Civil War
+	id = worldnews.66
+	title = worldnews.66.t
+	desc = worldnews.66.d
+	picture = GFX_petain_NFA
+
+	major = yes
+
+	is_triggered_only = yes
+
+	option = { #The land of Solomon succumbs to internal strife, too.
+		name = worldnews.66.a
+		trigger = {
+			NOT = {
+				TAG = ETH
+			}
+		}
+	}
+
+	option = { #We will see those cowardly traitors through.
+		name = worldnews.66.b
+		trigger = { 
+			TAG = ETH
+		}
+	}
+}
+
 # merge from news_events.txt
 
 news_event = {
@@ -4720,29 +4747,72 @@ news_event = {
 	}
 }
 
-news_event = { # Ethiopian Civil War
+# The Fall of Atlanta (USA)
+news_event = {
 	id = worldnews.257
 	title = worldnews.257.t
 	desc = worldnews.257.d
-	picture = GFX_petain_NFA
+	picture = atlanta_falls
 
 	major = yes
 
-	is_triggered_only = yes
+	trigger = {
+		365 = { is_controlled_by = USA }
+		365 = { is_owned_by = USA }
+		TEX = { has_war_with = USA }
+		NOT = { has_global_flag = fall_of_atlanta_usa }
+	}
 
-	option = { #The land of Solomon succumbs to internal strife, too.
+	immediate = {
+		set_global_flag = fall_of_atlanta_usa
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #You will never defeat the Minutemen of the Founding Fathers!
 		name = worldnews.257.a
 		trigger = {
-			NOT = {
-				TAG = ETH
+			TAG = TEX
+		}
+	}
+	
+	option = { #We are on your tail, Long. You will be tried for your crimes, you and your militia!
+		name = worldnews.257.b
+		trigger = {
+			TAG = USA
+		}
+	}
+	
+	option = { #With such a victory on the Reactionary traitors, the federal troops will soon be upon us.
+		name = worldnews.257.c
+		trigger = {
+			has_war_with = USA
+			OR = {
+				TAG = CSA
+				TAG = CAL
 			}
 		}
 	}
-
-	option = { #We will see those cowardly traitors through.
-		name = worldnews.257.b
-		trigger = { 
-			TAG = ETH
+	
+	option = { #With Long and the Minutemen struck down, the US closes one more front.
+		name = worldnews.257.e
+		trigger = {
+			TAG = CAN
+		}
+	}
+	
+	option = { #The Minutemen in Altanta will have some interesting dicussions with American military police.
+		name = worldnews.257.f
+		trigger = {
+			NOT = {
+				TAG = CSA
+				TAG = USA
+				TAG = TEX
+				TAG = CAL
+				TAG = CAN
+			}
 		}
 	}
 }

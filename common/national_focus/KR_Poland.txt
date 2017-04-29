@@ -1771,7 +1771,7 @@ focus_tree = {
 		x = 29
 		y = 5
 			ai_will_do = {
-					factor = 50
+					factor = 100
 				}
 			completion_reward = {
 					country_event = {
@@ -1782,6 +1782,7 @@ focus_tree = {
 					country_exists = POL
 					country_exists = GER
 					has_war = no
+					is_subject = no
 					controls_state = 10
 					GER = {
 							controls_state = 777
@@ -1789,21 +1790,15 @@ focus_tree = {
 							controls_state = 776
 							controls_state = 85
 							controls_state = 98
+						has_war = yes
+						any_enemy_country = {
+							ic_ratio = { 
+								tag = ROOT 
+								ratio > 0.5
+							}
 						}
-					GER = {
-							OR = {
-									has_war_with = FRA
-									has_war_with = RUS
-									has_war_with = AUS
-									has_war_with = ENG
-								}
-						}
-					NOT = {
-							is_subject_of = GER
-							is_subject_of = AUS
-							is_in_faction_with = GER
-							is_in_faction_with = AUS
-						}
+					}
+					NOT = {	is_in_faction_with = GER}
 				}
 			available_if_capitulated = no
 
@@ -1818,7 +1813,7 @@ focus_tree = {
 		x = 29
 		y = 6
 			ai_will_do = {
-					factor = 50
+					factor = 100
 				}
 			completion_reward = {
 				if = {
@@ -1853,19 +1848,23 @@ focus_tree = {
 				}
 			}
 			available = {
-					NOT = {
 						OR = {
-							777 = { is_core_of = POL }  
-							776 = { is_core_of = POL }    
-							85 = { is_core_of = POL } 
-							86 = { is_core_of = POL }  
-							98 = { is_core_of = POL }  
+							777 = { NOT = {is_core_of = POL }}
+							776 = { NOT = {is_core_of = POL }}   
+							85 = { NOT = {is_core_of = POL }}
+							86 = { NOT = {is_core_of = POL }}
+							98 = { NOT = {is_core_of = POL }}
 						}
-					}
+					has_global_flag = POL_PRUSSIANPARTITION
 					is_subject = no
 			}
 			bypass = {
 				AND = {
+					controls_state = 777
+					controls_state = 776
+					controls_state = 85
+					controls_state = 86
+					controls_state = 98
 					777 = { is_core_of = POL } 
 					776 = { is_core_of = POL } 
 					85 = { is_core_of = POL } 
@@ -2119,31 +2118,22 @@ focus_tree = {
 			available = {
 					country_exists = UKR
 					country_exists = DKB
+					has_war = no
 					is_subject = no
 					UKR = {
 							is_subject = no
-							is_in_faction = no
+							NOT = {is_in_faction_with = GER}
 							has_socialist_government = yes
 						}
 					DKB = {
 							is_subject = no
-						}
-					POL = {
 							has_war = no
-						}
-					DKB = {
-							has_war = no
+							NOT = {is_in_faction_with = RUS}
 						}
 					#has_global_flag = krushchev_criticizes_gov
 					NOT = {
 							has_global_flag = UKR_RUSCOUP
-							has_global_flag = russ_gives_passports 
-							has_government = totalist
-							has_government = radical_socialist
-							has_government = syndicalist
-							DKB = {
-									is_in_faction_with = RUS
-								}
+							has_global_flag = russ_gives_passports
 						}
 				}
 			bypass = {

@@ -785,6 +785,34 @@ focus_tree = {
 			is_subject = no
 			has_war = no
 			is_in_faction = no
+			has_socialist_government = no
+			custom_trigger_tooltip = {
+				tooltip = CAR_can_invite_faction
+				OR = {
+					ITA = {
+						is_subject = no
+						is_faction_leader = no
+						has_socialist_government = no
+					}
+					POR = {
+						is_subject = no
+						is_faction_leader = no
+						has_socialist_government = no
+					}
+					NFA = {
+						is_subject = no
+						is_faction_leader = no
+						has_socialist_government = no
+						has_completed_focus = NFA_support_carlists
+					}
+					CRO = {
+						is_in_faction = no
+						is_faction_leader = no
+						is_subject = no
+						has_socialist_government = no
+					}
+				}
+			}
 		}
 		
 		ai_will_do = {
@@ -792,6 +820,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_political_power = 100
 			create_faction = Mediterranean_Bloc
 		}
 	}
@@ -800,9 +829,13 @@ focus_tree = {
 		id = CAR_invite_italy
 		icon = GFX_goal_italianfed
 		available = {
+			is_subject = no
+			has_war = no
+			country_exists = ITA
 			ITA = {
 				has_war = no
 				is_subject = no
+				is_faction_leader = no
 				has_socialist_government = no
 			}
 		}
@@ -816,7 +849,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			country_event = { id = carfor.410 }
+			ITA = { country_event = { id = carfor.411 } }
 		}
 	}
 
@@ -824,9 +857,14 @@ focus_tree = {
 		id = CAR_invite_illyria
 		icon = GFX_goal_illyria
 		available = {
-			CRO = {
+			is_subject = no
+			has_war = no
+			country_exists = ILL
+			ILL = {
 				has_war = no
+				is_in_faction = no
 				is_subject = no
+				is_faction_leader = no
 				has_socialist_government = no
 			}
 		}
@@ -840,7 +878,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			country_event = { id = carfor.420 }
+			ILL = { country_event = { id = carfor.421 } }
 		}
 	}
 
@@ -848,9 +886,13 @@ focus_tree = {
 		id = CAR_invite_portugal
 		icon = GFX_goal_portugal
 		available = {
+			is_subject = no
+			has_war = no
+			country_exists = POR
 			POR = {
 				has_war = no
 				is_subject = no
+				is_faction_leader = no
 				has_socialist_government = no
 			}
 		}
@@ -864,7 +906,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			country_event = { id = carfor.430 }
+			POR = { country_event = { id = carfor.431 } }
 		}
 	}
 
@@ -872,9 +914,13 @@ focus_tree = {
 		id = CAR_invite_france
 		icon = GFX_goal_natfrance
 		available = {
+			is_subject = no
+			has_war = no
+			country_exists = NFA
 			NFA = {
 				has_war = no
 				is_subject = no
+				is_faction_leader = no
 				has_socialist_government = no
 				has_completed_focus = NFA_support_carlists
 			}
@@ -889,7 +935,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			country_event = { id = carfor.440 }
+			NFA = { country_event = { id = carfor.441 } }
 		}
 	}
 
@@ -897,7 +943,9 @@ focus_tree = {
 		id = CAR_french_restoration
 		icon = GFX_goal_generic_alliance
 		available = {
+			has_war = no
 			FRA = { has_war = yes }
+			is_faction_leader = yes
 			is_in_faction_with = NFA
 		}
 		prerequisite = { focus = CAR_invite_france }
@@ -906,14 +954,12 @@ focus_tree = {
 		cost = 1
 		
 		ai_will_do = {
-			factor = 100
+			factor = 50
 		}
 		
 		completion_reward = {
 			create_wargoal = { type = annex_everything target = FRA }
-			NFA = {
-				create_wargoal = { type = annex_everything target = FRA }
-			}
+			NFA = { create_wargoal = { type = annex_everything target = FRA } }
 		}
 	}
 

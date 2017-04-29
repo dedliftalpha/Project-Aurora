@@ -74,9 +74,15 @@ country_event = { #The German Capitulation
 
 	option = { #Annex Mittelafrika and Capitulate to the African Continent.
 		trigger = {
+		    OR = {
 			MAF = {
 				exists = yes
 				is_subject_of = GER
+			}
+			TNZ = {
+				exists = yes
+				is_subject_of = GER
+			}
 			}
 		}
 		name = capt.1.a
@@ -84,10 +90,20 @@ country_event = { #The German Capitulation
 			factor = 95
 		}
 
+		if = { limit = { MAF = { is_subject_of = GER } }
 		MAF = {
 			country_event = {
 				id = capt.3 days = 1
 			}
+		}
+		}
+		
+		if = { limit = { TNZ = { is_subject_of = GER } }
+		TNZ = {
+			country_event = {
+				id = capt.3 days = 1
+			}
+		}
 		}
 
 		add_state_core = 286
@@ -110,12 +126,21 @@ country_event = { #The German Capitulation
 
 	option = { #Marokko
 		trigger = {
+		    OR = {
 			controls_state = 461
+			MOR = { is_subject_of = GER
+			controls_state = 461
+			}
+			}
 		}
 		name = capt.1.b
 		ai_chance = {
 			factor = 5
 		}
+		
+		annex_country = {
+			target = MOR
+		} 
 
 		set_capital = 461
 
@@ -139,11 +164,27 @@ country_event = { #The German Capitulation
 
 	option = { #Vietnam
 		trigger = {
+			OR = {
 			controls_state = 286
+			INC = { is_subject_of = GER
+			controls_state = 286
+			}
+			VIE = { is_subject_of = GER
+			controls_state = 286
+			}
+			}
 		}
 		name = capt.1.c
 		ai_chance = {
 			factor = 5
+		}
+		
+		annex_country = {
+			target = INC
+		}
+		
+		annex_country = {
+			target = VIE
 		}
 
 		set_capital = 286
@@ -206,11 +247,20 @@ country_event = { #The German Capitulation
 
 	option = { #Sri Lanka
 		trigger = {
+			OR = {
 			controls_state = 422
+			CEY = { is_subject_of = GER
+			controls_state = 422
+			}
+			}
 		}
 		name = capt.1.f
 		ai_chance = {
 			factor = 2
+		}
+		
+		annex_country = {
+			target = CEY
 		}
 
 		set_capital = 422
@@ -242,7 +292,22 @@ country_event = { #The German Capitulation
 				controls_state = 757
 				controls_state = 286
 				controls_state = 461
+				CEY = { is_subject_of = GER
+						controls_state = 422
+				}
+				INC = { is_subject_of = GER
+					controls_state = 286
+				}
+				VIE = { is_subject_of = GER
+					controls_state = 286
+				}
+				MOR = { is_subject_of = GER
+					controls_state = 461
+				}
 				MAF = {
+					is_subject_of = GER
+				}
+				TNZ = {
 					is_subject_of = GER
 				}
 			}
@@ -301,7 +366,7 @@ country_event = { #The Capitulation of Germany, informative event
 
 	option = {
 		name = capt.7.a
-		trigger = { NOT = { tag = FRA tag = ENG tag = AUS tag = RUS tag = SOV tag = CAN } }
+		trigger = { NOT = { tag = FRA tag = ENG tag = AUS tag = RUS tag = SOV tag = CAN tag = NFA } }
 		add_political_power = 40
 	}
 
@@ -341,11 +406,11 @@ country_event = { #The Capitulation of Germany, informative event
 		add_political_power = 40
 	}
 
-	#option = {
-	#	name = capt.7.i
-	#	trigger = { tag = NFA }
-	#	add_political_power = 40
-	#}
+	option = {
+		name = capt.7.i
+		trigger = { tag = NFA }
+		add_political_power = 40
+	}
 }
 
 country_event = { #The German Empire surrenders!
@@ -384,7 +449,18 @@ country_event = { #The German Empire surrenders!
 country_event = { #Capitulation to Africa MAF
 	id = capt.3
 	title = capt.3.t
-	desc = capt.3.d
+	desc = {
+		text = capt.3.d_MAF
+		trigger = {
+			tag = MAF
+		}
+	}
+	desc = {
+		text = capt.3.d_TNZ
+		trigger = {
+			tag = TNZ
+		}
+	}
 	is_triggered_only = yes
 
 	option = { #Lapdogs no longer! Declare the independence of the Mittelafrikan Empire!
@@ -392,6 +468,7 @@ country_event = { #Capitulation to Africa MAF
 		ai_chance = {
 			factor = 0
 		}
+		trigger = { tag = MAF }
 
 		GER = {
 			end_puppet = MAF
@@ -425,11 +502,20 @@ country_event = { #Mittelafrika Declares Independence
 
 	option = { #Marokko
 		trigger = {
+			OR = {
 			controls_state = 461
+			MOR = { is_subject_of = GER
+			controls_state = 461
+			}
+			}
 		}
 		name = capt.4.a
 		ai_chance = {
 			factor = 25
+		}
+		
+		annex_country = {
+			target = MOR
 		}
 
 		set_capital = 461
@@ -444,11 +530,27 @@ country_event = { #Mittelafrika Declares Independence
 
 	option = { #Vietnam
 		trigger = {
+			OR = {
 			controls_state = 286
+			VIE = { is_subject_of = GER
+			controls_state = 286
+			}
+			INC = { is_subject_of = GER
+			controls_state = 286
+			}
+			}
 		}
 		name = capt.4.b
 		ai_chance = {
 			factor = 75
+		}
+		
+		annex_country = {
+			target = VIE
+		}
+		
+		annex_country = {
+			target = INC
 		}
 
 		set_capital = 286
@@ -492,11 +594,20 @@ country_event = { #Mittelafrika Declares Independence
 
 	option = { #Sri Lanka
 		trigger = {
+			OR = {
 			controls_state = 422
+			CEY = { is_subject_of = GER
+			controls_state = 422
+			}
+			}
 		}
 		name = capt.4.e
 		ai_chance = {
 			factor = 25
+		}
+		
+		annex_country = {
+			target = CEY
 		}
 
 		set_capital = 422
@@ -519,8 +630,17 @@ country_event = { #Mittelafrika Declares Independence
 				controls_state = 757
 				controls_state = 286
 				controls_state = 461
-				MAF = {
-					is_subject_of = GER
+				CEY = { is_subject_of = GER
+						controls_state = 422
+				}
+				INC = { is_subject_of = GER
+					controls_state = 286
+				}
+				VIE = { is_subject_of = GER
+					controls_state = 286
+				}
+				MOR = { is_subject_of = GER
+					controls_state = 461
 				}
 			}
 		}
@@ -549,8 +669,85 @@ country_event = { #The Reinstatement of Mittelafrika
 	option = {
 		name = capt.5.a
 
+		if = { limit = { MAF = { is_subject_of = GER } }
 		annex_country = {
 			target = MAF transfer_troops = yes
+		}
+		}
+		if = { limit = { TNZ = { is_subject_of = GER } }
+		annex_country = {
+			target = TNZ transfer_troops = yes
+		}
+		}
+		if = { limit = { GHA = { is_subject_of = GER } }
+		annex_country = {
+			target = GHA transfer_troops = yes
+		}
+		}
+		if = { limit = { NGR = { is_subject_of = GER } }
+		annex_country = {
+			target = NGR transfer_troops = yes
+		}
+		}
+		if = { limit = { CEA = { is_subject_of = GER } }
+		annex_country = {
+			target = CEA transfer_troops = yes
+		}
+		}
+		if = { limit = { GAB = { is_subject_of = GER } }
+		annex_country = {
+			target = GAB transfer_troops = yes
+		}
+		}
+		if = { limit = { CNR = { is_subject_of = GER } }
+		annex_country = {
+			target = CNR transfer_troops = yes
+		}
+		}
+		if = { limit = { NAM = { is_subject_of = GER } }
+		annex_country = {
+			target = NAM transfer_troops = yes
+		}
+		}
+		if = { limit = { KEN = { is_subject_of = GER } }
+		annex_country = {
+			target = KEN transfer_troops = yes
+		}
+		}
+		if = { limit = { UGA = { is_subject_of = GER } }
+		annex_country = {
+			target = UGA transfer_troops = yes
+		}
+		}
+		if = { limit = { ANG = { is_subject_of = GER } }
+		annex_country = {
+			target = ANG transfer_troops = yes
+		}
+		}
+		if = { limit = { MOZ = { is_subject_of = GER } }
+		annex_country = {
+			target = MOZ transfer_troops = yes
+		}
+		}
+		if = { limit = { BOT = { is_subject_of = GER } }
+		annex_country = {
+			target = BOT transfer_troops = yes
+		}
+		}
+		if = { limit = { ZIM = { is_subject_of = GER } }
+		annex_country = {
+			target = ZIM transfer_troops = yes
+		}
+		}
+		if = { limit = { ZAM = { is_subject_of = GER } }
+		annex_country = {
+			target = ZAM transfer_troops = yes
+		}
+		}
+		if = { limit = { MLW = { is_subject_of = GER } }
+		annex_country = {
+			target = MLW transfer_troops = yes
+		}
 		}
 		add_manpower = 50000
 		add_state_core = 546

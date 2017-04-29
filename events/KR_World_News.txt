@@ -4277,6 +4277,33 @@ news_event {
 
 }
 
+news_event = { # Ethiopian Civil War
+	id = worldnews.66
+	title = worldnews.66.t
+	desc = worldnews.66.d
+	picture = GFX_petain_NFA
+
+	major = yes
+
+	is_triggered_only = yes
+
+	option = { #The land of Solomon succumbs to internal strife, too.
+		name = worldnews.66.a
+		trigger = {
+			NOT = {
+				TAG = ETH
+			}
+		}
+	}
+
+	option = { #We will see those cowardly traitors through.
+		name = worldnews.66.b
+		trigger = { 
+			TAG = ETH
+		}
+	}
+}
+
 # merge from news_events.txt
 
 news_event = {
@@ -4326,18 +4353,22 @@ news_event = {
 		126 = { is_controlled_by = GER }
 		126 = { is_owned_by = ENG }
 		GER = { has_war_with = ENG }
-		NOT = { has_global_flag = fall_of_london_ger }
+		NOT = { has_global_flag = fall_of_london_uob }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
 	immediate = {
-		set_global_flag = fall_of_london_ger
+		set_global_flag = fall_of_london_uob
 	}
 
 	mean_time_to_happen = {
 		days = 2
 	}
 
-	option = { # This is only a temporary setback. We will reorganize and push them back to the Channel!
+	option = { #This is only a temporary setback. We will reorganize and push the Germans back!
 		name = worldnews.251.a
 		trigger = { 
 			TAG = ENG 
@@ -4383,11 +4414,15 @@ news_event = {
 		395 = { is_controlled_by = USA }
 		395 = { is_owned_by = CSA }
 		USA = { has_war_with = CSA }
-		NOT = { has_global_flag = fall_of_chicago_usa }
+		NOT = { has_global_flag = fall_of_chicago_csa }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
 	immediate = {
-		set_global_flag = fall_of_chicago_usa
+		set_global_flag = fall_of_chicago_csa
 	}
 
 	mean_time_to_happen = {
@@ -4450,14 +4485,18 @@ news_event = {
 	major = yes
 
 	trigger = {
-		361 = { is_controlled_by = USA }
-		361 = { is_owned_by = CSA }
+		361 = { is_controlled_by = CSA }
+		361 = { is_owned_by = USA }
 		USA = { has_war_with = CSA }
-		NOT = { has_global_flag = fall_of_washington_csa }
+		NOT = { has_global_flag = fall_of_washington_usa }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
 		immediate = {
-		set_global_flag = fall_of_washington_csa
+		set_global_flag = fall_of_washington_usa
 	}
 
 	mean_time_to_happen = {
@@ -4523,11 +4562,15 @@ news_event = {
 		395 = { is_controlled_by = TEX }
 		395 = { is_owned_by = CSA }
 		TEX = { has_war_with = CSA }
-		NOT = { has_global_flag = fall_of_chicago_aus }
+		NOT = { has_global_flag = fall_of_chicago_csa }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
-		immediate = {
-		set_global_flag = fall_of_chicago_aus
+	immediate = {
+		set_global_flag = fall_of_chicago_csa
 	}
 
 	mean_time_to_happen = {
@@ -4590,14 +4633,18 @@ news_event = {
 	major = yes
 
 	trigger = {
-		361 = { is_controlled_by = USA }
-		361 = { is_owned_by = TEX }
-		USA = { has_war_with = TEX }
-		NOT = { has_global_flag = fall_of_washington_aus }
+		361 = { is_controlled_by = TEX }
+		361 = { is_owned_by = USA }
+		TEX = { has_war_with = USA }
+		NOT = { has_global_flag = fall_of_washington_usa }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
-		immediate = {
-		set_global_flag = fall_of_washington_aus
+	immediate = {
+		set_global_flag = fall_of_washington_usa
 	}
 
 	mean_time_to_happen = {
@@ -4660,14 +4707,18 @@ news_event = {
 	major = yes
 
 	trigger = {
-		365 = { is_controlled_by = TEX }
-		365 = { is_owned_by = CSA }
-		TEX = { has_war_with = CSA }
-		NOT = { has_global_flag = fall_of_atlanta_csa }
+		365 = { is_controlled_by = CSA }
+		365 = { is_owned_by = TEX }
+		CSA = { has_war_with = TEX }
+		NOT = { has_global_flag = fall_of_atlanta_tex }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
 	}
 
 	immediate = {
-		set_global_flag = fall_of_atlanta_csa
+		set_global_flag = fall_of_atlanta_tex
 	}
 
 	mean_time_to_happen = {
@@ -4720,29 +4771,76 @@ news_event = {
 	}
 }
 
-news_event = { # Ethiopian Civil War
+# The Fall of Atlanta (USA)
+news_event = {
 	id = worldnews.257
 	title = worldnews.257.t
 	desc = worldnews.257.d
-	picture = GFX_petain_NFA
+	picture = atlanta_falls
 
 	major = yes
 
-	is_triggered_only = yes
-
-	option = { #The land of Solomon succumbs to internal strife, too.
-		name = worldnews.257.a
-		trigger = {
-			NOT = {
-				TAG = ETH
-			}
+	trigger = {
+		365 = { is_controlled_by = USA }
+		365 = { is_owned_by = TEX }
+		USA = { has_war_with = TEX }
+		NOT = { has_global_flag = fall_of_atlanta_tex }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
 		}
 	}
 
-	option = { #We will see those cowardly traitors through.
+	immediate = {
+		set_global_flag = fall_of_atlanta_tex
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #You will never defeat the Minutemen of the Founding Fathers!
+		name = worldnews.257.a
+		trigger = {
+			TAG = TEX
+		}
+	}
+	
+	option = { #We are on your tail, Long. You will be tried for your crimes, you and your militia!
 		name = worldnews.257.b
-		trigger = { 
-			TAG = ETH
+		trigger = {
+			TAG = USA
+		}
+	}
+	
+	option = { #With such a victory on the Reactionary traitors, the federal troops will soon be upon us.
+		name = worldnews.257.c
+		trigger = {
+			has_war_with = USA
+			OR = {
+				TAG = CSA
+				TAG = CAL
+			}
+		}
+	}
+	
+	option = { #With Long and the Minutemen struck down, the US closes one more front.
+		name = worldnews.257.e
+		trigger = {
+			TAG = CAN
+		}
+	}
+	
+	option = { #The Minutemen in Altanta will have some interesting dicussions with American military police.
+		name = worldnews.257.f
+		trigger = {
+			NOT = {
+				TAG = CSA
+				TAG = USA
+				TAG = TEX
+				TAG = CAL
+				TAG = CAN
+			}
 		}
 	}
 }
@@ -4757,13 +4855,20 @@ news_event = { # The Fall of Singapore (Siam) - xxxxxxx
 
 	trigger = {
 		336 = { is_controlled_by = SIA }
-		336 = { is_owned_by = GER }
-		NOT = { has_global_flag = fall_of_singapore }
+		OR = {
+			336 = { is_owned_by = GER }
+			AND = {
+				336 = { is_owned_by = MLY } #Sultanate of Malaya. Kaiserbund
+				MLY = { is_puppet_of = GER }
+			}
+		}
+		SIA = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_singapore_ger }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_singapore
+		set_global_flag = fall_of_singapore_ger
 		hidden_effect = {
 			336 = { set_state_name = Singhanakhon }
 			set_province_name = { id = 12299 name = "Singhanakhon" }
@@ -4812,12 +4917,12 @@ news_event = { # The Fall of Sydney (Siam) - xxxxxxx
 		285 = { is_controlled_by = SIA }
 		285 = { is_owned_by = AST }
 		SIA = { has_war_with = AST }
-		NOT = { has_global_flag = fall_of_sydney }
+		NOT = { has_global_flag = fall_of_sydney_ast }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_sydney
+		set_global_flag = fall_of_sydney_ast
 	}
 
 	mean_time_to_happen = {
@@ -4862,12 +4967,12 @@ news_event = { # The Fall of Hong Kong (Siam) - xxxxxxx
 	trigger = {
 		326 = { is_controlled_by = SIA }
 		326 = { is_owned_by = LEC }
-		NOT = { has_global_flag = fall_of_hong_kong }
+		NOT = { has_global_flag = fall_of_hong_kong_lec }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_hong_kong
+		set_global_flag = fall_of_hong_kong_lec
 	}
 
 	mean_time_to_happen = {
@@ -4913,12 +5018,12 @@ news_event = { # The Fall of Manila (Siam) - xxxxxxx
 		327 = { is_controlled_by = SIA }
 		327 = { is_owned_by = PHI }
 		SIA = { has_war_with = PHI }
-		NOT = { has_global_flag = fall_of_manila }
+		NOT = { has_global_flag = fall_of_manila_ger }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_manila
+		set_global_flag = fall_of_manila_ger
 	}
 
 	mean_time_to_happen = {
@@ -4956,13 +5061,18 @@ news_event = { # The Fall of Calcutta (Siam) - xxxxxxx
 
 	trigger = {
 		431 = { is_controlled_by = SIA }
-		431 = { is_owned_by = BHC }
-		NOT = { has_global_flag = fall_of_calcutta }
+		OR = {
+			431 = { is_owned_by = BHC }
+			431 = { is_owned_by = DEH }
+			431 = { is_owned_by = PRF }
+			431 = { is_owned_by = MAD }
+		}
+		NOT = { has_global_flag = fall_of_calcutta_ind }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_calcutta
+		set_global_flag = fall_of_calcutta_ind
 	}
 
 	mean_time_to_happen = {
@@ -5023,13 +5133,18 @@ news_event = { # The Fall of New Delhi (Siam) - xxxxxxx
 
 	trigger = {
 		439 = { is_controlled_by = SIA }
-		439 = { is_owned_by = DEH }
-		NOT = { has_global_flag = fall_of_new_delhi }
+		OR = {
+			439 = { is_owned_by = BHC }
+			439 = { is_owned_by = DEH }
+			439 = { is_owned_by = PRF }
+			439 = { is_owned_by = MAD }
+		}
+		NOT = { has_global_flag = fall_of_new_delhi_ind }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_new_delhi
+		set_global_flag = fall_of_new_delhi_ind
 	}
 
 	mean_time_to_happen = {
@@ -5093,12 +5208,12 @@ news_event = { # The Fall of Bangkok (CAN) - xxxxxxx
 		289 = { is_controlled_by = CAN }
 		289 = { is_owned_by = SIA }
 		CAN = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_sia
 	}
 
 	mean_time_to_happen = {
@@ -5135,12 +5250,12 @@ news_event = { # The Fall of Bangkok (JAP) - xxxxxxx
 		289 = { is_controlled_by = JAP }
 		289 = { is_owned_by = SIA }
 		ENG = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_sia
 	}
 
 	mean_time_to_happen = {
@@ -5185,12 +5300,12 @@ news_event = { # The Fall of Bangkok (Australasia) - xxxxxxx
 		289 = { is_controlled_by = AST }
 		289 = { is_owned_by = SIA }
 		AST = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_sia
 	}
 
 	mean_time_to_happen = {
@@ -5221,5 +5336,999 @@ news_event = { # The Fall of Bangkok (Australasia) - xxxxxxx
 	option = { #We clearly keep underestimating the Diggers. A brilliant job.
 		name = worldnews.266.e
 		trigger = { is_in_faction_with = CAN }
+	}
+}
+
+# The Fall of London (Canada)
+news_event = {
+	id = worldnews.267
+	title = worldnews.267.t
+	desc = worldnews.267.d
+	picture = News_Fall_of_London
+
+	major = yes
+
+	trigger = {
+		126 = { is_controlled_by = CAN }
+		126 = { is_owned_by = ENG }
+		CAN = { has_war_with = ENG }
+		NOT = { has_global_flag = fall_of_london_uob }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_london_uob
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #This is only a temporary setback. We will reorganize and push the Canadians back!
+		name = worldnews.267.a
+		trigger = { 
+			TAG = ENG 
+		}
+	}
+	
+	option = { #This is the beginning of the end. We will set right what once went wrong.
+		name = worldnews.267.b
+		trigger = { 
+			TAG = CAN
+		}
+	}
+	
+	option = { #With London in Canadian hands, the United Kingdom may very soon exist again.
+		name = worldnews.267.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = ENG
+				TAG = CAN
+			}
+		}
+	}
+}
+
+# The Fall of London (Ireland)
+news_event = {
+	id = worldnews.268
+	title = worldnews.268.t
+	desc = worldnews.268.d
+	picture = News_Fall_of_London
+
+	major = yes
+
+	trigger = {
+		126 = { is_controlled_by = IRE }
+		126 = { is_owned_by = ENG }
+		IRE = { has_war_with = ENG }
+		NOT = { has_global_flag = fall_of_london_uob }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_london_uob
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #This is only a temporary setback. We will reorganize and push the Irish back!
+		name = worldnews.268.a
+		trigger = { 
+			TAG = ENG 
+		}
+	}
+	
+	option = { #The English have underestimated Ireland for the last time.
+		name = worldnews.268.b
+		trigger = { 
+			TAG = IRE
+		}
+	}
+	
+	option = { #A humiliating defeat for the Union. Torn apart by Ireland out of all nations.
+		name = worldnews.268.c
+		trigger = {
+			NOT = {
+				TAG = IRE
+				TAG = ENG
+				TAG = CAN
+			}
+		}
+	}
+
+	option = { #We will be willing to overlook this, if the Irish return our territory of course.
+		name = worldnews.268.e
+		trigger = { 
+			TAG = CAN 
+		}
+	}
+}
+
+# The Fall of London (National France)
+news_event = {
+	id = worldnews.269
+	title = worldnews.269.t
+	desc = worldnews.269.d
+	picture = News_Fall_of_London
+
+	major = yes
+
+	trigger = {
+		126 = { is_controlled_by = NFA }
+		126 = { is_owned_by = ENG }
+		NFA = { has_war_with = ENG }
+		NOT = { has_global_flag = fall_of_london_uob }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_london_uob
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #This is only a temporary setback. We will reorganize and push the French back!
+		name = worldnews.269.a
+		trigger = { 
+			TAG = ENG
+		}
+	}
+	
+	option = { #Our troops finally march in London. What a pride for great, resurgent France!
+		name = worldnews.269.b
+		trigger = { 
+			TAG = NFA
+		}
+	}
+	
+	option = { #Napoleon's dream finally achieved by France, a little over a century after.
+		name = worldnews.269.c
+		trigger = {
+			NOT = {
+				TAG = NFA
+				TAG = ENG
+				TAG = CAN
+			}
+		}
+	}
+
+	option = { #Congratulations to our French friends. We will be taking this land back, however.
+		name = worldnews.269.e
+		trigger = { 
+			TAG = CAN 
+		}
+	}
+}
+
+# The Fall of Paris (Germany)
+news_event = {
+	id = worldnews.270
+	title = worldnews.270.t
+	desc = worldnews.270.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = GER }
+		16 = { is_owned_by = FRA }
+		GER = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German will not win! France cannot fall again! France will not fall!
+		name = worldnews.270.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #We proudly march where the heroes of the Weltkrieg once marched! Victory!
+		name = worldnews.270.b
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The Second Weltkrieg, it seems, sees a similar ending to the First.
+		name = worldnews.270.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #We will not have the honor of conquering Paris, we should negotiate with Germany.
+		name = worldnews.270.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Paris (National France)
+news_event = {
+	id = worldnews.271
+	title = worldnews.271.t
+	desc = worldnews.271.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = NFA }
+		16 = { is_owned_by = FRA }
+		NFA = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The reactionaries of the Party of Order cannot win. Back to Algiers with them!
+		name = worldnews.271.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #Today, we celebrate the revival of France. The Syndicalist terror is soon over.
+		name = worldnews.271.b
+		trigger = { 
+			TAG = NFA
+		}
+	}
+	
+	option = { #None else than National France has the honor of routing the Commune from Paris.
+		name = worldnews.271.c
+		trigger = {
+			NOT = {
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+}
+
+# The Fall of Paris (Canada)
+news_event = {
+	id = worldnews.272
+	title = worldnews.272.t
+	desc = worldnews.272.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = CAN }
+		16 = { is_owned_by = FRA }
+		CAN = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #Canada and their reactionary puppet state must be driven out!
+		name = worldnews.272.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #There is a certain pride in seeing our army parade in Paris, but let us stay focused.
+		name = worldnews.272.b
+		trigger = { 
+			TAG = CAN
+		}
+	}
+	
+	option = { #[CAN.GetLeader] is well on his way to bring the Entente back on the continent.
+		name = worldnews.272.c
+		trigger = {
+			NOT = {
+				TAG = CAN
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #We thank our British friends for this. We will parade through Paris many times thereafter.
+		name = worldnews.272.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Paris (Italy)
+news_event = {
+	id = worldnews.273
+	title = worldnews.273.t
+	desc = worldnews.273.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = ITA }
+		16 = { is_owned_by = FRA }
+		ITA = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The Italian reactionaries will pay, we might even finally raze that damned cathedral!
+		name = worldnews.273.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #This victory is a blessing for Italy. We are no longer defeated. Avanti Savoia!
+		name = worldnews.273.b
+		trigger = { 
+			TAG = ITA
+		}
+	}
+	
+	option = { #Italy went a long way from its defeat in the Weltkrieg. A force to be reckoned with.
+		name = worldnews.273.c
+		trigger = {
+			NOT = {
+				TAG = ITA
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #We need to send some envoys to Italy post-haste. Let them not get any ideas.
+		name = worldnews.273.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Paris (Austria)
+news_event = {
+	id = worldnews.274
+	title = worldnews.274.t
+	desc = worldnews.274.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = AUS }
+		16 = { is_owned_by = FRA }
+		AUS = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The Austrians are Germans all the same! France will not fall again!
+		name = worldnews.274.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #What Germany has done, Austria does too! It is our time to shine.
+		name = worldnews.274.b
+		trigger = { 
+			TAG = AUS
+		}
+	}
+	
+	option = { #Austria is no longer Germany's lackey. Not even by a stretch.
+		name = worldnews.274.c
+		trigger = {
+			NOT = {
+				TAG = AUS
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #Austria would know better than to challenge our return to the mainland, surely.
+		name = worldnews.274.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Paris (Switzerland) #Yep. Tribute to the fact it can and has happened with AI only.
+news_event = {
+	id = worldnews.275
+	title = worldnews.275.t
+	desc = worldnews.275.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		16 = { is_controlled_by = SWI }
+		16 = { is_owned_by = FRA }
+		SWI = { has_war_with = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The Swiss will regret giving up their neutrality. Resist, comrades!
+		name = worldnews.275.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #Our neutrality is not weakness. The Communards made a dire mistake.
+		name = worldnews.275.b
+		trigger = { 
+			TAG = SWI
+		}
+	}
+	
+	option = { #The Commune, routed by Switzerland. A humiliation worse than France's Weltkrieg defeat.
+		name = worldnews.275.c
+		trigger = {
+			NOT = {
+				TAG = SWI
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #The Commune was weak and rotten. The Swiss should not think too highly of themselves.
+		name = worldnews.275.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Paris (Spain) #Carlists and Kingdom alike
+news_event = {
+	id = worldnews.276
+	title = worldnews.276.t
+	desc = worldnews.276.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		OR = {
+			AND = {
+				16 = { is_controlled_by = SPR }
+				SPR = { has_war_with = FRA }
+			}
+			AND = {
+				16 = { is_controlled_by = CAR }
+				CAR = { has_war_with = FRA }
+			}
+		}
+		16 = { is_owned_by = FRA }
+		NOT = { has_global_flag = fall_of_paris_fra }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_paris_fra
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The Reactionary Spanish will regret raiding across the Pyrénees!
+		name = worldnews.276.a
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #As a wise man once said of our country, no-one expects...
+		name = worldnews.276.b
+		trigger = { 
+			OR = {
+				TAG = SPR
+				TAG = CAR
+			}
+		}
+	}
+	
+	option = { #Few thought Spain would recover rapidly from their civil war, let alone defeat the Commune.
+		name = worldnews.276.c
+		trigger = {
+			NOT = {
+				TAG = SPR
+				TAG = CAR
+				TAG = FRA
+				TAG = NFA
+			}
+		}
+	}
+
+	option = { #Our brothers down in Spain must stick with us and let us return to our lands.
+		name = worldnews.276.e
+		trigger = { 
+			TAG = NFA
+		}
+	}
+}
+
+# The Fall of Berlin (Commune of France)
+news_event = {
+	id = worldnews.277
+	title = worldnews.277.t
+	desc = worldnews.277.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = FRA }
+		64 = { is_owned_by = GER }
+		FRA = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Communards back!
+		name = worldnews.277.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #Verdun, Chemin des Dames, Somme. They have all been avenged.
+		name = worldnews.277.b
+		trigger = { 
+			TAG = FRA
+		}
+	}
+	
+	option = { #The Second Weltkrieg ends in a Communard victory. The world is shaken once more.
+		name = worldnews.277.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = FRA
+				TAG = ENG
+			}
+		}
+	}
+
+	option = { #The reign of Mitteleuropa is over. A great victory for the Internationale!
+		name = worldnews.277.e
+		trigger = { 
+			TAG = ENG
+		}
+	}
+}
+
+# The Fall of Berlin (Union of Britain)
+news_event = {
+	id = worldnews.278
+	title = worldnews.278.t
+	desc = worldnews.278.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = ENG }
+		64 = { is_owned_by = GER }
+		ENG = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Unionists back!
+		name = worldnews.278.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The reign of Mitteleuropa is over. A great victory for the Internationale!
+		name = worldnews.278.b
+		trigger = { 
+			TAG = ENG
+		}
+	}
+	
+	option = { #The Second Weltkrieg ends in a Communard victory. The world is shaken once more.
+		name = worldnews.278.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = FRA
+				TAG = ENG
+			}
+		}
+	}
+
+	option = { #Verdun, Chemin des Dames, Somme. They have all been avenged.
+		name = worldnews.278.e
+		trigger = { 
+			TAG = FRA
+		}
+	}
+}
+
+# The Fall of Berlin (Russia)
+news_event = {
+	id = worldnews.279
+	title = worldnews.279.t
+	desc = worldnews.279.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = RUS }
+		64 = { is_owned_by = GER }
+		RUS = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Russians back!
+		name = worldnews.279.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The Kaiser has finally been put in his place. Russia stands avenged.
+		name = worldnews.279.b
+		trigger = { 
+			TAG = RUS
+		}
+	}
+	
+	option = { #[RUS.GetNameDef] has struck down Mitteleuropa against all odds. A devastating blow.
+		name = worldnews.279.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = RUS
+			}
+		}
+	}
+}
+
+# The Fall of Berlin (Soviet Russia) #Russian AND Communist, the unholy alliance!
+news_event = {
+	id = worldnews.280
+	title = worldnews.280.t
+	desc = worldnews.280.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = SOV }
+		64 = { is_owned_by = GER }
+		SOV = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Soviets back!
+		name = worldnews.280.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The Kaiser has finally been put in his place. Russia stands avenged.
+		name = worldnews.280.b
+		trigger = { 
+			TAG = SOV
+		}
+	}
+	
+	option = { #Soviet Russia has struck down Mitteleuropa against all odds. A devastating blow.
+		name = worldnews.280.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = SOV
+			}
+		}
+	}
+}
+
+# The Fall of Berlin (Lithuania) #They can totally win, in theory
+news_event = {
+	id = worldnews.281
+	title = worldnews.281.t
+	desc = worldnews.281.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = LIT }
+		64 = { is_owned_by = GER }
+		LIT = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Lithuanians back!
+		name = worldnews.281.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The Kaiser and his puppets have been humbled. How glorious will Lithuania be!
+		name = worldnews.281.b
+		trigger = { 
+			TAG = LIT
+		}
+	}
+	
+	option = { #Who would have bet on Lithuania. An utterly humiliating end to Mitteleuropa.
+		name = worldnews.281.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = LIT
+			}
+		}
+	}
+}
+
+# The Fall of Berlin (Poland) #They can totally win, in theory
+news_event = {
+	id = worldnews.282
+	title = worldnews.282.t
+	desc = worldnews.282.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = POL }
+		64 = { is_owned_by = GER }
+		POL = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #The German Empire cannot end like this. Push the Poles back!
+		name = worldnews.282.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #The Kaiser and his puppets have been humbled. Greater Poland will rise again!
+		name = worldnews.282.b
+		trigger = { 
+			TAG = POL
+		}
+	}
+	
+	option = { #[POL.GetNameDef] met opposition from Mitteleuropa. Not anymore.
+		name = worldnews.282.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = POL
+			}
+		}
+	}
+}
+
+# The Fall of Berlin (Austria) #In case of HRE, break glass
+news_event = {
+	id = worldnews.283
+	title = worldnews.283.t
+	desc = worldnews.283.d
+	picture = GFX_news_event_french_parade
+
+	major = yes
+
+	trigger = {
+		64 = { is_controlled_by = AUS }
+		64 = { is_owned_by = GER }
+		AUS = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_berlin_ger }
+		OR = {
+			has_global_flag = NEWS_ALL
+			has_global_flag = NEWS_SOME
+		}
+	}
+
+	immediate = {
+		set_global_flag = fall_of_berlin_ger
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = { #[AUS.GetLeader] is not the Emperor of the Germans! Push the Austrians back!
+		name = worldnews.283.a
+		trigger = { 
+			TAG = GER
+		}
+	}
+	
+	option = { #With this coronation, we set right what once went wrong in 1866.
+		name = worldnews.283.b
+		trigger = { 
+			TAG = AUS
+		}
+	}
+	
+	option = { #So, is Austria actually going to restore the Holy Roman Empire?
+		name = worldnews.283.c
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = AUS
+			}
+		}
 	}
 }

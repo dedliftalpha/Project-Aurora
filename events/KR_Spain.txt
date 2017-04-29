@@ -34,7 +34,6 @@ country_event = {
 }
 
 # Black Monday hits Spain
-# TODO: Spain needs a way to remove this
 country_event = {
 	id = sprd.2
 	title = sprd.2.t
@@ -1129,8 +1128,6 @@ country_event = {
 #### Kingdom of Spain, Foreign Policy
 ########################################
 
-### Mediterranean economic bloc events
-
 # Mediterranean economic bloc - PORTUGAL
 country_event = {
 	id = sprf.1
@@ -1178,8 +1175,6 @@ country_event = {
 		add_political_power = -40
 	}
 }
-
-### Carlists and CNT-FAI fleeing events
 
 # Carlists flee to ITALY
 country_event = {
@@ -1655,6 +1650,7 @@ country_event = {
 	}
 }
 
+
 ### KINGDOM OF SPAIN EVENTS ###
 
 # Country considers aiding Spain
@@ -1796,8 +1792,6 @@ country_event = {
 		#and a bunch more stuff
 	}
 }
-
-### Arrest the Opposition
 
 # Main Terror check event
 country_event = {
@@ -2173,8 +2167,6 @@ country_event = {
 	}
 }
 
-### Morocco taken
-
 # CNT victory event
 country_event = {
 	id = sprc.220
@@ -2378,7 +2370,9 @@ news_event = {
 		trigger = { NOT = { tag = CNT } }
 	}
 }
-	
+
+### GIBRALTAR EVENT CHAIN
+
 # Gibraltar occupied by CNT
 country_event = {
 	id = sprc.225
@@ -2789,7 +2783,523 @@ country_event = {
 	}
 }
 
-### Arrest the Opposition
+### PORTUAL REVOLUTION EVENTS
+
+# Anarchist riots in Portugal (triggered by focus)
+country_event = {
+	id = sprc.240
+	title = sprc.240.t
+	desc = sprc.240.d
+	picture = GFX_report_event_generic_riot
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		is_subject = no
+		has_socialist_government = no
+		NOT = { has_war_with = CNT }
+	}
+	
+	option = {
+		name = sprc.240.a #Declare the UAP illegal and wrest control of the streets
+		ai_chance = { factor = 80 }
+	}
+	option = {
+		name = sprc.240.b #The UAP succedes in their coup!
+		ai_chance = { factor = 20 }
+		country_event = { id = sprc.241 hours = 5 }
+	}
+}
+
+# Syndicalist coup succeeds in Portugal
+country_event = {
+	id = sprc.241
+	title = sprc.241.t
+	desc = sprc.241.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_ideas_with_trait = head_of_government
+		create_country_leader = {
+			name = "Neno Vasco"
+			picture = "Portrait_POR_Neno_Vasco.tga"
+			expire = "1965.1.1"
+			ideology = syndicalist_subtype
+			traits = {}
+		}
+		CNT = { news_event = { id = sprc.244 hours = 5 } }
+	}
+	
+	option = {
+		name = sprc.241.a #The UAP establishes a new Portuguese Republic
+		ai_chance = { factor = 90 }
+		set_politics = { ruling_party = syndicalist elections_allowed = no }
+		add_popularity = { ideology = syndicalist popularity = 0.2 }
+		add_ideas = POR_Antonio_Pinto_Quartim_hog_syn
+		effect_tooltip = { CNT = { puppet = POR } }
+		hidden_effect = {
+			CNT = { country_event = { id = sprc.242 days = 3 } }
+		}
+	}
+	option = {
+		name = sprc.241.b #Propose integration into the FAI
+		trigger = { is_ai = yes }
+		ai_chance = { factor = 10 }
+		set_politics = { ruling_party = syndicalist elections_allowed = no }
+		add_popularity = { ideology = syndicalist popularity = 0.2 }
+		add_ideas = POR_Antonio_Pinto_Quartim_hog_syn
+		CNT = { country_event = { id = sprc.243 days = 3 } }
+	}
+}
+
+# Spain informed of new puppet
+country_event = {
+	id = sprc.242
+	title = sprc.242.t
+	desc = sprc.242.d
+	picture = GFX_report_event_SPR_civwar3
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.242.a
+		add_political_power = 100
+		if = {
+			limit = { has_dlc = "Together for Victory" }
+			set_autonomy = {
+				target = POR
+				autonomous_state = autonomy_colony
+			}
+			else = { puppet = POR }
+		}
+	}
+}
+
+# Portugal wishes to join the FAI
+country_event = {
+	id = sprc.243
+	title = sprc.243.t
+	desc = sprc.243.d
+	picture = diplomacy4
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.243.a #Accept their offer - Integrate the Portuguese nation
+		remove_ideas_with_trait = head_of_government
+		add_ideas = CNT_Antonio_Pinto_Quartim_hog_syn
+		annex_country = { target = POR transfer_troops = yes }
+		every_state = {
+			limit = { is_core_of = POR }
+			add_core_of = CNT
+		}
+	}
+	option = {
+		name = sprc.243.b #Rather not - Maybe an alliance instead?
+		trigger = { is_ai = no }
+		add_political_power = 100
+		if = {
+			limit = { has_dlc = "Together for Victory" }
+			set_autonomy = {
+				target = POR
+				autonomous_state = autonomy_colony
+			}
+			else = { puppet = POR }
+		}
+	}
+}
+
+# NEWS EVENT: Portguese coup
+news_event = {
+	id = sprc.244
+	title = sprc.244.t
+	desc = sprc.244.d
+	picture = GFX_POL_military_takeover_event
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = sprc.244.a
+		trigger = { tag = POR }
+	}
+	option = {
+		name = sprc.244.b
+		trigger = {
+			NOT = { tag = POR }
+			has_socialist_government = yes
+		}
+	}
+	option = {
+		name = sprc.244.c
+		trigger = {
+			NOT = { tag = POR }
+			has_socialist_government = no
+		}
+	}
+}
+
+# UAP suppressed in Portugal
+country_event = {
+	id = sprc.245
+	title = sprc.245.t
+	desc = sprc.245.d
+	picture = GFX_report_event_generic_riot
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		POR = {
+			is_subject = no
+			has_socialist_government = no
+			NOT = { has_war_with = CNT }
+		}
+	}
+	
+	option = {
+		name = sprc.245.a #Invade Portugal! Viva la Revolución!
+		ai_chance = { factor = 90 }
+		declare_war_on = {
+			target = POR
+			type = annex_everything
+		}
+	}
+	option = {
+		name = sprc.245.b #Let the UAP take care of this alone
+		ai_chance = { factor = 10 }
+		add_political_power = -100
+	}
+}
+
+# Portuguese government-in-exile set up
+country_event = {
+	id = sprc.246
+	title = sprc.246.t
+	desc = sprc.246.d
+	picture = GFX_report_event_generic_riot
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = CNT
+		has_war = no
+		owns_state = 112
+		NOT = { country_exists = POR }
+		OR = {
+			owns_state = 540 #Angola
+			owns_state = 544 #Mozambique
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = sprc.246.a
+		every_state = {
+			limit = {
+				OR = {
+					state = 702 #Cape Verde
+					state = 705 #Sao Tome
+					state = 540 #Angola
+					state = 544 #Mozambique
+				}
+			}
+			POR = { transfer_state = PREV }
+		}
+		hidden_effect = {
+			POR = {
+				if = {
+					limit = { owns_state = 540 }
+					set_capital = 540
+					add_state_core = 540
+					load_oob = POR_exile
+				}
+				if = {
+					limit = { owns_state = 544 }
+					add_state_core = 544
+					load_oob = POR_exile2
+				}
+				create_country_leader = {
+					name = "José Ricardo Pereira Cabral"
+					picture = "Portrait_POR_Jose_Ricardo_Pereira_Cabral.tga"
+					expire = "1965.1.1"
+					ideology = authoritarian_democrat_subtype
+					traits = {}
+				}
+				set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+				add_popularity = { ideology = authoritarian_democrat popularity = 0.2 }
+				remove_ideas_with_trait = head_of_government
+				remove_ideas_with_trait = foreign_minister
+				add_ideas = POR_Antonio_Lopes_Mateus_hog_ade
+				add_ideas = POR_Abel_de_Abreu_Sotto_Mayor_for_ade
+			}
+		}
+	}
+}
+
+# Mittelafrika considers seizing Angola
+country_event = {
+	id = sprc.247
+	title = sprc.247.t
+	desc = sprc.247.d
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = MAF
+			tag = SAF
+		}
+		is_subject = no
+		has_war = no
+		any_owned_state = { any_neighbor_state = { state = 540 } }
+		POR = {
+			owns_state = 540 #Angola
+			controls_state = 540
+			has_war_with = CNT
+			NOT = { is_in_faction_with = ROOT }
+		}
+		NOT = { has_country_flag = CNT_considered_ang }
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	immediate = {
+		set_country_flag = CNT_considered_ang
+	}
+	
+	option = {
+		name = sprc.247.a #We must get it!
+		ai_chance = { factor = 60 }
+		transfer_state = 540
+		if = {
+			limit = { POR = { owns_state = 705 } }
+			transfer_state = 705 #Sao Tome
+		}
+		POR = { country_event = { id = sprc.248 } }
+	}
+	option = {
+		name = sprc.247.b #Leave it alone
+		ai_chance = { factor = 40 }
+	}
+}
+
+# Mittelafrika has seized Angola
+country_event = {
+	id = sprc.248
+	title = sprc.248.t
+	desc = sprc.248.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.248.a
+		add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+		add_state_claim = 540
+		CNT = {
+			add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+			add_state_claim = 540
+		}
+	}
+}
+
+# Mittelafrika considers seizing Mozambique
+country_event = {
+	id = sprc.249
+	title = sprc.249.t
+	desc = sprc.249.d
+	picture = towar
+	
+	trigger = {
+		OR = {
+			tag = MAF
+			tag = SAF
+		}
+		is_subject = no
+		has_war = no
+		any_owned_state = { any_neighbor_state = { state = 544 } }
+		POR = {
+			owns_state = 544 #Mozambique
+			controls_state = 544
+			has_war_with = CNT
+			NOT = { is_in_faction_with = ROOT }
+		}
+		NOT = { has_country_flag = CNT_considered_moz }
+	}
+	
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	immediate = {
+		set_country_flag = CNT_considered_moz
+	}
+	
+	option = {
+		name = sprc.247.a #We must get it!
+		ai_chance = { factor = 60 }
+		transfer_state = 544
+		POR = { country_event = { id = sprc.250 } }
+	}
+	option = {
+		name = sprc.247.b #Leave it alone
+		ai_chance = { factor = 40 }
+	}
+}
+
+# Mittelafrika has seized Mozambique
+country_event = {
+	id = sprc.250
+	title = sprc.250.t
+	desc = sprc.250.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.248.a
+		add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+		add_state_claim = 544
+		CNT = {
+			add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+			add_state_claim = 544
+		}
+	}
+}
+
+# Macao is seized by a neighbor
+country_event = {
+	id = sprc.251
+	title = sprc.251.t
+	desc = sprc.251.d
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = LEC
+			tag = QIE
+			tag = SQI
+			tag = FNG
+			tag = GER
+			tag = AOG
+		}
+		NOT = { country_exists = POR }
+		is_subject = no
+		has_war = no
+		has_socialist_government = no
+		OR = {
+			tag = LEC
+			any_owned_state = { any_neighbor_state = { state = 729 } }
+		}
+		CNT = {
+			owns_state = 729 #Macau
+			controls_state = 729
+			NOT = { is_in_faction_with = ROOT }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+		modifier = {
+			factor = 0.35
+			tag = LEC
+		}
+	}
+
+	option = {
+		name = sprc.251.a #Welcome them
+		transfer_state = 729
+		CNT = { country_event = { id = sprc.252 } }
+	}
+	option = {
+		name = sprc.251.b #No, we don't want this kind of trouble
+		trigger = { is_ai = no }
+	}
+}
+
+country_event = {
+	id = sprc.252
+	title = sprc.252.t
+	desc = sprc.252.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.252.a
+		add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+		add_state_claim = 729
+	}
+}
+
+# East Timor is seized by a neighbor
+country_event = {
+	id = sprc.253
+	title = sprc.253.t
+	desc = sprc.253.d
+	picture = towar
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = INS
+			tag = HOL
+			tag = GER
+			tag = AST
+		}
+		NOT = { country_exists = POR }
+		is_subject = no
+		has_war = no
+		has_socialist_government = no
+		any_owned_state = { any_neighbor_state = { state = 721 } }
+		CNT = {
+			owns_state = 721 #East Timor
+			controls_state = 721
+			NOT = { is_in_faction_with = ROOT }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = sprc.251.a #Welcome them
+		transfer_state = 721
+		CNT = { country_event = { id = sprc.254 } }
+	}
+	option = {
+		name = sprc.251.b #No, we don't want this kind of trouble
+		trigger = { is_ai = no }
+	}
+}
+
+country_event = {
+	id = sprc.254
+	title = sprc.254.t
+	desc = sprc.254.d
+	picture = towar
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = sprc.252.a
+		add_opinion_modifier = { target = FROM modifier = ITA_hates_govt }
+		add_state_claim = 721
+	}
+}
+
 
 ### CARLIST EVENTS ###
 
@@ -2991,6 +3501,8 @@ country_event = {
 		hidden_effect = { load_oob = SCW_CAR_supplies }
 	}
 }
+
+### ASSASSINATION EVENT CHAIN
 
 # CNT hears about assassination plot
 country_event = {
@@ -3496,5 +4008,3 @@ news_event = {
 	}
 }
 
-
-### Arrest the Opposition

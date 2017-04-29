@@ -4211,6 +4211,72 @@ news_event = {
 	}
 }
 
+# The Romanian Civil War
+news_event {
+	id = worldnews.65
+	title = worldnews.65.t
+	desc = worldnews.65.d
+	picture = GFX_news_event_032
+
+	is_triggered_only = yes
+
+	major = yes
+
+	option = { #The Bucharest Circle will regret this attack on the Romanian people.
+		name = worldnews.65.a
+
+		trigger = {	TAG = ROM }
+	}
+	
+	option = { #Trăiască Regele! Long live King Carol! We will defeat the populists!
+		name = worldnews.65.b
+
+		trigger = { TAG = RRM }
+	}
+
+	option = { #Whoever wins, this is bound to weaken the odds of a Greater Romania.
+		name = worldnews.65.c
+
+		trigger = {
+			OR = {
+				NOT = { TAG = ROM }
+				is_in_faction_with = ROM #Belgrade Pact, potentially
+				TAG = AUS
+				is_puppet_of = AUS
+				TAG = HUN
+				TAG = OTT
+			}
+		}
+	}
+
+	option = { #This should set Romania back enough for them to not be a threat.
+		name = worldnews.65.e
+
+		trigger = { tag = BUL }
+	}
+	
+	option = { #With Romania ablaze, the Balkans inch ever closer to the brink.
+		name = worldnews.65.f
+
+		trigger = {
+			NOT = {
+				OR = {
+					TAG = ROM
+					TAG = RRM
+					NOT = { TAG = ROM }
+					is_in_faction_with = ROM #Belgrade Pact, potentially
+					TAG = AUS
+					is_puppet_of = AUS
+					TAG = HUN
+					TAG = OTT
+					TAG = BUL
+				}
+			}
+		}
+	}
+
+}
+
 # merge from news_events.txt
 
 news_event = {

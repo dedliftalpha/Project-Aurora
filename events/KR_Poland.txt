@@ -7218,90 +7218,6 @@ country_event = { # Dmowski
 
 ### Weissruthenien
 
-country_event = { # Brest Litovsk
-	id = poland.92
-	title = poland.92.t
-	desc = poland.92.d
-	picture = GFX_POL_rebels
-
-	fire_only_once = yes
-	
-	trigger = {
-		NOT = {has_global_flag = POL_BREST}
-		tag = POL
-		has_war = no
-		OR = {
-			controls_state = 92
-			controls_state = 97
-		}
-		WHR = { controls_state = 94 }
-		NOT = { 
-			is_in_faction_with = WHR 
-			has_global_flag = POL_SYNDIE 
-		}
-		OR = {
-			AND = {
-				NOT = { GER = { is_in_faction_with = WHR }}
-				has_global_flag = POL_CZA
-			}
-			AND = {
-				NOT = { GER = { is_in_faction_with = WHR }}
-				has_global_flag = POL_HA
-			}
-			AND = {
-				NOT = { GER = { is_in_faction_with = WHR }}
-				has_global_flag = POL_NATIONALISTS
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 30
-	}
-	
-	option = {
-		name = poland.92.a
-		ai_chance = { factor = 80 }
-
-		add_opinion_modifier = { target = LIT modifier = POL_CLAIM_BL } # -10
-		add_opinion_modifier = { target = WHR modifier = POL_CLAIM_BL } # -10
-		add_state_core = 94
-		add_state_core = 95
-		set_global_flag = POL_BREST
-
-		if = {
-			limit = {
-				WHR = {
-					is_in_faction_with = GER
-				}
-			}
-
-			WHR = { country_event = { days = 1 id = poland.93 }}
-		}
-
-		if = {
-			limit = {
-				WHR = {
-					NOT = { is_in_faction_with = GER }
-				}
-			}
-
-			WHR = { country_event = { days = 1 id = poland.100 }}
-		}
-	}
-
-	option = {
-		name = poland.92.b
-		ai_chance = { factor = 20 }
-
-		add_opinion_modifier = { target = LIT modifier = POL_NO_CLAIM_BL } # 10
-		add_opinion_modifier = { target = UKR modifier = POL_NO_CLAIM_BL } # 10
-		add_opinion_modifier = { target = WHR modifier = POL_NO_CLAIM_BL } # 10
-
-		add_political_power = -40
-	}		
-}
-
 country_event = { # Poland demands territory!
 	id = poland.93
 	title = poland.93.t
@@ -7309,23 +7225,12 @@ country_event = { # Poland demands territory!
 	picture = GFX_POL_rebels
 
 	is_triggered_only = yes
-
-	#fire_only_once = yes    #### REMOVED (TREIGGERED BY poland.92) (TOO MUCH TIME TO FIRE)
-	
-	#trigger = {
-		#tag = WHR
-		#country_exists = POL
-		#country_exists = WHR
-		#controls_state = 94
-		#has_global_flag = POL_BREST
-		#is_in_faction_with = GER
-	#}
 	
 	option = {
 		name = poland.93.a
 		ai_chance = { factor = 20 }
 
-		POL = { transfer_state = 94 transfer_state = 95 }
+		POL = { transfer_state = 93 }
 		add_political_power = -200
 	}
 
@@ -7349,7 +7254,7 @@ country_event = { # Polish claims
 		name = poland.94.a
 		ai_chance = { factor = 50 }
 
-		WHR = { country_event = { days = 1 id = poland.95 }}
+		UKR = { country_event = { days = 1 id = poland.95 }}
 	}
 
 	option = {
@@ -7357,7 +7262,7 @@ country_event = { # Polish claims
 		ai_chance = { factor = 50 }
 
 		POL = { country_event = { days = 1 id = poland.98 }}
-		WHR = { country_event = { days = 1 id = poland.99 }}
+		UKR = { country_event = { days = 1 id = poland.99 }}
 	}		
 }
 
@@ -7373,7 +7278,7 @@ country_event = { # No support from Germany!
 		name = poland.95.a
 		ai_chance = { factor = 99 }
 
-		POL = { transfer_state = 94 transfer_state = 95 }
+		POL = { transfer_state = 93 }
 		add_political_power = -100
 	}
 
@@ -7381,13 +7286,13 @@ country_event = { # No support from Germany!
 		name = poland.95.b
 		ai_chance = { factor = 1 }
 
-		GER = { remove_from_faction = WHR }
-		GER = { end_puppet = WHR }
+		GER = { remove_from_faction = UKR }
+		GER = { end_puppet = UKR }
 		GER = { country_event = { days = 1 id = poland.96 }}
 	}		
 }
 
-country_event = { # Belorussian secession
+country_event = { # Ukranian secession
 	id = poland.96
 	title = poland.96.t
 	desc = poland.96.d
@@ -7399,7 +7304,7 @@ country_event = { # Belorussian secession
 		name = poland.96.a
 		ai_chance = { factor = 90 }
 
-		declare_war_on = { target = WHR type = annex_everything }
+		declare_war_on = { target = UKR type = annex_everything }
 		POL = { country_event = { days = 1 id = poland.97 }}
 	}
 
@@ -7407,11 +7312,11 @@ country_event = { # Belorussian secession
 		name = poland.96.b
 		ai_chance = { factor = 10 }
 
-		add_opinion_modifier = { target = WHR modifier = GER_BD_ON_WHR } # 10
+		add_opinion_modifier = { target = UKR modifier = GER_BD_ON_WHR } # 10
 		add_opinion_modifier = { target = LAT modifier = GER_BD_ON_WHR_OTHERS } # -10
 		add_opinion_modifier = { target = POL modifier = GER_BD_ON_WHR_OTHERS } # -10
 		add_opinion_modifier = { target = LIT modifier = GER_BD_ON_WHR_OTHERS } # -10
-		add_opinion_modifier = { target = UKR modifier = GER_BD_ON_WHR_OTHERS } # -10
+		add_opinion_modifier = { target = WHR modifier = GER_BD_ON_WHR_OTHERS } # -10
 	}		
 }
 
@@ -7428,7 +7333,7 @@ country_event = { # German intervention
 		ai_chance = { factor = 99 }
 
 		declare_war_on = {
-			target = WHR
+			target = UKR
 			type = annex_everything
 		}
 	}
@@ -7437,7 +7342,7 @@ country_event = { # German intervention
 		name = poland.97.b
 		ai_chance = { factor = 1 }
 
-		add_opinion_modifier = { target = WHR modifier = embargo } # embargo
+		add_opinion_modifier = { target = UKR modifier = embargo } # embargo
 		add_political_power = -100
 	}
 
@@ -7445,7 +7350,7 @@ country_event = { # German intervention
 		name = poland.97.c
 		ai_chance = { factor = 0 }
 
-		add_opinion_modifier = { target = WHR modifier = POL_BD_ON_WHR } # 10
+		add_opinion_modifier = { target = UKR modifier = POL_BD_ON_WHR } # 10
 		add_opinion_modifier = { target = GER modifier = POL_BD_ON_WHR_OTHERS } # -10
 		add_opinion_modifier = { target = LIT modifier = POL_BD_ON_WHR_OTHERS } # -10
 		add_political_power = -200
@@ -7463,7 +7368,7 @@ country_event = { # No support from Germany!
 	option = {
 		name = poland.98.a
 
-		add_opinion_modifier = { target = WHR modifier = POL_GER_SUPP_WHR } # -50
+		add_opinion_modifier = { target = UKR modifier = POL_GER_SUPP_WHR } # -50
 		add_opinion_modifier = { target = GER modifier = POL_GER_SUPP_WHR } # -50
 		add_political_power = -200
 	}	
@@ -7492,23 +7397,12 @@ country_event = { # Poland demands territory!
 	picture = GFX_POL_rebels
 
 	is_triggered_only = yes
-
-	#fire_only_once = yes    #### REMOVED (TREIGGERED BY poland.92) (TOO MUCH TIME TO FIRE)
-	
-	#trigger = {
-		#tag = WHR
-		#country_exists = POL
-		#country_exists = WHR
-		#controls_state = 94
-		#has_global_flag = POL_BREST
-		#NOT = { is_in_faction_with = GER }
-	#}
 	
 	option = {
 		name = poland.100.a
 		ai_chance = { factor = 30 }
 
-		POL = { transfer_state = 94 transfer_state = 95 }
+		POL = { transfer_state = 93 }
 		add_political_power = -200
 	}
 
@@ -7533,7 +7427,7 @@ country_event = { # Belarus refused!
 		ai_chance = { factor = 90 }
 
 		declare_war_on = {
-			target = WHR
+			target = UKR
 			type = annex_everything
 		}
 	}
@@ -7542,7 +7436,7 @@ country_event = { # Belarus refused!
 		name = poland.101.b
 		ai_chance = { factor = 9 }
 
-		add_opinion_modifier = { target = WHR modifier = embargo } # embargo
+		add_opinion_modifier = { target = UKR modifier = embargo } # embargo
 		add_political_power = -100
 	}
 
@@ -7989,57 +7883,6 @@ country_event = { # Prussian partition
 	
 	is_triggered_only = yes
 	
-	#trigger = {
-	#	tag = POL
-	#	date > 1938.4.18
-	#	country_exists = POL
-	#	country_exists = GER
-	#	has_war = no
-	#	controls_state = 10
-	#	GER = {
-	#		controls_state = 777
-	#		controls_state = 86
-	#		controls_state = 776
-	#		controls_state = 85
-	#		controls_state = 98
-	#	}
-	#	GER = {
-	#		OR = {
-	#			has_war_with = FRA
-	#			has_war_with = RUS
-	#			has_war_with = AUS
-	#			has_war_with = ENG
-	#		}
-	#	}
-	#	OR = {
-	#		AND = {
-	#			controls_state = 91
-	#			controls_state = 88
-	#		}
-	#		AND = {
-	#			controls_state = 94
-	#			controls_state = 95
-	#		}
-	#		AND = {
-	#			controls_state = 95
-	#			controls_state = 11
-	#		}
-	#	}
-	#	NOT = {
-	#		is_subject_of = GER
-	#		is_subject_of = AUS
-	#		is_in_faction_with = GER
-	#		is_in_faction_with = AUS
-	#		has_global_flag = POL_WE
-	#		has_global_flag = POL_HA
-	#		has_global_flag = POL_RAD
-	#	}
-	#}
-
-	#mean_time_to_happen = {
-	#	days = 75
-	#}
-	
 	option = {
 		name = poland.112.a
 		ai_chance = { factor = 20 }
@@ -8094,10 +7937,6 @@ country_event = { # Germany is falling
 		country_exists = GER
 		has_war = no
 		controls_state = 10
-		controls_state = 91
-		controls_state = 88
-		controls_state = 94
-		controls_state = 95
 		GER = {
 			has_war = yes
 			controls_state = 777
@@ -9672,30 +9511,29 @@ country_event = { # Brest Litovsk Focus Ver.
 		name = poland.92.a
 		ai_chance = { factor = 80 }
 
-		add_opinion_modifier = { target = LIT modifier = POL_CLAIM_BL } # -10
-		add_opinion_modifier = { target = WHR modifier = POL_CLAIM_BL } # -10
+		reverse_add_opinion_modifier = { target = UKR modifier = POL_CLAIM_BL }
+		reverse_add_opinion_modifier = { target = WHR modifier = POL_CLAIM_BL } # -10
 		add_state_core = 94
-		add_state_core = 95
 		set_global_flag = POL_BREST
 
 		if = {
 			limit = {
-				WHR = {
+				UKR = {
 					is_in_faction_with = GER
 				}
 			}
 
-			WHR = { country_event = { days = 1 id = poland.93 }}
+			UKR = { country_event = { days = 1 id = poland.93 }}
 		}
 
 		if = {
 			limit = {
-				WHR = {
+				UKR = {
 					NOT = { is_in_faction_with = GER }
 				}
 			}
 
-			WHR = { country_event = { days = 1 id = poland.100 }}
+			UKR = { country_event = { days = 1 id = poland.100 }}
 		}
 	}
 
@@ -9703,9 +9541,8 @@ country_event = { # Brest Litovsk Focus Ver.
 		name = poland.92.b
 		ai_chance = { factor = 20 }
 
-		add_opinion_modifier = { target = LIT modifier = POL_NO_CLAIM_BL } # 10
-		add_opinion_modifier = { target = UKR modifier = POL_NO_CLAIM_BL } # 10
-		add_opinion_modifier = { target = WHR modifier = POL_NO_CLAIM_BL } # 10
+		reverse_add_opinion_modifier = { target = UKR modifier = POL_NO_CLAIM_BL } # 10
+		reverse_add_opinion_modifier = { target = WHR modifier = POL_NO_CLAIM_BL } # 10
 
 		add_political_power = -40
 	}		
@@ -10143,10 +9980,7 @@ country_event = { # Ruthenian Demands - Request
 		ai_chance = { factor = 90 }
 		every_country = { 
 		limit = {
-			OR = {
-				controls_state = 95
 				controls_state = 94
-			}
 		}
 		country_event = { days = 2 id = poland.185 }
 		}
@@ -10157,7 +9991,6 @@ country_event = { # Ruthenian Demands - Request
 		ai_chance = { factor = 10 }
 		add_political_power = -25
 		94 = { add_core_of = POL }
-		95 = { add_core_of = POL }
 	}	
 }
 
@@ -10198,10 +10031,7 @@ country_event = { # Ruthenian Demands - Yes
 		name = poland.186.a
 		 	POL = { set_state_owner = 94 } 
 			POL = { set_state_controller = 94 } 
-			94 = { add_core_of = POL } 
-		 	POL = { set_state_owner = 95 } 
-			POL = { set_state_controller = 95 } 
-			95 = { add_core_of = POL } 
+			94 = { add_core_of = POL }
 	}	
 }
 
@@ -10220,15 +10050,11 @@ country_event = { # Ruthenian Demands - No
 		ai_chance = { factor = 20 }
 		every_country = { 
 			limit = {
-				OR = {
-					controls_state = 95
 					controls_state = 94
-				}
 			} 
 		reverse_add_opinion_modifier = { target = POL modifier = POL_REFUSED_DEMANDS } # -50
 		}
 		94 = { add_core_of = POL }
-		95 = { add_core_of = POL }
 		add_political_power = -75
 	}
 	
@@ -10237,10 +10063,8 @@ country_event = { # Ruthenian Demands - No
 		ai_chance = { factor = 80 }
 			trigger = {
 				WHR = {controls_state = 94}
-				WHR = {controls_state = 95}
 			}
 		94 = { add_core_of = POL }
-		95 = { add_core_of = POL }
 		if = {
 					limit = {
 						WHR = {
@@ -10274,10 +10098,8 @@ country_event = { # Ruthenian Demands - No
 		ai_chance = { factor = 5 }
 			trigger = {
 				GER = {controls_state = 94}
-				GER = {controls_state = 95}
 			}
 		94 = { add_core_of = POL }
-		95 = { add_core_of = POL }
 		if = {
 					limit = {
 						GER = {

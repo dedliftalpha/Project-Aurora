@@ -18814,7 +18814,7 @@ country_event = { #The Annexation of Algeria
 	}
 }
 
-country_event = { #Fate of Morroco non-leftist
+country_event = { #Fate of Morocco non-leftist
 	id = annex.167
 	title = annex.167.t
 	desc = annex.167.d
@@ -19242,5 +19242,416 @@ country_event = { #Fate of Indochina
 		}
 		add_political_power = -60
 		set_country_flag = INC_CONQ
+	}
+}
+
+country_event = { #Fate of Australasia
+	id = annex.171
+	title = annex.171.t
+	desc = annex.171.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = AST
+			tag = NZL
+			has_country_flag = AST_CONQ
+			country_exists = AST
+		}
+
+		controls_state = 285
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Puppet Australasia
+		name = annex.171.a
+		ai_chance = {
+			factor = 80
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = AST
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			AST = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = AST
+	}
+	
+	option = { #Release New Zealand
+		name = annex.171.b
+		ai_chance = {
+			factor = 20
+		}
+		trigger = { controls_state = 284
+		}
+		
+		AST = { remove_state_core = 284
+		remove_state_core = 723 }
+
+		every_state = {
+			limit = {
+				is_core_of = NZL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			NZL = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = NZL
+		
+		every_state = {
+			limit = {
+				is_core_of = AST
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+
+			AST = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = AST
+		
+		AST = { set_cosmetic_tag = AST_australia }
+		
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+		set_country_flag = AST_CONQ
+	}
+}
+
+country_event = { #Fate of Spanish Morocco
+	id = annex.172
+	title = annex.172.t
+	desc = annex.172.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = SPR
+			tag = CNT
+			tag = CAR
+			tag = NFA
+			tag = MOR
+			tag = GER
+			has_country_flag = SPAMOR_CONQ
+		}
+
+		owns_state = 290
+		controls_state = 290
+		NOT = { controls_state = 461 }
+		MOR = { is_subject_of = ROOT }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Transfer to puppet morrocco
+		name = annex.172.a
+		ai_chance = {
+			factor = 70
+		}
+
+		MOR = { transfer_state = 290 }
+		if = { limit = { controls_state = 699 }
+		MOR = { transfer_state = 699 }
+		}
+	}
+	
+	option = { #Transfer to puppet spain
+		name = annex.172.b
+		ai_chance = {
+			factor = 30
+		}
+		trigger = { SPR = { is_subject_of = ROOT } }
+
+		SPR = { transfer_state = 290 }
+		if = { limit = { controls_state = 699 }
+		SPR = { transfer_state = 699 }
+		}
+	}
+	
+	option = { #Transfer to puppet spain
+		name = annex.172.b
+		ai_chance = {
+			factor = 30
+		}
+		trigger = { CAR = { is_subject_of = ROOT } }
+
+		CAR = { transfer_state = 290 }
+		if = { limit = { controls_state = 699 }
+		CAR = { transfer_state = 699 }
+		}
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -60
+		set_country_flag = SPAMOR_CONQ
+	}
+}
+
+country_event = { #Fate of German Somaliland
+	id = annex.173
+	title = annex.173.t
+	desc = annex.173.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = GER
+			tag = SOM
+			tag = ETH
+			has_country_flag = GERSOL_CONQ
+		}
+
+		owns_state = 269
+		controls_state = 269
+		NOT = { controls_state = 271 }
+		OR = {
+		SOM = { is_subject_of = ROOT }
+		ETH = { is_subject_of = ROOT }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Transfer to somalia
+		name = annex.173.a
+		ai_chance = {
+			factor = 95
+		}
+		trigger = { SOM = { is_subject_of = ROOT } }
+
+		SOM = { transfer_state = 269 }
+		if = { limit = { controls_state = 268 }
+		SOM = { transfer_state = 268 }
+		}
+	}
+	
+	option = { #Transfer to ethiopia
+		name = annex.173.b
+		ai_chance = {
+			factor = 95
+		}
+		trigger = { NOT = { SOM = { is_subject_of = ROOT } } }
+
+		ETH = { transfer_state = 269 }
+		if = { limit = { controls_state = 268 }
+		ETH = { transfer_state = 268 }
+		}
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 5
+		}
+		add_political_power = -60
+		set_country_flag = GERSOL_CONQ
+	}
+}
+
+country_event = { #Fate of German Aden
+	id = annex.174
+	title = annex.174.t
+	desc = annex.174.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = GER
+			tag = YEM
+			tag = OMA
+			tag = SAU
+			has_country_flag = GERAD_CONQ
+		}
+
+		owns_state = 659
+		controls_state = 659
+		NOT = { controls_state = 293 }
+		YEM = { is_subject_of = ROOT }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Transfer to Yemen
+		name = annex.174.a
+		ai_chance = {
+			factor = 90
+		}
+
+		YEM = { transfer_state = 659 }
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40
+		set_country_flag = GERAD_CONQ
+	}
+}
+
+country_event = { #Fate of Plock
+	id = annex.175
+	title = annex.175.t
+	desc = annex.175.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = GER
+			tag = POL
+			tag = PLC
+			has_country_flag = PLOCK_CONQ
+		}
+
+		owns_state = 98
+		controls_state = 98
+		NOT = { controls_state = 10 }
+		NOT = { controls_state = 64 }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #Transfer to Poland
+		name = annex.175.a
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 10
+			OR = { POL = { is_subject_of = ROOT }
+			is_in_faction_with = POL
+			}
+			}
+		}
+
+		POL = { transfer_state = 98 }
+	}
+	
+	option = { #Transfer to Poland
+		name = annex.175.a
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 10
+			OR = { POL = { is_subject_of = ROOT }
+			is_in_faction_with = POL
+			}
+			}
+		}
+		trigger = { country_exists = POL NOT = { has_war_with = POL } }
+
+		POL = { transfer_state = 98 }
+	}
+	
+	option = { #Transfer to German Union
+		name = annex.175.b
+		ai_chance = {
+			factor = 5
+			modifier = { factor = 10
+			OR = { GRU = { is_subject_of = ROOT }
+			is_in_faction_with = GRU
+			}
+			}
+		}
+		trigger = { country_exists = GRU NOT = { has_war_with = GRU } }
+
+		GRU = { transfer_state = 98 }
+	}
+	
+	option = { #Transfer to Prussia
+		name = annex.175.c
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 10
+			OR = { PSS = { is_subject_of = ROOT }
+			is_in_faction_with = PSS
+			}
+			}
+		}
+		trigger = { country_exists = PSS NOT = { has_war_with = PSS } }
+
+		PSS = { transfer_state = 98 }
+	}
+	
+	option = { #Transfer to Commonwealth
+		name = annex.175.e
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 10
+			OR = { PLC = { is_subject_of = ROOT }
+			is_in_faction_with = PLC
+			}
+			}
+		}
+		trigger = { country_exists = PLC NOT = { has_war_with = PLC } }
+
+		PLC = { transfer_state = 98 }
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -40
+		set_country_flag = PLOCK_CONQ
 	}
 }

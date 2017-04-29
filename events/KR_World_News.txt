@@ -4617,9 +4617,9 @@ news_event = {
 	major = yes
 
 	trigger = {
-		361 = { is_controlled_by = USA }
-		361 = { is_owned_by = TEX }
-		USA = { has_war_with = TEX }
+		361 = { is_controlled_by = TEX }
+		361 = { is_owned_by = USA }
+		TEX = { has_war_with = USA }
 		NOT = { has_global_flag = fall_of_washington_aus }
 	}
 
@@ -4687,9 +4687,9 @@ news_event = {
 	major = yes
 
 	trigger = {
-		365 = { is_controlled_by = TEX }
-		365 = { is_owned_by = CSA }
-		TEX = { has_war_with = CSA }
+		365 = { is_controlled_by = CSA }
+		365 = { is_owned_by = TEX }
+		CSA = { has_war_with = TEX }
 		NOT = { has_global_flag = fall_of_atlanta_csa }
 	}
 
@@ -4758,8 +4758,8 @@ news_event = {
 
 	trigger = {
 		365 = { is_controlled_by = USA }
-		365 = { is_owned_by = USA }
-		TEX = { has_war_with = USA }
+		365 = { is_owned_by = TEX }
+		USA = { has_war_with = TEX }
 		NOT = { has_global_flag = fall_of_atlanta_usa }
 	}
 
@@ -4827,13 +4827,20 @@ news_event = { # The Fall of Singapore (Siam) - xxxxxxx
 
 	trigger = {
 		336 = { is_controlled_by = SIA }
-		336 = { is_owned_by = GER }
-		NOT = { has_global_flag = fall_of_singapore }
+		OR = {
+			336 = { is_owned_by = GER }
+			AND = {
+				336 = { is_owned_by = MLY } #Sultanate of Malaya. Kaiserbund
+				MLY = { is_puppet_of = GER }
+			}
+		}
+		SIA = { has_war_with = GER }
+		NOT = { has_global_flag = fall_of_singapore_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_singapore
+		set_global_flag = fall_of_singapore_sia
 		hidden_effect = {
 			336 = { set_state_name = Singhanakhon }
 			set_province_name = { id = 12299 name = "Singhanakhon" }
@@ -4882,12 +4889,12 @@ news_event = { # The Fall of Sydney (Siam) - xxxxxxx
 		285 = { is_controlled_by = SIA }
 		285 = { is_owned_by = AST }
 		SIA = { has_war_with = AST }
-		NOT = { has_global_flag = fall_of_sydney }
+		NOT = { has_global_flag = fall_of_sydney_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_sydney
+		set_global_flag = fall_of_sydney_sia
 	}
 
 	mean_time_to_happen = {
@@ -4932,12 +4939,12 @@ news_event = { # The Fall of Hong Kong (Siam) - xxxxxxx
 	trigger = {
 		326 = { is_controlled_by = SIA }
 		326 = { is_owned_by = LEC }
-		NOT = { has_global_flag = fall_of_hong_kong }
+		NOT = { has_global_flag = fall_of_hong_kong_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_hong_kong
+		set_global_flag = fall_of_hong_kong_sia
 	}
 
 	mean_time_to_happen = {
@@ -4983,12 +4990,12 @@ news_event = { # The Fall of Manila (Siam) - xxxxxxx
 		327 = { is_controlled_by = SIA }
 		327 = { is_owned_by = PHI }
 		SIA = { has_war_with = PHI }
-		NOT = { has_global_flag = fall_of_manila }
+		NOT = { has_global_flag = fall_of_manila_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_manila
+		set_global_flag = fall_of_manila_sia
 	}
 
 	mean_time_to_happen = {
@@ -5026,13 +5033,18 @@ news_event = { # The Fall of Calcutta (Siam) - xxxxxxx
 
 	trigger = {
 		431 = { is_controlled_by = SIA }
-		431 = { is_owned_by = BHC }
-		NOT = { has_global_flag = fall_of_calcutta }
+		OR = {
+			431 = { is_owned_by = BHC }
+			431 = { is_owned_by = DEH }
+			431 = { is_owned_by = PRF }
+			431 = { is_owned_by = MAD }
+		}
+		NOT = { has_global_flag = fall_of_calcutta_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_calcutta
+		set_global_flag = fall_of_calcutta_sia
 	}
 
 	mean_time_to_happen = {
@@ -5093,13 +5105,18 @@ news_event = { # The Fall of New Delhi (Siam) - xxxxxxx
 
 	trigger = {
 		439 = { is_controlled_by = SIA }
-		439 = { is_owned_by = DEH }
-		NOT = { has_global_flag = fall_of_new_delhi }
+		OR = {
+			439 = { is_owned_by = BHC }
+			439 = { is_owned_by = DEH }
+			439 = { is_owned_by = PRF }
+			439 = { is_owned_by = MAD }
+		}
+		NOT = { has_global_flag = fall_of_new_delhi_sia }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_new_delhi
+		set_global_flag = fall_of_new_delhi_sia
 	}
 
 	mean_time_to_happen = {
@@ -5163,12 +5180,12 @@ news_event = { # The Fall of Bangkok (CAN) - xxxxxxx
 		289 = { is_controlled_by = CAN }
 		289 = { is_owned_by = SIA }
 		CAN = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_can }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_can
 	}
 
 	mean_time_to_happen = {
@@ -5205,12 +5222,12 @@ news_event = { # The Fall of Bangkok (JAP) - xxxxxxx
 		289 = { is_controlled_by = JAP }
 		289 = { is_owned_by = SIA }
 		ENG = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_jap }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_jap
 	}
 
 	mean_time_to_happen = {
@@ -5255,12 +5272,12 @@ news_event = { # The Fall of Bangkok (Australasia) - xxxxxxx
 		289 = { is_controlled_by = AST }
 		289 = { is_owned_by = SIA }
 		AST = { has_war_with = SIA }
-		NOT = { has_global_flag = fall_of_bangkok }
+		NOT = { has_global_flag = fall_of_bangkok_ast }
 		has_global_flag = NEWS_ALL
 	}
 
 	immediate = {
-		set_global_flag = fall_of_bangkok
+		set_global_flag = fall_of_bangkok_ast
 	}
 
 	mean_time_to_happen = {

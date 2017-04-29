@@ -399,8 +399,18 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			remove_ideas = GER_black_monday1
-			remove_ideas = GER_black_monday2
+			if = {
+				limit = {
+					has_idea = GER_black_monday1
+				}
+				remove_ideas = GER_black_monday1
+			}
+			if = {
+				limit = {
+					has_idea = GER_black_monday2
+				}
+				remove_ideas = GER_black_monday2
+			}
 		}
 	}
 	
@@ -418,6 +428,7 @@ focus_tree = {
 		ai_will_do = {
 			factor = 100
 		}
+		
 		
 		completion_reward = {
 			add_political_power = -100
@@ -454,6 +465,15 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 100
+		}
+		
+		available = {
+			NOT = {
+				has_war_with = POL
+				POL = {
+					is_in_faction = yes
+				}
+			}
 		}
 		
 		completion_reward = {
@@ -596,6 +616,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 100
+		}
+		
+		available = {
+			controls_state = 422
 		}
 		
 		completion_reward = {
@@ -1453,6 +1477,10 @@ focus_tree = {
 				threat > 0.5
 				has_war = yes
 			}
+			AND = {
+				controls_state = 28
+				controls_state = 779
+			}
 		}
 		x = 30
 		y = 1
@@ -1497,6 +1525,13 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = GER_linie1 }
 		mutually_exclusive = { focus = GER_linie2_small }
+		available = {
+			AND = {
+				controls_state = 741
+				controls_state = 6
+				controls_state = 34
+			}
+		}
 		x = 31
 		y = 2
 		cost = 10
@@ -1550,6 +1585,9 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = GER_linie1 }
 		mutually_exclusive = { focus = GER_linie2_full }
+		available = {
+			controls_state = 741
+		}
 		x = 29
 		y = 2
 		cost = 10
@@ -1592,6 +1630,13 @@ focus_tree = {
 		id = GER_linie3
 		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = GER_linie2_full focus = GER_linie2_small }
+		available = {
+			AND = {
+				controls_state = 781
+				controls_state = 51
+				controls_state = 57
+			}
+		}
 		x = 30
 		y = 3
 		cost = 10
@@ -2088,6 +2133,10 @@ focus_tree = {
 			factor = 1
 		}
 		
+		available = {
+			owns_state = 336
+		}
+		
 		completion_reward = {
 			336 = {
 				add_building_construction = {
@@ -2416,6 +2465,18 @@ focus_tree = {
 			factor = 10
 		}
 		
+		available = {
+			OR = {
+				GER = {
+					controls_state = 6
+				}
+				any_other_country = {
+					is_subject_of = GER
+					controls_state = 6
+				}
+			}
+		}
+		
 		continue_if_invalid = yes
 		
 		completion_reward = {
@@ -2520,6 +2581,10 @@ focus_tree = {
 			factor = 10
 		}
 		
+		available = {
+			owns_state = 336
+		}
+		
 		continue_if_invalid = yes
 		
 		completion_reward = {
@@ -2538,6 +2603,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 10
+		}
+		
+		available = {
+			owns_state = 336
 		}
 		
 		continue_if_invalid = yes
@@ -2570,6 +2639,11 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 10
+		}
+		
+		available = {
+			owns_state = 336
+			country_exists = HAW
 		}
 		
 		continue_if_invalid = yes
@@ -2870,10 +2944,28 @@ focus_tree = {
 		x = 54
 		y = 5
 		cost = 10
+		
 		ai_will_do = {
 			factor = 10
 		}
 		
+		available = {
+			OR = {
+				ENG = {
+					has_country_flag = PWH2
+				}
+				OR = {
+					GER = {
+						controls_state = 126
+					}
+					any_other_country = {
+						is_subject_of = GER
+						controls_state = 126
+					}
+				}
+			}
+		}
+				
 		completion_reward = {
 			navy_experience = 100
 		}

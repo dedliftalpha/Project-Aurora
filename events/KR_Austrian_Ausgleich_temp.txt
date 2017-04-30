@@ -107,6 +107,10 @@ country_event = {
 
 	fire_only_once = yes
 	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = heard_of_kingdoms
+	}
 
 	option = { # formally protest
 		name = ausgleich.new.201.a
@@ -242,6 +246,10 @@ country_event = {
 
 	fire_only_once = yes
 	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = heard_of_peoples
+	}
 
 	option = { # formally protest
 		name = ausgleich.new.211.a
@@ -407,6 +415,11 @@ country_event = { #Just Hungary
 		add_political_power = 10
 		
 		clr_country_flag = ausgleich_planned
+		
+		country_event = {
+			id = ausgleich.new.310
+			days = 1
+		}
 	}
 }
 
@@ -418,8 +431,9 @@ country_event = { #Kingdoms & Hungary
 	trigger = {
 		has_country_flag = ausgleich_planned
 		has_country_flag = ausgleich_all_kingdoms
-		NOT = {
-			HUN = {
+		HUN = {
+			has_country_flag = heard_of_kingdoms
+			NOT = {
 				has_country_flag = boycott_ausgleich
 			}
 		}
@@ -436,6 +450,11 @@ country_event = { #Kingdoms & Hungary
 		add_political_power = 10
 		
 		clr_country_flag = ausgleich_planned
+		
+		country_event = {
+			id = ausgleich.new.310
+			days = 1
+		}
 	}
 }
 
@@ -448,6 +467,7 @@ country_event = { # Only Kingdoms
 		has_country_flag = ausgleich_planned
 		has_country_flag = ausgleich_all_kingdoms
 		HUN = {
+			has_country_flag = heard_of_kingdoms
 			has_country_flag = boycott_ausgleich
 		}
 	}
@@ -465,6 +485,11 @@ country_event = { # Only Kingdoms
 		clr_country_flag = ausgleich_planned
 		clr_country_flag = ausgleich_all_kingdoms
 		set_country_flag = ausgleich_kingdoms_no_hungary
+		
+		country_event = {
+			id = ausgleich.new.312
+			days = 1
+		}
 	}
 }
 
@@ -476,8 +501,9 @@ country_event = { # Peoples & Hungary
 	trigger = {
 		has_country_flag = ausgleich_planned
 		has_country_flag = ausgleich_all_peoples
-		NOT = {
-			HUN = {
+		HUN = {
+			has_country_flag = heard_of_peoples
+			NOT = {
 				has_country_flag = boycott_ausgleich
 			}
 		}
@@ -494,6 +520,11 @@ country_event = { # Peoples & Hungary
 		add_political_power = 10
 		
 		clr_country_flag = ausgleich_planned
+		
+		country_event = {
+			id = ausgleich.new.310
+			days = 1
+		}
 	}
 }
 
@@ -506,6 +537,7 @@ country_event = { # Just Peoples
 		has_country_flag = ausgleich_planned
 		has_country_flag = ausgleich_all_peoples
 		HUN = {
+			has_country_flag = heard_of_peoples
 			has_country_flag = boycott_ausgleich
 		}
 	}
@@ -523,6 +555,11 @@ country_event = { # Just Peoples
 		clr_country_flag = ausgleich_planned
 		clr_country_flag = ausgleich_all_peoples
 		set_country_flag = ausgleich_all_peoples_no_hungary
+		
+		country_event = {
+			id = ausgleich.new.315
+			days = 1
+		}
 	}
 }
 
@@ -538,30 +575,67 @@ country_event = { #Make AU-HU great again speech
 
 	option = { # how insolent
 		name = ausgleich.new.310.a
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # send him home
 		name = ausgleich.new.310.b
 		trigger = { has_country_flag = ausgleich_just_hungary }
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # he's right though, isn't he?
 		name = ausgleich.new.310.c
 		trigger = { has_country_flag = ausgleich_just_hungary }
+		
+		set_country_flag = Ausgleich_Dualism_Path
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # send him home
 		name = ausgleich.new.310.e
 		trigger = { has_country_flag = ausgleich_all_kingdoms }
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # he's right though, isn't he?
 		name = ausgleich.new.310.f
 		trigger = { has_country_flag = ausgleich_all_kingdoms }
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # send him home
 		name = ausgleich.new.310.g
 		trigger = { has_country_flag = ausgleich_all_peoples }
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 	option = { # he's right though, isn't he?
 		name = ausgleich.new.310.h
 		trigger = { has_country_flag = ausgleich_all_peoples }
+		
+		country_event = {
+			id = ausgleich.new.311
+			days = 1
+		}
 	}
 }
 
@@ -578,15 +652,23 @@ country_event = { #Hungarian Demands - Reparation Payments
 	}
 	option = { # the Illyrians should pay (absent)
 		name = ausgleich.new.311.b
+		trigger = { has_country_flag = ausgleich_just_hungary }
 	}
 	option = { # the Illyrians should pay (present)
 		name = ausgleich.new.311.c
+		trigger = {
+			OR = {
+				has_country_flag = ausgleich_all_kingdoms
+				has_country_flag = ausgleich_all_peoples
+			}
+		}
 	}
 	option = { # point out that they pay less taxes
 		name = ausgleich.new.311.e
 	}
 	option = { # secretly offer them to take back Cro-Sla
 		name = ausgleich.new.311.f
+		trigger = { has_country_flag = Ausgleich_Dualism_Path }
 	}
 }
 

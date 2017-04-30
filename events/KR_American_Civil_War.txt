@@ -11084,6 +11084,7 @@ country_event = {
 }
 
 ### The Seizing of the St. Louis Union Station
+
 country_event = {# St. Louis is ripe for the taking
 	id = amcivwar.400
 	title = amcivwar.400.t
@@ -11113,6 +11114,13 @@ country_event = {# St. Louis is ripe for the taking
 				}
 			}
 		}
+		NOT = {
+			has_global_flag = ACW_stuff_happens2
+		}
+	}
+	
+	immediate = {
+		set_global_flag = ACW_stuff_happens2
 	}
 
 	mean_time_to_happen = { days = 10 }
@@ -11246,7 +11254,7 @@ country_event = {# The Battle of the Union Station
 		}
 	}
 
-	mean_time_to_happen = { days = 14 }
+	mean_time_to_happen = { days = 5 }
 
 	fire_only_once = yes
 
@@ -11486,3 +11494,839 @@ country_event = {# Loses 2
 		}
 	}
 }
+
+### The Appalachian Grinder
+
+country_event = {# Ongoing protests in Washington
+	id = amcivwar.407
+	title = amcivwar.407.t
+	desc = amcivwar.407.d
+	picture = USA_Peoples_March
+
+	trigger = {
+		OR = {
+			AND = {
+				tag = CSA
+				owns_state = 395
+				has_war_with = USA
+				has_global_flag = ACW_CSA
+				USA = {
+					controls_state = 361
+					owns_state = 361
+				}
+			}
+			AND = {
+				tag = TEX
+				owns_state = 372
+				has_war_with = USA
+				has_global_flag = ACW_AUS
+				USA = {
+					controls_state = 361
+					owns_state = 361
+				}
+			}
+		}
+		NOT = {
+			has_global_flag = ACW_stuff_happens2
+		}
+	}
+	
+	immediate = {
+		set_global_flag = ACW_stuff_happens2
+	}
+
+	mean_time_to_happen = { days = 5 }
+
+	fire_only_once = yes
+
+	option = {
+		name = amcivwar.407.a # Give the order to strike
+		ai_chance = { factor = 90 }
+		add_manpower = -20000
+		add_political_power = -25
+		set_country_flag = ACW_washington_armed
+		USA = {
+			country_event = { id = amcivwar.408 days = 2 }
+		}
+	}
+
+	option = {
+		name = amcivwar.407.b # We can't do this
+		ai_chance = { factor = 10 }
+	}
+}
+country_event = {# Ongoing demonstrations in Washington
+	id = amcivwar.408
+	title = amcivwar.408.t
+	desc = amcivwar.408.d
+	picture = USA_Peoples_March
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.408.a
+		ai_chance = { factor = 60 }
+		add_manpower = -20000
+		add_political_power = -50
+		set_country_flag = ACW_washington_army
+	}
+
+	option = {
+		name = amcivwar.408.b
+		ai_chance = { factor = 40 }
+		add_political_power = 25
+		set_country_flag = ACW_washington_cops
+	}
+}
+country_event = {# Arm our friends in Washington?
+	id = amcivwar.409
+	title = amcivwar.409.t
+	desc = amcivwar.409.d
+	picture = USA_Peoples_March
+
+	trigger = {
+		OR = {
+			AND = {
+				tag = CSA
+				owns_state = 395
+				has_war_with = USA
+				has_global_flag = ACW_CSA
+				NOT = {
+					has_country_flag = ACW_washington_expedition
+				}
+				TEX = {
+					has_country_flag = ACW_washington_expedition
+				}
+				USA = {
+					OR = {
+						has_country_flag = ACW_washington_army
+						has_country_flag = ACW_washington_cops
+					}
+				}
+			}
+			AND = {
+				tag = TEX
+				owns_state = 372
+				has_war_with = USA
+				has_global_flag = ACW_AUS
+				NOT = {
+					has_country_flag = ACW_washington_expedition
+				}
+				CSA = {
+					has_country_flag = ACW_washington_expedition
+				}
+				USA = {
+					OR = {
+						has_country_flag = ACW_washington_army
+						has_country_flag = ACW_washington_cops
+					}
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 10 }
+
+	fire_only_once = yes
+
+	option = {
+		name = amcivwar.409.a # Arm our demonstrators
+		ai_chance = { factor = 80 }
+		add_manpower = -20000
+		add_political_power = -25
+		set_country_flag = ACW_expedition
+	}
+
+	option = {
+		name = amcivwar.409.b # That would be horrible!
+		ai_chance = { factor = 20 }
+	}
+}
+country_event = {# The People's March
+	id = amcivwar.410
+	title = amcivwar.410.t
+	desc = amcivwar.410.d
+	picture = USA_Peoples_March
+
+	trigger = {
+		tag = USA
+		OR = {
+			CSA = {
+				has_country_flag = ACW_washington_expedition
+			}
+			TEX  = {
+				has_country_flag = ACW_washington_expedition
+			}
+		}
+		USA = {
+			OR = {
+				has_country_flag = ACW_washington_army
+				has_country_flag = ACW_washington_cops
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 10 }
+
+	fire_only_once = yes
+
+	option = {
+		name = amcivwar.410.a
+		hidden_effect = {
+			if = {
+				limit = {
+					AND = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_cops
+						}
+					}
+					NOT = {
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						TEX = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.412 } }
+					}
+					20 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_cops
+						}
+					}
+					NOT = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						CSA = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.412 } }
+					}
+					20 = {
+						CSA = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_cops
+						}
+					}
+				}
+				random_list = {
+					40 = {
+						TEX = { country_event = { id = amcivwar.411 } }
+						CSA = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.413 } }
+					}
+					40 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						CSA = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.413 } }
+					}
+					20 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						CSA = { country_event = { id = amcivwar.413 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_army
+						}
+					}
+					NOT = {
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+					}
+				}
+				random_list = {
+					50 = {
+						TEX = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.412 } }
+					}
+					50 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_army
+						}
+					}
+					NOT = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+					}
+				}
+				random_list = {
+					50 = {
+						CSA = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.412 } }
+					}
+					50 = {
+						CSA = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						TEX = {
+							has_country_flag = ACW_washington_expedition
+						}
+						CSA = {
+							has_country_flag = ACW_washington_expedition
+						}
+						USA = {
+							has_country_flag = ACW_washington_army
+						}
+					}
+				}
+				random_list = {
+					30 = {
+						TEX = { country_event = { id = amcivwar.411 } }
+						CSA = { country_event = { id = amcivwar.412 } }
+						USA = { country_event = { id = amcivwar.413 } }
+					}
+					30 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						CSA = { country_event = { id = amcivwar.411 } }
+						USA = { country_event = { id = amcivwar.413 } }
+					}
+					40 = {
+						TEX = { country_event = { id = amcivwar.412 } }
+						CSA = { country_event = { id = amcivwar.413 } }
+						USA = { country_event = { id = amcivwar.411 } }
+					}
+				}
+			}
+		}
+		TEX = {
+			clr_country_flag = ACW_washington_expedition
+		}
+		CSA = {
+			clr_country_flag = ACW_washington_expedition
+		}
+		USA = {
+			clr_country_flag = ACW_washington_army
+			clr_country_flag = ACW_washington_cops
+		}
+	}
+}
+country_event = {
+	id = amcivwar.411
+	title = amcivwar.411.t
+	desc = amcivwar.411.d
+	picture = USA_Peoples_March
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.411.a
+		add_political_power = 50
+		hidden_effect = {
+			load_oob = USA_WASHINGTON_WIN
+		}
+	}
+}
+country_event = {# Loses 1
+	id = amcivwar.412
+	title = amcivwar.412.t
+	desc = amcivwar.412.d
+	picture = USA_Peoples_March
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.412.a
+		add_political_power = -25
+		hidden_effect = {
+			load_oob = USA_WASHINGTON_LOSE1
+		}
+	}
+}
+country_event = {# Loses 2
+	id = amcivwar.413
+	title = amcivwar.413.t
+	desc = amcivwar.413.d
+	picture = USA_Peoples_March
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.413.a
+		add_political_power = -25
+		hidden_effect = {
+			load_oob = USA_WASHINGTON_LOSE2
+		}
+	}
+}
+
+### The Siege of Wall Street
+
+country_event = { # Wall Street is under siege!
+	id = amcivwar.414
+	title = amcivwar.414.t
+	desc = amcivwar.414.d
+	picture = USA_Wall_Street
+
+	trigger = {
+		tag = USA
+		owns_state = 395
+		has_war_with = CSA
+		has_global_flag = ACW_CSA
+		CSA = {
+			controls_state = 358
+			owns_state = 358
+		}
+		NOT = {
+			has_global_flag = ACW_things_happen
+		}
+	}
+
+	mean_time_to_happen = { days = 5 }
+
+	fire_only_once = yes
+	
+	immediate = {
+		set_global_flag = ACW_things_happen
+	}
+
+	option = {
+		name = amcivwar.414.a # Prepare an expedition
+		ai_chance = { factor = 70 }
+		add_manpower = -10000
+		add_political_power = -25
+		set_country_flag = ACW_wall_street_expedition
+		CSA = {
+			country_event = { id = amcivwar.408 days = 2 }
+		}
+	}
+
+	option = {
+		name = amcivwar.414.b # Too much effort
+		ai_chance = { factor = 30 }
+	}
+}
+
+country_event = {# We have Wall Street under siege!
+	id = amcivwar.415
+	title = amcivwar.415.t
+	desc = amcivwar.415.d
+	picture = USA_Wall_Street
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.415.a
+		ai_chance = { factor = 50 }
+		add_manpower = -10000
+		add_political_power = -50
+		set_country_flag = ACW_wall_street_secure
+	}
+
+	option = {
+		name = amcivwar.415.b
+		ai_chance = { factor = 50 }
+		add_political_power = 25
+		set_country_flag = ACW_wall_street_siege
+	}
+}
+country_event = {# The Siege of Wall Street
+	id = amcivwar.416
+	title = amcivwar.416.t
+	desc = amcivwar.416.d
+	picture = USA_Wall_Street
+
+	trigger = {
+		tag = CSA
+		USA = {
+			has_country_flag = ACW_wall_street_expedition
+		}
+		OR = {
+			has_country_flag = ACW_wall_street_secure
+			has_country_flag = ACW_wall_street_siege
+		}
+	}
+
+	mean_time_to_happen = { days = 4 }
+
+	fire_only_once = yes
+
+	option = {
+		name = amcivwar.416.a
+		hidden_effect = {
+			if = {
+				limit = {
+					AND = {
+						USA = {
+							has_country_flag = ACW_wall_street_expedition
+						}
+						CSA = {
+							has_country_flag = ACW_wall_street_secure
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						CSA = { country_event = { id = amcivwar.419 } }
+						USA = { country_event = { id = amcivwar.420 } }
+					}
+					20 = {
+						CSA = { country_event = { id = amcivwar.418 } }
+						USA = { country_event = { id = amcivwar.417 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						USA = {
+							has_country_flag = ACW_wall_street_expedition
+						}
+						CSA = {
+							has_country_flag = ACW_wall_street_siege
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						USA = { country_event = { id = amcivwar.417 } }
+						CSA = { country_event = { id = amcivwar.418 } }
+					}
+					20 = {
+						CSA = { country_event = { id = amcivwar.419 } }
+						USA = { country_event = { id = amcivwar.420 } }
+					}
+				}
+			}
+		}
+		CSA = {
+			clr_country_flag = ACW_wall_street_secure
+			clr_country_flag = ACW_wall_street_siege
+		}
+		USA = {
+			clr_country_flag = ACW_wall_street_expedition
+		}
+	}
+}
+country_event = {# USA Wins
+	id = amcivwar.417
+	title = amcivwar.417.t
+	desc = amcivwar.417.d
+	picture = USA_Wall_Street
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.417.a
+		add_political_power = 50
+		hidden_effect = {
+			load_oob = USA_WALLSTREET_USA
+		}
+		navy_experience = 10
+	}
+}
+country_event = {# CSA loses
+	id = amcivwar.418
+	title = amcivwar.418.t
+	desc = amcivwar.418.d
+	picture = USA_Wall_Street
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.418.a
+		add_political_power = -25
+		remove_unit_leader = 962
+	}
+}
+country_event = {# CSA wins
+	id = amcivwar.419
+	title = amcivwar.419.t
+	desc = amcivwar.419.d
+	picture = USA_Wall_Street
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.419.a
+		hidden_effect = {
+			load_oob = USA_WALLSTREET_CSA
+		}
+		add_political_power = 25
+		army_experience = 10
+	}
+}
+country_event = {# USA loses
+	id = amcivwar.420
+	title = amcivwar.420.t
+	desc = amcivwar.420.d
+	picture = USA_Wall_Street
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.420.a
+		add_political_power = -25
+		remove_unit_leader = 961
+	}
+}
+
+### The Second Battle of Fort Sumter
+
+country_event = { # Fort Sumter is under attack!
+	id = amcivwar.421
+	title = amcivwar.421.t
+	desc = amcivwar.421.d
+	picture = USA_Fort_Sumter
+
+	trigger = {
+		tag = USA
+		owns_state = 395
+		has_war_with = TEX
+		has_global_flag = ACW_AUS
+		TEX = {
+			controls_state = 364
+			owns_state = 364
+		}
+		NOT = {
+			has_global_flag = ACW_things_happen
+		}
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	fire_only_once = yes
+	
+	immediate = {
+		set_global_flag = ACW_things_happen
+	}
+
+	option = {
+		name = amcivwar.421.a # Attempt breakout!
+		ai_chance = { factor = 70 }
+		add_manpower = -10000
+		add_political_power = -25
+		set_country_flag = ACW_fort_sumter_breakout
+		CSA = {
+			country_event = { id = amcivwar.408 days = 2 }
+		}
+	}
+
+	option = {
+		name = amcivwar.421.b # Too much effort
+		ai_chance = { factor = 30 }
+	}
+}
+
+country_event = {# Fort Sumter is under siege!
+	id = amcivwar.422
+	title = amcivwar.422.t
+	desc = amcivwar.422.d
+	picture = USA_Fort_Sumter
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.422.a
+		ai_chance = { factor = 50 }
+		add_manpower = -10000
+		add_political_power = -50
+		set_country_flag = ACW_fort_sumter_blockade
+	}
+
+	option = {
+		name = amcivwar.422.b
+		ai_chance = { factor = 50 }
+		add_political_power = 25
+		set_country_flag = ACW_fort_sumter_bombard
+	}
+}
+country_event = {# The second battle of Fort Sumter
+	id = amcivwar.423
+	title = amcivwar.423.t
+	desc = amcivwar.423.d
+	picture = USA_Fort_Sumter
+
+	trigger = {
+		tag = TEX
+		USA = {
+			has_country_flag = ACW_fort_sumter_breakout
+		}
+		OR = {
+			has_country_flag = ACW_fort_sumter_blockade
+			has_country_flag = ACW_fort_sumter_bombard
+		}
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	fire_only_once = yes
+
+	option = {
+		name = amcivwar.423.a
+		hidden_effect = {
+			if = {
+				limit = {
+					AND = {
+						USA = {
+							has_country_flag = ACW_fort_sumter_breakout
+						}
+						TEX = {
+							has_country_flag = ACW_fort_sumter_blockade
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						TEX = { country_event = { id = amcivwar.425 } }
+						USA = { country_event = { id = amcivwar.426 } }
+					}
+					20 = {
+						TEX = { country_event = { id = amcivwar.427 } }
+						USA = { country_event = { id = amcivwar.424 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						USA = {
+							has_country_flag = ACW_fort_sumter_breakout
+						}
+						CSA = {
+							has_country_flag = ACW_fort_sumter_bombard
+						}
+					}
+				}
+				random_list = {
+					80 = {
+						USA = { country_event = { id = amcivwar.424 } }
+						TEX = { country_event = { id = amcivwar.427 } }
+					}
+					20 = {
+						TEX = { country_event = { id = amcivwar.425 } }
+						USA = { country_event = { id = amcivwar.426 } }
+					}
+				}
+			}
+		}
+		CSA = {
+			clr_country_flag = ACW_fort_sumter_blockade
+			clr_country_flag = ACW_fort_sumter_bombard
+		}
+		USA = {
+			clr_country_flag = ACW_fort_sumter_breakout
+		}
+	}
+}
+country_event = {# USA Wins
+	id = amcivwar.424
+	title = amcivwar.424.t
+	desc = amcivwar.424.d
+	picture = USA_Fort_Sumter
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.424.a
+		add_political_power = 50
+		hidden_effect = {
+			load_oob = USA_FORTSUMTER_USA
+		}
+		navy_experience = 10
+	}
+}
+country_event = {# TEX wins
+	id = amcivwar.425
+	title = amcivwar.425.t
+	desc = amcivwar.425.d
+	picture = USA_Fort_Sumter
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.425.a
+		add_political_power = 25
+		hidden_effect = {
+			load_oob = USA_FTSUMTER_TEX
+		}
+		army_experience = 10
+	}
+}
+country_event = { # USA loses
+	id = amcivwar.426
+	title = amcivwar.426.t
+	desc = amcivwar.426.d
+	picture = USA_Fort_Sumter
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.426.a
+		add_political_power = -25
+		remove_unit_leader = 961
+	}
+}
+country_event = {# TEX loses
+	id = amcivwar.427
+	title = amcivwar.427.t
+	desc = amcivwar.427.d
+	picture = USA_Fort_Sumter
+
+	is_triggered_only = yes
+
+	option = {
+		name = amcivwar.427.a
+		add_political_power = -25
+		remove_unit_leader = 960
+	}
+}
+
+### The Technocrat Militias

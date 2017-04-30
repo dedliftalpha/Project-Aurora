@@ -6,7 +6,7 @@
 
 add_namespace = pacificstates
 
-country_event = { # The Capital
+country_event = {# The Capital
 	id = pacificstates.2
 	title = pacificstates.2.t
 	desc = pacificstates.2.d
@@ -74,7 +74,7 @@ country_event = { # The Capital
 		set_capital = 797
 	}
 }
-country_event = { # The name of Washington State
+country_event = {# The name of Washington State
 	id = pacificstates.3
 	title = pacificstates.3.t
 	desc = pacificstates.3.d
@@ -94,27 +94,21 @@ country_event = { # The name of Washington State
 
 	option = {
 		name = pacificstates.3.a
-
 		ai_chance = {
 			factor = 80
 		}
-
-		add_timed_idea = { idea = rename_columbia days = 30 }
+		386 = { set_state_name = "Columbia" }
 		add_opinion_modifier = { target = USA modifier = CAL_RENAME } # -20
 	}
-
 	option = {
 		name = pacificstates.3.b
-
 		ai_chance = {
 			factor = 20
 		}
-
-		add_timed_idea = { idea = no_rename_columbia days = 30 }
 		add_opinion_modifier = { target = USA modifier = CAL_NO_RENAME } # 20
 	}
 }
-country_event = { # The Hughes Airshow
+country_event = {# The Hughes Airshow
 	id = pacificstates.4
 	title = pacificstates.4.t
 	desc = pacificstates.4.d
@@ -139,7 +133,7 @@ country_event = { # The Hughes Airshow
 		add_political_power = 40
 	}
 }
-country_event = { # PSA wins Long and the AUS escape to South America
+country_event = {# PSA wins Long and the AUS escape to South America
 	id = pacificstates.5
 	title = pacificstates.5.t
 	desc = pacificstates.5.d
@@ -164,7 +158,7 @@ country_event = { # PSA wins Long and the AUS escape to South America
 		add_political_power = 20
 	}
 }
-country_event = { # Reed escapes to France
+country_event = {# Reed escapes to France
 	id = pacificstates.6
 	title = pacificstates.6.t
 	desc = pacificstates.6.d
@@ -191,7 +185,7 @@ country_event = { # Reed escapes to France
 		add_opinion_modifier = { target = FRA modifier = REED_ESCAPES } # -25
 	}
 }
-country_event = { # PSA industries open up reserves
+country_event = {# PSA industries open up reserves
 	id = pacificstates.13
 	title = pacificstates.13.t
 	desc = pacificstates.13.d
@@ -215,7 +209,7 @@ country_event = { # PSA industries open up reserves
 		hidden_effect = { country_event = { id = pacificstates.14 days = 3 }}
 	}
 }
-country_event = { # Conscription or volunteer
+country_event = {# Conscription or volunteer
 	id = pacificstates.14
 	title = pacificstates.14.t
 	desc = pacificstates.14.d
@@ -249,7 +243,7 @@ country_event = { # Conscription or volunteer
 		hidden_effect = { country_event = { id = pacificstates.15 days = 4 }}
 	}
 }
-country_event = { # Bank of the Pacific
+country_event = {# Bank of the Pacific
 	id = pacificstates.15
 	title = pacificstates.15.t
 	desc = pacificstates.15.d
@@ -263,7 +257,7 @@ country_event = { # Bank of the Pacific
 		add_timed_idea = { idea = bank_of_the_pacific days = 730 }
 	}
 }
-country_event = { # USA Assets seized
+country_event = {# USA Assets seized
 	id = pacificstates.16
 	title = pacificstates.16.t
 	desc = pacificstates.16.d
@@ -286,7 +280,7 @@ country_event = { # USA Assets seized
 		add_timed_idea = { idea = usa_assets_seized days = 30 }
 	}
 }
-country_event = { # A new flag for the new pacific states ?
+country_event = {# A new flag for the new pacific states ?
 	id = pacificstates.8
 	title = pacificstates.8.t
 	desc = pacificstates.8.d
@@ -298,11 +292,12 @@ country_event = { # A new flag for the new pacific states ?
 		controls_state = 797
 		controls_state = 798
 		controls_state = 386 
-	OR = {
-		AND = { owns_state = 379 controls_state = 379 }
-		AND = { owns_state = 387 controls_state = 387 }
+		OR = {
+			AND = { owns_state = 379 controls_state = 379 }
+			AND = { owns_state = 387 controls_state = 387 }
+		}
+		date > 1937.1.1 
 	}
-	date > 1937.1.1 }
 
 	mean_time_to_happen = { days = 5 }
 
@@ -327,9 +322,79 @@ country_event = { # A new flag for the new pacific states ?
 		add_political_power = -20
 	}
 }
+country_event = {# Royal Visit to the Pacific States(Canada)
+	id = pacificstates.20
+	title = pacificstates.20.t
+	desc = pacificstates.20.d
+	picture = GFX_report_event_spain_civil_war_soldiers
 
+	fire_only_once = yes
 
+	trigger = {
+		tag = CAN
+		CAL = {
+			has_completed_focus = CAL_canadian_freindship
+		}
+	}
 
+	mean_time_to_happen = {
+		days = 365
+	}
+
+	option = {# Royal Charm meets Hollywood Glamor
+		name = pacificstates.20.a
+		add_political_power = 50
+		hidden_effect = {
+			CAL = { country_event = { id = pacificstates.21 days = 2 }}
+		}
+	}
+}
+country_event = {# Royal Visit to the Pacific States(PSA)
+	id = pacificstates.21
+	title = pacificstates.21.t
+	desc = pacificstates.21.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = {# Who doesn't love a visiting royal!
+		name = pacificstates.21.a
+		add_political_power = 50
+		add_opinion_modifier = { target = CAN modifier = CAN_royal_visit }
+		CAN = { add_opinion_modifier = { target = ROOT modifier = CAN_royal_visit } }		
+	}
+}
+country_event = {# Referendum to split California
+	id = pacificstates.22
+	title = pacificstates.22.t
+	desc = pacificstates.22.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = CAL
+		has_completed_focus = CAL_new_nationalism
+		date > 1940.1.1 
+	}
+
+	mean_time_to_happen = {
+		days = 365
+	}
+
+	option = {# Split the State!
+		name = pacificstates.22.a
+		ai_chance = { factor = 80 }
+		add_political_power = 60
+		378 = { set_state_name = "Jefferson" }
+		829 = { set_state_name = "Mojave" }
+	}
+	option = {# Don't Split the State
+		name = pacificstates.22.b
+		ai_chance = { factor = 20 }
+		add_political_power = -40
+	}	
+}
 ###############################
 ### Foreign Policies Events ###
 ###############################

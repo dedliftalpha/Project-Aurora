@@ -774,6 +774,8 @@ country_event = { #Bohemian Demands - Slovakia
 	option = { # Send for a Slovak delegation
 		name = ausgleich.new.312.c
 		
+		set_country_flag = slovak_state_promised
+		
 		country_event = {
 			id = ausgleich.new.313
 			days = 1
@@ -809,6 +811,8 @@ country_event = { #Galician Demands - Transcarpathia (if Slovakia happens)
 	option = { # Let's do this
 		name = ausgleich.new.313.c
 		
+		set_country_flag = transcarpathia_promised
+		
 		country_event = {
 			id = ausgleich.new.314
 			days = 1
@@ -834,6 +838,7 @@ country_event = { #Illyrian Demands - Backa (if Slovakia happens)
 	}
 	option = { # I cannot ask this of the Hungarians here and now
 		name = ausgleich.new.314.b
+		trigger = { has_country_flag = ausgleich_HUN_present }
 		
 		country_event = {
 			id = ausgleich.new.340
@@ -843,6 +848,8 @@ country_event = { #Illyrian Demands - Backa (if Slovakia happens)
 	}
 	option = { # Let's do this
 		name = ausgleich.new.314.c
+		
+		set_country_flag = backa_promised
 		
 		country_event = {
 			id = ausgleich.new.340
@@ -859,7 +866,7 @@ country_event = { #CzeSlo Demands - Slovakia
 	fire_only_once = yes
 	is_triggered_only = yes
 
-	option = { # Aak Hungary
+	option = { # Ask Hungary
 		name = ausgleich.new.315.a
 		trigger = { has_country_flag = ausgleich_HUN_present }
 		
@@ -871,9 +878,7 @@ country_event = { #CzeSlo Demands - Slovakia
 	option = { # Let's do this - Slovak majority territory
 		name = ausgleich.new.315.b
 		
-		BOM = {
-			add_ideas = BOM_ausgleich_slovak_state
-		}
+		set_country_flag = slovak_state_promised
 		
 		country_event = {
 			id = ausgleich.new.316
@@ -882,9 +887,12 @@ country_event = { #CzeSlo Demands - Slovakia
 	}
 	option = { # Let's do this - down to the Danube
 		name = ausgleich.new.315.b
+		trigger = { NOT = { has_country_flag = ausgleich_HUN_present } }
 		
-		BOM = {
-			add_ideas = BOM_ausgleich_slovak_state
+		set_country_flag = slovak_state_promised
+		
+		SVK = {
+			add_state_core = 664
 		}
 		
 		country_event = {
@@ -931,9 +939,7 @@ country_event = { #Ruthenian Demands - Transcarpathia
 	option = { # Let's do this
 		name = ausgleich.new.317.b
 		
-		GAL = {
-			add_ideas = GAL_ausgleich_transcarpathian_claims
-		}
+		set_country_flag = transcarpathia_promised
 		
 		country_event = {
 			id = ausgleich.new.318
@@ -962,9 +968,7 @@ country_event = { #Illyrian Demands - Backa
 	option = { # Let's do this - Majority territory
 		name = ausgleich.new.318.b
 		
-		ILL = {
-			add_ideas = ILL_ausgleich_backan_claims
-		}
+		set_country_flag = backa_promised
 		
 		country_event = {
 			id = ausgleich.new.319
@@ -973,10 +977,9 @@ country_event = { #Illyrian Demands - Backa
 	}
 	option = { # Let's do this - All of the Backa
 		name = ausgleich.new.318.c
+		trigger = { NOT = { has_country_flag = ausgleich_HUN_present } }
 		
-		ILL = {
-			add_ideas = ILL_ausgleich_backan_claims
-		}
+		set_country_flag = backa_promised
 		
 		country_event = {
 			id = ausgleich.new.319
@@ -1005,13 +1008,32 @@ country_event = { #Romanian Demands - Transylvania
 	option = { # Let's do this - Majority territory
 		name = ausgleich.new.319.b
 		
+		set_country_flag = transylvania_promised
+		
+		TRS = {
+			add_state_core = 76
+			add_state_core = 82
+			add_state_core = 84
+		}
+		
 		country_event = {
 			id = ausgleich.new.350
 			days = 1
 		}
 	}
-	option = { # Let's do this - All of the it
+	option = { # Let's do this - All of it
 		name = ausgleich.new.319.c
+		trigger = { NOT = { has_country_flag = ausgleich_HUN_present } }
+		
+		set_country_flag = transylvania_promised
+		
+		TRS = {
+			add_state_core = 76
+			add_state_core = 82
+			add_state_core = 83
+			add_state_core = 84
+			add_state_core = 789
+		}
 		
 		country_event = {
 			id = ausgleich.new.350
@@ -1246,6 +1268,64 @@ country_event = { #End of the Ausgleich - successful HUN + states
 
 	option = { # Good to know.
 		name = ausgleich.new.340.a
+		
+		if = {
+			limit = {
+				has_country_flag = slovak_state_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.342
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.343
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = transcarpathia_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.344
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.345
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = backa_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.346
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.347
+						days = 2
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1259,6 +1339,64 @@ country_event = { #End of the Ausgleich - successful only states
 
 	option = { # Good to know.
 		name = ausgleich.new.341.a
+		
+		if = {
+			limit = {
+				has_country_flag = slovak_state_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.342
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.343
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = transcarpathia_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.344
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.345
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = backa_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.346
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.347
+						days = 2
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1272,6 +1410,9 @@ country_event = { #BOM: Slovaks
 
 	option = { # Good to know.
 		name = ausgleich.new.342.a
+		add_political_power = 100
+		
+		add_ideas = BOM_ausgleich_slovak_state
 	}
 }
 
@@ -1298,6 +1439,9 @@ country_event = { #GAL: Transcarpathia
 
 	option = { # Good to know.
 		name = ausgleich.new.344.a
+		add_political_power = 100
+		
+		add_ideas = GAL_ausgleich_transcarpathian_claims
 	}
 }
 
@@ -1324,6 +1468,9 @@ country_event = { #ILL: Backa
 
 	option = { # Good to know.
 		name = ausgleich.new.346.a
+		add_political_power = 100
+		
+		add_ideas = ILL_ausgleich_backan_claims
 	}
 }
 
@@ -1352,6 +1499,64 @@ country_event = { #End of the Ausgleich - successful HUN + states
 
 	option = { # Good to know.
 		name = ausgleich.new.350.a
+		
+		if = {
+			limit = {
+				has_country_flag = slovak_state_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.352
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.353
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = transcarpathia_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.354
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.355
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = backa_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.356
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.357
+						days = 2
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1365,6 +1570,64 @@ country_event = { #End of the Ausgleich - successful only states
 
 	option = { # Good to know.
 		name = ausgleich.new.351.a
+		
+		if = {
+			limit = {
+				has_country_flag = slovak_state_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.352
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.353
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = transcarpathia_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.354
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.355
+						days = 2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = backa_promised
+			}
+			BOM = {
+				country_event = {
+					id = ausgleich.new.356
+					days = 2
+				}
+			}
+			else = {
+				BOM = {
+					country_event = {
+						id = ausgleich.new.357
+						days = 2
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1378,6 +1641,9 @@ country_event = { #BOM: Slovaks
 
 	option = { # Good to know.
 		name = ausgleich.new.352.a
+		add_political_power = 100
+		
+		add_ideas = BOM_ausgleich_slovak_state
 	}
 }
 
@@ -1404,6 +1670,9 @@ country_event = { #GAL: Transcarpathia
 
 	option = { # Good to know.
 		name = ausgleich.new.354.a
+		add_political_power = 100
+		
+		add_ideas = GAL_ausgleich_transcarpathian_claims
 	}
 }
 
@@ -1430,6 +1699,9 @@ country_event = { #ILL: Backa
 
 	option = { # Good to know.
 		name = ausgleich.new.356.a
+		add_political_power = 100
+		
+		add_ideas = ILL_backan_claims
 	}
 }
 

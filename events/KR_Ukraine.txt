@@ -1343,8 +1343,6 @@ country_event = { #Kingdom of Romania refuses!
 	title = ukraine.48.t
 	desc = ukraine.48.d
 
-	is_triggered_only = yes
-
 	option = {
 		name = ukraine.48.a #Then it is war
 		ai_chance = {
@@ -1363,4 +1361,354 @@ country_event = { #Kingdom of Romania refuses!
 		}
 		add_political_power = -40		
 	}
+}
+
+country_event = { # An Heir to King Vasily?
+	id = ukraine.52
+	title = ukraine.52.t
+	desc = ukraine.52.d
+
+	is_triggered_only = yes	
+
+	option = {
+		name = ukraine.52.a
+		ai_chance = { factor = 40 }
+
+		add_political_power = -60
+		set_country_flag = UKR_LEO
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_stefan_hab } # 20
+		add_opinion_modifier = { target = AUS modifier = UKR_AUS_stefan_hab } # 30
+
+		hidden_effect = { UKR = { country_event = { days = 100 id = ukraine.53 }}}
+	}
+
+	option = {
+		name = ukraine.52.b
+		ai_chance = { factor = 60 }
+
+		add_political_power = 60
+		set_country_flag = UKR_DAN
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_daniil_sko } # -20
+		add_opinion_modifier = { target = AUS modifier = UKR_AUS_daniil_sko } # -30
+
+		hidden_effect = { UKR = { country_event = { days = 100 id = ukraine.53 }}}
+	}
+}
+
+country_event = { # A New Minister of Security?
+	id = ukraine.53
+	title = ukraine.53.t
+	desc = ukraine.53.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.53.a
+		ai_chance = { factor = 40 }
+
+		hidden_effect = { remove_ideas_with_trait = security_minister }
+
+		add_ideas = {
+			UKR_Vladimir_Khitrovo_sec_ade
+		}
+	}
+
+	option = {
+		name = ukraine.53.b
+		ai_chance = { factor = 40 }
+
+		hidden_effect = { remove_ideas_with_trait = security_minister }
+
+		add_ideas = {
+			UKR_Vladimir_Chekhovsky_sec_ade
+		}
+	}
+
+	option = {
+		name = ukraine.53.c
+		ai_chance = { factor = 20 }
+		
+		trigger = {
+			has_country_flag = UKR_DAD_HERE	
+			has_country_flag = UKR_DAN				
+		}
+		
+
+		add_political_power = -100
+		set_country_flag = UKR_DAN1
+
+		hidden_effect = { remove_ideas_with_trait = security_minister }
+
+		add_ideas = {
+			UKR_Daniil_Skoropadsky_sec_ade
+		}
+	}
+}
+
+country_event = { # Explosion on the Dnieper
+	id = ukraine.54
+	title = ukraine.54.t
+	desc = ukraine.54.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = UKR
+		has_country_flag = UKR_RIVER_EXPL
+		has_country_flag = UKR_LEO
+		NOT = {
+		has_country_flag = UKR_DAN		
+		}
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = {
+		name = ukraine.54.a
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_VINOUN_CRISIS
+		}
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "E.K.S. Leo Stefan I Habsburg"
+			desc = "POLITICS_LEO_STEFAN_DESC"
+			picture = "Portrait_UKR_Leo_Stefan_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			UKR_Mikhail_Bulgakov_hog_ade
+			UKR_Konstantin_Prisovsky_for_pau
+			UKR_Vladimir_Tarnovsky_eco_sco
+			UKR_Ivan_Feshenko_Chopovsky_sec_sli
+		}
+	}
+
+	option = {
+		name = ukraine.54.b
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_VINOUN_CRISIS
+		}
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "E.K.S. Leo Stefan I Habsburg"
+			desc = "POLITICS_LEO_STEFAN_DESC"
+			picture = "Portrait_UKR_Leo_Stefan_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			UKR_Dmitri_Dontsov_hog_npo
+			UKR_Alexander_Shulgin_for_sco
+			UKR_Sergei_Ostapenko_eco_ade
+			UKR_Vladimir_Khitrovo_sec_ade
+		}
+	}
+
+	option = {
+		name = ukraine.54.c
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_DAD_HERE
+		}
+
+		create_country_leader = {
+			name = "E.K.S. Leo Stefan I Habsburg"
+			desc = "POLITICS_LEO_STEFAN_DESC"
+			picture = "Portrait_UKR_Leo_Stefan_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+		}
+		
+		add_ideas = {
+			UKR_Pavlo_Skoropadsky_hog_pau
+		}	
+	}
+	
+	option = {
+		name = ukraine.54.e
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_NoKhrushchev_success
+		}
+
+		create_country_leader = {
+			name = "E.K.S. Leo Stefan I Habsburg"
+			desc = "POLITICS_LEO_STEFAN_DESC"
+			picture = "Portrait_UKR_Leo_Stefan_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+	}	
+}
+
+country_event = { # Explosion on the Dnieper
+	id = ukraine.55
+	title = ukraine.55.t
+	desc = ukraine.55.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = UKR
+		has_country_flag = UKR_RIVER_EXPL
+		has_country_flag = UKR_DAN
+		NOT = {
+		has_country_flag = UKR_LEO		
+		}		
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = {
+		name = ukraine.55.a
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_VINOUN_CRISIS
+		}
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "E.K.S. Daniil I Skoropadsky"
+			desc = "POLITICS_DANIIL_I_DESC"
+			picture = "Portrait_UKR_DANIIL_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			UKR_Mikhail_Bulgakov_hog_ade
+			UKR_Konstantin_Prisovsky_for_pau
+			UKR_Vladimir_Tarnovsky_eco_sco
+			UKR_Ivan_Feshenko_Chopovsky_sec_sli
+		}
+	}
+
+	option = {
+		name = ukraine.55.b
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_VINOUN_CRISIS
+		}
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "E.K.S. Daniil I Skoropadsky"
+			desc = "POLITICS_DANIIL_I_DESC"
+			picture = "Portrait_UKR_DANIIL_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+
+		add_ideas = {
+			UKR_Dmitri_Dontsov_hog_npo
+			UKR_Alexander_Shulgin_for_sco
+			UKR_Sergei_Ostapenko_eco_ade
+			UKR_Vladimir_Khitrovo_sec_ade
+		}
+	}
+
+	option = {
+		name = ukraine.55.c
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_DAD_HERE
+		}
+
+		create_country_leader = {
+			name = "E.K.S. Daniil I Skoropadsky"
+			desc = "POLITICS_DANIIL_I_DESC"
+			picture = "Portrait_UKR_DANIIL_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+		}
+		
+		add_ideas = {
+			UKR_Pavlo_Skoropadsky_hog_pau
+		}	
+	}
+	
+	option = {
+		name = ukraine.55.e
+		ai_chance = { factor = 25 }
+
+		trigger = {
+			has_country_flag = UKR_NoKhrushchev_success
+		}
+
+		create_country_leader = {
+			name = "E.K.S. Daniil I Skoropadsky"
+			desc = "POLITICS_DANIIL_I_DESC"
+			picture = "Portrait_UKR_DANIIL_I.tga"
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
+		
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+	}	
 }		

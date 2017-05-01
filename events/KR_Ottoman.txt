@@ -27,12 +27,14 @@ country_event = {
 	option = {
 		name = ott.1.a
 
+		hidden_effect = {
 		remove_state_core = 656 # uncore auto-cored Kuwait, Al-Hajara, Jordan
 		remove_state_core = 675
 		remove_state_core = 455
 		add_state_claim = 656
 		add_state_claim = 675
 		add_state_claim = 455
+		}
 		country_event = { id = ott.13 days = 0 }
 	}
 
@@ -98,8 +100,10 @@ news_event = {
 	option = {
 		name = ott.3.a
 
-		remove_ideas = ott_black_monday
-		add_ideas = ott_black_monday1
+		swap_ideas = {
+		remove_idea = ott_black_monday
+		add_idea = ott_black_monday1
+		}
 		add_political_power = 20
 	}
 
@@ -132,8 +136,10 @@ news_event = {
 	option = {
 		name = ott.4.a
 
-		remove_ideas = ott_black_monday1
-		add_ideas = ott_black_monday2
+		swap_ideas = {
+		remove_idea = ott_black_monday1
+		add_idea = ott_black_monday2
+		}
 		add_political_power = 20
 	}
 
@@ -186,7 +192,10 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		tag = OTT
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
 		date > 1940.4.1
 		owns_state = 454
 		has_war = no
@@ -295,14 +304,17 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		tag = OTT
+		OR = {
+			tag = OTT
+			tag = TUR
+		}
 		has_country_flag = ott_jews_settled
 		NOT = { has_idea = ott_jews_idea }
 		owns_state = 454
 	}
 
 	mean_time_to_happen = {
-		days = 30
+		days = 100
 	}
 
 	option = {					#refuse them autonomy
@@ -418,7 +430,6 @@ country_event = {
 						load_oob = OTT_syr
 					}
 				}
-				set_technology = { infantry_weapons = 1 }
 				set_technology = { basic_machine_tools = 1 }
 		add_political_power = 100
 		set_politics = {
@@ -508,7 +519,6 @@ country_event = {
 						load_oob = OTT_irq
 					}
 				}
-				set_technology = { infantry_weapons = 1 }
 				set_technology = { basic_machine_tools = 1 }
 		add_political_power = 100
 		set_capital = 291
@@ -577,7 +587,7 @@ country_event = {
 
 		SYR = { declare_war_on = { target = OTT type = annex_everything	} }
 		IRQ = { declare_war_on = { target = OTT type = annex_everything	} }
-		add_timed_idea = { idea = ott_arab_revolt days = 365 } #countdown to revolt success
+		add_timed_idea = { idea = ott_arab_revolt days = 400 } #countdown to revolt success
 		set_country_flag = arab_revolt
 	}
 }
@@ -644,8 +654,6 @@ country_event = {
 						load_oob = OTT_syr
 					}
 				}
-				set_technology = { infantry_weapons = 1 }
-				set_technology = { basic_machine_tools = 1 }
 		add_political_power = 100
 		set_politics = {
 			ruling_party = authoritarian_democrat
@@ -726,8 +734,6 @@ country_event = {
 						load_oob = OTT_irq
 					}
 				}
-				set_technology = { infantry_weapons = 1 }
-				set_technology = { basic_machine_tools = 1 }
 		add_political_power = 100
 		set_capital = 291
 		add_popularity = {
@@ -794,7 +800,7 @@ country_event = {
 
 		SYR = { declare_war_on = { target = OTT type = annex_everything	} }
 		IRQ = { declare_war_on = { target = OTT type = annex_everything	} }
-		add_timed_idea = { idea = ott_arab_revolt days = 365 } #countdown to revolt success
+		add_timed_idea = { idea = ott_arab_revolt days = 400 } #countdown to revolt success
 		set_country_flag = arab_revolt
 	}
 }
@@ -1132,7 +1138,7 @@ country_event = {
 			add_state_core = 350	# Diyarbakir
 			add_state_core = 352	# Van
 			add_state_core = 680	# Deir-ez-Zor
-			add_state_core = 421	# Kurdistan state
+			add_state_core = 421	# Kermanshah
 			add_state_core = 353	# Erzurum
 			add_state_claim = 419	# Tebriz
 			set_capital = 676		# Mosul
@@ -1200,7 +1206,6 @@ country_event = {
 					}
 					load_oob = KUR
 				}
-				set_technology = { infantry_weapons = 1 }
 				add_popularity = {
 					ideology = paternal_autocrat
 					popularity = 0.3
@@ -1223,7 +1228,9 @@ country_event = {
 
 		set_global_flag = kurdish_revolt
 		set_country_flag = kurd_revolt
+		hidden_effect = {
 		country_event = { id = ott.17 days = 0 } #reaction
+		}
 	}
 }
 
@@ -1245,7 +1252,9 @@ country_event = {
 
 		ai_chance = { factor = 100 }
 		declare_war_on = { target = KUR type = annex_everything	}
+		hidden_effect = {
 		country_event = { id = ott.19 days = 200 } #revolt success event
+		}
 	}
 
 	option = {
@@ -1815,7 +1824,9 @@ country_event = {
 
 		ai_chance = { factor = 40 }
 		add_political_power = -50
+		hidden_effect = {
 		OTT = { country_event = { id = ott.32 days = 30 } } #Hejaz revolts
+		}
 	}
 
 	option = {			# send police
@@ -1829,7 +1840,9 @@ country_event = {
 		reverse_add_opinion_modifier = { target = OMA modifier = ott_hejaz3 } # -10
 		reverse_add_opinion_modifier = { target = TUN modifier = ott_hejaz3 } # -10
 		reverse_add_opinion_modifier = { target = YEM modifier = ott_hejaz3 } # -10
+		hidden_effect = {
 		OTT = { country_event = { id = ott.32 days = 40 } } #Hejaz revolts
+		}
 	}
 
 	option = {			# send army
@@ -1911,7 +1924,9 @@ country_event = {
 		reverse_add_opinion_modifier = { target = TUN modifier = ott_hejaz3 } # -10
 		reverse_add_opinion_modifier = { target = YEM modifier = ott_hejaz3 } # -10
 		declare_war_on = { target = SAU type = annex_everything	}
+		hidden_effect = {
 		EGY = { country_event = { id = ott.34 days = 3 } } # EGY intervention
+		}
 	}
 
 }
@@ -2142,13 +2157,14 @@ country_event = {
 					ideology = authoritarian_democrat_subtype
 					traits = {}
 				}
-				set_technology = { infantry_weapons = 1 }
 				set_technology = { basic_machine_tools = 1 }
 				set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
 			}
 		}
 		set_country_flag = cyprus_revolt
+		hidden_effect = {
 		country_event = { id = ott.40 days = 0 } #reaction
+		}
 	}
 }
 
@@ -2167,7 +2183,9 @@ country_event = { # Ottoman response
 		ai_chance = { factor = 100 }
 		declare_war_on = { target = CYP type = annex_everything }
 		load_oob = OTT_cyp
+		hidden_effect = {
 		country_event = { id = ott.43 days = 300 } #revolt success event
+		}
 	}
 
 	option = {					# they deserve independence
@@ -2493,9 +2511,11 @@ country_event = { # Ottoman response
 
 		ai_chance = { factor = 100 }
 		declare_war_on = { target = ARM type = annex_everything }
+		hidden_effect = {
 		ARM = { set_province_controller = 10403 }
 		ARM = { set_province_controller = 10472 }
 		country_event = { id = ott.51 days = 500 } #revolt success event
+		}
 	}
 
 	option = {					# let it go
@@ -2642,17 +2662,20 @@ country_event = {
 		tag = OTT
 		has_war_with = EGY
 		has_war_with = SAU
-		OR = {
-			EGY = { controls_state = 454 } # Jerusalem
-			SAU = { controls_state = 454 }
+		any_country = {
+			controls_state = 454
+			has_war_with = OTT
+			is_in_faction_with = EGY
 		}
-		OR = {
-			EGY = { controls_state = 554 } # Damascus
-			SAU = { controls_state = 554 }
+		any_country = {
+			controls_state = 554
+			has_war_with = OTT
+			is_in_faction_with = EGY
 		}
-		OR = {
-			EGY = { controls_state = 553 } # Lebanon
-			SAU = { controls_state = 553 }
+		any_country = {
+			controls_state = 553
+			has_war_with = OTT
+			is_in_faction_with = EGY
 		}
 		NOT = { controls_state = 679 } # Hedjaz
 		NOT = { controls_state = 291 } # Baghdad
@@ -3276,7 +3299,11 @@ country_event = {
 		tag = OTT
 		has_war_with = EGY
 		EGY = {	is_subject = no }
-		EGY = { controls_state = 454 } # Jerusalem
+		any_country = {
+			controls_state = 454
+			has_war_with = OTT
+			is_in_faction_with = EGY
+		}
 		NOT = { controls_state = 554 } # Damascus
 		NOT = { controls_state = 553 } # Lebanon
 		NOT = { controls_state = 344 } # Adana !!!
@@ -3296,7 +3323,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 30
+		days = 80
 	}
 
 	option = {					# surrender
@@ -3951,7 +3978,11 @@ country_event = {
 		tag = TUR
 		has_war_with = EGY
 		EGY = {	is_subject = no }
-		EGY = { controls_state = 454 } # Jerusalem
+		any_country = {
+			controls_state = 454
+			has_war_with = TUR
+			is_in_faction_with = EGY
+		}
 		NOT = { controls_state = 554 } # Damascus
 		NOT = { controls_state = 553 } # Lebanon
 		NOT = { controls_state = 344 } # Adana !!!
@@ -5227,6 +5258,7 @@ country_event = {
 		show_ideas_tooltip = OTT_Osman_Kemal_Bey_for_sli
 		show_ideas_tooltip = OTT_Riza_Nur_Pasa_for_pau
 		show_ideas_tooltip = OTT_Zeki_Velidi_Pasa_for_npo
+		hidden_effect = {
 		remove_ideas = OTT_Tevfik_Ruestue_Bey_for_sde
 		remove_ideas = OTT_Osman_Kemal_Bey_for_sli
 		remove_ideas = OTT_Riza_Nur_Pasa_for_pau
@@ -5239,6 +5271,7 @@ country_event = {
 		set_country_flag = Riza_Nur_Pasa_dead
 		set_country_flag = Zeki_Velidi_Pasa_dead
 		country_event = { id = ott.88 days = 5 }
+		}
 	}
 
 	option = {			# allow them to exist
@@ -5246,7 +5279,9 @@ country_event = {
 
 		ai_chance = { factor = 10 }
 		add_political_power = 20
+		hidden_effect = {
 		country_event = { id = ott.92 days = 10 }
+		}
 	}
 
 }
@@ -5265,7 +5300,9 @@ country_event = {
 
 		ai_chance = { factor = 55 }
 		add_political_power = -100
+		hidden_effect = {
 		country_event = { id = ott.89 days = 2 }
+		}
 	}
 
 	option = {			# do nothing
@@ -5273,7 +5310,9 @@ country_event = {
 
 		ai_chance = { factor = 45 }
 		add_political_power = -20
+		hidden_effect = {
 		country_event = { id = ott.91 days = 5 }
+		}
 	}
 
 }
@@ -5291,7 +5330,9 @@ country_event = {
 		name = ott.89.a
 
 		add_political_power = -150
+		hidden_effect = {
 		country_event = { id = ott.90 days = 3 }
+		}
 	}
 
 }
@@ -5326,7 +5367,7 @@ country_event = {
 		remove_ideas_with_trait = head_of_government
 		add_ideas = OTT_Mehmed_Cavid_Bey_hog_ade
 		remove_ideas_with_trait = foreign_minister
-		add_ideas = OTT_Koeprueluezade_Mehmed_Fuad_Pasa_for_mli
+		add_ideas = OTT_Mehmed_Suekrue_Pasa_for_pau
 		remove_ideas_with_trait = economy_minister
 		add_ideas = OTT_Mahmud_Celal_Pasa_eco_ade
 		remove_ideas_with_trait = security_minister
@@ -5384,8 +5425,11 @@ country_event = {
 
 		ai_chance = { factor = 70 }
 		add_political_power = -50
+		hidden_effect = {
 		country_event = { id = ott.93 days = 20 }
 		set_country_flag = Prens_Sabahaddin_Efendi_dead
+		remove_ideas = OTT_Prens_Sabahaddin_Efendi_for_sli
+		}
 	}
 
 	option = {				# Let him agitate
@@ -5393,7 +5437,9 @@ country_event = {
 
 		ai_chance = { factor = 30 }
 		add_political_power = -30
+		hidden_effect = {
 		country_event = { id = ott.93 days = 10 }
+		}
 	}
 
 }
@@ -5421,7 +5467,9 @@ country_event = {
 			}
 		}
 		add_popularity = { ideology = paternal_autocrat popularity = -0.05 }
+		hidden_effect = {
 		country_event = { id = ott.88 days = 5 }
+		}
 	}
 
 }
@@ -5468,7 +5516,9 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.96 days = 30 }
+		}
 	}
 	option = {
 		name = ott.95.a
@@ -5486,7 +5536,9 @@ country_event = {	# 1,2,3,4 Basic stuff
 	is_triggered_only = yes
 
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.97 days = 1 }
+		}
 	}
 	option = {
 		name = ott.96.a
@@ -5503,7 +5555,9 @@ country_event = {	# 5,6,7,8 Definition of the Monarchy
 	is_triggered_only = yes
 
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.98 days = 1 }
+		}
 	}
 	option = {
 		name = ott.97.a
@@ -5520,7 +5574,9 @@ country_event = {	# 9 Sovereign Rights of the Sultan
 	is_triggered_only = yes
 
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.99 days = 1 }
+		}
 	}
 	option = {
 		name = ott.98.a
@@ -5537,7 +5593,9 @@ country_event = {	# 10, 11, 12, 13, 14 Basic Human Rights & Minority Rights
 	is_triggered_only = yes
 
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.100 days = 1 }
+		}
 	}
 	option = {
 		name = ott.99.a
@@ -5553,7 +5611,9 @@ country_event = {	# 24 Houses of Parliament
 
 	is_triggered_only = yes
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.101 days = 1 }
+		}
 	}
 
 	option = {			# sultan will appoint the grand vizier
@@ -5578,7 +5638,9 @@ country_event = {	# 32 Parliament Schedule
 
 	is_triggered_only = yes
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.102 days = 1 }
+		}
 	}
 
 	option = {			# sultan opens and dissolves the parliament
@@ -5611,7 +5673,9 @@ country_event = {	# 39 Veto Rights
 
 	is_triggered_only = yes
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.103 days = 1 }
+		}
 	}
 
 	option = {			# sultan gets the last word
@@ -5644,7 +5708,9 @@ country_event = {	# 63 Right to Petition
 
 	is_triggered_only = yes
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.104 days = 1 }
+		}
 	}
 
 	option = {			# Allow petitions written in local languages
@@ -5670,7 +5736,9 @@ country_event = {	# 83, 84, 85 Rights of Trade Unions
 
 	is_triggered_only = yes
 	immediate = {
+		hidden_effect = {
 		country_event = { id = ott.105 days = 10 }
+		}
 	}
 
 	option = {			# Allow all trade unions, strikes and lockouts
@@ -6012,7 +6080,9 @@ country_event = {
 
 		ai_chance = { factor = 99 }
 		add_political_power = -20
+		hidden_effect = {
 		country_event = { id = ott.114 days = 5 }
+		}
 	}
 
 	option = {		# this is clearly a hornet's nest, end the investigation
@@ -6047,7 +6117,9 @@ country_event = {
 
 		ai_chance = { factor = 90 }
 		add_political_power = -50
+		hidden_effect = {
 		country_event = { id = ott.115 days = 5 }
+		}
 	}
 
 	option = {		# forgive offenders, close the investigation
@@ -6075,7 +6147,9 @@ country_event = {
 
 		ai_chance = { factor = 80 }
 		add_political_power = -100
+		hidden_effect = {
 		country_event = { id = ott.116 days = 1 }
+		}
 	}
 
 	option = {		# forgive all offenders, close the investigation
@@ -6102,7 +6176,9 @@ country_event = {
 		name = ott.116.a
 
 		add_political_power = -10
+		hidden_effect = {
 		country_event = { id = ott.117 hours = 6 }
+		}
 	}
 
 }
@@ -6140,7 +6216,9 @@ country_event = {
 				add_political_power = -50
 			}
 		}
+		hidden_effect = {
 		country_event = { id = ott.118 hours = 2 }
+		}
 	}
 
 }
@@ -6216,13 +6294,14 @@ country_event = {
 		name = ott.118.b
 
 		ai_chance = { factor = 10 }
+		hidden_effect = {
 		if = {
 			limit = {
 				has_country_leader = { ruling_only = yes name = "Ahmed IV" } 
 			}
 
 			kill_country_leader = yes
-			create_country_leader = { # TODO - hide
+			create_country_leader = {
 				name = "Ömer Faruk Efendi"
 				desc = "POLITICS_OMER_FARUK_DESC"
 				picture = "Portrait_Ottoman_OmerFaruk.tga"
@@ -6242,6 +6321,7 @@ country_event = {
 					traits = {}
 				}
 			}
+		}
 		}
 		add_political_power = -50
 		country_event = { id = ott.119 hours = 2 }
@@ -6263,9 +6343,11 @@ country_event = {
 
 	option = {
 		name = ott.119.a
+		hidden_effect = {
 		random_list = {
 			90 = { country_event = { id = ott.121 hours = 1 } }
 			10 = { country_event = { id = ott.129 hours = 1 } }
+		}
 		}
 	}
 
@@ -6300,9 +6382,11 @@ country_event = {
 	option = {
 		name = ott.121.a
 
+		hidden_effect = {
 		random_list = {
 			90 = { country_event = { id = ott.125 hours = 4 } }
 			10 = { country_event = { id = ott.130 hours = 6 } }
+		}
 		}
 	}
 
@@ -6369,7 +6453,9 @@ country_event = {
 	option = {
 		name = ott.125.a
 
+		hidden_effect = {
 		country_event = { id = ott.135 days = 3 }
+		}
 	}
 
 }
@@ -6432,7 +6518,9 @@ country_event = {
 	option = {
 		name = ott.129.a
 
+		hidden_effect = {
 		country_event = { id = ott.132 days = 1 }
+		}
 		load_oob = OTT_ertugrul
 		set_capital = 341
 	}
@@ -6452,7 +6540,9 @@ country_event = {
 	option = {
 		name = ott.130.a
 
+		hidden_effect = {
 		country_event = { id = ott.132 days = 1 }
+		}
 		load_oob = OTT_ertugrul
 		set_capital = 341
 	}
@@ -6486,6 +6576,8 @@ country_event = {
 		name = ott.132.a
 
 		add_political_power = -20
+		custom_effect_tooltip = ott_civil_war_tt
+		hidden_effect = {
 		remove_unit_leader = 672
 		TUR = {
 			create_country_leader = {
@@ -6517,6 +6609,7 @@ country_event = {
 			declare_war_on = { target = OTT type = annex_everything	}
 		}
 		country_event = { id = ott.134 days = 300 }
+		}
 		set_global_flag = OTT_civil_war
 	}
 
@@ -6548,11 +6641,13 @@ country_event = {
 
 		add_political_power = 20
 		set_capital = 773
+		hidden_effect = {
 		TUR = {
 			drop_cosmetic_tag = yes
 			kill_country_leader = yes
 		}
 		country_event = { id = ott.135 days = 4 }
+		}
 		clr_global_flag = OTT_civil_war
 	}
 
@@ -6578,7 +6673,9 @@ country_event = {
 		name = ott.134.a
 
 		add_political_power = -100
+		hidden_effect = {
 		TUR = { drop_cosmetic_tag = yes }
+		}
 		country_event = { id = turkey.1 days = 1 }
 		clr_global_flag = OTT_civil_war
 	}
@@ -6598,9 +6695,11 @@ country_event = {
 		name = ott.135.a
 
 		custom_effect_tooltip = OTT_executions1_tt
+		hidden_effect = {
 		remove_ideas = OTT_Ali_Ihsan_Pasa_carm_ade
 		set_country_flag = Ali_Ihsan_Pasa_dead
-		TUR = { remove_unit_leader = 672 }
+		TUR = { remove_unit_leader = 678 }
+		}
 		country_event = { id = ott.136 days = 1 }
 	}
 
@@ -6620,6 +6719,7 @@ country_event = {
 
 		add_political_power = 50
 		custom_effect_tooltip = OTT_executions2_tt
+		hidden_effect = {
 		set_country_flag = Mehmed_Cavid_Bey_dead
 		set_country_flag = Filibeli_Hilmi_Bey_dead
 		set_country_flag = Kara_Kemal_Bey_dead
@@ -6632,8 +6732,10 @@ country_event = {
 		remove_ideas = OTT_Abduelkadir_Pasa_sec_ade
 		remove_ideas = OTT_Yenibahceli_Nail_Bey_int_ade
 		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
+		}
 		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
 		set_party_name = { ideology = authoritarian_democrat long_name = "Terakkiperver Fırka" name = "TF" }
+		hidden_effect = {
 		create_country_leader = {
 			name = "Mustafa İsmet Paşa"
 			#desc = ""
@@ -6642,7 +6744,8 @@ country_event = {
 			ideology = authoritarian_democrat_subtype
 			traits = {}
 		}
-		country_event = { id = ott.137 days = 5 }
+		news_event = { id = ott.137 days = 5 }
+		}
 	}
 
 	option = {		# hanging
@@ -6650,6 +6753,7 @@ country_event = {
 
 		add_political_power = 50
 		custom_effect_tooltip = OTT_executions2_tt
+		hidden_effect = {
 		set_country_flag = Mehmed_Cavid_Bey_dead
 		set_country_flag = Filibeli_Hilmi_Bey_dead
 		set_country_flag = Kara_Kemal_Bey_dead
@@ -6662,8 +6766,10 @@ country_event = {
 		remove_ideas = OTT_Abduelkadir_Pasa_sec_ade
 		remove_ideas = OTT_Yenibahceli_Nail_Bey_int_ade
 		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
+		}
 		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
 		set_party_name = { ideology = authoritarian_democrat long_name = "Terakkiperver Fırka" name = "TF" }
+		hidden_effect = {
 		create_country_leader = {
 			name = "Mustafa İsmet Paşa"
 			#desc = ""
@@ -6672,7 +6778,8 @@ country_event = {
 			ideology = authoritarian_democrat_subtype
 			traits = {}
 		}
-		country_event = { id = ott.137 days = 5 }
+		news_event = { id = ott.137 days = 5 }
+		}
 	}
 
 }
@@ -6680,7 +6787,7 @@ country_event = {
 # Order restored to the capital!
 # Osman Fuad crowned Osman IV
 
-country_event = {
+news_event = {
 	id = ott.137
 	title = ott.137.t
 	desc = ott.137.d
@@ -6754,12 +6861,14 @@ country_event = {
 		name = ott.139.a
 
 		add_political_power = -50
+		hidden_effect = {
 		remove_ideas = OTT_Mustafa_Ismet_Pasa_hog_ade
 		remove_ideas = OTT_Mustafa_Ismet_Pasa_for_ade
 		remove_ideas = OTT_Mustafa_Ismet_Pasa_carm_ade
 		remove_ideas = OTT_Mustafa_Fevzi_Pasa_mhc_ade
 		remove_ideas = OTT_Mustafa_Fevzi_Pasa_carm_ade
 		remove_ideas = OTT_Suekrue_Pasa_cnav_ade
+		}
 		remove_unit_leader = 675
 		remove_unit_leader = 679
 		remove_unit_leader = 676
@@ -6793,8 +6902,10 @@ country_event = {
 
 		ai_chance = { factor = 20 }
 		add_political_power = -60
+		hidden_effect = {
 		remove_ideas = OTT_Ahmed_Kemal_Pasa_carm_sli
 		remove_ideas = OTT_Ibrahim_Pasa_cnav_sli
+		}
 		remove_unit_leader = 671
 		remove_unit_leader = 673
 		remove_unit_leader = 674
@@ -6837,7 +6948,6 @@ country_event = {
 		trigger = { has_completed_focus = OTT_enforce_autocracy }
 
 		ai_chance = { factor = 90 }
-		add_political_power = -20
 		remove_ideas_with_trait = intel_minister
 		add_ideas = OTT_Aziz_Vefa_int_pau
 	}
@@ -6873,9 +6983,11 @@ country_event = {
 		
 		add_political_power = 100
 		remove_ideas = ott_opda_idea
+		hidden_effect = {
 		remove_ideas = ott_opda_idea_1
 		remove_ideas = ott_opda_idea_2
 		remove_ideas = ott_opda_idea_3
+		}
 	}
 
 }
@@ -6913,8 +7025,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_3
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_2
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_2
+				}
 			}
 		}
 	}
@@ -6952,8 +7066,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_2
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_3
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_3
+				}
 			}
 		}
 	}
@@ -7004,8 +7120,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_3
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_2
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_2
+				}
 			}
 		}
 	}
@@ -7115,8 +7233,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_3
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_2
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_2
+				}
 			}
 		}
 	}
@@ -7151,8 +7271,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_3
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_2
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_2
+				}
 			}
 		}
 	}
@@ -7206,8 +7328,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_3
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_2
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_2
+				}
 			}
 		}
 	}
@@ -7233,12 +7357,14 @@ country_event = {
 		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
 		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
 		add_timed_idea = { idea = ott_opda_payments days = 180 }
-		OTT = { set_country_flag = ott_german_embargo }
-		remove_ideas = deutsch_osmanisches
-		remove_ideas = mauser_osmanen
-		remove_ideas = opel_osmanen
-		remove_ideas = tomtas
-		remove_ideas = germaniawerft_osmanen
+		OTT = {
+			set_country_flag = ott_german_embargo
+			remove_ideas = deutsch_osmanisches
+			remove_ideas = mauser_osmanen
+			remove_ideas = opel_osmanen
+			remove_ideas = tomtas
+			remove_ideas = germaniawerft_osmanen
+		}
 
 	}
 
@@ -7252,12 +7378,14 @@ country_event = {
 		add_opinion_modifier = { target = OTT modifier = ott_defaulted }
 		reverse_add_opinion_modifier = { target = OTT modifier = ott_defaulted }
 		add_timed_idea = { idea = ott_opda_payments days = 180 }
-		OTT = { set_country_flag = ott_german_embargo }
-		remove_ideas = deutsch_osmanisches
-		remove_ideas = mauser_osmanen
-		remove_ideas = opel_osmanen
-		remove_ideas = tomtas
-		remove_ideas = germaniawerft_osmanen
+		OTT = {
+			set_country_flag = ott_german_embargo
+			remove_ideas = deutsch_osmanisches
+			remove_ideas = mauser_osmanen
+			remove_ideas = opel_osmanen
+			remove_ideas = tomtas
+			remove_ideas = germaniawerft_osmanen
+		}
 		declare_war_on = { target = OTT type = annex_everything	}
 	}
 
@@ -7307,8 +7435,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_2
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_3
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_3
+				}
 			}
 		}
 	}
@@ -7418,8 +7548,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_2
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_3
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_3
+				}
 			}
 		}
 	}
@@ -7454,8 +7586,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_2
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_3
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_3
+				}
 			}
 		}
 	}
@@ -7509,8 +7643,10 @@ country_event = {
 			remove_ideas = ott_opda_idea_2
 			
 			else = {
-				remove_ideas = ott_opda_idea_1
-				add_ideas = ott_opda_idea_3
+				swap_ideas = {
+				remove_idea = ott_opda_idea_1
+				add_idea = ott_opda_idea_3
+				}
 			}
 		}
 	}
@@ -8038,4 +8174,541 @@ country_event = {
 	}
 
 }
+
+###############################################################################
+# Treaty of Baghdad
+###############################################################################
+
+### Treaty of Baghdad
+
+country_event = {
+	id = ott.179
+	title = ott.179.t
+	desc = ott.179.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = OTT
+		has_war_with = PER
+		PER = { is_subject = no }
+		PER = {
+			controls_state = 291
+			controls_state = 352
+			controls_state = 819
+			controls_state = 676
+		}
+		OR = {
+			PER = { controls_state = 350 }
+			PER = { controls_state = 353 }
+			PER = { controls_state = 680 }
+			PER = { controls_state = 677 }
+		}
+		NOT = { controls_state = 554 } # Damascus
+		NOT = { controls_state = 454 } # Palestine
+		NOT = { controls_state = 679 } # Hedjaz
+		PER = { controls_state = 266 } # Tehran
+		EGY = { controls_state = 446 } # Cairo
+		NOT = {
+			is_in_faction_with = GER
+			is_in_faction_with = CAN
+			is_in_faction_with = JAP
+			is_in_faction_with = RUS
+			is_subject = yes
+		}
+		NOT = { has_global_flag = ott_surrender }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = {					# surrender
+		name = ott.179.a
+
+		ai_chance = { factor = 100 }
+		add_political_power = -400
+		set_global_flag = ott_surrender
+		PER = { country_event = { id = ott.180 days = 2 } } # PER response
+	}
+
+	option = { # the war will continue until we march through Tehran!
+		name = ott.179.b
+
+		ai_chance = { factor = 0 }
+		add_political_power = -400
+	}
+
+}
+
+### Treaty of Baghdad - PER response
+
+country_event = {
+	id = ott.180
+	title = ott.180.t
+	desc = ott.180.d
+
+	is_triggered_only = yes
+
+	option = {					# accept the ottoman surrender
+		name = ott.180.a
+
+		ai_chance = { factor = 100 }
+		add_political_power = 100
+		add_state_core = 291
+		add_state_core = 819
+		add_state_core = 676
+		add_state_core = 680
+		add_state_core = 350
+		add_state_core = 352
+		add_state_claim = 353	# Persian claims
+		add_state_core = 230	# Armenia
+		set_global_flag = per_victory
+		if = {
+			limit = {
+				OTT = { has_war_with = EGY }
+			}
+			set_global_flag = egy_victory
+		}
+		if = {
+			limit = {
+				OTT = { has_war_with = SAU }
+			}
+			set_global_flag = sau_victory
+		}
+		if = {
+			limit = {
+				GRE = {
+					exists = yes
+					is_subject = no
+					has_war_with = OTT
+					NOT = { is_in_faction_with = RUS }
+				}
+			}
+			set_global_flag = gre_ott_victory
+		}
+		OTT = { country_event = { id = ott.181 days = 1 } } # OTT response
+	}
+
+	option = {					# no treaty, we march to Istanbul
+		name = ott.180.b
+
+		ai_chance = { factor = 0 }
+		add_political_power = -50
+		add_state_core = 291
+		add_state_core = 819
+		add_state_core = 676
+		add_state_core = 680
+		add_state_core = 350
+		add_state_core = 352
+		add_state_claim = 353	# Persian claims
+		add_state_core = 230	# Armenia
+		OTT = { country_event = { id = ott.182 days = 1 } } # OTT response
+		clr_global_flag = ott_surrender
+	}
+}
+
+### Treaty of Baghdad - Final Ottoman surrender
+
+country_event = {
+	id = ott.181
+	title = ott.181.t
+	desc = ott.181.d
+
+	is_triggered_only = yes
+
+	option = {					# shamefur dispray
+		name = ott.181.a
+
+		add_political_power = -40
+		if = {
+			limit = { is_in_faction = yes }
+			random_country = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = OTT
+				}
+				remove_from_faction = OTT
+			}
+		}
+		EGY = { white_peace_with_ROOT = yes }
+		SAU = { white_peace_with_ROOT = yes }
+		if = {
+			limit = {
+				ROOT = { owns_state = 679 }
+			}
+			release = SAU
+		}
+		PER = { white_peace_with_ROOT = yes }
+		diplomatic_relation = { country = PER relation = non_aggression_pact }
+		if = {
+			limit = { has_global_flag = egy_victory }
+			diplomatic_relation = { country = EGY relation = non_aggression_pact }
+		}
+		if = {
+			limit = { has_global_flag = sau_victory }
+			diplomatic_relation = { country = SAU relation = non_aggression_pact }
+		}
+
+		remove_state_core = 455
+		remove_state_core = 454
+		remove_state_core = 553
+		remove_state_core = 554
+		remove_state_core = 677
+		remove_state_core = 291
+		remove_state_core = 656
+		remove_state_core = 675
+		remove_state_core = 812
+		remove_state_core = 680
+		remove_state_core = 676
+		remove_state_core = 819
+		remove_state_core = 754
+		remove_state_core = 753
+		remove_state_core = 679
+		remove_state_core = 453				# mideast cores removed
+		remove_state_claim = 455
+		remove_state_claim = 454
+		remove_state_claim = 553
+		remove_state_claim = 554
+		remove_state_claim = 677
+		remove_state_claim = 291
+		remove_state_claim = 656
+		remove_state_claim = 675
+		remove_state_claim = 812
+		remove_state_claim = 680
+		remove_state_claim = 676
+		remove_state_claim = 819
+		remove_state_claim = 754
+		remove_state_claim = 753
+		remove_state_claim = 679
+		remove_state_claim = 453			# mideast claims removed
+		if = {
+			limit = {
+				ROOT = { owns_state = 291 }
+			}
+			PER = { transfer_state = 291 }	# Baghdad
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 819 }
+			}
+			PER = { transfer_state = 819 }	# Kirkuk
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 676 }
+			}
+			PER = { transfer_state = 676 }	# Mosul
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 680 }
+			}
+			PER = { transfer_state = 680 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 350 }
+			}
+			PER = { transfer_state = 350 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 352 }
+			}
+			PER = { transfer_state = 352 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 353 }
+			}
+			PER = { transfer_state = 353 }
+		}
+		if = {
+			limit = {
+				OR = {
+					PER = {
+						controls_state = 230
+						NOT = { owns_state = 230 }
+					}
+					ROOT = { owns_state = 230 }
+					ARM = {
+						owns_state = 230
+						is_subject_of = OTT
+					}
+				}
+			}
+			PER = { transfer_state = 230 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 455 }
+			}
+			EGY = { transfer_state = 455 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 454 }
+			}
+			EGY = { transfer_state = 454 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 553 }
+			}
+			EGY = { transfer_state = 553 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 554 }
+			}
+			EGY = { transfer_state = 554 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 677 }
+			}
+			EGY = { transfer_state = 677 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 812 }
+			}
+			EGY = { transfer_state = 812 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 656 }
+			}
+			SAU = { transfer_state = 656 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 675 }
+			}
+			SAU = { transfer_state = 675 }
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 754 }
+			}
+			SAU = { transfer_state = 754 } #Hashemites get Medina state
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 753 }
+				EGY = { exists = yes }
+			}
+			EGY = { transfer_state = 753 } #Egypt gets Suez Canal
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 453 }
+			}
+			EGY = { transfer_state = 453 }
+		}
+		every_enemy_country = {
+			limit = {
+				NOT = {
+					tag = RUS
+					num_of_factories > 40
+				}
+				NOT = { is_in_faction_with = RUS }
+			}
+			white_peace_with_ROOT = yes
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 229 }
+			}
+			release = AZB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 231 }
+			}
+			release = GEO
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 234 }
+			}
+			release = DKB
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 202 }
+			}
+			release = UKR
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 48 }
+			}
+			release = BUL
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 47 }
+			}
+			release = GRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 182 }
+			}
+			release = CRE
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 46 }
+			}
+			release = ROM
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 107 }
+			}
+			release = SER
+		}
+		if = {
+			limit = {
+				ROOT = { owns_state = 44 }
+			}
+			release = ALB
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				731 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 731 add_state_core = 731 }
+			remove_state_core = 731
+			remove_state_claim = 731
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				769 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 769 add_state_core = 769 }
+			remove_state_core = 769
+			remove_state_claim = 769
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				184 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 184 add_state_core = 184 }
+			remove_state_core = 184
+			remove_state_claim = 184
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				341 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 341 add_state_claim = 341 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				773 = { is_owned_by = OTT is_controlled_by = GRE }
+			}
+			GRE = { transfer_state = 773 add_state_claim = 773 }
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				187 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 187 add_state_core = 187 }
+			remove_state_core = 187
+			remove_state_claim = 187
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				164 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 164 add_state_core = 164 }
+			remove_state_core = 164
+			remove_state_claim = 164
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				183 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 183 add_state_core = 183 }
+			remove_state_core = 183
+			add_state_claim = 183
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = OTT }
+			}
+			GRE = { transfer_state = 182 add_state_core = 182 }
+			remove_state_core = 182
+			remove_state_claim = 182
+		}
+		if = {
+			limit = {
+				has_global_flag = gre_ott_victory
+				182 = { is_owned_by = CRE }
+			}
+			# TODO - link relevant greek event - GRE = { country_event = { id = GRE_CRETE_EVENT days = 0 } }
+		}
+		clr_global_flag = per_victory
+		clr_global_flag = sau_victory
+		clr_global_flag = gre_ott_victory
+		if = {
+			limit = { tag = OTT }
+			set_country_flag = ott_broken		#Ottomans broken, coup soon
+		}
+		clr_global_flag = ott_surrender
+		SAU = { country_event = { id = ott.183 days = 1 } }
+	}
+
+}
+
+### Treaty of Baghdad - Persians refused to sign the treaty!
+
+country_event = {
+	id = ott.182
+	title = ott.182.t
+	desc = ott.182.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ott.182.a
+
+		add_political_power = -10
+	}
+
+}
+
+### Treaty of Baghdad - Arabian gains
+
+country_event = {
+	id = ott.183
+	title = ott.183.t
+	desc = ott.183.d
+
+	is_triggered_only = yes
+
+	option = {	# SAU gets desert #rekt
+		name = ott.183.a
+
+		add_political_power = -20
+		add_state_core = 656
+		add_state_core = 675
+	}
+
+
+}
+
 

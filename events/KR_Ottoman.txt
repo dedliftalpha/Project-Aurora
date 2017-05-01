@@ -5709,6 +5709,7 @@ country_event = {	# The new constitution is declared!
 					focus = OTT_write_constitution
 					progress > 0.1
 				}
+				NOT = { has_completed_focus = OTT_write_constitution }
 			}
 			complete_national_focus = OTT_write_constitution
 		}
@@ -5947,14 +5948,7 @@ country_event = {	# corrupt bureaucracy
 country_event = {
 	id = ott.112
 	title = ott.112.t
-	desc = {
-		trigger = { has_completed_focus = OTT_enforce_autocracy }
-		text = ott.112.d1
-	}
-	desc = {
-		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
-		text = ott.112.d2
-	}
+	desc = ott.112.d
 
 	fire_only_once = yes
 
@@ -6011,26 +6005,16 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {		# issue arrests
+	option = {		# we will get to the bottom of this
 		name = ott.113.a
-		trigger = { has_completed_focus = OTT_enforce_autocracy }
 
 		ai_chance = { factor = 99 }
 		add_political_power = -20
 		country_event = { id = ott.114 days = 5 }
 	}
 
-	option = {		# you have my full support
+	option = {		# this is clearly a hornet's nest, end the investigation
 		name = ott.113.b
-		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
-
-		ai_chance = { factor = 99 }
-		add_political_power = -10
-		country_event = { id = ott.114 days = 5 }
-	}
-
-	option = {		# forgive offenders, close the investigation
-		name = ott.113.c
 
 		ai_chance = { factor = 1 }
 		add_political_power = -100
@@ -6080,14 +6064,7 @@ country_event = {
 country_event = {
 	id = ott.115
 	title = ott.115.t
-	desc = {
-		trigger = { has_completed_focus = OTT_enforce_autocracy }
-		text = ott.115.d1
-	}
-	desc = {
-		trigger = { NOT = { has_completed_focus = OTT_enforce_autocracy } }
-		text = ott.115.d2
-	}
+	desc = ott.115.d
 
 	is_triggered_only = yes
 
@@ -6171,7 +6148,14 @@ country_event = {
 country_event = {
 	id = ott.118
 	title = ott.118.t
-	desc = ott.118.d
+	desc = {
+		trigger = { NOT = { has_country_leader = { ruling_only = yes name = "Ahmed IV" } } }
+		text = ott.118.d1
+	}
+	desc = {
+		trigger = { has_country_leader = { ruling_only = yes name = "Ahmed IV" } }
+		text = ott.118.d2
+	}
 
 	is_triggered_only = yes
 
@@ -6612,9 +6596,9 @@ country_event = {
 		name = ott.135.a
 
 		custom_effect_tooltip = OTT_executions1_tt
+		remove_ideas = OTT_Ali_Ihsan_Pasa_carm_ade
 		set_country_flag = Ali_Ihsan_Pasa_dead
 		TUR = { remove_unit_leader = 672 }
-		remove_ideas = OTT_Ali_Ihsan_Pasa_carm_ade
 		country_event = { id = ott.136 days = 1 }
 	}
 
@@ -6647,6 +6631,15 @@ country_event = {
 		remove_ideas = OTT_Yenibahceli_Nail_Bey_int_ade
 		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
 		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
+		set_party_name = { ideology = authoritarian_democrat long_name = "Terakkiperver Fırka" name = "TF" }
+		create_country_leader = {
+			name = "Mustafa İsmet Paşa"
+			#desc = ""
+			#picture = ""
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
 		country_event = { id = ott.137 days = 5 }
 	}
 
@@ -6669,6 +6662,14 @@ country_event = {
 		remove_ideas = OTT_Doktor_Nazim_Bey_int_ade
 		add_popularity = { ideology = authoritarian_democrat popularity = -0.05 }
 		set_party_name = { ideology = authoritarian_democrat long_name = "Terakkiperver Fırka" name = "TF" }
+		create_country_leader = {
+			name = "Mustafa İsmet Paşa"
+			#desc = ""
+			#picture = ""
+			expire = "1965.1.1"
+			ideology = authoritarian_democrat_subtype
+			traits = {}
+		}
 		country_event = { id = ott.137 days = 5 }
 	}
 
@@ -6714,6 +6715,7 @@ country_event = {
 					focus = OTT_fight_corruption
 					progress > 0.1
 				}
+				NOT = { has_completed_focus = OTT_fight_corruption }
 			}
 			complete_national_focus = OTT_fight_corruption
 		}
@@ -6757,7 +6759,7 @@ country_event = {
 		remove_ideas = OTT_Mustafa_Fevzi_Pasa_carm_ade
 		remove_ideas = OTT_Suekrue_Pasa_cnav_ade
 		remove_unit_leader = 675
-		remove_unit_leader = 678
+		remove_unit_leader = 679
 		remove_unit_leader = 676
 		remove_unit_leader = 677
 		set_country_flag = Mustafa_Ismet_Pasa_carm_fired
@@ -6794,7 +6796,8 @@ country_event = {
 		remove_unit_leader = 671
 		remove_unit_leader = 673
 		remove_unit_leader = 674
-		set_country_flag = HZ_mil_purged
+		set_country_flag = Ahmed_Kemal_Pasa_carm_fired
+		set_country_flag = Ibrahim_Pasa_cnav_fired
 	}
 
 }
@@ -6849,6 +6852,8 @@ country_event = {
 	title = ott.142.t
 	desc = ott.142.d
 
+	fire_only_once = yes
+
 	trigger = {
 		tag = OTT
 		date > 1954.5.24
@@ -6865,8 +6870,6 @@ country_event = {
 		name = ott.142.a
 		
 		add_political_power = 100
-		GER = { add_timed_idea = { idea = ott_opda_payments days = 180 } }
-		AUS = { add_timed_idea = { idea = ott_opda_payments days = 180 } }
 		remove_ideas = ott_opda_idea
 		remove_ideas = ott_opda_idea_1
 		remove_ideas = ott_opda_idea_2

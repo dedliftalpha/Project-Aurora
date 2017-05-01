@@ -13,7 +13,7 @@ default_peace = {
 	
 	# ROOT = Taker, FROM = Giver
 	annex = {
-		factor = 10
+		factor = 1
 	}
 
 	# ROOT = Taker, FROM = Liberated
@@ -29,7 +29,7 @@ default_peace = {
 
 	# ROOT = Taker, FROM = State
 	take_states = {
-		factor = 10 
+		factor = 1
 		
 		####Priorities####
 		modifier = { #Priortize taking claimed or cored land
@@ -160,7 +160,7 @@ default_peace = {
 				}
 			}
 		}
-		modifier = { #prioritize states on the same continent as capital; 8 Total
+		modifier = { #prioritize states on the same continent as capital
 			factor = 10 
 			OR = {
 				AND = { #Europe
@@ -222,6 +222,29 @@ default_peace = {
 		}
 
 		####Restrictions####
+		# modifier = { #Hopefully will help prevent border gore by making sure that border countries only take bordering states
+			# factor = 0			
+			# FROM = { 
+				# NOT = { is_core_of = ROOT }
+				# any_neighbor_state = {
+					# NOT = {
+						# AND = {
+							# owner = { tag = ROOT }
+						# }
+						# AND = {
+							# has_claimed_state_in_peace_conference = ROOT 
+						# }							
+					# }
+					# owner = {
+						# is_in_peace_conference = yes
+						# is_ai = yes
+					# }
+				# }		
+			# }
+		# }		
+		
+		
+		
 		modifier = { #Prevents states being taken without connection to them
 			factor = 0		
 			NOT = { FROM = { is_claimed_by = ROOT } }
@@ -3197,10 +3220,19 @@ default_peace = {
 		#PER - Persia
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = PER
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = PER
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = PER
+					has_war_with = OTT
+					EGY = {
+						is_in_peace_conference = yes					
+					}				
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -3224,11 +3256,22 @@ default_peace = {
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
 			ROOT = { #Checks if in faction with, and a faction leader
-				is_in_faction_with = PER
-				is_faction_leader = yes
 				NOT = {
 					tag = PER
 				}
+				OR = {
+					AND = {
+						is_in_faction_with = PER
+						is_faction_leader = yes
+					}
+					AND = {
+						has_war_with = OTT
+						PER = {
+							is_in_peace_conference = yes
+						}
+					}
+				}
+				
 			}
 			PER = {
 				is_subject = no

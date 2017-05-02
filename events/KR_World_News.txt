@@ -1620,6 +1620,7 @@ news_event = {
 	option = { #We clearly disagree with the Autonomists on centralised rule.
 		name = worldnews.25.b
 		trigger = {
+			has_socialist_government = yes
 			NOT = {
 				TAG = ENG
 				has_government = radical_socialist
@@ -5332,7 +5333,26 @@ news_event = {
 news_event = {
 	id = worldnews.253
 	title = worldnews.253.t
-	desc = worldnews.253.d
+	desc = {
+		text = worldnews.253.csa.d
+		trigger = { event_target:invader = { tag = CSA } }
+	}
+	desc = {
+		text = worldnews.253.tex.d
+		trigger = { event_target:invader = { tag = TEX } }
+	}
+	desc = {
+		text = worldnews.253.cal.d
+		trigger = { event_target:invader = { tag = CAL } }
+	}
+	desc = {
+		text = worldnews.253.can.d
+		trigger = { event_target:invader = { tag = CAN } }
+	}
+	desc = {
+		text = worldnews.253.mex.d
+		trigger = { event_target:invader = { tag = MEX } }
+	}
 	picture = washington_falls
 
 	major = yes
@@ -5341,7 +5361,10 @@ news_event = {
 		361 = {
 			is_owned_by = USA
 			NOT = { is_controlled_by = USA }
-			controller = { has_war_with = USA }
+			controller = { 
+				has_war_with = USA
+				OR = { TAG = CSA TAG = TEX TAG = CAL TAG = CAN TAG = MEX }
+			}
 		}
 		NOT = { has_global_flag = fall_of_washington_acw_usa }
 		OR = {
@@ -5362,21 +5385,23 @@ news_event = {
 	}
 
 	option = { #We cannot let Reed and his Syndicalist mobs win. We must reorganise and push them out!
-		name = worldnews.253.a
+		name = worldnews.253.csa.a
 		trigger = { 
 			event_target:invader = { tag = CSA }
 			TAG = USA 
 		}
 	}
+
 	option = { #The central government has been thrown off its golden throne. Now we deal with the remnants.
-		name = worldnews.253.b
+		name = worldnews.253.csa.b
 		trigger = {
 			event_target:invader = { tag = CSA }
 			TAG = CSA 
 		}
 	}
+
 	option = { #The Syndicalist traitors made it to Washington D.C. first. We need to take it back!
-		name = worldnews.253.c
+		name = worldnews.253.csa.c
 		trigger = {
 			event_target:invader = { tag = CSA }
 			has_war_with = USA
@@ -5386,42 +5411,31 @@ news_event = {
 			}
 		}
 	}
+
 	option = { #We might want to intervene. Now. The situation is urgent beyond measure!
-		name = worldnews.253.e
+		name = worldnews.253.csa.e
 		trigger = {
 			event_target:invader = { tag = CSA }
 			TAG = CAN
 		}
 	}
-	option = { #Whoever controls Washington D.C. controls America. At least once the fighting is over.
-		name = worldnews.253.f
-		trigger = {
-			event_target:invader = { tag = CSA }
-			NOT = {
-				TAG = CSA
-				TAG = USA
-				TAG = TEX
-				TAG = CAL
-				TAG = CAN
-			}
-		}
-	}
+
 	option = { #We cannot let Long and his Minutemen thugs lead our country.
-		name = worldnews.255.g
+		name = worldnews.253.tex.a
 		trigger = {
 			event_target:invader = { tag = TEX }
 			TAG = USA 
 		}
 	}
 	option = { #Washington D.C. is now in our hands! We will do the Founding Fathers proud.
-		name = worldnews.255.h
+		name = worldnews.253.tex.b
 		trigger = {
 			event_target:invader = { tag = TEX }
 			TAG = TEX
 		}
 	}
 	option = { #The reactionary Minutemen made it to Washington D.C. first. We need to take it back!
-		name = worldnews.255.i
+		name = worldnews.253.tex.c
 		trigger = {
 			event_target:invader = { tag = TEX }
 			has_war_with = TEX
@@ -5432,10 +5446,126 @@ news_event = {
 		}
 	}
 	option = { #The situation is still stable, but Long is unpredictable.
-		name = worldnews.255.j
+		name = worldnews.253.tex.e
 		trigger = {
 			event_target:invader = { tag = TEX }			
 			TAG = CAN
+		}
+	}
+
+	option = { #The Californians are way out of their place. We will fix this.
+		name = worldnews.253.cal.a
+		trigger = { 
+			event_target:invader = { tag = CAL }
+			TAG = USA 
+		}
+	}
+	
+	option = { #With control of Washington D.C., our independence is more than secure.
+		name = worldnews.253.cal.b
+		trigger = { 
+			event_target:invader = { tag = CAL }
+			TAG = CAL
+		}
+	}
+
+	option = { #The Californians have some hubris, let's send them back West.
+		name = worldnews.253.cal.c
+		trigger = {
+			event_target:invader = { tag = CAL }
+			has_war_with = USA
+			OR = {
+				TAG = TEX
+				TAG = CSA
+			}
+		}
+	}	
+	
+	option = { #This is quite odd, but hopefully the Pacific States should still be influencable.
+		name = worldnews.253.cal.e
+		trigger = {
+			event_target:invader = { tag = CAL }
+			TAG = CAN
+		}
+	}
+
+	option = { #Canada tries to repeat the War of 1812, but it had them pushed back!
+		name = worldnews.253.can.a
+		trigger = {
+			event_target:invader = { tag = CAN }
+			TAG = USA 
+		}
+	}
+	
+	option = { #Enough subtle nudges and influence games, we will fix America ourselves.
+		name = worldnews.253.can.b
+		trigger = {
+			event_target:invader = { tag = CAN }
+			TAG = CAN
+		}
+	}
+
+	option = { #The Canadians ignore history. America will kick the British out again.
+		name = worldnews.253.can.c
+		trigger = {
+			event_target:invader = { tag = CAN }
+			has_war_with = USA
+			OR = {
+				TAG = TEX
+				TAG = CSA
+				TAG = CAL
+			}
+		}
+	}
+
+	option = { #The Mexican cannot win like this. We will push them back to the Rio Grande!
+		name = worldnews.253.mex.a
+		trigger = {
+			event_target:invader = { tag = MEX }
+			TAG = USA 
+		}
+	}
+	
+	option = { #It is time for us to restore our borders, we have largely won.
+		name = worldnews.253.mex.b
+		trigger = {
+			event_target:invader = { tag = MEX }
+			TAG = MEX
+		}
+	}
+
+	option = { #The Federal Government failed to protect our nation from Mexico. We won't.
+		name = worldnews.253.mex.c
+		trigger = {
+			event_target:invader = { tag = MEX }
+			has_war_with = USA
+			OR = {
+				TAG = TEX
+				TAG = CSA
+				TAG = CAL
+			}
+		}
+	}	
+	
+	option = { #This is a serious problem, we are going to have to intervene, probably.
+		name = worldnews.253.mex.e
+		trigger = {
+			event_target:invader = { tag = MEX }
+			TAG = CAN
+		}
+	}	
+	
+	option = { #Whoever controls Washington D.C. controls America. At least once the fighting is over.
+		name = worldnews.253.common
+		trigger = {
+			NOT = {
+				TAG = CSA
+				TAG = USA
+				TAG = TEX
+				TAG = CAL
+				TAG = CAN
+				TAG = MEX
+			}
 		}
 	}
 }
@@ -8397,224 +8527,6 @@ news_event = {
 				TAG = CAR
 				TAG = POR
 				TAG = CNT
-			}
-		}
-	}
-}
-
-# The Fall of Washington (PSA)
-news_event = {
-	id = worldnews.303
-	title = worldnews.303.t
-	desc = worldnews.303.d
-	picture = washington_falls
-
-	major = yes
-
-	trigger = {
-		361 = { is_controlled_by = CAL }
-		361 = { is_owned_by = USA }
-		USA = { has_war_with = CAL }
-		NOT = { has_global_flag = fall_of_washington_acw_usa }
-		OR = {
-			has_global_flag = NEWS_ALL
-			has_global_flag = NEWS_SOME
-		}
-	}
-
-	immediate = {
-		set_global_flag = fall_of_washington_acw_usa
-	}
-
-	mean_time_to_happen = {
-		days = 2
-	}
-
-	option = { #The Californians are way out of their place. We will fix this.
-		name = worldnews.303.a
-		trigger = { 
-			TAG = USA 
-		}
-	}
-	
-	option = { #With control of Washington D.C., our independence is more than secure.
-		name = worldnews.303.b
-		trigger = { 
-			TAG = CAL
-		}
-	}
-
-	option = { #The Californians have some hubris, let's send them back West.
-		name = worldnews.303.c
-		trigger = {
-			has_war_with = USA
-			OR = {
-				TAG = TEX
-				TAG = CSA
-			}
-		}
-	}	
-	
-	option = { #This is quite odd, but hopefully the Pacific States should still be influencable.
-		name = worldnews.303.e
-		trigger = { 
-			TAG = CAN
-		}
-	}	
-	
-	option = { #Whoever controls Washington D.C. controls America. At least once the fighting is over.
-		name = worldnews.303.f
-		trigger = {
-			NOT = {
-				TAG = CSA
-				TAG = USA
-				TAG = TEX
-				TAG = CAL
-				TAG = CAN
-			}
-		}
-	}
-}
-
-# The Fall of Washington (Canada)
-news_event = {
-	id = worldnews.304
-	title = worldnews.304.t
-	desc = worldnews.304.d
-	picture = washington_falls
-
-	major = yes
-
-	trigger = {
-		361 = { is_controlled_by = CAN }
-		361 = { is_owned_by = USA }
-		USA = { has_war_with = CAN }
-		NOT = { has_global_flag = fall_of_washington_acw_usa }
-		OR = {
-			has_global_flag = NEWS_ALL
-			has_global_flag = NEWS_SOME
-		}
-	}
-
-	immediate = {
-		set_global_flag = fall_of_washington_usa
-	}
-
-	mean_time_to_happen = {
-		days = 2
-	}
-
-	option = { #Canada tries to repeat the War of 1812, but it had them pushed back!
-		name = worldnews.304.a
-		trigger = { 
-			TAG = USA 
-		}
-	}
-	
-	option = { #Enough subtle nudges and influence games, we will fix America ourselves.
-		name = worldnews.304.b
-		trigger = { 
-			TAG = CAN
-		}
-	}
-
-	option = { #The Canadians ignore history. America will kick the British out again.
-		name = worldnews.303.c
-		trigger = {
-			has_war_with = USA
-			OR = {
-				TAG = TEX
-				TAG = CSA
-				TAG = CAL
-			}
-		}
-	}	
-	
-	option = { #Whoever controls Washington D.C. controls America. At least once the fighting is over.
-		name = worldnews.304.e
-		trigger = {
-			NOT = {
-				TAG = CSA
-				TAG = USA
-				TAG = TEX
-				TAG = CAL
-				TAG = CAN
-			}
-		}
-	}
-}
-
-# The Fall of Washington (Mexico)
-news_event = {
-	id = worldnews.305
-	title = worldnews.305.t
-	desc = worldnews.305.d
-	picture = washington_falls
-
-	major = yes
-
-	trigger = {
-		361 = { is_controlled_by = MEX }
-		361 = { is_owned_by = USA }
-		USA = { has_war_with = MEX }
-		NOT = { has_global_flag = fall_of_washington_acw_usa }
-		OR = {
-			has_global_flag = NEWS_ALL
-			has_global_flag = NEWS_SOME
-		}
-	}
-
-	immediate = {
-		set_global_flag = fall_of_washington_acw_usa
-	}
-
-	mean_time_to_happen = {
-		days = 2
-	}
-
-	option = { #The Mexican cannot win like this. We will push them back to the Rio Grande!
-		name = worldnews.305.a
-		trigger = { 
-			TAG = USA 
-		}
-	}
-	
-	option = { #It is time for us to restore our borders, we have largely won.
-		name = worldnews.305.b
-		trigger = { 
-			TAG = MEX
-		}
-	}
-
-	option = { #The Federal Government failed to protect our nation from Mexico. We won't.
-		name = worldnews.305.c
-		trigger = {
-			has_war_with = USA
-			OR = {
-				TAG = TEX
-				TAG = CSA
-				TAG = CAL
-			}
-		}
-	}	
-	
-	option = { #This is a serious problem, we are going to have to intervene, probably.
-		name = worldnews.305.e
-		trigger = { 
-			TAG = CAN
-		}
-	}	
-	
-	option = { #Whoever controls Washington D.C. controls America. At least once the fighting is over.
-		name = worldnews.305.f
-		trigger = {
-			NOT = {
-				TAG = CSA
-				TAG = USA
-				TAG = TEX
-				TAG = CAL
-				TAG = CAN
-				TAG = MEX
 			}
 		}
 	}

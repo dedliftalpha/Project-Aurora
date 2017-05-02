@@ -160,7 +160,7 @@ focus_tree = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment amount = -250 producer = GER
 			}
-			add_manpower = 10000
+			add_manpower = 25000
 		}
 	}
 
@@ -317,8 +317,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			custom_effect_tooltip = GER_schleicher_tp
 			add_national_unity = -0.05
 			set_party_name = { ideology = paternal_autocrat long_name = GER_paternal_autocrat_party_long name = GER_paternal_autocrat_party }
+			add_popularity = { ideology = paternal_autocrat popularity = 0.1 }
 		}
 	}
 
@@ -461,7 +463,7 @@ focus_tree = {
 		prerequisite = { focus = GER_schacht2 }
 		x = 9
 		y = 3
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 100
@@ -612,7 +614,7 @@ focus_tree = {
 		prerequisite = { focus = GER_groener2 }
 		x = 13
 		y = 3
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 100
@@ -1053,10 +1055,12 @@ focus_tree = {
 		mutually_exclusive = { focus = GER_siemens focus = GER_Mauser_werke }
 		x = 24
 		y = 1
-		cost = 10
+		cost = 5
+		
 		ai_will_do = {
 			factor = 1
 		}
+		
 		completion_reward = {			
 			custom_effect_tooltip = GER_krupp_unlock
 			51 = {
@@ -1824,8 +1828,12 @@ focus_tree = {
 		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war focus = GER_doctrine_armor }
 		x = 34
 		y = 3
-		
 		cost = 10
+		available = {
+			NOT = {
+				has_idea = GER_quenched_militarism
+			}
+		}
 		
 		ai_will_do = {
 			factor = 50
@@ -1936,7 +1944,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_doctrine
 		prerequisite = { focus = GER_mil_expansion }
 		mutually_exclusive = { focus = GER_luftwaffe }
-		x = 38
+		x = 39
 		y = 1
 		cost = 10
 		
@@ -2139,7 +2147,7 @@ focus_tree = {
 		prerequisite = { focus = GER_global2 }
 		x = 46
 		y = 3
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 1
@@ -2206,6 +2214,9 @@ focus_tree = {
 		x = 43
 		y = 5
 		cost = 10
+		available = {
+			has_war = yes
+		}
 		
 		ai_will_do = {
 			factor = 1
@@ -2213,7 +2224,9 @@ focus_tree = {
 		
 		completion_reward = {
 			custom_effect_tooltip = GER_cult_of_aviation_tp
-			add_ideas = GER_cult_of_aviation_idea
+			hidden_effect = {
+				add_ideas = GER_cult_of_aviation_idea
+			}
 		}
 	}
 		
@@ -2648,19 +2661,29 @@ focus_tree = {
 		x = 49
 		y = 3
 		cost = 10
+		bypass = {
+			HAW = {
+				OR = {
+					exists = no
+					is_subject = yes
+					has_war_with = GER
+				}
+			}
+		}
+		available = {
+			owns_state = 336
+		}
 		
 		ai_will_do = {
 			factor = 10
 		}
 		
-		available = {
-			owns_state = 336
-			country_exists = HAW
-		}
-		
 		continue_if_invalid = yes
 		
 		completion_reward = {
+			HAW = {
+				country_event = { id = gerfor.78 }
+			}
 		}
 	}
 
@@ -3251,21 +3274,19 @@ focus_tree = {
 		available = {  
 			BUR = { 
 				exists = yes
+				is_subject = no
+				is_in_faction = no
 				NOT = {
-					has_government = totalist
-					has_government = syndicalist 
-					has_government = radical_socialist
-					is_in_faction_with = BHC 
-					is_in_faction_with = GER
-					is_in_faction_with = FRA 
-					is_in_faction_with = INC
-					is_in_faction_with = VIE 
-					is_in_faction_with = LAO 
-					is_in_faction_with = CHI
+					has_war_with = GER
+					OR = {
+						has_government = totalist
+						has_government = syndicalist 
+						has_government = radical_socialist
+					}
 				}
-				SIA = {
-					is_in_faction_with = JAP
-				}
+			}
+			SIA = {
+				is_in_faction_with = JAP
 			}
 		}
 

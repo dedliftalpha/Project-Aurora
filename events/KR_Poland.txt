@@ -65,7 +65,7 @@ country_event = { # Bombing in Warsaw
 	id = poland.2
 	title = poland.2.t
 	desc = poland.2.d
-	picture = GFX_POL_rebels
+	picture = GFX_POL_train_bomb
 
 	fire_only_once = yes
 	
@@ -5743,7 +5743,7 @@ country_event = { # Comrade Dzierzynski passes away
 	
 	trigger = {
 		tag = POL
-		date > 1937.11.20
+		date > 1937.4.20
 		has_global_flag = POL_SYNDIE
 	}
 
@@ -5761,6 +5761,8 @@ country_event = { # Comrade Dzierzynski passes away
 		ai_chance = { factor = 30 }
 
 		kill_country_leader = yes
+		
+		set_politics = { ruling_party = totalist elections_allowed = no }
 
 		create_country_leader = {
 			name = "Karol Radek"
@@ -5785,13 +5787,15 @@ country_event = { # Comrade Dzierzynski passes away
 		ai_chance = { factor = 30 }
 
 		kill_country_leader = yes
+		
+		set_politics = { ruling_party = syndicalist elections_allowed = no }
 
 		create_country_leader = {
 			name = "Jakub Hanecki"
 			desc = "JAKUB_HANECKI_DESC"
 			picture = "Portrait_Poland_Jakub_Hanceki.tga"
 			expire = "1965.1.1"
-			ideology = social_liberal_subtype
+			ideology = syndicalist_subtype
 			traits = {}
 		}
 
@@ -5809,13 +5813,15 @@ country_event = { # Comrade Dzierzynski passes away
 		ai_chance = { factor = 30 }
 
 		kill_country_leader = yes
+		
+		set_politics = { ruling_party = totalist elections_allowed = no }
 
 		create_country_leader = {
 			name = "Roza Luksemburg"
 			desc = "ROZA_LUKSEMBURG_DESC"
-			picture = "Portrait_Poland_Roza_Luksemburg.tga"
+			picture = "Portriat_Poland_Roza_Luksemburg.tga"
 			expire = "1965.1.1"
-			ideology = social_liberal_subtype
+			ideology = totalist_subtype
 			traits = {}
 		}
 
@@ -10500,7 +10506,7 @@ country_event = { # Monarchist Coup
 		OR = {
 			date > 1940.1.1
 			AND = {
-				date > 1938.1.1
+				date > 1939.1.1
 				has_war = yes
 			}
 		}
@@ -10878,6 +10884,129 @@ country_event = { # Black Monday Hits Poland
 			country_event = {
 				days = 5 id = poland.1
 			}
+		}
+	}
+}
+
+country_event = { # Fate of the Royal Palace
+	id = poland.211
+	title = poland.211.t
+	desc = poland.211.d
+	picture = GFX_POL_royal_castle
+
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			AND = {
+				tag = POL
+				has_global_flag = POL_SYNDIE
+			}
+			AND = {
+				tag = PLC
+				has_country_flag = PLC_chose_syndicalist
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 40
+	}
+	
+	option = { 
+		name = poland.211.a
+		add_political_power = 50
+	}
+	
+	option = { 
+		name = poland.211.b
+		add_national_unity = 0.05
+	}
+	
+	option = { 
+		name = poland.211.c
+		add_national_unity = 0.025
+		add_political_power = 25
+	}
+}
+
+country_event = { # Royalist Bombing
+	id = poland.212
+	title = poland.212.t
+	desc = poland.212.d
+	picture = GFX_POL_train_bomb
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		has_idea = POL_monarchist_sympathies_idea
+	}
+	
+	mean_time_to_happen = { 
+		days = 60
+	}
+	
+	option = { 
+		name = poland.212.a
+		add_political_power = -20
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = 0.02
+		}
+	}
+}
+
+country_event = { # Royalist Militia
+	id = poland.213
+	title = poland.213.t
+	desc = poland.213.d
+	picture = GFX_POL_resistance
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		has_idea = POL_monarchist_sympathies_idea
+	}
+	
+	mean_time_to_happen = { 
+		days = 120
+	}
+	
+	option = { 
+		name = poland.213.a
+		add_political_power = -30
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = 0.03
+		}
+	}
+}
+
+country_event = { # Royalist Assassination
+	id = poland.214
+	title = poland.214.t
+	desc = poland.214.d
+	picture = assassination
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = POL
+		has_idea = POL_monarchist_sympathies_idea
+	}
+	
+	mean_time_to_happen = { 
+		days = 180
+	}
+	
+	option = { 
+		name = poland.214.a
+		add_political_power = -40
+		add_popularity = {
+			ideology = authoritarian_democrat
+			popularity = 0.04
 		}
 	}
 }

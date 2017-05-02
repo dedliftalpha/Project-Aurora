@@ -2059,6 +2059,7 @@ country_event = { #Fate of the Southern Italy
 			tag = SRI
 			has_country_flag = ITAOCC_CONQ
 			has_war_with = ITA
+			has_country_flag = ITA_deal_ongoing
 		}
 		
 		NOT = { controls_state = 2 }
@@ -2344,6 +2345,7 @@ country_event = { #Fate of the Southern Italy
 				}
 			}
 		}
+		set_country_flag = ITA_deal_ongoing
 	}
 
 	option = { #return to ITA
@@ -2427,7 +2429,11 @@ country_event = { #An alliance in exchange for our land
 		}
 		add_political_power = -200
 		FROM = {
-			set_country_flag = ITA_refuse
+		set_country_flag = ITA_refuse
+		clr_country_flag = ITA_deal_ongoing
+		   country_event = {
+				id = annex.43
+			}
 		}
 	}
 }
@@ -2440,6 +2446,7 @@ country_event = { #Honour the deal
 
 	option = {
 		name = annex.45.a
+		clr_country_flag = ITA_deal_ongoing
 		if = {
 			limit = {
 				OR = {
@@ -2469,7 +2476,34 @@ country_event = { #Honour the deal
 			}
 		}
 
-		puppet = ITA
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+			create_faction = "Alliance"
+			add_to_faction = ITA
+		}
+		if = {
+			limit = {
+				AND = {
+					is_in_faction = yes is_faction_leader = yes
+				}
+			}
+			add_to_faction = ITA
+		}
+		if = {
+			limit = {
+				AND = {
+					is_in_faction = yes is_faction_leader = no
+				}
+			}
+			every_other_country = {
+				limit = {
+					is_faction_leader = yes is_in_faction_with = ROOT
+				}
+				add_to_faction = ITA
+			}
+		}
 	}
 }
 country_event = { #An alliance with aus and  in exchange for our land

@@ -1612,6 +1612,220 @@ american_civil_war-pacific= {
 		value = 100
 	}
 }
+russian_civil_war-sov= {
+	enable = {
+		has_country_flag = SOV_intervention
+		has_war = no
+		is_subject = no
+
+		OR = {
+
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = FIN		
+				tag = GER		
+				tag = JAP		
+				tag = CSA		
+				tag = CNT		
+				tag = CAN		
+				tag = NFA		
+			}
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = SOV
+							tag = RUS
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports the Soviet
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = SOV_intervention
+						}			
+					}
+				}
+				has_socialist_government = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			NOT = { has_country_flag = SOV_intervention }
+			NOT = { country_exists = SOV } #SOV must exist
+			NOT = {	country_exists = RUS }
+			has_war = yes
+			is_subject = yes
+			NOT = {
+				tag = FRA		
+				tag = ENG		
+				tag = FIN		
+				tag = GER		
+				tag = JAP		
+				tag = CSA		
+				tag = CNT		
+				tag = CAN		
+				tag = NFA
+				AND = {
+					OR = { #Country must either not be landlocked or border the conflict
+						any_owned_state = { 
+							is_coastal = yes 
+						}
+						any_neighbor_country = {
+							OR = {
+								tag = SOV
+								tag = RUS
+							}
+						}
+					}
+					OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+						is_major = yes
+						is_faction_leader = yes
+						AND = {
+							is_in_faction = yes
+							any_allied_country = {
+								is_faction_leader = yes
+								has_country_flag = SOV_intervention
+							}			
+						}
+					}
+					has_socialist_government = yes
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "SOV"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "SOV"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "RUS"
+		value = 100
+	}
+}
+russian_civil_war-rus= {
+	enable = {
+		has_country_flag = RUS_intervention
+		has_war = no
+		is_subject = no
+		country_exists = RUS #CSA must exists
+		country_exists = SOV
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = FRA		
+				tag = ENG		
+				tag = FIN		
+				tag = GER		
+				tag = JAP		
+				tag = CSA		
+				tag = CNT		
+				tag = CAN		
+				tag = NFA
+			}
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = SOV
+							tag = RUS
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = RUS_intervention
+						}			
+					}
+				}
+				has_democratic_government = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			NOT = { has_country_flag = RUS_intervention }
+			NOT = { country_exists = RUS } #RUS must exists
+			NOT = { country_exists = SOV } #SOV must exists
+			has_war = yes
+			is_subject = yes
+			NOT = {
+				tag = FRA		
+				tag = ENG		
+				tag = FIN		
+				tag = GER		
+				tag = JAP		
+				tag = CSA		
+				tag = CNT		
+				tag = CAN		
+				tag = NFA
+				AND = {
+					OR = { #Country must either not be landlocked or border the conflict
+						any_owned_state = { 
+							is_coastal = yes 
+						}
+						any_neighbor_country = {
+							OR = {
+								tag = RUS
+								tag = SOV
+							}
+						}
+					}
+					OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+						is_major = yes
+						is_faction_leader = yes
+						AND = {
+							is_in_faction = yes
+							any_allied_country = {
+								is_faction_leader = yes
+								has_country_flag = RUS_intervention
+							}			
+						}
+					}
+					has_democratic_government = yes
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "RUS"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "RUS"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "SOV"
+		value = 100
+	}
+}
 DEFAULT_template_design = {
 	enable = {
 		#NOT = { OR = { tag = GER tag = ENG tag = SOV tag = ITA tag = JAP tag = USA tag = POL } }	

@@ -757,7 +757,7 @@ country_event = { #Fate of White Ruthenia
 	}
 
 	mean_time_to_happen = {
-		days = 2
+		days = 7
 	}
 
 	option = {
@@ -1233,7 +1233,7 @@ country_event = { #Fate of the Ukraine
 	}
 
 	mean_time_to_happen = {
-		days = 2
+		days = 7
 	}
 
 	option = {
@@ -5363,7 +5363,7 @@ country_event = { #The fate of Finland
 	}
 
 	mean_time_to_happen = {
-		days = 50
+		days = 7
 	}
 
 	option = {
@@ -5525,8 +5525,10 @@ country_event = { #The fate of Manchuria
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS NOT = {
-			country_exists = FNG 328 = {
+		tag = RUS 
+		NOT = {
+			country_exists = FNG 
+			328 = {
 				is_core_of = RUS
 			}
 		}
@@ -5534,7 +5536,7 @@ country_event = { #The fate of Manchuria
 	}
 
 	mean_time_to_happen = {
-		days = 50
+		days = 7
 	}
 
 	option = {
@@ -6901,7 +6903,7 @@ country_event = { #The fate of Poland
 	}
 
 	mean_time_to_happen = {
-		days = 50
+		days = 7
 	}
 
 	option = {
@@ -8099,9 +8101,11 @@ country_event = { #Alash-Orda Autonomy
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS date > 1937.1.1 ALO = {
+		tag = RUS date > 1937.1.1 
+		ALO = {
 			is_subject_of = RUS
 		}
+		NOT = { has_country_flag = ALO_stayed_russia }
 	}
 
 	mean_time_to_happen = {
@@ -15292,6 +15296,150 @@ country_event = { #Poland joins Mitteleuropa
 		ENG = {
 			add_opinion_modifier = {
 				target = POL modifier = embargo
+			}
+		}
+	}
+
+}
+
+country_event = { #Russian expansionism threatens Commonwealth
+	id = rusfor.11211
+	title = rusfor.11211.t
+	desc = rusfor.11211.d
+	picture = GFX_petain_NFA
+
+	is_triggered_only = yes
+
+	option = {
+		name = rusfor.1121.a #Ask German Empire for protection
+		ai_chance = {
+			factor = 70
+		}
+		trigger = {
+			GER = {
+				is_faction_leader = yes is_subject = no
+			}
+		}
+		add_political_power = -20
+		GER = {
+			country_event = {
+				id = rusfor.11221
+			}
+		}
+		add_opinion_modifier = {
+			target = RUS modifier = POL_join_mitteleuropa_rusee
+		}
+	}
+
+	option = {
+		name = rusfor.1121.b #We don't need any allies
+		ai_chance = {
+			factor = 30
+		}
+		add_political_power = 20
+		add_opinion_modifier = {
+			target = RUS modifier = POL_not_join_mitteleuropa_rusee
+		}
+	}
+
+}
+
+country_event = { #Commonwealth wants to join Mitteleuropa
+	id = rusfor.11221
+	title = rusfor.11221.t
+	desc = rusfor.11221.d
+	picture = GFX_petain_NFA
+
+	is_triggered_only = yes
+
+	option = {
+		name = rusfor.1122.a #Accept their offer.
+		ai_chance = {
+			factor = 70
+		}
+		add_to_faction = PLC
+		add_political_power = -20
+		PLC = {
+			country_event = {
+				id = rusfor.11231
+			}
+		}
+		add_opinion_modifier = {
+			target = RUS modifier = POL_join_mitteleuropa_rusee
+		}
+		add_opinion_modifier = {
+			target = PLC modifier = POL_join_mitteleuropa_rusee2
+		}
+	}
+
+	option = {
+		name = rusfor.1122.b #Just guarantee
+		ai_chance = {
+			factor = 20
+		}
+		give_guarantee = PLC
+		diplomatic_relation = {
+			country = PLC relation = non_aggression_pact
+		}
+		add_political_power = -20
+		add_opinion_modifier = {
+			target = RUS modifier = GER_guarantee_poland_rusee2
+		}
+		add_opinion_modifier = {
+			target = PLC modifier = GER_guarantee_poland_rusee1
+		}
+	}
+
+	option = {
+		name = rusfor.1122.c #Stable relationship with Russia is more important.
+		ai_chance = {
+			factor = 10
+		}
+		add_opinion_modifier = {
+			target = RUS modifier = GER_refuse_poland_rusee1
+		}
+		add_opinion_modifier = {
+			target = POL modifier = GER_refuse_poland_rusee2
+		}
+	}
+
+}
+
+country_event = { #Commonwealth joins Mitteleuropa
+	id = rusfor.11231
+	title = rusfor.11231.t
+	desc = rusfor.11231.d
+	picture = GFX_petain_NFA
+
+	is_triggered_only = yes
+
+	option = {
+		name = rusfor.1123.a
+		add_opinion_modifier = {
+			target = FRA modifier = POL_join_mitteleuropa_rusee4
+		}
+		add_opinion_modifier = {
+			target = ENG modifier = POL_join_mitteleuropa_rusee4
+		}
+		add_opinion_modifier = {
+			target = GER modifier = POL_join_mitteleuropa_rusee2
+		}
+		every_other_country = {
+			limit = {
+				is_in_faction_with = GER
+			}
+			add_opinion_modifier = {
+				modifier = POL_join_mitteleuropa_rusee3
+			}
+		}
+		FRA = {
+			add_opinion_modifier = {
+				target = PLC modifier = embargo
+			}
+		}
+		ENG = {
+			add_opinion_modifier = {
+				target = PLC modifier = embargo
 			}
 		}
 	}

@@ -222,7 +222,7 @@ country_event = { #Romanian liberation
 	option = { #liberate
 		name = annex.2.a
 		ai_chance = {
-			factor = 99
+			factor = 40
 		}
 		
 		if = { limit = { controls_state = 82 }
@@ -270,6 +270,55 @@ country_event = { #Romanian liberation
 			}
 			transfer_state = 772
 		}
+	}
+	
+	option = { #Take Bessarabia
+		name = annex.6.b
+		ai_chance = {
+			factor = 60
+		}
+		trigger = { tag = RUS controls_state = 192 }
+		
+		if = { limit = { controls_state = 82 }
+		ROM = { add_state_core = 82 }
+		}
+		
+		if = { limit = { controls_state = 83 }
+		ROM = { add_state_core = 83 }
+		}
+		
+		if = { limit = { controls_state = 76 }
+		ROM = { add_state_core = 76 }
+		}
+		
+		if = { limit = { controls_state = 80 }
+		ROM = { add_state_core = 80 }
+		}
+		
+		ROM = { add_state_core = 82
+		add_state_core = 83
+		add_state_core = 76
+		add_state_core = 80
+		}
+		
+		ROM = { remove_state_core = 78 }
+
+		every_state = {
+			limit = {
+				is_core_of = ROM
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			ROM = {
+				transfer_state = PREV
+			}
+			add_core_of = ROM
+		}
+		puppet = ROM
+		add_political_power = 100
 	}
 
 	option = { #occupy
@@ -21177,6 +21226,7 @@ country_event = { #Fate of Manchuria
 			tag = MAN
 			tag = SQI
 			tag = MON
+			tag = RUS
 
 			has_war_with = JAP
 			has_war_with = FNG

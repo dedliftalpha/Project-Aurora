@@ -1,0 +1,147 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			#EAI news event
+			every_country = { limit = { is_ai = no } country_event = EAI_M.0 }
+			random_country = { limit = { is_ai = no } set_country_flag = customisation_event }
+			
+			#add resistance reduction for AI
+			every_country  = { limit = { is_ai = yes NOT = { tag = NOR tag = SWI tag = POL tag = SOV tag = CHI tag = FIN tag = GRE tag = SPR } } add_ideas = ns }
+			every_country  = { limit = { is_ai = yes OR = { tag = NOR tag = SWI tag = POL tag = SOV tag = CHI tag = FIN tag = GRE tag = SPR } } add_ideas = ns2 } #highly defensive countries
+			
+			#AI neutrality ideas
+			USA = { country_event = EAI_DM.0 }
+			
+			#AI construction
+			GER = { country_event = EAI_C.0 }
+			
+			#default EAI settings
+			set_global_flag = EAI_lend_lease
+			set_global_flag = EAI_free_convoys
+			
+			#AI majors random land doctrine switch #random_list is weird
+			every_country = {
+				limit = { tag = ITA is_ai = yes }
+				country_event = EAI_M.2
+			}
+			every_country = {
+				limit = { tag = JAP is_ai = yes }
+				country_event = EAI_M.2
+			}
+			every_country = {
+				limit = { tag = ENG is_ai = yes }
+				country_event = EAI_M.2
+			}
+			every_country = {
+				limit = { tag = FRA is_ai = yes }
+				country_event = EAI_M.2
+			}
+			every_country = {
+				limit = { tag = USA is_ai = yes }
+				country_event = EAI_M.2
+			}
+			every_country = {
+				limit = { tag = SOV is_ai = yes }
+				set_technology = { mass_assault = 0 } set_technology = { superior_firepower = 1 } #keep it on SF for now, SOV seems weak
+			}
+			
+			#other doctrine switches
+			every_country = {
+				limit = { NOT = { tag = SOV } has_tech = mass_assault is_ai = yes }
+				set_technology = { mass_assault = 0 } set_technology = { superior_firepower = 1 }
+			}
+			every_country = {
+				limit = { tag = ENG is_ai = yes }
+				set_technology = { fleet_in_being = 0 } set_technology = { base_strike = 1 }
+			}
+			every_country = {
+				limit = { tag = GER is_ai = yes }
+				set_technology = { fleet_in_being = 1 } set_technology = { trade_interdiction = 0 }
+			}
+			every_country = {
+				limit = { tag = RAJ is_ai = yes }
+				set_technology = { mobile_warfare = 1 } set_technology = { trench_warfare = 0 }
+			}
+			every_country = {
+				limit = { OR = { tag = CAN tag = SAF tag = NZL tag = AST tag = MAL } is_ai = yes }
+				set_technology = { superior_firepower = 1 } set_technology = { trench_warfare = 0 }
+			}
+			
+			#radar script
+			every_state = {
+				limit = { radar_location = yes }
+				set_state_flag = radar_site
+			}
+		}
+	}
+	on_puppet = {
+		effect = { #fix JAP-CHI peace conference
+			if = {
+				limit = {
+					FROM = { tag = JAP is_ai = yes }
+					ROOT = { OR = { tag = GXC tag = YUN tag = PRC tag = XSM } is_ai = yes }
+				}
+	
+				CHI = { annex_country = { target = ROOT } }
+			}
+			if = {
+				limit = {
+					FROM = { tag = JAP is_ai = yes }
+					ROOT = { tag = CHI is_ai = yes }
+				}
+				
+				#resource rich states
+				if = { limit = { 599 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					599 = { JAP = { transfer_state = PREV } }
+				}
+				if = { limit = { 600 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					600 = { JAP = { transfer_state = PREV } }
+				}
+				if = { limit = { 606 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					606 = { JAP = { transfer_state = PREV } }
+				}
+			}
+		}
+	}
+	on_annex = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = { tag = JAP is_ai = yes }
+					FROM = { tag = PRC is_ai = yes }
+				}
+	
+				#PRC territories
+				if = { limit = { 622 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					622 = { CHI = { transfer_state = PREV } }
+				}
+				if = { limit = { 615 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					615 = { CHI = { transfer_state = PREV } }
+				}
+				if = { limit = { 621 = { CONTROLLER = { OR = { tag = JAP is_subject_of = JAP } } } }
+					621 = { CHI = { transfer_state = PREV } }
+				}
+			}
+		}
+	}
+	on_declare_war = { 
+		effect = {
+			#AI allies should immediately join wars to avoid problems with their fronts
+			if = { limit = { ROOT = { is_ai = yes } }
+				ROOT = { country_event = { id = EAI_DM.5 hours = 1 } } #has to be delayed for it to work
+			}
+			if = { limit = { FROM = { is_ai = yes } }
+				FROM = { country_event = { id = EAI_DM.5 hours = 1 } }
+			}
+			
+			#invaded countries should instantly raise conscription law, waiting for the MTTH event takes too long
+			if = { limit = { FROM = { is_ai = yes } }
+				FROM = { 
+					country_event = { id = EAI_L.5 hours = 1 } 
+					country_event = { id = EAI_L.6 hours = 2 } 
+					country_event = { id = EAI_L.7 hours = 3 } 
+				}
+			}
+		}
+	}
+}

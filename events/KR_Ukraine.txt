@@ -1365,6 +1365,83 @@ country_event = { #Kingdom of Romania refuses!
 	}
 }
 
+country_event = { # Social Chaos in the Ukraine!
+	id = ukraine.49
+	title = ukraine.49.t
+	desc = ukraine.49.d
+
+	is_triggered_only = yes
+
+	option = {
+		name = ukraine.49.a
+		ai_chance = { factor = 100 }
+
+		add_political_power = -200
+
+		add_popularity = {
+			ideology = paternal_autocrat
+			popularity = 0.4
+		}
+
+		set_politics = { ruling_party = paternal_autocrat elections_allowed = no }
+
+		hidden_effect = { kill_country_leader = yes }
+
+		create_country_leader = {
+			name = "Vasyl I Vyshyvanyi von Habsburg"
+			desc = "POLITICS_VASYL_DESC"
+			picture = "Portrait_Ukraine_Vasyl.tga"
+			expire = "1965.1.1"
+			ideology = paternal_autocrat_subtype
+			traits = {}
+		}
+
+		hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+		add_ideas = {
+			UKR_Pavlo_Skoropadsky_hog_pau
+		}
+
+		add_opinion_modifier = { target = GER modifier = UKR_GER_royal_will } # 40
+		add_opinion_modifier = { target = AUS modifier = UKR_AUS_HUN_royal_will } # 50
+		add_opinion_modifier = { target = HUN modifier = UKR_AUS_HUN_royal_will } # 50
+		add_opinion_modifier = { target = WHR modifier = UKR_WHR_LIT_royal_will } # 60
+		add_opinion_modifier = { target = LIT modifier = UKR_WHR_LIT_royal_will } # 60
+		add_opinion_modifier = { target = GEO modifier = UKR_COMMIE_royal_will } # -100
+		add_opinion_modifier = { target = FRA modifier = UKR_COMMIE_royal_will } # -100
+		add_opinion_modifier = { target = ENG modifier = UKR_COMMIE_royal_will } # -100
+		add_opinion_modifier = { target = SRI modifier = UKR_COMMIE_royal_will } # -100
+
+		set_country_flag = UKR_HET
+		set_cosmetic_tag = UKR
+
+		start_civil_war = { ideology = totalist size = 0.2 }
+
+		every_country = {
+			limit = { original_tag = UKR NOT = { tag = UKR } has_government = totalist }
+
+			set_cosmetic_tag = UKR_communist
+
+			hidden_effect = { kill_country_leader = yes }
+
+			create_country_leader = {
+				name = "Nikita Kruschev"
+				desc = "NIKITA_KRUSCHEV_DESC"
+				picture = "Portrait_UKR_Nikita_Kruschev.tga"
+				expire = "1965.1.1"
+				ideology = totalist_subtype
+				traits = {}
+			}
+
+			hidden_effect = { remove_ideas_with_trait = head_of_government }
+
+			add_ideas = {
+				UKR_Nikita_Kruschev_hog_tot
+			}
+		}
+	}
+}
+
 country_event = { # An Heir to King Vasily?
 	id = ukraine.52
 	title = ukraine.52.t
@@ -1585,7 +1662,9 @@ country_event = { # Explosion on the Dnieper
 		}
 		
 		set_politics = { ruling_party = social_democrat elections_allowed = no }
-	}	
+	}
+
+		hidden_effect = { UKR = { country_event = { days = 25 id = ukraine.49 }}}	
 }
 
 country_event = { # Explosion on the Dnieper
@@ -1724,6 +1803,7 @@ country_event = { # Explosion on the Dnieper
 		}
 		
 		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = { UKR = { country_event = { days = 25 id = ukraine.49 }}}			
 	}	
 }
 

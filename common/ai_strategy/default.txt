@@ -1934,3 +1934,201 @@ korean_japanese_war-kor= {
 		value = 100
 	}
 }
+romanian_civil_war-rom= {
+	enable = {
+		has_country_flag = ROM_intervention
+		has_war = no
+		is_subject = no
+		country_exists = ROM #ROM + RRM must exists
+		country_exists = RRM
+		ROM = { has_war_with = RRM }
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = SER
+				tag = AUS
+				tag = UKR
+				tag = RUS
+			}
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = ROM
+							tag = RRM
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = ROM_intervention
+						}			
+					}
+				}
+				has_dictatorship_government = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			NOT = { has_country_flag = ROM_intervention }
+			NOT = { country_exists = ROM } #ROM must exists
+			NOT = { country_exists = RRM } #RRM must exists
+			NOT = { ROM = { has_war_with = RRM }}
+			has_war = yes
+			is_subject = yes
+			NOT = {
+				tag = SER
+				tag = AUS
+				tag = UKR
+				tag = RUS
+				AND = {
+					OR = { #Country must either not be landlocked or border the conflict
+						any_owned_state = { 
+							is_coastal = yes 
+						}
+						any_neighbor_country = {
+							OR = {
+								tag = ROM
+								tag = RRM
+							}
+						}
+					}
+					OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+						is_major = yes
+						is_faction_leader = yes
+						AND = {
+							is_in_faction = yes
+							any_allied_country = {
+								is_faction_leader = yes
+								has_country_flag = ROM_intervention
+							}			
+						}
+					}
+					has_dictatorship_government = yes
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "ROM"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "ROM"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "RRM"
+		value = 100
+	}
+}
+romanian_civil_war-rrm= {
+	enable = {
+		has_country_flag = RRM_intervention
+		has_war = no
+		is_subject = no
+		country_exists = ROM #ROM + RRM must exists
+		country_exists = RRM
+		ROM = { has_war_with = RRM }
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = SER
+				tag = AUS
+				tag = UKR
+				tag = RUS
+			}
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = ROM
+							tag = RRM
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = RRM_intervention
+						}			
+					}
+				}
+				has_democratic_government = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			NOT = { has_country_flag = RRM_intervention }
+			NOT = { country_exists = ROM } #ROM must exists
+			NOT = { country_exists = RRM } #RRM must exists
+			NOT = { ROM = { has_war_with = RRM }}
+			has_war = yes
+			is_subject = yes
+			NOT = {
+				tag = SER
+				tag = AUS
+				tag = UKR
+				tag = RUS
+				AND = {
+					OR = { #Country must either not be landlocked or border the conflict
+						any_owned_state = { 
+							is_coastal = yes 
+						}
+						any_neighbor_country = {
+							OR = {
+								tag = ROM
+								tag = RRM
+							}
+						}
+					}
+					OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+						is_major = yes
+						is_faction_leader = yes
+						AND = {
+							is_in_faction = yes
+							any_allied_country = {
+								is_faction_leader = yes
+								has_country_flag = RRM_intervention
+							}			
+						}
+					}
+					has_democratic_government = yes
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "RRM"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "RRM"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "ROM"
+		value = 100
+	}
+}

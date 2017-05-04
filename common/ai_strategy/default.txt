@@ -1617,7 +1617,9 @@ russian_civil_war-sov= {
 		has_country_flag = SOV_intervention
 		has_war = no
 		is_subject = no
-
+		country_exists = RUS #RUS must exists
+		country_exists = SOV
+		RUS = { has_war_with = SOV }
 		OR = {
 
 			OR = { #Does not already have an event effecting it specifically
@@ -1663,6 +1665,7 @@ russian_civil_war-sov= {
 			NOT = { has_country_flag = SOV_intervention }
 			NOT = { country_exists = SOV } #SOV must exist
 			NOT = {	country_exists = RUS }
+			NOT = { RUS = { has_war_with = SOV }}
 			has_war = yes
 			is_subject = yes
 			NOT = {
@@ -1726,6 +1729,7 @@ russian_civil_war-rus= {
 		is_subject = no
 		country_exists = RUS #CSA must exists
 		country_exists = SOV
+		RUS = { has_war_with = SOV }
 		OR = {
 			OR = { #Does not already have an event effecting it specifically
 				tag = FRA		
@@ -1770,6 +1774,7 @@ russian_civil_war-rus= {
 			NOT = { has_country_flag = RUS_intervention }
 			NOT = { country_exists = RUS } #RUS must exists
 			NOT = { country_exists = SOV } #SOV must exists
+			NOT = { RUS = { has_war_with = SOV }}
 			has_war = yes
 			is_subject = yes
 			NOT = {
@@ -1833,6 +1838,7 @@ korean_japanese_war-kor= {
 		is_subject = no
 		country_exists = KOR #KOR must exists
 		country_exists = JAP
+		KOR = { has_war_with = JAP }
 		OR = {
 			OR = { #Does not already have an event effecting it specifically
 				tag = RUS
@@ -1872,8 +1878,9 @@ korean_japanese_war-kor= {
 	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
 		OR = {
 			NOT = { has_country_flag = KOR_intervention }
-			NOT = { country_exists = KOR } #RUS must exists
-			NOT = { country_exists = JAP } #SOV must exists
+			NOT = { country_exists = KOR } #KOR must exists
+			NOT = { country_exists = JAP } #JAP must exists
+			NOT = { KOR = { has_war_with = JAP }}
 			has_war = yes
 			is_subject = yes
 			NOT = {

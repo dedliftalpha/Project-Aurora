@@ -3,9 +3,10 @@
 ###########################
 # By Levi
 ###########################
+
 add_namespace = japfor
 
-country_event = { #Economic exploitation of Fengtian republic
+country_event = { #Economic exploitation of Fengtian
 	id = japfor.1
 	title = japfor.1.t
 	desc = japfor.1.d
@@ -653,26 +654,42 @@ country_event = { #Qing pushed back Japan
 		has_war_with = JAP
 		is_subject = no
 		QIE = {
-			controls_state = 716
-			controls_state = 328
+			OR = { AND = { controls_state = 716
+			controls_state = 328 }
+			AND = { is_faction_leader = yes
+					any_country = { NOT = { tag = QIE }
+					controls_state = 716
+					controls_state = 328
+					OR = { is_in_faction_with = QIE is_subject_of = QIE }
+					}
+				}
+			}
 		}
 		OR = {
 			AND = {
 				controls_state = 527
 				controls_state = 525
 			}
-			KOR = {
-				OR = {
-					is_subject_of = QIE
-					is_in_faction_with = QIE
+			AND = { is_faction_leader = yes
+					any_country = { NOT = { tag = QIE }
+					controls_state = 527
+					controls_state = 525
+					OR = { is_in_faction_with = QIE is_subject_of = QIE }
+					}
 				}
-				controls_state = 527
-				controls_state = 525
-			}
 		}
 		QIE = {
-			controls_state = 613
-			controls_state = 608
+			OR = {
+			AND = { controls_state = 613
+			controls_state = 608 }
+			AND = { is_faction_leader = yes
+					any_country = { NOT = { tag = QIE }
+					controls_state = 613
+					controls_state = 608
+					OR = { is_in_faction_with = QIE is_subject_of = QIE }
+					}
+				}
+		    }
 		}
 
 	}
@@ -2879,7 +2896,10 @@ news_event = { #Korean exiles
 	id = japfor.68
 	title = japfor.68.t
 	desc = japfor.68.d
+	picture = GFX_news_event_038
+	
 	is_triggered_only = yes
+	
 	option = {
 		name = japfor.68.a
 	}
@@ -4074,7 +4094,7 @@ country_event = { #Russia
 			}
 		}
 		set_country_flag = sent_kor_volunteers
-
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4092,7 +4112,7 @@ country_event = { #Russia
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -4161,7 +4181,7 @@ country_event = { #Qing
 			}
 		}
 		set_country_flag = sent_kor_volunteers
-
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4179,7 +4199,7 @@ country_event = { #Qing
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -4254,7 +4274,7 @@ country_event = { #Soviets
 			}
 		}
 		set_country_flag = sent_kor_volunteers
-
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4272,7 +4292,7 @@ country_event = { #Soviets
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -4343,6 +4363,7 @@ country_event = { #AOG
 			}
 		}
 		set_country_flag = sent_kor_volunteers
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4360,7 +4381,7 @@ country_event = { #AOG
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -4432,6 +4453,7 @@ country_event = { #Republican china
 			}
 		}
 		set_country_flag = sent_kor_volunteers
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4449,7 +4471,7 @@ country_event = { #Republican china
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -4519,6 +4541,7 @@ country_event = { #Germany
 			}
 		}
 		set_country_flag = sent_kor_volunteers
+		set_country_flag = KOR_intervention
 	}
 
 	option = { #dont help
@@ -4536,7 +4559,7 @@ country_event = { #Germany
 			target = KOR modifier = JAP_KOR_VOL_BAD
 		}
 		add_political_power = -100
-
+		set_country_flag = no_KOR_intervention
 	}
 }
 
@@ -5171,6 +5194,10 @@ country_event = { ## Mongolia surrenders - Pact of Vladivostok - Japan
 	mean_time_to_happen = {
 		days = 3
 	}
+	
+	immediate = {
+		TIB = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = { #Occupy Mongolia
 		name = japfor.122.a
@@ -5192,7 +5219,6 @@ country_event = { ## Mongolia surrenders - Pact of Vladivostok - Japan
 			limit = {
 				has_war_with = TIB
 			}
-			TIB = { save_event_target_as = white_peace_receiver }
 			RUS = { white_peace_with_TARGET = yes }
 			JAP = { white_peace_with_TARGET = yes }
 		}
@@ -5223,7 +5249,6 @@ country_event = { ## Mongolia surrenders - Pact of Vladivostok - Japan
 			limit = {
 				has_war_with = TIB
 			}
-			TIB = { save_event_target_as = white_peace_receiver }
 			RUS = { white_peace_with_TARGET = yes }
 			JAP = { white_peace_with_TARGET = yes }
 		}
@@ -5271,6 +5296,10 @@ country_event = { ## Mongolia surrenders Japan only
 	mean_time_to_happen = {
 		days = 3
 	}
+	
+	immediate = {
+		TIB = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = { #Occupy Mongolia
 		name = japfor.122.a
@@ -5292,7 +5321,6 @@ country_event = { ## Mongolia surrenders Japan only
 			limit = {
 				has_war_with = TIB
 			}
-			TIB = { save_event_target_as = white_peace_receiver }
 			RUS = { white_peace_with_TARGET = yes }
 			JAP = { white_peace_with_TARGET = yes }
 		}
@@ -5371,7 +5399,6 @@ country_event = { ## Mongolia surrenders Japan only
 			limit = {
 				has_war_with = TIB
 			}
-			TIB = { save_event_target_as = white_peace_receiver }
 			RUS = { white_peace_with_TARGET = yes }
 			JAP = { white_peace_with_TARGET = yes }
 		}
@@ -5687,6 +5714,7 @@ country_event = { #Fate of the mad baron
 			}
 			50 = {
 				set_global_flag = ungern_dead
+                                MON = { kill_country_leader = yes }
 			}
 		}
 		add_political_power = 100
@@ -5699,6 +5727,7 @@ country_event = { #Fate of the mad baron
 		}
 		add_political_power = -20
 		set_global_flag = ungern_dead
+                MON = { kill_country_leader = yes }
 	}
 }
 
@@ -5715,6 +5744,7 @@ country_event = { #Sternberg arrived
 		}
 		add_political_power = 40
 		set_global_flag = ungern_dead
+                MON = { kill_country_leader = yes }
 	}
 	option = { #siberia
 		name = japfor.131.b
@@ -5723,6 +5753,7 @@ country_event = { #Sternberg arrived
 		}
 		add_political_power = 20
 		set_global_flag = ungern_dead
+                MON = { kill_country_leader = yes }
 	}
 }
 
@@ -6568,13 +6599,19 @@ country_event = { #Defeat of Fengtien
 	id = japfor.151
 	title = japfor.151.t
 	desc = japfor.151.d
+	
 	fire_only_once = yes
+	
 	trigger = {
 		tag = RUS
 		has_war_with = FNG
 		RUS = {
 			controls_state = 328
 		}
+	}
+	
+	immediate = {
+		FNG = { save_event_target_as = white_peace_receiver }
 	}
 
 	option = { #puppet
@@ -6583,7 +6620,6 @@ country_event = { #Defeat of Fengtien
 			factor = 80
 		}
 		
-		FNG = { save_event_target_as = white_peace_receiver }
 		white_peace_with_TARGET = yes
 		every_country = {
 			limit = {
@@ -6633,6 +6669,10 @@ country_event = { ## Transamur surrenders
 	mean_time_to_happen = {
 		days = 5
 	}
+	
+	immediate = {
+		TRM = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = { #puppet
 		name = japfor.152.a
@@ -6640,7 +6680,6 @@ country_event = { ## Transamur surrenders
 			factor = 5
 		}
 		
-		TRM = { save_event_target_as = white_peace_receiver }
 		white_peace_with_TARGET = yes
 		every_country = {
 			limit = {
@@ -6684,6 +6723,11 @@ country_event = { #fading sun
 			TRM = {
 				is_subject_of = RUS
 			}
+			AND = { RUS = { is_faction_leader = yes }
+			any_country = { NOT = { tag = RUS }
+			controls_state = 409
+			OR = { is_in_faction_with = RUS is_subject_of = RUS } }
+			}
 		}
 		RUS = {
 			OR = {
@@ -6693,8 +6737,21 @@ country_event = { #fading sun
 				KOR = {
 					is_subject_of = RUS
 				}
+				AND = { is_faction_leader = yes
+					any_country = { NOT = { tag = RUS }
+					controls_state = 527
+					controls_state = 525
+					OR = { is_in_faction_with = RUS is_subject_of = RUS } }
+				}
 			}
-			controls_state = 716 controls_state = 610
+			OR = { controls_state = 716 controls_state = 610
+			AND = { is_faction_leader = yes
+					any_country = { NOT = { tag = RUS }
+					controls_state = 716
+					controls_state = 610
+					OR = { is_in_faction_with = RUS is_subject_of = RUS } }
+				}
+			}
 		}
 	}
 	mean_time_to_happen = {
@@ -6726,7 +6783,13 @@ country_event = {
 	id = japfor.154
 	title = japfor.154.t
 	desc = japfor.154.d
+	
 	is_triggered_only = yes
+	
+	immediate = {
+		JAP = { save_event_target_as = white_peace_receiver }
+	}
+	
 	option = {
 		name = japfor.154.a
 		ai_chance = {
@@ -6755,7 +6818,6 @@ country_event = {
 			transfer_state = 537
 			transfer_state = 555
 			transfer_state = 745
-			transfer_state = 612
 			transfer_state = 610
 			transfer_state = 409
 			transfer_state = 408
@@ -6763,17 +6825,8 @@ country_event = {
 			transfer_state = 527
 			add_state_core = 409
 			add_state_core = 408
-			add_state_core = 655
-			add_state_core = 537
-			add_state_core = 555
-			add_state_core = 745
-			add_state_core = 612
-			add_state_core = 610
-			add_state_core = 525
-			add_state_core = 527
 		}
 		
-		JAP = { save_event_target_as = white_peace_receiver }
 		white_peace_with_TARGET = yes
 		every_country = {
 			limit = {
@@ -6871,7 +6924,7 @@ country_event = { #Second Treaty of Port Arthur
 			}
 			RUS = {
 				country_event = {
-					id = japfor.157 days = 15
+					id = japfor.157 days = 7
 				}
 			}
 		}
@@ -7105,7 +7158,12 @@ country_event = { #Defeat of Fengtien
 	id = japfor.161
 	title = japfor.161.t
 	desc = japfor.161.d
+	
 	is_triggered_only = yes
+	
+	immediate = {
+		FNG = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = { #puppet
 		name = japfor.161.a
@@ -7113,7 +7171,6 @@ country_event = { #Defeat of Fengtien
 			factor = 90
 		}
 		
-		FNG = { save_event_target_as = white_peace_receiver }
 		white_peace_with_TARGET = yes
 		every_country = {
 			limit = {
@@ -7264,13 +7321,17 @@ country_event = { ## End of Russo-Transamurian acts of war
 	id = japfor.164
 	title = japfor.164.t
 	desc = japfor.164.d
+	
 	is_triggered_only = yes
+	
+	immediate = {
+		TRM = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = {
 		name = japfor.164.a
 		MON = { white_peace_with_ROOT = yes }
 		
-		TRM = { save_event_target_as = white_peace_receiver }
 		every_country = {
 			limit = {
 				OR = {
@@ -7430,7 +7491,13 @@ country_event = {
 	id = japfor.170
 	title = japfor.170.t
 	desc = japfor.170.d
+	
 	is_triggered_only = yes
+	
+	immediate = {
+		JAP = { save_event_target_as = white_peace_receiver }
+	}
+	
 	option = {
 		name = japfor.170.a
 		ai_chance = {
@@ -7462,7 +7529,6 @@ country_event = {
 			add_state_core = 610
 		}
 		
-		JAP = { save_event_target_as = white_peace_receiver }
 		white_peace_with_TARGET = yes
 		every_country = {
 			limit = {
@@ -8156,7 +8222,7 @@ country_event = { #The Dutch beg for peace!
 					AND = {
 						is_owned_by = INS
 						INS = {
-							is_puppet_of = HOL
+							is_subject_of = HOL
 						}
 					}
 				}
@@ -8873,4 +8939,185 @@ country_event = { #The Japanese refuse!
 
 	}
 
+}
+
+#Fengtian Silver Crisis (Flamefang)
+
+country_event = { #Fengtian Requests a Bailout
+	id = japfor.202
+	title = japfor.202.t
+	desc = japfor.202.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #Accept
+		add_political_power = 30
+		add_timed_idea = {
+			idea = JAP_fengtian_bailout
+			days = 60
+		}
+		FNG = {
+			country_event = fengtian.new.73
+		}
+	}
+	
+	option = { #Refuse
+		add_political_power = -50
+		FNG = {
+			country_event = fengtian.new.74
+		}
+	}
+}
+
+country_event = { #Fengtian blames Japan for the crisis
+	id = japfor.203
+	title = japfor.203.t
+	desc = japfor.203.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #False accusations!
+		add_political_power = -20
+		FNG = {
+			country_event = fengtian.new.75
+		}
+	}
+	
+	option = { #Punish this insolence!
+		add_political_power = 20
+		set_global_flag = fengtian_blames_japan
+		FNG = {
+			country_event = fengtian.new.22
+		}
+	}
+}
+
+#Fengtian Expels the Japanese Military Mission
+
+country_event = { #Fengtian Diplomatic
+	id = japfor.204
+	title = japfor.204.t
+	desc = japfor.204.d
+	desc = {
+		text = japfor.204.d_mantetsu
+		trigger = {
+			FNG = {
+				OR = {
+					has_idea = FNG_informal_empire_5
+					has_idea = FNG_informal_empire_4
+				}
+			}
+		}
+	}
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #Declare war
+		name = japfor.204.a
+		release_puppet = FNG
+		FNG = { 
+			country_event = fengtian.new.77
+		}
+		ai_chance = {
+			factor = 30
+		}
+	}
+	
+	option = { #Force Fengtian
+		name = japfor.204.b
+		trigger = {
+			FNG = {
+				OR = {
+					has_idea = FNG_informal_empire_5
+					has_idea = FNG_informal_empire_4
+				}
+			}
+		}
+		add_political_power = 20
+		FNG = {
+			country_event = fengtian.new.78
+		}
+	}
+	
+	option = { #Punish Fengtian
+		name = japfor.204.c
+		add_political_power = -30
+		FNG = {
+			country_event = fengtian.new.22
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Do Nothing
+		name = japfor.204.d
+		add_political_power = -100
+	}
+}
+
+country_event = { #Fengtian non-diplomatic
+	id = japfor.205
+	title = japfor.205.t
+	desc = japfor.205.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #Send an ultimatum
+		name = japfor.205.new.a
+		set_global_flag = jap_fengtian_ultimatum
+		add_political_power = 20
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Do Nothing
+		name = japfor.205.new.b
+		add_political_power = -100
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#The Anshan Incident
+
+country_event = {
+	id = japfor.206
+	title = japfor.206.t
+	desc = japfor.206.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #Punish this insolence!
+		name = japfor.206.a
+		add_political_power = 30
+		FNG = {
+			country_event = fengtian.new.22
+		}
+	}
+	
+	option = { #Denounce Fengtian
+		name = japfor.206.b
+		add_political_power = 10
+		FNG = {
+			country_event = fengtian.new.113
+		}
+	}
+	
+	option = { #Stay silent
+		name = japfor.206.c
+		add_political_power = -50
+	}
 }

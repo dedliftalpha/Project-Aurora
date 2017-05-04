@@ -203,46 +203,51 @@ country_event = {
 		}
 	}
 }
+
 ## Indian Nations Seizing Goa ##
 country_event = {
 	id = por.7
 	title = por.7.t
 	desc = por.7.d
 
-	fire_only_once = yes
-
 	trigger = {
-		tag = PRF
-		POR = { exists = yes }
-		425 = { is_controlled_by = PRF }
-		321 = { is_controlled_by = POR }
-		or = {
-			POR = {
-				has_capitulated = yes
-			}
+		OR = {
+			tag = PRF
+			tag = BHC
+			tag = DEH
+		}
+		has_war = no
+		is_subject = no
+		425 = { is_owned_and_controlled_by = ROOT } #Mysore
+		321 = { is_owned_and_controlled_by = POR } #Goa
+		OR = {
+			POR = { has_capitulated = yes }
 			POR = {
 				has_war = yes
+				surrender_progress > 0.1
 			}
 		}
-		not = {
-			POR = {
-				is_in_faction_with = PRF
-			}
-			POR = {
-				is_subject_of = PRF
-			}
-			PRF = {
-				has_war = yes
-			}
+		NOT = {
+			is_in_faction_with = POR
+			POR = { is_subject_of = PRF }
+			has_country_flag = considered_goa
 		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = considered_goa
 	}
 
 	option = {
 		name = por.7.a
 		ai_chance = { factor = 90 }
-		PRF = { add_state_claim = 321 }
+		add_state_claim = 321
 		POR = {
-			add_opinion_modifier = { target = PRF modifier = seized_goa }
+			add_opinion_modifier = { target = ROOT modifier = seized_goa }
 			country_event = {
 				id = por.8
 				days = 1
@@ -255,7 +260,7 @@ country_event = {
 		name = por.7.b
 		ai_chance = { factor = 10 }
 		POR = {
-			add_opinion_modifier = { target = PRF modifier = ignored_goa }
+			add_opinion_modifier = { target = ROOT modifier = ignored_goa }
 		}
 	}
 }
@@ -271,191 +276,30 @@ country_event = {
 	option = {
 		name = por.8.a
 		ai_chance = { factor = 70 }
-		PRF  = {
+		FROM  = {
 			transfer_state = 321
 			add_state_core = 321
 		}
+		add_state_claim = 321
 		add_national_unity = -0.01
 	}
 
 	option = {
 		name = por.8.b
-		ai_chance = { factor = 30 }
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0
+				is_in_faction = no
+			}
+		}
+		add_state_claim = 321
 		add_national_unity = -0.03
 		declare_war_on = {
-			target = PRF
+			target = FROM
 			type = annex_everything
 		}
 
-	}
-}
-
-country_event = {
-	id = por.9
-	title = por.9.t
-	desc = por.9.d
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = DEH
-		POR = { exists = yes }
-		425 = { is_controlled_by = DEH }
-		321 = { is_controlled_by = POR }
-		or = {
-			POR = {
-				has_capitulated = yes
-			}
-			POR = {
-				has_war = yes
-			}
-		}
-		not = {
-			POR = {
-				is_in_faction_with = DEH
-			}
-			POR = {
-				is_subject_of = DEH
-			}
-			DEH = {
-				has_war = yes
-			}
-		}
-	}
-
-	option = {
-		name = por.9.a
-		ai_chance = { factor = 90 }
-		add_state_claim = 321
-		POR = {
-			add_opinion_modifier = { target = DEH modifier = seized_goa }
-			country_event = {
-				id = por.10
-				days = 1
-			}
-		}
-	}
-
-	option = {
-		name = por.9.b
-		ai_chance = { factor = 10 }
-		POR = {
-			add_opinion_modifier = { target = DEH modifier = ignored_goa }
-		}
-	}
-}
-
-country_event = {
-	id = por.10
-	title = por.10.t
-	desc = por.10.d
-
-	is_triggered_only = yes
-
-
-	option = {
-		name = por.10.a
-		ai_chance = { factor = 70 }
-		DEH = {
-			transfer_state = 321
-			add_state_core = 321
-		}
-		add_national_unity = -0.01
-	}
-
-	option = {
-		name = por.10.b
-		ai_chance = { factor = 30 }
-		add_national_unity = -0.03
-		declare_war_on = {
-			target = DEH
-			type = annex_everything
-		}
-
-	}
-}
-
-country_event = {
-	id = por.11
-	title = por.11.t
-	desc = por.11.d
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = BHC
-		POR = { exists = yes }
-		425 = { is_controlled_by = BHC }
-		321 = { is_controlled_by = POR }
-		or = {
-			POR = {
-				has_capitulated = yes
-			}
-			POR = {
-				has_war = yes
-			}
-		}
-		not = {
-			POR = {
-				is_in_faction_with = BHC
-			}
-			POR = {
-				is_subject_of = BHC
-			}
-			BHC = {
-				has_war = yes
-			}
-		}
-	}
-
-	option = {
-		name = por.11.a
-		ai_chance = { factor = 90 }
-		add_state_claim = 321
-		POR = {
-			add_opinion_modifier = { target = BHC modifier = seized_goa }
-			country_event = {
-				id = por.10
-				days = 1
-			}
-		}
-	}
-
-	option = {
-		name = por.11.b
-		ai_chance = { factor = 10 }
-		POR = {
-			add_opinion_modifier = { target = BHC modifier = ignored_goa }
-		}
-	}
-}
-
-country_event = {
-	id = por.12
-	title = por.12.t
-	desc = por.12.d
-
-	is_triggered_only = yes
-
-
-	option = {
-		name = por.12.a
-		ai_chance = { factor = 70 }
-		BHC = {
-			transfer_state = 321
-			add_state_core = 321
-		}
-		add_political_power = -10
-	}
-
-	option = {
-		name = por.12.b
-		ai_chance = { factor = 30 }
-		declare_war_on = {
-			target = BHC
-			type = annex_everything
-		}
-		add_political_power = -50
 	}
 }
 

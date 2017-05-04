@@ -1,3 +1,7 @@
+###########################
+# Japan Focus Tree
+###########################
+
 	focus_tree = {
 	
 	id = japan_focus
@@ -1603,6 +1607,12 @@ focus = {
 		completion_reward = {
 		add_ideas = JAP_rising_sun
 		set_country_flag = JAP_EXP
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.30 days = 2 }
+		}
 		add_named_threat = { threat = 1 name = JAP_SUN_THREAT }
 		if = { limit = { OR = { is_in_faction = no is_faction_leader = yes } } dismantle_faction = yes create_faction = "co_prosperity_sphere" }
 	
@@ -2346,15 +2356,18 @@ focus = {
 		prerequisite = { focus = JAP_SUN_COLONY }
 		mutually_exclusive = { focus = JAP_SUN_HAW_annex }
 		available = {
-		HAW = {
-		exists = yes
-							}
-		NOT = {
-		has_country_flag = JAP_ISO
-							}
-									}
-
-							
+			HAW = {exists = yes	}
+			NOT = {
+				has_country_flag = JAP_ISO
+				HAW = {
+					has_government = radical_socialist
+					has_government = syndicalist
+					has_government = totalist
+					is_in_faction_with = JAP
+				}
+			}
+		}
+		bypass = { HAW = {is_in_faction_with = JAP} }		
 		x = 23
 		y = 3
 		cost = 10
@@ -2370,15 +2383,14 @@ focus = {
 		prerequisite = { focus = JAP_SUN_COLONY }
 		mutually_exclusive = { focus = JAP_SUN_HAW_alliance }
 		available = {
-		HAW = {
-		exists = yes
-							}
-		NOT = {
-		has_country_flag = JAP_ISO
-							}
-									}
-
-							
+			HAW = {exists = yes	}
+			NOT = {
+				has_country_flag = JAP_ISO
+				HAW = {is_in_faction_with = JAP}
+			}
+		}
+		cancel = { HAW = {is_in_faction_with = JAP} }
+		
 		x = 25
 		y = 3
 		cost = 10

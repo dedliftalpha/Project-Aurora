@@ -13,7 +13,7 @@ default_peace = {
 	
 	# ROOT = Taker, FROM = Giver
 	annex = {
-		factor = 1000
+		factor = 10
 	}
 
 	# ROOT = Taker, FROM = Liberated
@@ -29,11 +29,11 @@ default_peace = {
 
 	# ROOT = Taker, FROM = State
 	take_states = {
-		factor = 400 #Dylan, I know what you are thinking and do not lower this weight. REMEMBER SPAIN!
+		factor = 10
 		
 		####Priorities####
 		modifier = { #Priortize taking claimed or cored land
-			factor = 10
+			factor = 5
 			FROM = {
 				OR = {
 					is_claimed_by = ROOT
@@ -41,8 +41,14 @@ default_peace = {
 				}
 			}
 		}
+		modifier = { #Controls the state
+			factor = 5
+			FROM = {
+				is_controlled_by = ROOT
+			}
+		}		
 		modifier = { #Closer land is better land; 8 total
-			factor = 2.5
+			factor = 1.25
 			capital_scope = {
 				distance_to = {
 					target = FROM
@@ -52,7 +58,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 2.5
+			factor = 1.25
 			capital_scope = {
 				distance_to = {
 					target = FROM
@@ -62,7 +68,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 2.5
+			factor = 1.25
 			capital_scope = {
 				distance_to = {
 					target = FROM
@@ -72,7 +78,7 @@ default_peace = {
 		}
 
 		modifier = {
-			factor = 2.5
+			factor = 1.25
 			capital_scope = {
 				distance_to = {
 					target = FROM
@@ -160,8 +166,8 @@ default_peace = {
 				}
 			}
 		}
-		modifier = { #prioritize states on the same continent as capital; 8 Total
-			factor = 10 
+		modifier = { #prioritize states on the same continent as capital
+			factor = 5
 			OR = {
 				AND = { #Europe
 					FROM = { is_on_continent = europe }
@@ -222,6 +228,29 @@ default_peace = {
 		}
 
 		####Restrictions####
+		# modifier = { #Hopefully will help prevent border gore by making sure that border countries only take bordering states
+			# factor = 0			
+			# FROM = { 
+				# NOT = { is_core_of = ROOT }
+				# any_neighbor_state = {
+					# NOT = {
+						# AND = {
+							# owner = { tag = ROOT }
+						# }
+						# AND = {
+							# has_claimed_state_in_peace_conference = ROOT 
+						# }							
+					# }
+					# owner = {
+						# is_in_peace_conference = yes
+						# is_ai = yes
+					# }
+				# }		
+			# }
+		# }		
+		
+		
+		
 		modifier = { #Prevents states being taken without connection to them
 			factor = 0		
 			NOT = { FROM = { is_claimed_by = ROOT } }
@@ -372,9 +401,10 @@ default_peace = {
 			# }
 			
 		# }
-		#Faction leader Preferences
+		#Specific Priorities
+		#Country Specific
 		modifier = { #German Empire prioritize taking France
-			factor = 10	
+			factor = 5
 			ROOT = { #Checks if Germany and faction leader
 				TAG = GER
 				is_faction_leader = yes
@@ -387,7 +417,7 @@ default_peace = {
 			}
 		}
 		modifier = { #Canada prioritize taking the UK
-			factor = 10	
+			factor = 5
 			ROOT = { #Checks if canada and faction leader
 				TAG = CAN
 				is_faction_leader = yes
@@ -400,6 +430,62 @@ default_peace = {
 				}
 			}
 		}
+		modifier = { #Spanish Civil War incentive to take african states
+			factor = 5
+			ROOT = { 
+				OR = {
+					TAG = CNT
+					TAG = CAR
+				}
+				OR = {
+					has_war_with = SPR
+					has_war_with = CAR
+				}
+			}
+			FROM = { #State is apart of the following strategic regions
+				OR = {
+					region = 126 #Spanish Africa
+					region = 127 #Spanish Africa
+					region = 48 #Spanish Africa
+					region = 140 #Spanish Africa
+				}
+			}
+		}
+		#CSA-TEX Treaty - American civil War
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 5
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = CSA
+				has_war_with = USA
+			}
+			TEX = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State not apart of the following strategic regions
+				OR = {
+					region = 186 #North-East
+					region = 120 #Mid-West
+					region = 185 #NorthWest
+				}
+			}
+		}
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 5
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = TEX
+				has_war_with = USA
+			}
+			CSA = {
+				is_in_peace_conference = yes
+			}
+			FROM = { #State  apart of the following strategic regions
+				NOT = {
+					region = 186 #North-East
+					region = 120 #Mid-West
+					region = 185 #NorthWest
+				}
+			}
+		}
 		
 		######COUNTRY GOALS######
 		###This is the country goals for countries that are in factions and not faction leaders.
@@ -408,6 +494,113 @@ default_peace = {
 		###Faction leaders respect the country goals of allies
 		###Cores/claims will always ovverride any conference rules set and take precedent
 		###Some countries have no areas set and will only take cores/claims
+		##War Specific
+		#WK2 - Internationale Lose
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { 
+				has_war_with = FRA #At war with france
+			}
+			FRA = {
+				has_socialist_government = yes #Is Syndiclist
+				is_faction_leader = yes #Is internationale
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			OR = {
+				if = { #If Germany or National France is in the peace conference
+					limit = {
+						OR = {
+							GER = {
+								is_in_peace_conference = yes
+							}
+							NFA = {
+								is_in_peace_conference = yes
+							}
+						}
+						ROOT = {
+							NOT = {
+								tag = GER
+								tag = NFA
+							}
+						}
+					}
+					FROM = { #If state is core of France or National France, Leave it alone
+						OR = {
+							is_core_of = FRA	
+							is_core_of = NFA	
+						}
+					}
+				}
+				#If germany and national france
+				if = { #If Germany and National France is in peace conference
+					limit = {
+						NFA = {
+							is_in_peace_conference = yes
+						}
+						ROOT = {
+							tag = GER
+						}
+					}
+					FROM = { #Leave southern France OR states in northern france controlled by National France (Or its allies) alone
+						OR = {
+							region = 20 #Southern France	
+							AND = {
+								OR = {
+									is_controlled_by = NFA
+									any_country = {
+										is_in_faction_with = NFA 
+										FROM = {
+											is_controlled_by = PREV
+										}
+									}
+								}
+								region = 19 #Northern France
+							}
+						}
+						NOT = { is_controlled_by = ROOT }
+					}
+				}
+				if = { #If National France and Germany is in peace conference
+					limit = {
+						GER = {
+							is_in_peace_conference = yes
+						}
+						ROOT = {
+							tag = NFA
+						}
+					}
+					FROM = { #Leave northern France OR states in southern france controlled by Germany (Or its allies) alone
+						OR = {
+							region = 19 #Northern France
+							AND = {
+								OR = {
+									is_controlled_by = GER
+									any_country = {
+										is_in_faction_with = GER 
+										FROM = {
+											is_controlled_by = PREV
+										}
+									}
+								}
+								region = 20 #Southern France
+							}
+						}
+						NOT = { is_controlled_by = ROOT }
+					}
+				}
+			}
+
+		}
+		
+		
+		##Country Specific		
 		#Ukraine
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
@@ -513,10 +706,32 @@ default_peace = {
 		#SER - Serbia
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = SER
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = SER
+						is_faction_leader = no
+						is_in_faction = yes	
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with ottomans
+						tag = SER
+						has_war_with = OTT
+					}
+					OR = { #checks if persia, egypt or arabia is in peace conference
+						EGY = { 
+							is_in_peace_conference = yes
+						}
+						SAU = { 
+							is_in_peace_conference = yes
+						}
+						PER = { 
+							is_in_peace_conference = yes
+						}
+					}
+				}
+			
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -569,11 +784,21 @@ default_peace = {
 		#ILL - Illyria
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = ILL
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = ILL
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = ILL
+					has_war_with = AUS
+					HUN = {
+						is_in_peace_conference = yes
+					}
+				}
 			}
+			
 			FROM = { #State is not a Claim or core
 				NOT = {
 					OR = {
@@ -642,6 +867,15 @@ default_peace = {
 						is_in_peace_conference = yes
 					}
 				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = BOM
+						has_war_with = HUN
+					}
+					AUS = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
 			
 			}
 
@@ -692,10 +926,26 @@ default_peace = {
 		#ROM - Romania
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = ROM
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR ={
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = ROM
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = ROM
+						OR = {
+							has_war_with = BUL
+							has_war_with = OTT	
+						}
+						
+						
+					}
+					SER = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -709,10 +959,26 @@ default_peace = {
 		#GRE - Greece
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = GRE
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = GRE
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = GRE
+						OR = {
+							has_war_with = BUL
+							has_war_with = OTT	
+						}
+						
+						
+					}
+					SER = { #checks if hungary is in peace conference
+						is_in_peace_conference = yes
+					}
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -2227,10 +2493,33 @@ default_peace = {
 		#AUS - Austria
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = AUS
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = AUS
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = AUS
+					OR = {
+						has_war_with = 	FRA
+						has_war_with = 	ENG
+						has_war_with = 	SRI					
+					}
+					OR = {
+						CAN = {
+							is_in_peace_conference = yes
+						}
+						ENG = {
+							is_in_peace_conference = yes
+						}
+						NFA = {
+							is_in_peace_conference = yes
+						}
+					
+					}
+				}
+			
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -2241,6 +2530,7 @@ default_peace = {
 				}
 			}
 			FROM = { #State not apart of the following strategic regions
+				
 				NOT = {
 					OR = {
 					region = 21 #Alpine
@@ -2251,6 +2541,7 @@ default_peace = {
 					region = 27 #Carpathia
 					region = 22 #Bohemia
 					region = 38 #Poland
+					region = 169 
 					}
 				}
 			}
@@ -2470,6 +2761,119 @@ default_peace = {
 			FROM = { #State is apart of the following strategic regions
 				OR = {
 					region = 41 #Iberia
+				}
+			}
+		}
+		#CAN - Canada
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = CAN
+						is_faction_leader = no
+						is_in_faction = yes	
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = CAN
+						has_war_with = USA
+					}
+					OR = {
+						CSA = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+						TEX = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = CAN
+						has_war_with = CSA
+					}
+					OR = {
+						USA = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+						TEX = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+			
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+					region = 121 #Canada
+					region = 183 #Canada
+					region = 122 #Canada
+					region = 184 #Canada
+					region = 33 #Alaska
+					state = 685 #Panama Canal
+					state = 796 #New England
+					state = 357 #New England
+					}
+				}
+			}
+		}
+		#GER - German Empire
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			OR = {
+				AND = {
+					ROOT = { #Checks Country tag, is in faction and not a faction leader
+						tag = GER
+						is_faction_leader = no
+						is_in_faction = yes	
+					}
+				}
+				AND = { 
+					ROOT = { #Checks Country tag and in a war with austria
+						tag = GER
+						OR = {
+							has_war_with = SER
+							has_war_with = BUL
+							has_war_with = ROM
+							has_war_with = GRE
+						}
+					}
+					OR = {
+						AUS = { #checks if hungary is in peace conference
+							is_in_peace_conference = yes
+						}
+					}
+				}
+			
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+			FROM = { #State not apart of the following strategic regions
+				NOT = {
+					OR = {
+					region = 7
+					region = 6
+					region = 21
+					region = 22
+					region = 8
+					}
 				}
 			}
 		}
@@ -2879,10 +3283,19 @@ default_peace = {
 		#PER - Persia
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = PER
-				is_faction_leader = no
-				is_in_faction = yes	
+			OR = {
+				ROOT = { #Checks Country tag, is in faction and not a faction leader
+					tag = PER
+					is_faction_leader = no
+					is_in_faction = yes	
+				}
+				AND = {
+					tag = PER
+					has_war_with = OTT
+					EGY = {
+						is_in_peace_conference = yes					
+					}				
+				}
 			}
 			FROM = { #State is not a Claim or core
 				NOT = {
@@ -2906,11 +3319,22 @@ default_peace = {
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
 			ROOT = { #Checks if in faction with, and a faction leader
-				is_in_faction_with = PER
-				is_faction_leader = yes
 				NOT = {
 					tag = PER
 				}
+				OR = {
+					AND = {
+						is_in_faction_with = PER
+						is_faction_leader = yes
+					}
+					AND = {
+						has_war_with = OTT
+						PER = {
+							is_in_peace_conference = yes
+						}
+					}
+				}
+				
 			}
 			PER = {
 				is_subject = no
@@ -4709,43 +5133,7 @@ default_peace = {
 				}
 			}
 		}
-		#CSA-TEX Treaty - American civil War
-		modifier = { #Will forbid taking the states if the below triggers are met
-			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = CSA
-				has_war_with = USA
-			}
-			TEX = {
-				is_in_peace_conference = yes
-			}
-			FROM = { #State not apart of the following strategic regions
-				NOT = {
-					OR = {
-						region = 186 #North-East
-						region = 120 #Mid-West
-						region = 185 #NorthWest
-					}
-				}
-			}
-		}
-		modifier = { #Will forbid taking the states if the below triggers are met
-			factor = 0	
-			ROOT = { #Checks Country tag, is in faction and not a faction leader
-				tag = TEX
-				has_war_with = USA
-			}
-			CSA = {
-				is_in_peace_conference = yes
-			}
-			FROM = { #State  apart of the following strategic regions
-				OR = {
-					region = 186 #North-East
-					region = 120 #Mid-West
-					region = 185 #NorthWest
-				}
-			}
-		}
+
 		#MittleAfrika Partition - NFA - POR - FRA
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	
@@ -5556,7 +5944,22 @@ default_peace = {
 					}
 				}
 			}
-		}	
+		}
+		#Tripoltania
+		modifier = { #Will forbid taking the states if the below triggers are met
+			factor = 0	
+			ROOT = { #Checks Country tag, is in faction and not a faction leader
+				tag = LYB
+			}
+			FROM = { #State is not a Claim or core
+				NOT = {
+					OR = {
+					is_claimed_by = ROOT
+					is_core_of = ROOT
+					}
+				}
+			}
+		}			
 		#Cyrpus
 		modifier = { #Will forbid taking the states if the below triggers are met
 			factor = 0	

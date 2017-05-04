@@ -21,7 +21,7 @@ country_event = {
 		tag = SER
 		date > 1937.5.1
 		is_in_faction = no
-		is_puppet = no
+		is_subject = no
 		has_war = no
 
 		# Bulgaria and one of the potential partners need to exist
@@ -60,6 +60,12 @@ country_event = {
 		}
 
 		set_country_flag = founded_belgradepact
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.18 days = 2 }
+		}
 
 		create_faction = Belgrade_Pact
 
@@ -106,7 +112,7 @@ country_event = {
 				OR = {
 					has_war = yes
 					is_in_faction = yes
-					is_puppet = yes
+					is_subject = yes
 				}
 			}
 		}
@@ -353,7 +359,7 @@ country_event = {
 
 	trigger = {
 		has_war = no
-		is_puppet = no
+		is_subject = no
 
 		SER = { has_country_flag = founded_belgradepact }
 
@@ -461,7 +467,7 @@ country_event = {
 		}
 
 		# Bulgaria is a valid target
-		BUL = { is_puppet = no }
+		BUL = { is_subject = no }
 	}
 
 	mean_time_to_happen = {
@@ -792,7 +798,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		is_puppet = no
+		is_subject = no
 	}
 
 	option = {
@@ -912,7 +918,7 @@ country_event = {
 	trigger = {
 		tag = OTT
 		has_country_flag = supported_bulgaria
-		is_puppet = no
+		is_subject = no
 
 		SER = {
 			has_country_flag = founded_belgradepact
@@ -1110,7 +1116,7 @@ country_event = {
 				factor = 0
 				OR = {
 					has_war = yes
-					is_puppet = yes
+					is_subject = yes
 				}
 			}
 		}
@@ -1807,6 +1813,10 @@ country_event = {
 	desc = pact.48.d
 
 	is_triggered_only = yes
+	
+	immediate = {
+		SER = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = {
 		name = pact.48.a # We are triumphant.
@@ -1816,8 +1826,6 @@ country_event = {
 		set_global_flag = balkan_war_ended
 
 		add_political_power = 100
-		
-		SER = { save_event_target_as = white_peace_receiver }
 
 		# White peace with Ottomans and their puppets
 		if = {
@@ -1892,6 +1900,7 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
+		SER = { save_event_target_as = white_peace_receiver }
 		767 = { set_demilitarized_zone = yes } # Nis
 
 		SER = { add_timed_idea = { idea = SER_reparation_payments days = 1460 } }
@@ -1905,7 +1914,6 @@ country_event = {
 		name = pact.49.a # At least we exist
 
 		effect_tooltip = {
-			SER = { save_event_target_as = white_peace_receiver }
 			BUL = { white_peace_with_TARGET = yes }
 
 			SER = { dismantle_faction = yes }
@@ -1922,6 +1930,7 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
+		SER = { save_event_target_as = white_peace_receiver }
 		81 = { set_demilitarized_zone = yes } # Oltenia
 
 		if = {
@@ -1944,7 +1953,6 @@ country_event = {
 		name = pact.50.a # At least we exist
 
 		effect_tooltip = {
-			SER = { save_event_target_as = white_peace_receiver }
 			BUL = { white_peace_with_TARGET = yes }
 
 			SER = { dismantle_faction = yes }
@@ -1966,15 +1974,19 @@ country_event = {
 	}
 
 	is_triggered_only = yes
+	
+	immediate = {
+		SER = { save_event_target_as = white_peace_receiver }
+	}
 
 	immediate = {
 		768 = { set_demilitarized_zone = yes } # Thessalia
 
 		if = {
-	limit = { 731 = { is_core_of = ROOT } }
-	remove_state_core = 731 # Greece renounces their claims on Central Macedonia
+			limit = { 731 = { is_core_of = ROOT } }
+			remove_state_core = 731 # Greece renounces their claims on Central Macedonia
 			BUL = { add_state_core = 731 }
-	}
+		}
 
 		if = {
 			limit = { OTT = { has_country_flag = alliance_with_bulgaria } }
@@ -1991,7 +2003,6 @@ country_event = {
 		name = pact.51.a # At least we exist
 
 		effect_tooltip = {
-			SER = { save_event_target_as = white_peace_receiver }
 			BUL = { white_peace_with_TARGET = yes }
 
 			SER = { dismantle_faction = yes }

@@ -1,3 +1,7 @@
+###########################
+# National France Focus Tree
+###########################
+
 focus_tree = {
 	id = NFA_focus
 	
@@ -50,6 +54,15 @@ focus = {
 			country_event = { id = nfa.3 }
 		add_political_power = 20
 		set_country_flag = NFA_monarch
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			random_country = {
+				limit = { NOT = { TAG = NFA } }
+				news_event = { id = worldnews.29 days = 2 }
+			}
+		}
 		add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
 		add_popularity = { ideology = social_conservative popularity = 0.05 }
 		add_popularity = { ideology = paternal_autocrat popularity = 0.05 }
@@ -71,6 +84,15 @@ focus = {
 			country_event = { id = nfa.4 }
 		add_political_power = -20
 		set_country_flag = NFA_empire
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			random_country = {
+				limit = { NOT = { TAG = NFA } }
+				news_event = { id = worldnews.29 days = 2 }
+			}
+		}
 		add_popularity = { ideology = authoritarian_democrat popularity = 0.1 }
 		add_popularity = { ideology = social_conservative popularity = 0.05 }
 		add_popularity = { ideology = paternal_autocrat popularity = 0.05 }
@@ -1956,19 +1978,19 @@ focus = {
 	y = 1
 	cost = 1
 	completion_reward = {
-	add_manpower = -3000
+		add_manpower = -3000
 		send_equipment = {
 			target = SPR
 			type = infantry_equipment
 			amount = 1500
-	}
+		}
 		SPR = { country_event = { id = nfa.62 days = 1 } }
-		set_global_flag = NFA_SPR_intervention
+		set_country_flag = SPR_intervention
 		add_opinion_modifier = { target = SPR modifier = NFA_supported_us_scw }
 		add_opinion_modifier = { target = CNT modifier = NFA_supported_others_scw }
 		add_opinion_modifier = { target = CAR modifier = NFA_supported_others_scw }
 		add_opinion_modifier = { target = ITA modifier = NFA_supported_others_scw }
-		}
+	}
 	}
 	
 	focus = {
@@ -2005,19 +2027,19 @@ focus = {
 	y = 1
 	cost = 1
 	completion_reward = {
-	add_manpower = -3000
+		add_manpower = -3000
 		send_equipment = {
 			target = CAR
 			type = infantry_equipment
 			amount = 1500
-	}
+		}
 		CAR = { country_event = { id = nfa.63 days = 1 } }
-		set_global_flag = NFA_SPR_intervention
+		set_country_flag = NFA_CAR_intervention
 		add_opinion_modifier = { target = SPR modifier = NFA_supported_others_scw }
 		add_opinion_modifier = { target = CNT modifier = NFA_supported_others_scw }
 		add_opinion_modifier = { target = CAR modifier = NFA_supported_us_scw }
 		add_opinion_modifier = { target = ITA modifier = NFA_supported_us_scw }
-		}
+	}
 	}
 	
 	focus = {
@@ -2074,12 +2096,42 @@ focus = {
 	}
 	
 	focus = {
+	id = NFA_strike_france
+	icon = GFX_goal_generic_major_war
+	prerequisite = { focus = NFA_homeland_reconquest }
+	available = { is_subject = no
+	NOT = { is_in_faction_with = FRA }
+	NOT = { has_idea = NFA_political_unrest }
+	OR = { FRA = { has_war_with = GER }
+	date > 1939.6.1
+	}
+	}
+	bypass = { OR = { has_war_with = FRA 
+	NOT = { country_exists = FRA }
+	FRA = { is_subject_of = GER }
+	}
+	}
+	
+	x = 50
+	y = 1
+	cost = 10
+	completion_reward = {
+	if = { limit = { is_ai = no }
+			create_wargoal = { type = annex_everything target = FRA }
+			}
+			if = { limit = { is_ai = yes }
+			declare_war_on = { target = FRA type = annex_everything }
+			}
+		}
+	}
+	
+	focus = {
 	id = NFA_return_to_paris
 	icon = GFX_goal_generic_demand_territory
-	prerequisite = { focus = NFA_homeland_reconquest }
+	prerequisite = { focus = NFA_strike_france }
 	available = { FRA = { exists = no } owns_state = 16 owns_state = 21 }
 	x = 49
-	y = 1
+	y = 2
 	cost = 10
 	completion_reward = {
 	country_event = { id = nfa.67 }
@@ -2099,7 +2151,7 @@ focus = {
 	focus = {
 	id = NFA_return_to_marseille
 	icon = GFX_goal_generic_demand_territory
-	prerequisite = { focus = NFA_homeland_reconquest }
+	prerequisite = { focus = NFA_strike_france }
 	available = { owns_state = 21
 	NOT = { has_completed_focus = NFA_return_to_paris has_war_with = GER has_war_with = FRP has_war_with = OCC
 	country_exists = FRA controls_state = 16 16 = { is_core_of = NFA } } }
@@ -2107,7 +2159,7 @@ focus = {
 			factor = 10
 		}
 	x = 51
-	y = 1
+	y = 2
 	cost = 10
 	completion_reward = {
 	country_event = { id = nfa.68 }
@@ -2136,7 +2188,7 @@ focus = {
 			factor = 10
 		}
 	x = 53
-	y = 2
+	y = 3
 	cost = 10
 	completion_reward = {
 	add_political_power = 20
@@ -2154,7 +2206,7 @@ focus = {
 	bypass = { has_country_flag = NFA_demo }
 	available = { NOT = { has_country_flag = NFA_demo } }
 	x = 49
-	y = 2
+	y = 3
 	cost = 10
 	ai_will_do = {
 			factor = 100
@@ -2184,7 +2236,7 @@ focus = {
 			factor = 0
 		}
 	x = 51
-	y = 2
+	y = 3
 	cost = 10
 	completion_reward = {
 	add_political_power = -280	
@@ -2200,7 +2252,7 @@ focus = {
 			factor = 10
 		}
 	x = 53
-	y = 3
+	y = 4
 	cost = 10
 	completion_reward = {
 	add_research_slot = 1
@@ -2212,7 +2264,7 @@ focus = {
 	icon = GFX_focus_wonderweapons
 	prerequisite = { focus = NFA_amnistia }
 	x = 52
-	y = 4
+	y = 5
 	cost = 10
 	completion_reward = {
 	add_tech_bonus = {
@@ -2229,7 +2281,7 @@ focus = {
 	icon = GFX_focus_rocketry
 	prerequisite = { focus = NFA_amnistia }
 	x = 54
-	y = 4
+	y = 5
 	cost = 10
 	completion_reward = {
 	add_tech_bonus = {
@@ -2246,7 +2298,7 @@ focus = {
 	icon = GFX_goal_generic_allies_build_infantry
 	prerequisite = { focus = NFA_absolutism_mainland focus = NFA_restore_consitution_mainland }
 	x = 51
-	y = 3
+	y = 4
 	cost = 10
 	ai_will_do = {
 			factor = 10
@@ -2271,7 +2323,7 @@ focus = {
 			factor = 10
 		}
 	x = 49
-	y = 3
+	y = 4
 	cost = 10
 	completion_reward = {
 	add_state_claim = 694

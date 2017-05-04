@@ -874,6 +874,15 @@ country_event = { #Restoration of the monarchy ? jean
 		add_ideas = NFA_free_monarchy }
 		if = { limit = { has_idea = NFA_conservative_republic } remove_ideas = NFA_conservative_republic
 		add_ideas = NFA_conservative_monarchy }
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			random_country = {
+				limit = { NOT = { TAG = NFA } }
+				news_event = { id = worldnews.29 days = 2 }
+			}
+		}
 	}
 
 	option = {
@@ -902,6 +911,15 @@ country_event = { #Restoration of the monarchy ? henri
 		add_ideas = NFA_free_monarchy }
 		if = { limit = { has_idea = NFA_conservative_republic } remove_ideas = NFA_conservative_republic
 		add_ideas = NFA_conservative_monarchy }
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			random_country = {
+				limit = { NOT = { TAG = NFA } }
+				news_event = { id = worldnews.29 days = 2 }
+			}
+		}
 	}
 
 	option = {
@@ -3121,7 +3139,8 @@ country_event = { #The Liberation of Metropolitan France
 
 	fire_only_once = yes
 
-	trigger = { OR = { tag = USA tag = CAN tag = AST tag = CAF tag = DEH tag = GBR tag = SAF tag = POR tag = SPR }
+	trigger = { 
+	OR = { tag = USA tag = CAN tag = AST tag = CAF tag = DEH tag = GBR tag = SAF tag = POR tag = SPR }
 	NOT = { country_exists = FRA } NFA = { is_subject = no } is_in_faction_with = NFA
 	any_state = { AND = { OR = { state = 31 state = 21 state = 763 state = 22 state = 32 state = 817 state = 26 state = 20 state = 25 state = 19 state = 23 state = 33 state = 27 state = 17 state = 24 state = 30 state = 14 state = 18 state = 785 state = 16 state = 15 state = 29 state = 779 state = 28 state = 735 state = 762 state = 1 }
 	OR = { is_owned_by = ROOT is_controlled_by = ROOT } } }
@@ -3327,7 +3346,7 @@ country_event = { #Nationalist France supports us! SPR
 	id = nfa.62
 	title = nfa.62.t
 	desc = nfa.62.d
-	picture = GFX_petain_NFA
+	picture = GFX_report_event_SPR_civwar
 
 	is_triggered_only = yes
 
@@ -3335,10 +3354,9 @@ country_event = { #Nationalist France supports us! SPR
 		name = nfa.62.a
 		add_manpower = 3000
 		custom_effect_tooltip = received_equipment_1500
-
-		load_oob = SPR_NFA_VOL
-
-	NFA = { set_country_flag = SCW_VOL }
+		add_ideas = SPR_advisors_natfrance
+		set_country_flag = SPR_help_from_natfrance
+		NFA = { set_country_flag = SCW_VOL }
 	}
 
 }
@@ -3347,7 +3365,7 @@ country_event = { #Nationalist France supports us! CAR
 	id = nfa.63
 	title = nfa.63.t
 	desc = nfa.63.d
-	picture = GFX_petain_NFA
+	picture = GFX_report_event_SPR_civwar
 
 	is_triggered_only = yes
 
@@ -3355,12 +3373,9 @@ country_event = { #Nationalist France supports us! CAR
 		name = nfa.63.a
 		add_manpower = 3000
 		custom_effect_tooltip = received_equipment_1500
-
-		load_oob = CAR_NFA_VOL
-
-	NFA = { set_country_flag = SCW_VOL }
+		add_ideas = SPR_advisors_natfrance
+		NFA = { set_country_flag = SCW_VOL }
 	}
-
 }
 
 country_event = { #CNT in Africa what to do with the rif
@@ -3883,7 +3898,13 @@ country_event = { #Divided France GER
 		name = nfa.79.c #National France can have that land, if they join us!
 		ai_chance = { factor = 5 }
 		trigger = { country_exists = NFA NOT = { NFA = { is_in_faction_with = GER is_subject_of = GER } country_exists = OCC } }
-		set_global_flag = NFA_GER_offer
+		if = { limit = { NFA = { OR = { is_in_faction_with = GBR is_in_faction_with = CAN } } }
+		NFA = { country_event = { id = part.82 days = 2 } }
+		}
+		if = { limit = { NFA = { NOT = { is_in_faction_with = GBR is_in_faction_with = CAN } } }
+		NFA = { country_event = { id = part.81 days = 2 } }
+		}
+		set_global_flag = DEAL_WITH_NFA_ALLY
 	}
 
 }
@@ -4057,26 +4078,24 @@ country_event = { #Partition of Northern France
 		name = nfa.84.a #Set up a French Puppet Government.
 		ai_chance = { factor = 95 }
 		every_country = {
-	limit = {
-	OR = {
-	tag = GER
-	is_in_faction_with = GER
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
 			}
+			every_state = {
+				limit = {
+					is_controlled_by = PREV
+					is_core_of = FRP
+
 				}
-				}
-	every_state = {
-	limit = {
-		is_controlled_by = PREV
-
-		is_core_of = FRP
-
-	}
-	FRP = { transfer_state = PREV }
-
-}
+				FRP = { transfer_state = PREV }
+			}
+		}
 	puppet = FRP
-	FRP = { set_cosmetic_tag = FRP_GER }
-	#events
+	FRP = { country_event = { id = part.79 } }
+	GER = { country_event = { id = part.71 } }
 	}
 
 	option = {
@@ -4084,64 +4103,72 @@ country_event = { #Partition of Northern France
 		ai_chance = { factor = 5 }
 		trigger = { controls_state = 14 controls_state = 15 NOT = { country_exists = BRI country_exists = NRM } }
 		every_country = {
-	limit = {
-	OR = {
-	tag = GER
-	is_in_faction_with = GER
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
+				}
 			}
-				}
-				}
-	every_state = {
-	limit = {
-		is_controlled_by = PREV
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
 
-		is_core_of = NRM
+				is_core_of = NRM
 
-	}
-	NRM = { transfer_state = PREV }
-
-}
-	puppet = NRM
-	every_country = {
-	limit = {
-	OR = {
-	tag = GER
-	is_in_faction_with = GER
 			}
-				}
-				}
-	every_state = {
-	limit = {
-		is_controlled_by = PREV
-
-		is_core_of = BRI
-
-	}
-	BRI = { transfer_state = PREV }
-
-}
-	puppet = BRI
-	every_country = {
-	limit = {
-	OR = {
-	tag = GER
-	is_in_faction_with = GER
+			NRM = {
+				transfer_state = PREV
 			}
+
+		}
+		}
+		puppet = NRM
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
 				}
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
+
+				is_core_of = BRI
+
+			}
+			BRI = {
+				transfer_state = PREV
+			}
+
+		}
+		}
+		puppet = BRI
+		every_country = {
+			limit = {
+				OR = {
+					tag = GER
+					is_in_faction_with = GER
 				}
-	every_state = {
-	limit = {
-		is_controlled_by = PREV
+				NOT = { tag = BRI tag = NRM }
+			}
+		every_state = {
+			limit = {
+				is_controlled_by = PREV
 
-		is_core_of = FRP
+				is_core_of = FRP
 
-	}
-	FRP = { transfer_state = PREV }
+			}
+			FRP = {
+				transfer_state = PREV
+			}
 
-}
-	puppet = FRP
-	FRP = { set_cosmetic_tag = FRP_GER }
-	#events
+		}
+		}
+		puppet = FRP
+		GER = { country_event = { id = part.72 } 
+		country_event = { id = part.73 } }
+        FRP = { country_event = { id = part.79 } }
 	}
 
 	option = {

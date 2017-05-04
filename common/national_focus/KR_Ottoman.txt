@@ -1,3 +1,7 @@
+###########################
+# Ottoman Focus Tree
+###########################
+
 ### This focustree is for Devlet-i Al-i Osmaniye [ceddin deden intensifies]
 
 focus_tree = {
@@ -23,6 +27,9 @@ focus = {
 	x = 4
 	y = 0
 	cost = 10
+	ai_will_do = {
+		factor = 500
+	}
 	
 	completion_reward = {
 		add_political_power = 150
@@ -39,7 +46,13 @@ focus = {
 	x = 1
 	y = 1
 	cost = 4
-	
+	ai_will_do = {
+		factor = 20
+	}
+	available = {
+		date > 1938.6.1
+	}
+
 	
 	completion_reward = {
 		country_event = { id = ott.85 days = 0 }
@@ -54,14 +67,14 @@ focus = {
 	mutually_exclusive = { focus = OTT_support_parliament }
 	x = 0
 	y = 2
-	cost = 20
-	
-	select_effect = {
-		country_event = { id = ott.86 days = 15 }
+	cost = 10
+	ai_will_do = {
+		factor = 10
 	}
+	
 	completion_reward = {
-		# TODO - custom tooltip
-		# TODO - constant PP loss
+		country_event = { id = ott.86 days = 0 }
+		add_ideas = ott_protests_idea
 	}
 
 }
@@ -72,12 +85,23 @@ focus = {
 	icon = GFX_goal_generic_propaganda
 	x = 0
 	y = 3
-	cost = 10
+	cost = 20
+	ai_will_do = {
+		factor = 70
+	}
+	available = {
+		NOT = { has_country_flag = ott_new_reformers }
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
-	
+	select_effect = {
+		country_event = { id = ott.87 days = 15 }
+	}
+
 	completion_reward = {
-		# TODO - custom tooltip
-		# TODO - end PP loss
+		custom_effect_tooltip = OTT_opposition_tt
+		remove_ideas = ott_protests_idea
 	}
 
 }
@@ -89,11 +113,14 @@ focus = {
 	x = 0
 	y = 4
 	cost = 10
+	ai_will_do = {
+		factor = 70
+	}
 	
 	
 	completion_reward = {
-		add_political_power = 100
-		# TODO - add dicktator modifier
+		add_political_power = 150
+		add_ideas = ott_renewed_autocracy
 	}
 
 }
@@ -106,6 +133,9 @@ focus = {
 	x = 2
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 30
+	}
 	
 	
 	completion_reward = {
@@ -121,12 +151,16 @@ focus = {
 	x = 2
 	y = 3
 	cost = 10
+	ai_will_do = {
+		factor = 20
+	}
 	
 	select_effect = {
 		country_event = { id = ott.95 days = 10 }
 	}
 	completion_reward = {
-		add_national_unity = 0.05
+		custom_effect_tooltip = OTT_constitution_tt
+		show_ideas_tooltip = ott_solid_constitution
 	}
 
 }
@@ -140,11 +174,13 @@ focus = {
 	x = 2
 	y = 4
 	cost = 10
+	ai_will_do = {
+		factor = 20
+	}
 	
 	
 	completion_reward = {
-		# TODO - custom tooltip about resistance to reforms
-		# TODO - enables arabian cores
+		add_national_unity = 0.15
 	}
 
 }
@@ -154,25 +190,27 @@ focus = {
 focus = {
 	id = OTT_fight_corruption
 	prerequisite = { focus = OTT_enforce_autocracy focus = OTT_enforce_rule_of_law }
-	icon = GFX_goal_tfv_saf_anti_colonialist_crusade # TODO -works without DLC?
+	icon = GFX_goal_tfv_saf_anti_colonialist_crusade
 	x = 1
 	y = 5
 	cost = 30
+	ai_will_do = {
+		factor = 70
+	}
 	
 	available = {
 		has_country_flag = ott_investigation
+		has_war = no
 	}
-	cancel_if_invalid = yes
-	continue_if_invalid = no
+	cancel_if_invalid = no
+	continue_if_invalid = yes
 
 	select_effect = {
 		country_event = { id = ott.113 days = 50 }
 	}
 	
 	completion_reward = {
-		# TODO - add tooltip might end corrupt bureaucracy
-		# TODO - add triggers to events that check for currently active focus
-		# TODO - remove effects from end-of-focus events and put them here
+		custom_effect_tooltip = OTT_corruption1_tt
 	}
 
 }
@@ -184,6 +222,9 @@ focus = {
 	x = 1
 	y = 6
 	cost = 10
+	ai_will_do = {
+		factor = 500
+	}
 
 	available = {
 		has_country_flag = ott_investigation
@@ -194,31 +235,36 @@ focus = {
 	}
 
 	completion_reward = {
-		# TODO - add tooltip might end military factions
-		remove_ideas = ott_decline_3
-		add_ideas = ott_decline_4
+		custom_effect_tooltip = OTT_corruption2_tt
+		swap_ideas = {
+		remove_idea = ott_decline_3
+		add_idea = ott_decline_4
+		}
 	}
 
 }
 
 focus = {
-	id = OTT_end_paramilitary
+	id = OTT_end_paramilitary # Rebuild Ottoman Intelligence
 	prerequisite = { focus = OTT_eliminate_military_factions  }
 	icon = GFX_goal_generic_major_war
 	x = 1
 	y = 7
 	cost = 10
+	ai_will_do = {
+		factor = 500
+	}
 
 	available = {
 		has_country_flag = ott_investigation
 	}
 
 	select_effect = {
-		country_event = { id = ott.141 days = 5 }
+		country_event = { id = ott.141 days = 60 }
 	}
 
 	completion_reward = {
-		# TODO - add tooltip might end paramilitary organisations
+		custom_effect_tooltip = OTT_corruption3_tt
 		remove_ideas = ott_decline_4
 	}
 
@@ -233,11 +279,14 @@ focus = {
 	x = 7
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
 		add_political_power = 50
 		set_country_flag = ott_reform_resistance
+		custom_effect_tooltip = OTT_reform_resistance_tt
 	}
 
 }
@@ -249,15 +298,18 @@ focus = {
 	x = 5
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 20
+	}
 	
 	available = {
-		NOT = { has_country_flag = ott_arbitrary_rulings }
+		hidden_trigger = { NOT = { has_country_flag = ott_arbitrary_rulings } }
 	}
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	
 	completion_reward = {
-		# TODO - add tooltip might fix stuff
+		custom_effect_tooltip = OTT_reforms_tt
 	}
 
 }
@@ -269,9 +321,12 @@ focus = {
 	x = 5
 	y = 3
 	cost = 10
+	ai_will_do = {
+		factor = 20
+	}
 	
 	available = {
-		NOT = { has_country_flag = ott_arbitrary_rulings }
+		hidden_trigger = { NOT = { has_country_flag = ott_arbitrary_rulings } }
 	}
 	cancel_if_invalid = yes
 	continue_if_invalid = no
@@ -280,17 +335,21 @@ focus = {
 		country_event = { id = ott.106 days = 20 }
 	}
 	completion_reward = {
-		# TODO - add tooltip might fix stuff
+		custom_effect_tooltip = OTT_reforms_tt
 		if = {
 			limit = {
 				has_idea = ott_decline_2
 			}
-			remove_ideas = ott_decline_2
-			add_ideas = ott_decline_3
+			swap_ideas = {
+			remove_idea = ott_decline_2
+			add_idea = ott_decline_3
+			}
 			
 			else = {
-				remove_ideas = ott_decline
-				add_ideas = ott_decline_1
+				swap_ideas = {
+				remove_idea = ott_decline
+				add_idea = ott_decline_1
+				}
 			}
 		}
 	}
@@ -304,14 +363,16 @@ focus = {
 	x = 7
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	select_effect = {
 		country_event = { id = ott.107 days = 10 }
 	}
 	completion_reward = {
-		# TODO - add tooltip might fix stuff
-		# TODO - required to take control of own economy
+		custom_effect_tooltip = OTT_reforms_tt
+		custom_effect_tooltip = OTT_admin_opda_tt
 	}
 
 }
@@ -323,20 +384,26 @@ focus = {
 	x = 7
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
-		# TODO - add tooltip might fix stuff
+		custom_effect_tooltip = OTT_reforms_tt
 		if = {
 			limit = {
 				has_idea = ott_decline_1
 			}
-			remove_ideas = ott_decline_1
-			add_ideas = ott_decline_3
+			swap_ideas = {
+			remove_idea = ott_decline_1
+			add_idea = ott_decline_3
+			}
 			
 			else = {
-				remove_ideas = ott_decline
-				add_ideas = ott_decline_2
+				swap_ideas = {
+				remove_idea = ott_decline
+				add_idea = ott_decline_2
+				}
 			}
 		}
 	}
@@ -350,7 +417,9 @@ focus = {
 	x = 9
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 80
+	}
 	
 	completion_reward = {
 		add_ideas = ott_education_reform_idea
@@ -365,11 +434,13 @@ focus = {
 	x = 9
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 60
+	}
 	
 	completion_reward = {
 		add_research_slot = 1
-		# TODO - enable theorists
+		custom_effect_tooltip = OTT_theorists_unlocked_tt
 	}
 
 }
@@ -381,9 +452,12 @@ focus = {
 	x = 9
 	y = 4
 	cost = 10
+	ai_will_do = {
+		factor = 80
+	}
 	available = {
 		num_of_factories > 50
-		NOT = { has_country_flag = ott_opda_flag }
+		custom_trigger_tooltip = { tooltip = ott_opda_flag_tt NOT = { has_country_flag = ott_opda_flag } }
 	}
 	cancel_if_invalid = no
 	
@@ -401,7 +475,9 @@ focus = {
 	x = 14
 	y = 0
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
 		add_political_power = 100
@@ -416,7 +492,9 @@ focus = {
 	x = 11
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
 		reverse_add_opinion_modifier = { target = BOS modifier = ott_r_caliph }
@@ -431,18 +509,18 @@ focus = {
 		reverse_add_opinion_modifier = { target = MLY modifier = ott_r_caliph }
 		reverse_add_opinion_modifier = { target = INS modifier = ott_r_caliph }
 		reverse_add_opinion_modifier = { target = SUD modifier = ott_r_caliph }
-		add_opinion_modifier = { target = BOS modifier = ott_r_caliph }
-		add_opinion_modifier = { target = ALB modifier = ott_r_caliph }
-		add_opinion_modifier = { target = LYB modifier = ott_r_caliph }
-		add_opinion_modifier = { target = AZB modifier = ott_r_caliph }
-		add_opinion_modifier = { target = ALO modifier = ott_r_caliph }
-		add_opinion_modifier = { target = AFG modifier = ott_r_caliph }
-		add_opinion_modifier = { target = PRF modifier = ott_r_caliph }
-		add_opinion_modifier = { target = TUA modifier = ott_r_caliph }
-		add_opinion_modifier = { target = GNE modifier = ott_r_caliph }
-		add_opinion_modifier = { target = MLY modifier = ott_r_caliph }
-		add_opinion_modifier = { target = INS modifier = ott_r_caliph }
-		add_opinion_modifier = { target = SUD modifier = ott_r_caliph }
+		add_opinion_modifier = { target = BOS modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = ALB modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = LYB modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = AZB modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = ALO modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = AFG modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = PRF modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = TUA modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = GNE modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = MLY modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = INS modifier = ott_rr_caliph }
+		add_opinion_modifier = { target = SUD modifier = ott_rr_caliph }
 		# TODO - crimea reverse_add_opinion_modifier = { target = --- modifier = ott_r_caliph }
 		# TODO - dervish reverse_add_opinion_modifier = { target = --- modifier = ott_r_caliph }
 		# TODO - mountainous reverse_add_opinion_modifier = { target = --- modifier = ott_r_caliph }
@@ -457,9 +535,16 @@ focus = {
 	x = 13
 	y = 1
 	cost = 10
+	ai_will_do = {
+		factor = 80
+	}
 	
 	completion_reward = {
-		# TODO - tooltip regain full control over economy
+		custom_effect_tooltip = OTT_opda_focus_tt
+		swap_ideas = {
+		remove_idea = ott_opda_idea
+		add_idea = ott_opda_idea_1
+		}
 		reverse_add_opinion_modifier = { target = NFA modifier = ott_r_opda }
 		reverse_add_opinion_modifier = { target = CAN modifier = ott_r_opda }
 		reverse_add_opinion_modifier = { target = HOL modifier = ott_r_opda }
@@ -475,19 +560,36 @@ focus = {
 	x = 12
 	y = 2
 	cost = 5
-	# TODO - bypass if free germany does not exist
-	
-	available = {
-		# WK2
-		# GER capitulation
-		# GER CON capitulation
-		# 1944
+	ai_will_do = {
+		factor = 100
 	}
 	
+	available = {
+		GER = {
+			OR = {
+				has_global_flag = GER_capitulation
+				has_global_flag = GER_CON_capitulation
+				has_war_with = FRA
+				has_war_with = RUS
+				has_war_with = CAN
+				has_war_with = USA
+				has_war_with = AUS
+				date > 1942.1.1
+			}
+		}
+	}
+	
+	bypass = {
+		OR = {
+			GER = { exists = no }
+			GER = { is_subject = yes }
+		}
+	}
+
 	completion_reward = {
+		custom_effect_tooltip = OTT_opda_focus_tt
 		reverse_add_opinion_modifier = { target = GER modifier = ott_r_opda }
-		# TODO - tooltip regain full control over economy
-		# TODO - the creditors need to agree
+		custom_effect_tooltip = OTT_creditors_tt
 		country_event = { id = ott.145 days = 1 }
 	}
 
@@ -500,21 +602,43 @@ focus = {
 	x = 14
 	y = 2
 	cost = 5
-	# TODO - bypass if free austria does not exist
+	ai_will_do = {
+		factor = 100
+	}
 	
 	available = {
-		# WK2 entry
-		# Crisis on the Danube
-		# Italo-Austrian War
-		# 1944
+		AUS = {
+			OR = {
+				has_war_with = HUN
+				has_war_with = FRA
+				has_war_with = RUS
+				has_war_with = CAN
+				has_war_with = USA
+				has_war_with = ITA
+				has_war_with = SRI
+				has_war_with = GER
+				AND = {
+					HUN = { NOT = { is_subject_of = AUS } }
+					NOT = { 43 = { is_owned_by = AUS } }
+				}
+				date > 1942.1.1
+			}
+		}
 	}
 	
 	
+	bypass = {
+		OR = {
+			AUS = { exists = no }
+			AUS = { is_subject = yes }
+		}
+	}
+
 	completion_reward = {
+		custom_effect_tooltip = OTT_opda_focus_tt
 		reverse_add_opinion_modifier = { target = AUS modifier = ott_r_opda }
-		# TODO - check for AUS tag switch
-		# TODO - tooltip regain full control over economy
-		# TODO - the creditors need to agree
+		custom_effect_tooltip = OTT_creditors_tt
+		country_event = { id = ott.154 days = 1 }
 	}
 
 }
@@ -526,8 +650,18 @@ focus = {
 	x = 15
 	y = 1
 	cost = 10
-	# TODO - require axis defeated & border with yemen
-	
+	ai_will_do = {
+		factor = 50
+	}
+	available = {
+		is_neighbor_of = YEM
+		YEM = {
+			is_subject = no
+			has_war = no
+			is_in_faction = no
+		}
+	}
+		
 	completion_reward = {
 		country_event = { id = ott.164 days = 0 }
 	}
@@ -541,16 +675,23 @@ focus = {
 	x = 17
 	y = 1
 	cost = 10
+	ai_will_do = {
+		factor = 50
+	}
 	available = {
-		# TODO - axis beaten / year 1942
-		NOT = { has_country_flag = ott_opda_flag }
+		OR = {
+			has_country_flag = axis_defeated
+			date > 1942.1.1
+		}
 	}
 	
 	completion_reward = {
 		add_political_power = 100
+		reverse_add_opinion_modifier = { target = AZB modifier = ott_r_turkic_diplo }
+		reverse_add_opinion_modifier = { target = ALO modifier = ott_r_turkic_diplo }
 		add_opinion_modifier = { target = AZB modifier = ott_r_turkic_diplo }
 		add_opinion_modifier = { target = ALO modifier = ott_r_turkic_diplo }
-		# TODO - tooltip turkestan
+		custom_effect_tooltip = OTT_turkestan_tt
 	}
 
 }
@@ -562,13 +703,16 @@ focus = {
 	x = 16
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 50
+	}
 	
 	available = {
 		always = no
 	}
 
 	completion_reward = {
-		add_political_power = 5
+		custom_effect_tooltip = OTT_NOT_IMPLEMENTED_YET
 	}
 
 }
@@ -580,13 +724,16 @@ focus = {
 	x = 17
 	y = 3
 	cost = 10
+	ai_will_do = {
+		factor = 50
+	}
 	
 	available = {
 		always = no
 	}
 	
 	completion_reward = {
-		add_political_power = 5
+		custom_effect_tooltip = OTT_NOT_IMPLEMENTED_YET
 	}
 
 }
@@ -598,13 +745,16 @@ focus = {
 	x = 18
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 50
+	}
 	
 	available = {
 		always = no
 	}
 	
 	completion_reward = {
-		add_political_power = 5
+		custom_effect_tooltip = OTT_NOT_IMPLEMENTED_YET
 	}
 
 }
@@ -617,8 +767,11 @@ focus = {
 	x = 25
 	y = 0
 	cost = 10
+	ai_will_do = {
+		factor = 80
+	}
 	available = {
-		NOT = { has_country_flag = ott_opda_flag }
+		custom_trigger_tooltip = { tooltip = ott_opda_flag_tt NOT = { has_country_flag = ott_opda_flag } }
 	}
 
 	completion_reward = {
@@ -641,7 +794,9 @@ focus = {
 	x = 21
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_political_power = 25
@@ -656,7 +811,9 @@ focus = {
 	x = 21
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_ideas = ott_school_of_agriculture_idea
@@ -671,7 +828,9 @@ focus = {
 	x = 21
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_political_power = -50
@@ -687,11 +846,20 @@ focus = {
 	x = 21
 	y = 4
 	cost = 10
-	# TODO - require Uzel
+	ai_will_do = {
+		factor = 50
+	}
+	available = {
+		has_completed_focus = OTT_anatolian_factories
+	}
+
 	
 	completion_reward = {
-		add_ideas = ott_agricultural_revolution_idea
-		remove_ideas = ott_land_reform_idea
+		custom_effect_tooltip = OTT_uzel_unlocked_tt
+		swap_ideas = {
+		remove_idea = ott_land_reform_idea
+		add_idea = ott_agricultural_revolution_idea
+		}
 	}
 
 }
@@ -705,7 +873,9 @@ focus = {
 	x = 25
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -725,10 +895,11 @@ focus = {
 	x = 25
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
-		# TODO - unlock Uzel
 		340 = {
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
@@ -756,11 +927,12 @@ focus = {
 	x = 25
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_ideas = ott_construction_industry_idea
-		# TODO - unlock construction minister
 		add_tech_bonus = {
 			name = construction_tech_bonus
 			bonus = 0.5
@@ -797,9 +969,12 @@ focus = {
 	x = 23
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
+		custom_effect_tooltip = OTT_sarsilmaz_unlocked_tt
 		random_owned_state = {
 			limit = {
 				state_population > 500000
@@ -847,10 +1022,12 @@ focus = {
 	x = 25
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
-		# TODO - unlock karabuk demir celik
+		custom_effect_tooltip = OTT_kardemir_unlocked_tt
 		347 = {
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
@@ -875,7 +1052,9 @@ focus = {
 	x = 27
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		add_resource = {
@@ -911,7 +1090,9 @@ focus = {
 	x = 25
 	y = 5
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_political_power = 20
@@ -929,10 +1110,21 @@ focus = {
 	x = 29
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
+	available = {
+		owns_state = 341
+		owns_state = 773
+		owns_state = 774
+		has_full_control_of_state = 341
+		has_full_control_of_state = 773
+		has_full_control_of_state = 774
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
 	completion_reward = {
-		# TODO - unlock infra minister
 		341 = {
 			add_building_construction = {
 				type = infrastructure
@@ -965,7 +1157,21 @@ focus = {
 	x = 29
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
+	available = {
+		owns_state = 349
+		owns_state = 350
+		owns_state = 353
+		owns_state = 355
+		has_full_control_of_state = 349
+		has_full_control_of_state = 350
+		has_full_control_of_state = 353
+		has_full_control_of_state = 355
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
 	completion_reward = {
 		349 = {
@@ -1007,7 +1213,21 @@ focus = {
 	x = 29
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
+	available = {
+		owns_state = 553
+		owns_state = 554
+		owns_state = 454
+		owns_state = 453
+		has_full_control_of_state = 553
+		has_full_control_of_state = 554
+		has_full_control_of_state = 454
+		has_full_control_of_state = 453
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
 	completion_reward = {
 		553 = {
@@ -1049,7 +1269,21 @@ focus = {
 	x = 29
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
+	available = {
+		owns_state = 680
+		owns_state = 676
+		owns_state = 819
+		owns_state = 291
+		has_full_control_of_state = 680
+		has_full_control_of_state = 676
+		has_full_control_of_state = 819
+		has_full_control_of_state = 291
+	}
+	cancel_if_invalid = yes
+	continue_if_invalid = no
 	
 	completion_reward = {
 		680 = {
@@ -1092,7 +1326,9 @@ focus = {
 	x = 41
 	y = 0
 	cost = 10
-	
+	ai_will_do = {
+		factor = 90
+	}
 	
 	completion_reward = {
 		add_political_power = 100
@@ -1116,7 +1352,9 @@ focus = {
 	x = 34
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1124,6 +1362,42 @@ focus = {
 			bonus = 0.5
 			uses = 1
 			category = infantry_weapons
+		}
+		random_owned_state = {
+			limit = {
+				state_population > 500000
+				is_core_of = OTT
+				free_building_slots = {
+					building = arms_factory
+					size > 1
+					include_locked = yes
+				}
+			}
+			
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_state = {
+			limit = {
+				state_population > 500000
+				is_core_of = OTT
+				free_building_slots = {
+					building = arms_factory
+					size > 1
+					include_locked = yes
+				}
+			}
+			
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
 		}
 	}
 
@@ -1136,7 +1410,9 @@ focus = {
 	x = 32
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1156,7 +1432,9 @@ focus = {
 	x = 32
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1183,7 +1461,9 @@ focus = {
 	x = 34
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {		
@@ -1203,7 +1483,9 @@ focus = {
 	x = 34
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1223,7 +1505,9 @@ focus = {
 	x = 36
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1243,7 +1527,9 @@ focus = {
 	x = 36
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1265,16 +1551,18 @@ focus = {
 	x = 34
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 80
+	}
 	
 	completion_reward = {
-		# TODO - unlock MKE
+		custom_effect_tooltip = OTT_mke_unlocked_tt
 		add_ideas = ott_mass_production_idea
 		774 = {
-			add_extra_state_shared_building_slots = 2
+			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
 				type = arms_factory
-				level = 2
+				level = 1
 				instant_build = yes	
 			}
 		}
@@ -1291,7 +1579,9 @@ focus = {
 	x = 41
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 80
+	}
 	
 	completion_reward = {
 		army_experience = 25
@@ -1312,10 +1602,11 @@ focus = {
 	x = 38
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
-		# TODO - doctrine selection event
 		add_tech_bonus = {
 			name = land_doc_bonus
 			bonus = 0.5
@@ -1333,7 +1624,9 @@ focus = {
 	x = 40
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 40
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {		
@@ -1379,7 +1672,9 @@ focus = {
 	x = 42
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1400,7 +1695,9 @@ focus = {
 	x = 44
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 70
+	}
 	
 	completion_reward = {
 		army_experience = 25
@@ -1416,11 +1713,13 @@ focus = {
 	x = 43
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 90
+	}
 	
 	completion_reward = {
+		custom_effect_tooltip = OTT_gendarmerie_tt
 		add_ideas = ott_gendarmerie_idea
-		# TODO - add tooltip about rebel suppression
 	}
 
 }
@@ -1432,17 +1731,17 @@ focus = {
 	x = 45
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
-		custom_effect_tooltip = OTT_camel_corpse_tooltip # TODO - write tooltip
+		custom_effect_tooltip = OTT_desert_tt
 		hidden_effect = {
 			load_oob = OTT_camels
 			set_technology = { camel_corpse = 1 }
 		}
-		# TODO - fix research icon
-		# TODO - add tooltip about rebel suppression
-		# TODO - mention Ottoman Desert Rangers
+		custom_effect_tooltip = OTT_camel_corpse_effect
 	}
 
 }
@@ -1456,7 +1755,9 @@ focus = {
 	x = 48
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		air_experience = 25
@@ -1477,8 +1778,11 @@ focus = {
 	x = 48
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 70
+	}
 	available = {
-		NOT = { has_country_flag = ott_opda_flag }
+		custom_trigger_tooltip = { tooltip = ott_opda_flag_tt NOT = { has_country_flag = ott_opda_flag } }
 	}
 	
 	completion_reward = {
@@ -1514,11 +1818,11 @@ focus = {
 	x = 47
 	y = 3
 	cost = 10
-	# TODO - description includes Aces becoming Pasha
-	# TODO - remove ace prevention, add on_action for ottoman aces instead
+	ai_will_do = {
+		factor = 50
+	}
 	
 	completion_reward = {
-		# TODO - enable ottoman air aces by removing hidden idea
 		air_experience = 25
 		add_ideas = ott_air_warfare_academy_idea
 		add_tech_bonus = {
@@ -1538,10 +1842,12 @@ focus = {
 	x = 49
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 70
+	}
 	
 	completion_reward = {
-		# TODO - unlock Hurkus
+		custom_effect_tooltip = OTT_hurkus_unlocked_tt
 		773 = {
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
@@ -1562,7 +1868,9 @@ focus = {
 	x = 48
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 30
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1589,7 +1897,9 @@ focus = {
 	x = 50
 	y = 4
 	cost = 10
-	
+	ai_will_do = {
+		factor = 10
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1612,13 +1922,18 @@ focus = {
 	x = 49
 	y = 5
 	cost = 10
+	ai_will_do = {
+		factor = 80
+	}
 	available = {
-		# TODO - check for german capitulation
 		NOT = { has_global_flag = GER_capitulation }
+		NOT = { has_global_flag = GER_CON_capitulation }
+		NOT = { has_country_flag = ott_german_embargo }
 	}
 	
 	completion_reward = {
 		GER = { country_event = { id = ott.79 days = 3 } }
+		custom_effect_tooltip = OTT_german_approval_tt
 	}
 
 }
@@ -1631,8 +1946,11 @@ focus = {
 	x = 55
 	y = 0
 	cost = 10
+	ai_will_do = {
+		factor = 30
+	}
 	available = {
-		NOT = { has_country_flag = ott_opda_flag }
+		custom_trigger_tooltip = { tooltip = ott_opda_flag_tt NOT = { has_country_flag = ott_opda_flag } }
 	}
 	
 	completion_reward = {
@@ -1655,10 +1973,12 @@ focus = {
 	x = 53
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 60
+	}
 	
 	completion_reward = {
-		goto_province = 3851
+		hidden_effect = { goto_province = 3851 }
 		774 = {
 			add_building_construction = {
 				type = naval_base
@@ -1673,7 +1993,7 @@ focus = {
 				instant_build = yes
 			}
 		}
-		# TODO - unlock golcuk dockyards
+		custom_effect_tooltip = OTT_golcuk_unlocked_tt
 		add_timed_idea = { idea = ott_denbts_large days = 80  } #money
 	}
 
@@ -1686,7 +2006,9 @@ focus = {
 	x = 52
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1710,7 +2032,9 @@ focus = {
 	x = 52
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		navy_experience = 25
@@ -1737,7 +2061,9 @@ focus = {
 	x = 54
 	y = 2
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1761,7 +2087,9 @@ focus = {
 	x = 54
 	y = 3
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1787,7 +2115,9 @@ focus = {
 	x = 58
 	y = 1
 	cost = 10
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		add_tech_bonus = {
@@ -1808,7 +2138,9 @@ focus = {
 	y = 2
 	cost = 10
 	available = { has_completed_focus = OTT_golcuk_dockyards }
-	
+	ai_will_do = {
+		factor = 60
+	}
 	
 	completion_reward = {
 		773 = {
@@ -1827,15 +2159,8 @@ focus = {
 			add_building_construction = {
 				type = naval_base
 				province = 3851
-				level = 1
+				level = 2
 				instant_build = yes
-			}
-		}
-		341 = {
-			add_building_construction = {
-				type = coastal_bunker
-				province = 849
-				level = 3
 			}
 		}
 		country_event = { id = ott.82 days = 3 }
@@ -1851,7 +2176,9 @@ focus = {
 	y = 2
 	cost = 10
 	available = { controls_state = 553 }
-	
+	ai_will_do = {
+		factor = 20
+	}
 	
 	completion_reward = {
 		553 = {
@@ -1872,6 +2199,13 @@ focus = {
 				instant_build = yes
 			}
 		}
+		183 = {
+			add_building_construction = {
+				type = air_base
+				level = 2
+				instant_build = yes
+			}
+		}
 		country_event = { id = ott.83 days = 3 }
 	}
 
@@ -1884,6 +2218,9 @@ focus = {
 	x = 60
 	y = 2
 	cost = 10
+	ai_will_do = {
+		factor = 20
+	}
 	available = { controls_state = 656 controls_state = 291 }
 	
 	completion_reward = {

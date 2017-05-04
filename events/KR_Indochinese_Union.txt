@@ -200,7 +200,7 @@ country_event = { # 52004 - Revolution in Indochina!
 		BHC = { add_opinion_modifier = { target = INC modifier = INC_Liberation } } # 200
 		INC = { add_opinion_modifier = { target = BHC modifier = INC_Liberation } } # 200
 		hidden_effect = { BHC = { country_event = { id = viet.5 days = 4 } } }
-		hidden_effect = { BHC = { news_event = { id = viet.13 } } }
+		news_event = { id = worldnews.91 days = 2 }
 		INC = {
 			declare_war_on = {
 				target = GER
@@ -246,8 +246,20 @@ country_event = { # 52005 - Revolution in Indochina!
 			}
 		}
 		if = {
-			limit = { BHC = { is_in_faction = yes } }
+			limit = { 
+				BHC = { 
+					is_in_faction = yes
+					is_faction_leader = yes 
+				} 
+			}
 			BHC = { add_to_faction = INC }
+		}
+		if = {
+			limit = { 
+				BHC = { is_in_faction = yes }
+				is_in_faction_with = FRA 
+			}
+			FRA = { add_to_faction = INC }
 		}
 	}
 	option = {
@@ -305,7 +317,7 @@ country_event = { # 52007 - Indochina is in Full Rebellion Round 1
 
 	trigger = {
 		tag = GER
-		NOT = { INC = { is_puppet_of = GER } }
+		NOT = { INC = { is_subject_of = GER } }
 		GER = { has_war_with = INC }
 		286 = { is_controlled_by = INC } # Saigon
 		286 = { is_owned_by = GER } # Saigon
@@ -314,6 +326,10 @@ country_event = { # 52007 - Indochina is in Full Rebellion Round 1
 	}
 
 	mean_time_to_happen = { days = 80 }
+	
+	immediate = {
+		INC = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = {
 		name = viet.7.a # Keep figthing the rebels
@@ -333,7 +349,6 @@ country_event = { # 52007 - Indochina is in Full Rebellion Round 1
 			transfer_state = 671 # Hanoi
 			transfer_state = 857 # Dong Bac
 			white_peace_with_ROOT = yes
-			save_event_target_as = white_peace_receiver
 		}
 		if = {
 			limit = { 750 = { is_owned_by = GER } } # Phnom Penh
@@ -369,7 +384,7 @@ country_event = { # 52008 - Indochina is in Full Rebellion Round 2
 
 	trigger = {
 		tag = GER
-		NOT = { INC = { is_puppet_of = GER } }
+		NOT = { INC = { is_subject_of = GER } }
 		GER = { has_war_with = INC }
 		286 = { is_controlled_by = INC } # Saigon
 		286 = { is_owned_by = GER } # Saigon
@@ -379,6 +394,10 @@ country_event = { # 52008 - Indochina is in Full Rebellion Round 2
 	}
 
 	mean_time_to_happen = { days = 80 }
+	
+	immediate = {
+		INC = { save_event_target_as = white_peace_receiver }
+	}
 
 	option = {
 		name = viet.8.a # Keep figthing the rebels
@@ -398,7 +417,6 @@ country_event = { # 52008 - Indochina is in Full Rebellion Round 2
 			transfer_state = 671 # Hanoi
 			transfer_state = 857 # Dong Bac
 			white_peace_with_ROOT = yes
-			save_event_target_as = white_peace_receiver
 		}
 		if = {
 			limit = { 750 = { is_owned_by = GER } } # Phnom Penh
@@ -434,7 +452,7 @@ country_event = { # 52009 - Major Victory
 
 	option = {
 		name = viet.9.a # Excellent!
-		hidden_effect = { BHC = { news_event = { id = viet.14 } } }
+		news_event = { id = worldnews.92 days = 2 }
 		INC = { add_opinion_modifier = { target = BHC modifier = INC_BHC_Support } } # 200
 	}
 }
@@ -451,7 +469,7 @@ country_event = { # 520010 - The Indochinese Revolt Succeeds
 		286 = { is_owned_by = INC } # Saigon
 		671 = { is_owned_by = INC } # Hanoi
 		NOT = {
-			INC = { is_puppet_of = GER }
+			INC = { is_subject_of = GER }
 			GER = { has_war_with = INC }
 			country_exists = DEH
 			country_exists = PRF
@@ -476,7 +494,7 @@ country_event = { # 520010 - The Indochinese Revolt Succeeds
 		}
 		if = {
 			limit = { BHC = { is_in_faction = yes } }
-			BHC = { add_to_faction = INC }
+			FRA = { add_to_faction = INC }
 		}
 	}
 	option = {
@@ -498,7 +516,7 @@ country_event = { # 520011 - Victory in Indochina
 
 	trigger = {
 		tag = GER
-		NOT = { INC = { is_puppet_of = GER } }
+		NOT = { INC = { is_subject_of = GER } }
 		GER = { has_war_with = INC }
 		856 = { is_controlled_by = GER } # Mekong Delta
 		286 = { is_controlled_by = GER } # Saigon
@@ -524,7 +542,7 @@ country_event = { # 520011 - Victory in Indochina
 		name = viet.11.a # Sehr Gut, kamaraden!
 		#command = { type = industrial_modifier which = total value = 3 }
 		hidden_effect = { BHC = { country_event = { id = viet.12 } } }
-		hidden_effect = { BHC = { news_event = { id = viet.15 } } }
+		news_event = { id = worldnews.93 days = 2 }
 		annex_country = { target = INC }
 	}
 }
@@ -541,90 +559,5 @@ country_event = { # 520012 - The Indochinese Revolution is Defeated
 		BHC = { add_opinion_modifier = { target = GER modifier = INC_ImperialistScum } } # -50
 		add_political_power = -60 # 3 dissent
 		army_experience = 60
-	}
-}
-news_event = { # Indochinses Rebellion (World News) - xxxxxxx
-	id = viet.13
-	title = viet.13.t
-	desc = viet.13.d
-	picture = GFX_news_event_INC_rebel2
-
-	major = yes
-
-	is_triggered_only = yes
-
-	option = {
-		name = viet.13.a
-		trigger = {
-			NOT = {
-				TAG = INC
-				TAG = GER
-			}
-		}
-	}
-	option = {
-		name = viet.13.b
-		trigger = { TAG = INC }
-	}
-	option = {
-		name = viet.13.c
-		trigger = { TAG = GER }
-	}
-}
-news_event = { # The Creation of the Indochinese Union (World News) - xxxxxxx
-	id = viet.14
-	title = viet.14.t
-	desc = viet.14.d
-	picture = GFX_news_event_INC_victorious
-
-	major = yes
-
-	is_triggered_only = yes
-
-	option = {
-		name = viet.14.a
-		trigger = {
-			NOT = {
-				TAG = INC
-				TAG = GER
-			}
-		}
-	}
-	option = {
-		name = viet.14.b
-		trigger = { TAG = INC }
-	}
-	option = {
-		name = viet.14.c
-		trigger = { TAG = GER }
-	}
-}
-news_event = { # The Indochinese Rebellion crushed! (World News) - xxxxxxx
-	id = viet.15
-	title = viet.15.t
-	desc = viet.15.d
-	picture = GFX_news_event_GER_colonial
-
-	major = yes
-
-	is_triggered_only = yes
-
-
-	option = {
-		name = viet.15.a
-		trigger = {
-			NOT = {
-				TAG = INC
-				TAG = GER
-			}
-		}
-	}
-	option = {
-		name = viet.15.b
-		trigger = { TAG = INC }
-	}
-	option = {
-		name = viet.15.c
-		trigger = { TAG = GER }
 	}
 }

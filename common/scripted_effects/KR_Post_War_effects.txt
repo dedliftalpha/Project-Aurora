@@ -258,13 +258,21 @@ white_peace_with_ROOT = {
 		if = {
 			limit = {
 				is_in_faction = no
-				any_country = { is_subject_of = PREV }
+				any_country = {
+					is_in_faction = no
+					has_war_together_with = PREV
+					has_war_with = ROOT
+				}
 			}
 			set_country_flag = KR_temp_faction
 			save_event_target_as = white_peace_defender
 			create_faction = "Temporary Defender Faction"
 			every_country = {
-				limit = { is_subject_of = PREV }
+				limit = {
+					is_in_faction = no
+					has_war_together_with = PREV
+					has_war_with = ROOT
+				}
 				event_target:white_peace_defender = { add_to_faction = PREV }
 			}
 		}
@@ -273,14 +281,22 @@ white_peace_with_ROOT = {
 		if = {
 			limit = {
 				ROOT = { is_in_faction = no }
-				any_country = { is_subject_of = ROOT }
+				any_country = {
+					is_in_faction = no
+					has_war_together_with = ROOT
+					has_war_with = PREV
+				}
 			}
 			ROOT = {
 				set_country_flag = KR_temp_faction
 				create_faction = "Temporary Attacker Faction"
 			}
 			every_country = {
-				limit = { is_subject_of = ROOT }
+				limit = {
+					is_in_faction = no
+					has_war_together_with = ROOT
+					has_war_with = PREV
+				}
 				ROOT = { add_to_faction = PREV }
 			}
 		}
@@ -321,13 +337,21 @@ white_peace_with_TARGET = {
 		if = {
 			limit = {
 				is_in_faction = no
-				any_country = { is_subject_of = PREV }
+				any_country = {
+					is_in_faction = no
+					has_war_together_with = PREV
+					has_war_with = event_target:white_peace_receiver
+				}
 			}
 			set_country_flag = KR_temp_faction
 			save_event_target_as = white_peace_offer
 			create_faction = "Temporary Defender Faction"
 			every_country = {
-				limit = { is_subject_of = PREV }
+				limit = {
+					is_in_faction = no
+					has_war_together_with = PREV
+					has_war_with = event_target:white_peace_receiver
+				}
 				event_target:white_peace_offer = { add_to_faction = PREV }
 			}
 		}
@@ -336,21 +360,29 @@ white_peace_with_TARGET = {
 		if = {
 			limit = {
 				event_target:white_peace_receiver = { is_in_faction = no }
-				any_country = { is_subject_of = event_target:white_peace_receiver }
+				any_country = {
+					is_in_faction = no
+					has_war_together_with = event_target:white_peace_receiver
+					has_war_with = PREV
+				}
 			}
 			event_target:white_peace_receiver = {
 				set_country_flag = KR_temp_faction
 				create_faction = "Temporary Attacker Faction"
 			}
 			every_country = {
-				limit = { is_subject_of = event_target:white_peace_receiver }
+				limit = {
+					is_in_faction = no
+					has_war_together_with = event_target:white_peace_receiver
+					has_war_with = PREV
+				}
 				event_target:white_peace_receiver = { add_to_faction = PREV }
 			}
 		}
 	}
 	
 	# Now white peace as per normal
-	white_peace = PREV
+	white_peace = event_target:white_peace_receiver
 	
 	# Then dismantle factions if necessary
 	hidden_effect = {

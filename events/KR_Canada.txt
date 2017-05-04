@@ -33,7 +33,7 @@ country_event = { # Death of King George V
 	id = canada.2
 	title = canada.2.t
 	desc = canada.2.d
-	picture = GFX_report_event_spain_civil_war_soldiers
+	picture = GFX_report_event_europe_funeral
 
 	fire_only_once = yes
 
@@ -61,7 +61,6 @@ country_event = { # Death of King George V
 			}
 			add_ideas = CAN_divided_nation
 		}
-
 
 		create_country_leader = {
 			name = "King Edward VIII"
@@ -120,10 +119,19 @@ country_event = { # Death of King George V
 			traits = {}
 		}
 
-		#hidden_effect = { country_event = { id = canada.3 days = 5 }}
-		hidden_effect =
-		{
-			DEH = {country_event = {id = delhi.3}}
+		hidden_effect = {
+			# Death event for Delhi
+			DEH = { country_event = { id = delhi.3 } }
+			# World News event
+			if = {
+				limit = {
+					has_global_flag = NEWS_ALL
+				}
+				random_country = {
+					limit = { NOT = { TAG = CAN } }
+					news_event = { id = worldnews.28 days = 2 }
+				}
+			}
 		}
 	}
 }
@@ -3524,45 +3532,57 @@ country_event = { # Canada considers Denmark's peace offer
 	}
 }
 
-country_event = {# Join ISAC
+# Entente member joins the ISAC
+country_event = {
 	id = canada.700
 	title = canada.700.t
 	desc = canada.700.d
-	picture = GFX_report_event_soviet_soldiers_tank
-
-	is_triggered_only = yes
-
-	option = {# we shall participate
+	picture = GFX_report_event_generic_research_lab
+	
+	trigger = {
+		is_in_faction_with = CAN
+		NOT = { tag = CAN }
+		NOT = { has_country_flag = CAN_joined_ISAC }
+		has_global_flag = CAN_isac_created
+	}
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
 		name = canada.700.a
-		add_to_tech_sharing_group = entente_research
+		set_country_flag = CAN_joined_ISAC
+		if = {
+			limit = {
+				NOT = { tag = DEH } #Delhi has a national focus to join
+			}
+			add_to_tech_sharing_group = entente_research	
+		}
 	}
 }
 
-country_event = {# Join ISAC
+# ISAC member leaves
+country_event = {
 	id = canada.701
 	title = canada.701.t
 	desc = canada.701.d
-	picture = GFX_report_event_soviet_soldiers_tank
-
-	is_triggered_only = yes
-
-	option = {# we shall participate
-		name = canada.701.a
-		add_to_tech_sharing_group = entente_research
+	picture = GFX_report_event_generic_research_lab
+	
+	trigger = {
+		has_country_flag = CAN_joined_ISAC
+		NOT = { tag = CAN }
+		NOT = { is_in_faction_with = CAN }
 	}
-}
-
-country_event = {# Join ISAC
-	id = canada.702
-	title = canada.702.t
-	desc = canada.702.d
-	picture = GFX_report_event_soviet_soldiers_tank
-
-	is_triggered_only = yes
-
-	option = {# we shall participate
-		name = canada.702.a
-		add_to_tech_sharing_group = entente_research
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	option = {
+		name = canada.700.a
+		clr_country_flag = CAN_joined_ISAC
+		remove_from_tech_sharing_group = entente_research
 	}
 }
 
@@ -4187,8 +4207,7 @@ country_event = {
 		}
 		DEN = {
 			has_war = yes
-			surrender_progress < 100
-			surrender_progress > 50
+			surrender_progress > 0.50
 		}
 		AND = {
 			OR = {

@@ -1,5 +1,7 @@
 ﻿###########################
-# German Foreign Events - converted by Levi, Zankoas and Zarasophos, tidied up and expanded by Zarasophos
+# German Foreign Events
+###########################
+# By Levi, Zankoas and Zarasophos
 ###########################
 
 add_namespace = gerfor
@@ -2503,3 +2505,564 @@ country_event = {
 	}
 }
 
+##### Joining the Entente after the capitulation
+
+country_event = {
+	id = gerfor.66 #Deal with the Devil?
+	title = gerfor.66.t
+	desc = gerfor.66.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+	OR = { has_global_flag = GER_Capitulation has_global_flag = GER_CON_Capitulation }
+	FRA = { controls_state = 16 }
+	NOT = { controls_state = 64 }
+	CAN = { controls_state = 276 has_war_with = FRA OR = { is_faction_leader = yes is_in_faction_with = GBR }
+	is_subject = no }
+	is_subject = no
+	NOT = { is_in_faction_with = CAN has_war_with = CAN }
+	}
+	
+	mean_time_to_happen = { days = 5 }
+	
+	option = {
+		name = gerfor.66.a #Join with the Entente.
+		ai_chance = { factor = 80 }
+		add_political_power = 100
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.67 } }
+		reverse_add_opinion_modifier = { target = GBR modifier = GER_asked_join_entente }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.67 } }
+		reverse_add_opinion_modifier = { target = CAN modifier = GER_asked_join_entente }
+		}
+		every_other_country = { limit = { is_in_faction_with = GER } 
+		set_country_flag = IS_IN_MITTEL
+		}
+	}
+
+	option = {
+		name = gerfor.66.b #No, we will fight alone!
+		ai_chance = { factor = 20 }
+		add_political_power = -100
+	}
+}
+
+country_event = {
+	id = gerfor.67 #Germany wants to talk!
+	title = gerfor.67.t
+	desc = gerfor.67.d
+	picture = NFA_Petain
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gerfor.67.a #Allow them into the Entente without concessions.
+		ai_chance = { factor = 30 }
+		set_global_flag = CAN_NO_STRINGS
+		if = { limit = { is_in_faction_with = NFA }
+		NFA = { country_event = { id = gerfor.68 } }
+		else = { set_global_flag = CAN_VIC_NO_ALLY }
+		}
+	}
+
+	option = {
+		name = gerfor.67.b #Allow them into the Entente with concessions.
+		ai_chance = { factor = 65 }
+		set_global_flag = CAN_COLONIES
+		add_state_claim = 700
+		add_state_claim = 703
+		add_state_claim = 704
+		add_state_claim = 753
+		add_state_claim = 659
+		add_state_claim = 269
+		add_state_claim = 709
+		add_state_claim = 707
+		add_state_claim = 710
+		add_state_claim = 281
+		add_state_claim = 422
+		add_state_claim = 336
+		add_state_claim = 333
+		add_state_claim = 828
+		add_state_claim = 757
+		add_state_claim = 634
+		add_state_claim = 737
+		add_state_claim = 639
+		add_state_claim = 643
+		if = { limit = { is_in_faction_with = NFA }
+		NFA = { country_event = { id = gerfor.68 } }
+		else = { set_global_flag = CAN_VIC_NO_ALLY }
+		}
+	}
+	
+	option = {
+		name = gerfor.67.c #We will regain our homeland without the German swine!
+		ai_chance = { factor = 5 }
+		add_political_power = -100
+		GER = { country_event = { id = gerfor.75 } }
+	}
+}
+
+country_event = {
+	id = gerfor.68 #Germany wants to talk! NFA
+	title = gerfor.68.t
+	desc = gerfor.68.d
+	picture = NFA_Petain
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gerfor.68.a #Demand Alsace-Lorraine!
+		ai_chance = { factor = 50 }
+		add_political_power = 20
+		add_state_claim = 779
+		add_state_claim = 28
+		set_global_flag = VIC_ALSACE
+	}
+
+	option = {
+		name = gerfor.68.b #Demand Alsace-Lorraine and part of their colonies!
+		ai_chance = { factor = 50 }
+		add_political_power = 100
+		set_global_flag = VIC_COLONIES
+		add_state_claim = 779
+		add_state_claim = 28
+		add_state_claim = 462
+		add_state_claim = 461
+	}
+	
+	option = {
+		name = gerfor.68.c #Demand nothing from the Germans.
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+		set_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.69 #The Entente has accepted NO DEMANDS
+	title = gerfor.69.t
+	desc = gerfor.69.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    AND = { 
+	has_global_flag = CAN_NO_STRINGS
+    OR = { has_global_flag = VIC_NO_STRINGS
+    has_global_flag = CAN_VIC_NO_ALLY
+    }
+    }
+    }	
+	
+	option = {
+		name = gerfor.69.a #Sign the treaty!
+		ai_chance = { factor = 100 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+	}
+
+	option = {
+		name = gerfor.69.b #No, we've changed our minds.
+		ai_chance = { factor = 0 }
+		add_political_power = -200
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.70 #The Entente has accepted CANADIAN REQUESTS
+	title = gerfor.70.t
+	desc = gerfor.70.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    AND = { 
+	has_global_flag = CAN_COLONIES
+    OR = { has_global_flag = VIC_NO_STRINGS
+    has_global_flag = CAN_VIC_NO_ALLY
+    }
+    }
+    }	
+	
+	option = {
+		name = gerfor.70.a #Sign the treaty!
+		ai_chance = { factor = 90 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+	}
+
+	option = {
+		name = gerfor.70.b #No, we've changed our minds.
+		ai_chance = { factor = 10 }
+		add_political_power = -140
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.71 #The Entente has accepted ALSACE
+	title = gerfor.71.t
+	desc = gerfor.71.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    has_global_flag = CAN_NO_STRINGS
+	has_global_flag = VIC_ALSACE
+    }	
+	
+	option = {
+		name = gerfor.71.a #Sign the treaty!
+		ai_chance = { factor = 95 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+		remove_state_core = 779
+		remove_state_core = 28
+	}
+
+	option = {
+		name = gerfor.71.b #No, we've changed our minds.
+		ai_chance = { factor = 5 }
+		add_political_power = -180
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.72 #The Entente has accepted ALSACE AND CANADIAN REQUESTS
+	title = gerfor.72.t
+	desc = gerfor.72.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    has_global_flag = CAN_COLONIES
+	has_global_flag = VIC_ALSACE
+    }	
+	
+	option = {
+		name = gerfor.72.a #Sign the treaty!
+		ai_chance = { factor = 85 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+		remove_state_core = 779
+		remove_state_core = 28
+	}
+
+	option = {
+		name = gerfor.72.b #No, we've changed our minds.
+		ai_chance = { factor = 15 }
+		add_political_power = -120
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.73 #The Entente has accepted FRENCH COLONIES
+	title = gerfor.73.t
+	desc = gerfor.73.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    has_global_flag = CAN_NO_STRINGS
+	has_global_flag = VIC_ALSACE
+    }	
+	
+	option = {
+		name = gerfor.73.a #Sign the treaty!
+		ai_chance = { factor = 90 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+		remove_state_core = 779
+		remove_state_core = 28
+	}
+
+	option = {
+		name = gerfor.73.b #No, we've changed our minds.
+		ai_chance = { factor = 10 }
+		add_political_power = -120
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.74 #The Entente has accepted FRENCH AND CANADIAN COLONIES
+	title = gerfor.74.t
+	desc = gerfor.74.d
+	picture = NFA_Petain
+
+	fire_only_once = yes
+	
+	trigger = { tag = GER
+    has_global_flag = CAN_NO_STRINGS
+	has_global_flag = VIC_ALSACE
+    }	
+	
+	option = {
+		name = gerfor.74.a #Sign the treaty!
+		ai_chance = { factor = 75 }
+		dismantle_faction = yes
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		country_event = { id = gerfor.77 }
+		}
+		every_country = { limit = { is_in_faction_with = CAN }
+		reverse_add_opinion_modifier = { target = GER modifier = GER_joined_entente_op }
+		}
+		if = { limit = { GBR = { is_in_faction_with = CAN } }
+		GBR = { country_event = { id = gerfor.76 } }
+		}
+		if = { limit = { GBR = { NOT = { is_in_faction_with = CAN } } }
+		CAN = { country_event = { id = gerfor.76 } }
+		}
+		remove_state_core = 779
+		remove_state_core = 28
+	}
+
+	option = {
+		name = gerfor.74.b #No, we've changed our minds.
+		ai_chance = { factor = 25 }
+		add_political_power = -40
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.75 #The Entente has refused
+	title = gerfor.75.t
+	desc = gerfor.75.d
+	picture = NFA_Petain
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gerfor.75.a #Verdammt!
+		ai_chance = { factor = 75 }
+		add_political_power = -60
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}
+		clr_global_flag = CAN_NO_STRINGS
+		clr_global_flag = CAN_COLONIES
+		clr_global_flag = CAN_VIC_NO_ALLY
+		clr_global_flag = VIC_ALSACE
+		clr_global_flag = VIC_COLONIES
+		clr_global_flag = VIC_NO_STRINGS
+	}
+}
+
+country_event = {
+	id = gerfor.76 #Enlargement of the Entente
+	title = gerfor.76.t
+	desc = gerfor.76.d
+	picture = NFA_Petain
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gerfor.76.a #Great!
+		ai_chance = { factor = 75 }
+		add_to_faction = GER
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		ROOT = { add_to_faction = PREV }
+		}
+		every_country = { limit = { has_country_flag = IS_IN_MITTEL }
+		clr_country_flag = IS_IN_MITTEL
+		}	
+	}
+}
+
+country_event = {
+	id = gerfor.77 #The end of Mitteleuropa
+	title = gerfor.77.t
+	desc = gerfor.77.d
+	picture = NFA_Petain
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gerfor.77.a #Sign the treaty!
+		ai_chance = { factor = 75 }	
+	}
+}
+
+### Treaty with Hawaii
+
+# Germany wants basing rights
+
+country_event = {
+	id = gerfor.78
+	title = gerfor.78.t
+	desc = gerfor.78.d
+	picture = GER_hawaii
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.78.a
+		add_political_power = 100
+		ai_chance = { factor = 80 }
+		GER = {
+			country_event = { id = gerfor.79 days = 2 }
+		}
+	}
+
+	option = {
+		name = gerfor.78.b
+		add_political_power = -20
+		ai_chance = { factor = 20 }
+		GER = {
+			country_event = { id = gerfor.80 days = 2 }
+		}
+	}
+}
+
+# Hawaii agrees
+
+country_event = {
+	id = gerfor.79
+	title = gerfor.79.t
+	desc = gerfor.79.d
+	picture = GER_hawaii
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.79.a
+		HAW = {
+			give_military_access = GER
+		}
+		reverse_add_opinion_modifier = { target = HAW modifier = GER_hawaii_yes_op }
+
+	}
+}
+
+# Hawaii disagrees
+
+country_event = {
+	id = gerfor.80
+	title = gerfor.80.t
+	desc = gerfor.80.d
+	picture = GER_hawaii
+
+	is_triggered_only = yes
+
+	option = {
+		name = gerfor.80.a
+		add_political_power = -20
+		reverse_add_opinion_modifier = { target = HAW modifier = GER_trondheim_no_op }
+	}
+}

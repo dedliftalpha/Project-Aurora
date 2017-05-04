@@ -4,17 +4,6 @@ ideas = {
 ##############
 # Country ideas
 ##############
-	hidden_ideas = {
-
-		ott_ace_prevention = {	# hidden idea, prevents ace promotion
-			picture = air_war_plans_division_focus
-			modifier = {
-				air_ace_generation_chance_factor = -1.00
-			}
-		}
-
-	}
-
 	country = {
 
 		ott_decline = {
@@ -23,7 +12,7 @@ ideas = {
 				political_power_factor = -0.2	# judiciary
 				unity_factor = -0.05			# intel purge
 				army_org_factor = -0.05			# army purge
-				production_factory_max_efficiency_factor = -0.2	# bureaucracy
+				production_factory_max_efficiency_factor = -0.1	# bureaucracy
 				research_time_factor = 0.10		# education
 			}
 		}
@@ -34,7 +23,7 @@ ideas = {
 				political_power_factor = -0.1	# judiciary
 				unity_factor = -0.05			# intel purge
 				army_org_factor = -0.05			# army purge
-				production_factory_max_efficiency_factor = -0.2	# bureaucracy
+				production_factory_max_efficiency_factor = -0.1	# bureaucracy
 				research_time_factor = 0.10		# education
 			}
 		}
@@ -45,7 +34,7 @@ ideas = {
 				political_power_factor = -0.2	# judiciary
 				unity_factor = -0.05			# intel purge
 				army_org_factor = -0.05			# army purge
-				production_factory_max_efficiency_factor = -0.1	# bureaucracy
+				production_factory_max_efficiency_factor = -0.05	# bureaucracy
 				research_time_factor = 0.10		# education
 			}
 		}
@@ -56,7 +45,7 @@ ideas = {
 				political_power_factor = -0.1	# judiciary
 				unity_factor = -0.05			# intel purge
 				army_org_factor = -0.05			# army purge
-				production_factory_max_efficiency_factor = -0.1	# bureaucracy
+				production_factory_max_efficiency_factor = -0.05	# bureaucracy
 				research_time_factor = 0.10		# education
 			}
 		}
@@ -97,6 +86,13 @@ ideas = {
 			}
 		}
 		
+        ott_opda_payments = {
+			picture = can_wartime_prices_and_trade_board
+            modifier = {
+                consumer_goods_factor = 0.05
+            }
+        }
+
 		ott_black_monday = {	#black monday
 			modifier = {
 				consumer_goods_factor = 0.1
@@ -202,6 +198,20 @@ ideas = {
 			picture = can_wartime_prices_and_trade_board
 		}
 
+		ott_denbts_huge = {		#huge money payments for OPDA
+			modifier = {
+				consumer_goods_factor = 0.5
+			}
+			picture = can_wartime_prices_and_trade_board
+		}
+
+		ott_denbts_huge_ger = {	#huge money received from deal
+			modifier = {
+				consumer_goods_factor = -0.15
+			}
+			picture = can_wartime_prices_and_trade_board
+		}
+
 		ott_ger_aid = {			#german aid from event
 			modifier = {
 				production_factory_max_efficiency_factor = 0.05
@@ -213,21 +223,45 @@ ideas = {
 			
 		}
 		
-		ott_solid_constitution = {				#constitution focus
+		ott_protests_idea = {					# eliminate opposition focus
+			picture = FRA_matignon_agreements
 			modifier = {
-				consumer_goods_factor = -0.01 # TODO - set bonuses
+				political_power_factor = -0.2
 			}
+		}
 
-			picture = generic_research_bonus
-			
+		ott_renewed_autocracy = {				# enforce autocracy focus
+			picture = OTT_autocracy_idea
+			modifier = {
+				political_power_factor = 0.25
+			}
+		}
+
+		ott_investigation_idea = {				# corruption focuses
+			picture = SOV_scientist_defect
+			modifier = {
+				unity_factor = -0.05
+				political_power_factor = -0.1
+			}
 		}
 
 		ott_compromise_constitution = {			#constitution focus
 			modifier = {
-				consumer_goods_factor = -0.01 # TODO - set bonuses
+				consumer_goods_factor = -0.05
+				political_power_factor = 0.1
 			}
 
-			picture = generic_research_bonus
+			picture = OTT_compromise_idea
+			
+		}
+
+		ott_solid_constitution = {				#constitution focus
+			modifier = {
+				consumer_goods_factor = -0.1
+				political_power_factor = 0.2
+			}
+
+			picture = OTT_solid_idea
 			
 		}
 
@@ -302,7 +336,7 @@ ideas = {
 
 		}
 
-		ott_planned_mobilization_idea = {			#reorganize army focus
+		ott_planned_mobilization_idea = {		#reorganize army focus
 			modifier = {
 				conscription = 0.03
 			}
@@ -311,7 +345,7 @@ ideas = {
 
 		}
 
-		ott_gendarmerie_idea = {					#gendarmerie focus
+		ott_gendarmerie_idea = {				#gendarmerie focus
 			modifier = {
 				enemy_partisan_effect = -0.2
 				political_power_gain = 0.1
@@ -321,7 +355,7 @@ ideas = {
 
 		}
 
-		ott_air_warfare_academy_idea = {			#air warfare academy focus
+		ott_air_warfare_academy_idea = {		#air warfare academy focus
 			modifier = {
 				experience_gain_air = 0.10
 				air_ace_generation_chance_factor = 0.10
@@ -344,6 +378,9 @@ industrial_concern = {
 	karabuk_demir = {
 		allowed = { original_tag = OTT }
 		traits = { industrial_manufacturer }
+		available = {
+			has_completed_focus = OTT_steel_industry
+		}
 		modifier = {
 			production_speed_arms_factory_factor = 0.1
 			production_speed_industrial_complex_factor = 0.1
@@ -368,6 +405,9 @@ industrial_concern = {
 	deutsch_osmanisches  = {
 		allowed = { original_tag = OTT }
 		traits = { chemical_producer }
+		available = {
+			NOT = { has_country_flag = ott_german_embargo }
+		}
 		modifier = {
 			production_speed_synthetic_refinery_factor = 0.15
 		}
@@ -385,6 +425,9 @@ weapons_manufacturer = {
 	mauser_osmanen = {
 		allowed = { original_tag = OTT }
 		traits = { infantry_equipment_producer_offense_1 }
+		available = {
+			NOT = { has_country_flag = ott_german_embargo }
+		}
 		modifier = {}
 		research_bonus = {
 			infantry_weapons = 0.1
@@ -403,6 +446,9 @@ weapons_manufacturer = {
 	sarsilmaz = {
 		allowed = { original_tag = OTT }
 		traits = { infantry_equipment_producer_assualt_1 }
+		available = {
+			has_completed_focus = OTT_military_industry
+		}
 		modifier = {}
 		research_bonus = {
 			infantry_weapons = 0.1
@@ -426,6 +472,9 @@ tank_manufacturer = {
 	mke_ottoman = {
 		allowed = { original_tag = OTT }
 		traits = { artillery_producer_defense_1 }
+		available = {
+			has_completed_focus = OTT_directorate_military
+		}
 		modifier = {}
 		research_bonus = {
 			artillery = 0.05
@@ -435,12 +484,27 @@ tank_manufacturer = {
 	opel_osmanen = {
 		allowed = { original_tag = OTT }
 		traits = { motorised_equipment_producer_mass_1 }
+		available = {
+			NOT = { has_country_flag = ott_german_embargo }
+		}
 		modifier = {}
 		research_bonus = {
 			motorized_equipment = 0.05
 		}
 	}
 	
+	uzel_traktor = {
+		allowed = { original_tag = OTT }
+		traits = { small_tank_producer_defense_1 }
+		available = {
+			has_completed_focus = OTT_mechanized_agriculture
+		}
+		modifier = {}
+		research_bonus = {
+			armor = 0.05
+		}
+	}
+
 	eskisehir_lokomotif = {
 		allowed = { original_tag = OTT }
 		traits = { medium_tank_producer_defense_1 }
@@ -450,14 +514,6 @@ tank_manufacturer = {
 		}
 	}
 	
-	uzel_traktor = {
-		allowed = { original_tag = OTT }
-		traits = { small_tank_producer_defense_1 }
-		modifier = {}
-		research_bonus = {
-			armor = 0.05
-		}
-	}
 }
 
 #### Air and Naval Manufacturer ####
@@ -467,6 +523,9 @@ air_naval_manufacturer = {
 	hurkus = {
 		allowed = { original_tag = OTT }
 		traits = { fighter_producer_defense_1 }
+		available = {
+			has_completed_focus = OTT_aircraft_industry
+		}
 		modifier = {}
 		research_bonus = {
 			air_equipment = 0.05
@@ -476,6 +535,9 @@ air_naval_manufacturer = {
 	tomtas = {
 		allowed = { original_tag = OTT }
 		traits = { bomber_producer_defense_1 }
+		available = {
+			NOT = { has_country_flag = ott_german_embargo }
+		}
 		modifier = {}
 		research_bonus = {
 			air_equipment = 0.05
@@ -485,21 +547,15 @@ air_naval_manufacturer = {
 	germaniawerft_osmanen = {
 		allowed = { original_tag = OTT }
 		traits = { capital_ship_producer_defense_1 }
+		available = {
+			NOT = { has_country_flag = ott_german_embargo }
+		}
 		modifier = {}
 		research_bonus = {
 			naval_equipment = 0.05
 		}
 	}
 	
-	golcuk_tersanesi = {
-		allowed = { original_tag = OTT }
-		traits = { cruiser_producer_defense_1 }
-		modifier = {}
-		research_bonus = {
-			naval_equipment = 0.05
-		}
-	}
-		
 	taskizak_tersanesi = {
 		allowed = { original_tag = OTT }
 		traits = { small_ship_producer_offense_1 }
@@ -508,10 +564,22 @@ air_naval_manufacturer = {
 			naval_equipment = 0.05
 		}
 	}
+
+	golcuk_tersanesi = {
+		allowed = { original_tag = OTT }
+		traits = { cruiser_producer_defense_1 }
+		available = {
+			has_completed_focus = OTT_golcuk_dockyards
+		}
+		modifier = {}
+		research_bonus = {
+			naval_equipment = 0.05
+		}
+	}
+		
 }
 
     theorist = {
-		# TODO - theorist pictures
 		ahmed_izzet_pasha = {
 
 			allowed = { original_tag = OTT }
@@ -546,6 +614,7 @@ air_naval_manufacturer = {
             research_bonus = {
                 land_doctrine = 0.05
             }
+			picture = OTT_Mustafa_Kemal_Pasa_mhc_pau
         }
 
         fahrettin_pasha = {
@@ -557,6 +626,7 @@ air_naval_manufacturer = {
             research_bonus = {
                 cat_mobile_warfare = 0.1
             }
+			picture = OTT_Fahrettin_Pasa_carm_sco
         }
 
         santuri_mustafa_bey = {
@@ -571,7 +641,6 @@ air_naval_manufacturer = {
             research_bonus = {
                 electronics = 0.05
             }
-
         }
 
         osman_besim_bey = {

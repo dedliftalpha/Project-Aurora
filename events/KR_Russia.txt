@@ -3,6 +3,7 @@
 ###########################
 # By Nijato
 ###########################
+
 add_namespace = russia
 
 #1-... = events
@@ -182,9 +183,16 @@ news_event = { #Assassination Kerensky
 			traits = {}
 		}
 		set_country_flag = RUS_KRSKY_DEATH
-
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			random_country = {
+				limit = { NOT = { TAG = RUS } }
+				news_event = { id = worldnews.15 days = 1 }
+			}
+		}
 	}
-
 }
 
 country_event = { #Aftermath of the assassination
@@ -761,9 +769,22 @@ country_event = { #Kornilov Death Savinkov
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_KORN has_country_flag = RUS_SAVI_HOG date > 1937.10.04
+		tag = RUS has_country_flag = RUS_KORN has_country_flag = RUS_SAVI_HOG date > 1937.02.29
 		NOT = {
 			has_country_flag = Lavr_G_Kornilov_dead
+		}
+		OR = {
+		NOT = {
+			OR = {
+				has_country_flag = RUS_CIVIL_WAR has_country_flag = RUS_DUAL_POWER has_country_flag = RUS_CW_NEGOTIATIONS
+			}
+		}
+		date > 1937.08.29
+		}
+		NOT = {
+			OR = {
+				has_country_flag = unlock_denikin has_country_flag = unlock_savinkov has_country_flag = unlock_bukharin has_country_flag = unlock_kornilov has_country_flag = unlock_wrangel has_country_flag = unlock_dmitri has_country_flag = unlock_popular_front has_country_flag = unlock_milyukov has_country_flag = unlock_iraklij
+			}
 		}
 	}
 
@@ -772,10 +793,9 @@ country_event = { #Kornilov Death Savinkov
 		ai_chance = {
 			factor = 60
 		}
+		custom_effect_tooltip = unlock_kornilov_tooltip
 		add_political_power = -100
 		remove_unit_leader = 402
-		clr_country_flag = unlock_kornilov_tsar
-		clr_country_flag = unlock_kornilov
 		if = {
 			limit = {
 				has_idea = RUS_Lavr_G_Kornilov_mhc_pau
@@ -820,6 +840,39 @@ country_event = { #Kornilov Death Savinkov
 		}
 		set_country_flag = Savinkov_new_policy1
 		set_cosmetic_tag = RUS_vozhdct
+		hidden_effect = {
+			set_country_flag = unlock_savinkov
+		}
+		if = {
+			limit = {
+				has_political_power < -200 has_political_power > -399
+			}
+			add_political_power = 50
+		}
+		if = {
+			limit = {
+				has_political_power < -400 has_political_power > -599
+			}
+			add_political_power = 100
+		}
+		if = {
+			limit = {
+				has_political_power < -600 has_political_power > -799
+			}
+			add_political_power = 150
+		}
+		if = {
+			limit = {
+				has_political_power < -800 has_political_power > -999
+			}
+			add_political_power = 200
+		}
+		if = {
+			limit = {
+				has_political_power < -1000
+			}
+			add_political_power = 250
+		}
 	}
 
 }
@@ -856,22 +909,27 @@ country_event = { #Kornilov Death Denikin or Lukomsky
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_KORN
+		tag = RUS 
+		has_country_flag = RUS_KORN
 		OR = {
 			has_country_flag = RUS_DEN has_country_flag = RUS_LUK
 		}
-		NOT = {
-			has_country_flag = RUS_TSAR_KYR has_country_flag = RUS_TSAR_DMI
-			focus_progress = {
-				focus = RUS_TSAR_DMI progress > 0.01
-			}
-			focus_progress = {
-				focus = RUS_TSAR_KYR progress > 0.01
-			}
-		}
-		date > 1937.10.04
+		date > 1937.02.29
 		NOT = {
 			has_country_flag = Lavr_G_Kornilov_dead
+		}
+		OR = {
+		NOT = {
+			OR = {
+				has_country_flag = RUS_CIVIL_WAR has_country_flag = RUS_DUAL_POWER has_country_flag = RUS_CW_NEGOTIATIONS
+			}
+		}
+		date > 1937.08.29
+		}
+		NOT = {
+			OR = {
+				has_country_flag = unlock_denikin has_country_flag = unlock_savinkov has_country_flag = unlock_bukharin has_country_flag = unlock_kornilov has_country_flag = unlock_wrangel has_country_flag = unlock_dmitri has_country_flag = unlock_popular_front has_country_flag = unlock_milyukov has_country_flag = unlock_iraklij
+			}
 		}
 	}
 
@@ -880,10 +938,9 @@ country_event = { #Kornilov Death Denikin or Lukomsky
 		ai_chance = {
 			factor = 60
 		}
+		custom_effect_tooltip = unlock_kornilov_tooltip
 		add_political_power = -100
 		remove_unit_leader = 402
-		clr_country_flag = unlock_kornilov_tsar
-		clr_country_flag = unlock_kornilov
 		set_country_flag = Lavr_G_Kornilov_dead
 		if = {
 			limit = {
@@ -911,6 +968,36 @@ country_event = { #Kornilov Death Denikin or Lukomsky
 		country_event = {
 			id = russia.43 days = 5
 		}
+		if = {
+			limit = {
+				has_political_power < -200 has_political_power > -399
+			}
+			add_political_power = 50
+		}
+		if = {
+			limit = {
+				has_political_power < -400 has_political_power > -599
+			}
+			add_political_power = 100
+		}
+		if = {
+			limit = {
+				has_political_power < -600 has_political_power > -799
+			}
+			add_political_power = 150
+		}
+		if = {
+			limit = {
+				has_political_power < -800 has_political_power > -999
+			}
+			add_political_power = 200
+		}
+		if = {
+			limit = {
+				has_political_power < -1000
+			}
+			add_political_power = 250
+		}
 	}
 
 	option = {
@@ -918,10 +1005,9 @@ country_event = { #Kornilov Death Denikin or Lukomsky
 		ai_chance = {
 			factor = 40
 		}
+		custom_effect_tooltip = unlock_kornilov_tooltip
 		add_political_power = -100
 		remove_unit_leader = 402
-		clr_country_flag = unlock_kornilov_tsar
-		clr_country_flag = unlock_kornilov
 		set_country_flag = Lavr_G_Kornilov_dead
 		if = {
 			limit = {
@@ -958,6 +1044,36 @@ country_event = { #Kornilov Death Denikin or Lukomsky
 		}
 		country_event = {
 			id = russia.42 days = 5
+		}
+		if = {
+			limit = {
+				has_political_power < -200 has_political_power > -399
+			}
+			add_political_power = 50
+		}
+		if = {
+			limit = {
+				has_political_power < -400 has_political_power > -599
+			}
+			add_political_power = 100
+		}
+		if = {
+			limit = {
+				has_political_power < -600 has_political_power > -799
+			}
+			add_political_power = 150
+		}
+		if = {
+			limit = {
+				has_political_power < -800 has_political_power > -999
+			}
+			add_political_power = 200
+		}
+		if = {
+			limit = {
+				has_political_power < -1000
+			}
+			add_political_power = 250
 		}
 	}
 
@@ -1250,7 +1366,6 @@ country_event = { #Unlock Politico-industrial path for Wrangel
 			factor = 90
 		}
 		custom_effect_tooltip = unlock_wrangel_tooltip
-		clr_country_flag = RUS_wra_wait
 		hidden_effect = {
 			set_country_flag = unlock_wrangel
 		}
@@ -1284,214 +1399,6 @@ country_event = { #Unlock Politico-industrial path for Wrangel
 			}
 			add_political_power = 250
 		}
-	}
-
-	option = { #wait
-		name = russia.27.b
-		ai_chance = {
-			factor = 10
-		}
-		trigger = {
-			NOT = {
-				has_country_flag = RUS_wra_wait
-			}
-		}
-		set_country_flag = RUS_wra_wait
-		add_political_power = -100
-		hidden_effect = {
-			country_event = {
-				id = russia.27 days = 175
-			}
-		}
-		if = {
-			limit = {
-				has_political_power < -200 has_political_power > -399
-			}
-			add_political_power = 50
-		}
-		if = {
-			limit = {
-				has_political_power < -400 has_political_power > -599
-			}
-			add_political_power = 100
-		}
-		if = {
-			limit = {
-				has_political_power < -600 has_political_power > -799
-			}
-			add_political_power = 150
-		}
-		if = {
-			limit = {
-				has_political_power < -800 has_political_power > -999
-			}
-			add_political_power = 200
-		}
-		if = {
-			limit = {
-				has_political_power < -1000
-			}
-			add_political_power = 250
-		}
-	}
-
-	option = { #wait again
-		name = russia.27.b
-		ai_chance = {
-			factor = 10
-		}
-		trigger = {
-			has_country_flag = RUS_wra_wait
-		}
-		add_political_power = -100
-		hidden_effect = {
-			country_event = {
-				id = russia.27 days = 175
-			}
-		}
-	}
-
-
-}
-
-country_event = { #Unlock Politico-industrial path for Kornilov not savinkov
-	id = russia.28
-	title = russia.28.t
-	desc = russia.28.d
-	picture = GFX_petain_NFA
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = RUS date > 1937.02.29 has_country_flag = RUS_KORN NOT = {
-			has_country_flag = RUS_SAVI_HOG
-		}
-		NOT = {
-			has_country_flag = Lavr_G_Kornilov_dead
-		}
-		NOT = {
-			OR = {
-				has_country_flag = RUS_CIVIL_WAR has_country_flag = RUS_DUAL_POWER has_country_flag = RUS_CW_NEGOTIATIONS
-			}
-		}
-		NOT = {
-			OR = {
-				has_country_flag = unlock_bukharin has_country_flag = unlock_kornilov has_country_flag = unlock_wrangel has_country_flag = unlock_dmitri has_country_flag = unlock_popular_front has_country_flag = unlock_milyukov has_country_flag = unlock_iraklij
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 5
-	}
-
-	option = {
-		name = russia.28.a
-		hidden_effect = {
-			set_country_flag = unlock_kornilov set_country_flag = unlock_kornilov_tsar
-		}
-		if = {
-			limit = {
-				has_political_power < -200 has_political_power > -399
-			}
-			add_political_power = 50
-		}
-		if = {
-			limit = {
-				has_political_power < -400 has_political_power > -599
-			}
-			add_political_power = 100
-		}
-		if = {
-			limit = {
-				has_political_power < -600 has_political_power > -799
-			}
-			add_political_power = 150
-		}
-		if = {
-			limit = {
-				has_political_power < -800 has_political_power > -999
-			}
-			add_political_power = 200
-		}
-		if = {
-			limit = {
-				has_political_power < -1000
-			}
-			add_political_power = 250
-		}
-		custom_effect_tooltip = unlock_kornilov_tooltip
-	}
-
-}
-
-country_event = { #Unlock Politico-industrial path for Kornilov savinkov
-	id = russia.44
-	title = russia.44.t
-	desc = russia.44.d
-	picture = GFX_petain_NFA
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = RUS date > 1937.02.29 has_country_flag = RUS_KORN has_country_flag = RUS_SAVI_HOG NOT = {
-			has_country_flag = Lavr_G_Kornilov_dead
-		}
-		NOT = {
-			OR = {
-				has_country_flag = RUS_CIVIL_WAR has_country_flag = RUS_DUAL_POWER has_country_flag = RUS_CW_NEGOTIATIONS
-			}
-		}
-		NOT = {
-			OR = {
-				has_country_flag = unlock_denikin has_country_flag = unlock_savinkov has_country_flag = unlock_bukharin has_country_flag = unlock_kornilov has_country_flag = unlock_wrangel has_country_flag = unlock_dmitri has_country_flag = unlock_popular_front has_country_flag = unlock_milyukov has_country_flag = unlock_iraklij
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 5
-	}
-
-	option = {
-		name = russia.44.a
-		ai_chance = {
-			factor = 65
-		}
-		hidden_effect = {
-			set_country_flag = unlock_savinkov
-		}
-		if = {
-			limit = {
-				has_political_power < -200 has_political_power > -399
-			}
-			add_political_power = 50
-		}
-		if = {
-			limit = {
-				has_political_power < -400 has_political_power > -599
-			}
-			add_political_power = 100
-		}
-		if = {
-			limit = {
-				has_political_power < -600 has_political_power > -799
-			}
-			add_political_power = 150
-		}
-		if = {
-			limit = {
-				has_political_power < -800 has_political_power > -999
-			}
-			add_political_power = 200
-		}
-		if = {
-			limit = {
-				has_political_power < -1000
-			}
-			add_political_power = 250
-		}
-		custom_effect_tooltip = unlock_vozhd_tooltip
 	}
 
 }
@@ -1945,6 +1852,12 @@ country_event = { #Constitutional Monarchy
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_KYR
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 	}
 	option = {
 		name = russia.11.b
@@ -2054,6 +1967,12 @@ country_event = { #Constitutional Monarchy
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_KYR
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 	}
 	option = {
 		name = russia.11.c
@@ -2164,6 +2083,12 @@ country_event = { #Constitutional Monarchy
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_KYR
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 	}
 	option = {
 		name = russia.11.e
@@ -2276,6 +2201,12 @@ country_event = { #Constitutional Monarchy
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_KYR
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 	}
 
 	option = {
@@ -2388,6 +2319,12 @@ country_event = { #Constitutional Monarchy
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_KYR
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 	}
 }
 
@@ -2664,6 +2601,12 @@ country_event = { #Tsar Dmitri
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_DMI
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 		set_party_name = {
 			ideology = paternal_autocrat long_name = RUS_tsar_party_long name = RUS_tsar_party
 		}
@@ -2698,6 +2641,12 @@ country_event = { #Tsar Dmitri
 		set_country_flag = rus_tsar
 		set_cosmetic_tag = RTS
 		set_country_flag = RUS_TSAR_DMI
+		if = {
+			limit = {
+				has_global_flag = NEWS_ALL
+			}
+			news_event = { id = worldnews.7 days = 2 }
+		}
 		set_party_name = {
 			ideology = paternal_autocrat long_name = RUS_tsar_party_long name = RUS_tsar_party
 		}
@@ -3074,7 +3023,10 @@ country_event = { #The final step? WRA can become tsar
 	picture = GFX_petain_NFA
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_wra_wait is_ai = no
+		tag = RUS 
+		has_country_flag = RUS_MIL_DICT
+		has_country_flag = unlock_wrangel
+		is_ai = no
 		date > 1938.01.01
 	}
 
@@ -3096,7 +3048,6 @@ country_event = { #The final step? WRA can become tsar
 			factor = 25
 		}
 		add_political_power = 100
-		clr_country_flag = RUS_wra_wait
 		hidden_effect = {
 			set_country_flag = RUS_TSAR_WRANGEL
 		}
@@ -3114,8 +3065,6 @@ country_event = { #The final step? WRA can become tsar
 			elections_allowed = no
 		}
 		set_country_flag = rus_tsar
-		remove_ideas = rus_political_instability
-		remove_ideas = soviet_worker_soldier
 		country_event = {
 			id = russia.34 days = 1
 		}
@@ -3582,7 +3531,10 @@ country_event = { #Initialization Hidden event
 		NOT = {
 			country_exists = SOV
 		}
-		owns_state = 219 owns_state = 195 controls_state = 219 controls_state = 195
+		owns_state = 219 
+		owns_state = 195 
+		controls_state = 219 
+		controls_state = 195
 	}
 
 	mean_time_to_happen = {
@@ -3593,7 +3545,8 @@ country_event = { #Initialization Hidden event
 		name = russia.1916.a
 		trigger = {
 			OR = {
-				has_country_flag = RUS_KORN has_country_flag = RUS_DMI
+				has_country_flag = RUS_KORN 
+				has_country_flag = RUS_DMI
 			}
 		}
 		country_event = {
@@ -3618,7 +3571,8 @@ country_event = { #Initialization Hidden event
 		name = russia.1916.c
 		trigger = {
 			has_country_flag = RUS_SEN OR = {
-				has_country_flag = RUS_IRA has_country_flag = RUS_MILYU
+				has_country_flag = RUS_IRA 
+				has_country_flag = RUS_MILYU
 			}
 		}
 		country_event = {
@@ -3631,7 +3585,8 @@ country_event = { #Initialization Hidden event
 	option = {
 		name = russia.1916.e
 		trigger = {
-			has_country_flag = RUS_BUKH has_country_flag = RUS_SEN
+			has_country_flag = RUS_BUKH 
+			has_country_flag = RUS_SEN
 		}
 		country_event = {
 			id = russia.1920
@@ -3668,7 +3623,7 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
+			transfer_state = 880
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -3679,6 +3634,9 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -3690,7 +3648,7 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
+			add_state_core = 880
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -3701,6 +3659,9 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 248
 			add_state_core = 253
 			add_state_core = 755
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220			
 
 			load_oob = SOV country_event = {
 				id = russia.2004
@@ -3735,7 +3696,6 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -3746,6 +3706,10 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -3757,7 +3721,6 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -3767,7 +3730,13 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 country_event = {
+			add_state_core = 755
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -3809,7 +3778,6 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -3820,6 +3788,10 @@ country_event = { #Revolution for korn and dmitri
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -3831,7 +3803,6 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -3841,7 +3812,13 @@ country_event = { #Revolution for korn and dmitri
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -3890,7 +3867,7 @@ country_event = { #Revolution for wrangel
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
+			transfer_state = 880
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -3901,6 +3878,10 @@ country_event = { #Revolution for wrangel
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -3912,7 +3893,7 @@ country_event = { #Revolution for wrangel
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
+			add_state_core = 880
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -3922,7 +3903,14 @@ country_event = { #Revolution for wrangel
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -3955,7 +3943,6 @@ country_event = { #Revolution for wrangel
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -3966,6 +3953,10 @@ country_event = { #Revolution for wrangel
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -3977,7 +3968,6 @@ country_event = { #Revolution for wrangel
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -3987,7 +3977,14 @@ country_event = { #Revolution for wrangel
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4029,7 +4026,6 @@ country_event = { #Revolution for wrangel
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -4040,6 +4036,10 @@ country_event = { #Revolution for wrangel
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -4051,7 +4051,6 @@ country_event = { #Revolution for wrangel
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -4061,7 +4060,14 @@ country_event = { #Revolution for wrangel
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4110,7 +4116,6 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -4121,6 +4126,10 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -4132,7 +4141,6 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -4142,7 +4150,14 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4175,7 +4190,6 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -4186,6 +4200,10 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -4197,7 +4215,6 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -4207,7 +4224,14 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4249,7 +4273,6 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -4260,6 +4283,10 @@ country_event = { #Revolution for Senate not Bukharin
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880			
 
 			add_state_core = 195
 			add_state_core = 208
@@ -4271,7 +4298,6 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -4281,7 +4307,14 @@ country_event = { #Revolution for Senate not Bukharin
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4381,7 +4414,8 @@ country_event = { #Revolution for Bukharin
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = RUS NOT = {
+				is_claimed_by = RUS 
+				NOT = {
 					is_core_of = RUS
 				}
 			}
@@ -4417,7 +4451,6 @@ country_event = { #Revolution for Bukharin
 			transfer_state = 210
 			transfer_state = 242
 			transfer_state = 243
-			transfer_state = 241
 			transfer_state = 246
 			transfer_state = 219
 			transfer_state = 205
@@ -4428,6 +4461,10 @@ country_event = { #Revolution for Bukharin
 			transfer_state = 248
 			transfer_state = 253
 			transfer_state = 755
+			transfer_state = 224
+			transfer_state = 222
+			transfer_state = 220
+			transfer_state = 880				
 
 			add_state_core = 195
 			add_state_core = 208
@@ -4439,7 +4476,6 @@ country_event = { #Revolution for Bukharin
 			add_state_core = 210
 			add_state_core = 242
 			add_state_core = 243
-			add_state_core = 241
 			add_state_core = 246
 			add_state_core = 219
 			add_state_core = 205
@@ -4449,7 +4485,14 @@ country_event = { #Revolution for Bukharin
 			add_state_core = 247
 			add_state_core = 248
 			add_state_core = 253
-			add_state_core = 755 load_oob = SOV country_event = {
+			add_state_core = 755 
+			add_state_core = 224
+			add_state_core = 222
+			add_state_core = 220
+			add_state_core = 880			
+			
+			load_oob = SOV 
+			country_event = {
 				id = russia.2004
 			}
 		}
@@ -4543,7 +4586,8 @@ country_event = { #Soviets demand popular front
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = SOV NOT = {
+				is_claimed_by = SOV 
+				NOT = {
 					is_core_of = SOV
 				}
 			}
@@ -4771,7 +4815,8 @@ country_event = { #Soviets demand popular front
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = SOV NOT = {
+				is_claimed_by = SOV 
+				NOT = {
 					is_core_of = SOV
 				}
 			}
@@ -5166,7 +5211,9 @@ country_event = { #War RUS
 		if = {
 			limit = {
 				OR = {
-					has_idea = normal_stability has_idea = good_stability has_idea = very_good_stability
+					has_idea = normal_stability 
+					has_idea = good_stability 
+					has_idea = very_good_stability
 				}
 			}
 			add_ideas = rus_cw_average
@@ -5190,7 +5237,10 @@ country_event = { #War RUS2
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS country_exists = SOV has_war_with = SOV NOT = {
+		tag = RUS 
+		country_exists = SOV 
+		has_war_with = SOV 
+		NOT = {
 			has_country_flag = russia_1933_event
 		}
 	}
@@ -5219,7 +5269,9 @@ country_event = { #War RUS2
 		if = {
 			limit = {
 				OR = {
-					has_idea = normal_stability has_idea = good_stability has_idea = very_good_stability
+					has_idea = normal_stability 
+					has_idea = good_stability 
+					has_idea = very_good_stability
 				}
 			}
 			add_ideas = rus_cw_average
@@ -5245,7 +5297,10 @@ country_event = { #Dual power
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_DUAL_POWER country_exists = SOV NOT = {
+		tag = RUS 
+		has_country_flag = RUS_DUAL_POWER 
+		country_exists = SOV 
+		NOT = {
 			has_war_with = SOV
 		}
 	}
@@ -5280,7 +5335,8 @@ country_event = { #Soviets surrender
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = SOV NOT = {
+				is_claimed_by = SOV 
+				NOT = {
 					is_core_of = SOV
 				}
 			}
@@ -5301,7 +5357,9 @@ country_event = { #The Capitalists are weak...
 		tag = SOV RUS = {
 			has_country_flag = RUS_DUAL_POWER
 		}
-		country_exists = RUS country_exists = SOV NOT = {
+		country_exists = RUS 
+		country_exists = SOV 
+		NOT = {
 			has_war_with = RUS
 		}
 	}
@@ -5341,7 +5399,8 @@ country_event = { #The Capitalists are weak...
 			factor = 20
 		}
 		RUS = {
-			clr_country_flag = RUS_DUAL_POWER country_event = {
+			clr_country_flag = RUS_DUAL_POWER 
+			country_event = {
 				id = russia.1936
 			}
 		}
@@ -5357,7 +5416,11 @@ country_event = { #The Soviets are weak...
 	picture = GFX_petain_NFA
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_DUAL_POWER country_exists = RUS country_exists = SOV NOT = {
+		tag = RUS 
+		has_country_flag = RUS_DUAL_POWER 
+		country_exists = RUS 
+		country_exists = SOV 
+		NOT = {
 			has_war_with = SOV
 		}
 	}
@@ -5431,7 +5494,8 @@ country_event = { #Russia surrenders
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = RUS NOT = {
+				is_claimed_by = RUS 
+				NOT = {
 					is_core_of = RUS
 				}
 			}
@@ -5441,7 +5505,8 @@ country_event = { #Russia surrenders
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = RUS NOT = {
+				is_claimed_by = RUS 
+				NOT = {
 					is_core_of = RUS
 				}
 			}
@@ -5539,6 +5604,7 @@ country_event = {
 
 	trigger = {
 		tag = SOV
+		country_exists = RUS		
 	}
 
 	option = {
@@ -5647,7 +5713,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				FRA = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5659,7 +5727,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				ENG = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5671,7 +5741,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				SRI = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5683,7 +5755,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				BHC = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5695,7 +5769,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				SPR = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5707,7 +5783,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				GEO = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5719,7 +5797,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				CAF = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5731,7 +5811,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				NOR = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5743,7 +5825,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				UKR = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5755,7 +5839,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				SWE = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5767,7 +5853,9 @@ country_event = { #Civil war for soviets
 			limit = {
 				FRA = {
 					OR = {
-						has_government = totalist has_government = radical_socialist has_government = syndicalist
+						has_government = totalist 
+						has_government = radical_socialist 
+						has_government = syndicalist
 					}
 				}
 			}
@@ -5846,7 +5934,9 @@ country_event = { #Kazan Captured
 	fire_only_once = yes
 
 	trigger = {
-		tag = SOV has_war_with = RUS 249 = {
+		tag = SOV 
+		has_war_with = RUS 
+		249 = {
 			is_controlled_by = SOV
 		}
 	}
@@ -5868,7 +5958,9 @@ country_event = { #Volunteers from Eastern Europe
 	fire_only_once = yes
 
 	trigger = {
-		tag = SOV has_war_with = RUS 195 = {
+		tag = SOV 
+		has_war_with = RUS 
+		195 = {
 			is_controlled_by = SOV
 		}
 	}
@@ -5898,7 +5990,9 @@ country_event = { #Soviet power established
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = SOV_CIVIL_WAR tag = SOV NOT = {
+		has_country_flag = SOV_CIVIL_WAR 
+		tag = SOV 
+		NOT = {
 			country_exists = RUS
 		}
 		195 = {
@@ -5932,7 +6026,8 @@ country_event = { #Soviet power established
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = RUS NOT = {
+				is_claimed_by = RUS 
+				NOT = {
 					is_core_of = RUS
 				}
 			}
@@ -5942,7 +6037,8 @@ country_event = { #Soviet power established
 		}
 		every_state = {
 			limit = {
-				is_claimed_by = RUS NOT = {
+				is_claimed_by = RUS 
+				NOT = {
 					is_core_of = RUS
 				}
 			}
@@ -5986,7 +6082,9 @@ country_event = { #End of the soviets
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = RUS_CIVIL_WAR tag = RUS NOT = {
+		has_country_flag = RUS_CIVIL_WAR 
+		tag = RUS 
+		NOT = {
 			country_exists = SOV
 		}
 		195 = {
@@ -6042,9 +6140,12 @@ country_event = { #Returns to capital
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_global_flag = russian_revolution OR = {
+		tag = RUS 
+		has_global_flag = russian_revolution 
+		OR = {
 			AND = {
-				has_country_flag = CAP_PET 195 = {
+				has_country_flag = CAP_PET 
+				195 = {
 					is_controlled_by = RUS
 				}
 				195 = {
@@ -6052,7 +6153,8 @@ country_event = { #Returns to capital
 				}
 			}
 			AND = {
-				has_country_flag = CAP_MOS 219 = {
+				has_country_flag = CAP_MOS 
+				219 = {
 					is_controlled_by = RUS
 				}
 				219 = {
@@ -6062,7 +6164,8 @@ country_event = { #Returns to capital
 			AND = {
 				NOT = {
 					OR = {
-						has_country_flag = CAP_MOS has_country_flag = CAP_PET
+						has_country_flag = CAP_MOS 
+						has_country_flag = CAP_PET
 					}
 				}
 				219 = {
@@ -6098,7 +6201,8 @@ country_event = { #Returns to capital
 		trigger = {
 			NOT = {
 				OR = {
-					has_country_flag = CAP_MOS has_country_flag = CAP_PET
+					has_country_flag = CAP_MOS 
+					has_country_flag = CAP_PET
 				}
 			}
 		}
@@ -6200,7 +6304,8 @@ country_event = { #Panic in Karelia
 			limit = {
 				SOV = {
 					OR = {
-						controls_state = 215 controls_state = 216
+						controls_state = 215 
+						controls_state = 216
 					}
 				}
 			}
@@ -6251,7 +6356,9 @@ country_event = { #Panic in Karelia
 			limit = {
 				SOV = {
 					OR = {
-						controls_state = 215 controls_state = 216 controls_state = 213
+						controls_state = 215 
+						controls_state = 216 
+						controls_state = 213
 					}
 				}
 			}
@@ -6336,7 +6443,8 @@ country_event = { #Karelia claimed RUS
 				controls_state = 215
 			}
 			FIN = {
-				transfer_state = 215 add_state_core = 215
+				transfer_state = 215 
+				add_state_core = 215
 			}
 		}
 		if = {
@@ -6344,7 +6452,8 @@ country_event = { #Karelia claimed RUS
 				controls_state = 216
 			}
 			FIN = {
-				transfer_state = 216 add_state_core = 216
+				transfer_state = 216 
+				add_state_core = 216
 			}
 		}
 	}
@@ -6386,7 +6495,8 @@ country_event = { #Karelia claimed SOV
 				controls_state = 215
 			}
 			FIN = {
-				transfer_state = 215 add_state_core = 215
+				transfer_state = 215 
+				add_state_core = 215
 			}
 		}
 		if = {
@@ -6394,7 +6504,8 @@ country_event = { #Karelia claimed SOV
 				controls_state = 216
 			}
 			FIN = {
-				transfer_state = 216 add_state_core = 216
+				transfer_state = 216 
+				add_state_core = 216
 			}
 		}
 	}
@@ -6436,7 +6547,8 @@ country_event = { #Karelia and Murmansk claimed RUS
 				controls_state = 215
 			}
 			FIN = {
-				transfer_state = 215 add_state_core = 215
+				transfer_state = 215
+				add_state_core = 215
 			}
 		}
 		if = {
@@ -6444,7 +6556,8 @@ country_event = { #Karelia and Murmansk claimed RUS
 				controls_state = 216
 			}
 			FIN = {
-				transfer_state = 216 add_state_core = 216
+				transfer_state = 216 
+				add_state_core = 216
 			}
 		}
 		if = {
@@ -6452,7 +6565,8 @@ country_event = { #Karelia and Murmansk claimed RUS
 				controls_state = 213
 			}
 			FIN = {
-				transfer_state = 213 add_state_core = 213
+				transfer_state = 213 
+				add_state_core = 213
 			}
 		}
 	}
@@ -6495,7 +6609,8 @@ country_event = { #Karelia and Murmansk claimed SOV
 				controls_state = 215
 			}
 			FIN = {
-				transfer_state = 215 add_state_core = 215
+				transfer_state = 215 
+				add_state_core = 215
 			}
 		}
 		if = {
@@ -6503,7 +6618,8 @@ country_event = { #Karelia and Murmansk claimed SOV
 				controls_state = 216
 			}
 			FIN = {
-				transfer_state = 216 add_state_core = 216
+				transfer_state = 216 
+				add_state_core = 216
 			}
 		}
 		if = {
@@ -6511,7 +6627,8 @@ country_event = { #Karelia and Murmansk claimed SOV
 				controls_state = 213
 			}
 			FIN = {
-				transfer_state = 213 add_state_core = 213
+				transfer_state = 213 
+				add_state_core = 213
 			}
 		}
 	}
@@ -6548,7 +6665,9 @@ country_event = { #Treaty of Arkhangelsk
 			controls_state = 840
 		}
 		FIN = {
-			controls_state = 215 controls_state = 213 is_subject = no NOT = {
+			controls_state = 215 
+			controls_state = 213 
+			is_subject = no NOT = {
 				is_in_faction_with = GER
 			}
 		}
@@ -6699,7 +6818,7 @@ country_event = { #Treaty of Arkhangelsk accepted
 
 }
 
-country_event = { #Treaty of Arkhangelsk refused fucking finns who the fuck do they think they are little bitches I’ll let them know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I’m the top sniper in the entire russian armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the telegraph ? Think again, fucker. As we speak I am contacting my secret network of spies across russia and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the Russia Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little “clever�? refusal was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo.
+country_event = { #Treaty of Arkhangelsk refused 
 	id = russia.1963
 	title = russia.1963.t
 	desc = russia.1963.d
@@ -6780,7 +6899,9 @@ country_event = { #End of russo-finn alliance ?
 	fire_only_once = yes
 
 	trigger = {
-		tag = FIN has_global_flag = RUS_FIN_COALITION NOT = {
+		tag = FIN 
+		has_global_flag = RUS_FIN_COALITION 
+		NOT = {
 			country_exists = SOV
 		}
 		is_in_faction_with = RUS
@@ -6796,7 +6917,8 @@ country_event = { #End of russo-finn alliance ?
 		}
 		every_other_country = {
 			limit = {
-				is_faction_leader = yes is_in_faction_with = FIN
+				is_faction_leader = yes 
+				is_in_faction_with = FIN
 			}
 			remove_from_faction = FIN
 		}
@@ -6840,7 +6962,8 @@ country_event = { #End of russo-finn alliance ?
 		}
 		every_other_country = {
 			limit = {
-				is_faction_leader = yes is_in_faction_with = FIN
+				is_faction_leader = yes 
+				is_in_faction_with = FIN
 			}
 			remove_from_faction = FIN
 		}
@@ -6888,7 +7011,8 @@ country_event = { #Defeated Russia
 		tag = FIN has_global_flag = RUS_FIN_COALITION NOT = {
 			country_exists = RUS
 		}
-		country_exists = SOV has_war_with = SOV
+		country_exists = SOV 
+		has_war_with = SOV
 	}
 
 	option = {
@@ -6948,7 +7072,9 @@ country_event = { #Murmansk is vulnerable
 
 	trigger = {
 		tag = FIN NOT = {
-			has_war_with = RUS has_war_with = SOV RUS = {
+			has_war_with = RUS 
+			has_war_with = SOV 
+			RUS = {
 				is_in_faction_with = GER
 			}
 			RUS = {
@@ -6961,7 +7087,11 @@ country_event = { #Murmansk is vulnerable
 		RUS = {
 			NOT = {
 				AND = {
-					controls_state = 195 controls_state = 219 controls_state = 214 controls_state = 217 controls_state = 251
+					controls_state = 195 
+					controls_state = 219 
+					controls_state = 214 
+					controls_state = 217 
+					controls_state = 251
 				}
 			}
 		}
@@ -7076,7 +7206,10 @@ country_event = { #Panic along the Volga Alash Orda initialization
 
 	trigger = {
 		tag = ALO RUS = {
-			has_country_flag = RUS_VOL_PANIC has_war_with = SOV controls_state = 582 controls_state = 571
+			has_country_flag = RUS_VOL_PANIC 
+			has_war_with = SOV 
+			controls_state = 582 
+			controls_state = 571
 		}
 		has_war = no is_subject = no NOT = {
 			is_in_faction_with = RUS
@@ -7164,7 +7297,9 @@ country_event = { #Cossack makes their move
 		}
 		add_political_power = -200
 		DKB = {
-			transfer_state = 217 transfer_state = 265 transfer_state = 260
+			transfer_state = 217 
+			transfer_state = 265 
+			transfer_state = 260
 		}
 		remove_state_core = 217
 		remove_state_core = 265
@@ -7279,7 +7414,9 @@ country_event = { #Alash Orda makes his move
 		}
 		add_political_power = -100
 		ALO = {
-			transfer_state = 652 transfer_state = 251 transfer_state = 401
+			transfer_state = 652 
+			transfer_state = 251 
+			transfer_state = 401
 		}
 		remove_state_core = 652
 		remove_state_core = 251
@@ -7309,7 +7446,13 @@ country_event = { #Treaty of Astrakhan
 	trigger = {
 		tag = RUS has_war_with = ALO
 		ALO = {
-			controls_state = 651 controls_state = 572 controls_state = 652 controls_state = 582 controls_state = 236 controls_state = 251 controls_state = 588
+			controls_state = 651 
+			controls_state = 572 
+			controls_state = 652 
+			controls_state = 582 
+			controls_state = 236 
+			controls_state = 251 
+			controls_state = 588
 			is_subject = no
 		}
 		is_subject = no
@@ -7522,14 +7665,19 @@ country_event = { #Treaty of Tsaritsyn
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_war_with = DKB
+		tag = RUS 
+		has_war_with = DKB
 		DKB = {
-			controls_state = 217 controls_state = 260 controls_state = 265
-			is_subject = no NOT = {
+			controls_state = 217 
+			controls_state = 260 
+			controls_state = 265
+			is_subject = no 
+			NOT = {
 				is_in_faction_with = GER
 			}
 		}
-		is_subject = no NOT = {
+		is_subject = no 
+		NOT = {
 			controls_state = 239
 		}
 	}
@@ -7712,12 +7860,23 @@ country_event = { #Panic in Siberia initialization for democracy
 
 	trigger = {
 		OR = {
-			has_government = market_liberal has_government = social_conservative has_government = social_democrat
+			has_government = market_liberal 
+			has_government = social_conservative 
+			has_government = social_democrat
 		}
-		tag = RUS has_political_power < -800 has_country_flag = RUS_SIB_PANIC NOT = {
+		tag = RUS 
+		has_political_power < -800 
+		has_country_flag = RUS_SIB_PANIC 
+		NOT = {
 			country_exists = SIB
 		}
-		owns_state = 566 owns_state = 562 controls_state = 562 owns_state = 637 owns_state = 560 controls_state = 560 owns_state = 570
+		owns_state = 566 
+		owns_state = 562 
+		controls_state = 562 
+		owns_state = 637 
+		owns_state = 560 
+		controls_state = 560 
+		owns_state = 570
 	}
 
 	mean_time_to_happen = {
@@ -7926,9 +8085,13 @@ country_event = { #Panic in Siberia initialization for authoritarian
 
 	trigger = {
 		OR = {
-			has_government = authoritarian_democrat has_government = paternal_autocrat has_government = national_populist
+			has_government = authoritarian_democrat 
+			has_government = paternal_autocrat 
+			has_government = national_populist
 		}
-		tag = RUS has_political_power < -200 has_country_flag = RUS_SIB_PANIC NOT = {
+		tag = RUS has_political_power < -200 
+		has_country_flag = RUS_SIB_PANIC 
+		NOT = {
 			country_exists = SIB
 		}
 		owns_state = 566 owns_state = 562 controls_state = 562 owns_state = 637 owns_state = 560 controls_state = 560 owns_state = 570
@@ -8142,7 +8305,10 @@ country_event = { #Panic in Siberia initialization for communist
 		OR = {
 			has_government = radical_socialist has_government = totalist has_government = syndicalist
 		}
-		tag = RUS has_political_power < -200 has_country_flag = RUS_SIB_PANIC NOT = {
+		tag = RUS 
+		has_political_power < -200 
+		has_country_flag = RUS_SIB_PANIC 
+		NOT = {
 			country_exists = SIB
 		}
 		owns_state = 566 owns_state = 562 controls_state = 562 owns_state = 637 owns_state = 560 controls_state = 560 owns_state = 570
@@ -8946,8 +9112,12 @@ country_event = { #Siberia is vulnerable mongolia
 	fire_only_once = yes
 
 	trigger = {
-		tag = MON controls_state = 617 has_war = no is_subject = no SIB = {
-			has_war = yes is_subject = no
+		tag = MON controls_state = 617 
+		has_war = no 
+		is_subject = no 
+		SIB = {
+			has_war = yes 
+			is_subject = no
 		}
 		NOT = {
 			MON = {
@@ -9036,7 +9206,9 @@ country_event = { #Siberian crisis is over
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_SIB_PANIC NOT = {
+		tag = RUS 
+		has_country_flag = RUS_SIB_PANIC 
+		NOT = {
 			has_war_with = SIB
 		}
 	}
@@ -9062,7 +9234,10 @@ country_event = { #Siberian crisis graduates
 	fire_only_once = yes
 
 	trigger = {
-		tag = RUS has_country_flag = RUS_SIB_PANIC has_war_with = SIB country_exists = SIB
+		tag = RUS 
+		has_country_flag = RUS_SIB_PANIC 
+		has_war_with = SIB 
+		country_exists = SIB
 	}
 
 	mean_time_to_happen = {
@@ -9079,4388 +9254,15 @@ country_event = { #Siberian crisis graduates
 
 country_event = { #Soviet and Siberia copies technologies
 	id = russia.2004
-	title = russia.2004.t
-	desc = russia.2004.d
-	picture = GFX_petain_NFA
 
 	hidden = yes
 
 	is_triggered_only = yes
-
-	option = {
-		name = russia.2004.a
-		hidden_effect = {
-			### Air doctrines ####
-			if = {
-				limit = {
-					RUS = {
-						has_tech = air_superiority
-					}
-				}
-				set_technology = {
-					air_superiority = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infrastructure_destruction
-					}
-				}
-				set_technology = {
-					infrastructure_destruction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = home_defence
-					}
-				}
-				set_technology = {
-					home_defence = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_strike_tactics
-					}
-				}
-				set_technology = {
-					naval_strike_tactics = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter_sweeps
-					}
-				}
-				set_technology = {
-					fighter_sweeps = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dogfighting_experience
-					}
-				}
-				set_technology = {
-					dogfighting_experience = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = multialtitude_flying
-					}
-				}
-				set_technology = {
-					multialtitude_flying = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = logistical_bombing
-					}
-				}
-				set_technology = {
-					logistical_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = night_bombing
-					}
-				}
-				set_technology = {
-					night_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = day_bombing
-					}
-				}
-				set_technology = {
-					day_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = massed_bomber_formations
-					}
-				}
-				set_technology = {
-					massed_bomber_formations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = air_offense
-					}
-				}
-				set_technology = {
-					air_offense = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = flying_fortress
-					}
-				}
-				set_technology = {
-					flying_fortress = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = offensive_formations
-					}
-				}
-				set_technology = {
-					offensive_formations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mass_destruction
-					}
-				}
-				set_technology = {
-					mass_destruction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = formation_flying
-					}
-				}
-				set_technology = {
-					formation_flying = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dive_bombing
-					}
-				}
-				set_technology = {
-					dive_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = direct_ground_support
-					}
-				}
-				set_technology = {
-					direct_ground_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = formation_fighting
-					}
-				}
-				set_technology = {
-					formation_fighting = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter_ace_initiative
-					}
-				}
-				set_technology = {
-					fighter_ace_initiative = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = hunt_and_destroy
-					}
-				}
-				set_technology = {
-					hunt_and_destroy = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = combat_unit_destruction
-					}
-				}
-				set_technology = {
-					combat_unit_destruction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = battlefield_support
-					}
-				}
-				set_technology = {
-					battlefield_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = keypoint_bombing
-					}
-				}
-				set_technology = {
-					keypoint_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = ground_support_integration
-					}
-				}
-				set_technology = {
-					ground_support_integration = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_strike_torpedo_tactics
-					}
-				}
-				set_technology = {
-					naval_strike_torpedo_tactics = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = strategic_destruction
-					}
-				}
-				set_technology = {
-					strategic_destruction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = forward_interception
-					}
-				}
-				set_technology = {
-					forward_interception = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = force_rotation
-					}
-				}
-				set_technology = {
-					force_rotation = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter_baiting
-					}
-				}
-				set_technology = {
-					fighter_baiting = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = low_echelon_support
-					}
-				}
-				set_technology = {
-					low_echelon_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_fighting
-					}
-				}
-				set_technology = {
-					dispersed_fighting = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = operational_destruction
-					}
-				}
-				set_technology = {
-					operational_destruction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter_veteran_initiative
-					}
-				}
-				set_technology = {
-					fighter_veteran_initiative = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_strike_torpedo_tactics_oi
-					}
-				}
-				set_technology = {
-					naval_strike_torpedo_tactics_oi = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cas_veteran_initiative
-					}
-				}
-				set_technology = {
-					cas_veteran_initiative = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = carousel_bombing
-					}
-				}
-				set_technology = {
-					carousel_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infiltration_bombing
-					}
-				}
-				set_technology = {
-					infiltration_bombing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = air_skirmish
-					}
-				}
-				set_technology = {
-					air_skirmish = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = high_level_bombing
-					}
-				}
-				set_technology = {
-					high_level_bombing = 1
-				}
-			}
-
-			### air techs
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_fighter
-					}
-				}
-				set_technology = {
-					early_fighter = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_early_fighter
-					}
-				}
-				set_technology = {
-					cv_early_fighter = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter1
-					}
-				}
-				set_technology = {
-					fighter1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_fighter1
-					}
-				}
-				set_technology = {
-					cv_fighter1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter2
-					}
-				}
-				set_technology = {
-					fighter2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_fighter2
-					}
-				}
-				set_technology = {
-					cv_fighter2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fighter3
-					}
-				}
-				set_technology = {
-					fighter3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_fighter3
-					}
-				}
-				set_technology = {
-					cv_fighter3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_fighter1
-					}
-				}
-				set_technology = {
-					jet_fighter1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_fighter2
-					}
-				}
-				set_technology = {
-					jet_fighter2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = CAS1
-					}
-				}
-				set_technology = {
-					CAS1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_CAS1
-					}
-				}
-				set_technology = {
-					cv_CAS1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = CAS2
-					}
-				}
-				set_technology = {
-					CAS2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_CAS2
-					}
-				}
-				set_technology = {
-					cv_CAS2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = CAS3
-					}
-				}
-				set_technology = {
-					CAS3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_CAS3
-					}
-				}
-				set_technology = {
-					cv_CAS3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_bomber1
-					}
-				}
-				set_technology = {
-					naval_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_naval_bomber1
-					}
-				}
-				set_technology = {
-					cv_naval_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_bomber2
-					}
-				}
-				set_technology = {
-					naval_bomber2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_naval_bomber2
-					}
-				}
-				set_technology = {
-					cv_naval_bomber2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_bomber3
-					}
-				}
-				set_technology = {
-					naval_bomber3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = cv_naval_bomber3
-					}
-				}
-				set_technology = {
-					cv_naval_bomber3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_bomber
-					}
-				}
-				set_technology = {
-					early_bomber = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = heavy_fighter1
-					}
-				}
-				set_technology = {
-					heavy_fighter1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = heavy_fighter2
-					}
-				}
-				set_technology = {
-					heavy_fighter2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = heavy_fighter3
-					}
-				}
-				set_technology = {
-					heavy_fighter3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tactical_bomber1
-					}
-				}
-				set_technology = {
-					tactical_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tactical_bomber2
-					}
-				}
-				set_technology = {
-					tactical_bomber2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tactical_bomber3
-					}
-				}
-				set_technology = {
-					tactical_bomber3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_tactical_bomber1
-					}
-				}
-				set_technology = {
-					jet_tactical_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_tactical_bomber2
-					}
-				}
-				set_technology = {
-					jet_tactical_bomber2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = strategic_bomber1
-					}
-				}
-				set_technology = {
-					strategic_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = strategic_bomber2
-					}
-				}
-				set_technology = {
-					strategic_bomber2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = strategic_bomber3
-					}
-				}
-				set_technology = {
-					strategic_bomber3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_strategic_bomber1
-					}
-				}
-				set_technology = {
-					jet_strategic_bomber1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = suicide_craft
-					}
-				}
-				set_technology = {
-					suicide_craft = 1
-				}
-			}
-			### Armour techs
-			if = {
-				limit = {
-					RUS = {
-						has_tech = gwtank
-					}
-				}
-				set_technology = {
-					gwtank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_light_tank
-					}
-				}
-				set_technology = {
-					basic_light_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_light_td
-					}
-				}
-				set_technology = {
-					basic_light_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_light_art
-					}
-				}
-				set_technology = {
-					basic_light_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_light_spaa
-					}
-				}
-				set_technology = {
-					basic_light_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_light_tank
-					}
-				}
-				set_technology = {
-					improved_light_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_light_td
-					}
-				}
-				set_technology = {
-					improved_light_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_light_art
-					}
-				}
-				set_technology = {
-					improved_light_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_light_spaa
-					}
-				}
-				set_technology = {
-					improved_light_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_light_tank
-					}
-				}
-				set_technology = {
-					advanced_light_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_light_td
-					}
-				}
-				set_technology = {
-					advanced_light_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_light_art
-					}
-				}
-				set_technology = {
-					advanced_light_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_light_spaa
-					}
-				}
-				set_technology = {
-					advanced_light_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_medium_tank
-					}
-				}
-				set_technology = {
-					basic_medium_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_medium_td
-					}
-				}
-				set_technology = {
-					basic_medium_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_medium_art
-					}
-				}
-				set_technology = {
-					basic_medium_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_medium_spaa
-					}
-				}
-				set_technology = {
-					basic_medium_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_medium_tank
-					}
-				}
-				set_technology = {
-					improved_medium_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_medium_td
-					}
-				}
-				set_technology = {
-					improved_medium_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_medium_art
-					}
-				}
-				set_technology = {
-					improved_medium_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_medium_spaa
-					}
-				}
-				set_technology = {
-					improved_medium_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_medium_tank
-					}
-				}
-				set_technology = {
-					advanced_medium_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_medium_td
-					}
-				}
-				set_technology = {
-					advanced_medium_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_medium_art
-					}
-				}
-				set_technology = {
-					advanced_medium_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_medium_spaa
-					}
-				}
-				set_technology = {
-					advanced_medium_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = main_battle_tank
-					}
-				}
-				set_technology = {
-					main_battle_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = modern_td
-					}
-				}
-				set_technology = {
-					modern_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = modern_art
-					}
-				}
-				set_technology = {
-					modern_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = modern_spaa
-					}
-				}
-				set_technology = {
-					modern_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_heavy_tank
-					}
-				}
-				set_technology = {
-					basic_heavy_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_heavy_td
-					}
-				}
-				set_technology = {
-					basic_heavy_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_heavy_art
-					}
-				}
-				set_technology = {
-					basic_heavy_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_heavy_spaa
-					}
-				}
-				set_technology = {
-					basic_heavy_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_heavy_tank
-					}
-				}
-				set_technology = {
-					improved_heavy_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_heavy_td
-					}
-				}
-				set_technology = {
-					improved_heavy_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_heavy_art
-					}
-				}
-				set_technology = {
-					improved_heavy_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_heavy_spaa
-					}
-				}
-				set_technology = {
-					improved_heavy_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_heavy_tank
-					}
-				}
-				set_technology = {
-					advanced_heavy_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_heavy_td
-					}
-				}
-				set_technology = {
-					advanced_heavy_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_heavy_art
-					}
-				}
-				set_technology = {
-					advanced_heavy_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_heavy_spaa
-					}
-				}
-				set_technology = {
-					advanced_heavy_spaa = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = super_heavy_tank
-					}
-				}
-				set_technology = {
-					super_heavy_tank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = super_heavy_td
-					}
-				}
-				set_technology = {
-					super_heavy_td = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = super_heavy_art
-					}
-				}
-				set_technology = {
-					super_heavy_art = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = super_heavy_spaa
-					}
-				}
-				set_technology = {
-					super_heavy_spaa = 1
-				}
-			}
-			### Art techs
-			if = {
-				limit = {
-					RUS = {
-						has_tech = gw_artillery
-					}
-				}
-				set_technology = {
-					gw_artillery = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = interwar_artillery
-					}
-				}
-				set_technology = {
-					interwar_artillery = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = artillery1
-					}
-				}
-				set_technology = {
-					artillery1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = artillery2
-					}
-				}
-				set_technology = {
-					artillery2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = artillery3
-					}
-				}
-				set_technology = {
-					artillery3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = artillery4
-					}
-				}
-				set_technology = {
-					artillery4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = artillery5
-					}
-				}
-				set_technology = {
-					artillery5 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = rocket_artillery
-					}
-				}
-				set_technology = {
-					rocket_artillery = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = rocket_artillery2
-					}
-				}
-				set_technology = {
-					rocket_artillery2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = rocket_artillery3
-					}
-				}
-				set_technology = {
-					rocket_artillery3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = rocket_artillery4
-					}
-				}
-				set_technology = {
-					rocket_artillery4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = interwar_antiair
-					}
-				}
-				set_technology = {
-					interwar_antiair = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antiair2
-					}
-				}
-				set_technology = {
-					antiair2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antiair3
-					}
-				}
-				set_technology = {
-					antiair3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antiair4
-					}
-				}
-				set_technology = {
-					antiair4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antiair4
-					}
-				}
-				set_technology = {
-					antiair4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antiair5
-					}
-				}
-				set_technology = {
-					antiair5 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = interwar_antitank
-					}
-				}
-				set_technology = {
-					interwar_antitank = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antitank1
-					}
-				}
-				set_technology = {
-					antitank1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antitank2
-					}
-				}
-				set_technology = {
-					antitank2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antitank3
-					}
-				}
-				set_technology = {
-					antitank3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antitank4
-					}
-				}
-				set_technology = {
-					antitank4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = antitank5
-					}
-				}
-				set_technology = {
-					antitank5 = 1
-				}
-			}
-			### electronic mechanical engineering
-			if = {
-				limit = {
-					RUS = {
-						has_tech = electronic_mechanical_engineering
-					}
-				}
-				set_technology = {
-					electronic_mechanical_engineering = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = radio
-					}
-				}
-				set_technology = {
-					radio = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = radio_detection
-					}
-				}
-				set_technology = {
-					radio_detection = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = decimetric_radar
-					}
-				}
-				set_technology = {
-					decimetric_radar = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_decimetric_radar
-					}
-				}
-				set_technology = {
-					improved_decimetric_radar = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = centimetric_radar
-					}
-				}
-				set_technology = {
-					centimetric_radar = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_centimetric_radar
-					}
-				}
-				set_technology = {
-					improved_centimetric_radar = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_centimetric_radar
-					}
-				}
-				set_technology = {
-					advanced_centimetric_radar = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanical_computing
-					}
-				}
-				set_technology = {
-					mechanical_computing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = computing_machine
-					}
-				}
-				set_technology = {
-					computing_machine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_computing_machine
-					}
-				}
-				set_technology = {
-					improved_computing_machine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_computing_machine
-					}
-				}
-				set_technology = {
-					advanced_computing_machine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_encryption
-					}
-				}
-				set_technology = {
-					basic_encryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_encryption
-					}
-				}
-				set_technology = {
-					improved_encryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_encryption
-					}
-				}
-				set_technology = {
-					advanced_encryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_decryption
-					}
-				}
-				set_technology = {
-					basic_decryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_decryption
-					}
-				}
-				set_technology = {
-					improved_decryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_decryption
-					}
-				}
-				set_technology = {
-					advanced_decryption = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = experimental_rockets
-					}
-				}
-				set_technology = {
-					experimental_rockets = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = rocket_engines
-					}
-				}
-				set_technology = {
-					rocket_engines = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_rocket_engines
-					}
-				}
-				set_technology = {
-					improved_rocket_engines = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_rocket_engines
-					}
-				}
-				set_technology = {
-					advanced_rocket_engines = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = jet_engines
-					}
-				}
-				set_technology = {
-					jet_engines = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = atomic_research
-					}
-				}
-				set_technology = {
-					atomic_research = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = nuclear_reactor
-					}
-				}
-				set_technology = {
-					nuclear_reactor = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = nukes
-					}
-				}
-				set_technology = {
-					nukes = 1
-				}
-			}
-			### industry
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_machine_tools
-					}
-				}
-				set_technology = {
-					basic_machine_tools = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_machine_tools
-					}
-				}
-				set_technology = {
-					improved_machine_tools = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_machine_tools
-					}
-				}
-				set_technology = {
-					advanced_machine_tools = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = assembly_line_production
-					}
-				}
-				set_technology = {
-					assembly_line_production = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = flexible_line
-					}
-				}
-				set_technology = {
-					flexible_line = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = streamlined_line
-					}
-				}
-				set_technology = {
-					streamlined_line = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_industry
-					}
-				}
-				set_technology = {
-					concentrated_industry = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_industry2
-					}
-				}
-				set_technology = {
-					concentrated_industry2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_industry3
-					}
-				}
-				set_technology = {
-					concentrated_industry3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_industry4
-					}
-				}
-				set_technology = {
-					concentrated_industry4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_industry5
-					}
-				}
-				set_technology = {
-					concentrated_industry5 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_industry
-					}
-				}
-				set_technology = {
-					dispersed_industry = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_industry2
-					}
-				}
-				set_technology = {
-					dispersed_industry2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_industry3
-					}
-				}
-				set_technology = {
-					dispersed_industry3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_industry4
-					}
-				}
-				set_technology = {
-					dispersed_industry4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_industry5
-					}
-				}
-				set_technology = {
-					dispersed_industry5 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = synth_oil_experiments
-					}
-				}
-				set_technology = {
-					synth_oil_experiments = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = oil_plant
-					}
-				}
-				set_technology = {
-					oil_plant = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_oil_plant
-					}
-				}
-				set_technology = {
-					improved_oil_plant = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_oil_plant
-					}
-				}
-				set_technology = {
-					advanced_oil_plant = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = construction1
-					}
-				}
-				set_technology = {
-					construction1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = excavation1
-					}
-				}
-				set_technology = {
-					excavation1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = construction2
-					}
-				}
-				set_technology = {
-					construction2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = excavation2
-					}
-				}
-				set_technology = {
-					excavation2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = construction3
-					}
-				}
-				set_technology = {
-					construction3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = excavation3
-					}
-				}
-				set_technology = {
-					excavation3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = construction4
-					}
-				}
-				set_technology = {
-					construction4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = excavation4
-					}
-				}
-				set_technology = {
-					excavation4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = construction5
-					}
-				}
-				set_technology = {
-					construction5 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = excavation5
-					}
-				}
-				set_technology = {
-					excavation5 = 1
-				}
-			}
-			### infantry
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_weapons
-					}
-				}
-				set_technology = {
-					infantry_weapons = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_weapons1
-					}
-				}
-				set_technology = {
-					infantry_weapons1 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_weapons2
-					}
-				}
-				set_technology = {
-					infantry_weapons2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_infantry_weapons
-					}
-				}
-				set_technology = {
-					improved_infantry_weapons = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_infantry_weapons_2
-					}
-				}
-				set_technology = {
-					improved_infantry_weapons_2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_at
-					}
-				}
-				set_technology = {
-					infantry_at = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_at2
-					}
-				}
-				set_technology = {
-					infantry_at2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_infantry_weapons
-					}
-				}
-				set_technology = {
-					advanced_infantry_weapons = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_infantry_weapons2
-					}
-				}
-				set_technology = {
-					advanced_infantry_weapons2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = paratroopers
-					}
-				}
-				set_technology = {
-					paratroopers = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = paratroopers2
-					}
-				}
-				set_technology = {
-					paratroopers2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = paratroopers3
-					}
-				}
-				set_technology = {
-					paratroopers3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = marines
-					}
-				}
-				set_technology = {
-					marines = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = marines2
-					}
-				}
-				set_technology = {
-					marines2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = marines3
-					}
-				}
-				set_technology = {
-					marines3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_mountaineers
-					}
-				}
-				set_technology = {
-					tech_mountaineers = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_mountaineers2
-					}
-				}
-				set_technology = {
-					tech_mountaineers2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_mountaineers3
-					}
-				}
-				set_technology = {
-					tech_mountaineers3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = night_vision
-					}
-				}
-				set_technology = {
-					night_vision = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = night_vision2
-					}
-				}
-				set_technology = {
-					night_vision2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = support_weapons
-					}
-				}
-				set_technology = {
-					support_weapons = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = support_weapons2
-					}
-				}
-				set_technology = {
-					support_weapons2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = support_weapons3
-					}
-				}
-				set_technology = {
-					support_weapons3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = support_weapons4
-					}
-				}
-				set_technology = {
-					support_weapons4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = motorised_infantry
-					}
-				}
-				set_technology = {
-					motorised_infantry = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = motorized_rocket_unit
-					}
-				}
-				set_technology = {
-					motorized_rocket_unit = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanised_infantry
-					}
-				}
-				set_technology = {
-					mechanised_infantry = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanised_infantry2
-					}
-				}
-				set_technology = {
-					mechanised_infantry2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanised_infantry3
-					}
-				}
-				set_technology = {
-					mechanised_infantry3 = 1
-				}
-			}
-			###	land_doctrines
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mobile_warfare
-					}
-				}
-				set_technology = {
-					mobile_warfare = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = delay
-					}
-				}
-				set_technology = {
-					delay = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = elastic_defence
-					}
-				}
-				set_technology = {
-					elastic_defence = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mobile_infantry
-					}
-				}
-				set_technology = {
-					mobile_infantry = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mass_motorization
-					}
-				}
-				set_technology = {
-					mass_motorization = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanised_offensive
-					}
-				}
-				set_technology = {
-					mechanised_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = armored_spearhead
-					}
-				}
-				set_technology = {
-					armored_spearhead = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = schwerpunk
-					}
-				}
-				set_technology = {
-					schwerpunk = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = blitzkrieg
-					}
-				}
-				set_technology = {
-					blitzkrieg = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = kampfgruppe
-					}
-				}
-				set_technology = {
-					kampfgruppe = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = firebrigades
-					}
-				}
-				set_technology = {
-					firebrigades = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = backhand_blow
-					}
-				}
-				set_technology = {
-					backhand_blow = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = modern_blitzkrieg
-					}
-				}
-				set_technology = {
-					modern_blitzkrieg = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = volkssturm
-					}
-				}
-				set_technology = {
-					volkssturm = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = nd_conscription
-					}
-				}
-				set_technology = {
-					nd_conscription = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = werwolf_guerillas
-					}
-				}
-				set_technology = {
-					werwolf_guerillas = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = superior_firepower
-					}
-				}
-				set_technology = {
-					superior_firepower = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = sup_delay
-					}
-				}
-				set_technology = {
-					sup_delay = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mobile_defence
-					}
-				}
-				set_technology = {
-					mobile_defence = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = intergrated_support
-					}
-				}
-				set_technology = {
-					intergrated_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = regimental_combat_teams
-					}
-				}
-				set_technology = {
-					regimental_combat_teams = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = dispersed_support
-					}
-				}
-				set_technology = {
-					dispersed_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = overwhelming_firepower
-					}
-				}
-				set_technology = {
-					overwhelming_firepower = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = sup_mechanized_offensive
-					}
-				}
-				set_technology = {
-					sup_mechanized_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = concentrated_fire_plans
-					}
-				}
-				set_technology = {
-					concentrated_fire_plans = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = combined_arms
-					}
-				}
-				set_technology = {
-					combined_arms = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tactical_control
-					}
-				}
-				set_technology = {
-					tactical_control = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = air_land_battle
-					}
-				}
-				set_technology = {
-					air_land_battle = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = centralized_fire_control
-					}
-				}
-				set_technology = {
-					centralized_fire_control = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = forward_observers
-					}
-				}
-				set_technology = {
-					forward_observers = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_firebases
-					}
-				}
-				set_technology = {
-					advanced_firebases = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = shock_and_awe
-					}
-				}
-				set_technology = {
-					shock_and_awe = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = trench_warfare
-					}
-				}
-				set_technology = {
-					trench_warfare = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = grand_battle_plan
-					}
-				}
-				set_technology = {
-					grand_battle_plan = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = prepared_defense
-					}
-				}
-				set_technology = {
-					prepared_defense = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = grand_assault
-					}
-				}
-				set_technology = {
-					grand_assault = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = grand_mechanized_offensive
-					}
-				}
-				set_technology = {
-					grand_mechanized_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = assault_concentration
-					}
-				}
-				set_technology = {
-					assault_concentration = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = branch_interoperation
-					}
-				}
-				set_technology = {
-					branch_interoperation = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = assault_breakthrough
-					}
-				}
-				set_technology = {
-					assault_breakthrough = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = central_planning
-					}
-				}
-				set_technology = {
-					central_planning = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = c3i_theory
-					}
-				}
-				set_technology = {
-					c3i_theory = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infantry_offensive
-					}
-				}
-				set_technology = {
-					infantry_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = armored_operations
-					}
-				}
-				set_technology = {
-					armored_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infiltration_assault
-					}
-				}
-				set_technology = {
-					infiltration_assault = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = night_assault_tactics
-					}
-				}
-				set_technology = {
-					night_assault_tactics = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = attritional_containment
-					}
-				}
-				set_technology = {
-					attritional_containment = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = infiltration_in_depth
-					}
-				}
-				set_technology = {
-					infiltration_in_depth = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mass_assault
-					}
-				}
-				set_technology = {
-					mass_assault = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = pocket_defence
-					}
-				}
-				set_technology = {
-					pocket_defence = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = defence_in_depth
-					}
-				}
-				set_technology = {
-					defence_in_depth = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = large_front_operations
-					}
-				}
-				set_technology = {
-					large_front_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = deep_operations
-					}
-				}
-				set_technology = {
-					deep_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = operational_concentration
-					}
-				}
-				set_technology = {
-					operational_concentration = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = vast_offensives
-					}
-				}
-				set_technology = {
-					vast_offensives = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = breakthrough_priority
-					}
-				}
-				set_technology = {
-					breakthrough_priority = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = mechanized_wave
-					}
-				}
-				set_technology = {
-					mechanized_wave = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = continuous_offensive
-					}
-				}
-				set_technology = {
-					continuous_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = peoples_army
-					}
-				}
-				set_technology = {
-					peoples_army = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = human_infantry_offensive
-					}
-				}
-				set_technology = {
-					human_infantry_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = large_front_offensive
-					}
-				}
-				set_technology = {
-					large_front_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = human_wave_offensive
-					}
-				}
-				set_technology = {
-					human_wave_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = guerilla_warfare
-					}
-				}
-				set_technology = {
-					guerilla_warfare = 1
-				}
-			}
-			### naval
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_destroyer
-					}
-				}
-				set_technology = {
-					early_destroyer = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_destroyer
-					}
-				}
-				set_technology = {
-					basic_destroyer = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_destroyer
-					}
-				}
-				set_technology = {
-					improved_destroyer = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_destroyer
-					}
-				}
-				set_technology = {
-					advanced_destroyer = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_light_cruiser
-					}
-				}
-				set_technology = {
-					early_light_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_light_cruiser
-					}
-				}
-				set_technology = {
-					basic_light_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_light_cruiser
-					}
-				}
-				set_technology = {
-					improved_light_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_light_cruiser
-					}
-				}
-				set_technology = {
-					advanced_light_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_heavy_cruiser
-					}
-				}
-				set_technology = {
-					early_heavy_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_heavy_cruiser
-					}
-				}
-				set_technology = {
-					basic_heavy_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_heavy_cruiser
-					}
-				}
-				set_technology = {
-					improved_heavy_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_heavy_cruiser
-					}
-				}
-				set_technology = {
-					advanced_heavy_cruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_battlecruiser
-					}
-				}
-				set_technology = {
-					early_battlecruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_battlecruiser
-					}
-				}
-				set_technology = {
-					basic_battlecruiser = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_battleship
-					}
-				}
-				set_technology = {
-					early_battleship = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_battleship
-					}
-				}
-				set_technology = {
-					basic_battleship = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_battleship
-					}
-				}
-				set_technology = {
-					improved_battleship = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_battleship
-					}
-				}
-				set_technology = {
-					advanced_battleship = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = heavy_battleship
-					}
-				}
-				set_technology = {
-					heavy_battleship = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = heavy_battleship2
-					}
-				}
-				set_technology = {
-					heavy_battleship2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = transport
-					}
-				}
-				set_technology = {
-					transport = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = landing_craft
-					}
-				}
-				set_technology = {
-					landing_craft = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tank_landing_craft
-					}
-				}
-				set_technology = {
-					tank_landing_craft = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_carrier
-					}
-				}
-				set_technology = {
-					early_carrier = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_carrier
-					}
-				}
-				set_technology = {
-					basic_carrier = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_carrier
-					}
-				}
-				set_technology = {
-					improved_carrier = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_carrier
-					}
-				}
-				set_technology = {
-					advanced_carrier = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = early_submarine
-					}
-				}
-				set_technology = {
-					early_submarine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = basic_submarine
-					}
-				}
-				set_technology = {
-					basic_submarine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = improved_submarine
-					}
-				}
-				set_technology = {
-					improved_submarine = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_submarine
-					}
-				}
-				set_technology = {
-					advanced_submarine = 1
-				}
-			}
-			### naval doctrine
-			if = {
-				limit = {
-					RUS = {
-						has_tech = fleet_in_being
-					}
-				}
-				set_technology = {
-					fleet_in_being = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = battlefleet_concentration
-					}
-				}
-				set_technology = {
-					battlefleet_concentration = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = subsidiary_carrier_role
-					}
-				}
-				set_technology = {
-					subsidiary_carrier_role = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = hunter_killer_groups
-					}
-				}
-				set_technology = {
-					hunter_killer_groups = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_fortress
-					}
-				}
-				set_technology = {
-					floating_fortress = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_airfield
-					}
-				}
-				set_technology = {
-					floating_airfield = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = grand_battlefleet
-					}
-				}
-				set_technology = {
-					grand_battlefleet = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_sailing
-					}
-				}
-				set_technology = {
-					convoy_sailing = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_escorts
-					}
-				}
-				set_technology = {
-					convoy_escorts = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = escort_carriers
-					}
-				}
-				set_technology = {
-					escort_carriers = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = integrated_convoy_defence
-					}
-				}
-				set_technology = {
-					integrated_convoy_defence = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = submarine_operations
-					}
-				}
-				set_technology = {
-					submarine_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = undersea_blockade
-					}
-				}
-				set_technology = {
-					undersea_blockade = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_interdiction
-					}
-				}
-				set_technology = {
-					convoy_interdiction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = submarine_offensive
-					}
-				}
-				set_technology = {
-					submarine_offensive = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = trade_interdiction
-					}
-				}
-				set_technology = {
-					trade_interdiction = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_interdiction_ti
-					}
-				}
-				set_technology = {
-					convoy_interdiction_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = unrestricted_submarine_warfare
-					}
-				}
-				set_technology = {
-					unrestricted_submarine_warfare = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = wolfpacks
-					}
-				}
-				set_technology = {
-					wolfpacks = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = advanced_submarine_warfare
-					}
-				}
-				set_technology = {
-					advanced_submarine_warfare = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = combined_operations_raiding
-					}
-				}
-				set_technology = {
-					combined_operations_raiding = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = raider_patrols
-					}
-				}
-				set_technology = {
-					raider_patrols = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = capital_ship_raiders
-					}
-				}
-				set_technology = {
-					capital_ship_raiders = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = battlefleet_concentration_ti
-					}
-				}
-				set_technology = {
-					battlefleet_concentration_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_fortress_ti
-					}
-				}
-				set_technology = {
-					floating_fortress_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_airfield_ti
-					}
-				}
-				set_technology = {
-					floating_airfield_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = carrier_operations
-					}
-				}
-				set_technology = {
-					carrier_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_sailing_ti
-					}
-				}
-				set_technology = {
-					convoy_sailing_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = subsidiary_carrier_role_ti
-					}
-				}
-				set_technology = {
-					subsidiary_carrier_role_ti = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = naval_air_operations
-					}
-				}
-				set_technology = {
-					naval_air_operations = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = base_strike
-					}
-				}
-				set_technology = {
-					base_strike = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = carrier_primacy
-					}
-				}
-				set_technology = {
-					carrier_primacy = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = carrier_task_forces
-					}
-				}
-				set_technology = {
-					carrier_task_forces = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_airfield_bs
-					}
-				}
-				set_technology = {
-					floating_airfield_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = massed_strikes
-					}
-				}
-				set_technology = {
-					massed_strikes = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = floating_fortress_bs
-					}
-				}
-				set_technology = {
-					floating_fortress_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = carrier_battlegroups
-					}
-				}
-				set_technology = {
-					carrier_battlegroups = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = submarine_operations_bs
-					}
-				}
-				set_technology = {
-					submarine_operations_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = undersea_blockade_bs
-					}
-				}
-				set_technology = {
-					undersea_blockade_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_interdiction_bs
-					}
-				}
-				set_technology = {
-					convoy_interdiction_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = submarine_offensive_bs
-					}
-				}
-				set_technology = {
-					submarine_offensive_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_escorts_bs
-					}
-				}
-				set_technology = {
-					convoy_escorts_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = escort_patrols
-					}
-				}
-				set_technology = {
-					escort_patrols = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = convoy_sailing_bs
-					}
-				}
-				set_technology = {
-					convoy_sailing_bs = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = integrated_convoy_defence_bs
-					}
-				}
-				set_technology = {
-					integrated_convoy_defence_bs = 1
-				}
-			}
-			### support
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_support
-					}
-				}
-				set_technology = {
-					tech_support = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_engineers
-					}
-				}
-				set_technology = {
-					tech_engineers = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_engineers2
-					}
-				}
-				set_technology = {
-					tech_engineers2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_engineers3
-					}
-				}
-				set_technology = {
-					tech_engineers3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_engineers4
-					}
-				}
-				set_technology = {
-					tech_engineers4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_recon
-					}
-				}
-				set_technology = {
-					tech_recon = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_recon2
-					}
-				}
-				set_technology = {
-					tech_recon2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_recon3
-					}
-				}
-				set_technology = {
-					tech_recon3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_recon4
-					}
-				}
-				set_technology = {
-					tech_recon4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_military_police
-					}
-				}
-				set_technology = {
-					tech_military_police = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_military_police2
-					}
-				}
-				set_technology = {
-					tech_military_police2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_military_police3
-					}
-				}
-				set_technology = {
-					tech_military_police3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_military_police4
-					}
-				}
-				set_technology = {
-					tech_military_police4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_maintenance_company
-					}
-				}
-				set_technology = {
-					tech_maintenance_company = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_maintenance_company2
-					}
-				}
-				set_technology = {
-					tech_maintenance_company2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_maintenance_company3
-					}
-				}
-				set_technology = {
-					tech_maintenance_company3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_maintenance_company4
-					}
-				}
-				set_technology = {
-					tech_maintenance_company4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_field_hospital
-					}
-				}
-				set_technology = {
-					tech_field_hospital = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_field_hospital2
-					}
-				}
-				set_technology = {
-					tech_field_hospital2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_field_hospital3
-					}
-				}
-				set_technology = {
-					tech_field_hospital3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_field_hospital4
-					}
-				}
-				set_technology = {
-					tech_field_hospital4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_logistics_company
-					}
-				}
-				set_technology = {
-					tech_logistics_company = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_logistics_company2
-					}
-				}
-				set_technology = {
-					tech_logistics_company2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_logistics_company3
-					}
-				}
-				set_technology = {
-					tech_logistics_company3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_logistics_company4
-					}
-				}
-				set_technology = {
-					tech_logistics_company4 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_signal_company
-					}
-				}
-				set_technology = {
-					tech_signal_company = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_signal_company2
-					}
-				}
-				set_technology = {
-					tech_signal_company2 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_signal_company3
-					}
-				}
-				set_technology = {
-					tech_signal_company3 = 1
-				}
-			}
-			###
-			if = {
-				limit = {
-					RUS = {
-						has_tech = tech_signal_company4
-					}
-				}
-				set_technology = {
-					tech_signal_company4 = 1
-				}
-			}
-			###
+	
+	immediate = {
+		RUS = {
+			ROOT = { transfer_technology = yes }
 		}
 	}
-
-
 }
+

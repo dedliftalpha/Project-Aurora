@@ -1018,7 +1018,6 @@ focus = {
 		completion_reward = {
 		add_ideas = rus_village_communes_focus
 		add_national_unity = 0.05
-		add_political_power = 150
 		}		
 	}
 	
@@ -1221,8 +1220,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 50		
+		completion_reward = {	
 		random_owned_state = {
 				limit = {
 					industrial_complex > 0
@@ -1318,7 +1316,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		add_political_power = 40
+		add_political_power = 75
 		}		
 	}
 	
@@ -1339,8 +1337,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 20		
+		completion_reward = {	
 		random_owned_state = {
 				limit = {
 					state_population > 300000
@@ -1402,8 +1399,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 60		
+		completion_reward = {	
 		random_owned_state = {
 				limit = {
 					state_population > 200000
@@ -1462,8 +1458,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 40		
+		completion_reward = {		
 		add_tech_bonus = {
 				name = industry_bonus
 				bonus = 0.5
@@ -1555,7 +1550,7 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		add_political_power = 80
+		add_political_power = 100
 
 		}		
 	}
@@ -1649,8 +1644,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 80		
+		completion_reward = {	
 		random_owned_state = {
 				limit = {
 					state_population > 500000
@@ -1707,8 +1701,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = 80		
+		completion_reward = {		
 		random_owned_state = {
 				limit = {
 					state_population > 300000
@@ -1795,8 +1788,7 @@ focus = {
 				has_idea = very_low_stability }
 			}
 		}	
-		completion_reward = {
-		add_political_power = -60		
+		completion_reward = {	
 		random_owned_state = {
 				limit = {
 					state_population > 300000
@@ -1935,8 +1927,10 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		remove_ideas = rus_sav_econ
-		add_political_power = -60		
+		if = { limit = { has_idea = rus_black_monday } remove_ideas = rus_black_monday }
+		if = { limit = { has_idea = rus_black_monday1 } remove_ideas = rus_black_monday1 }
+		if = { limit = { has_idea = rus_black_monday2 } remove_ideas = rus_black_monday2 }
+		remove_ideas = rus_sav_econ		
 		add_timed_idea = { idea = rus_sav_econ1 days = 180 }
 		every_other_country = { add_opinion_modifier = { modifier = minor_sanctions } }
 		if = {
@@ -1991,8 +1985,6 @@ focus = {
 			}
 		}	
 		completion_reward = {
-		add_research_slot = 1
-		add_political_power = -50
 		set_country_flag = Savinkov_Yusupov1
 		random_owned_state = {
 				limit = {
@@ -2012,6 +2004,7 @@ focus = {
 				}
 				set_state_flag = RUS_WRA_IND1_2IC
 			}
+		add_research_slot = 1
 		}		
 	}
 	
@@ -2053,7 +2046,7 @@ focus = {
 focus = {
 		id = RUS_more_resources
 		icon = GFX_goal_oil
-		x = 25
+		x = 24
 		y = 4
 		cost = 10
 		available = { }
@@ -2082,9 +2075,73 @@ focus = {
 	}
 	
 focus = {
+		id = RUS_more_infrastructure
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 24
+		y = 5
+		cost = 10
+		available = { }
+		prerequisite = { focus = RUS_more_resources }
+		
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 0
+				OR = { has_idea = disaster
+				has_idea = very_low_stability }
+			}
+		}	
+		completion_reward = {
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 250000
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 250000
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+		random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 2
+					}
+					state_population > 250000
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+
+		}		
+	}
+	
+focus = {
 		id = RUS_nuclear_effort
 		icon = GFX_focus_wonderweapons
-		x = 30
+		x = 28
 		y = 5
 		cost = 10
 		prerequisite = { focus = RUS_tech_slot }
@@ -2111,7 +2168,7 @@ focus = {
 focus = {
 		id = RUS_rocket_effort
 		icon = GFX_focus_rocketry
-		x = 32
+		x = 30
 		y = 5
 		cost = 10
 		available = { has_completed_focus = RUS_air_office }
@@ -2139,7 +2196,7 @@ focus = {
 focus = {
 		id = RUS_tech_slot
 		icon = GFX_focus_research
-		x = 31
+		x = 29
 		y = 4
 		cost = 10
 		available = { custom_trigger_tooltip = { tooltip = rus_special_unlock_tooltip OR = { AND = { has_completed_focus = RUS_CON_ADM3 has_completed_focus = RUS_CON_IND1 has_completed_focus = RUS_CON_IND3 } AND = { has_completed_focus = RUS_WRA_NG1 has_completed_focus = RUS_WRA_ADM3 has_completed_focus = RUS_WRA_LA1 } AND = { has_completed_focus = RUS_DMI_ADM3 has_completed_focus = RUS_DMI_IND3 } AND = { has_completed_focus = RUS_DEM_IND2 } } }

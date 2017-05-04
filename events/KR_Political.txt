@@ -2332,3 +2332,451 @@ country_event = {
 
 }
 
+
+### Setting up Opinion Modifiers at Gamestart ###
+country_event = {
+	id = kr.political.40
+	title = kr.political.40.t
+	desc = kr.political.40.d
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_socialist_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_socialist_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_democratic_government = yes
+						has_dictatorship_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_democratic_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_democratic_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_socialist_government = yes
+						has_dictatorship_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_dictatorship_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_dictatorship_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_democratic_government = yes
+						has_socialist_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_government = totalist
+			}
+			set_country_flag = opinion_set_totalist
+		}
+		if = {
+			limit = {
+				has_government = syndicalist
+			}
+			set_country_flag = opinion_set_syndicalist
+		}
+		if = {
+			limit = {
+				has_government = radical_socialist
+			}
+			set_country_flag = opinion_set_radical_socialist
+		}
+		if = {
+			limit = {
+				has_government = social_democrat
+			}
+			set_country_flag = opinion_set_social_democrat
+		}
+		if = {
+			limit = {
+				has_government = social_liberal
+			}
+			set_country_flag = opinion_set_social_liberal
+		}
+		if = {
+			limit = {
+				has_government = market_liberal
+			}
+			set_country_flag = opinion_set_market_liberal
+		}
+		if = {
+			limit = {
+				has_government = social_conservative
+			}
+			set_country_flag = opinion_set_social_conservative
+		}
+		if = {
+			limit = {
+				has_government = authoritarian_democrat
+			}
+			set_country_flag = opinion_set_authoritarian_democrat
+		}
+		if = {
+			limit = {
+				has_government = paternal_autocrat
+			}
+			set_country_flag = opinion_set_paternal_autocrat
+		}
+		if = {
+			limit = {
+				has_government = national_populist
+			}
+			set_country_flag = opinion_set_national_populist
+		}
+	}
+	
+	option = {
+		name = kr.political.40.a
+	}
+
+}
+
+### Setting up Opinion Modifiers on Government Change ###
+country_event = {
+	id = kr.political.41
+	title = kr.political.40.t
+	desc = kr.political.40.d
+	
+	hidden = yes
+
+	trigger = {
+		OR = {
+			AND = {
+				NOT = { has_government = totalist }
+				has_country_flag = opinion_set_totalist
+			}
+			AND = {
+				NOT = { has_government = syndicalist }
+				has_country_flag = opinion_set_syndicalist
+			}
+			AND = {
+				NOT = { has_government = radical_socialist }
+				has_country_flag = opinion_set_radical_socialist
+			}
+			AND = {
+				NOT = { has_government = social_democrat }
+				has_country_flag = opinion_set_social_democrat
+			}
+			AND = {
+				NOT = { has_government = social_liberal }
+				has_country_flag = opinion_set_social_liberal
+			}
+			AND = {
+				NOT = { has_government = market_liberal }
+				has_country_flag = opinion_set_market_liberal
+			}
+			AND = {
+				NOT = { has_government = social_conservative }
+				has_country_flag = opinion_set_social_conservative
+			}
+			AND = {
+				NOT = { has_government = authoritarian_democrat }
+				has_country_flag = opinion_set_authoritarian_democrat
+			}
+			AND = {
+				NOT = { has_government = paternal_autocrat }
+				has_country_flag = opinion_set_paternal_autocrat
+			}
+			AND = {
+				NOT = { has_government = national_populist }
+				has_country_flag = opinion_set_national_populist
+			}
+			AND = {
+				NOT = { has_country_flag = opinion_set_totalist }
+				NOT = { has_country_flag = opinion_set_syndicalist }
+				NOT = { has_country_flag = opinion_set_radical_socialist }
+				NOT = { has_country_flag = opinion_set_social_democrat }
+				NOT = { has_country_flag = opinion_set_social_liberal }
+				NOT = { has_country_flag = opinion_set_market_liberal }
+				NOT = { has_country_flag = opinion_set_social_conservative }
+				NOT = { has_country_flag = opinion_set_authoritarian_democrat }
+				NOT = { has_country_flag = opinion_set_paternal_autocrat }
+				NOT = { has_country_flag = opinion_set_national_populist }
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	immediate = {
+		clr_country_flag = opinion_set_totalist
+		clr_country_flag = opinion_set_syndicalist
+		clr_country_flag = opinion_set_radical_socialist
+		clr_country_flag = opinion_set_social_democrat
+		clr_country_flag = opinion_set_social_liberal
+		clr_country_flag = opinion_set_market_liberal
+		clr_country_flag = opinion_set_social_conservative
+		clr_country_flag = opinion_set_authoritarian_democrat
+		clr_country_flag = opinion_set_paternal_autocrat
+		clr_country_flag = opinion_set_national_populist
+		every_country = {
+			remove_opinion_modifier = {
+				target = ROOT
+				modifier = KR_similar_ideology
+			}
+			ROOT = {
+			remove_opinion_modifier = {
+				target = PREV
+				modifier = KR_similar_ideology
+			}
+			}
+			remove_opinion_modifier = {
+				target = ROOT
+				modifier = KR_different_ideology
+			}
+			ROOT = {
+			remove_opinion_modifier = {
+				target = PREV
+				modifier = KR_different_ideology
+			}
+			}
+		}
+		if = {
+			limit = {
+				has_socialist_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_socialist_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_democratic_government = yes
+						has_dictatorship_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_democratic_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_democratic_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_socialist_government = yes
+						has_dictatorship_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_dictatorship_government = yes
+			}
+			every_country = {
+				limit = {
+					AND = {
+						has_dictatorship_government = yes
+						has_same_government_as_ROOT = no
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_similar_ideology
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_democratic_government = yes
+						has_socialist_government = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+				reverse_add_opinion_modifier = {
+					target = ROOT
+					modifier = KR_different_ideology
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_government = totalist
+			}
+			set_country_flag = opinion_set_totalist
+		}
+		if = {
+			limit = {
+				has_government = syndicalist
+			}
+			set_country_flag = opinion_set_syndicalist
+		}
+		if = {
+			limit = {
+				has_government = radical_socialist
+			}
+			set_country_flag = opinion_set_radical_socialist
+		}
+		if = {
+			limit = {
+				has_government = social_democrat
+			}
+			set_country_flag = opinion_set_social_democrat
+		}
+		if = {
+			limit = {
+				has_government = social_liberal
+			}
+			set_country_flag = opinion_set_social_liberal
+		}
+		if = {
+			limit = {
+				has_government = market_liberal
+			}
+			set_country_flag = opinion_set_market_liberal
+		}
+		if = {
+			limit = {
+				has_government = social_conservative
+			}
+			set_country_flag = opinion_set_social_conservative
+		}
+		if = {
+			limit = {
+				has_government = authoritarian_democrat
+			}
+			set_country_flag = opinion_set_authoritarian_democrat
+		}
+		if = {
+			limit = {
+				has_government = paternal_autocrat
+			}
+			set_country_flag = opinion_set_paternal_autocrat
+		}
+		if = {
+			limit = {
+				has_government = national_populist
+			}
+			set_country_flag = opinion_set_national_populist
+		}
+	}
+	
+	
+	option = {
+		name = kr.political.40.a
+	}
+
+}

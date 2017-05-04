@@ -1643,7 +1643,7 @@ russian_civil_war-sov= {
 						}
 					}
 				}
-				OR = { #Either be a major power, a faction leader, or your faction leader supports the Soviet
+				OR = { #Either be a major power, a faction leader, or your faction leader supports the Soviets
 					is_major = yes
 					is_faction_leader = yes
 					AND = {
@@ -1687,7 +1687,7 @@ russian_civil_war-sov= {
 							}
 						}
 					}
-					OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					OR = { #Either be a major power, a faction leader, or your faction leader supports the Soviets
 						is_major = yes
 						is_faction_leader = yes
 						AND = {
@@ -1750,7 +1750,7 @@ russian_civil_war-rus= {
 						}
 					}
 				}
-				OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+				OR = { #Either be a major power, a faction leader, or your faction leader supports russia
 					is_major = yes
 					is_faction_leader = yes
 					AND = {
@@ -1794,7 +1794,7 @@ russian_civil_war-rus= {
 							}
 						}
 					}
-					OR = { #Either be a major power, a faction leader, or your faction leader supports spain
+					OR = { #Either be a major power, a faction leader, or your faction leader supports russia
 						is_major = yes
 						is_faction_leader = yes
 						AND = {
@@ -1823,6 +1823,107 @@ russian_civil_war-rus= {
 	ai_strategy = { #Use Lend Lease
 		type = ignore
 		id = "SOV"
+		value = 100
+	}
+}
+korean_japanese_war-kor= {
+	enable = {
+		has_country_flag = KOR_intervention
+		has_war = no
+		is_subject = no
+		country_exists = KOR #KOR must exists
+		country_exists = JAP
+		OR = {
+			OR = { #Does not already have an event effecting it specifically
+				tag = RUS
+				tag = QIE
+				tag = SOV
+				tag = AOG
+				tag = CHI
+				tag = GER
+			}
+			AND = {
+				OR = { #Country must either not be landlocked or border the conflict
+					any_owned_state = { 
+						is_coastal = yes 
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = KOR
+							tag = JAP
+						}
+					}
+				}
+				OR = { #Either be a major power, a faction leader, or your faction leader supports korea
+					is_major = yes
+					is_faction_leader = yes
+					AND = {
+						is_in_faction = yes
+						any_allied_country = {
+							is_faction_leader = yes
+							has_country_flag = KOR_intervention
+						}			
+					}
+				}
+				has_democratic_government = yes
+			}
+		}
+	}
+	abort = { #stop sending troops; Stop if any of the above conditions are no longer met
+		OR = {
+			NOT = { has_country_flag = KOR_intervention }
+			NOT = { country_exists = KOR } #RUS must exists
+			NOT = { country_exists = JAP } #SOV must exists
+			has_war = yes
+			is_subject = yes
+			NOT = {
+				tag = RUS
+				tag = QIE
+				tag = SOV
+				tag = AOG
+				tag = CHI
+				tag = GER
+				AND = {
+					OR = { #Country must either not be landlocked or border the conflict
+						any_owned_state = { 
+							is_coastal = yes 
+						}
+						any_neighbor_country = {
+							OR = {
+								tag = KOR
+								tag = JAP
+							}
+						}
+					}
+					OR = { #Either be a major power, a faction leader, or your faction leader supports korea
+						is_major = yes
+						is_faction_leader = yes
+						AND = {
+							is_in_faction = yes
+							any_allied_country = {
+								is_faction_leader = yes
+								has_country_flag = KOR_intervention
+							}			
+						}
+					}
+					has_democratic_government = yes
+				}
+			}
+		}
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "KOR"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "KOR"
+		value = 100
+	}
+	ai_strategy = { #Use Lend Lease
+		type = ignore
+		id = "JAP"
 		value = 100
 	}
 }

@@ -628,7 +628,7 @@ country_event = { #Make AU-HU great again speech
 		trigger = { has_country_flag = ausgleich_all_peoples }
 		
 		country_event = {
-			id = ausgleich.new.315
+			id = ausgleich.new.311
 			days = 1
 		}
 			
@@ -639,7 +639,7 @@ country_event = { #Make AU-HU great again speech
 		trigger = { has_country_flag = ausgleich_all_peoples }
 		
 		country_event = {
-			id = ausgleich.new.315
+			id = ausgleich.new.311
 			days = 1
 		}
 			
@@ -675,9 +675,23 @@ country_event = { #Hungarian Demands - Reparation Payments
 					has_country_flag = ausgleich_just_hungary
 				}
 			}
-			country_event = {
-				id = ausgleich.new.312
-				days = 1
+			if= {
+				limit = {
+					has_country_flag = ausgleich_all_kingdoms
+				}
+				country_event = {
+					id = ausgleich.new.312
+					days = 1
+				}
+			}
+			if= {
+				limit = {
+					has_country_flag = ausgleich_all_peoples
+				}
+				country_event = {
+					id = ausgleich.new.315
+					days = 1
+				}
 			}
 		}
 	}
@@ -704,9 +718,23 @@ country_event = { #Hungarian Demands - Reparation Payments
 		
 		set_country_flag = ausgleich_ILL_pays_HUN_pres
 		
-		country_event = {
-			id = ausgleich.new.312
-			days = 1
+		if= {
+			limit = {
+				has_country_flag = ausgleich_all_kingdoms
+			}
+			country_event = {
+				id = ausgleich.new.312
+				days = 1
+			}
+		}
+		if= {
+			limit = {
+				has_country_flag = ausgleich_all_peoples
+			}
+			country_event = {
+				id = ausgleich.new.315
+				days = 1
+			}
 		}
 	}
 	option = { # point out that they pay less taxes
@@ -727,9 +755,23 @@ country_event = { #Hungarian Demands - Reparation Payments
 					has_country_flag = ausgleich_just_hungary
 				}
 			}
-			country_event = {
-				id = ausgleich.new.312
-				days = 1
+			if= {
+				limit = {
+					has_country_flag = ausgleich_all_kingdoms
+				}
+				country_event = {
+					id = ausgleich.new.312
+					days = 1
+				}
+			}
+			if= {
+				limit = {
+					has_country_flag = ausgleich_all_peoples
+				}
+				country_event = {
+					id = ausgleich.new.315
+					days = 1
+				}
 			}
 		}
 	}
@@ -1054,6 +1096,47 @@ country_event = { #End of the Ausgleich - successful HUN only
 
 	option = { # Great
 		name = ausgleich.new.320.a
+		if = {
+			limit = {
+				has_country_flag = ausgleich_AUS_pays_HUN
+			}
+			HUN = {
+				country_event = {
+					id = ausgleich.new.323
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = ausgleich_ILL_pays_HUN_abs
+			}
+			HUN = {
+				country_event = {
+					id = ausgleich.new.324
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = ausgleich_give_HUN_Croatia
+			}
+			HUN = {
+				country_event = {
+					id = ausgleich.new.326
+					days = 1
+				}
+			}
+		}
+		else = {
+			HUN = {
+				country_event = {
+					id = ausgleich.new.325
+					days = 1
+				}
+			}
+		}
 		
 		add_political_power = 50
 	}
@@ -1101,6 +1184,12 @@ country_event = { #HUN: Reparaption payments for Cro-Sla by AUS
 
 	option = { # Good
 		name = ausgleich.new.323.a
+		AUS = {
+			country_event = {
+				id = ausgleich.new.330
+				days = 2
+			}
+		}
 	}
 }
 
@@ -1114,6 +1203,12 @@ country_event = { #HUN: Reparaption payments for Cro-Sla by ILL
 
 	option = { # Good
 		name = ausgleich.new.324.a
+		ILL = {
+			country_event = {
+				id = ausgleich.new.331
+				days = 2
+			}
+		}
 	}
 }
 
@@ -1140,6 +1235,15 @@ country_event = { #Au-Hu Route
 
 	option = { # Good to know.
 		name = ausgleich.new.326.a
+		
+		ILL = {
+			set_country_flag = HUN_outrageous_demands
+			
+			country_event = {
+				id = ausgleich.new.331
+				days = 2
+			}
+		}
 	}
 }
 
@@ -1192,8 +1296,14 @@ country_event = { #AUS: Reparaption payments for Cro-Sla
 	fire_only_once = yes
 	is_triggered_only = yes
 
-	option = { # Good to know.
+	option = { # Well, can't do a thing.
 		name = ausgleich.new.330.a
+		HUN = {
+			country_event = {
+				id = ausgleich.new.332
+				days = 2
+			}
+		}
 	}
 }
 
@@ -1205,8 +1315,39 @@ country_event = { #ILL: Reparaption payments for Cro-Sla
 	fire_only_once = yes
 	is_triggered_only = yes
 
-	option = { # Good to know.
+	option = { # Wait, what?
 		name = ausgleich.new.331.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 2
+				has_country_flag = HUN_outrageous_demands
+			}
+		}
+		
+		HUN = {
+			country_event = {
+				id = ausgleich.new.333
+				days = 2
+			}
+		}
+	}
+	option = { # If that has been decided...
+		name = ausgleich.new.331.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_country_flag = HUN_outrageous_demands
+			}
+		}
+		
+		HUN = {
+			country_event = {
+				id = ausgleich.new.334
+				days = 2
+			}
+		}
 	}
 }
 
@@ -1244,8 +1385,9 @@ country_event = { #HUN: ILL says WTF NO
 	fire_only_once = yes
 	is_triggered_only = yes
 
-	option = { # Good to know.
+	option = { # Well, let's do this then
 		name = ausgleich.new.334.a
+		ai_chance = { factor = 90 }
 		
 		declare_war_on = {
 			target = ILL
@@ -1254,6 +1396,7 @@ country_event = { #HUN: ILL says WTF NO
 	}
 	option = { # Well, can't do anything about it
 		name = ausgleich.new.334.b
+		ai_chance = { factor = 10 }
 	}
 }
 

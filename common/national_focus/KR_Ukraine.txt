@@ -1162,7 +1162,7 @@ focus = {
 
 focus = {
 		id = UKR_Newforpol
-		icon = GFX_goal_unknown
+		icon = GFX_goal_liberty
 		prerequisite = {}
 		available = { OR = { has_completed_focus = UKR_Explosion_Dnieper has_completed_focus = UKR_Syn_Rev } }		
 		x = 30
@@ -1177,10 +1177,18 @@ focus = {
 
 focus = {
 		id = UKR_Ties_Germany
-		icon = GFX_goal_unknown
+		icon = GFX_goal_germany
 		prerequisite = { focus = UKR_Newforpol }
 		mutually_exclusive = { focus = UKR_Fra_cooperation focus = UKR_is_alone focus = UKR_RUS_friendship }				
-		available = {}		
+		available = {
+		has_completed_focus = UKR_Explosion_Dnieper		
+		is_in_faction_with = GER
+		has_war = no 
+		is_subject = no 
+		NOT = {
+		has_country_flag = UKR_VIN_POWER
+		} 		
+		}		
 		x = 26
 		y = 7
 		cost = 10
@@ -1195,9 +1203,13 @@ focus = {
 
 focus = {
 		id = UKR_Gerukr_army
-		icon = GFX_goal_unknown
+		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = UKR_Ties_Germany }
-		available = {}		
+		available = {
+		is_in_faction_with = GER
+		has_war = no 
+		is_subject = no 
+		}		
 		x = 26
 		y = 8
 		cost = 10
@@ -1212,9 +1224,13 @@ focus = {
 
 focus = {
 		id = UKR_Ostwall_focus
-		icon = GFX_goal_unknown
+		icon = GFX_goal_generic_construct_military
 		prerequisite = { focus = UKR_Gerukr_army }
-		available = {}		
+		available = {
+		is_in_faction_with = GER
+		has_war = no 
+		is_subject = no  			
+		}		
 		x = 26
 		y = 9
 		cost = 10
@@ -1278,11 +1294,18 @@ focus = {
 
 focus = {
 		id = UKR_is_alone
-		icon = GFX_goal_unknown
+		icon = GFX_goal_ukraine
 		prerequisite = { focus = UKR_Newforpol }
 		mutually_exclusive = { focus = UKR_Fra_cooperation focus = UKR_RUS_friendship focus = UKR_Ties_Germany  }		
 		
-		available = {}		
+		available = {
+		has_war = no 
+		is_subject = no 
+		OR = {
+		has_completed_focus = UKR_Syn_Rev 
+		has_completed_focus = UKR_Explosion_Dnieper
+		}
+		}		
 		x = 29
 		y = 7
 		cost = 10
@@ -1291,13 +1314,15 @@ focus = {
 		}
 		completion_reward = {
 		add_ideas = UKR_Splendid_Isolation
-		add_political_power = 60			
+		add_political_power = 60
+		GER = { remove_from_faction = UKR }
+		hidden_effect = { GER = { country_event = { days = 4 id = ukraine.74 }}}			
 		}
 	}
 
 focus = {
 		id = UKR_Bessarabia_claim
-		icon = GFX_goal_unknown
+		icon = GFX_goal_generic_territory_or_war
 		prerequisite = { focus = UKR_is_alone focus = UKR_RUS_friendship }
 		available = { 
 		has_war = no 
@@ -1326,9 +1351,15 @@ focus = {
 
 focus = {
 		id = UKR_Mozyr_claim
-		icon = GFX_goal_unknown
+		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = UKR_Bessarabia_claim }
-		available = {}		
+		available = {
+		has_war = no 
+		is_subject = no 
+		NOT = { 
+		is_in_faction_with = WHR 
+		}
+		}				
 		x = 29
 		y = 9
 		cost = 10
@@ -1342,83 +1373,25 @@ focus = {
 	}	
 	
 focus = {
-		id = UKR_Fra_cooperation
-		icon = GFX_goal_unknown
-		prerequisite = { focus = UKR_Newforpol }
-		mutually_exclusive = { focus = UKR_RUS_friendship focus = UKR_is_alone focus = UKR_Ties_Germany  }		
-		
-		available = {}		
-		x = 34
-		y = 7
-		cost = 10
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-		FRA = { country_event = { days = 1 id = ukraine.33 }}
-		add_political_power = 80			
-		}
-	}
-
-focus = {
-		id = UKR_Fra_alliance
-		icon = GFX_goal_unknown
-		prerequisite = { focus = UKR_Fra_cooperation }
-		available = {}		
-		x = 34
-		y = 8
-		cost = 10
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-		FRA = { country_event = { days = 1 id = ukraine.37 }}
-		add_political_power = 40		
-		}
-	}
-
-focus = {
-		id = UKR_Fra_claims
-		icon = GFX_goal_unknown
-		prerequisite = { focus = UKR_Fra_alliance }
-		available = {}		
-		x = 34
-		y = 9
-		cost = 10
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-		add_political_power = 40
-		add_state_core = 194
-		add_state_core = 204
-		add_state_core = 91
-		add_state_core = 89
-		add_state_core = 80
-		add_state_core = 78		
-		}
-	}
-
-focus = {
 		id = UKR_RUS_friendship
-		icon = GFX_goal_unknown
+		icon = GFX_goal_russia 
 		prerequisite = { focus = UKR_Newforpol }
 		mutually_exclusive = { focus = UKR_Fra_cooperation focus = UKR_is_alone focus = UKR_Ties_Germany  }			
 		
 		available = {
+		has_completed_focus = UKR_Explosion_Dnieper
 		has_war = no 
 		is_subject = no 		
 		country_exists = RUS
 		RUS = { 
 		is_subject = no 
 		NOT = {
-		OR = {
 		has_country_flag = RUS_BUKH			
 		is_in_faction_with = GER 
 		}
 		}
-		}
 		NOT = {
+			has_country_flag = UKR_OUN_POWER			
 			country_exists = SIB
 			country_exists = SOV
 			has_war_with = RUS
@@ -1438,9 +1411,17 @@ focus = {
 
 focus = {
 		id = UKR_RUS_Galicia
-		icon = GFX_goal_unknown
+		icon = GFX_focus_generic_strike_at_democracy1
 		prerequisite = { focus = UKR_Bessarabia_claim }
-		available = {}		
+		available = {
+		has_war = no 
+		is_subject = no 
+		NOT = { 
+		is_in_faction_with = POL 
+		is_in_faction_with = GAL
+		is_in_faction_with = AUS		
+		}		
+		}		
 		x = 31
 		y = 9
 		cost = 10
@@ -1452,4 +1433,69 @@ focus = {
 		add_state_core = 89	
 		add_state_core = 80		
 		}
-	}	
+	}		
+	
+focus = {
+		id = UKR_Fra_cooperation
+		icon = GFX_goal_comfrance
+		prerequisite = { focus = UKR_Newforpol }
+		mutually_exclusive = { focus = UKR_RUS_friendship focus = UKR_is_alone focus = UKR_Ties_Germany  }		
+		
+		available = {
+		has_war = no 
+		is_subject = no 		
+		has_completed_focus = UKR_Syn_Rev
+		NOT = {
+		is_in_faction_with = GER
+		}	
+		}	
+		x = 34
+		y = 7
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		FRA = { country_event = { days = 1 id = ukraine.33 }}
+		add_political_power = 80			
+		}
+	}
+
+focus = {
+		id = UKR_Fra_alliance
+		icon = GFX_goal_totalism
+		prerequisite = { focus = UKR_Fra_cooperation }
+		available = {}		
+		x = 34
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		FRA = { country_event = { days = 1 id = ukraine.37 }}
+		add_political_power = 40		
+		}
+	}
+
+focus = {
+		id = UKR_Fra_claims
+		icon = GFX_goal_national_mobilization
+		prerequisite = { focus = UKR_Fra_alliance }
+		available = {}		
+		x = 34
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		add_political_power = 40
+		add_state_core = 194
+		add_state_core = 204
+		add_state_core = 91
+		add_state_core = 89
+		add_state_core = 80
+		add_state_core = 78		
+		}
+	}

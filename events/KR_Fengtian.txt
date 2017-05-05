@@ -10,6 +10,7 @@ add_namespace = fengtian
 add_namespace = fengtian.informalempire
 add_namespace = fengtian.new
 add_namespace = fngwar
+add_namespace = fngpolitic
 
 country_event = { # Zhang Zuolin's decision
 	id = fengtian.1
@@ -898,7 +899,6 @@ country_event = { # Japan has removed support from our country
 
 		add_manpower = -20000
 
-		hidden_effect = { FNG = { country_event = { id = fengtian.24 days = 1 }}}
 	}
 }
 
@@ -5309,6 +5309,9 @@ country_event = { #shanhaiguan setup successful
 	trigger = {
 		tag = FNG
 		has_global_flag = shanhaiguan_successful
+		NOT = {
+			has_completed_focus = FNG_Begin_the_War_of_National_Reclamation
+		}
 	}
 	
 	mean_time_to_happen = {
@@ -5746,8 +5749,357 @@ country_event = { #Repeating Mantetsu Influence
 		}
 	}
 }
+
+### Political Tree Branch Events###
+
+# Courting the Grand Marshal's Favour #
+
+country_event = { #Courting the Grand Marshal's Favour
+	id = fengtian.new.122
+	title = fengtian.new.122.t
+	desc = fengtian.new.122.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.122.a
+	}
+}
+
+# Constitutional Branch #
+
+country_event = { #Reorganizing the Legislative Polity
+	id = fengtian.new.123
+	title = fengtian.new.123.t
+	desc = fengtian.new.123.desc
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = { #Choose the Recovery League
+		name = fengtian.new.123.a
+		set_country_flag = recovery_league_favor
+		add_political_power = 20
+	}
+	
+	option = { #Choose the Communications Clique
+		name = fengtian.new.123.b
+		set_country_flag = communications_clique_favor
+		add_political_power = 30
+	}
+	
+	option = { #Choose the Zhang Clique
+		name = fengtian.new.123.c
+		set_country_flag = zhang_clique_favor
+		add_political_power = 30
+	}
+	
+	option = { #Choose the Concordia Association
+		name = fengtian.new.123.d
+		set_country_flag = concordia_association_favor
+		add_political_power = -30
+	}
+}
+
+country_event = { #Entrust the Assembly
+	id = fengtian.new.124
+	title = fengtian.new.124.t
+	desc = fengtian.new.124.d
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = fengtian.new.124
+		#WORKPOINT
+	}
+}
 	
 	
+	
+#############################################
+### Fengtian Political Influence Mechanic ###
+#############################################
+
+# Recovery League/Auth Dem #
+country_event = { #Authdem Popularity Low
+	id = fngpolitic.1
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = authdem_pop_low
+		}
+		authoritarian_democrat > 0.00
+		authoritarian_democrat < 0.25
+	}
+	
+	immediate = {
+		set_country_flag = authdem_pop_low
+		clr_country_flag = authdem_pop_medium
+		clr_country_flag = authdem_pop_high
+	}
+}
+
+country_event = { #Authdem Popularity Medium
+	id = fngpolitic.2
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = authdem_pop_medium
+		}
+		authoritarian_democrat > 0.25
+		authoritarian_democrat < 0.50
+	}
+	
+	immediate = {
+		set_country_flag = authdem_pop_medium
+		clr_country_flag = authdem_pop_low
+		clr_country_flag = authdem_pop_high
+	}
+}
+
+country_event = { #Authdem Popularity High
+	id = fngpolitic.3
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = authdem_pop_high
+		}
+		authoritarian_democrat > 0.50
+		authoritarian_democrat < 1.00
+	}
+	
+	immediate = {
+		set_country_flag = authdem_pop_high
+		clr_country_flag = authdem_pop_low
+		clr_country_flag = authdem_pop_medium
+	}
+}
+
+# Zhang Clique/ Pat Aut #
+
+country_event = { #Pat Aut Popularity Low
+	id = fngpolitic.4
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = pataut_pop_low
+		}
+		paternal_autocrat > 0.00
+		paternal_autocrat < 0.25
+	}
+	
+	immediate = {
+		set_country_flag = pataut_pop_low
+		clr_country_flag = pataut_pop_medium
+		clr_country_flag = pataut_pop_high
+	}
+}
+
+country_event = { #Pataut Popularity Medium
+	id = fngpolitic.5
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = pataut_pop_medium
+		}
+		paternal_autocrat > 0.25
+		paternal_autocrat < 0.50
+	}
+	
+	immediate = {
+		set_country_flag = pataut_pop_medium
+		clr_country_flag = pataut_pop_low
+		clr_country_flag = pataut_pop_high
+	}
+}
+
+country_event = { #Pataut Popularity High
+	id = fngpolitic.6
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = Pataut_pop_high
+		}
+		paternal_autocrat > 0.50
+		paternal_autocrat < 1.00
+	}
+	
+	immediate = {
+		set_country_flag = pataut_pop_high
+		clr_country_flag = pataut_pop_low
+		clr_country_flag = pataut_pop_medium
+	}
+}
+
+# Communications Clique/Soc Con #
+
+country_event = { #Soccon Popularity Low
+	id = fngpolitic.7
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = soccon_pop_low
+		}
+		social_conservative > 0.00
+		social_conservative < 0.25
+	}
+	
+	immediate = {
+		set_country_flag = soccon_pop_low
+		clr_country_flag = soccon_pop_medium
+		clr_country_flag = soccon_pop_high
+	}
+}
+
+country_event = { #Soccon Popularity Medium
+	id = fngpolitic.8
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = soccon_pop_medium
+		}
+		social_conservative > 0.25
+		social_conservative < 0.50
+	}
+	
+	immediate = {
+		set_country_flag = soccon_pop_medium
+		clr_country_flag = soccon_pop_low
+		clr_country_flag = soccon_pop_high
+	}
+}
+
+country_event = { #Soccon Popularity High
+	id = fngpolitic.9
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = authdem_pop_high
+		}
+		social_conservative > 0.50
+		social_conservative < 1.00
+	}
+	
+	immediate = {
+		set_country_flag = soccon_pop_high
+		clr_country_flag = soccon_pop_low
+		clr_country_flag = soccon_pop_medium
+	}
+}
+
+# Concordia Association/Mark Lib #
+
+country_event = { #Marklib Popularity Low
+	id = fngpolitic.10
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = marklib_pop_low
+		}
+		market_liberal > 0.00
+		market_liberal < 0.25
+	}
+	
+	immediate = {
+		set_country_flag = marklib_pop_low
+		clr_country_flag = marklib_pop_medium
+		clr_country_flag = marklib_pop_high
+	}
+}
+
+country_event = { #Marklib Popularity Medium
+	id = fngpolitic.8
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = marklib_pop_medium
+		}
+		market_liberal > 0.25
+		market_liberal < 0.50
+	}
+	
+	immediate = {
+		set_country_flag = marklib_pop_medium
+		clr_country_flag = marklib_pop_low
+		clr_country_flag = marklib_pop_high
+	}
+}
+
+country_event = { #Marklib Popularity High
+	id = fngpolitic.11
+	
+	hidden = yes
+	
+	trigger = {
+		tag = fng
+		NOT = {
+			has_country_flag = marklib_pop_high
+		}
+		market_liberal > 0.50
+		market_liberal < 1.00
+	}
+	
+	immediate = {
+		set_country_flag = marklib_pop_high
+		clr_country_flag = marklib_pop_low
+		clr_country_flag = marklib_pop_medium
+	}
+}
+
 #########################################
 ### Fengtian Informal Empire Mechanic ###
 #########################################
@@ -6378,7 +6730,7 @@ country_event = { # Legation Pre-War
 		}
 		create_wargoal = { 
 			type = annex_everything
-			target = LEG
+			target = LEC
 		}
 	}
 	

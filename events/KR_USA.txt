@@ -2592,7 +2592,6 @@ country_event = { # Hughes shoots down propoganda blimp
 		country_event = { id = amcivwar.4 days = 6}
 		}
 	}
-
 	option = {
 		name = ustates.79.b
 
@@ -6354,7 +6353,7 @@ country_event = {
 			USA_Harry_S_Truman_hog_sli
 			USA_Alben_W_Barkley_for_sli
 			USA_Henry_J_Kaiser_eco_sli
-			USA_Hugh_Simons_Gibson_sec_mli
+			USA_James_Farley_sec_sli
 		}
 	}
 }
@@ -7343,6 +7342,1356 @@ country_event = {
 		add_opinion_modifier = { target = CGL modifier = CGL_NO_JOIN_FACTION } # -25
 		add_opinion_modifier = { target = USA modifier = CGL_NO_JOIN_FACTION_USA } # 10
 	}
+}
+######################################
+#	  Curtis victory Elections       #
+######################################
+country_event = {# First election for Curtis
+	id = ustates.217
+	title = ustates.217.t
+    desc = {# Curtis died
+        text = ustates.217.d.dead_curtis
+        trigger = {
+			has_global_flag = END_ACW
+			has_global_flag = Charles_Curtis_dead
+		}
+    }
+    desc = {# Civil war broke out
+        text = ustates.217.d.civil_war
+        trigger = {
+			has_global_flag = END_ACW
+			NOT = { has_global_flag = Charles_Curtis_dead }			
+		}
+    }
+    desc = {# No civil war
+        text = ustates.217.d.no_war
+        trigger = { has_global_flag = civil_war_avoided }
+    }	
+	picture = congress
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_completed_focus = USA_president_curtis		
+		OR = {
+			has_completed_focus = USA_reconstruction
+			AND = {
+				has_global_flag = END_ACW
+				date > 1940.11.3
+				date < 1940.12.5
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = { set_country_flag = ustates217 }
+	
+	option = {# Elect Roosevelt
+		name = ustates.217.a
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Quentin Roosevelt"
+			desc = "QUENTIN_ROOSEVELT_DESC"
+			picture = "Portrait_USA_quentin_roosevelt.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		country_event = { id = ustates.218 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Fiorello_H_La_Guardia_hog_sde
+			USA_Robert_A_Taft_for_mli
+			USA_George_W_Norris_eco_sde
+			USA_Oveta_Culp_Hobby_sec_sde
+		}
+		set_country_flag = USA_quentin_elected	
+	}
+	option = {# go with Garner!
+		name = ustates.217.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.218 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Cordell_Hull_for_sli
+			USA_Harry_H_Woodring_eco_sli
+			USA_Fred_M_Vinson_sec_sli
+		}
+		set_country_flag = USA_garner_curtis	
+	}
+}
+country_event = {# Second election for Curtis
+	id = ustates.218
+	title = ustates.218.t
+    desc = {# Quentin Roosevelt was elected
+        text = ustates.218.d.roosevelt_reelection
+        trigger = {
+			has_global_flag = END_ACW
+			has_global_flag = Charles_Curtis_dead
+		}
+    }
+    desc = {# Garner was elected
+        text = ustates.218.d.garner_reelection
+        trigger = {
+			has_country_flag = USA_quentin_elected
+			has_country_flag = USA_garner_curtis
+		}
+    }	
+	picture = congress
+
+	is_triggered_only = yes
+
+	option = {# Re-elect Quentin Roosevelt
+		name = ustates.218.a
+        trigger = {	has_country_flag = USA_quentin_elected }
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Quentin Roosevelt"
+			desc = "QUENTIN_ROOSEVELT_DESC"
+			picture = "Portrait_USA_quentin_roosevelt.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		country_event = { id = ustates.219 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Fiorello_H_La_Guardia_hog_sde
+			USA_Robert_A_Taft_for_mli
+			USA_George_W_Norris_eco_sde
+			USA_Oveta_Culp_Hobby_sec_sde
+		}
+		set_country_flag = USA_quentin_elected2	
+	}
+	option = {# Re-elect John Nancy Garner
+		name = ustates.218.b
+        trigger = {	has_country_flag = USA_garner_curtis }	
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.219 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Cordell_Hull_for_sli
+			USA_Harry_H_Woodring_eco_sli
+			USA_Fred_M_Vinson_sec_sli
+		}
+		set_country_flag = USA_garner_curtis2
+	}
+	option = {# Go with Robert Taft
+		name = ustates.218.c
+        trigger = {	has_country_flag = USA_garner_curtis }
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.219 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+		set_country_flag = USA_curtis_garner_taft
+	}
+	option = {# Go with Cordell Hull
+		name = ustates.218.d
+        trigger = {	has_country_flag = USA_quentin_elected }		
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.219 days = 1480 }					
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+		set_country_flag = USA_curtis_hall
+	}	
+}
+country_event = {# Third Election for Curtis
+	id = ustates.219
+	title = ustates.219.t
+    desc = {# Quentin Roosevelt Was Re-elected
+        text = ustates.219.d.roosevelt_reelected
+        trigger = {	has_country_flag = USA_quentin_elected2 }
+    }
+    desc = {# Robert Taft was Elected
+        text = ustates.219.d.taft_elected
+        trigger = {	has_country_flag = USA_curtis_garner_taft}
+    }
+    desc = {# Garner was Re-elected
+        text = ustates.219.d.garner_reelected
+        trigger = {	has_country_flag = USA_garner_curtis2 }
+    }
+    desc = {# Cordell Hull was elected
+        text = ustates.219.d.hull_elected
+        trigger = {	has_country_flag = USA_curtis_hall }
+    }		
+	picture = congress
+
+	is_triggered_only
+
+	option = {# Go with Thomas Dewey
+		name = ustates.219.a
+        trigger = {
+			OR = {
+				has_country_flag = USA_curtis_hall
+				has_country_flag = USA_quentin_elected2	
+			}
+		}				
+		ai_chance = {
+			factor = 90
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Henry_A_Wallace_hog_sde
+			USA_Patrick_J_Hurley_for_sde
+			USA_Melville_Clyde_Kelly_eco_sde
+			USA_Clifford_P_Case_sec_sde
+		}
+		set_country_flag = USA_quentin_elected	
+	}
+	option = {# Re-elect Robert Taft
+		name = ustates.219.b
+        trigger = {
+			OR = {
+				has_country_flag = USA_curtis_garner_taft
+				has_country_flag = USA_curtis_hall	
+			}
+		}		
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.101 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+		set_country_flag = USA_garner_curtis	
+	}
+	option = {# Go with Alben W. Barkley
+		name = ustates.219.c
+        trigger = {
+			OR = {
+				has_country_flag = USA_garner_curtis2
+				has_country_flag = USA_quentin_elected2	
+			}
+		}			
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Alben W. Barkley"
+			desc = "ALBEN_BARKLEY_DESC"
+			picture = "Portrait_USA_Alben_Barkley.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_James_Farley_hog_sli
+			USA_Edward_Stettinius_Jr_for_sli
+			USA_Fred_M_Vinson_eco_sli
+			USA_Edward_Stettinius_Jr_sec_sli
+		}
+	}
+	option = {# Re-elect Hull
+		name = ustates.219.e
+        trigger = {
+			OR = {
+				has_country_flag = USA_curtis_hall
+				has_country_flag = USA_curtis_garner_taft	
+			}
+		}			
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+	}	
+}
+######################################
+#	  Garner victory Elections       #
+######################################
+country_event = {# First election for Garner
+	id = ustates.220
+	title = ustates.220.t
+	desc = ustates.220.d
+	picture = congress
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_completed_focus = USA_president_garner
+		has_completed_focus = USA_reconstruction
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}	
+	
+	option = {# Go with Thomas Dewey
+		name = ustates.220.a
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.220 days = 1480 }				
+		}
+		add_ideas = {
+			USA_Henry_A_Wallace_hog_sde
+			USA_John_Foster_Dulles_for_sde
+			USA_Bronson_M_Cutting_eco_sde
+			USA_Allen_Dulles_sec_sde
+		}
+		set_country_flag = USA_garner_dewey	
+	}
+	option = {# Re-elect Garner
+		name = ustates.220.b
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.220 days = 1480 }				
+		
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Cordell_Hull_for_sli
+			USA_Harry_H_Woodring_eco_sli
+			USA_Fred_M_Vinson_sec_sli
+		}
+		set_country_flag = USA_garner_garner
+	}
+}
+country_event = {# Second election for Garner
+	id = ustates.221
+	title = ustates.221.t
+    desc = {# Thomas Dewey was elected
+        text = ustates.221.d.dewey_elected
+        trigger = {	has_country_flag = USA_garner_dewey }
+    }
+    desc = {# Garner was re-electe again
+        text = ustates.221.d.garner_elected
+        trigger = {	has_country_flag = USA_garner_garner }
+    }	
+	picture = congress
+
+	is_triggered_only
+
+	option = {# Re-Elect Thomas Dewey
+		name = ustates.221.a
+        trigger = {	has_country_flag = USA_garner_dewey }		
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.222 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Henry_A_Wallace_hog_sde
+			USA_John_Foster_Dulles_for_sde
+			USA_Bronson_M_Cutting_eco_sde
+			USA_Allen_Dulles_sec_sde
+		}
+		set_country_flag = USA_garner_dewey2	
+	}
+	option = {# Go with Robert Taft
+		name = ustates.221.b
+        trigger = {	has_country_flag = USA_garner_garner }				
+		ai_chance = {
+			factor = 40
+		}
+			add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.222 days = 1480 }							
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+		set_country_flag = USA_garner_taft		
+	}	
+	option = {# Re-elect Garner, again
+		name = ustates.221.b
+        trigger = {	has_country_flag = USA_garner_garner }						
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.222 days = 1480 }				
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Cordell_Hull_for_sli
+			USA_Harry_H_Woodring_eco_sli
+			USA_Fred_M_Vinson_sec_sli
+		}
+		set_country_flag = USA_garner_garner2
+	}
+	option = {# Go with Cordell Hull
+		name = ustates.221.b
+        trigger = {	has_country_flag = USA_garner_dewey }				
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.222 days = 1480 }							
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+		set_country_flag = USA_garner_hull	
+	}	
+}
+country_event = {# Third election for Garner
+	id = ustates.222
+	title = ustates.222.t
+    desc = {# Thomas Dewey was re-elected
+        text = ustates.222.d.dewey_reelected
+        trigger = {	has_country_flag = USA_garner_dewey2 }
+    }
+    desc = {# Garner was re-elected again
+        text = ustates.222.d.garner_again
+        trigger = {	has_country_flag = USA_garner_garner2 }
+    }
+    desc = {# Robert Taft was elected
+        text = ustates.222.d.taft_elected
+        trigger = {	has_country_flag = USA_garner_taft }
+    }
+    desc = {# Hull was elected
+        text = ustates.222.d.hull_elected
+        trigger = {	has_country_flag = USA_garner_hull }
+    }	
+	picture = congress
+
+	is_triggered_only
+
+	option = {# Go with Frank Knox
+		name = ustates.222.a
+        trigger = {
+			OR = {
+				has_country_flag = USA_garner_dewey2
+				has_country_flag = USA_garner_garner2	
+			}
+		}		
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.15
+		}		
+		create_country_leader = {
+			name = "Frank Knox"
+			desc = "KNOX_DESC"
+			picture = "Portrait_USA_Frank_Knox.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Henry_A_Wallace_hog_sde
+			USA_John_Bassett_Moore_for_mli
+			USA_Alfred_E_Smith_eco_mli
+			USA_Owen_Roberts_sec_mli
+		}
+	}
+	option = {# Re-elect Robert Taft
+		name = ustates.222.b
+        trigger = {
+			OR = {
+				has_country_flag = USA_garner_taft
+				has_country_flag = USA_garner_hull	
+			}
+		}		
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+	}	
+	option = {# Go with Alben W. Barkley
+		name = ustates.222.c
+       trigger = {
+			OR = {
+				has_country_flag = USA_garner_dewey2
+				has_country_flag = USA_garner_garner2	
+			}
+		}		
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Alben W. Barkley"
+			desc = "ALBEN_BARKLEY_DESC"
+			picture = "Portrait_USA_Alben_Barkley.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_James_Farley_hog_sli
+			USA_Edward_Stettinius_Jr_for_sli
+			USA_Fred_M_Vinson_eco_sli
+			USA_J_Edgar_Hoover_sec_ade
+		}
+	}
+	option = {# Re-elect Cordell Hull
+		name = ustates.222.e
+       trigger = {
+			OR = {
+				has_country_flag = USA_garner_taft
+				has_country_flag = USA_garner_hull	
+			}
+		}			
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+	}
+}
+######################################
+#   MacArthur democratic Elections   #
+######################################
+country_event = {# First election for American Cincinnatus
+	id = ustates.223
+	title = ustates.223.t
+	desc = ustates.223.d
+	picture = congress
+
+	is_triggered_only
+
+	option = {# Alben W. Barkley(democrats)
+		name = ustates.223.a
+		ai_chance = {
+			factor = 40
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Alben W. Barkley"
+			desc = "ALBEN_BARKLEY_DESC"
+			picture = "Portrait_USA_Alben_Barkley.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.224 days = 1480 }						
+		}
+		add_ideas = {
+			USA_James_Farley_hog_sli
+			USA_Edward_Stettinius_Jr_for_sli
+			USA_Fred_M_Vinson_eco_sli
+			USA_Edward_Stettinius_Jr_sec_sli
+		}
+		set_country_flag = USA_macarthur_barkley	
+	
+	}
+	option = {# Quentin Roosevelt(Republican
+		name = ustates.223.b
+		ai_chance = {
+			factor = 60
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Quentin Roosevelt"
+			desc = "QUENTIN_ROOSEVELT_DESC"
+			picture = "Portrait_USA_quentin_roosevelt.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		country_event = { id = ustates.224 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Fiorello_H_La_Guardia_hog_sde
+			USA_Robert_A_Taft_for_mli
+			USA_George_W_Norris_eco_sde
+			USA_Oveta_Culp_Hobby_sec_sde
+		}
+		set_country_flag = USA_macarthur_quentin	
+	}
+}
+country_event = {# Second election for American Cincinnatus
+	id = ustates.224
+	title = ustates.219.t
+    desc = {# Alben W. Barkley was elected
+        text = ustates.224.d.barkley_elected
+        trigger = {	has_country_flag = USA_macarthur_barkley }
+    }
+    desc = {# Quentin Roosevelt was elected
+        text = ustates.224.d.roosevelt_elected
+        trigger = {	has_country_flag = USA_macarthur_quentin }
+    }
+	picture = congress
+	
+	is_triggered_only
+
+	option = {# Re-elect Alben Barkley
+		name = ustates.224.a
+        trigger = {	has_country_flag = USA_macarthur_barkley }
+		ai_chance = {
+			factor = 80
+		}		
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Alben W. Barkley"
+			desc = "ALBEN_BARKLEY_DESC"
+			picture = "Portrait_USA_Alben_Barkley.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.225 days = 1480 }				
+		}
+		add_ideas = {
+			USA_James_Farley_hog_sli
+			USA_Edward_Stettinius_Jr_for_sli
+			USA_Fred_M_Vinson_eco_sli
+			USA_Edward_Stettinius_Jr_sec_sli
+		}
+		set_country_flag = USA_macarthur_barkley2	
+	}
+	option = {# Re-elect Quentin Roosevelt
+		name = ustates.224.b
+        trigger = {	has_country_flag = USA_macarthur_quentin }
+		ai_chance = {
+			factor = 80
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Quentin Roosevelt"
+			desc = "QUENTIN_ROOSEVELT_DESC"
+			picture = "Portrait_USA_quentin_roosevelt.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		country_event = { id = ustates.225 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Fiorello_H_La_Guardia_hog_sde
+			USA_Robert_A_Taft_for_mli
+			USA_George_W_Norris_eco_sde
+			USA_Oveta_Culp_Hobby_sec_sde
+		}
+		set_country_flag = USA_macarthur_quentin2	
+	}
+	option = {# Elect Cordell Hull
+		name = ustates.224.a
+        trigger = {	has_country_flag = USA_macarthur_quentin }
+		
+		ai_chance = {
+			factor = 20
+		}
+		add_political_power = 50
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.25
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = { retire_country_leader = yes }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.225 days = 1480 }				
+		
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+		set_country_flag = USA_macarthur_hull
+	}
+	option = {# Elect Robert Taft
+		name = ustates.224.b
+        trigger = {	has_country_flag = USA_macarthur_barkley }		
+		ai_chance = {
+			factor = 30
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+			country_event = { id = ustates.225 days = 1480 }		
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+		set_country_flag = USA_macarthur_taft	
+	}
+	
+}
+country_event = {# Third election for American Cincinnatus
+	id = ustates.225
+	title = ustates.225.t
+    desc = {# Roosevelt was reelected
+        text = ustates.225.d.roosevelt_reelected
+        trigger = {	has_country_flag = USA_macarthur_quentin2 }
+    }
+    desc = {# Alben Barkley was re-elected again
+        text = ustates.225.d.barkley_reelected
+        trigger = {	has_country_flag = USA_macarthur_barkley2 }
+    }
+    desc = {# Robert Taft was elected
+        text = ustates.225.d.taft_elected
+        trigger = {	has_country_flag = USA_garner_taft }
+    }
+    desc = {# Hull was elected
+        text = ustates.225.d.hull_elected
+        trigger = {	has_country_flag = USA_macarthur_hull }
+    }	picture = congress
+	
+	is_triggered_only
+
+	option = {# Elect William Averell Harriman
+		name = ustates.225.a
+        trigger = {
+			OR = {
+				has_country_flag = USA_macarthur_taft
+				has_country_flag = USA_macarthur_barkley2	
+			}
+		}		
+		ai_chance = {
+			factor = 70
+		}
+		add_political_power = 50
+		add_popularity = {
+			ideology = Social_liberal
+			popularity = 0.25
+		}
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		hidden_effect = { retire_country_leader = yes }
+		create_country_leader = {
+			name = "William A. Harriman"
+			desc = "WILLIAM_HARRIMAN_DESC"
+			picture = "Portrait_USA_Averell_Harriman.dds"
+			expire = "1965.1.1"
+			ideology = Social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_James_Farley_hog_sli
+			USA_Edward_Stettinius_Jr_for_sli
+			USA_Harry_H_Woodring_eco_sli
+			USA_Francis_Biddle_sec_sli
+		}
+	}
+	option = {# Elect Thomas Dewey
+		name = ustates.225.b
+        trigger = {
+			OR = {
+				has_country_flag = USA_macarthur_quentin2
+				has_country_flag = USA_macarthur_hull	
+			}
+		}		
+		ai_chance = {
+			factor = 30
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.2
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.1
+		}
+		create_country_leader = {
+			name = "Thomas Dewey"
+			desc = "THOMAS_DEWEY_DESC"
+			picture = "Portrait_USA_Thomas_Dewey.tga"
+			expire = "1965.1.1"
+			ideology = social_democrat_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = social_democrat elections_allowed = no }
+		hidden_effect = {
+		remove_ideas_with_trait = head_of_government
+		remove_ideas_with_trait = foreign_minister
+		remove_ideas_with_trait = economy_minister
+		remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Henry_A_Wallace_hog_sde
+			USA_Patrick_J_Hurley_for_sde
+			USA_Melville_Clyde_Kelly_eco_sde
+			USA_Clifford_P_Case_sec_sde
+		}
+		set_country_flag = USA_quentin_elected	
+	}
+	option = {# Re-elect Cordell Hull
+		name = ustates.225.a
+        trigger = {
+			OR = {
+				has_country_flag = USA_macarthur_quentin2
+				has_country_flag = USA_macarthur_taft	
+			}
+		}			
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 40
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = social_liberal
+			popularity = 0.1
+		}		
+		set_politics = { ruling_party = social_liberal elections_allowed = no }
+		create_country_leader = {
+			name = "Cordell Hull"
+			desc = "CORDELL_HULL_DESC"
+			picture = "Portrait_USA_Cordel_Hull.tga"
+			expire = "1965.1.1"
+			ideology = social_liberal_subtype
+			traits = {}
+		}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Harry_S_Truman_hog_sli
+			USA_Alben_W_Barkley_for_sli
+			USA_Henry_J_Kaiser_eco_sli
+			USA_James_Farley_sec_sli
+		}
+	}
+	option = {# Re-Elect Robert Taft
+		name = ustates.225.b
+        trigger = {
+			OR = {
+				has_country_flag = USA_macarthur_hull
+				has_country_flag = USA_macarthur_taft	
+			}
+		}
+		ai_chance = {
+			factor = 30
+		}
+		add_political_power = 100
+		add_popularity = {
+			ideology = social_democrat
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = market_liberal
+			popularity = 0.2
+		}
+		create_country_leader = {
+			name = "Robert Taft"
+			desc = "ROBERT_TAFT_DESC"
+			picture = "Portrait_USA_Robert_taft.tga"
+			expire = "1965.1.1"
+			ideology = market_liberal_subtype
+			traits = {}
+		}
+		set_politics = { ruling_party = market_liberal elections_allowed = no }
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			remove_ideas_with_trait = foreign_minister
+			remove_ideas_with_trait = economy_minister
+			remove_ideas_with_trait = security_minister
+		}
+		add_ideas = {
+			USA_Frederick_Steiwer_hog_mli
+			USA_Frank_Knox_for_mli
+			USA_John_J_McCloy_eco_mli
+			USA_Hugh_Simons_Gibson_sec_mli
+		}
+	}	
 }
 ######################################################
 #Question about PSA:

@@ -1425,8 +1425,10 @@ country_event = {
 	
 	option = {
 		name = sprc.1.a #We shall fight them!
-		custom_effect_tooltip = SPR_reinforce_madrid
-		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
+		if = {
+			limit = { is_ai = yes }
+			load_oob = SCW_SPR_reinforce1
+		}
 		CAR = {
 			country_event = { id = sprc.2 days = 7 }
 		}
@@ -1434,8 +1436,10 @@ country_event = {
 	option = {
 		name = sprc.1.b #Long live Javier I! (Play as the Carlists)
 		trigger = { is_ai = no }
-		custom_effect_tooltip = SPR_reinforce_madrid
-		hidden_effect = { load_oob = SCW_SPR_reinforce1 }
+		if = {
+			limit = { is_ai = yes }
+			load_oob = SCW_SPR_reinforce1
+		}
 		CAR = {
 			country_event = { id = sprc.2 days = 7 }
 			change_tag_from = SPR
@@ -1557,8 +1561,10 @@ country_event = {
 	option = {
 		name = sprc.3.a #We shall fight to stop this revolution!
 		set_global_flag = cntfai_risen
-		custom_effect_tooltip = SPR_reinforce_madrid
-		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
+		if = {
+			limit = { is_ai = yes }
+			load_oob = SCW_SPR_reinforce2
+		}
 		CNT = {
 			country_event = { id = sprc.4 days = 7 }
 		}
@@ -1566,8 +1572,10 @@ country_event = {
 	option = {
 		name = sprc.3.b #Viva la Revolución! (Play as the CNT-FAI)
 		trigger = { is_ai = no }
-		custom_effect_tooltip = SPR_reinforce_madrid
-		hidden_effect = { load_oob = SCW_SPR_reinforce2 }
+		if = {
+			limit = { is_ai = yes }
+			load_oob = SCW_SPR_reinforce2
+		}
 		CNT = {
 			country_event = { id = sprc.4 days = 7 }
 			change_tag_from = SPR
@@ -1631,7 +1639,7 @@ country_event = {
 		country_exists = SPR
 		has_global_flag = spanish_civil_war
 		has_war = no
-		has_socialist_government = no
+		NOT = { has_socialist_government = yes }
 		NOT = { has_country_flag = SPR_considered_int }
 	}
 	
@@ -2759,7 +2767,7 @@ country_event = {
 	
 	trigger = {
 		is_subject = no
-		has_socialist_government = no
+		NOT = { has_socialist_government = yes }
 		NOT = { has_war_with = CNT }
 	}
 	
@@ -2886,7 +2894,7 @@ country_event = {
 	trigger = {
 		POR = {
 			is_subject = no
-			has_socialist_government = no
+			NOT = { has_socialist_government = yes }
 			NOT = { has_war_with = CNT }
 		}
 	}
@@ -3129,7 +3137,7 @@ country_event = {
 		NOT = { country_exists = POR }
 		is_subject = no
 		has_war = no
-		has_socialist_government = no
+		NOT = { has_socialist_government = yes }
 		OR = {
 			tag = LEC
 			any_owned_state = { any_neighbor_state = { state = 729 } }
@@ -3194,7 +3202,7 @@ country_event = {
 		NOT = { country_exists = POR }
 		is_subject = no
 		has_war = no
-		has_socialist_government = no
+		NOT = { has_socialist_government = yes }
 		any_owned_state = { any_neighbor_state = { state = 721 } }
 		CNT = {
 			owns_state = 721 #East Timor
@@ -3253,7 +3261,7 @@ country_event = {
 		country_exists = CAR
 		has_global_flag = spanish_civil_war
 		has_war = no
-		has_socialist_government = no
+		NOT = { has_socialist_government = yes }
 		NOT = { has_country_flag = CAR_considered_int }
 	}
 	
@@ -3437,7 +3445,7 @@ country_event = {
 
 ### ASSASSINATION EVENT CHAIN
 
-# CNT hears about assassination plot
+# Assassination plot begins
 country_event = {
 	id = sprc.306
 	title = sprc.306.t
@@ -3447,26 +3455,26 @@ country_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		country_exists = CAR
 		has_war_with = SPR
 		SPR = {
 			has_country_leader = { name = "Alfonso XIII de Bourbon" }
-			has_country_flag = CAR_assassination_plot
 		}
 	}
 	
 	option = {
-		name = sprc.306.a #Use it as leverage with the Kingdom
-		add_political_power = -50
-		SPR = { country_event = { id = sprc.307 days = 15 } }
-	}
-	option = {
-		name = sprc.306.b #Let them do it
-		add_political_power = 50
+		name = sprc.306.a
+		random_list = {
+			75 = {
+				country_event = { id = sprc.309 days = 20 } #success
+			}
+			25 = {
+				country_event = { id = sprc.307 days = 20 } #fails
+			}
+		}
 	}
 }
 
-# The CNT offers info on the plot
+# Assassination plot fails
 country_event = {
 	id = sprc.307
 	title = sprc.307.t
@@ -3476,34 +3484,22 @@ country_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		country_exists = CAR
-		has_war_with = CNT
-		has_country_leader = { name = "Alfonso XIII de Bourbon" }
-		has_country_flag = CAR_assassination_plot
+		has_war_with = SPR
+		SPR = {
+			has_country_leader = { name = "Alfonso XIII de Bourbon" }
+		}
 	}
-
+	
 	option = {
-		name = sprc.307.a #Never! The royal family is safe
-		ai_chance = { factor = 75 }
-		add_political_power = 50
-		CNT = { country_event = { id = sprc.308 } }
-	}
-	option = {
-		name = sprc.307.b #For the sake of the royal family, we should agree
-		ai_chance = { factor = 25 }
-		clr_country_flag = CAR_assassination_plot
-		CNT = {
-			if = {
-				limit = { SPR = { is_ai = no } }
-				change_tag_from = SPR
-			}
-			country_event = { id = sprc.309 }
-			effect_tooltip = { annex_country = { target = SPR } }
+		name = sprc.307.a
+		add_political_power = -100
+		hidden_effect = {
+			SPR = { country_event = { id = sprc.308 } }
 		}
 	}
 }
 
-# The CNT's offer is refused
+# Inform Kingdom of Spain that plot failed
 country_event = {
 	id = sprc.308
 	title = sprc.308.t
@@ -3514,117 +3510,60 @@ country_event = {
 	
 	option = {
 		name = sprc.308.a
+		add_political_power = 50
 	}
 }
 
-# The CNT's offer is accepted = they annex Spain
+# Assassination plot succeeds
 country_event = {
 	id = sprc.309
 	title = sprc.309.t
 	desc = sprc.309.d
-	picture = GFX_report_event_SPR_civwar3
+	picture = GFX_report_event_europe_funeral
 	
 	is_triggered_only = yes
 	
+	trigger = {
+		has_war_with = SPR
+		SPR = {
+			has_country_leader = { name = "Alfonso XIII de Bourbon" }
+		}
+	}
+	
 	option = {
-		name = sprc.308.a
-		annex_country = { target = SPR }
+		name = sprc.309.a
 		add_political_power = 100
 		hidden_effect = {
-			CAR = { country_event = { id = sprc.310 } }
+			SPR = { country_event = { id = sprc.310 } }
 		}
 	}
 }
-
-# Carlists informed that the Kingdom surrendered
+	
+# Inform Kingdom of Spain that plot succeeded
 country_event = {
 	id = sprc.310
 	title = sprc.310.t
 	desc = sprc.310.d
-	picture = GFX_report_event_SPR_civwar3
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.310.a
-	}
-}
-
-# Assassination fails
-country_event = {
-	id = sprc.311
-	title = sprc.311.t
-	desc = sprc.311.d
-	picture = GFX_report_event_SPR_civwar3
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SPR
-		has_war_with = CAR
-		has_country_leader = { name = "Alfonso XIII de Bourbon" }
-		has_country_flag = CAR_assassination_plot
-	}
-	
-	mean_time_to_happen = {
-		days = 100
-	}
-	
-	immediate = {
-		clr_country_flag = CAR_assassination_plot
-	}
-	
-	option = {
-		name = sprc.311.a
-		CAR = { country_event = { id = sprc.312 } }
-	}
-}
-
-# Carlists informed that the plot failed
-country_event = {
-	id = sprc.312
-	title = sprc.311.t
-	desc = sprc.312.d
-	picture = GFX_report_event_SPR_civwar3
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.312.a
-	}
-}
-
-# Assassination succeeds
-country_event = {
-	id = sprc.313
-	title = sprc.313.t
-	desc = sprc.313.d
 	picture = GFX_report_event_europe_funeral
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 	
 	trigger = {
-		tag = SPR
 		has_war_with = CAR
 		has_country_leader = { name = "Alfonso XIII de Bourbon" }
-		has_country_flag = CAR_assassination_plot
-	}
-	
-	mean_time_to_happen = {
-		days = 99
 	}
 	
 	immediate = {
-		clr_country_flag = CAR_assassination_plot
 		set_country_flag = SPR_Juan_III_killed
 	}
 	
 	option = {
-		name = sprc.313.a #Miguel Ferrer takes control
+		name = sprc.310.a #Miguel Ferrer takes control
 		trigger = { NOT = { has_country_flag = SPR_javier_praised } }
 		ai_chance = {
 			factor = 30
 		}
+		add_timed_idea = { idea = SPR_regent_killed days = 90 }
 		add_political_power = -100
 		create_country_leader = {
 			name = "Miguel Cabanellas Ferrer"
@@ -3640,7 +3579,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = sprc.313.b #Franco Bahamonde becomes the regent
+		name = sprc.310.b #Franco Bahamonde becomes the regent
 		ai_chance = {
 			factor = 30
 			modifier = {
@@ -3648,6 +3587,7 @@ country_event = {
 				has_country_flag = SPR_javier_praised
 			}
 		}
+		add_timed_idea = { idea = SPR_regent_killed days = 90 }
 		add_political_power = -100
 		create_country_leader = {
 			name = "Francisco Franco Bahamonde"
@@ -3661,10 +3601,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = sprc.313.c #J.M. Gil-Robles Quiñones retains the government
+		name = sprc.310.c #J.M. Gil-Robles Quiñones retains the government
 		ai_chance = {
 			factor = 40
 		}
+		add_timed_idea = { idea = SPR_regent_killed days = 90 }
+		add_political_power = -100
 		create_country_leader = {
 			name = "J.M. Gil-Robles Quiñones"
 			picture = "Portrait_SPR_J_M_Gil_Robles_Quinones.tga"
@@ -3673,71 +3615,22 @@ country_event = {
 			traits = {}
 		}
 		hidden_effect = {
-			CAR = { country_event = { id = sprc.316 days = 1} }
-		}
-	}
-	option = {
-		name = sprc.313.e #We must give in to Xavier
-		trigger = { has_country_flag = SPR_javier_praised }
-		ai_chance = {
-			factor = 40
-		}
-		CAR = {
-			if = {
-				limit = { SPR = { is_ai = no } }
-				change_tag_from = SPR
-			}
-			country_event = { id = sprc.314 }
-			effect_tooltip = { annex_country = { target = SPR } }
+			CAR = { country_event = { id = sprc.316 days = 1 } }
 		}
 	}
 }
 
-# The Kingdom gives into Xavier
+# CNT informed of the regent's assassination
 country_event = {
-	id = sprc.314
-	title = sprc.314.t
-	desc = sprc.314.d
+	id = sprc.311
+	title = sprc.311.t
+	desc = sprc.311.d
 	picture = GFX_report_event_europe_funeral
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = sprc.314.a
-		annex_country = { target = SPR transfer_troops = yes }
-		add_political_power = 100
-		hidden_effect = {
-			CNT = { country_event = { id = sprc.315 } }
-		}
-	}
-}
-
-# CNT informed that the Kingdom gave into Xavier
-country_event = {
-	id = sprc.315
-	title = sprc.315.t
-	desc = sprc.315.d
-	picture = GFX_report_event_europe_funeral
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.315.a
-	}
-}
-
-# Carlists informed their plot was successful
-country_event = {
-	id = sprc.316
-	title = sprc.316.t
-	desc = sprc.316.d
-	picture = GFX_report_event_europe_funeral
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = sprc.316.a
-		add_political_power = 100
+		name = sprc.311.a
 	}
 }
 

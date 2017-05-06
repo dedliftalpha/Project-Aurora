@@ -9121,3 +9121,419 @@ country_event = {
 		add_political_power = -50
 	}
 }
+
+country_event = { #Fengtian pushed back Japan
+	id = japfor.207
+	title = japfor.207.t
+	desc = japfor.207.d
+	fire_only_once = yes
+	trigger = {
+		tag = FNG
+		has_war_with = JAP
+		is_subject = no
+		FNG = {
+			OR = { 
+			AND = { controls_state = 716
+			controls_state = 745 }
+			AND = { is_faction_leader = yes
+					any_country = { 
+					NOT = { tag = FNG }
+					controls_state = 716
+					controls_state = 745
+					OR = { is_in_faction_with = FNG is_subject_of = FNG }
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				controls_state = 527
+				controls_state = 525
+			}
+			AND = { 
+			is_faction_leader = yes
+					any_country = { NOT = { tag = FNG }
+					controls_state = 527
+					controls_state = 525
+					OR = { is_in_faction_with = FNG is_subject_of = FNG }
+					}
+				}
+		}
+
+	}
+	mean_time_to_happen = {
+		days = 20
+	}
+	option = { #humiliate japan
+		name = japfor.207.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 200
+		JAP = {
+			country_event = {
+				id = japfor.208 days = 2
+			}
+		}
+	}
+	option = { #push on
+		name = japfor.207.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #The Fading Sun
+	id = japfor.208
+	title = japfor.208.t
+	desc = japfor.208.d
+	is_triggered_only = yes
+	option = { #surrender
+		name = japfor.208.a
+		ai_chance = {
+			factor = 100
+		}
+		FNG = { white_peace_with_ROOT = yes }
+		every_other_country = { limit { is_in_faction_with = FNG }
+		white_peace_with_ROOT = yes }
+
+		remove_state_claim = 757
+		remove_state_claim = 737
+		remove_state_claim = 634
+		remove_state_claim = 647
+		remove_state_claim = 684
+		remove_state_claim = 646
+		remove_state_claim = 633
+		remove_state_claim = 639
+		remove_state_claim = 725
+		remove_state_claim = 634
+		remove_state_claim = 734
+		remove_state_claim = 635
+		remove_state_claim = 643
+		FNG = {
+			transfer_state = 745
+			if = {
+				limit = {
+					OR = {
+						KOR = {
+							is_in_faction_with = JAP
+						}
+						JAP = {
+							owns_state = 527 owns_state = 525
+						}
+					}
+				}
+				transfer_state = 527
+				transfer_state = 525
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					TAI = {
+						is_in_faction_with = JAP
+					}
+					JAP = {
+						controls_state = 524
+						controls_state = 859
+					}
+				}
+			}
+			FNG = {
+				transfer_state = 524
+				transfer_state = 859
+			}
+		}
+
+		if = {
+			limit = {
+
+				AOG = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 595
+				}
+			}
+
+			JAP = {
+				release = AOG
+			}
+			FNG = {
+				annex_country = {
+					target = AOG transfer_troops = no
+				}
+			}
+		}
+		if = {
+			limit = {
+				YUN = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 325
+				}
+			}
+			JAP = {
+				release = YUN
+			}
+			FNG = {
+				annex_country = {
+					target = YUN transfer_troops = no
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				LEC = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 743
+				}
+			}
+			JAP = {
+				release = LEC
+			}
+			FNG = {
+				annex_country = {
+					target = LEC transfer_troops = no
+				}
+			}
+		}
+		if = {
+			limit = {
+				SQI = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 622
+				}
+			}
+			JAP = {
+				release = SQI
+			}
+			FNG = {
+				annex_country = {
+					target = SQI transfer_troops = no
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				XSM = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 604
+				}
+			}
+			JAP = {
+				release = XSM
+			}
+			FNG = {
+				annex_country = {
+					target = XSM transfer_troops = no
+				}
+			}
+		}
+		if = {
+			limit = {
+				QIE = {
+					exists = no
+				}
+				JAP = {
+					controls_state = 608
+				}
+			}
+			JAP = {
+				release = QIE
+			}
+			FNG = {
+				annex_country = {
+					target = QIE transfer_troops = no
+				}
+			}
+		}
+
+		end_puppet = FNG
+		end_puppet = TAI
+		end_puppet = KOR
+		end_puppet = HAW
+		end_puppet = AST
+		end_puppet = TRM
+		end_puppet = PHL
+		end_puppet = SIA
+		end_puppet = NCH
+		end_puppet = LEC
+		end_puppet = INC
+		end_puppet = VIE
+		end_puppet = LAO
+
+		set_global_flag = JAP_Defeated_FNG
+		set_country_flag = JAP_ISO
+		set_global_flag = JAP_ISO
+		clr_country_flag = JAP_EXP
+		clr_country_flag = JAP_EXP1
+		clr_country_flag = JAP_EXP2
+		clr_country_flag = JAP_GER1
+		clr_country_flag = JAP_GER2
+		clr_country_flag = JAP_RUS_CAMP
+		clr_country_flag = JAP_SIB_CAMP
+		clr_country_flag = JAP_MON_CAMP
+		clr_country_flag = JAP_RUS
+		clr_country_flag = JAP_MONRUS_CAMP
+		clr_country_flag = JAP_WEAK
+		clr_country_flag = JAP_COLONY
+		clr_country_flag = JAP_ANZAC
+		clr_country_flag = JAP_NUTS
+		if = { limit = { FNG = { controls_state = 525 controls_state = 527 } }
+		FNG = {
+			country_event = {
+				id = japfor.209 days = 3
+			}
+		}
+		}
+	}
+	option = { #no surrender
+		name = japfor.20.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+	}
+}
+
+country_event = { #Japan is defeated and Korea is freed
+	id = japfor.209
+	title = japfor.209.t
+	desc = japfor.209.d
+	is_triggered_only = yes
+	option = {
+		name = japfor.209.a
+		release = KOR
+		puppet = KOR
+		add_state_core = 745
+	}
+
+}
+
+country_event = { #Transamur is isolated
+	id = japfor.210
+	title = japfor.210.t
+	desc = japfor.210.d
+	fire_only_once = yes
+	trigger = {
+		OR = {
+			tag = RUS
+			tag = SOV
+		}
+		has_global_flag = JAP_Defeated_FNG
+		TRM = {
+			controls_state = 408
+			controls_state = 409
+		}
+	}
+	mean_time_to_happen = {
+		days = 15
+	}
+	option = {
+		name = japfor.210.a
+		add_political_power = 60
+		annex_country = {
+			target = TRM transfer_troops = yes
+		}
+		add_state_core = 408
+		add_state_core = 409
+	}
+
+}
+
+country_event = { #Qing pushed back Japan - Germany
+	id = japfor.211
+	title = japfor.211.t
+	desc = japfor.211.d
+	fire_only_once = yes
+	trigger = {
+		tag = GER
+		has_global_flag = JAP_Defeated_FNG
+		has_war_with = JAP
+		NOT = {
+			has_global_flag = GER_Capitulation
+		}
+	}
+
+	option = { #yes
+		name = japfor.211.a
+		ai_chance = {
+			factor = 75
+		}
+		JAP = {
+			country_event = {
+				id = japfor.212 days = 1
+			}
+		}
+	}
+	option = { #no
+		name = japfor.23.b
+		ai_chance = {
+			factor = 25
+		}
+		add_political_power = -60
+	}
+}
+country_event = { #The Germans demand our oversea territory
+	id = japfor.212
+	title = japfor.212.t
+	desc = japfor.212.d
+	is_triggered_only = yes
+	option = { #We Give up! As long as our sacred homeland is intact!
+		name = japfor.212.a
+		ai_chance = {
+			factor = 25
+		}
+		GER = { white_peace_with_ROOT = yes }
+		every_country = { limit = { is_in_faction_with = GER } white_peace_with_ROOT = yes }
+		clr_country_flag = JAP_Defeated_FNG
+		GER = {
+			transfer_state = 526
+			transfer_state = 645
+			transfer_state = 648
+		}
+		if = {
+			limit = {
+				PHL = {
+					exists = no
+				}
+				controls_state = 327
+			}
+			every_state = {
+				limit = {
+					is_controlled_by = JAP
+
+					is_core_of = PHL
+				}
+				PHL = {
+					transfer_state = PREV
+				}
+			}
+			GER = {
+				annex_country = {
+					target = PHL transfer_troops = no
+				}
+			}
+		}
+	}
+
+	option = { #no
+		name = japfor.24.b
+		ai_chance = {
+			factor = 25
+		}
+
+	}
+}

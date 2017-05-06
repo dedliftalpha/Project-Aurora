@@ -1164,3 +1164,175 @@ country_event = {
 		}
 	}
 }
+
+##Commune of France - Second Weltkrieg##
+country_event = {
+	id = ai.civilwar.013
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = FRA_intervention
+			has_country_flag = no_FRA_intervention
+			has_country_flag = GER_intervention
+			has_country_flag = no_GER_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = MEX
+			tag = BRA
+			tag = BHC
+			tag = GUA
+		}
+		country_exists = FRA #ROM + RRM must exist
+		country_exists = GER
+		FRA = { has_war_with = GER }
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = FRA
+					tag = GER
+				}
+			}
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = FRA_intervention
+				}			
+			}
+		}
+		has_socialist_government = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = FRA_intervention
+					}	
+			}
+		}
+		set_country_flag = FRA_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_FRA_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_FRA_intervention
+				}	
+			}
+		}
+	}
+}
+
+##German Empire - Second Weltkrieg##
+country_event = {
+	id = ai.civilwar.014
+	title = sprc.101.t
+	desc = sprc.101.d
+	picture = GFX_report_event_SPR_civwar
+	
+	trigger = {
+		is_ai = yes #AI Only
+		NOT = { #Has not already decided to support or not
+			has_country_flag = FRA_intervention
+			has_country_flag = no_FRA_intervention
+			has_country_flag = GER_intervention
+			has_country_flag = no_GER_intervention
+		}
+		NOT = { #Does not already have an event effecting it specifically
+			tag = MEX
+			tag = BRA
+			tag = BHC
+			tag = GUA
+		}
+		country_exists = FRA #ROM + RRM must exist
+		country_exists = GER
+		FRA = { has_war_with = GER }
+		has_war = no
+		is_subject = no
+		OR = { #Country must either not be landlocked or border the conflict
+			any_owned_state = { 
+				is_coastal = yes 
+			}
+			any_neighbor_country = {
+				OR = {
+					tag = FRA
+					tag = GER
+				}
+			}
+		}
+		OR = { #Either be a major power, a faction leader, or your faction leader supports romania
+			is_major = yes
+			is_faction_leader = yes
+			AND = {
+				is_in_faction = yes
+				any_allied_country = {
+					is_faction_leader = yes
+					has_country_flag = GER_intervention
+				}			
+			}
+		}
+		has_democratic_government = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = sprc.101.a
+		ai_chance = {
+			factor = 60
+			modifier = { #Faction member supports them 
+				factor = 1.25
+					is_in_faction = yes
+					any_allied_country = {
+						has_country_flag = GER_intervention
+					}	
+			}
+		}
+		set_country_flag = GER_intervention
+		add_political_power = -50
+	}
+	option = {
+		name = sprc.101.b
+		set_country_flag = no_GER_intervention
+		ai_chance = {
+			factor = 40
+			modifier = { #Faction member does not support
+			factor = 1.25
+				is_in_faction = yes
+				any_allied_country = {
+					has_country_flag = no_GER_intervention
+				}	
+			}
+		}
+	}
+}

@@ -22817,3 +22817,269 @@ country_event = { #Fate of the Legation cities
 	}
 
 }
+
+country_event = { #Fate of Brazil
+	id = annex.181
+	title = annex.181.t
+	desc = annex.181.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			original_tag = BRA
+			tag = PIR
+			has_war_with = PIR
+			has_war_with = ARG
+			has_country_flag = BRA_CONQ
+			country_exists = BRA
+		}
+
+		controls_state = 500
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #liberate full brazil
+		name = annex.181.a
+		ai_chance = {
+			factor = 10
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = BRA
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			BRA = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = BRA
+		
+		if = { limit = { tag = ARG BRA = { controls_state = 504 } }
+		transfer_state = 504
+		}
+	}
+	
+	option = { #Liberate Piratini
+		name = annex.181.b
+		ai_chance = {
+			factor = 90
+			modifier = { factor = 0
+			NOT = { tag = ARG is_ai = no }
+			}
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = PIR
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			PIR = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = PIR
+
+		every_state = {
+			limit = {
+				is_core_of = BRA
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			BRA = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = BRA
+		
+		if = { limit = { tag = ARG BRA = { controls_state = 504 } }
+		transfer_state = 504
+		}
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+		set_country_flag = BRA_CONQ
+	}
+}
+
+country_event = { #Fate of La Plata
+	id = annex.182
+	title = annex.182.t
+	desc = annex.182.d
+
+	trigger = {
+		NOT = {
+			tag = EMP
+			tag = REB
+		}
+
+		NOT = {
+			tag = ARG
+			tag = PAR
+			tag = URG
+			has_war_with = ARG
+			has_war_with = BRA
+			has_war_with = CHL
+			has_war_with = PAR
+			has_war_with = URG
+			has_country_flag = ARG_CONQ
+			country_exists = ARG
+		}
+
+		controls_state = 500
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { #liberate full la plata
+		name = annex.182.a
+		ai_chance = {
+			factor = 30
+			modifier = { 
+			factor = 0
+			tag = BRA
+			}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = ARG
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			ARG = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = ARG
+		
+		if = { limit = { tag = BRA ARG = { controls_state = 510 } }
+		transfer_state = 510
+		transfer_state = 299
+		transfer_state = 720
+		}
+		
+		if = { limit = { tag = CHL ARG = { controls_state = 512 } }
+		transfer_state = 512
+		transfer_state = 511
+		transfer_state = 904
+		}
+	}
+	
+	option = { #Liberate paraguay and uruguay
+		name = annex.182.b
+		ai_chance = {
+			factor = 70
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = PAR
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			PAR = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = PAR
+		
+		every_state = {
+			limit = {
+				is_core_of = URG
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			URG = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = URG
+
+		every_state = {
+			limit = {
+				is_core_of = ARG
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+
+			ARG = {
+				transfer_state = PREV
+			}
+		}
+
+		puppet = ARG
+		
+		ARG = { set_cosmetic_tag = AGT }
+		
+		if = { limit = { tag = BRA ARG = { controls_state = 510 } }
+		transfer_state = 510
+		transfer_state = 299
+		transfer_state = 720
+		}
+		
+		if = { limit = { tag = CHL ARG = { controls_state = 512 } }
+		transfer_state = 512
+		transfer_state = 511
+		transfer_state = 904
+		}
+	}
+
+	option = { #occupy
+		name = annex.2.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -100
+		set_country_flag = ARG_CONQ
+	}
+}

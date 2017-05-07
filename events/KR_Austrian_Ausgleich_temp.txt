@@ -1492,6 +1492,212 @@ country_event = { #ILL: No Reparaptions - HUN declares war
 
 	option = { # Crap.
 		name = ausgleich.new.335.a
+		
+		AUS = {
+			country_event = ausgleich.new.336
+		}
+	}
+}
+
+country_event = { #AUS: Illyrian Conflict
+	id = ausgleich.new.336
+	title = ausgleich.new.336.t
+	desc = ausgleich.new.336.d
+	
+	immediate = { set_country_flag = illyrian_conflict }
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { # This is outrageous.
+		name = ausgleich.new.336.a
+		trigger = {
+			NOT = {
+				has_country_flag = slovak_state_promised
+				has_country_flag = transcarpathia_promised
+				has_country_flag = backa_promised
+				has_country_flag = transylvania_promised
+			}
+		}
+		set_country_flag = {
+			illyrian_conflict_attacked_hun
+		}
+		declare_war_on = {
+			target = HUN
+			type = annex_everything
+		}
+	}
+	option = { # Time to put those promises into action
+		name = ausgleich.new.336.b
+		trigger = {
+			OR = {
+				has_country_flag = slovak_state_promised
+				has_country_flag = transcarpathia_promised
+				has_country_flag = backa_promised
+				has_country_flag = transylvania_promised
+			}
+		}
+		set_country_flag = {
+			illyrian_conflict_attacked_hun
+		}
+		declare_war_on = {
+			target = HUN
+			type = annex_everything
+		}
+		#BOM etc. call ot arms events
+	}
+	option = { # Leave them to it
+		name = ausgleich.new.336.c
+		trigger = {
+			NOT = {
+				has_country_flag = ausgleich_give_HUN_Croatia
+			}
+		}
+		set_country_flag = {
+			illyrian_conflict_attacked_ill
+		}
+		declare_war_on = {
+			target = ILL
+			type = annex_everything
+		}
+	}
+	option = { # It's happening
+		name = ausgleich.new.336.e
+		trigger = {
+			has_country_flag = ausgleich_give_HUN_Croatia
+		}
+		set_country_flag = {
+			illyrian_conflict_attacked_ill
+		}
+		declare_war_on = {
+			target = ILL
+			type = annex_everything
+		}
+	}
+}
+
+country_event = { #Post War: Au-Hu split of Illyria
+	id = ausgleich.new.337
+	title = ausgleich.new.337.t
+	desc = ausgleich.new.337.d
+
+	trigger = {
+		tag = AUS
+		has_country_flag = illyrian_conflict_attacked_ill
+		has_war = no
+		OR = {
+			owns_state = 109
+			AND = {
+				HUN = {
+					is_subject_of = AUS
+					owns_state = 109
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 14 }
+
+	option = { # Restore the 1921 borders
+		name = ausgleich.new.337.a
+		
+		transfer_state = 105
+		transfer_state = 163
+		puppet = BOS
+		BOS = {
+			transfer_state = 104
+		}
+		HUN = {
+			transfer_state = 103
+			transfer_state = 109
+			transfer_state = 794
+		}
+	}
+	option = { # Croatia-Slavonia to Hungary, Illyrian Condominium
+		name = ausgleich.new.337.b
+		
+		puppet = ILL
+		ILL = {
+			transfer_state = 104
+			transfer_state = 105
+			transfer_state = 163
+		}
+		HUN = {
+			transfer_state = 103
+			transfer_state = 109
+			transfer_state = 794
+		}
+	}
+	option = { # Occupy the whole thing for now
+		name = ausgleich.new.337.b
+		
+		transfer_state = 103
+		transfer_state = 104
+		transfer_state = 105
+		transfer_state = 109
+		transfer_state = 163
+		transfer_state = 794
+		
+		HUN = {
+			country_event = ausgleich.new.338
+		}
+	}
+}
+
+country_event = { #Austria occupies all of ILL
+	id = ausgleich.new.338
+	title = ausgleich.new.338.t
+	desc = ausgleich.new.338.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { # They can't do that!
+		name = ausgleich.new.338.a
+		ai_chance = { factor = 100 }
+		
+		declare_war_on = {
+			target = AUS
+			type = annex_everything
+		}
+	}
+	option = { # well shit.
+		name = ausgleich.new.338.b
+		ai_chance = { factor = 0 }
+		add_political_power = -100
+	}
+}
+
+country_event = { #BOM, GAL: Austria declares war on Illyria
+	id = ausgleich.new.339
+	title = ausgleich.new.339.t
+	desc = ausgleich.new.339.d
+
+	trigger = {
+		OR = {
+			tag = BOM
+			tag = GAL
+		}
+		NOT = {
+			has_country_flag = illyrian_conflict_attacked_aus
+		}
+		has_war = no
+		is_subject_of = AUS
+		AUS = {
+			has_war_with = ILL
+		}
+	}
+	
+	mean_time_to_happen = { days = 6 }
+
+	option = { # For our Slavic brothers!
+		name = ausgleich.new.339.a
+		set_country_flag = illyrian_conflict_attacked_aus
+		
+		declare_war_on = {
+			target = AUS
+			type = annex_everything
+		}
 	}
 }
 
@@ -2195,6 +2401,8 @@ country_event = { #AUS: Hungarian Slovaks and Romanians massacred
 		name = ausgleich.new.363.a
 		
 		AUS = {
+			set_country_flag = hungarian_protests
+			
 			country_event = {
 				id = ausgleich.new.366
 				days = 4
@@ -2218,6 +2426,8 @@ country_event = { #AUS: Hungarian Slovaks massacred
 		name = ausgleich.new.364.a
 		
 		AUS = {
+			set_country_flag = hungarian_protests
+			
 			country_event = {
 				id = ausgleich.new.367
 				days = 4
@@ -2241,6 +2451,8 @@ country_event = { #AUS: Hungarian Romanians massacred
 		name = ausgleich.new.365.a
 		
 		AUS = {
+			set_country_flag = hungarian_protests
+			
 			country_event = {
 				id = ausgleich.new.368
 				days = 4

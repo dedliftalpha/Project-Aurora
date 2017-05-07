@@ -153,11 +153,6 @@ country_event = { # Long launches major protests in the South
 	desc = amcivwar.2.d
 	picture = GFX_report_event_spain_civil_war_soldiers
 
-	trigger = {
-	NOT = { has_global_flag = END_ACW }
-	NOT = { has_global_flag = aus_rised_up }
-	}
-
 	is_triggered_only = yes
 
 	option = {
@@ -217,6 +212,25 @@ country_event = { # Long launches major protests in the South
 		if = { limit = { has_country_flag = LONG_PRES } country_event = { id = amcivwar.8 } }
 		set_global_flag = ACW_AUS
 		set_global_flag = aus_rised_up
+		if = { limit = {has_government = paternal_autocrat }
+			kill_country_leader = yes
+			set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+			create_country_leader = {
+				name = "Douglas MacArthur"
+				desc = "MACARTHUR_DESC"
+				picture = "Portrait_USA_Douglas_MacArthur.dds"
+				expire = "1965.1.1"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}			
+			set_country_flag = macarthur_takes_over
+			add_ideas = {
+				USA_Omar_N_Bradley_hog_ade
+				USA_Walter_Bedell_Smith_for_ade
+				USA_Frederick_H_Mueller_eco_ade
+				USA_Carl_Spaatz_sec_ade
+			}		
+		}		
 	}
 	option = {
 		name = amcivwar.2.b
@@ -262,21 +276,37 @@ country_event = { # Long launches major protests in the South
 				country_event = { id = amcivwar.1 }				
 			}
 		}
-			hidden_effect = { USA = { country_event = { id = amcivwar.3 days = 1 }
+		hidden_effect = { USA = { country_event = { id = amcivwar.3 days = 1 }
 			if = { limit = { has_country_flag = reed_elected } country_event = { id = amcivwar.3000 days = 1 } } } }
-
-			hidden_effect = {
+		hidden_effect = {
 				TEX = {
 					country_event = { id = amcivwar.341 days = 0 }
 				}
 			}
-
-
 		add_political_power = 160
 		add_manpower = -100000
 		if = { limit = { has_country_flag = LONG_PRES } country_event = { id = amcivwar.8 } }
 		set_global_flag = ACW_AUS
 		set_global_flag = aus_rised_up
+		if = { limit = {has_government = paternal_autocrat }
+			kill_country_leader = yes
+			set_politics = { ruling_party = authoritarian_democrat elections_allowed = no }
+			create_country_leader = {
+				name = "Douglas MacArthur"
+				desc = "MACARTHUR_DESC"
+				picture = "Portrait_USA_Douglas_MacArthur.dds"
+				expire = "1965.1.1"
+				ideology = authoritarian_democrat_subtype
+				traits = {}
+			}			
+			set_country_flag = macarthur_takes_over
+			add_ideas = {
+				USA_Omar_N_Bradley_hog_ade
+				USA_Walter_Bedell_Smith_for_ade
+				USA_Frederick_H_Mueller_eco_ade
+				USA_Carl_Spaatz_sec_ade
+			}		
+		} 
 	}
 
 }
@@ -1292,11 +1322,12 @@ country_event = { # AUS hits the road
 		NOT = {
 			has_government = paternal_autocrat
 			has_global_flag = ACW_AUS
+			has_global_flag = END_ACW			
 		}
 	}
 
 	mean_time_to_happen = {
-		days = 1
+		days = 10
 	}
 
 	option = {
@@ -1322,6 +1353,7 @@ country_event = { # Combined Syndicates of America Leave
 		NOT = {
 			has_government = syndicalist
 			has_global_flag = ACW_CSA
+			has_global_flag = END_ACW			
 		}
 	}
 
@@ -1352,6 +1384,7 @@ country_event = { # California Leaves the Union
 		}
 		NOT = {
 			has_global_flag = ACW_CAL
+			has_global_flag = END_ACW			
 		}
 	}
 

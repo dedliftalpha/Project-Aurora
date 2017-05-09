@@ -77,7 +77,9 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 				limit = { Not = { country_exists = TEX }}
 				country_event = { id = amcivwar.2 days = 1 }				
 			}
-		}		
+		}
+		hidden_effect = {CSA = {	country_event = { id = amcivwar.341 days = 0 }}	}
+		set_global_flag = ACW_CSA_actually_rose_up	
 	}
 	option = {
 		name = amcivwar.1.b
@@ -92,6 +94,7 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 			limit = { LBR = { is_subject_of = USA } } 
 			LBR = { country_event = { id = amcivwar.186 } } 
 		}
+		set_global_flag = ACW_CSA_actually_rose_up	
 		add_popularity = { ideology = syndicalist popularity = -0.3 }
 		remove_ideas = new_year_strike
 		remove_ideas = max_schachtman
@@ -128,12 +131,6 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 				country_event = { id = amcivwar.341 days = 0 }
 			}
 		}
-		hidden_effect = { 
-			if = {
-				limit = { Not = { country_exists = TEX }}
-				country_event = { id = amcivwar.2 }				
-			}
-		}
 		#End Guarantee on legation cities
 		add_political_power = 160
 		add_manpower = -100000
@@ -142,9 +139,10 @@ country_event = { # Jack Reed declares the seccession of the CSA as an independe
 		hidden_effect = { 
 			if = {
 				limit = { Not = { country_exists = TEX }}
-				country_event = { id = amcivwar.2 }				
+				country_event = { id = amcivwar.2 days = 2 }				
 			}
-		}		
+		}
+		hidden_effect = {CSA = {	country_event = { id = amcivwar.341 days = 0 }}	}		
 	}
 }
 country_event = { # Long launches major protests in the South
@@ -168,6 +166,7 @@ country_event = { # Long launches major protests in the South
 			limit = { LBR = { is_subject_of = USA } }
 			LBR = { country_event = { id = amcivwar.186 } } 
 		}
+		set_global_flag = ACW_AUS_actually_rose_up	
 		add_popularity = { ideology = paternal_autocrat popularity = -0.3 }
 		remove_ideas = southern_rally
 		remove_ideas = long_agg_ref
@@ -245,6 +244,7 @@ country_event = { # Long launches major protests in the South
 			limit = { LBR = { is_subject_of = USA } }
 			LBR = { country_event = { id = amcivwar.186 } } 
 		}
+		set_global_flag = ACW_AUS_actually_rose_up		
 		add_popularity = { ideology = paternal_autocrat popularity = -0.3 }
 		remove_ideas = southern_rally
 		remove_ideas = long_agg_ref
@@ -431,6 +431,7 @@ country_event = { # California leaves the Union
 		OR = { has_country_flag = long_elected has_country_flag = reed_elected } } country_event = { id = amcivwar.5 days = 2 } }
 		if = { limit = { 387 = { is_owned_by = USA }
 		OR = { has_country_flag = long_elected has_country_flag = reed_elected } } country_event = { id = amcivwar.6 days = 2 } } }
+		set_global_flag = ACW_PSA_actually_rose_up		
 	}
 	option = {
 		name = amcivwar.4.b
@@ -465,7 +466,7 @@ country_event = { # California leaves the Union
 
 			hidden_effect = { country_event = { id = amcivwar.341 days = 0 } }
 		}
-
+		set_global_flag = ACW_PSA_actually_rose_up	
 		add_political_power = 160
 		add_manpower = -100000
 		hidden_effect = { if = { limit = { 379 = { is_owned_by = USA }
@@ -5278,6 +5279,11 @@ country_event = { # End of the Civil War/ USA wins democracy
 			has_war_with = CAL
 			has_government = authoritarian_democrat
 		}
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -5327,6 +5333,11 @@ country_event = { # End of the Civil War/ USA wins MacArthur
 			country_exists = CSA
 			has_war_with = CAL
 		}
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}	
 	}
 
 	mean_time_to_happen = {
@@ -5374,6 +5385,11 @@ country_event = { # End of the Civil War AUS wins
 			has_war_with = CAL
 			has_war_with = HAW
 		}
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -5412,6 +5428,11 @@ country_event = { # End of the Civil War CSA wins
 			has_war_with = CAL
 			has_war_with = HAW
 		}
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 	}
 
 	mean_time_to_happen = {
@@ -5444,6 +5465,11 @@ country_event = { # End of the civil war PSA wins by beating the USA
 	trigger = {
 		tag = CAL
 		has_global_flag = ACW_CSA
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 		NOT = {
 			country_exists = USA
 			country_exists = TEX
@@ -5483,6 +5509,11 @@ country_event = { # End of the Civil War PSA wins while allied with the USA
 		tag = CAL
 		has_global_flag = ACW_CSA
 		has_global_flag = CAL_Allies_USA
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 		NOT = {
 			country_exists = CSA
 			country_exists = TEX
@@ -5523,6 +5554,11 @@ country_event = { # End of the Civil War New England wins?
 			country_exists = USA
 		}
 		has_global_flag = NEE_Allies_USA
+		OR = {
+			set_global_flag = ACW_CSA_actually_rose_up	
+			set_global_flag = ACW_AUS_actually_rose_up	
+			set_global_flag = ACW_PSA_actually_rose_up	
+		}		
 	}
 
 	mean_time_to_happen = {

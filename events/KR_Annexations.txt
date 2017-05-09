@@ -346,7 +346,9 @@ country_event = { #Serbian liberation
 			tag = SER
 		}
 		controls_state = 107
-		NOT = { controls_state = 109 controls_state = 102 }
+		OR = { NOT = { controls_state = 109 controls_state = 102 }
+		AND = { OR = { controls_state = 109 controls_state = 102 } tag = AUS }
+		}
 		SER = {
 			exists = no
 		}
@@ -4448,6 +4450,7 @@ country_event = { #Fate of South Slavic Nations
 			tag = SLO
 			tag = MTN
 			tag = YUG
+			tag = AUS
 			has_war_with = AUS
 			has_war_with = ITA
 			has_war_with = ROM
@@ -5049,6 +5052,11 @@ country_event = { #The Fate of Spain POR
 			tag = EMP
 			tag = REB
 		}
+		NOT = {
+		country_exists = SPR
+		country_exists = CNT
+		country_exists = CAR
+		}
 
 		tag = POR
 
@@ -5063,23 +5071,7 @@ country_event = { #The Fate of Spain POR
 
 		}
 
-		OR = {
-			owns_state = 171
-			owns_state = 174
-			owns_state = 172
-			owns_state = 176
-			owns_state = 166
-			owns_state = 165
-			owns_state = 170
-			owns_state = 41
-			owns_state = 175
-			owns_state = 167
-			owns_state = 168
-			owns_state = 173
-			owns_state = 169
-			owns_state = 177
-			owns_state = 793
-		}
+		owns_state = 41
 	}
 
 	mean_time_to_happen = {
@@ -6505,6 +6497,12 @@ country_event = { #Releasing Spain (if not POR)
 			tag = EMP
 			tag = REB
 		}
+		
+		NOT = {
+			country_exists = SPR
+			country_exists = CAR
+			country_exists = CNT
+		}
 
 		NOT = {
 			tag = SPR
@@ -6527,23 +6525,7 @@ country_event = { #Releasing Spain (if not POR)
 
 		}
 
-		OR = {
-			controls_state = 171
-			controls_state = 174
-			controls_state = 172
-			controls_state = 176
-			controls_state = 166
-			controls_state = 165
-			controls_state = 170
-			controls_state = 41
-			controls_state = 175
-			controls_state = 167
-			controls_state = 168
-			controls_state = 173
-			controls_state = 169
-			controls_state = 177
-			controls_state = 793
-		}
+		controls_state = 41
 	}
 
 	mean_time_to_happen = {
@@ -6562,8 +6544,6 @@ country_event = { #Releasing Spain (if not POR)
 				is_in_faction_with = ITA
 				tag = ITA
 			}
-
-
 		}
 
 
@@ -6573,9 +6553,6 @@ country_event = { #Releasing Spain (if not POR)
 		}
 
 		add_political_power = 100
-		add_named_threat = {
-			threat = -5 name = returned_lands
-		}
 
 		if = {
 
@@ -6732,9 +6709,6 @@ country_event = { #Releasing Spain (if not POR)
 		}
 
 		add_political_power = 100
-		add_named_threat = {
-			threat = -5 name = returned_lands
-		}
 
 		if = {
 
@@ -6838,9 +6812,6 @@ country_event = { #Releasing Spain (if not POR)
 		}
 
 		add_political_power = 100
-		add_named_threat = {
-			threat = -5 name = returned_lands
-		}
 
 		if = {
 
@@ -6938,9 +6909,6 @@ country_event = { #Releasing Spain (if not POR)
 		}
 
 		add_political_power = 100
-		add_named_threat = {
-			threat = -10 name = returned_lands
-		}
 
 
 
@@ -10290,6 +10258,7 @@ country_event = { #Fate of the Hashemite Arabia
 				NOT = {
 					is_core_of = ROOT
 					is_claimed_by = ROOT
+					state = 754
 				}
 
 			}
@@ -17482,6 +17451,7 @@ country_event = { #Bosnia Liberation
 			tag = ILL
 			tag = YUG
 			tag = SER
+			tag = AUS
 		}
 		controls_state = 104
 		NOT = { AND = { controls_state = 102 controls_state = 107 } }
@@ -17579,6 +17549,7 @@ country_event = { #Montenegro Liberation
 			tag = ILL
 			tag = YUG
 			tag = SER
+			tag = AUS
 		}
 		controls_state = 105
 		NOT = { AND = { controls_state = 102 controls_state = 107 } }
@@ -19060,7 +19031,7 @@ country_event = { #Fate of Luxembourg
 		}
 		trigger = { OR = { tag = BEL tag = WLL } }
 
-		set_country_flag = BEL_CONQ
+		set_country_flag = LUX_CONQ
 		add_state_claim = 8
 		add_political_power = 20
 
@@ -19072,7 +19043,7 @@ country_event = { #Fate of Luxembourg
 			factor = 0
 		}
 		trigger = { NOT = { tag = BEL tag = WLL } }
-		set_country_flag = BEL_CONQ
+		set_country_flag = LUX_CONQ
 		add_political_power = -60
 	}
 }
@@ -20180,6 +20151,7 @@ country_event = { #Fate of the North-western China
 			tag = XSM
 			tag = SIK
 			tag = RUS
+			tag = TIB
 
 			has_country_flag = NOWEC_CONQ
 
@@ -22924,6 +22896,10 @@ country_event = { #Fate of Brazil
 		if = { limit = { tag = ARG BRA = { controls_state = 504 } }
 		transfer_state = 504
 		}
+		
+		if = { limit = { tag = ARG }
+		set_country_flag = ARG_beat_bra
+		}
 	}
 
 	option = { #occupy
@@ -23000,6 +22976,10 @@ country_event = { #Fate of La Plata
 		transfer_state = 720
 		}
 		
+		if = { limit = { tag = BRA }
+		set_country_flag = BRA_beat_arg
+		}
+		
 		if = { limit = { tag = CHL ARG = { controls_state = 512 } }
 		transfer_state = 512
 		transfer_state = 511
@@ -23070,6 +23050,10 @@ country_event = { #Fate of La Plata
 		transfer_state = 510
 		transfer_state = 299
 		transfer_state = 720
+		}
+		
+		if = { limit = { tag = BRA }
+		set_country_flag = BRA_beat_arg
 		}
 		
 		if = { limit = { tag = CHL ARG = { controls_state = 512 } }

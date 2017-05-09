@@ -1,4 +1,4 @@
-﻿name="Kaiserreich"
+﻿name="Kaiserreich Dev Build"
 path="mod/Kaiserreich/"
 tags={
 	"Alternative History"

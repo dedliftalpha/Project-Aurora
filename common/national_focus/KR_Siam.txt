@@ -3,7 +3,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 0 # change back to 10 later when activated
+			add = 10 # change back to 10 later when activated
 			tag = SIA
 		}
 	}
@@ -18,6 +18,15 @@ focus_tree = {
 		}
 		x = 4
 		y = 0
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_CONSTITUTION_GIVEN
+		}
 
 	}
 	focus = {
@@ -30,6 +39,15 @@ focus_tree = {
 		}
 		x = 8
 		y = 0
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_KHANA_RATSADON_COUP
+		}
 
 	}
 	focus = {
@@ -39,6 +57,9 @@ focus_tree = {
 		cost = 10.00
 		x = 26
 		y = 0
+		available = {
+			has_global_flag = SIA_BLACK_MONDAY
+		}
 
 	}
 	focus = {
@@ -46,27 +67,97 @@ focus_tree = {
 		text = SIA_nationalhighway
 		icon = GFX_goal_generic_army_motorized
 		cost = 10.00
-		x = 27
-		y = 7
-
+		x = 32
+		y = 6
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			289 = { # Bangkok
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			824 = { # Rayong
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			822 = { # Lopburi
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 289 # Bangkok
+				controls_state = 824 # Rayong
+				controls_state = 822 # Lopburi
+			}
+		}
 	}
 	focus = {
 		id = SIA_royalsiamesearmy
 		text = SIA_royalsiamesearmy
 		icon = GFX_goal_unknown
-		cost = 10.00
+		cost = 3.00
 		x = 13
 		y = 6
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_political_power = 25
+			army_experience = 10
+		}
 
 	}
 	focus = {
 		id = SIA_royalsiamesenavy
 		text = SIA_royalsiamesenavy
 		icon = GFX_goal_unknown
-		cost = 10.00
+		cost = 7.00
 		x = 7
 		y = 7
-
+		ai_will_do = {
+			factor = 4
+		}
+		completion_reward = {
+			add_political_power = 25
+			navy_experience = 10
+			289 = { # Bangkok
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 7408
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Bangkok
 	}
 	focus = {
 		id = SIA_royalsiameseaircorps
@@ -75,7 +166,44 @@ focus_tree = {
 		cost = 10.00
 		x = 1
 		y = 7
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_political_power = 25
+			air_experience = 10
+			289 = { # Don Mueang AFB
+				if = {
+					limit = { is_owned_by = SIA }
+					add_building_construction = {
+						type = air_base
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Bangkok
+	}
+	focus = {
+		id = SIA_renegiotiatedealwithHAPAG
+		text = SIA_renegiotiatedealwithHAPAG
+		icon = GFX_shadow_government
+		cost = 10.00
+		mutually_exclusive = {
+			focus = SIA_maritimesilkroad
+		}
+		x = 26
+		y = 7
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_hapagproposal
+		}
 	}
 	focus = {
 		id = SIA_thaiaviationindustries
@@ -87,7 +215,24 @@ focus_tree = {
 		}
 		x = 1
 		y = 9
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = SIA_air_production			
+			289 = { # Former RSAFW Aircraft Factories
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Bangkok
 	}
 	focus = {
 		id = SIA_newfighterdesign
@@ -99,6 +244,17 @@ focus_tree = {
 		}
 		x = 1
 		y = 10
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.5
+				uses = 2
+				category = light_fighter
+			}
+		}
 
 	}
 	focus = {
@@ -132,6 +288,15 @@ focus_tree = {
 		}
 		x = 2
 		y = 2
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_SENI_PRAMOJ_ELECTED
+		}
 
 	}
 	focus = {
@@ -192,13 +357,80 @@ focus_tree = {
 		id = SIA_antiairsystem
 		text = SIA_antiairsystem
 		icon = GFX_goal_generic_construct_military
-		cost = 10.00
+		cost = 13.00
 		prerequisite = {
 			focus = SIA_royalsiameseaircorps
 		}
 		x = 2
 		y = 8
-
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			289 = { # Bangkok
+				if = {
+					limit = { is_owned_by = SIA }
+						add_building_construction = {
+						type = anti_air_building
+						level = 2
+						instant_build = yes
+					}
+				}			
+			}
+			
+			824 = { # Sattahip
+				if = {
+					limit = { is_owned_by = SIA }
+						add_building_construction = {
+						type = anti_air_building
+						level = 1
+						instant_build = yes
+					}
+				}					
+			}
+			
+			822 = { # Chang Mai, Lampang
+				if = {
+					limit = { is_owned_by = SIA }
+						add_building_construction = {
+						type = anti_air_building
+						level = 1
+						instant_build = yes
+					}
+				}				
+			}
+			
+			823 = { # Nakhon Ratchasima, Khonkaen
+				if = {
+					limit = { is_owned_by = SIA }
+						add_building_construction = {
+						type = anti_air_building
+						level = 1
+						instant_build = yes
+					}
+				}			
+			}
+			
+			724 = { # Nakhon Si Thammarat, Surat Thani, Hat Yai
+				if = {
+					limit = { is_owned_by = SIA }
+						add_building_construction = {
+						type = anti_air_building
+						level = 1
+						instant_build = yes
+					}
+				}				
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 289 # Bangkok
+				controls_state = 824 # Rayong
+				controls_state = 822 # Chiang Mai
+				controls_state = 823 # Nakhon Ratchasima
+				controls_state = 724 # Hat Yai
+			}
+		}
 	}
 	focus = {
 		id = SIA_CASfocus
@@ -213,7 +445,17 @@ focus_tree = {
 		}
 		x = 2
 		y = 11
-
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 0.5
+				uses = 2
+				category = 	cas_bomber
+			}
+		}
 	}
 	focus = {
 		id = SIA_navalbomber
@@ -228,7 +470,17 @@ focus_tree = {
 		}
 		x = 0
 		y = 11
-
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = naval_bomber_bonus
+				bonus = 0.5
+				uses = 2
+				category = 	naval_bomber
+			}
+		}
 	}
 	focus = {
 		id = SIA_furtherairdevelopment
@@ -241,7 +493,17 @@ focus_tree = {
 		}
 		x = 2
 		y = 12
-
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 0.5
+				uses = 4
+				category = air_doctrine
+			}
+		}
 	}
 	focus = {
 		id = SIA_yellowcoverdossier
@@ -257,6 +519,15 @@ focus_tree = {
 		}
 		x = 4
 		y = 2
+			completion_reward = {
+					custom_effect_tooltip = unlock_focuses
+				}
+			available = {
+					always = no
+				}
+			bypass = {
+					has_global_flag = SIA_PRIDI_PANOMYONG_ELECTED_ELECTED
+				}
 
 	}
 	focus = {
@@ -305,7 +576,25 @@ focus_tree = {
 		}
 		x = 6
 		y = 8
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			navy_experience = 10
+			824 = { # Rayong
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 4433
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 824 } } # Rayong
 	}
 	focus = {
 		id = SIA_destroyerfleet
@@ -317,7 +606,18 @@ focus_tree = {
 		}
 		x = 5
 		y = 9
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = dd_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_subships
@@ -328,7 +628,18 @@ focus_tree = {
 		}
 		x = 5
 		y = 10
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = ss_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_aliberalsiam
@@ -345,6 +656,15 @@ focus_tree = {
 		}
 		x = 6
 		y = 2
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_PHRAYA_PHAHON_ELECTED
+		}
 
 	}
 	focus = {
@@ -407,7 +727,19 @@ focus_tree = {
 		}
 		x = 7
 		y = 9
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cl_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_newflagship
@@ -419,7 +751,19 @@ focus_tree = {
 		}
 		x = 7
 		y = 10
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cv_bonus
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = cv_tech
+				category = bc_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_wolfpacks
@@ -437,7 +781,17 @@ focus_tree = {
 		}
 		x = 5
 		y = 11
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5 
+				uses = 2
+				category = cat_trade_interdiction
+			}
+		}
 	}
 	focus = {
 		id = SIA_alargefleet
@@ -455,7 +809,17 @@ focus_tree = {
 		}
 		x = 7
 		y = 11
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5 
+				uses = 2
+				category = cat_fleet_in_being
+			}
+		}
 	}
 	focus = {
 		id = SIA_twooceannavy
@@ -468,7 +832,10 @@ focus_tree = {
 		}
 		x = 6
 		y = 12
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = { add_ideas = SIA_navy_focus }
 	}
 	focus = {
 		id = SIA_iron_marshal
@@ -507,7 +874,10 @@ focus_tree = {
 		}
 		x = 9
 		y = 3
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = { add_ideas = SIA_yuwachon_taharn_idea }
 	}
 	focus = {
 		id = SIA_ratthaniyomdecrees
@@ -578,7 +948,17 @@ focus_tree = {
 		}
 		x = 11
 		y = 7
-
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cat_superior_firepower_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_superior_firepower
+			}
+		}
 	}
 	focus = {
 		id = SIA_seriroengritplan
@@ -594,7 +974,17 @@ focus_tree = {
 		}
 		x = 13
 		y = 7
-
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cat_mass_assault_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_mass_assault
+			}
+		}
 	}
 	focus = {
 		id = SIA_expandmarinescorps
@@ -604,13 +994,24 @@ focus_tree = {
 		prerequisite = {
 			focus = SIA_phibunsongkhramplan
 			focus = SIA_seriroengritplan
+			focus = SIA_phrayaphahonplan
 		}
 		prerequisite = {
 			focus = SIA_royalsiamesenavy
 		}
 		x = 9
 		y = 8
-
+		ai_will_do = {
+			factor = 5
+		}		
+		completion_reward = {
+			add_tech_bonus = {
+				name = marine_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}		
+		}
 	}
 	focus = {
 		id = SIA_riverpatolunit
@@ -622,7 +1023,17 @@ focus_tree = {
 		}
 		x = 9
 		y = 9
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = naval_doctrine_bonus
+				bonus = 0.5 
+				uses = 2
+				category = naval_doctrine
+			}
+		}
 	}
 	focus = {
 		id = SIA_improvedlandingcraft
@@ -634,7 +1045,17 @@ focus_tree = {
 		}
 		x = 9
 		y = 10
-
+		ai_will_do = {
+			factor = 1
+		}	
+		completion_reward = {
+			add_tech_bonus = {
+				name = tp_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = tp_tech
+			}		
+		}
 	}
 	focus = {
 		id = SIA_phrayaphahonplan
@@ -650,7 +1071,17 @@ focus_tree = {
 		}
 		x = 15
 		y = 7
-
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = cat_grand_battle_plan_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_grand_battle_plan
+			}
+		}
 	}
 	focus = {
 		id = SIA_femalecorps
@@ -664,7 +1095,18 @@ focus_tree = {
 		}
 		x = 12
 		y = 8
-
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				has_manpower < 500000
+			}
+			modifier = {
+				factor = 10
+				has_manpower < 300000
+			}
+		}
+		completion_reward = { add_ideas = SIA_suranaree_corps_idea }
 	}
 	focus = {
 		id = SIA_governmentalreform
@@ -727,7 +1169,17 @@ focus_tree = {
 		}
 		x = 14
 		y = 8
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.5
+				uses = 2
+				category = infantry_weapons
+			}
+		}
 	}
 	focus = {
 		id = SIA_jungletraining
@@ -740,7 +1192,16 @@ focus_tree = {
 		}
 		x = 13
 		y = 9
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			custom_effect_tooltip = SIA_jungle_tt
+			hidden_effect = {
+				set_technology = { jungle_warfare = 1 }
+			}
+			custom_effect_tooltip = SIA_jungle_warfare_effect
+			}
 	}
 	focus = {
 		id = SIA_artilleryresearchdivision
@@ -753,7 +1214,17 @@ focus_tree = {
 		}
 		x = 11
 		y = 9
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = artillery_bonus
+				bonus = 0.5
+				uses = 2
+				category = artillery
+			}
+		}
 	}
 	focus = {
 		id = SIA_asymmetricalwarfare
@@ -765,7 +1236,16 @@ focus_tree = {
 		}
 		x = 13
 		y = 10
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			custom_effect_tooltip = SIA_urban_tt
+			hidden_effect = {
+				set_technology = { asymmetrical_warfare = 1 }
+			}
+			custom_effect_tooltip = SIA_asymmetrical_warfare_effect
+		}
 	}
 	focus = {
 		id = SIA_defensetechnologyinstitute
@@ -777,7 +1257,12 @@ focus_tree = {
 		}
 		x = 11
 		y = 10
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
 	}
 	focus = {
 		id = SIA_electronicsresearch
@@ -789,7 +1274,18 @@ focus_tree = {
 		}
 		x = 9
 		y = 11
-
+		ai_will_do = {
+			factor = 8
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = electronics_bonus
+				ahead_reduction = 0.5
+				bonus = 0.5
+				uses = 2
+				category = electronics
+			}
+		}
 	}
 	focus = {
 		id = SIA_nationalcurriculumact
@@ -801,7 +1297,10 @@ focus_tree = {
 		}
 		x = 15
 		y = 2
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = { add_ideas = SIA_education_reform_idea }
 	}
 	focus = {
 		id = SIA_regionaluniversities
@@ -813,7 +1312,12 @@ focus_tree = {
 		}
 		x = 15
 		y = 3
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
 	}
 	focus = {
 		id = SIA_kingmongkutinstitute
@@ -825,7 +1329,13 @@ focus_tree = {
 		}
 		x = 15
 		y = 4
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+		available = { SIA = { num_of_factories > 50 } }
 	}
 	focus = {
 		id = SIA_nationalreserveact
@@ -838,7 +1348,14 @@ focus_tree = {
 		}
 		x = 15
 		y = 9
-
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 10
+				has_manpower < 500000
+			}
+		}
+		completion_reward = { add_ideas = SIA_conscription_bonus }
 	}
 	focus = {
 		id = SIA_expandsupportcapacity
@@ -850,7 +1367,17 @@ focus_tree = {
 		}
 		x = 15
 		y = 10
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = support_tech_bonus
+				bonus = 0.5
+				uses = 3
+				category = 	support_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_salacheepphurchard
@@ -868,7 +1395,10 @@ focus_tree = {
 		}
 		x = 13
 		y = 11
-
+		ai_will_do = {
+			factor = 20
+		}
+		completion_reward = { add_ideas = SIA_salacheepphurchard_idea }
 	}
 	focus = {
 		id = SIA_armyaffairs
@@ -891,7 +1421,16 @@ focus_tree = {
 		}
 		x = 17
 		y = 8
-
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			custom_effect_tooltip = SIA_police_integration_tt
+			army_experience = 10
+			hidden_effect = {
+				load_oob = SIA_POLICE
+			}
+		}
 	}
 	focus = {
 		id = SIA_taharpran
@@ -903,7 +1442,10 @@ focus_tree = {
 		}
 		x = 17
 		y = 9
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = { add_ideas = SIA_taharn_pran_idea }
 	}
 	focus = {
 		id = SIA_counterinsurgencytactics
@@ -915,7 +1457,12 @@ focus_tree = {
 		}
 		x = 17
 		y = 10
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			swap_ideas = { remove_idea = SIA_taharn_pran_idea add_idea = SIA_counterinsurgency_idea }
+		}
 	}
 	focus = {
 		id = SIA_chiangmaioil
@@ -939,7 +1486,12 @@ focus_tree = {
 		}
 		x = 19
 		y = 8
-
+		ai_will_do = {
+			factor = 20
+		}
+		completion_reward = {
+			add_ideas = SIA_chulachomklao_academy
+		}
 	}
 	focus = {
 		id = SIA_royalmunitionsfactory
@@ -951,7 +1503,36 @@ focus_tree = {
 		}
 		x = 19
 		y = 9
-
+		completion_reward = {
+			822 = { # Lopburi
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			823 = { # Khonkaen
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 822 # Lanna
+				controls_state = 823 # Isan
+			}
+		}
 	}
 	focus = {
 		id = SIA_industrialmobilization
@@ -963,7 +1544,12 @@ focus_tree = {
 		}
 		x = 19
 		y = 10
-
+		ai_will_do = {
+			factor = 20
+		}
+		completion_reward = {
+			add_ideas = SIA_industrialmobilizationplan
+		}
 	}
 	focus = {
 		id = SIA_kickstartlocalbusiness
@@ -1053,7 +1639,17 @@ focus_tree = {
 		}
 		x = 21
 		y = 8
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {	
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = para_tech
+				category = mountaineers_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_contractswithchaiseri
@@ -1101,6 +1697,18 @@ focus_tree = {
 		}
 		x = 23
 		y = 5
+
+	}
+	focus = {
+		id = SIA_thegoldentriangle
+		text = SIA_thegoldentriangle
+		icon = GFX_goal_generic_secret_weapon
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_renegiotiatedealwithHAPAG
+		}
+		x = 24
+		y = 8
 
 	}
 	focus = {
@@ -1166,66 +1774,42 @@ focus_tree = {
 
 	}
 	focus = {
-		id = SIA_maritimesilkroad
-		text = SIA_maritimesilkroad
-		icon = GFX_OTT_camels
+		id = SIA_newgermaninvestments
+		text = SIA_newgermaninvestments
+		icon = GFX_goal_generic_construct_civ_factory
 		cost = 10.00
 		prerequisite = {
-			focus = SIA_nationalhighway
+			focus = SIA_renegiotiatedealwithHAPAG
 		}
-		x = 25
+		x = 26
 		y = 8
 
 	}
 	focus = {
-		id = SIA_maptaphuthawaiport
-		text = SIA_maptaphuthawaiport
-		icon = GFX_goal_generic_construct_naval_dockyard
+		id = SIA_increaseopiumoutput
+		text = SIA_increaseopiumoutput
+		icon = GFX_goal_LEC_monkey
 		cost = 10.00
 		prerequisite = {
-			focus = SIA_maritimesilkroad
+			focus = SIA_thegoldentriangle
+		}
+		prerequisite = {
+			focus = SIA_newgermaninvestments
 		}
 		x = 25
 		y = 9
 
 	}
 	focus = {
-		id = SIA_transtensassarimrailway
-		text = SIA_transtensassarimrailway
-		icon = GFX_goal_generic_construct_infrastructure
+		id = SIA_angyiipurge
+		text = SIA_angyiipurge
+		icon = GFX_goal_generic_attack_allies
 		cost = 10.00
 		prerequisite = {
-			focus = SIA_maritimesilkroad
+			focus = SIA_increaseopiumoutput
 		}
-		x = 27
-		y = 9
-
-	}
-	focus = {
-		id = SIA_foreigninvestment
-		text = SIA_foreigninvestment
-		icon = GFX_goal_generic_demand_territory
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_transtensassarimrailway
-		}
-		prerequisite = {
-			focus = SIA_maptaphuthawaiport
-		}
-		x = 26
+		x = 25
 		y = 10
-
-	}
-	focus = {
-		id = SIA_twooceantradinghub
-		text = SIA_twooceantradinghub
-		icon = GFX_goal_generic_positive_trade_relations_gold
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_foreigninvestment
-		}
-		x = 26
-		y = 11
 
 	}
 	focus = {
@@ -1250,7 +1834,7 @@ focus_tree = {
 		}
 		x = 28
 		y = 2
-
+		
 	}
 	focus = {
 		id = SIA_communalapproach
@@ -1289,6 +1873,312 @@ focus_tree = {
 		}
 		x = 28
 		y = 5
+
+	}
+	focus = {
+		id = SIA_maritimesilkroad
+		text = SIA_maritimesilkroad
+		icon = GFX_OTT_camels
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_nationalhighway
+		}
+		mutually_exclusive = {
+			focus = SIA_renegiotiatedealwithHAPAG
+		}
+		x = 30
+		y = 7
+		completion_reward = {
+			custom_effect_tooltip = unlock_focuses
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+			has_global_flag = SIA_maritimesilkroad_proposed
+		}
+	}
+	focus = {
+		id = SIA_kloengtoeidocks
+		text = SIA_kloengtoeidocks
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_maritimesilkroad
+			focus = SIA_renegiotiatedealwithHAPAG
+		}
+		x = 28
+		y = 8
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			289 = { # Kloengtoei Docks
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Kloengtoei
+	}
+	focus = {
+		id = SIA_bangkokdockexpansion
+		text = SIA_bangkokdockexpansion
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_kloengtoeidocks
+		}
+		prerequisite = {
+			focus = SIA_newgermaninvestments
+		}
+		x = 27
+		y = 9
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			289 = { # Bangkok
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 7408
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Bangkok
+	}
+	focus = {
+		id = SIA_maptaphuthawaiport
+		text = SIA_maptaphuthawaiport
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_maritimesilkroad
+		}
+		x = 30
+		y = 8
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			824 = { # Rayong
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 4433
+						instant_build = yes
+					}
+				}
+			}
+			749 = { # Thawai
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 1315
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 824 # Rayong
+				controls_state = 749 # Thawai
+			}
+		}
+	}
+	focus = {
+		id = SIA_expandmapthaphut
+		text = SIA_expandmapthaphut
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_kloengtoeidocks
+		}
+		prerequisite = {
+			focus = SIA_maptaphuthawaiport
+		}
+		x = 29
+		y = 9
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			824 = { # Rayong
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = naval_base
+						level = 2
+						province = 4433
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 824 } } # Rayong
+	}
+	focus = {
+		id = SIA_merchantmarines
+		text = SIA_merchantmarines
+		icon = GFX_USA_goal_liberty_ships
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_expandmapthaphut
+		}
+		x = 29
+		y = 10
+
+	}
+	focus = {
+		id = SIA_exportrice
+		text = SIA_exportrice
+		icon = GFX_goal_generic_positive_trade_relations
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_agrarianscoop
+		}
+		mutually_exclusive = {
+			focus = SIA_communalapproach
+		}
+		x = 30
+		y = 3
+
+	}
+	focus = {
+		id = SIA_ricesubsidyscheme
+		text = SIA_ricesubsidyscheme
+		icon = GFX_GUA_wheat
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_exportrice
+		}
+		x = 30
+		y = 4
+
+	}
+	focus = {
+		id = SIA_worldgranary
+		text = SIA_worldgranary
+		icon = GFX_GUA_wheat
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_ricesubsidyscheme
+		}
+		x = 30
+		y = 5
+
+	}
+	focus = {
+		id = SIA_transtensassarimrailway
+		text = SIA_transtensassarimrailway
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_maritimesilkroad
+		}
+		x = 32
+		y = 8
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			289 = { # Bangkok
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			824 = { # Rayong
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			749 = { # Thawai
+				if = {
+					limit = { is_owned_by = SIA }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 289 # Bangkok
+				controls_state = 824 # Rayong
+				controls_state = 749 # Thawai
+			}
+		}
+	}
+	focus = {
+		id = SIA_foreigninvestment
+		text = SIA_foreigninvestment
+		icon = GFX_goal_generic_demand_territory
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_transtensassarimrailway
+		}
+		prerequisite = {
+			focus = SIA_maptaphuthawaiport
+		}
+		x = 31
+		y = 9
+
+	}
+	focus = {
+		id = SIA_twooceantradinghub
+		text = SIA_twooceantradinghub
+		icon = GFX_goal_generic_positive_trade_relations_gold
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_foreigninvestment
+		}
+		x = 31
+		y = 10
 
 	}
 	focus = {
@@ -1340,55 +2230,30 @@ focus_tree = {
 
 	}
 	focus = {
-		id = SIA_exportrice
-		text = SIA_exportrice
-		icon = GFX_goal_generic_positive_trade_relations
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_agrarianscoop
-		}
-		mutually_exclusive = {
-			focus = SIA_communalapproach
-		}
-		x = 30
-		y = 3
-
-	}
-	focus = {
-		id = SIA_ricesubsidyscheme
-		text = SIA_ricesubsidyscheme
-		icon = GFX_GUA_wheat
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_exportrice
-		}
-		x = 30
-		y = 4
-
-	}
-	focus = {
-		id = SIA_worldgranary
-		text = SIA_worldgranary
-		icon = GFX_GUA_wheat
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_ricesubsidyscheme
-		}
-		x = 30
-		y = 5
-
-	}
-	focus = {
 		id = SIA_railwaygauge
 		text = SIA_railwaygauge
 		icon = GFX_goal_generic_construct_infrastructure
-		cost = 10.00
+		cost = 20.00
 		prerequisite = {
 			focus = SIA_nationalhighway
 		}
-		x = 30
-		y = 8
-
+		x = 34
+		y = 7
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			every_owned_state	= {
+				limit = { is_in_home_area = yes }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}					
+			}
+		}
+		available = { SIA = { controls_state = 289 } } # Bangkok
 	}
 	focus = {
 		id = SIA_isanrailway
@@ -1398,9 +2263,116 @@ focus_tree = {
 		prerequisite = {
 			focus = SIA_railwaygauge
 		}
-		x = 30
-		y = 9
-
+		x = 34
+		y = 8
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			if = { # Only Control Isan
+				limit = {
+					SIA = {
+						controls_state = 823 # Nakhon Ratchasima
+						NOT = {
+							controls_state = 882 # Chaiyaburi
+							controls_state = 670 # Vientiane
+						}
+					}
+				}
+				823 = { # Isan
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = infrastructure
+						level = 5
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Isan & Chaiyaburi
+				limit = {
+					SIA = {
+						controls_state = 823 # Nakhon Ratchasima
+						controls_state = 882 # Chaiyaburi
+						NOT = { controls_state = 670 } # Vientiane
+					}
+				}
+				823 = { # Isan
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				882 = { # Chaiyaburi
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Isan & Laos
+				limit = {
+					SIA = {
+						controls_state = 823 # Nakhon Ratchasima
+						controls_state = 670 # Vientiane
+						NOT = { controls_state = 882 } # Chaiyaburi
+					}
+				}
+				823 = { # Nakhon Ratchasima
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				670 = { # Laos
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Isan, Chaiyaburi & Laos
+				limit = {
+					SIA = {
+						controls_state = 823 # Nakhon Ratchasima
+						controls_state = 670 # Vientiane
+						controls_state = 882 # Chaiyaburi
+					}
+				}
+				823 = { # Nakhon Ratchasima
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				882 = { # Chaiyaburi
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				670 = { # Laos
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 823 } } # Nakhon Ratchasima
 	}
 	focus = {
 		id = SIA_southernrailway
@@ -1410,9 +2382,210 @@ focus_tree = {
 		prerequisite = {
 			focus = SIA_isanrailway
 		}
-		x = 30
-		y = 10
-
+		x = 34
+		y = 9
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			if = { # Only Control Southernn
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						NOT = {
+							controls_state = 831 # Satun
+							controls_state = 830 # Pattani
+						}
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = infrastructure
+						level = 5
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Only Control Southern & Pattani
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						controls_state = 830 # Pattani
+						NOT = { controls_state = 831 } # Satun
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				830 = { # Pattani
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Only Control Southern & Satun
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						controls_state = 831 # Satun
+						NOT = { controls_state = 830 } # Pattani
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				831 = { # Satun
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Only Control Southern Proper
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						controls_state = 831 # Satun
+						controls_state = 830 # Pattani
+						NOT = { controls_state = 751 } # Sirat Malai
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				830 = { # Pattani
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				831 = { # Satun
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}			
+			}
+			if = { # Control Southern Proper & Sirat Malai
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						controls_state = 831 # Satun
+						controls_state = 830 # Pattani
+						controls_state = 751 # Sirat Malai
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				830 = { # Pattani
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				831 = { # Satun
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				751 = { # Sirat Malai
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Southern Proper & whole Malaya Peninsular
+				limit = {
+					SIA = {
+						controls_state = 724 # Hat Yai
+						controls_state = 831 # Satun
+						controls_state = 830 # Pattani
+						controls_state = 751 # Sirat Malai
+						controls_state = 846 # Malaya
+					}
+				}
+				724 = { # Southern
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				830 = { # Pattani
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				831 = { # Satun
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				751 = { # Sirat Malai
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				846 = { # Malaya
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 724 } } # Southern
 	}
 	focus = {
 		id = SIA_northernrailway
@@ -1422,60 +2595,182 @@ focus_tree = {
 		prerequisite = {
 			focus = SIA_southernrailway
 		}
-		x = 30
-		y = 11
-
-	}
-	focus = {
-		id = SIA_kloengtoeidocks
-		text = SIA_kloengtoeidocks
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_maritimesilkroad
-		}
-		x = 23
-		y = 9
-
-	}
-	focus = {
-		id = SIA_expandmapthaphut
-		text = SIA_expandmapthaphut
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_kloengtoeidocks
-		}
-		prerequisite = {
-			focus = SIA_maptaphuthawaiport
-		}
-		x = 24
+		x = 34
 		y = 10
-
-	}
-	focus = {
-		id = SIA_merchantmarines
-		text = SIA_merchantmarines
-		icon = GFX_USA_goal_liberty_ships
-		cost = 10.00
-		prerequisite = {
-			focus = SIA_expandmapthaphut
+		ai_will_do = {
+			factor = 2
 		}
-		x = 24
-		y = 11
-
+		completion_reward = {
+			if = { # Only Control Lanna
+				limit = {
+					SIA = {
+						controls_state = 822 # Chiang Mai
+						NOT = {
+							controls_state = 756 # Lower Shan
+							controls_state = 72 # Upper Shan
+						}
+					}
+				}
+				822 = { # Lanna
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = infrastructure
+						level = 5
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Lanna & Lower Shan
+				limit = {
+					SIA = {
+						controls_state = 822 # Chiang Mai
+						controls_state = 756 # Lower Shan
+						NOT = { controls_state = 72 } # Upper Shan
+					}
+				}
+				822 = { # Lanna
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				756 = { # Lower Shan
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Lanna & Upper Shan
+				limit = {
+					SIA = {
+						controls_state = 822 # Chiang Mai
+						controls_state = 72 # Upper Shan
+						NOT = { controls_state = 756 } # Lower Shan
+					}
+				}
+				822 = { # Lanna
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+				72 = { # Upper Shan
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = { # Control Lanna & United Shan
+				limit = {
+					SIA = {
+						controls_state = 822 # Chiang Mai
+						controls_state = 72 # Upper Shan
+						controls_state = 756 # Lower Shan
+					}
+				}
+				822 = { # Lanna
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				756 = { # Lower Shan
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				72 = { # Upper Shan
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = { SIA = { controls_state = 822 } } # Lanna
 	}
 	focus = {
 		id = SIA_airportauthority
 		text = SIA_airportauthority
 		icon = GFX_goal_generic_production2
-		cost = 10.00
+		cost = 13.00
 		prerequisite = {
 			focus = SIA_royalsiameseaircorps
 		}
 		x = 0
 		y = 8
-
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = SIA_airport_authority_idea
+			289 = { # Takhli AFB, Prachua Khiri Khan AFB, Khok Ka Tiem AFB
+				if = {
+					limit = { is_owned_by = SIA }
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			823 = { # Korat AFB, Udon AFB, Ubon AFB
+				if = {
+					limit = { is_owned_by = SIA }
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			822 = { # Chiang Mai AFB, Lampang AFB, Phitsanulok AFB
+				if = {
+					limit = { is_owned_by = SIA }
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			724 = { # Hatyai AFB, Surat Thani AFB
+				if = {
+					limit = { is_owned_by = SIA }
+					add_building_construction = {
+						type = air_base
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		available = {
+			SIA = {
+				controls_state = 289 # Bangkok
+				controls_state = 824 # Rayong
+				controls_state = 822 # Chiang Mai
+				controls_state = 823 # Nakhon Ratchasima
+				controls_state = 724 # Hat Yai
+			}
+		}
 	}
 	focus = {
 		id = SIA_tacticalbombers
@@ -1488,6 +2783,14 @@ focus_tree = {
 		}
 		x = 0
 		y = 12
+		completion_reward = {
+			add_tech_bonus = {
+				name = tactical_bomber_bonus
+				bonus = 0.5
+				uses = 2
+				category = 	tactical_bomber
+			}
+		}
 
 	}
 	focus = {
@@ -1500,7 +2803,19 @@ focus_tree = {
 		}
 		x = 11
 		y = 12
-
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = jet_rocket_bonus
+				ahead_reduction = 0.5
+				bonus = 0.5
+				uses = 2
+				category = rocketry
+				category = jet_technology
+			}
+		}
 	}
 	focus = {
 		id = SIA_radar
@@ -1512,7 +2827,18 @@ focus_tree = {
 		}
 		x = 9
 		y = 12
-
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = radar_tech_bonus
+				ahead_reduction = 0.5
+				bonus = 0.5
+				uses = 2
+				category = radar_tech
+			}
+		}
 	}
 	focus = {
 		id = SIA_rulerofheskies
@@ -1527,6 +2853,23 @@ focus_tree = {
 		}
 		x = 1
 		y = 13
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			swap_ideas = { remove_idea = SIA_air_production add_idea = SIA_air_focus }
+		}
+	}
+	focus = {
+		id = SIA_germanprocurementprogramme
+		text = SIA_germanprocurementprogramme
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10.00
+		prerequisite = {
+			focus = SIA_bangkokdockexpansion
+		}
+		x = 27
+		y = 10
 
 	}
 }

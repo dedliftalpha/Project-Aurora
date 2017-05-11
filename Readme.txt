@@ -1,6 +1,6 @@
 Thank you for downloading Kaiserreich for Hearts of Iron 4!
 This is alpha version 0.4.3 - 'FUCKING WTF DO WE CALL THIS SHIT'.
-It is NOT save game compatible with any versions before 0.4, while it *may* be compatible with 0.4, 0.4.1 and 0.4.2, we have got mixed reports about it, ranging from totally okay to save game breaking, you have been warned!
+It is NOT save game compatible with any prior version!
 
 Manual Installation Instructions
 1) Download the mod

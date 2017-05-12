@@ -1645,7 +1645,34 @@ focus_tree = {
 		}
 		x = 22
 		y = 13
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_political_power = -100 # Pissed Minorities
+			set_global_flag = SIA_EMPIRE
+			if = { # Siamese
+				limit = { has_global_flag = SIA_SIAM }
+				SIA = { set_cosmetic_tag = SIA_EMPIRE }
+			}
+			if = { # Thai
+				limit = { has_global_flag = SIA_THAILAND }
+				SIA = { set_cosmetic_tag = THI_EMPIRE }
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 289 # Bangkok
+				controls_state = 822 # Lanna
+				controls_state = 823 # Isan
+				controls_state = 824 # Rayong
+				controls_state = 724 # Hat Yai
+				OR = {
+					has_global_flag = SIA_SIAM 
+					has_global_flag = SIA_THAILAND
+				}
+			}
+		}		
 	}
 	focus = {
 		id = SIA_bangkokdeclaration
@@ -1657,7 +1684,27 @@ focus_tree = {
 		}
 		x = 26
 		y = 13
-
+		ai_will_do = {
+			factor = 20
+		}
+		completion_reward = {
+			add_political_power = 100
+			create_faction = "SIA_SEATO_alliance"
+		}
+		available = { 
+			SIA = { 
+				controls_state = 289 # Bangkok
+				controls_state = 822 # Lanna
+				controls_state = 823 # Isan
+				controls_state = 824 # Rayong
+				controls_state = 724 # Hat Yai
+				OR = {
+					has_global_flag = SIA_SIAM 
+					has_global_flag = SIA_THAILAND
+				}
+				NOT = { is_in_faction = yes }
+			}
+		}
 	}
 	focus = {
 		id = SIA_integratelaos
@@ -1670,7 +1717,35 @@ focus_tree = {
 		}
 		x = 19
 		y = 14
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			SIA = {
+				remove_state_claim = 882 # Chaiyaburi
+				remove_state_claim = 670 # Laos
+				add_state_core = 882
+				add_state_core = 670		
+			}		
+			LAO = {
+				remove_state_claim = 882 # Chaiyauri - rightfully Siamese clay now
+				add_state_claim = 670 # Laos
+				remove_state_core = 882
+				remove_state_core = 670
+			}
+			INC = { # fcking purge
+				remove_state_claim = 882 # Chaiyaburi
+				remove_state_claim = 670 # Laos
+				remove_state_core = 882
+				remove_state_core = 670
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 882 # Chaiyaburi
+				controls_state = 670 # Laos			
+			}
+		}
 	}
 	focus = {
 		id = SIA_chaiyaburidam
@@ -1795,7 +1870,35 @@ focus_tree = {
 		}
 		x = 21
 		y = 14
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			SIA = {
+				remove_state_claim = 756 # Lower
+				remove_state_claim = 72 # Upper
+				add_state_core = 756
+				add_state_core = 72		
+			}		
+			SHA = {
+				add_state_claim = 756 # Lower
+				add_state_claim = 72 # Upper
+				remove_state_core = 756
+				remove_state_core = 72
+			}
+			BUR = { # fcking purge
+				remove_state_claim = 72 # Upper
+				remove_state_claim = 756 # Lower
+				remove_state_core = 72
+				remove_state_core = 756
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 72 # Upper
+				controls_state = 756 # Lower
+			}
+		}
 	}
 	focus = {
 		id = SIA_claimsibsongpanna
@@ -1810,7 +1913,21 @@ focus_tree = {
 		}
 		x = 21
 		y = 15
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			SIA = {
+				add_state_claim = 325 # Temporary Substitute		
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 72 # Upper
+				controls_state = 756 # Lower
+				controls_state = 670 # Laos
+			}
+		}
 	}
 	focus = {
 		id = SIA_contractswithchaiseri
@@ -1883,7 +2000,28 @@ focus_tree = {
 		}
 		x = 24
 		y = 14
-
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			SIA = {
+				remove_state_claim = 749 # Tanaosri
+				add_state_core = 749		
+			}		
+			MNS = {
+				add_state_claim = 749 # Tanaosri
+				remove_state_core = 749
+			}
+			BUR = { # fcking purge
+				remove_state_claim = 749 # Tanaosri
+				remove_state_core = 749
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 749 # Tanaosri
+			}
+		}
 	}
 	focus = {
 		id = SIA_sahaviriyasteeldeal
@@ -1999,7 +2137,186 @@ focus_tree = {
 		}
 		x = 25
 		y = 15
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			SIA = {
+				if = {
+					limit = { has_dlc = "Together for Victory" }
+					set_autonomy = {
+						target = CAM
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					else = { puppet = CAM }
+				}
+				load_oob = "SIA_Autonomous_Cambodia"		
+			}			
+			CAM = {
+				set_cosmetic_tag = Siam_CAM
+				load_oob = "CAM_SIA_Autonomous"
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = national_populist_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = paternal_autocrat_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = authoritarian_democrat_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = social_conservative_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = market_liberal_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = social_liberal_subtype
+					traits = { }
+				}
+				create_country_leader = { # Siamese throne contender
+					name = "Chau Ponhea Khuang Apheithipess"
+					desc = "POLITICS_KHUANG_APHAIWONG_DESC"
+					picture = "gfx/leaders/CAM/Portrait_Cambodia_Khuang_Aphaiwong.tga"
+					expire = "1968.3.15"
+					ideology = social_democrat_subtype
+					traits = { }
+				}
+			}	
+			if = { # Hand all Area to Cambodia Puppet
+				limit = {
+					SIA = {
+						controls_state = 825 # Phra Tabong
+						controls_state = 750 # Phnom Penh
+						controls_state = 825 # Stung Treng
+						controls_state = 856 # Can Tho						
+					}
+				}
+				SIA = {
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					remove_state_claim = 856 # Can Tho
+					remove_state_core = 825
+					remove_state_core = 750
+					remove_state_core = 826
+					remove_state_core = 856
+				}
+				CAM = {
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					remove_state_claim = 856 # Can Tho
+					add_state_core = 825
+					add_state_core = 750
+					add_state_core = 826
+					add_state_core = 856				
+					transfer_state = 825
+					transfer_state = 750
+					transfer_state = 826
+					transfer_state = 856				
+				}
+				INC = { # fcking purge
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					remove_state_claim = 856 # Can Tho
+					remove_state_core = 825
+					remove_state_core = 750
+					remove_state_core = 826
+					remove_state_core = 856
+				}
+			}
+			if = { # Mekong Delta is not handed back
+				limit = {
+					SIA = {
+						controls_state = 825 # Phra Tabong
+						controls_state = 750 # Phnom Penh
+						controls_state = 825 # Stung Treng
+						NOT = { controls_state = 856 } # Can Tho						
+					}
+				}
+				SIA = {
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					remove_state_claim = 856 # Can Tho
+					remove_state_core = 825
+					remove_state_core = 750
+					remove_state_core = 826
+					remove_state_core = 856
+				}
+				CAM = {
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					add_state_core = 825
+					add_state_core = 750
+					add_state_core = 826				
+					transfer_state = 825
+					transfer_state = 750
+					transfer_state = 826
+					remove_state_core = 856 # Can Tho - Obey your leader
+					add_state_claim = 856 # Can Tho				
+				}
+				INC = { # fcking purge
+					remove_state_claim = 825 # Phra Tabong
+					remove_state_claim = 750 # Phnom Penh
+					remove_state_claim = 826 # Stung Treng
+					remove_state_claim = 856 # Can Tho
+					remove_state_core = 825
+					remove_state_core = 750
+					remove_state_core = 826
+					remove_state_core = 856
+				}
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 825 # Phra Tabong
+				controls_state = 750 # Phnom Penh
+				controls_state = 825 # Stung Treng
+			}
+			CAM = { exists = no }
+		}
 	}
 	focus = {
 		id = SIA_agriculuralmechanisation
@@ -3171,7 +3488,49 @@ focus_tree = {
 		}
 		x = 23
 		y = 15
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			SIA = {
+				remove_state_claim = 825 # Phra Tabong
+				remove_state_claim = 750 # Phnom Penh
+				remove_state_claim = 826 # Stung Treng
+				remove_state_claim = 856 # Can Tho
+				add_state_core = 825
+				add_state_core = 750
+				add_state_core = 826
+				add_state_core = 856		
+			}		
+			CAM = {
+				remove_state_claim = 825 # Phra Tabong - rightfully Siamese clay now
+				add_state_claim = 750 # Phnom Penh
+				add_state_claim = 826 # Stung Treng
+				add_state_claim = 856 # Can Tho
+				remove_state_core = 825
+				remove_state_core = 750
+				remove_state_core = 826
+				remove_state_core = 856
+			}
+			INC = { # fcking purge
+				remove_state_claim = 825 # Phra Tabong
+				remove_state_claim = 750 # Phnom Penh
+				remove_state_claim = 826 # Stung Treng
+				remove_state_claim = 856 # Can Tho
+				remove_state_core = 825
+				remove_state_core = 750
+				remove_state_core = 826
+				remove_state_core = 856
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 825 # Phra Tabong
+				controls_state = 750 # Phnom Penh
+				controls_state = 825 # Stung Treng
+				controls_state = 856 # Mekong Delta				
+			}
+		}
 	}
 	focus = {
 		id = SIA_muslimmalayintegration
@@ -3186,7 +3545,125 @@ focus_tree = {
 		}
 		x = 22
 		y = 16
-
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			if = { # Control Singapore
+				limit = {
+					SIA = {
+						controls_state = 751 # Sirat Malai
+						controls_state = 846 # Malaya
+						controls_state = 336 # Singapore
+						controls_state = 830 # Satun
+						controls_state = 831 # Pattani						
+					}
+				}		
+				SIA = {
+					add_state_core = 751 # Kota Bharu
+					add_state_core = 336 # Singapore
+					add_state_core = 846 # Kuala Lumpur
+					add_state_core = 830 # Pattani
+					add_state_core = 831 # Satun
+					add_state_claim = 333 # Sarawak
+					add_state_claim = 828 # Sabah
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun			
+				}		
+				MLY = {
+					remove_state_claim = 751 # Kota Bharu - Rightfully Siamese Clay
+					add_state_claim = 336 # Singapore
+					add_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani - Rightfully Siamese Clay
+					remove_state_claim = 831 # Satun - Rightfully Siamese Clay
+					remove_state_core = 751
+					remove_state_core = 336
+					remove_state_core = 846
+					remove_state_core = 830
+					remove_state_core = 831
+					remove_state_core = 333 # Purge off Borneo
+					remove_state_core = 828 # Purge off Borneo
+				}
+			}
+			if = { # Not control Singapore
+				limit = {
+					SIA = {
+						controls_state = 751 # Sirat Malai
+						controls_state = 846 # Malaya
+						controls_state = 830 # Satun
+						controls_state = 831 # Pattani
+						NOT = { controls_state = 336 } # Singapore						
+					}
+				}		
+				SIA = {
+					add_state_core = 751 # Kota Bharu
+					add_state_core = 846 # Kuala Lumpur
+					add_state_core = 830 # Pattani
+					add_state_core = 831 # Satun
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun			
+				}		
+				MLY = {
+					remove_state_claim = 751 # Kota Bharu - Rightfully Siamese Clay
+					add_state_claim = 846 # Malaya
+					add_state_claim = 333 # Sarawak
+					add_state_claim = 828 # Sabah
+					remove_state_claim = 830 # Pattani - Rightfully Siamese Clay
+					remove_state_claim = 831 # Satun - Rightfully Siamese Clay
+					remove_state_core = 751
+					remove_state_core = 846
+					remove_state_core = 830
+					remove_state_core = 831
+					remove_state_core = 333 # Purge off Borneo
+					remove_state_core = 828 # Purge off Borneo
+				}
+			}
+			if = { # Sarawak is a thing - purge Malaysia (Sarawak Only)
+				limit = {
+					MLY = {
+						controls_state = 333 # Sarawak
+						NOT = {
+							controls_state = 751 # Sirat Malai
+							controls_state = 846 # Malaya
+							controls_state = 828 # Sabah
+						}
+					}
+				}		
+				SAR = {
+					transfer_state = 333 # Rebellion Begins		
+				}		
+			}
+			if = { # Sarawak is a thing - purge Malaysia (Sarawak & Sabah)
+				limit = {
+					MLY = {
+						controls_state = 333 # Sarawak
+						controls_state = 828 # Sabah
+						NOT = { 
+							controls_state = 751 # Sirat Malai
+							controls_state = 846 # Malaya
+						}
+					}
+				}		
+				SAR = {
+					transfer_state = 333 # Rebellion Begins
+					transfer_state = 828 # Rebellion Begins	
+				}		
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 751 # Sirat Malai
+				controls_state = 846 # Malaya
+				controls_state = 830 # Satun
+				controls_state = 831 # Pattani	
+			}
+		}
 	}
 	focus = {
 		id = SIA_malayaautonomous
@@ -3201,7 +3678,132 @@ focus_tree = {
 		}
 		x = 26
 		y = 16
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			SIA = {
+				if = {
+					limit = { has_dlc = "Together for Victory" }
+					set_autonomy = {
+						target = MLY
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					else = { puppet = MLY }
+				}
+				load_oob = "SIA_Autonomous_Malaya"	
+			}		
+			MLY = {
+				set_cosmetic_tag = Siam_MLY
+				load_oob = "MLY_SIA_Autonomous"
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}
+			}		
+			if = { # Control Singapore
+				limit = {
+					SIA = {
+						controls_state = 751 # Sirat Malai
+						controls_state = 846 # Malaya
+						controls_state = 336 # Singapore
+						controls_state = 830 # Satun
+						controls_state = 831 # Pattani						
+					}
+				}
+				SIA = {
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun
+					remove_state_core = 751
+					remove_state_core = 336
+					remove_state_core = 846
+					remove_state_core = 830
+					remove_state_core = 831
+				}
+				MLY = {
+					add_state_core = 751 # Kota Bharu
+					add_state_core = 336 # Singapore
+					add_state_core = 846 # Kuala Lumpur
+					add_state_core = 830 # Pattani
+					add_state_core = 831 # Satun
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun					
+					transfer_state = 751
+					transfer_state = 336
+					transfer_state = 846
+					transfer_state = 830
+					transfer_state = 731
+					remove_state_core = 333 # Purge off Borneo
+					remove_state_core = 828 # Purge off Borneo
+					add_state_claim = 333 # Sarawak
+					add_state_claim = 828 # Sabah
+				}
+			}
+			if = { # Not control Singapore
+				limit = {
+					SIA = {
+						controls_state = 751 # Sirat Malai
+						controls_state = 846 # Malaya
+						controls_state = 830 # Satun
+						controls_state = 831 # Pattani
+						NOT = {
+							controls_state = 336 # Singapore
+						}
+					}
+				}
+				SIA = {
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun
+					remove_state_core = 751
+					remove_state_core = 336
+					remove_state_core = 846
+					remove_state_core = 830
+					remove_state_core = 831
+				}
+				MLY = {
+					add_state_core = 751 # Kota Bharu
+					add_state_core = 846 # Kuala Lumpur
+					add_state_core = 830 # Pattani
+					add_state_core = 831 # Satun
+					remove_state_claim = 751 # Kota Bharu
+					remove_state_claim = 336 # Singapore
+					remove_state_claim = 846 # Malaya
+					remove_state_claim = 830 # Pattani
+					remove_state_claim = 831 # Satun					
+					transfer_state = 751
+					transfer_state = 846
+					transfer_state = 830
+					transfer_state = 731
+					remove_state_core = 333 # Purge off Borneo
+					remove_state_core = 828 # Purge off Borneo
+					add_state_claim = 333 # Sarawak
+					add_state_claim = 828 # Sabah
+				}			
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 751 # Sirat Malai
+				controls_state = 846 # Malaya
+				controls_state = 830 # Satun
+				controls_state = 831 # Pattani
+			}
+			MLY = { exists = no }
+		}	
 	}
 	focus = {
 		id = SIA_burmesepuppet
@@ -3213,7 +3815,160 @@ focus_tree = {
 		}
 		x = 20
 		y = 16
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			SIA = {
+				if = {
+					limit = { has_dlc = "Together for Victory" }
+					set_autonomy = {
+						target = BUR
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					set_autonomy = {
+						target = KAC
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					set_autonomy = {
+						target = RKH
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					else = {
+						puppet = BUR
+						puppet = KAC
+						puppet = RKH
+					}
+				}
+				load_oob = "SIA_Autonomous_Burma"		
+			}		
+			BUR = {
+				set_cosmetic_tag = Siam_BUR
+				load_oob = "BUR_SIA_Autonomous"
+				clr_global_flag = RPCevent_banned_BUR
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}				
+			}	
+			KAC = {
+				set_cosmetic_tag = Siam_KAC			
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}			
+			}
+			RKH = {
+				set_cosmetic_tag = Siam_RKH
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}			
+			}
+			if = { # Hand all Area to Burma & Co Puppet except Shan and Mon ofc
+				limit = {
+					SIA = {
+						controls_state = 640 # Mandalay
+						controls_state = 288 # Rangoon
+					}
+				}
+				SIA = {
+					remove_state_claim = 288 # Rangoon
+					remove_state_claim = 640 # Mandalay
+					remove_state_claim = 701 # Kachin
+					remove_state_claim = 790 # Rakhine
+					remove_state_core = 288
+					remove_state_core = 640
+					remove_state_core = 701
+					remove_state_core = 790
+				}
+				BUR = {
+					add_state_core = 288 # Rangoon
+					add_state_core = 640 # Mandalay
+					transfer_state = 288
+					transfer_state = 640				
+				}
+				KAC = {
+					add_state_core = 701 # Kachin
+					transfer_state = 701				
+				}
+				RKH = {
+					add_state_core = 790 # Rakhine
+					transfer_state = 790				
+				}
+				BHC = { # fcking purge
+					remove_state_claim = 288 # Rangoon
+					remove_state_claim = 640 # Mandalay
+					remove_state_claim = 756 # Kengtung
+					remove_state_claim = 749 # Tanintharyi
+					remove_state_claim = 72  # Shan
+					remove_state_claim = 701 # Kachin
+					remove_state_claim = 790 # Rahine
+					remove_state_core = 288
+					remove_state_core = 640
+					remove_state_core = 756
+					remove_state_core = 749
+					remove_state_core = 72
+					remove_state_core = 701
+					remove_state_core = 790
+				}
+				PRF = { # fcking purge
+					remove_state_claim = 288 # Rangoon
+					remove_state_claim = 640 # Mandalay
+					remove_state_claim = 756 # Kengtung
+					remove_state_claim = 749 # Tanintharyi
+					remove_state_claim = 72  # Shan
+					remove_state_claim = 701 # Kachin
+					remove_state_claim = 790 # Rahine
+					remove_state_core = 288
+					remove_state_core = 640
+					remove_state_core = 756
+					remove_state_core = 749
+					remove_state_core = 72
+					remove_state_core = 701
+					remove_state_core = 790
+				}
+				DEH = { # fcking purge
+					remove_state_claim = 288 # Rangoon
+					remove_state_claim = 640 # Mandalay
+					remove_state_claim = 756 # Kengtung
+					remove_state_claim = 749 # Tanintharyi
+					remove_state_claim = 72  # Shan
+					remove_state_claim = 701 # Kachin
+					remove_state_claim = 790 # Rahine
+					remove_state_core = 288
+					remove_state_core = 640
+					remove_state_core = 756
+					remove_state_core = 749
+					remove_state_core = 72
+					remove_state_core = 701
+					remove_state_core = 790
+				}
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 671 # Hanoi
+				controls_state = 827 # Annam
+				controls_state = 286 # Saigon
+			}
+			BUR = { exists = no }
+		}		
 	}
 	focus = {
 		id = SIA_vietnamesepuppet
@@ -3225,6 +3980,145 @@ focus_tree = {
 		}
 		x = 18
 		y = 16
-
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			SIA = {
+				if = {
+					limit = { has_dlc = "Together for Victory" }
+					set_autonomy = {
+						target = VIE
+						autonomous_state = autonomy_integrated_puppet
+						freedom_level = 0.8
+					}
+					else = { puppet = VIE }
+				}
+				load_oob = "SIA_Autonomous_Vietnam"		
+			}		
+			VIE = {
+				set_cosmetic_tag = Siam_VIE
+				load_oob = "VIE_SIA_Autonomous"
+				set_politics = {
+					ruling_party = paternal_autocrat
+					elections_allowed = no
+				}
+				add_popularity = {
+					ideology = paternal_autocrat
+					popularity = 0.20
+				}
+			}		
+			if = { # Hand all Area to Vietnam Puppet
+				limit = {
+					SIA = {
+						controls_state = 671 # Hanoi
+						controls_state = 827 # Annam
+						controls_state = 286 # Saigon
+					}
+					NOT = {
+						856 = { is_core_of = SIA } # Cantho
+					}
+				}
+				SIA = {
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 856 # Can Tho
+					remove_state_claim = 857 # Dong Bac
+					remove_state_core = 286
+					remove_state_core = 671
+					remove_state_core = 856
+					remove_state_core = 857
+					remove_state_core = 827
+				}
+				VIE = {
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 856 # Can Tho
+					remove_state_claim = 857 # Dong Bac				
+					add_state_core = 286 # Saigon
+					add_state_core = 671 # Hanoi
+					add_state_core = 827 # Annam
+					add_state_core = 856 # Can Tho
+					add_state_core = 857 # Dong Bac
+					transfer_state = 286
+					transfer_state = 827
+					transfer_state = 856
+					transfer_state = 857
+					transfer_state = 671				
+				}
+				INC = { # fcking purge
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 856 # Can Tho
+					remove_state_claim = 857 # Dong Bac
+					remove_state_core = 286
+					remove_state_core = 671
+					remove_state_core = 856
+					remove_state_core = 857
+					remove_state_core = 827
+				}
+			}
+			if = { # CanTho is not handed back
+				limit = {
+					SIA = {
+						controls_state = 671 # Hanoi
+						controls_state = 827 # Annam
+						controls_state = 286 # Saigon
+					}
+					NOT = {
+						856 = { is_core_of = SIA } # Cantho
+					}
+				}
+				SIA = {
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 857 # Dong Bac
+					remove_state_core = 286
+					remove_state_core = 671
+					remove_state_core = 857
+					remove_state_core = 827
+				}
+				VIE = {
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 857 # Dong Bac				
+					add_state_core = 286 # Saigon
+					add_state_core = 671 # Hanoi
+					add_state_core = 827 # Annam
+					add_state_core = 857 # Dong Bac
+					transfer_state = 286
+					transfer_state = 827
+					transfer_state = 857
+					transfer_state = 671
+					remove_state_core = 856 # Can Tho - Obey your overlord
+					add_state_claim = 856 # Can Tho - here's the sign that you were here
+				}
+				INC = { # fcking purge
+					remove_state_claim = 286 # Saigon
+					remove_state_claim = 671 # Hanoi
+					remove_state_claim = 827 # Annam
+					remove_state_claim = 856 # Can Tho
+					remove_state_claim = 857 # Dong Bac
+					remove_state_core = 286
+					remove_state_core = 671
+					remove_state_core = 856
+					remove_state_core = 857
+					remove_state_core = 827
+				}				
+			}
+		}
+		available = { 
+			SIA = { 
+				controls_state = 671 # Hanoi
+				controls_state = 827 # Annam
+				controls_state = 286 # Saigon
+			}
+			VIE = { exists = no }
+		}		
 	}
 }

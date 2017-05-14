@@ -461,6 +461,16 @@ focus_tree = {
 		id = GER_schacht3
 		icon = GFX_focus_generic_polish_deal
 		prerequisite = { focus = GER_schacht2 }
+		bypass = {
+			AND = {
+				POL = { 
+					is_in_faction = yes 
+					NOT = {
+						is_in_faction_with = GER
+					}
+				}
+			}
+		}
 		x = 9
 		y = 3
 		cost = 5
@@ -1419,7 +1429,7 @@ focus_tree = {
 	focus = {
 		id = GER_industry_finished
 		icon = GFX_goal_generic_trade
-		prerequisite = { focus = GER_civ_industry_3 }
+		prerequisite = { focus = GER_civ_industry_3 focus = GER_mil_industry_3 }
 		x = 24
 		y = 5
 		cost = 10
@@ -2667,6 +2677,37 @@ focus_tree = {
 	}
 
 	focus = {
+		id = GER_IRE_deal
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = GER_north_sea3 }
+		x = 52
+		y = 4
+		cost = 6
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		available = { 
+			IRE = {	
+				exists = yes
+				NOT = { 
+					is_in_faction_with = FRA 
+					is_in_faction_with = ENG 
+				}
+			}
+			OR = {
+				has_global_flag = ENG_GERIRE_protection
+				is_in_faction_with = IRE
+			}
+		}
+
+		completion_reward = {	
+			country_event = { id = gerfor.43 }
+		}
+	}
+
+	focus = {
 		id = GER_north_sea4
 		icon = GFX_goal_generic_more_territorial_claims
 		prerequisite = { focus = GER_north_sea3 }
@@ -2686,7 +2727,7 @@ focus_tree = {
 			}
 		}
 		x = 51
-		y = 4
+		y = 5
 		cost = 10
 		
 		ai_will_do = {
@@ -3134,10 +3175,10 @@ focus_tree = {
 	}
 
 	########################
-	### Mitteleuropa
+	### Foreign
 	########################
 	
-	### Administration
+	### Mitteleuropa
 	
 	# focus = {
 		# id = GER_handelshof
@@ -3191,8 +3232,6 @@ focus_tree = {
 		# }
 	# }
 	
-	# ### Grain
-	
 	# focus = {
 		# id = GER_support_local
 		# icon = GFX_goal_generic_production
@@ -3227,8 +3266,6 @@ focus_tree = {
 		# }
 	# }
 	
-	# ### Trade
-	
 	# focus = {
 		# id = GER_reichsmark
 		# icon = GFX_goal_generic_production
@@ -3260,8 +3297,6 @@ focus_tree = {
 		# completion_reward = {
 		# }
 	# }
-	
-	# ### Expansion
 	
 	# focus = {
 		# id = GER_poland
@@ -3310,47 +3345,8 @@ focus_tree = {
 		# completion_reward = {
 		# }
 	# }
-
-	########################
-	### Foreign
-	########################
-
-	# focus = {
-		# id = GER_IRE_deal
-		# icon = GFX_goal_generic_positive_trade_relations
-		# prerequisite = { }
-		# x = 34
-		# y = 8
-		# cost = 6
-		
-		# ai_will_do = {
-			# factor = 100
-		# }
-		
-		# available = { 
-			# country_exists = IRE
-			# NOT = { 
-				# has_war_with = FRA 
-				# has_war_with = SOV 
-				# has_war_with = IRE 
-				# has_war_with = FRA 
-			# }
-			# OR = {
-				# has_global_flag = ENG_GERIRE_protection
-				# is_in_faction_with = IRE
-			# }
-			# IRE = {	
-				# NOT = { 
-					# is_in_faction_with = FRA 
-					# is_in_faction_with = ENG 
-				# }
-			# }
-		# }
-
-		# completion_reward = {	
-			# country_event = { id = gerfor.43 }
-		# }
-	# }
+	
+	### The Oil must flow
 	
 	# focus = {
 		# id = GER_DKB_deal

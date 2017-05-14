@@ -1171,13 +1171,13 @@ country_event = { #POL liberation
 				tag = EMP
 			tag = REB
 			}
-			not = {
+			NOT = {
 				tag = GER
 			}
 		}
 		name = annex.2.a
 		ai_chance = {
-			factor = 99
+			factor = 25
 		}
 
 		every_state = {
@@ -1194,7 +1194,56 @@ country_event = { #POL liberation
 			}
 		}
 		puppet = POL
-		add_political_power = 100
+		add_political_power = 20
+
+	}
+	
+	option = { #liberate
+		trigger = {
+			NOT = {
+				tag = EMP
+			tag = REB
+			}
+			NOT = {
+				tag = GER
+			}
+			any_state = {
+			is_core_of = POL
+			is_controlled_by = ROOT
+			NOT = { state = 10 state = 97 state = 92 state = 90 state = 98 }
+			}
+		}
+		name = annex.22.f
+		ai_chance = {
+			factor = 99
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = POL
+				NOT = { state = 10 state = 97 state = 92 state = 90 state = 98 }
+			}
+			POL = {
+				remove_state_core = PREV
+			}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = POL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			POL = {
+				transfer_state = PREV
+			}
+		}
+		puppet = POL
+		
+		add_political_power = 20
 
 	}
 
@@ -1204,7 +1253,7 @@ country_event = { #POL liberation
 			factor = 1
 		}
 		set_country_flag = POL_CONQ
-		add_political_power = -20
+		add_political_power = -100
 	}
 
 	option = { #German option
@@ -1223,11 +1272,28 @@ country_event = { #POL liberation
 		ai_chance = {
 			factor = 50
 		}
-		POL = {
-			transfer_state = 10
-			transfer_state = 97
-			transfer_state = 92
-			transfer_state = 90
+		every_state = {
+			limit = {
+				is_core_of = POL
+				NOT = { state = 10 state = 97 state = 92 state = 90 }
+			}
+			POL = {
+				remove_state_core = PREV
+			}
+		}
+
+		every_state = {
+			limit = {
+				is_core_of = POL
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+
+			}
+			POL = {
+				transfer_state = PREV
+			}
 		}
 		puppet = POL
 		add_political_power = -20
@@ -4033,6 +4099,7 @@ country_event = { #Fate of the Baltic Region
 			tag = EST
 			tag = LIT
 			tag = LAT
+			tag = RUS
 			has_war_with = POL
 			has_war_with = LIT
 			has_war_with = PLC
@@ -17235,7 +17302,7 @@ country_event = { #Fate of Galicia
 			exists = no
 		}
 		controls_state = 91 #Lwow
-		NOT = { controls_state = 43 }
+		NOT = { controls_state = 43 controls_state = 10 }
 	}
 	
 	mean_time_to_happen = {

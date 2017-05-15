@@ -50,6 +50,7 @@ country_event = { #attack Delhi
 		}
 		add_political_power = -100
 		DEH = { set_country_flag = DEH_no_afghan_war }
+		AFG = { set_country_flag = AFG_muslim_angry }
 	}
 }
 
@@ -406,7 +407,6 @@ country_event = {
 			add_ideas = AFG_Ghulam_Faruq_Usman_sec_pau
 		}
 		add_political_power =  300
-		country_event = {id = afg.14 days = 7}
 	}
 }
 
@@ -482,8 +482,8 @@ country_event = {
 }
 
 ### Reforms - Nadir Route###
-### Nadir's Claims to the Throne###
 
+### Nadir's Claims to the Throne###
 country_event = {
 	id = afg.14
 	title = afg.14.t
@@ -674,3 +674,265 @@ country_event = {
 		}
 	}
 }
+
+
+####################################
+#### New Afghanistan Events		####
+####################################
+#### By anbory #####################
+####################################
+
+###Indian sarrafs (money changers) left our country###
+country_event = {
+	id = afg.18
+	title = afg.18.t
+	desc = afg.18.d
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = AFG
+		has_war_with = DEH
+	}
+
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	option = {
+		name = afg.18.a 
+		add_political_power = -20
+		set_country_flag = AFG_sar_gone
+	}
+	
+}
+
+###War is over, sarrafs traders came back###
+country_event = {
+	id = afg.19
+	title = afg.19.t
+	desc = afg.19.d
+
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			tag = AFG
+			NOT = { has_war_with = DEH }
+			has_country_flag = AFG_sar_gone
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = {
+		name = afg.19.a 
+		add_political_power = 15
+		clr_country_flag = AFG_sar_gone
+	}
+	
+}
+
+###Fate of "Machine-Khana"###
+country_event = {
+	id = afg.20
+	title = afg.20.t
+	desc = afg.20.d
+
+	fire_only_once = yes
+
+	trigger = {
+		AND = {
+			tag = DEH
+			AFG = {is_subject_of = DEH}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+	
+	option = { #Destroy
+		ai_chance = {
+			factor = 50
+		}
+		name = afg.20.a 
+		add_political_power = -20
+		AFG = { country_event = {id = afg.21 days = 4} }
+	}
+	
+	option = { #Invest money
+		ai_chance = {
+			factor = 40
+		}
+		name = afg.20.b 
+		add_political_power = -40
+		AFG = { country_event = {id = afg.22 days = 15} }
+	}
+	
+	option = { # Do Nothing
+		ai_chance = {
+			factor = 10
+		}
+		name = afg.20.c
+	}
+	
+}
+
+###Factory destroyed###
+country_event = {
+	id = afg.21
+	title = afg.21.t
+	desc = afg.21.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = afg.21.a 
+		267 = {
+			remove_building = {
+				type = industrial_complex
+				level = 2
+			}
+		}
+	}
+}
+
+###New factory from Indians###
+country_event = {
+	id = afg.22
+	title = afg.22.t
+	desc = afg.22.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = afg.22.a 
+		267 = {
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+###Non-war variant for rebelion###
+
+###Muslim opposition###
+country_event = {
+	id = afg.23
+	title = afg.23.t
+	desc = afg.23.d
+
+	fire_only_once = yes
+	trigger = {
+		tag = AFG
+		has_country_flag = AFG_muslim_angry
+	}
+	
+	mean_time_to_happen = {days = 31}
+	
+	option = {
+		name = afg.23.a 
+		add_political_power = -60
+		country_event = {id = afg.24 days = 21}
+	}
+}
+
+###Muslims are angry###
+country_event = {
+	id = afg.24
+	title = afg.24.t
+	desc = afg.24.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = { #Use army against them
+		ai_chance = {
+			factor = 60
+		}
+		name = afg.24.a 
+		add_political_power = -20
+		country_event = {id = afg.25 days = 21}
+		set_country_flag = AFG_Nadir_angry
+		add_popularity = {ideology = national_populist popularity = -0.05}
+	}
+	
+	option = { #Do nothing
+		ai_chance = {
+			factor = 40
+		}
+		name = afg.24.b
+		add_political_power = -60
+		country_event = {id = afg.25 days = 21}
+	}
+}
+
+###Muslim revolt###
+country_event = {
+	id = afg.25
+	title = afg.25.t
+	desc = afg.25.d
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = { #Habibulah's muslim
+		ai_chance = {
+			factor = 50
+		}
+		name = afg.25.a 
+		set_politics = {ruling_party = national_populist}
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			add_ideas = AFG_Malik_Habibullah_Kalakani_hog_npo
+			remove_ideas_with_trait = foreign_minister
+			add_ideas = AFG_Muhammad_Nauruz_for_pau
+			remove_ideas_with_trait = economy_minister
+			add_ideas = AFG_Muhammad_Nauruz_eco_pau
+			remove_ideas_with_trait = security_minister
+			add_ideas = AFG_Khalilullah_Khalili_sec_npo
+			add_popularity = { ideology = national_populist popularity = 0.3 }
+			country_event = {id = afg.11 days = 30}
+		}
+		add_political_power = -400
+	}
+	
+	option = { #Nadir's hunta
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			has_country_flag = AFG_Nadir_angry #Nadir become too powerful for you
+		}
+		name = afg.25.b
+		create_country_leader = {
+				name = "Mohammed Nadir"
+				desc = ""
+				picture = "Portrait_Afghan_Mohammed_Zahir.tga"
+				expire = "1965.1.1"
+				ideology = paternal_autocrat_subtype
+				traits = {}
+		}	
+		set_country_flag = AFG_reforms
+		set_cosmetic_tag = AFG_nadir
+		hidden_effect = {
+			remove_ideas_with_trait = head_of_government
+			add_ideas = AFG_Inayatullah_Khan_Seraj_hog_pau
+			remove_ideas_with_trait = foreign_minister
+			add_ideas = AFG_Haji_Faiz_Muhammed_Zikeria_for_pau
+			remove_ideas_with_trait = security_minister
+			add_ideas = AFG_Ghulam_Faruq_Usman_sec_pau
+		}
+		add_political_power = -400
+		country_event = {id = afg.14 days = 7}
+	}
+}
+

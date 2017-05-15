@@ -386,7 +386,7 @@ focus_tree = {
 		icon = GFX_goal_generic_air_fighter
 		cost = 10.00
 		prerequisite = {
-			focus = TEX_navy
+			focus = TEX_carriers
 		}
 		x = 9
 		y = 4
@@ -1321,15 +1321,34 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {# Rebuilding America
+		id = TEX_rebulding_america
+		icon = GFX_goal_generic_production2
+		cost = 10.00
+		prerequisite = {
+			focus = TEX_reconstruction_policies
+		}
+		x = 16
+		y = 8
+		completion_reward = {		
+			add_tech_bonus = {
+				name = industrial_bonus 
+				bonus = 0.5
+				uses = 3
+				category = industry
+				category = electronics			
+			}		
+		}
+	}
 	focus = {# Rebuilding the South
 		id = TEX_rebuilding_the_south
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
 		prerequisite = {
-			focus = TEX_reconstruction_policies
+			focus = TEX_rebulding_america
 		}
-		x = 17
-		y = 8
+		x = 16
+		y = 9
 		completion_reward = {
 			370 = {
 				if = {
@@ -1386,7 +1405,7 @@ focus_tree = {
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
 		prerequisite = {
-			focus = TEX_rebuilding_the_south
+			focus = TEX_rebulding_america
 		}
 		x = 18
 		y = 9
@@ -1446,9 +1465,9 @@ focus_tree = {
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
 		prerequisite = {
-			focus = TEX_rebuilding_the_south
+			focus = TEX_rebulding_america
 		}
-		x = 16
+		x = 14
 		y = 9
 		completion_reward = {
 			395 = {
@@ -1517,7 +1536,13 @@ focus_tree = {
 		prerequisite = {
 			focus = TEX_rebuilding_the_midwest
 		}
-		x = 16
+		prerequisite = {
+			focus = TEX_rebuilding_the_west
+		}
+		prerequisite = {
+			focus = TEX_rebuilding_the_south
+		}		
+		x = 18
 		y = 10
 		completion_reward = {
 			386 = {
@@ -1580,9 +1605,15 @@ focus_tree = {
 			796 = {	is_owned_by = TEX }		
 		}
 		prerequisite = {
+			focus = TEX_rebuilding_the_midwest
+		}
+		prerequisite = {
 			focus = TEX_rebuilding_the_west
 		}
-		x = 18
+		prerequisite = {
+			focus = TEX_rebuilding_the_south
+		}
+		x = 16
 		y = 10
 		completion_reward = {
 			357 = {
@@ -1616,10 +1647,13 @@ focus_tree = {
 		icon = GFX_goal_continuous_non_factory_construct
 		cost = 10.00
 		prerequisite = {
-			focus = TEX_rebuilding_the_pacific
+			focus = TEX_rebuilding_the_midwest
 		}
 		prerequisite = {
-			focus = TEX_rebuilding_new_england
+			focus = TEX_rebuilding_the_west
+		}
+		prerequisite = {
+			focus = TEX_rebuilding_the_south
 		}
 		x = 17
 		y = 11
@@ -1718,6 +1752,14 @@ focus_tree = {
 		completion_reward = {
 			remove_ideas = TEX_reconstruction_policy
 			remove_ideas = recovering_from_acw
+			if = {
+				limit = {
+					has_completed_focus = TEX_rebuilding_new_england
+					has_completed_focus = TEX_rebuilding_the_pacific					
+				}
+				add_political_power = 250
+				add_national_unity = 0.05
+			}			
 			add_research_slot = 1
 		}
 	}	

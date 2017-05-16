@@ -4772,6 +4772,12 @@ country_event = { #Escalate the Propaganda War
 	desc = fengtian.new.91.d
 	desc = {
 		text = fengtian.new.91.d_mantetsu
+		trigger = {
+			OR = {
+				has_idea = FNG_informal_empire_4
+				has_idea = FNG_informal_empire_5
+			}
+		}
 	}
 	
 	fire_only_once = yes
@@ -6246,7 +6252,133 @@ country_event = { #Hidden Minister Availability Rotation
 	}
 }
 
+#Minister Selection Events
 
+country_event = { #Recovery League/AuthDem Foreign Minister Setup
+	id = fngpolitic.14
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Wu_Jinglian_for_ade
+				has_idea = FNG_Chang_Chun_for_ade
+			}
+		}
+	}
+	
+	option = {
+		random_list = {
+			60 = {
+				set_country_flag = Wu_Jinglian_for_ade
+			}
+			40 = {
+				set_country_flag = Chang_Chun_for_ade
+			}
+		}
+	}
+}
+
+country_event = { #Recovery League/AuthDem Foreign Minister Actual
+	id = fngpolitic.15
+	title = fngpolitic.15.t
+	desc = {
+		text = fngpolitic.15.d_Wu
+		trigger = {
+			has_country_flag = Wu_Jinglian_for_ade
+		}
+	}
+	desc = {
+		text = fngpolitic.15.d_Chang
+		trigger = {
+			has_country_flag = Chang_Chun_for_ade
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Wu_Jinglian_for_ade
+				has_idea = FNG_Chang_Chun_for_ade
+			}
+		}
+		OR = {
+			has_country_flag = Wu_Jinglian_for_ade
+			has_country_flag = Chang_Chun_for_ade
+		}
+	}
+	
+	option = { #Appoint Wu
+		name = fngpolitic.15.a
+		trigger = {
+			has_country_flag = Wu_Jinglian_for_ade
+		}
+		add_ideas = {
+			FNG_Wu_Jinglian_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Chang
+		name = fngpolitic.15.b
+		trigger = {
+			has_country_flag = Chang_Chun_for_ade
+		}
+		add_ideas = {
+			FNG_Chang_Chun_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.15.c
+		add_political_power = -30
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+
+
+
+
+	
 
 #########################################
 ### Fengtian Informal Empire Mechanic ###

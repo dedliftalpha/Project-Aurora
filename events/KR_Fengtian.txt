@@ -6374,7 +6374,130 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 	}
 }
 
+country_event = { #Recovery League/AuthDem Economic Setup
+	id = fngpolitic.16
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		has_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		NOT = {
+			OR = {
+				has_idea = FNG_Pan_Fu_eco_ade
+				has_idea = FNG_Chang_Chun_eco_ade
+			}
+		}
+	}
+	
+	option = {
+		random_list = {
+			60 = {
+				set_country_flag = Pan_Fu_eco_ade
+			}
+			40 = {
+				set_country_flag = Chang_Chun_eco_ade
+			}
+		}
+	}
+}
 
+country_event = { #Recovery League/AuthDem Economic Actual
+	id = fngpolitic.17
+	title = fngpolitic.17.t
+	desc = {
+		text = fngpolitic.17.d_Pan
+		trigger = {
+			has_country_flag = Pan_Fu_eco_ade
+		}
+	}
+	desc = {
+		text = fngpolitic.17.d_Chang
+		trigger = {
+			has_country_flag = Chang_Chun_eco_ade
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 250
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Pan_Fu_eco_ade
+				has_idea = FNG_Chang_Chun_eco_ade
+				has_idea = FNG_Y_C_James_Yen_eco_ade
+			}
+		}
+		OR = {
+			has_country_flag = Pan_Fu_eco_ade
+			has_country_flag = Chang_Chun_eco_ade
+		}
+	}
+	
+	option = { #Appoint Pan
+		name = fngpolitic.17.a
+		trigger = {
+			has_country_flag = Pan_Fu_eco_ade
+		}
+		add_ideas = {
+			FNG_Pan_Fu_eco_ade
+		}
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_eco_ade
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Chang
+		name = fngpolitic.17.b
+		trigger = {
+			has_country_flag = Chang_Chun_eco_ade
+		}
+		add_ideas = {
+			FNG_Chang_Chun_for_ade
+		}
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_Fu_eco_ade
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.17.c
+		add_political_power = -30
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_Fu_eco_ade
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
 
 
 

@@ -6276,12 +6276,34 @@ country_event = { #Recovery League/AuthDem Foreign Minister Setup
 	}
 	
 	option = {
+		trigger = {
+			has_idea = FNG_Huang_Fu_hog_ade
+		}
 		random_list = {
 			60 = {
 				set_country_flag = Wu_Jinglian_for_ade
 			}
 			40 = {
 				set_country_flag = Chang_Chun_for_ade
+			}
+		}
+	}
+	
+	option = {
+		trigger = {
+			NOT = {
+				has_idea = FNG_Huang_Fu_hog_ade
+			}
+		}
+		random_list = {
+			50 = {
+				set_country_flag = Wu_Jinglian_for_ade
+			}
+			30 = {
+				set_country_flag = Chang_Chun_for_ade
+			}
+			20 = {
+				set_country_flag = Huang_Fu_for_ade
 			}
 		}
 	}
@@ -6302,6 +6324,12 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 			has_country_flag = Chang_Chun_for_ade
 		}
 	}
+	desc = {
+		text = fngpolitic.15.d_Huang
+		trigger = {
+			has_country_flag = Huang_Fu_for_ade
+		}
+	}
 	
 	mean_time_to_happen = {
 		days = 200
@@ -6315,11 +6343,13 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 			OR = {
 				has_idea = FNG_Wu_Jinglian_for_ade
 				has_idea = FNG_Chang_Chun_for_ade
+				has_idea = FNG_Huang_Fu_for_ade
 			}
 		}
 		OR = {
 			has_country_flag = Wu_Jinglian_for_ade
 			has_country_flag = Chang_Chun_for_ade
+			has_country_flag = Huang_Fu_for_ade
 		}
 	}
 	
@@ -6333,6 +6363,7 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 		}
 		clr_country_flag = Chang_Chun_for_ade
 		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = minister_available
 		set_country_flag = {
 			flag = ade_ministers
 			value = 1
@@ -6352,6 +6383,28 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 		}
 		clr_country_flag = Chang_Chun_for_ade
 		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Huang
+		name = fngpolitic.15.c
+		trigger = {
+			has_country_flag = Huang_Fu_for_ade
+		}
+		add_ideas = {
+			FNG_Huang_Fu_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = Huang_Fu_for_ade
+		clr_country_flag = minister_available
 		set_country_flag = {
 			flag = ade_ministers
 			value = 1
@@ -6362,19 +6415,20 @@ country_event = { #Recovery League/AuthDem Foreign Minister Actual
 	}
 	
 	option = { #Refuse to Appoint
-		name = fngpolitic.15.c
+		name = fngpolitic.15.d
 		add_political_power = -30
 		clr_country_flag = minister_available
 		set_country_flag = minister_unavailable
 		clr_country_flag = Chang_Chun_for_ade
 		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = Huang_Fu_for_ade
 		ai_chance = {
 			factor = 30
 		}
 	}
 }
 
-country_event = { #Recovery League/AuthDem Economic Setup
+country_event = { #Recovery League/AuthDem Economic Minister Setup
 	id = fngpolitic.16
 	
 	hidden = yes
@@ -6389,7 +6443,11 @@ country_event = { #Recovery League/AuthDem Economic Setup
 		has_country_flag = authdem_pop_high
 		has_country_flag = {
 			flag = ade_ministers
-			value = 1
+			value < 1
+		}
+		has_country_flag = {
+			flag = ade_ministers
+			value > 1
 		}
 		NOT = {
 			OR = {
@@ -6411,7 +6469,7 @@ country_event = { #Recovery League/AuthDem Economic Setup
 	}
 }
 
-country_event = { #Recovery League/AuthDem Economic Actual
+country_event = { #Recovery League/AuthDem Economic Minister Actual
 	id = fngpolitic.17
 	title = fngpolitic.17.t
 	desc = {
@@ -6458,6 +6516,7 @@ country_event = { #Recovery League/AuthDem Economic Actual
 		}
 		clr_country_flag = Chang_Chun_eco_ade
 		clr_country_flag = Pan_eco_ade
+		clr_country_flag = minister_available
 		set_country_flag = {
 			flag = ade_ministers
 			value = 2
@@ -6477,6 +6536,7 @@ country_event = { #Recovery League/AuthDem Economic Actual
 		}
 		clr_country_flag = Chang_Chun_eco_ade
 		clr_country_flag = Pan_Fu_eco_ade
+		clr_country_flag = minister_available
 		set_country_flag = {
 			flag = ade_ministers
 			value = 2
@@ -6499,7 +6559,174 @@ country_event = { #Recovery League/AuthDem Economic Actual
 	}
 }
 
+country_event = { #Recovery League/AuthDem Security Minister Actual NO SETUP Yen
+	id = fngpolitic.18
+	title = fngpolitic.18.t
+	desc = fngpolitic.18.d
+	
+	mean_time_to_happen = {
+		days = 720
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		has_country_flag = {
+			flag = ade_ministers
+			value < 2
+		}
+		has_country_flag = {
+			flag = ade_ministers
+			value > 2
+		}
+		NOT = {
+			has_idea = FNG_Y_C_James_Yen_sec_ade
+		}
+	}
+	
+	option = { #Appoint Wu
+		name = fngpolitic.18.a
+		add_ideas = {
+			FNG_Y_C_James_Yen_sec_ade
+		}
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 3
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.18.b
+		add_political_power = -40
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
 
+country_event = { # Repeating Ade Foreign Minister Check & Reset
+	id = fngpolitic.20
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_idea = FNG_Ruan_Zhenduo_for_mli
+			has_idea = FNG_Sun_Qichang_for_pau
+			has_idea = FNG_Wang_Yintai_for_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 1
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 1
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+	}
+}
+
+country_event = { # Repeating Ade Economic Minister Check & Reset
+	id = fngpolitic.21
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_idea = FNG_Li_Shaogeng_eco_sco
+			has_idea = FNG_Lu_Ronghuan_eco_sco
+			has_idea = FNG_Ruan_Zhenduo_eco_mli
+			has_idea = FNG_Sun_Qichang_eco_pau
+			has_idea = FNG_Tang_Yulin_eco_pau
+			has_idea = FNG_Yoshisuke_Aikawa_eco_mli
+			has_idea = FNG_Yu_Zhishan_eco_mli
+			has_idea = FNG_Yuan_Jinkai_eco_pau
+			has_idea = FNG_Zhang_Xueliang_eco_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 2
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 2
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+	}
+}
+
+country_event = { #Repeating Ade Security Minister Check & Reset
+	id = fngpolitic.22
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = minister_available
+		OR = {
+			has_idea = FNG_Cao_Rulin_sec_sco
+			has_idea = FNG_Ding_Jianxiu_sec_mli
+			has_idea = FNG_Li_Shaogeng_sec_sco
+			has_idea = FNG_Liang_Shiyi_sec_sco
+			has_idea = FNG_Ma_Zhanshan_sec_pau
+			has_idea = FNG_Tang_Yulin_sec_pau
+			has_idea = FNG_Yang_Yuting_sec_mli
+			has_idea = FNG_Yuan_Jinkai_sec_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 3
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 3
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 3
+		}
+	}
+}
 
 	
 

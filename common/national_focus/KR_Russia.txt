@@ -5601,20 +5601,55 @@ focus = {
 		x = 39
 		y = 8
 		cost = 2
-		available = { custom_trigger_tooltip = { tooltip = can_only_take_one_alliance	
-		NOT = { OR = { has_completed_focus = RUS_join_entente has_completed_focus = RUS_join_internationale has_completed_focus = RUS_join_mitteleuropa } } }
-		OR = { hidden_trigger = { AND = { is_ai = yes has_country_flag = RUS_ai_choose_new_alliance } } AND = { is_ai = no is_subject = no date > 1942.05.03
-		NOT = { is_in_faction_with = CAN is_in_faction_with = GER is_in_faction_with = JAP is_in_faction_with = FRA is_in_faction_with = DNF is_in_faction_with = AHE is_in_faction_with = GBR is_in_faction_with = USA is_in_faction_with = CSA is_in_faction_with = TEX is_in_faction_with = UKR }
-		} } }
+		available = {
+			custom_trigger_tooltip = { tooltip = can_only_take_one_alliance	
+				NOT = {
+					OR = {
+						has_completed_focus = RUS_join_entente
+						has_completed_focus = RUS_join_internationale
+						has_completed_focus = RUS_join_mitteleuropa
+					}
+				} 
+			}
+			OR = {
+				hidden_trigger = {
+					AND = {
+						is_ai = yes
+						has_country_flag = RUS_ai_choose_new_alliance
+					}
+				} 
+				AND = {
+					is_ai = no
+					is_subject = no
+					date > 1942.05.03
+					is_in_faction = no
+				}
+			}
+		}
 		prerequisite = { focus = RUS_expansionism focus = RUS_real_politik }
 		
 		ai_will_do = {
 			factor = 100
 		}	
 		completion_reward = {
-		if = { limit = { NOT = { has_government = syndicalist has_government = totalist } } country_event = { id = rusfor.1250 } }
-		if = { limit = { OR = { has_government = syndicalist has_government = totalist } is_in_faction = yes } }
-		if = { limit = { OR = { has_government = syndicalist has_government = totalist } is_in_faction = no } create_faction = "proletarian_alliance" }		
+			if = {
+				limit = {
+					NOT = {
+						has_government = syndicalist
+						has_government = totalist
+					}
+				}
+				country_event = { id = rusfor.1250 }
+			}
+			if = {
+				limit = {
+					OR = {
+						has_government = syndicalist
+						has_government = totalist
+					} is_in_faction = no
+				} 
+				create_faction = "proletarian_alliance"
+			}		
 		}		
 	}
 

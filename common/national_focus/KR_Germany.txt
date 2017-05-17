@@ -123,7 +123,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_parlamentsvertrauen
-		icon = GFX_goal_support_democracy
+		icon = GFX_goal_tfv_sever_ties_with_uk
 		prerequisite = { focus = GER_restore_country_rights focus = GER_post }
 		mutually_exclusive = { focus = GER_disband_reichstag }
 		x = 3
@@ -351,7 +351,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_black_monday_aftermath
-		icon = GFX_goal_generic_production
+		icon = GFX_goal_bankruptcy
 		available = { 
 			has_idea = GER_black_monday
 		}
@@ -420,7 +420,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_schacht1
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_goal_agriculture
 		prerequisite = { focus = GER_black_monday_aftermath }
 		mutually_exclusive = { focus = GER_groener1 }
 		x = 10
@@ -524,57 +524,67 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			add_ideas = GER_europamark_idea
 			add_ideas = GER_Heinrich_von_Brentano_for_sco
-			if = {
+			every_other_country = {
 				limit = {
-					BEL = {
-						is_in_faction_with = GER
+					is_in_faction_with = GER
+					any_owned_state = {
+						is_on_continent = europe
 					}
 				}
-				BEL = {
-					country_event = { id = germit.1 }
-				}
+				country_event = { id = germit.1 }
 			}
-			if = {
-				limit = {
-					BAT = {
-						is_in_faction_with = GER
-					}
-				}
-				BAT = {
-					country_event = { id = germit.1 }
-				}
-			}
-			if = {
-				limit = {
-					LIT = {
-						is_in_faction_with = GER
-					}
-				}
-				LIT = {
-					country_event = { id = germit.1 }
-				}
-			}
-			if = {
-				limit = {
-					WHR = {
-						is_in_faction_with = GER
-					}
-				}
-				WHR = {
-					country_event = { id = germit.1 }
-				}
-			}
-			if = {
-				limit = {
-					UKR = {
-						is_in_faction_with = GER
-					}
-				}
-				UKR = {
-					country_event = { id = germit.1 }
-				}
-			}
+			# if = {
+				# limit = {
+					# BEL = {
+						# is_in_faction_with = GER
+					# }
+				# }
+				# BEL = {
+					# country_event = { id = germit.1 }
+				# }
+			# }
+			# if = {
+				# limit = {
+					# BAT = {
+						# is_in_faction_with = GER
+					# }
+				# }
+				# BAT = {
+					# country_event = { id = germit.1 }
+				# }
+			# }
+			# if = {
+				# limit = {
+					# LIT = {
+						# is_in_faction_with = GER
+					# }
+				# }
+				# LIT = {
+					# country_event = { id = germit.1 }
+				# }
+			# }
+			# if = {
+				# limit = {
+					# WHR = {
+						# is_in_faction_with = GER
+					# }
+				# }
+				# WHR = {
+					# country_event = { id = germit.1 }
+				# }
+			# }
+			# if = {
+				# limit = {
+					# UKR = {
+						# is_in_faction_with = GER
+					# }
+				# }
+				# UKR = {
+					# country_event = { id = germit.1 }
+				# }
+			# }
 		}
 	}
 	
@@ -913,12 +923,22 @@ focus_tree = {
 		id = GER_hahn_meitner
 		icon = GFX_focus_wonderweapons
 		prerequisite = { focus = GER_experimental_research }
-		x = 19
-		y = 4
+		x = 18
+		y = 5
 		cost = 10
+		available = {
+			OR = {
+				FRA = {
+					has_completed_focus = FRA_damocles
+				}
+				ENG = {
+					has_completed_focus = ENG_westminster_project
+				}
+			}
+		}
 		
 		ai_will_do = {
-			factor = 5
+			factor = 10
 		}
 		
 		completion_reward = {				
@@ -932,8 +952,30 @@ focus_tree = {
 	}
 
 	focus = {
+		id = GER_rocket
+		icon = GFX_focus_rocketry
+		prerequisite = { focus = GER_experimental_research }
+		x = 19
+		y = 4
+		cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {				
+			add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = rocketry
+			}		
+		}
+	}
+
+	focus = {
 		id = GER_economy
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_goal_generic_production
 		x = 20
 		y = 0
 		cost = 10
@@ -1456,7 +1498,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_mil_expansion
-		icon = GFX_goal_generic_build_tank
+		icon =  GFX_goal_generic_axis_build_infantry
 		x = 35
 		y = 0
 		cost = 10
@@ -1930,7 +1972,7 @@ focus_tree = {
 		
 	focus = {
 		id = GER_mil_expansion_land_1
-		icon = GFX_goal_generic_axis_build_infantry
+		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
 		prerequisite = { focus = GER_doctrine_mobile focus = GER_doctrine_great_war focus = GER_doctrine_armor }
 		x = 34
 		y = 3
@@ -2334,7 +2376,6 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = GER_cult_of_aviation_tp
 			hidden_effect = {
 				add_ideas = GER_cult_of_aviation_idea
 			}
@@ -3170,181 +3211,173 @@ focus_tree = {
 	
 	### Mitteleuropa
 	
-	# focus = {
-		# id = GER_handelshof
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# x = 5
-		# y = 7
-		# cost = 10
+	focus = {
+		id = GER_handelshof
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = GER_mitteleuropa }
+		x = 7
+		y = 7
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 100
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_europakammer
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_handelshof }
-		# prerequisite = { focus = GER_parlamentsvertrauen }
-		# mutually_exclusive = { focus = GER_europakommission }
-		# x = 4
-		# y = 9
-		# cost = 10
+	focus = {
+		id = GER_europakammer
+		icon = GFX_focus_generic_the_giant_wakes
+		prerequisite = { focus = GER_handelshof }
+		prerequisite = { focus = GER_parlamentsvertrauen }
+		mutually_exclusive = { focus = GER_europakommission }
+		x = 3
+		y = 9
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 100
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_europakommission
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_handelshof }
-		# prerequisite = { focus = GER_disband_reichstag focus = GER_post }
-		# mutually_exclusive = { focus = GER_europakammer }
-		# x = 6
-		# y = 9
-		# cost = 10
+	focus = {
+		id = GER_europakommission
+		icon = GFX_goal_generic_production
+		prerequisite = { focus = GER_handelshof }
+		prerequisite = { focus = GER_disband_reichstag focus = GER_post }
+		mutually_exclusive = { focus = GER_europakammer }
+		x = 6
+		y = 9
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 100
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_support_local
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# mutually_exclusive = { focus = GER_bauernland }
-		# x = 14
-		# y = 8
-		# cost = 10
+	focus = {
+		id = GER_guard_the_balance
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = GER_mitteleuropa }
+		x = 13
+		y = 7
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 100
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_bauernland
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# mutually_exclusive = { focus = GER_support_local }
-		# x = 16
-		# y = 8
-		# cost = 10
+	focus = {
+		id = GER_kaisergipfel
+		icon = GFX_goal_POL_austrian_king
+		prerequisite = { focus = GER_guard_the_balance }
+		x = 11
+		y = 9
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 10
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_reichsmark
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# x = 10
-		# y = 9
-		# cost = 10
+	focus = {
+		id = GER_poland_war
+		icon = GFX_goal_generic_more_territorial_claims
+		prerequisite = { focus = GER_guard_the_balance }
+		mutually_exclusive = { focus = GER_poland_alliance }
+		x = 12
+		y = 8
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 10
+		}
 		
-		# completion_reward = {
-		# }
-	# }
+		completion_reward = {
+		}
+	}
 	
-	# focus = {
-		# id = GER_trade_poland
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# x = 18
-		# y = 7
-		# cost = 10
+	focus = {
+		id = GER_poland_alliance
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GER_guard_the_balance }
+		prerequisite = { focus = GER_schacht3 }
+		mutually_exclusive = { focus = GER_poland_war }
+		x = 14
+		y = 8
+		cost = 10
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+		ai_will_do = {
+			factor = 10
+		}
 		
-		# completion_reward = {
-		# }
-	# }
-	
-	# focus = {
-		# id = GER_poland
-		# icon = GFX_focus_generic_polish_deal
-		# prerequisite = { focus = GER_trade_poland }
-		# x = 19
-		# y = 8
-		# cost = 10
+		completion_reward = {
+		}
+	}
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
+	focus = {
+		id = GER_BUR_ALLY
+		icon = GFX_goal_generic_military_deal
+		prerequisite = { focus = GER_guard_the_balance }
+		x = 15
+		y = 9
+		cost = 10
 		
-		# completion_reward = {
-		# }
-	# }
-	
-	# focus = {
-		# id = GER_france
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# x = 21
-		# y = 8
-		# cost = 10
+		ai_will_do = {
+			factor = 10
+		}
 		
-		# ai_will_do = {
-			# factor = 100
-		# }
-		
-		# completion_reward = {
-		# }
-	# }
-	
-	# focus = {
-		# id = GER_kaisergipfel
-		# icon = GFX_goal_generic_production
-		# prerequisite = { focus = GER_mitteleuropa }
-		# x = 24
-		# y = 7
-		# cost = 10
-		
-		# ai_will_do = {
-			# factor = 100
-		# }
-		
-		# completion_reward = {
-		# }
-	# }
+		available = {  
+			SIA = {
+				is_in_faction_with = JAP
+			}
+			BUR = { 
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				has_socialist_government = no
+				NOT = {
+					has_war_with = GER
+				}
+			}
+		}
+
+		completion_reward = {	
+			BUR = { 
+				country_event = { id = japfor.30 }
+			}
+		}	
+	}			
 	
 	### The Oil must flow
 	
 	focus = {
 		id = GER_oil
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_goal_oil
 		prerequisite = { }
 		x = 24
 		y = 7
 		cost = 10
+		available = {
+			NOT = {
+				has_idea = GER_rom_oil_shipments
+			}
+		}
 		
 		ai_will_do = {
 			factor = 10
@@ -3358,7 +3391,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_oil_venezuela
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = GER_oil }
 		x = 19
 		y = 8
@@ -3385,7 +3418,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_oil_venezuela_start
-		icon = GFX_goal_generic_intelligence_exchange
+		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = GER_oil_venezuela }
 		x = 19
 		y = 11
@@ -3403,7 +3436,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_oil_caucasus
-		icon = GFX_goal_generic_production
+		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = GER_oil }
 		x = 22
 		y = 8
@@ -3431,7 +3464,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_oil_caucasus_land
-		icon = GFX_goal_generic_production
+		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = GER_oil_caucasus }
 		mutually_exclusive = { focus = GER_oil_caucasus_straits }
 		x = 21
@@ -3580,7 +3613,7 @@ focus_tree = {
 	
 	focus = {
 		id = GER_oil_gulf
-		icon = GFX_goal_generic_production
+		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = GER_oil }
 		x = 26
 		y = 8
@@ -3731,14 +3764,15 @@ focus_tree = {
 			set_country_flag = GER_oil_ongoing
 		}
 	}
+	
 	# Romania
 	
 	focus = {
 		id = GER_oil_romania_alliance
 		icon = GFX_goal_generic_alliance
 		prerequisite = { focus = GER_oil_romania }
-		x = 30
-		y = 9
+		x = 28
+		y = 10
 		cost = 10
 		
 		ai_will_do = {
@@ -3788,42 +3822,255 @@ focus_tree = {
 		completion_reward = {
 		}
 	}
+	
+	### Our Darkest Hour
+	
+	focus = {
+		id = GER_darkest_hour
+		icon = GFX_goal_tfv_burn_the_royal_portraits
+		x = 37
+		y = 7
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
 		
-	# focus = {
-		# id = GER_BUR_ALLY
-		# icon = GFX_goal_generic_military_deal
-		# prerequisite = {  }
-		# x = 35
-		# y = 9
-		# cost = 10
+		ai_will_do = {
+			factor = 10
+		}
 		
-		# ai_will_do = {
-			# factor = 10
-		# }
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_spirit_of_resistance
+		icon = GFX_goal_liberty
+		prerequisite = { focus = GER_darkest_hour }
+		x = 37
+		y = 8
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
 		
-		# available = {  
-			# BUR = { 
-				# exists = yes
-				# is_subject = no
-				# is_in_faction = no
-				# NOT = {
-					# has_war_with = GER
-					# OR = {
-						# has_government = totalist
-						# has_government = syndicalist 
-						# has_government = radical_socialist
-					# }
-				# }
-			# }
-			# SIA = {
-				# is_in_faction_with = JAP
-			# }
-		# }
-
-		# completion_reward = {	
-			# BUR = { 
-				# country_event = { id = japfor.30 }
-			# }
-		# }	
-	# }			
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	# Buildup
+	
+	focus = {
+		id = GER_kili
+		icon = GFX_goal_generic_secret_weapon
+		prerequisite = { focus = GER_darkest_hour }
+		x = 32
+		y = 8
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+			
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {			
+			add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 0.5
+				uses = 1
+				category = nuclear
+			}		
+		}
+	}
+	
+	focus = {
+		id = GER_air
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = GER_darkest_hour }
+		x = 34
+		y = 8
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+			
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {			
+			add_tech_bonus = {
+				name = air_equipment_bonus
+				bonus = 0.5
+				uses = 2
+				category = air_equipment
+			}		
+		}
+	}
+	
+	focus = {
+		id = GER_exiled_eco
+		icon = GFX_goal_generic_production2
+		prerequisite = { focus = GER_spirit_of_resistance }
+		x = 33
+		y = 9
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_exiled_infra
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = GER_exiled_eco }
+		x = 33
+		y = 10
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	# Askaris
+	
+	focus = {
+		id = GER_afrikakorps
+		icon = GFX_goal_national_arsenal
+		prerequisite = { focus = GER_spirit_of_resistance }
+		x = 37
+		y = 9
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_the_way_home
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = GER_afrikakorps }
+		x = 37
+		y = 10
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_walking_over_water
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = GER_the_way_home }
+		x = 37
+		y = 11
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	# Foreign
+	
+	focus = {
+		id = GER_old_enemies_new_allies
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = GER_darkest_hour }
+		mutually_exclusive = { focus = GER_our_continent }
+		x = 40
+		y = 8
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_our_continent
+		icon = GFX_goal_tfv_saf_support_german_coup
+		prerequisite = { focus = GER_darkest_hour }
+		mutually_exclusive = { focus = GER_new_allies }
+		x = 42
+		y = 8
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = GER_crush_france
+		icon = GFX_focus_RAJ_clamp_down_on_corruption
+		prerequisite = { focus = GER_our_continent }
+		x = 42
+		y = 9
+		cost = 10
+		available = {
+			has_global_flag = GER_Capitulation
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+		}
+	}
 }

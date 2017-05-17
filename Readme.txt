@@ -1,5 +1,5 @@
 Thank you for downloading Kaiserreich for Hearts of Iron 4!
-This is alpha version 0.4.3 - 'PDXCON'.
+This is alpha version 0.4.5 - 'FUCKING FINALLY AUSTRIA'.
 It is NOT save game compatible with any prior version!
 
 Manual Installation Instructions

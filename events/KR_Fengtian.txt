@@ -4319,11 +4319,11 @@ country_event = { #Expel Japanese Officers
 		}
 		add_popularity = {
 			ideology = market_liberal
-			popularity = -0.5
+			popularity = -0.05
 		}
 		add_popularity = {
 			ideology = paternal_autocrat
-			popularity = 0.5
+			popularity = 0.05
 		}
 		ai_chance = { 
 			factor = 40
@@ -4772,6 +4772,12 @@ country_event = { #Escalate the Propaganda War
 	desc = fengtian.new.91.d
 	desc = {
 		text = fengtian.new.91.d_mantetsu
+		trigger = {
+			OR = {
+				has_idea = FNG_informal_empire_4
+				has_idea = FNG_informal_empire_5
+			}
+		}
 	}
 	
 	fire_only_once = yes
@@ -5956,7 +5962,7 @@ country_event = { #Authdem Popularity Medium
 			has_country_flag = authdem_pop_medium
 		}
 		authoritarian_democrat > 0.10
-		authoritarian_democrat < 0.45
+		authoritarian_democrat < 0.35
 	}
 	
 	immediate = {
@@ -5980,7 +5986,7 @@ country_event = { #Authdem Popularity High
 		NOT = {
 			has_country_flag = authdem_pop_high
 		}
-		authoritarian_democrat > 0.45
+		authoritarian_democrat > 0.35
 		authoritarian_democrat < 1.00
 	}
 	
@@ -6033,7 +6039,7 @@ country_event = { #Pataut Popularity Medium
 			has_country_flag = pataut_pop_medium
 		}
 		paternal_autocrat > 0.10
-		paternal_autocrat < 0.45
+		paternal_autocrat < 0.35
 	}
 	
 	immediate = {
@@ -6057,7 +6063,7 @@ country_event = { #Pataut Popularity High
 		NOT = {
 			has_country_flag = Pataut_pop_high
 		}
-		paternal_autocrat > 0.45
+		paternal_autocrat > 0.35
 		paternal_autocrat < 1.00
 	}
 	
@@ -6110,7 +6116,7 @@ country_event = { #Soccon Popularity Medium
 			has_country_flag = soccon_pop_medium
 		}
 		social_conservative > 0.10
-		social_conservative < 0.45
+		social_conservative < 0.35
 	}
 	
 	immediate = {
@@ -6134,7 +6140,7 @@ country_event = { #Soccon Popularity High
 		NOT = {
 			has_country_flag = authdem_pop_high
 		}
-		social_conservative > 0.45
+		social_conservative > 0.35
 		social_conservative < 1.00
 	}
 	
@@ -6187,7 +6193,7 @@ country_event = { #Marklib Popularity Medium
 			has_country_flag = marklib_pop_medium
 		}
 		market_liberal > 0.10
-		market_liberal < 0.45
+		market_liberal < 0.35
 	}
 	
 	immediate = {
@@ -6211,7 +6217,7 @@ country_event = { #Marklib Popularity High
 		NOT = {
 			has_country_flag = marklib_pop_high
 		}
-		market_liberal > 0.45
+		market_liberal > 0.35
 		market_liberal < 1.00
 	}
 	
@@ -6221,6 +6227,508 @@ country_event = { #Marklib Popularity High
 		clr_country_flag = marklib_pop_medium
 	}
 }
+
+#################################################################
+### Fengtian Political Influence Mechanic - Ministers Section ###
+#################################################################
+
+country_event = { #Hidden Minister Availability Rotation
+	id = fngpolitic.13
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 150
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_unavailable
+	}
+	
+	immediate = {
+		clr_country_flag = minister_unavailable
+		set_country_flag = minister_available
+	}
+}
+
+#Minister Selection Events
+
+country_event = { #Recovery League/AuthDem Foreign Minister Setup
+	id = fngpolitic.14
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Wu_Jinglian_for_ade
+				has_idea = FNG_Chang_Chun_for_ade
+			}
+		}
+	}
+	
+	option = {
+		trigger = {
+			has_idea = FNG_Huang_Fu_hog_ade
+		}
+		random_list = {
+			60 = {
+				set_country_flag = Wu_Jinglian_for_ade
+			}
+			40 = {
+				set_country_flag = Chang_Chun_for_ade
+			}
+		}
+	}
+	
+	option = {
+		trigger = {
+			NOT = {
+				has_idea = FNG_Huang_Fu_hog_ade
+			}
+		}
+		random_list = {
+			50 = {
+				set_country_flag = Wu_Jinglian_for_ade
+			}
+			30 = {
+				set_country_flag = Chang_Chun_for_ade
+			}
+			20 = {
+				set_country_flag = Huang_Fu_for_ade
+			}
+		}
+	}
+}
+
+country_event = { #Recovery League/AuthDem Foreign Minister Actual
+	id = fngpolitic.15
+	title = fngpolitic.15.t
+	desc = {
+		text = fngpolitic.15.d_Wu
+		trigger = {
+			has_country_flag = Wu_Jinglian_for_ade
+		}
+	}
+	desc = {
+		text = fngpolitic.15.d_Chang
+		trigger = {
+			has_country_flag = Chang_Chun_for_ade
+		}
+	}
+	desc = {
+		text = fngpolitic.15.d_Huang
+		trigger = {
+			has_country_flag = Huang_Fu_for_ade
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Wu_Jinglian_for_ade
+				has_idea = FNG_Chang_Chun_for_ade
+				has_idea = FNG_Huang_Fu_for_ade
+			}
+		}
+		OR = {
+			has_country_flag = Wu_Jinglian_for_ade
+			has_country_flag = Chang_Chun_for_ade
+			has_country_flag = Huang_Fu_for_ade
+		}
+	}
+	
+	option = { #Appoint Wu
+		name = fngpolitic.15.a
+		trigger = {
+			has_country_flag = Wu_Jinglian_for_ade
+		}
+		add_ideas = {
+			FNG_Wu_Jinglian_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Chang
+		name = fngpolitic.15.b
+		trigger = {
+			has_country_flag = Chang_Chun_for_ade
+		}
+		add_ideas = {
+			FNG_Chang_Chun_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Huang
+		name = fngpolitic.15.c
+		trigger = {
+			has_country_flag = Huang_Fu_for_ade
+		}
+		add_ideas = {
+			FNG_Huang_Fu_for_ade
+		}
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = Huang_Fu_for_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.15.d
+		add_political_power = -30
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		clr_country_flag = Chang_Chun_for_ade
+		clr_country_flag = Wu_Jinglian_for_ade
+		clr_country_flag = Huang_Fu_for_ade
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+country_event = { #Recovery League/AuthDem Economic Minister Setup
+	id = fngpolitic.16
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		days = 5
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		has_country_flag = {
+			flag = ade_ministers
+			value < 1
+		}
+		has_country_flag = {
+			flag = ade_ministers
+			value > 1
+		}
+		NOT = {
+			OR = {
+				has_idea = FNG_Pan_Fu_eco_ade
+				has_idea = FNG_Chang_Chun_eco_ade
+			}
+		}
+	}
+	
+	option = {
+		random_list = {
+			60 = {
+				set_country_flag = Pan_Fu_eco_ade
+			}
+			40 = {
+				set_country_flag = Chang_Chun_eco_ade
+			}
+		}
+	}
+}
+
+country_event = { #Recovery League/AuthDem Economic Minister Actual
+	id = fngpolitic.17
+	title = fngpolitic.17.t
+	desc = {
+		text = fngpolitic.17.d_Pan
+		trigger = {
+			has_country_flag = Pan_Fu_eco_ade
+		}
+	}
+	desc = {
+		text = fngpolitic.17.d_Chang
+		trigger = {
+			has_country_flag = Chang_Chun_eco_ade
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 250
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		NOT = {
+			OR = {
+				has_idea = FNG_Pan_Fu_eco_ade
+				has_idea = FNG_Chang_Chun_eco_ade
+				has_idea = FNG_Y_C_James_Yen_eco_ade
+			}
+		}
+		OR = {
+			has_country_flag = Pan_Fu_eco_ade
+			has_country_flag = Chang_Chun_eco_ade
+		}
+	}
+	
+	option = { #Appoint Pan
+		name = fngpolitic.17.a
+		trigger = {
+			has_country_flag = Pan_Fu_eco_ade
+		}
+		add_ideas = {
+			FNG_Pan_Fu_eco_ade
+		}
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_eco_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Appoint Chang
+		name = fngpolitic.17.b
+		trigger = {
+			has_country_flag = Chang_Chun_eco_ade
+		}
+		add_ideas = {
+			FNG_Chang_Chun_for_ade
+		}
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_Fu_eco_ade
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.17.c
+		add_political_power = -30
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		clr_country_flag = Chang_Chun_eco_ade
+		clr_country_flag = Pan_Fu_eco_ade
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+country_event = { #Recovery League/AuthDem Security Minister Actual NO SETUP Yen
+	id = fngpolitic.18
+	title = fngpolitic.18.t
+	desc = fngpolitic.18.d
+	
+	mean_time_to_happen = {
+		days = 720
+	}
+	
+	trigger = {
+		tag = FNG
+		has_country_flag = minister_available
+		has_country_flag = authdem_pop_high
+		has_country_flag = {
+			flag = ade_ministers
+			value < 2
+		}
+		has_country_flag = {
+			flag = ade_ministers
+			value > 2
+		}
+		NOT = {
+			has_idea = FNG_Y_C_James_Yen_sec_ade
+		}
+	}
+	
+	option = { #Appoint Wu
+		name = fngpolitic.18.a
+		add_ideas = {
+			FNG_Y_C_James_Yen_sec_ade
+		}
+		clr_country_flag = minister_available
+		set_country_flag = {
+			flag = ade_ministers
+			value = 3
+		}
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { #Refuse to Appoint
+		name = fngpolitic.18.b
+		add_political_power = -40
+		clr_country_flag = minister_available
+		set_country_flag = minister_unavailable
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+country_event = { # Repeating Ade Foreign Minister Check & Reset
+	id = fngpolitic.20
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_idea = FNG_Ruan_Zhenduo_for_mli
+			has_idea = FNG_Sun_Qichang_for_pau
+			has_idea = FNG_Wang_Yintai_for_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 1
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 1
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 1
+		}
+	}
+}
+
+country_event = { # Repeating Ade Economic Minister Check & Reset
+	id = fngpolitic.21
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_idea = FNG_Li_Shaogeng_eco_sco
+			has_idea = FNG_Lu_Ronghuan_eco_sco
+			has_idea = FNG_Ruan_Zhenduo_eco_mli
+			has_idea = FNG_Sun_Qichang_eco_pau
+			has_idea = FNG_Tang_Yulin_eco_pau
+			has_idea = FNG_Yoshisuke_Aikawa_eco_mli
+			has_idea = FNG_Yu_Zhishan_eco_mli
+			has_idea = FNG_Yuan_Jinkai_eco_pau
+			has_idea = FNG_Zhang_Xueliang_eco_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 2
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 2
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 2
+		}
+	}
+}
+
+country_event = { #Repeating Ade Security Minister Check & Reset
+	id = fngpolitic.22
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = minister_available
+		OR = {
+			has_idea = FNG_Cao_Rulin_sec_sco
+			has_idea = FNG_Ding_Jianxiu_sec_mli
+			has_idea = FNG_Li_Shaogeng_sec_sco
+			has_idea = FNG_Liang_Shiyi_sec_sco
+			has_idea = FNG_Ma_Zhanshan_sec_pau
+			has_idea = FNG_Tang_Yulin_sec_pau
+			has_idea = FNG_Yang_Yuting_sec_mli
+			has_idea = FNG_Yuan_Jinkai_sec_pau
+		}
+		NOT = {
+			has_country_flag = {
+				flag = ade_ministers
+				value < 3
+			}
+			has_country_flag = {
+				flag = ade_ministers
+				value > 3
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	immediate = {
+		set_country_flag = {
+			flag = ade_ministers
+			value = 3
+		}
+	}
+}
+
+	
 
 #########################################
 ### Fengtian Informal Empire Mechanic ###
